@@ -37,13 +37,13 @@ BANK = {
     # Tier 2 — NICHE (100K-1M): targeted coffee community
     "niche": [
         "#InstantCoffee", "#PremiumCoffee", "#PureCoffee", "#GourmetCoffee", "#SpecialtyCoffee",
-        "#FreezeDriedCoffee", "#BlackCoffee", "#CoffeeConnoisseur", "#CoffeeSnob", "#ThirdWaveCoffee",
+        "#GlassJar", "#BlackCoffee", "#CoffeeConnoisseur", "#CoffeeSnob", "#ThirdWaveCoffee",
         "#HomeBarista", "#HomeBrewing", "#CoffeeAtHome", "#CoffeeBrewing", "#PourOver",
         "#ColdBrew", "#ColdCoffee", "#IcedCoffee", "#FrenchPress", "#Aeropress",
-        "#CoffeeRoasters", "#FreshCoffee", "#ArtisanCoffee", "#CraftCoffee", "#SingleOrigin",
+        "#CoffeeRoasters", "#FreshCoffee", "#ArtisanCoffee", "#CraftCoffee", "#ReadTheLabel",
         "#CoffeeEducation", "#CoffeeFacts", "#CoffeeTips", "#CoffeeScience", "#CoffeeKnowledge",
         "#CoffeeReview", "#CoffeeTasting", "#CoffeeExperience", "#RealCoffee", "#QualityCoffee",
-        "#CleanCoffee", "#HealthyCoffee", "#OrganicCoffee", "#NaturalCoffee", "#SugarFreeCoffee",
+        "#CleanCoffee", "#DailyBrew", "#JarCoffee", "#NaturalCoffee", "#NoAddedSugar",
     ],
     # Tier 3 — INDIAN (local discovery)
     "indian": [

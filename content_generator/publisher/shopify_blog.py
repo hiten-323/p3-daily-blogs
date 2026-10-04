@@ -7,11 +7,12 @@ The separate Cowork blog workflow remains the intended production publisher.
 """
 from __future__ import annotations
 import base64
-import datetime
 import glob as _glob
+import html
 import json
 import logging
 import os
+import urllib.parse
 import urllib.request
 
 logger = logging.getLogger(__name__)
@@ -62,7 +63,8 @@ def _resolve_blog_id() -> str | None:
 
 def _hero_image_b64() -> str | None:
     creative = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
-    today = datetime.date.today().isoformat()
+    from content_generator.core.ist_dates import today_ist
+    today = today_ist().isoformat()
     for pat in (f"carousel_slide_1_*{today}.jpg", f"*{today}.jpg"):
         hits = sorted(_glob.glob(os.path.join(creative, pat)))
         if hits:
@@ -74,6 +76,25 @@ def _hero_image_b64() -> str | None:
     return None
 
 
+def _article_body(blog: dict) -> str:
+    """HTML for Shopify. `body` is plain text; legacy `body_html` is already markup."""
+    from content_generator.core.blog_quality import normalize_text
+
+    raw_html = normalize_text(str(blog.get("body_html") or "").strip())
+    raw_body = normalize_text(str(blog.get("body") or "").strip())
+    if raw_html:
+        body = raw_html
+    elif raw_body:
+        paragraphs = [html.escape(part.strip()) for part in raw_body.split("\n\n") if part.strip()]
+        body = "\n".join(f"<p>{part}</p>" for part in paragraphs)
+    else:
+        return ""
+    intro = normalize_text(str(blog.get("intro") or blog.get("introduction") or ""))
+    if intro and intro not in body:
+        body = f"<p>{html.escape(intro)}</p>\n{body}"
+    return body
+
+
 def post_content(content: dict, day: int = 0) -> dict:
     """Publish only when explicitly enabled; otherwise make a hard no-write decision."""
     if not blog_enabled():
@@ -82,9 +103,11 @@ def post_content(content: dict, day: int = 0) -> dict:
     if not is_configured():
         return {"success": False, "error": "not_configured"}
 
-    blog = content.get("blog_post") or {}
+    from content_generator.core.blog_quality import assess, normalize_blog_piece
+
+    blog = normalize_blog_piece(dict(content.get("blog_post") or {}))
     title = str(blog.get("title") or "").strip()
-    body = str(blog.get("body_html") or "").strip()
+    body = _article_body(blog)
     if not title or not body:
         logger.warning("[shopify_blog] Blog enabled but generation produced no blog content")
         return {"success": False, "error": "no_blog_content"}
@@ -93,12 +116,14 @@ def post_content(content: dict, day: int = 0) -> dict:
     if not blog_id:
         return {"success": False, "error": "no_blog_id"}
 
-    intro = str(blog.get("intro") or "")
-    if intro and intro not in body:
-        body = f"<p>{intro}</p>\n{body}"
+    from content_generator.core.ist_dates import today_ist
     website = os.getenv("WEBSITE_URL", "https://p3online.in")
     if "p3online.in" not in body:
-        body += f'\n<p>Explore Purity Beans: <a href="{website}">{website}</a></p>'
+        body += f'\n<p>Explore Purity Beans: <a href="{html.escape(website, quote=True)}">{html.escape(website)}</a></p>'
+    defects = assess(blog, on_date=today_ist().isoformat())
+    if defects:
+        logger.warning("[shopify_blog] Refusing to write; blog failed quality checks: %s", defects[0])
+        return {"success": False, "error": "blog_quality", "issues": defects[:8]}
 
     tags = blog.get("tags")
     if isinstance(tags, list):
@@ -112,8 +137,14 @@ def post_content(content: dict, day: int = 0) -> dict:
         "published": True,
         "summary_html": str(blog.get("meta_description") or "")[:320],
     }
-    if blog.get("slug"):
-        article["handle"] = str(blog["slug"])
+    handle = str(blog.get("slug") or "").strip()
+    if handle:
+        article["handle"] = handle
+        existing = _admin(f"blogs/{blog_id}/articles.json?handle={urllib.parse.quote(handle)}")
+        articles = (existing or {}).get("articles") or []
+        if articles:
+            logger.warning("[shopify_blog] Refusing duplicate handle %s", handle)
+            return {"success": False, "error": "duplicate_handle", "handle": handle}
     hero = _hero_image_b64()
     if hero:
         article["image"] = {"attachment": hero, "alt": str(blog.get("image_alt") or title)}

@@ -24,6 +24,8 @@ import logging
 import os
 import shutil
 
+from content_generator.core.ist_dates import today_ist
+
 logger = logging.getLogger(__name__)
 
 _ARCHIVE_ROOT = os.path.join("output", "archive")
@@ -36,7 +38,7 @@ def save_daily_snapshot(content: dict, day_number: int = 0) -> str:
 
     Returns the archive directory path.
     """
-    today    = datetime.date.today().isoformat()
+    today    = today_ist().isoformat()
     arch_dir = os.path.join(_ARCHIVE_ROOT, today)
     os.makedirs(arch_dir, exist_ok=True)
 
@@ -80,7 +82,7 @@ def load_snapshot(date_str: str = None) -> dict:
     Load a snapshot for a given date (default: today).
     Returns {} if no snapshot exists for that date.
     """
-    date_str = date_str or datetime.date.today().isoformat()
+    date_str = date_str or today_ist().isoformat()
     arch_dir = os.path.join(_ARCHIVE_ROOT, date_str)
 
     if not os.path.isdir(arch_dir):
@@ -100,7 +102,7 @@ def load_snapshot(date_str: str = None) -> dict:
 
 def load_yesterday_snapshot() -> dict:
     """Load yesterday's snapshot — used by the emergency fallback."""
-    yesterday = (datetime.date.today() - datetime.timedelta(days=1)).isoformat()
+    yesterday = (today_ist() - datetime.timedelta(days=1)).isoformat()
     snap      = load_snapshot(yesterday)
     if snap:
         logger.info("[snapshot] Loaded yesterday's snapshot (%s)", yesterday)
@@ -255,7 +257,7 @@ def _prune_old_archives() -> None:
     """Delete archives older than SNAPSHOT_KEEP_DAYS."""
     if not os.path.isdir(_ARCHIVE_ROOT):
         return
-    cutoff = datetime.date.today() - datetime.timedelta(days=_KEEP_DAYS)
+    cutoff = today_ist() - datetime.timedelta(days=_KEEP_DAYS)
     try:
         for name in os.listdir(_ARCHIVE_ROOT):
             try:

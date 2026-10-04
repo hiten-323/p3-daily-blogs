@@ -92,7 +92,7 @@ def post_content(content: dict, day: int = 0) -> dict:
 # 25-tag fallback: 5 broad + 5 niche + 5 Indian + 5 discovery + 5 brand
 _FALLBACK_HASHTAGS = (
     "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime "
-    "#PremiumCoffee #FreezeDriedCoffee #GourmetCoffee #PureCoffee #CoffeeCommunity "
+    "#PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity "
     "#IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands "
     "#CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife "
     "#PurityBeans #PurityBeansCoffee #NoChicory #BrewPure #PureCoffeeExperience"
@@ -580,7 +580,8 @@ def _get_permalink(media_id: str, token: str) -> str:
         import requests
         resp = requests.get(
             f"{_GRAPH_API}/{media_id}",
-            params={"fields": "permalink", "access_token": token},
+            params={"fields": "permalink"},
+            headers={"Authorization": f"Bearer {token}"},
             timeout=10,
         )
         return resp.json().get("permalink", "")

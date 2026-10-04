@@ -29,10 +29,12 @@ Usage:
     # }
 """
 from __future__ import annotations
+import datetime
 import json
 import logging
 import os
-import datetime
+
+from content_generator.core.ist_dates import today_ist
 
 logger = logging.getLogger(__name__)
 
@@ -88,7 +90,7 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
 
     # ── Instagram ─────────────────────────────────────────────────────────────
     # With timed slots enabled, Instagram is held for its algorithm-optimal
-    # windows (08:00 + 20:00 IST) and published by the morning/evening slot
+    # windows (10:00 + 22:00 IST) and published by the morning/evening slot
     # runs instead of the 06:00 generate run.
     import os as _os
     if _os.getenv("ENABLE_TIMED_SLOTS", "false").lower() == "true":
@@ -182,7 +184,7 @@ def _append_publish_log(day_number: int, results: dict) -> None:
         entries = []
 
     entries.append({
-        "date":        datetime.date.today().isoformat(),
+        "date":        today_ist().isoformat(),
         "day_number":  day_number,
         "results":     results,
     })

@@ -17,6 +17,7 @@ Usage:
     )
     # Returns: "output/creative/reel_1_hero_20260609.mp4" or None
 """
+from content_generator.core.ist_dates import today_ist
 import logging
 import os
 import time
@@ -160,7 +161,7 @@ def _download_video(url: str, label: str) -> str | None:
     import datetime
 
     os.makedirs(_OUT_DIR, exist_ok=True)
-    date_str = datetime.date.today().isoformat()
+    date_str = today_ist().isoformat()
     filename = f"{label}_{date_str}.mp4"
     filepath = os.path.join(_OUT_DIR, filename)
 

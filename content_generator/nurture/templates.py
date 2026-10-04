@@ -28,7 +28,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "channel": "both",
         "body": (
             "Hi {name},\n\n"
-            "Thank you for your interest in Purity Beans — India's first 100% pure instant coffee (zero chicory).\n\n"
+            "Thank you for your interest in Purity Beans. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\n"
             "We're currently expanding our distribution network in {region} and your profile looks like a strong fit.\n\n"
             "Purity Beans is priced at Rs 18/cup — positioned between commodity instant coffee and premium cafes, "
             "which means high velocity AND healthy margins for our partners.\n\n"
@@ -123,8 +123,8 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "channel": "email",
         "body": (
             "Dear {name},\n\n"
-            "I'm reaching out regarding a listing opportunity for Purity Beans — India's first 100% pure "
-            "instant coffee brand, positioned at Rs 18/cup with zero chicory.\n\n"
+            "I'm reaching out regarding a listing opportunity for Purity Beans, "
+            "positioned at Rs 18/cup. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\n"
             "We believe Purity Beans can meaningfully grow your hot beverages category by capturing "
             "the consumer who has been choosing between commodity instant coffee and expensive cafe visits.\n\n"
             "I'd like to share our category deck and discuss a pilot listing in select stores.\n\n"
@@ -191,11 +191,11 @@ TEMPLATES: dict[tuple[str, str], dict] = {
             "Hi {name},\n\n"
             "Namaste! This is Purity Beans team.\n\n"
             "We noticed your inquiry about stocking pure instant coffee. "
-            "Purity Beans is 100% pure — no chicory — and priced at Rs 18/cup.\n\n"
+            "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. The home cup is Rs 18.\n\n"
             "Your customers who ask for 'good coffee' will love it, and your margins will too.\n\n"
             "Can I send across a sample pack this week?"
         ),
-        "cta": "Reply with your shop address for free samples",
+        "cta": "Reply with your shop address if you want a sample pack",
     },
 
     ("retailer", "sample_sent"): {
@@ -243,11 +243,11 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "channel": "whatsapp",
         "body": (
             "Hi {name}!\n\n"
-            "You recently showed interest in Purity Beans — India's only 100% pure instant coffee.\n\n"
+            "You recently showed interest in Purity Beans. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\n"
             "We'd love to send you a free trial sachet so you can taste the difference for yourself.\n\n"
             "Where should we send it? (Delivery within 3-5 days, all of India)"
         ),
-        "cta": "Reply with your address for the free sample",
+        "cta": "Reply with your address if you want a sample pack",
     },
 
     ("consumer", "first_purchase"): {

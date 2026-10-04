@@ -126,7 +126,8 @@ def verify_claims(text: str) -> list[dict]:
             findings.append({"claim": s[:140], "type": "competitor_claim",
                              "reason": "assertion about another brand's contents, unverifiable"})
             continue
-        if stat_re.search(s) and not supported:
+        from content_generator.scheduler.daily import sentence_has_unsupported_statistic
+        if sentence_has_unsupported_statistic(s):
             findings.append({"claim": s[:140], "type": "statistic",
                              "reason": "numeric claim with no verified source"})
             continue
@@ -137,6 +138,8 @@ def verify_claims(text: str) -> list[dict]:
         if _SUPERLATIVE.search(s) and not supported:
             findings.append({"claim": s[:140], "type": "superlative",
                              "reason": "unsubstantiated superlative"})
+    from content_generator.core.product_truth import product_truth_findings
+    findings.extend(product_truth_findings(str(text)))
     return findings
 
 
@@ -146,7 +149,8 @@ def verify_piece(piece: dict) -> list[dict]:
         return []
     parts = []
     for k in ("hook", "hook_text", "headline", "title", "caption", "body",
-              "cta", "on_screen", "spoken"):
+              "body_html", "intro", "introduction", "conclusion",
+              "meta_description", "cta", "on_screen", "spoken"):
         v = piece.get(k)
         if isinstance(v, str):
             parts.append(v)

@@ -224,8 +224,16 @@ def validate_asset(label: str, piece: dict,
         is_valid, issues = validate_asset_copy(combined_text, check_brand_facts=True, check_website=True, check_brand_mention=True, check_length=True)
 
     elif clean_label == "blog_post":
-        combined_text = f"{piece.get('title', '')} {piece.get('introduction', '')} {piece.get('body', '')} {piece.get('conclusion', '')}"
+        combined_text = " ".join(
+            str(piece.get(key) or "")
+            for key in ("title", "introduction", "intro", "body", "body_html", "conclusion", "meta_description")
+        )
         is_valid, issues = validate_asset_copy(combined_text, check_brand_facts=True, check_website=True, check_brand_mention=True, check_length=True)
+        from content_generator.core.blog_quality import assess
+        extra = assess(piece)
+        if extra:
+            is_valid = False
+            issues.extend(extra)
 
     elif clean_label == "yt_short":
         # Support both Format 1 (hook/script/cta) and Format 2 (scenes)

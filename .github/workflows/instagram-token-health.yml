@@ -56,9 +56,15 @@ jobs:
               )
               sys.exit(1)
 
-          query = urllib.parse.urlencode({"fields": "id", "access_token": token})
-          url = f"https://graph.facebook.com/v24.0/{account_id}?{query}"
-          request = urllib.request.Request(url, headers={"User-Agent": "PurityBeans/1.0"})
+          account = urllib.parse.quote(account_id, safe="")
+          url = f"https://graph.facebook.com/v24.0/{account}?fields=id"
+          request = urllib.request.Request(
+              url,
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "User-Agent": "PurityBeans/1.0",
+              },
+          )
 
           try:
               with urllib.request.urlopen(request, timeout=15) as response:

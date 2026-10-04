@@ -4,7 +4,7 @@ from content_generator.rotation import WEBSITE_URL, get_todays_viral_idea, get_t
 
 HASHTAG_25 = (
     "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime "
-    "#PremiumCoffee #FreezeDriedCoffee #GourmetCoffee #PureCoffee #CoffeeCommunity "
+    "#PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity "
     "#IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands "
     "#CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife "
     "#PurityBeans #PurityBeansCoffee #PurityBeansExperience #BrewPure #PureCoffeeExperience"
@@ -35,7 +35,7 @@ The best hooks cannot save a topic nobody cares about.
 PSYCHOLOGY REQUIREMENT:
 Pick ONE primary frame from the PSYCHOLOGY FRAMES list above.
 Put its id in "psychology_frame". The frame must drive the hook, the spoken arc, and the share/save triggers.
-Product claims (100% coffee, zero chicory, Rs 18) support the frame — they are not the frame.
+Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Never apply the 100% coffee line to Ultra Blend. Rs 18 is the home-cup price.
 
 ABSOLUTE RULES:
 - NEVER invent statistics or percentages
@@ -54,10 +54,10 @@ ABSOLUTE RULES:
   "hook_text": "4 WORDS MAX ALL CAPS — stops the scroll instantly",
   "hook_options": [
     "12 alternate opening lines across 4 distinct modes (3 of each, output as a flat list):",
-    "1-3. Tension (immediate friction/conflict, e.g. 'Your daily coffee has 40% wood-root filler.')",
+    "1-3. Tension (immediate friction/conflict, e.g. 'Turn the jar around before you buy it.')",
     "4-6. Counterintuitive Claim (contrarian truth, e.g. 'Why premium pure coffee is actually cheaper.')",
     "7-9. Exact Feeling (names a specific person's exact feeling, e.g. 'You're tired of starting your day with a bitter, muddy-tasting cup.')",
-    "10-12. Open Loop (opens a curiosity loop, e.g. 'We read the back label of India's biggest instant coffee, and found a quiet compromise.')"
+    "10-12. Open Loop (opens a curiosity loop, e.g. 'The line under the word coffee is the one that matters.')"
   ],
   "hook_spoken": "First 3 spoken words — mid-action, never Hey guys. MUST NOT repeat hook_text word-for-word: the on-screen line and the spoken line do different jobs. On-screen is what they READ in silence; spoken is what they HEAR. Together they should say more than either alone.",
   "hook_text_overlay": "The on-screen hook — 4-6 words, different wording from hook_spoken",
@@ -66,17 +66,17 @@ ABSOLUTE RULES:
     {{"on_screen": "THE PROBLEM", "spoken": "What most Indians drink without knowing — specific, not statistical"}},
     {{"on_screen": "THE TWIST", "spoken": "The thing they did not expect — contrarian, relatable"}},
     {{"on_screen": "THE VILLAIN", "spoken": "Name it precisely — chicory, preservatives, artificial aroma"}},
-    {{"on_screen": "PURITY BEANS FIX", "spoken": "Zero preservatives. No artificial aroma. 100% coffee. Relief, not a pitch."}},
+    {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee."}},
     {{"on_screen": "COMMENT PURE BELOW", "spoken": "CTA that feels rewarding to follow"}}
   ],
   "loop_note": "One sentence: how the last frame connects back to frame 1 for infinite loop",
   "alt_hook": "A/B option — 4 words, completely different archetype",
-  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: No preservatives. No artificial aroma. 100% coffee. Available at {WEBSITE_URL}\\n\\nThis is a 150-250 word paste-ready caption with emotional storytelling, brand facts woven in naturally, and a clear reason to act.\\n\\nShop now: {WEBSITE_URL}",
+  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Available at {WEBSITE_URL}\\n\\nThis is a 150-250 word paste-ready caption with emotional storytelling, brand facts woven in naturally, and a clear reason to act.\\n\\nShop now: {WEBSITE_URL}",
   "cta": "Direct action line — shop / visit / comment. Must include {WEBSITE_URL}",
   "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
   "save_trigger": "Save this before your next grocery run so you never buy the wrong coffee again.",
   "share_trigger": "Share with someone who starts every morning with coffee — they deserve to know.",
-  "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "agglomerated coffee", "best instant coffee india", "coffee without preservatives", "pure instant coffee", "coffee lovers india", "instant coffee brand india"],
+  "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "agglomerated coffee", "coffee without preservatives", "pure instant coffee", "coffee lovers india", "instant coffee brand india"],
   "hashtags": "{HASHTAG_25}",
   "visual_direction": "Shot type. Lighting. Motion. Colour grade. Dark marble surfaces, warm amber light, Purity Beans jar prominent.",
   "music_vibe": "Tempo, instrument, mood — matches the emotional arc",

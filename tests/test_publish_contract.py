@@ -161,9 +161,10 @@ def main():
     print("\nA crashed slot does not lock out the day:")
     import datetime
     import tempfile as _tf
+    from content_generator.core.ist_dates import today_ist
     from content_generator.scheduler.run_lock import RunLock, STALE_AFTER_MINUTES
     lp = os.path.join(_tf.mkdtemp(prefix="pb_test_lock_"), ".running_test")
-    today = datetime.date.today().isoformat()
+    today = today_ist().isoformat()
 
     RunLock(lock_path=lp).__enter__()
     check("a fresh lock records 'started', not 'completed'",

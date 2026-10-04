@@ -17,6 +17,7 @@ Every function degrades gracefully — thin data returns honest low-confidence
 output, never fabricated precision (Honesty Rule, POLICY_ENGINE.md).
 """
 from __future__ import annotations
+from content_generator.core.ist_dates import today_ist
 import datetime
 import hashlib
 import logging
@@ -185,7 +186,7 @@ def _versions() -> dict:
 
 
 def _content_id(day: int, channel: str, ctype: str) -> str:
-    raw = f"{datetime.date.today().isoformat()}|{day}|{channel}|{ctype}"
+    raw = f"{today_ist().isoformat()}|{day}|{channel}|{ctype}"
     return "pb_" + hashlib.md5(raw.encode()).hexdigest()[:10]
 
 

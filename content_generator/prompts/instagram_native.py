@@ -29,7 +29,7 @@ If generating reels or carousels, apply these faceless content principles:
    - Slide 3: Myth Busted (surprising/contrarian twist)
    - Slide 4: The Revelation (the hidden truth revealed)
    - Slide 5: Why It Matters (Indian consumer scenario/relevance)
-   - Slide 6: Purity Beans Difference (pure ingredients, zero chicory, how to buy)
+   - Slide 6: Purity Beans Difference (100% coffee jars named; Ultra Blend called 70% coffee; how to buy)
    - Slide 7: Branded Share/Comment Trigger (direct save/comment incentive + website URL)
 2. **Text-Only Reel Scripts**:
    - Scene-by-scene script writing. For every scene/time-slot, write exact voiceover text, on-screen text overlays, and detailed visual directions (e.g. macro camera panning, steam rising, pouring coffee, hands grinding beans) to make it highly visual without needing to show a face or use generic stock media.

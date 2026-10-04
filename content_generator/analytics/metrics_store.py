@@ -12,6 +12,7 @@ Tables:
 
 No side effects on import. DB is initialised on first write/read call.
 """
+from content_generator.core.ist_dates import today_ist
 import os
 import sqlite3
 import datetime
@@ -205,7 +206,7 @@ def record_metrics(
     _ensure_init()
     from content_generator.analytics.viral_scorer import compute_viral_score
     score = compute_viral_score(views, retention, shares, saves, comments)
-    date  = datetime.date.today().isoformat()
+    date  = today_ist().isoformat()
 
     with _conn() as con:
         con.execute("""
@@ -290,7 +291,7 @@ def get_hook_performance(min_samples: int = 3) -> list[dict]:
 def get_recent_metrics(days: int = 14) -> list[dict]:
     """Return all metrics from the last N days, sorted by viral score."""
     _ensure_init()
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
     with _conn() as con:
         rows = con.execute("""
             SELECT * FROM content_metrics WHERE date >= ?
@@ -367,7 +368,7 @@ def get_revenue_by_content(content_id: str) -> dict:
 def get_revenue_leaders(days: int = 30, limit: int = 10) -> list[dict]:
     """Return top revenue-generating content pieces."""
     _ensure_init()
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
     with _conn() as con:
         rows = con.execute("""
             SELECT
@@ -393,7 +394,7 @@ def get_revenue_leaders(days: int = 30, limit: int = 10) -> list[dict]:
 def get_total_revenue(days: int = 30) -> dict:
     """Return total revenue stats for the last N days."""
     _ensure_init()
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
     with _conn() as con:
         row = con.execute("""
             SELECT SUM(revenue) AS total_revenue, SUM(orders) AS total_orders,
@@ -431,7 +432,7 @@ def record_audience_performance(
 def get_audience_performance(days: int = 30) -> list[dict]:
     """Return performance aggregated by audience segment."""
     _ensure_init()
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
     with _conn() as con:
         rows = con.execute("""
             SELECT
@@ -518,7 +519,7 @@ def record_posting_time(
 def get_best_posting_hours(platform: str = "instagram", days: int = 90) -> list[dict]:
     """Return posting hours ranked by avg viral score."""
     _ensure_init()
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
     with _conn() as con:
         rows = con.execute("""
             SELECT hour, AVG(viral_score) AS avg_score, COUNT(*) AS samples
@@ -598,7 +599,7 @@ def get_leads(
     if stage:
         clauses.append("stage=?"); params.append(stage)
     if days:
-        cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+        cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
         clauses.append("created_at >= ?"); params.append(cutoff)
     where = ("WHERE " + " AND ".join(clauses)) if clauses else ""
     with _conn() as con:
@@ -657,7 +658,7 @@ def record_publish_event(
 ) -> None:
     """Log a publish attempt to any social platform."""
     _ensure_init()
-    today = datetime.date.today().isoformat()
+    today = today_ist().isoformat()
     with _conn() as con:
         con.execute("""
             INSERT INTO publish_log (date, day, platform, success, post_id, url, error)
@@ -677,7 +678,7 @@ def get_publish_stats(days: int = 30) -> dict:
         }
     """
     _ensure_init()
-    since = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    since = (today_ist() - datetime.timedelta(days=days)).isoformat()
     with _conn() as con:
         rows = con.execute("""
             SELECT platform,

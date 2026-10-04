@@ -305,7 +305,8 @@ jobs:
           git add -f output/learning/ 2>/dev/null || true
           python - <<'PRUNE'
           import datetime, glob, os, re
-          cutoff = datetime.date.today() - datetime.timedelta(days=7)
+          from zoneinfo import ZoneInfo
+          cutoff = datetime.datetime.now(ZoneInfo("Asia/Kolkata")).date() - datetime.timedelta(days=7)
           removed = 0
           for path in glob.glob("output/creative/*"):
               m = re.search(r"(\d{4})-(\d{2})-(\d{2})", os.path.basename(path))

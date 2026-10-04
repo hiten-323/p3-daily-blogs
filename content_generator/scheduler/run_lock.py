@@ -38,6 +38,8 @@ import datetime
 import logging
 import os
 
+from content_generator.core.ist_dates import today_ist
+
 logger = logging.getLogger(__name__)
 
 _LOCK_FILE = os.path.join("output", ".running")
@@ -70,7 +72,7 @@ class RunLock:
 
     def __enter__(self) -> "RunLock":
         os.makedirs(os.path.dirname(self._path) or ".", exist_ok=True)
-        today = datetime.date.today().isoformat()
+        today = today_ist().isoformat()
 
         if os.path.exists(self._path):
             try:
@@ -141,7 +143,7 @@ class RunLock:
 
     def _write(self, status: str) -> None:
         with open(self._path, "w") as f:
-            f.write(f"{datetime.date.today().isoformat()}|{os.getpid()}|{status}"
+            f.write(f"{today_ist().isoformat()}|{os.getpid()}|{status}"
                     f"|{datetime.datetime.now().isoformat(timespec='seconds')}")
 
     def mark_completed(self) -> None:
@@ -193,7 +195,7 @@ class RunLock:
         try:
             content   = open(_LOCK_FILE).read().strip()
             lock_date = content.split("|")[0]
-            return lock_date == datetime.date.today().isoformat()
+            return lock_date == today_ist().isoformat()
         except Exception:
             return False
 

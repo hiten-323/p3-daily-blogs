@@ -4,7 +4,7 @@ from content_generator.rotation import COMMERCIAL_EMOTIONS, WEBSITE_URL
 
 HASHTAG_25 = (
     "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime "
-    "#PremiumCoffee #FreezeDriedCoffee #GourmetCoffee #PureCoffee #CoffeeCommunity "
+    "#PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity "
     "#IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands "
     "#CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife "
     "#PurityBeans #PurityBeansCoffee #PurityBeansExperience #BrewPure #PureCoffeeExperience"
@@ -32,16 +32,16 @@ ABSOLUTE RULES:
 - The first line must stop a scroll in under 2 seconds. A generic how-to title fails that test.
 
 {{
-  "caption": "HOOK LINE that stops the scroll (max 12 words, no emoji).\\n\\nShort story or insight coffee lovers relate to. Introduce Purity Beans naturally. Explain why real coffee drinkers should care. Mention: No preservatives. No artificial aroma. 100% coffee. Freeze-dried and agglomerated variants available.\\n\\nShop now: {WEBSITE_URL}\\n\\nThis caption must be 150-250 words. Paste-ready. Emotional storytelling with brand facts woven in naturally.",
+  "caption": "HOOK LINE that stops the scroll (max 12 words, no emoji).\\n\\nShort story or insight coffee lovers relate to. Introduce Purity Beans naturally. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Purica is freeze-dried. Prima is Premium Agglomerate.\\n\\nShop now: {WEBSITE_URL}\\n\\nThis caption must be 150-250 words. Paste-ready. Emotional storytelling with brand facts woven in naturally.",
   "cta": "Direct action with {WEBSITE_URL}",
   "comment_trigger": "Comment COFFEE if you are a real coffee lover who refuses to drink chicory.",
   "save_trigger": "Save this post before your next grocery run.",
   "share_trigger": "Share with someone who starts every morning with coffee.",
   "image_prompt": "Detailed AI image prompt — Purity Beans jar, dark marble surface, warm amber studio light, premium editorial FMCG photography, 1080x1080. No text in image. No generic jars.",
-  "image_alt": "Purity Beans premium instant coffee jar — no preservatives, no artificial aroma, 100% coffee",
+  "image_alt": "Purity Beans glass jar — name the jar, do not call Ultra Blend 100% coffee",
   "post_type": "one of: product-truth / founder-moment / customer-story / cultural-hook / myth-busting",
   "hook_line": "The first line of the caption repeated here — must stop scroll before the More button cuts it",
-  "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "coffee without preservatives", "pure instant coffee india", "best instant coffee brand india"],
+  "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "coffee without preservatives", "pure instant coffee india", "instant coffee brand india"],
   "hashtags": "{HASHTAG_25}"
 }}"""
 

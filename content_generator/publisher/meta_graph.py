@@ -62,9 +62,16 @@ def graph_request(method: str, url: str, params: dict | None = None, timeout: in
     delay = _RETRY_BASE_DELAY
     last = "meta_request_failed"
     attempts = max(1, _RETRY_ATTEMPTS)
+    safe_params = dict(params or {})
+    token = safe_params.pop("access_token", None)
+    headers = {"User-Agent": "PurityBeans/1.0"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
     for attempt in range(attempts):
         try:
-            resp = requests.request(method, url, params=params or {}, timeout=timeout)
+            resp = requests.request(
+                method, url, params=safe_params, headers=headers, timeout=timeout,
+            )
         except requests.RequestException as exc:
             last = f"transport: {exc}"
             logger.warning("[meta] %s %s failed (%s) attempt %d/%d",

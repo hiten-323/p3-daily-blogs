@@ -12,6 +12,7 @@ Design notes:
 - report() gives 7-day rolling views by platform / model / failure reason.
 """
 from __future__ import annotations
+from content_generator.core.ist_dates import today_ist
 import datetime
 import json
 import logging
@@ -167,7 +168,7 @@ def record_quality(
 
     record = {
         "ts":                 datetime.datetime.now().isoformat(timespec="seconds"),
-        "date":               datetime.date.today().isoformat(),
+        "date":               today_ist().isoformat(),
         "day_number":         day_number,
         "generation_ms":      int(generation_ms),
         "validation_ms":      int(validation_ms),

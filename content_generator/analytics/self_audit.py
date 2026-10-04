@@ -9,6 +9,7 @@ later.
 Never raises: an audit must never be able to break the run it is auditing.
 """
 from __future__ import annotations
+from content_generator.core.ist_dates import today_ist
 import logging
 
 logger = logging.getLogger(__name__)
@@ -94,8 +95,8 @@ def run_self_audit(content: dict | None = None, publish_result: dict | None = No
     def _memory():
         from content_generator.core.learning_engine import _recency_factor
         import datetime
-        old = {"posted_at": (datetime.date.today() - datetime.timedelta(days=180)).isoformat()}
-        fresh = {"posted_at": datetime.date.today().isoformat()}
+        old = {"posted_at": (today_ist() - datetime.timedelta(days=180)).isoformat()}
+        fresh = {"posted_at": today_ist().isoformat()}
         return _recency_factor(old) < _recency_factor(fresh), "decay active"
     checks.append(_check("Memory", _memory))
 

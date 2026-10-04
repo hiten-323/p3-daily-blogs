@@ -54,7 +54,7 @@ def get_current_slot(now_utc: datetime.datetime = None) -> str:
         logger.info("[slots] Current slot forced by FORCE_SLOT env: %s", forced)
         return forced
 
-    now_utc = now_utc or datetime.datetime.utcnow()
+    now_utc = now_utc or datetime.datetime.now(datetime.timezone.utc)
     slot = slot_from_utc_hour(now_utc.hour)
     logger.info("[slots] No FORCE_SLOT — derived %s from %02d:00 UTC",
                 slot, now_utc.hour)

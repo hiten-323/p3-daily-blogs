@@ -6,6 +6,7 @@ Historical performance is always scored under the KPI stamped when the asset
 was created. A later founder-policy change may discount old evidence, but must
 never silently rewrite the yardstick under which an experiment originally ran.
 """
+from content_generator.core.ist_dates import today_ist
 import datetime
 import json
 import logging
@@ -56,7 +57,7 @@ def record_performance(
         "scroller_state": scroller_state or None, "psychology_frame": psychology_frame or None,
         "hook_strategy": hook_strategy or None, "payoff_type": payoff_type or None,
         "decision_version": decision_version or None, "audio_category": audio_category,
-        "posted_at": posted_at or datetime.date.today().isoformat(),
+        "posted_at": posted_at or today_ist().isoformat(),
         "recorded_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "metrics": {k: v for k, v in (metrics or {}).items() if k in METRIC_FIELDS},
         "notes": notes,
@@ -102,7 +103,7 @@ def _recency_factor(entry: dict) -> float:
     if not ts:
         return 1.0
     try:
-        age = (datetime.date.today() - datetime.date.fromisoformat(ts)).days
+        age = (today_ist() - datetime.date.fromisoformat(ts)).days
     except Exception:
         return 1.0
     return float(0.5 ** (max(age, 0) / _HALF_LIFE_DAYS))
