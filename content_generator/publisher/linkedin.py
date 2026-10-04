@@ -49,6 +49,12 @@ def post_content(content: dict, day: int = 0) -> dict:
     Returns:
         {"success": bool, "post_id": str, "url": str, "error": str|None}
     """
+    from content_generator.publisher.dispatcher import editorial_disposition, not_attempted_result
+    state = editorial_disposition(content, "linkedin_post")
+    if state != "approved":
+        logger.info("[linkedin] Skipping linkedin_post — %s; not attempted", state)
+        return not_attempted_result("linkedin_post", state)
+
     if not is_configured():
         logger.info("[linkedin] Not configured — LI_API_ACCESS or LI_AUTHOR_URN missing")
         return {"success": False, "post_id": "", "url": "", "error": "not_configured"}

@@ -41,6 +41,77 @@ logger = logging.getLogger(__name__)
 _PUBLISH_LOG = os.path.join("output", "publish_log.json")
 
 
+def _approved_or_empty(content: dict) -> dict:
+    """Canonical publish gate. Any failure refuses LinkedIn and YouTube."""
+    try:
+        from content_generator.core.editorial_engine import approved_assets
+        approved = approved_assets(content if isinstance(content, dict) else {})
+    except Exception as e:
+        logger.error(
+            "[publisher] approved_assets failed (%s) — LinkedIn and YouTube not attempted",
+            e,
+        )
+        return {}
+    return approved if isinstance(approved, dict) else {}
+
+
+def _editor_rejected(piece: dict) -> bool:
+    """True when the editor turned the piece down, rather than merely withholding it."""
+    if str(piece.get("editorial_error") or "").strip():
+        return True
+    score = piece.get("editorial_score")
+    if not isinstance(score, dict) or score.get("overall") in (None, ""):
+        return True
+    verdict = str(score.get("verdict") or "").strip().upper()
+    if verdict in ("HOLD", "HELD"):
+        return False
+    if verdict in ("REJECT", "FAIL", "REJECTED"):
+        return True
+    try:
+        from content_generator.core.editorial_engine import get_current_pass_score
+        return float(score.get("overall")) < get_current_pass_score()
+    except (TypeError, ValueError):
+        return True
+
+
+def editorial_disposition(content: dict, key: str, approved: dict | None = None) -> str:
+    """
+    Decision for one asset against editorial_engine.approved_assets.
+
+    approved  the piece cleared the same gate Instagram uses and may be posted
+    missing   the piece is not in the payload
+    rejected  the piece is present and the editor turned it down
+    held      the piece is present, the editor did not reject it, and the gate
+              still withheld it
+    """
+    if approved is None:
+        approved = _approved_or_empty(content)
+    if key in approved:
+        return "approved"
+    from content_generator.core.editorial_engine import _piece_for
+    piece = _piece_for(content if isinstance(content, dict) else {}, key)
+    if not isinstance(piece, dict) or not piece:
+        return "missing"
+    if _editor_rejected(piece):
+        return "rejected"
+    return "held"
+
+
+def not_attempted_result(piece: str, disposition: str) -> dict:
+    """A deliberate non-post. It is not a failure and it is not an attempt."""
+    return {
+        "success": False,
+        "attempted": False,
+        "skipped": True,
+        "error": "not_attempted",
+        "piece": piece,
+        "gate": disposition,
+        "post_id": "",
+        "video_id": "",
+        "url": "",
+    }
+
+
 def publish_all(content: dict, day_number: int = 0) -> dict:
     """
     Post today's content to all configured platforms.
@@ -83,10 +154,20 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
         res["duration_ms"] = duration_ms
         return res
 
+    # LinkedIn and YouTube use the same canonical gate as Instagram. A piece
+    # that is not in approved_assets is not posted, and the skip is not an
+    # attempt — a rejection must not fail the run or the publish verification.
+    approved = _approved_or_empty(content)
+
     # ── LinkedIn ──────────────────────────────────────────────────────────────
-    from content_generator.publisher.linkedin import post_content as li_post
-    logger.info("[publisher] Posting to LinkedIn...")
-    results["linkedin"] = _attempt("linkedin", lambda: li_post(content, day=day_number))
+    li_state = editorial_disposition(content, "linkedin_post", approved)
+    if li_state != "approved":
+        logger.info("[publisher] Skipping linkedin_post — %s; not attempted", li_state)
+        results["linkedin"] = not_attempted_result("linkedin_post", li_state)
+    else:
+        from content_generator.publisher.linkedin import post_content as li_post
+        logger.info("[publisher] Posting to LinkedIn...")
+        results["linkedin"] = _attempt("linkedin", lambda: li_post(content, day=day_number))
 
     # ── Instagram ─────────────────────────────────────────────────────────────
     # With timed slots enabled, Instagram is held for its algorithm-optimal
@@ -111,9 +192,14 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
         results["facebook"] = _attempt("facebook", lambda: fb_post(content, day=day_number))
 
     # ── YouTube ───────────────────────────────────────────────────────────────
-    from content_generator.publisher.youtube import post_content as yt_post
-    logger.info("[publisher] Posting to YouTube...")
-    results["youtube"] = _attempt("youtube", lambda: yt_post(content, day=day_number))
+    yt_state = editorial_disposition(content, "yt_short", approved)
+    if yt_state != "approved":
+        logger.info("[publisher] Skipping yt_short — %s; not attempted", yt_state)
+        results["youtube"] = not_attempted_result("yt_short", yt_state)
+    else:
+        from content_generator.publisher.youtube import post_content as yt_post
+        logger.info("[publisher] Posting to YouTube...")
+        results["youtube"] = _attempt("youtube", lambda: yt_post(content, day=day_number))
 
     # ── Blog (Shopify article — SEO / organic search) ──────────────────────────
     from content_generator.publisher.shopify_blog import post_content as blog_post
@@ -123,13 +209,16 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
     # ── Summary ───────────────────────────────────────────────────────────────
     # Held (timed slots) and skipped (not configured / no content) are NOT
     # failures — label them honestly so the summary reflects reality.
-    _SKIP_ERRORS = ("not_configured", "no_blog_content", "no_content", "no_video", "no_image")
+    _SKIP_ERRORS = (
+        "not_configured", "no_blog_content", "no_content", "no_video", "no_image",
+        "not_attempted",
+    )
     def _cat(r):
         if r.get("success"):
             return "published"
         if r.get("held") or r.get("error") == "held_for_timed_slot":
             return "held"
-        if r.get("error") in _SKIP_ERRORS:
+        if r.get("attempted") is False or r.get("error") in _SKIP_ERRORS:
             return "skipped"
         return "failed"
 

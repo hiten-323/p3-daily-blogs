@@ -63,6 +63,12 @@ def post_content(content: dict, day: int = 0) -> dict:
     Returns:
         {"success": bool, "video_id": str, "url": str, "error": str|None}
     """
+    from content_generator.publisher.dispatcher import editorial_disposition, not_attempted_result
+    state = editorial_disposition(content, "yt_short")
+    if state != "approved":
+        logger.info("[youtube] Skipping yt_short — %s; not attempted", state)
+        return not_attempted_result("yt_short", state)
+
     if not is_configured():
         logger.info("[youtube] Not configured — YOUTUBE_CLIENT_ID/SECRET/REFRESH_TOKEN missing")
         return {"success": False, "video_id": "", "url": "", "error": "not_configured"}
