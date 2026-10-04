@@ -31,7 +31,8 @@ _NOT_A_GENERATOR = ("safeguard", "prompt-guard", "content-safety", "-guard-", "/
 
 
 def _all_defaults() -> list[tuple[str, str]]:
-    out = [("gemini", gemini._MODEL), ("nvidia", nvidia._DEFAULT_MODEL)]
+    out = [("gemini", gemini._MODEL)]
+    out += [("nvidia", model) for model in nvidia._DEFAULT_MODELS]
     for name, mod in (("groq", groq), ("cerebras", cerebras), ("openrouter", openrouter)):
         out += [(name, m) for m in mod.MODELS]
     return out
