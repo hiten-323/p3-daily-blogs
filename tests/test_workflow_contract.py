@@ -99,5 +99,140 @@ def test_main():
     assert rc in (0, None), f"suite reported failures (rc={rc})"
 
 
+_PUBLISHING_STEPS = (
+    "Clear run lock (if force_run)",
+    "Meta token soft-check (generate)",
+    "Verify Meta publishing access",
+    "Run autonomous pipeline",
+    "Verify slot result",
+    "Persist validated state to Git",
+    "Alert on failure",
+)
+
+_LLM_PROBE_ENV = {
+    "NVIDIA_API_KEY": "${{ secrets.NVIDIA_API_KEY }}",
+    "NVIDIA_MODEL": "${{ secrets.NVIDIA_MODEL }}",
+    "GEMINI_API_KEY": "${{ secrets.GEMINI_API_KEY }}",
+    "GROQ_API_KEY": "${{ secrets.GROQ_API_KEY }}",
+    "OPENROUTER_API_KEY": "${{ secrets.OPENROUTER_API_TOKEN }}",
+    "DEEPSEEK_API_KEY": "${{ secrets.DEEPSEEK_API_KEY }}",
+    "CEREBRAS_API_KEY": "${{ secrets.CEREBRAS_API_KEY }}",
+}
+
+
+def _workflow_document() -> dict:
+    import yaml
+
+    data = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))
+    # PyYAML 1.1 treats the bare key `on` as boolean true.
+    if True in data and "on" not in data:
+        data["on"] = data.pop(True)
+    return data
+
+
+def test_dry_run_gates_publishing_steps():
+    """Scheduled runs keep their conditions. Dry-run skips publish and commit."""
+    data = _workflow_document()
+    dry = data["on"]["workflow_dispatch"]["inputs"]["dry_run"]
+    assert dry["type"] == "boolean"
+    assert dry["required"] is False
+    assert dry["default"] is False
+
+    steps = data["jobs"]["run-pipeline"]["steps"]
+    by_name = {step["name"]: step for step in steps}
+
+    for name in _PUBLISHING_STEPS:
+        condition = str(by_name[name].get("if") or "")
+        assert "github.event.inputs.dry_run != 'true'" in condition, name
+
+    assert "success()" in by_name["Run autonomous pipeline"]["if"]
+    assert "success()" in by_name["Verify slot result"]["if"]
+    assert "success()" in by_name["Persist validated state to Git"]["if"]
+    assert "failure()" in by_name["Alert on failure"]["if"]
+    assert "github.event.inputs.force_run == 'true'" in by_name["Clear run lock (if force_run)"]["if"]
+    assert "env.FORCE_SLOT == 'generate'" in by_name["Meta token soft-check (generate)"]["if"]
+    assert "env.FORCE_SLOT != 'generate'" in by_name["Verify Meta publishing access"]["if"]
+
+    probe = by_name["Probe LLM providers"]
+    assert "github.event.inputs.dry_run == 'true'" in probe["if"]
+    assert probe["env"] == _LLM_PROBE_ENV
+    assert "python -m content_generator.providers.llm_probe" in probe["run"]
+    assert "/models" not in probe["run"]
+
+    pytest_steps = [step for step in steps if "pytest -q tests/" in str(step.get("run") or "")]
+    assert pytest_steps
+    for step in pytest_steps:
+        assert "dry_run" not in str(step.get("if") or "")
+
+
+def test_llm_probe_is_one_chat_call_per_provider(monkeypatch, capsys):
+    from content_generator.providers import llm_probe
+
+    keys = {
+        "NVIDIA_API_KEY": "nvapi-secretvalue",
+        "NVIDIA_MODEL": "meta/llama-3.3-70b-instruct",
+        "GROQ_API_KEY": "gsk_testkeyvalue",
+        "GEMINI_API_KEY": "AIza-secretvalue",
+        "CEREBRAS_API_KEY": "csk-secretvalue",
+        "DEEPSEEK_API_KEY": "sk-secretvalue",
+        "OPENROUTER_API_KEY": "sk-or-secretvalue",
+    }
+    for name, value in keys.items():
+        monkeypatch.setenv(name, value)
+
+    calls = []
+
+    class _Resp:
+        def __init__(self, status_code, text):
+            self.status_code = status_code
+            self.text = text
+
+    def post(url, headers=None, json=None, params=None, timeout=None):
+        calls.append({
+            "url": url,
+            "json": json,
+            "params": params,
+            "timeout": timeout,
+            "auth": (headers or {}).get("Authorization", ""),
+        })
+        if "api.groq.com" in url:
+            return _Resp(429, "slow down gsk_testkeyvalue")
+        return _Resp(200, '{"choices":[{"message":{"content":"OK"}}]}')
+
+    monkeypatch.setattr(llm_probe.requests, "post", post)
+    assert llm_probe.main() == 0
+
+    urls = [call["url"] for call in calls]
+    assert urls[0] == "https://integrate.api.nvidia.com/v1/chat/completions"
+    assert calls[0]["json"]["model"] == "meta/llama-3.3-70b-instruct"
+    assert calls[0]["json"]["max_tokens"] == 16
+    assert calls[0]["auth"] == "Bearer nvapi-secretvalue"
+    assert all(not url.rstrip("/").endswith("/models") for url in urls)
+    assert any(url.endswith(":generateContent") for url in urls)
+    assert len(calls) == 6
+    for call in calls:
+        assert call["timeout"] == 20
+        body = call["json"]
+        if "generationConfig" in body:
+            assert body["generationConfig"]["maxOutputTokens"] == 16
+        else:
+            assert body["max_tokens"] == 16
+        assert "nvapi-secretvalue" not in call["url"]
+
+    out = capsys.readouterr().out
+    assert "providers with keys: nvidia, groq, gemini, cerebras, deepseek, openrouter" in out
+    assert "nvidia: OK" in out
+    assert "groq: HTTP 429" in out
+    assert "gsk_testkeyvalue" not in out
+    for secret in keys.values():
+        assert secret not in out
+
+    monkeypatch.delenv("NVIDIA_API_KEY")
+    calls.clear()
+    skipped = dict(llm_probe.probe_results())
+    assert skipped["nvidia"] == "skipped"
+    assert all("api.nvidia.com" not in call["url"] for call in calls)
+
+
 if __name__ == "__main__":
     main()
