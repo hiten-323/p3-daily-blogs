@@ -24,7 +24,7 @@ _MIN_SCORE = float(os.getenv("EDITORIAL_MIN_SCORE", "6.5"))
 _ENABLED   = os.getenv("ENABLE_EDITORIAL_REVIEW", "true").lower() == "true"
 
 _PROMPT_TEMPLATE = """\
-You are an expert social media editor and retention copywriter for Purity Beans (Rs 18/cup). Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and may be called lower caffeine. Do not reward a claim that the whole range is 100% coffee.
+You are an expert social media editor and retention copywriter for Purity Beans (Rs 18/cup). Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory and may be called lower caffeine. Never reward calling Ultra Blend no-chicory or zero-chicory. "India's Cleanest Instant Coffee" is an approved slogan unless it sits next to a zero-chicory claim about Ultra Blend. Do not reward a consumer sample offer; samples are for businesses only. Do not reward a claim that the whole range is 100% coffee.
 
 Your job is to audit this content with a stopwatch. Evaluate it line by line.
 Flag every moment where a viewer would lose interest, stop watching/reading, or swipe away, and identify exactly why.

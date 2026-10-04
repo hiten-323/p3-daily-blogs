@@ -1,7 +1,8 @@
 """
 LLM router — circuit breaker, rate limiter, retry, cost tracking.
 
-Call order: Gemini → DeepSeek → Cerebras → Groq → OpenRouter
+Call order: NVIDIA → Groq → Gemini → Cerebras → DeepSeek → OpenRouter
+NVIDIA is primary. The others stay in their previous order as fallbacks.
 Each provider has an independent circuit breaker: after 3 consecutive failures
 it is disabled for 15 minutes before being retried.
 A threading.Semaphore(2) limits concurrent outbound API calls to prevent
@@ -12,7 +13,7 @@ import logging
 from threading import Semaphore, Lock
 from dataclasses import dataclass, field
 
-from content_generator.providers import gemini, groq, openrouter, deepseek, cerebras
+from content_generator.providers import gemini, groq, openrouter, deepseek, cerebras, nvidia
 from content_generator.parsers.json_parser import extract
 
 logger = logging.getLogger(__name__)
@@ -68,6 +69,7 @@ class _ProviderState:
 
 
 _STATES = {
+    "nvidia": _ProviderState("nvidia"),
     "gemini": _ProviderState("gemini"),
     "deepseek": _ProviderState("deepseek"),
     "cerebras": _ProviderState("cerebras"),
@@ -79,7 +81,7 @@ _STATES = {
 _cascade_log: list[dict] = []
 _cascade_lock = Lock()
 
-_SECRET_PREFIXES = ("sk-", "gsk_", "csk-", "AIza", "Bearer ", "key-")
+_SECRET_PREFIXES = ("sk-", "gsk_", "csk-", "AIza", "Bearer ", "key-", "nvapi-")
 
 
 def _redact(text: str, limit: int = 200) -> str:
@@ -135,6 +137,7 @@ def _record_usage(label: str, provider: str, usage: dict) -> None:
 
 
 _PROVIDERS = [
+    ("nvidia", nvidia.call),
     ("groq", groq.call),
     ("gemini", gemini.call),
     ("cerebras", cerebras.call),
@@ -142,18 +145,35 @@ _PROVIDERS = [
     ("openrouter", openrouter.call),
 ]
 
+_KEY_GETTERS = (
+    ("nvidia", nvidia.get_key),
+    ("groq", groq.get_key),
+    ("gemini", gemini.get_key),
+    ("cerebras", cerebras.get_key),
+    ("deepseek", deepseek.get_key),
+    ("openrouter", openrouter.get_key),
+)
+
 
 def any_provider_available() -> bool:
     """Return True if at least one provider has an API key configured."""
-    from content_generator.providers import groq, cerebras, openrouter, gemini, deepseek
-    checks = [
-        groq.get_key(),
-        cerebras.get_key(),
-        openrouter.get_key(),
-        gemini.get_key(),
-        deepseek.get_key(),
-    ]
-    return any(k for k in checks if k)
+    return any(getter() for _, getter in _KEY_GETTERS)
+
+
+def log_provider_status() -> None:
+    """Startup line: which providers have keys, then one NVIDIA health check.
+
+    Names only. Key values are never logged.
+    """
+    present = [name for name, getter in _KEY_GETTERS if getter()]
+    logger.info(
+        "[llm] providers with keys present: %s",
+        ", ".join(present) if present else "(none)",
+    )
+    if nvidia.get_key():
+        logger.info("[llm] NVIDIA health check: %s", nvidia.health_check())
+    else:
+        logger.info("[llm] NVIDIA health check: skipped (no key)")
 
 
 def _try_provider(
@@ -259,7 +279,15 @@ def call(prompt: str, label: str, max_tokens: int = 3000) -> dict:
     full_prompt = f"SYSTEM RULES:\n{system_rules}\n\nUSER REQUEST:\n{prompt}"
 
     for name, fn in _PROVIDERS:
-        retries = 3 if name == "gemini" else 2 if name in ("groq", "deepseek", "cerebras") else 4
+        # NVIDIA backs off inside its own client, then this loop falls through.
+        if name == "nvidia":
+            retries = 1
+        elif name == "gemini":
+            retries = 3
+        elif name in ("groq", "deepseek", "cerebras"):
+            retries = 2
+        else:
+            retries = 4
         raw = _try_provider(name, fn, full_prompt, max_tokens, label, retries)
         if not raw:
             continue
@@ -298,7 +326,7 @@ def call(prompt: str, label: str, max_tokens: int = 3000) -> dict:
     _log_cascade_verdict(label)
     raise RuntimeError(
         f"All LLM providers failed for '{label}'. "
-        "Set GEMINI_API_KEY or GROQ_API_KEY in GitHub Secrets."
+        "Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
     )
 
 

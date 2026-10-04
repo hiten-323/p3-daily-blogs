@@ -202,3 +202,38 @@ def test_dispatcher_does_not_fail_the_run_for_a_blog_skip(monkeypatch, tmp_path)
     assert result["blog"]["error"] == "not_attempted"
     assert "Blog" not in (result["summary"].split("Failed: ")[-1] if "Failed:" in result["summary"] else "")
     assert "Blog" in result["summary"]
+
+
+def test_shopify_domain_is_a_host_and_the_token_is_not_logged(monkeypatch, caplog):
+    from content_generator.analytics import revenue_attribution as revenue
+
+    raw = "https://User:shpat_secretvalue@Purity-Beans.myshopify.com:443/admin/api?x=1"
+    assert revenue.normalize_shopify_domain(raw) == "purity-beans.myshopify.com"
+    assert revenue.normalize_shopify_domain("https://shop.myshopify.com/admin/") == "shop.myshopify.com"
+    assert revenue.normalize_shopify_domain("shop.myshopify.com/") == "shop.myshopify.com"
+
+    monkeypatch.setenv("SHOPIFY_STORE_DOMAIN", raw)
+    monkeypatch.setenv("SHOPIFY_ADMIN_TOKEN", "shpat_secretvalue")
+    caplog.set_level(logging.INFO)
+    assert revenue.shopify_store_host() == "purity-beans.myshopify.com"
+    assert "[shopify] store host: purity-beans.myshopify.com" in caplog.text
+    assert "shpat_secretvalue" not in caplog.text
+    assert "https://" not in caplog.text
+
+    seen = {}
+
+    class _Resp:
+        def read(self):
+            return b'{"orders": []}'
+
+    def urlopen(req, timeout=None):
+        seen["url"] = req.full_url
+        seen["token"] = req.get_header("X-shopify-access-token")
+        return _Resp()
+
+    monkeypatch.setattr(revenue.urllib.request, "urlopen", urlopen)
+    assert revenue._shopify_get("orders.json", {"limit": "1"}) == {"orders": []}
+    assert seen["url"].startswith("https://purity-beans.myshopify.com/admin/api/")
+    assert "https://https://" not in seen["url"]
+    assert "/admin/admin" not in seen["url"]
+    assert seen["token"] == "shpat_secretvalue"

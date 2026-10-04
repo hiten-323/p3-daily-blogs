@@ -75,6 +75,58 @@ _SUPERLATIVE = re.compile(
     r"strongest|healthiest|number\s+one|no\.?\s*1)\b"
     r"|\b(the\s+)?(best|cleanest|purest)\s+(coffee|instant\s+coffee)\s+in\s+india\b",
     re.I)
+# Owner-approved slogan. Other superlatives, including "India's cleanest coffee"
+# without "instant", stay unsupported.
+_APPROVED_SLOGAN = re.compile(r"india'?s\s+cleanest\s+instant\s+coffee", re.I)
+_CONSUMER_SAMPLE = re.compile(
+    r"\b(?:sample\s+packs?|free\s+samples?|trial\s+sachets?|complimentary\s+samples?|"
+    r"(?:send|sending|sent)\s+(?:you\s+|across\s+)?(?:a\s+)?samples?\b|"
+    r"samples?\s+(?:is|are)\s+waiting|want\s+a\s+sample)\b",
+    re.I,
+)
+_B2B_AUDIENCE = re.compile(
+    r"\b(?:cafes?|cafés?|offices?|retailers?|distributors?|wholesal\w*|b2b|"
+    r"business(?:es)?|your\s+shop|your\s+team|kirana|modern\s+trade)\b",
+    re.I,
+)
+
+
+def _unapproved_superlative(sentence: str) -> bool:
+    if not _SUPERLATIVE.search(sentence):
+        return False
+    return bool(_SUPERLATIVE.search(_APPROVED_SLOGAN.sub(" ", sentence)))
+
+
+def _slogan_beside_ultra_zero(text: str) -> list[dict]:
+    """The slogan is allowed. It is not allowed next to a zero-chicory Ultra Blend claim."""
+    if not _APPROVED_SLOGAN.search(text):
+        return []
+    from content_generator.core.product_truth import product_truth_findings
+    hits = [
+        item for item in product_truth_findings(text)
+        if "zero-chicory" in item.get("reason", "") or "no-chicory" in item.get("reason", "")
+    ]
+    if not hits:
+        return []
+    return [{
+        "claim": "India's Cleanest Instant Coffee",
+        "type": "product_truth",
+        "reason": (
+            "the slogan must not appear alongside a zero-chicory or no-chicory "
+            "claim about Ultra Blend"
+        ),
+    }]
+
+
+def _consumer_sample_findings(text: str) -> list[dict]:
+    """Samples are for businesses. Consumer copy points at the 50g Variety Box."""
+    if not _CONSUMER_SAMPLE.search(text) or _B2B_AUDIENCE.search(text):
+        return []
+    return [{
+        "claim": str(text).strip()[:140],
+        "type": "consumer_sample",
+        "reason": "samples are only for businesses; point customers to the 50g Variety Box",
+    }]
 
 
 def _shared_patterns():
@@ -136,11 +188,13 @@ def verify_claims(text: str) -> list[dict]:
             findings.append({"claim": s[:140], "type": "offer",
                              "reason": "promotional offer not backed by a real campaign"})
             continue
-        if _SUPERLATIVE.search(s) and not supported:
+        if _unapproved_superlative(s) and not supported:
             findings.append({"claim": s[:140], "type": "superlative",
                              "reason": "unsubstantiated superlative"})
     from content_generator.core.product_truth import product_truth_findings
     findings.extend(product_truth_findings(str(text)))
+    findings.extend(_slogan_beside_ultra_zero(str(text)))
+    findings.extend(_consumer_sample_findings(str(text)))
     return findings
 
 

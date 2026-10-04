@@ -17,6 +17,68 @@ def test_ultra_blend_cannot_inherit_pure_jar_claims():
     assert clean == []
 
 
+def test_hyphenated_chicory_claims_are_rejected():
+    from content_generator.core.claim_verifier import verify_claims
+    from content_generator.core.product_truth import product_truth_findings
+
+    for sentence in (
+        "Ultra Blend is no-chicory.",
+        "Ultra Blend is zero-chicory.",
+        "Ultra Blend is a no-chicory jar.",
+    ):
+        assert product_truth_findings(sentence), sentence
+        assert any(item["type"] == "product_truth" for item in verify_claims(sentence))
+
+
+def test_approved_slogan_is_allowed_unless_it_sits_on_ultra_zero_chicory():
+    from content_generator.core.claim_verifier import verify_claims
+
+    slogan = "Purity Beans: India's Cleanest Instant Coffee."
+    assert verify_claims(slogan) == []
+    generic = verify_claims("India's cleanest coffee.")
+    assert any(item["type"] == "superlative" for item in generic)
+    mixed = verify_claims(
+        "India's Cleanest Instant Coffee. Ultra Blend is zero-chicory."
+    )
+    assert any("slogan" in item["reason"] for item in mixed)
+    assert any(item["type"] == "product_truth" for item in mixed)
+
+
+def test_consumer_samples_are_flagged_and_b2b_samples_are_not():
+    from content_generator.core.claim_verifier import verify_claims
+    from content_generator.core.shopify_catalog import SHOPIFY_PRODUCTS, product_page_url
+    from content_generator.nurture.templates import TEMPLATES, render_template
+
+    flagged = verify_claims("Reply with your address if you want a sample pack.")
+    assert any(item["type"] == "consumer_sample" for item in flagged)
+    b2b = verify_claims("We can send a sample pack to your cafe this week.")
+    assert not any(item["type"] == "consumer_sample" for item in b2b)
+
+    url = product_page_url(SHOPIFY_PRODUCTS["variety_box"])
+    assert url == "https://p3online.in/products/variety-box"
+    for (segment, _stage), template in TEMPLATES.items():
+        if segment != "consumer":
+            continue
+        blob = " ".join(str(template.get(key) or "") for key in ("subject", "body", "cta")).lower()
+        assert "sample" not in blob
+        assert "sachet" not in blob
+    lead = render_template("consumer", "lead", name="Asha")
+    assert url in lead["body"]
+    assert "sample" not in (lead["subject"] + lead["body"] + lead["cta"]).lower()
+
+
+def test_catalog_prices_and_prima_stock_stay_as_confirmed():
+    from content_generator.core.shopify_catalog import SHOPIFY_PRODUCTS
+
+    def prices(slug):
+        return [variant["price"] for variant in SHOPIFY_PRODUCTS[slug]["variants"]]
+
+    assert prices("bold") == [239, 369]
+    assert prices("prima") == [269, 449]
+    assert prices("ultra_blend") == [209, 309]
+    assert SHOPIFY_PRODUCTS["prima"]["in_stock"] is False
+
+
 def test_ultra_blend_is_thirty_percent_chicory():
     from content_generator.core.claim_verifier import verify_claims
     from content_generator.core.product_truth import product_truth_findings

@@ -27,11 +27,13 @@ def blog_enabled() -> bool:
 
 
 def is_configured() -> bool:
-    return bool(os.getenv("SHOPIFY_STORE_DOMAIN") and os.getenv("SHOPIFY_ADMIN_TOKEN"))
+    from content_generator.analytics.revenue_attribution import normalize_shopify_domain
+    return bool(normalize_shopify_domain(os.getenv("SHOPIFY_STORE_DOMAIN")) and os.getenv("SHOPIFY_ADMIN_TOKEN"))
 
 
 def _admin(path: str, method: str = "GET", body: dict | None = None) -> dict | None:
-    domain = os.getenv("SHOPIFY_STORE_DOMAIN")
+    from content_generator.analytics.revenue_attribution import shopify_store_host
+    domain = shopify_store_host()
     token = os.getenv("SHOPIFY_ADMIN_TOKEN")
     if not domain or not token:
         return None

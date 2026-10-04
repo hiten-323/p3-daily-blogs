@@ -14,6 +14,18 @@ template automatically.
 """
 from __future__ import annotations
 
+
+def _variety_box_url() -> str:
+    """50g trial pack. There is no separate trial SKU; the Variety Box is 4×50g."""
+    try:
+        from content_generator.core.shopify_catalog import SHOPIFY_PRODUCTS, product_page_url
+        return product_page_url(SHOPIFY_PRODUCTS["variety_box"])
+    except Exception:
+        return "https://p3online.in/products/variety-box"
+
+
+_VARIETY_BOX_URL = _variety_box_url()
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Template registry
 # Key: (segment, stage)
@@ -239,15 +251,15 @@ TEMPLATES: dict[tuple[str, str], dict] = {
 
     # ── CONSUMER ──────────────────────────────────────────────────────────────
     ("consumer", "lead"): {
-        "subject": "Your free Purity Beans sample is waiting",
+        "subject": "Start with the 50g Variety Box",
         "channel": "whatsapp",
         "body": (
             "Hi {name}!\n\n"
-            "You recently showed interest in Purity Beans. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\n"
-            "We'd love to send you a free trial sachet so you can taste the difference for yourself.\n\n"
-            "Where should we send it? (Delivery within 3-5 days, all of India)"
+            "You recently showed interest in Purity Beans. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory.\n\n"
+            f"The 50g trial jar pack is the Variety Box: {_VARIETY_BOX_URL}\n\n"
+            "Four 50g jars, so you can taste the range before a full-size order. Delivery is across India."
         ),
-        "cta": "Reply with your address if you want a sample pack",
+        "cta": "Order the 50g Variety Box",
     },
 
     ("consumer", "first_purchase"): {

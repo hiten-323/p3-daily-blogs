@@ -68,3 +68,20 @@ def test_auth_failure_does_not_waste_calls_on_same_credential(provider, env_name
     assert text is None
     assert usage["status_code"] == 401
     assert calls == ["bad-model"]
+
+
+def test_groq_skips_an_oversized_prompt_without_posting(monkeypatch):
+    monkeypatch.setenv("GROQ_API_KEY", "gsk_testkeyvalue")
+    monkeypatch.setattr(groq, "_TOKEN_LIMIT", 8000)
+    posted = []
+
+    def post(*_args, **_kwargs):
+        posted.append(True)
+        raise AssertionError("Groq was posted an oversized prompt")
+
+    monkeypatch.setattr(groq._http, "post", post)
+    text, usage = groq.call("x" * 40000, 1000)
+    assert text is None
+    assert usage["status_code"] == 413
+    assert "exceeds 8000" in usage["error"]
+    assert posted == []

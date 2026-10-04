@@ -27,7 +27,7 @@ _OTHER_THAN_ULTRA = re.compile(
 )
 _PURE_CLAIM = re.compile(
     r"100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee|"
-    r"zero\s+chicory|(?<!\d)0\s*%\s*chicory|\bno chicory\b|\bwithout chicory\b|"
+    r"zero[\s-]+chicory|(?<!\d)0\s*%\s*chicory|\bno[\s-]+chicory\b|\bwithout chicory\b|"
     r"\bchicory[-\s]?free\b|"
     r"\b(?:does not|doesn't|doesnt)\s+contain\s+chicory\b|"
     r"\bcontains?\s+no\s+chicory\b",

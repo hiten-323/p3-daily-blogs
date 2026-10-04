@@ -69,11 +69,16 @@ def enforce_editorial_gate(piece_name: str, score: float) -> bool:
     return True
 
 _PREVETTED_SOURCES = ("evergreen_template", "evergreen_distributor")
+# LinkedIn, YouTube, and the Shopify blog post off-platform. A stock or
+# evergreen piece has no measured editor score, and that used to count as
+# pre-vetted — run 37192396900 sent a stock linkedin_post that way.
+_EXTERNAL_AUTOPOST = ("linkedin_post", "yt_short", "blog_post")
 
 
 def _editorial_ok(label: str, piece: dict) -> bool:
     """
-    Apply the editorial threshold, exempting hand-written fallback templates.
+    Apply the editorial threshold, exempting hand-written fallback templates
+    from the on-platform gates only.
 
     The threshold scores LLM output. Fallback templates are written by hand and
     never receive an editorial_score, so they scored 0 and were rejected — which
@@ -81,20 +86,28 @@ def _editorial_ok(label: str, piece: dict) -> bool:
     nothing publishable at all and went silent while reporting success.
 
     The exemption is narrow and auditable: it applies ONLY to the curated
-    sources, and only to this one gate. Schema, brand, claim verification,
-    psychology governance, the north-star gate, the 80/20 cap and the payoff
-    gate all still apply. tests/test_fallback_safety.py asserts every template
-    passes all of them, so the exemption rests on an enforced guarantee rather
-    than on trust.
+    sources, ONLY to this one gate, and NEVER to LinkedIn, YouTube, or the
+    Shopify blog. Those auto-posters require a measured editor score. Schema,
+    brand, claim verification, psychology governance, the north-star gate, the
+    80/20 cap and the payoff gate all still apply. tests/test_fallback_safety.py
+    asserts every template passes all of them, so the on-platform exemption
+    rests on an enforced guarantee rather than on trust.
 
     A fabricated passing score was the alternative, and inventing a number to
     clear a gate is the habit this engine has spent its whole history removing.
     """
-    if str(piece.get("source") or "") in _PREVETTED_SOURCES:
+    source = str(piece.get("source") or "")
+    if source in _PREVETTED_SOURCES and label not in _EXTERNAL_AUTOPOST:
         logger.info("[editorial] %s is a pre-vetted %s — editorial score not "
                     "applicable; all other gates still enforced",
-                    label, piece.get("source"))
+                    label, source)
         return True
+    if source in _PREVETTED_SOURCES and label in _EXTERNAL_AUTOPOST:
+        logger.warning(
+            "[editorial] %s is stock/fallback (%s) — external auto-post requires "
+            "an editor score; the pre-vetted exemption does not apply",
+            label, source,
+        )
     raw = piece.get("editorial_score")
     if not isinstance(raw, dict) or raw.get("overall") in (None, ""):
         detail = str(piece.get("editorial_error") or "").strip()

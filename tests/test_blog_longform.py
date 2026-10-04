@@ -110,6 +110,77 @@ def test_topic_plan_skips_slugs_already_in_output(tmp_path):
     assert chosen["slug"] != first["slug"]
 
 
+def test_partial_draft_is_saved_and_a_later_run_resumes(tmp_path):
+    def failing(prompt, label="", max_tokens=900):
+        if "outline" in str(label):
+            return {"sections": []}
+        if str(label).endswith("s0"):
+            return {"body": _long_body()}
+        raise RuntimeError("All LLM providers failed")
+
+    piece = generate_blog_post(
+        2,
+        llm_call=failing,
+        output_dir=str(tmp_path),
+        on_date="2026-10-04",
+        write_files=False,
+    )
+    draft_path = tmp_path / "blog_draft_2026-10-04.json"
+    assert draft_path.is_file()
+    draft = json.loads(draft_path.read_text(encoding="utf-8"))
+    assert draft["failed_section_id"] == "s1"
+    assert draft["topic_id"] == piece["topic_id"]
+    completed = [row for row in draft["sections"] if row.get("complete")]
+    assert [row["id"] for row in completed] == ["s0"]
+    assert "provider_failure" in piece["hold_reason"]
+
+    resumed = []
+
+    def resume(prompt, label="", max_tokens=900):
+        resumed.append(label)
+        if "outline" in str(label):
+            return {"sections": []}
+        return {"body": _long_body()}
+
+    again = generate_blog_post(
+        2,
+        llm_call=resume,
+        output_dir=str(tmp_path),
+        on_date="2026-10-04",
+        write_files=False,
+    )
+    assert not any(str(label).endswith("s0") for label in resumed)
+    assert any(str(label).endswith("s1") for label in resumed)
+    assert again.get("hold_reason") in (None, "")
+    assert not draft_path.exists()
+
+
+def test_failing_section_backs_off_then_uses_the_next_provider(monkeypatch):
+    from content_generator.core import blog_writer
+    from content_generator.providers import llm_router as router
+
+    sleeps = []
+    monkeypatch.setattr(blog_writer.time, "sleep", lambda seconds: sleeps.append(seconds))
+    calls = []
+
+    def fail(_prompt, _max_tokens):
+        calls.append("nvidia")
+        return None, {"status_code": 500, "model": "nim", "error": "down"}
+
+    def ok(_prompt, _max_tokens):
+        calls.append("groq")
+        return '{"body": "Purity Beans keeps this section on catalog facts."}', {"model": "groq"}
+
+    monkeypatch.setattr(router, "_PROVIDERS", [("nvidia", fail), ("groq", ok)])
+    for state in router._STATES.values():
+        state.record_success()
+
+    data = blog_writer.call_section_with_fallback("Write the section.", "blog_section_s2")
+    assert "Purity Beans" in data["body"]
+    assert calls == ["nvidia", "groq"]
+    assert sleeps == [2]
+
+
 def test_provider_failure_keeps_the_draft_and_logs_the_hold(tmp_path, caplog):
     caplog.set_level(logging.ERROR)
 

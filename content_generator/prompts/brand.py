@@ -22,9 +22,13 @@ def brand_block() -> str:
     except Exception:
         psych = ""
 
+    trial_url = "https://p3online.in/products/variety-box"
     try:
-        from content_generator.core.shopify_catalog import format_catalog_for_prompt
+        from content_generator.core.shopify_catalog import (
+            SHOPIFY_PRODUCTS, format_catalog_for_prompt, product_page_url,
+        )
         catalog_block = format_catalog_for_prompt()
+        trial_url = product_page_url(SHOPIFY_PRODUCTS["variety_box"]) or trial_url
     except Exception:
         catalog_block = ""
 
@@ -44,10 +48,16 @@ def brand_block() -> str:
         f"Prima / Premium Agglomerate is 100% Arabica and agglomerated, not freeze-dried. "
         f"Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta.\n"
         f"4. Ultra Blend is 70% coffee and 30% chicory. You may describe only that jar as lower caffeine. "
-        f"Never call Ultra Blend 100% coffee, zero chicory, no chicory, chicory-free, or 0% chicory.\n"
-        f"5. Do not invent prices, percentages, health outcomes, certificates, sourcing, or competitor recipes. "
-        f"Do not write \"India's cleanest\", \"India's first\", or \"India's only\".\n"
-        f"6. Never use generic phrases. Every line must be specific to Purity Beans.\n"
+        f"Never call Ultra Blend 100% coffee, zero chicory, no chicory, no-chicory, zero-chicory, chicory-free, or 0% chicory.\n"
+        f"5. The slogan \"India's Cleanest Instant Coffee\" is approved and may be used. "
+        f"Never place it alongside a zero-chicory or no-chicory claim about Ultra Blend. "
+        f"Do not write \"India's first\" or \"India's only\".\n"
+        f"6. Do not invent prices, percentages, health outcomes, certificates, sourcing, or competitor recipes. "
+        f"The catalog prices are correct. Prima is out of stock — do not tell people to buy it.\n"
+        f"7. Samples are only for businesses (cafes, offices, retailers, distributors). "
+        f"In consumer-facing content, never offer a sample, sample pack, or trial sachet. "
+        f"Point customers to the 50g Variety Box: {trial_url}\n"
+        f"8. Never use generic phrases. Every line must be specific to Purity Beans.\n"
         f"\n"
         f"{psych}\n"
         f"\n"

@@ -240,8 +240,8 @@ while protecting the Purity Beans brand.
 Brand Name: Purity Beans
 Company: Pure Pantry Provisions
 Website: https://p3online.in
-Positioning: name the jar. Do not write "India's Cleanest Instant Coffee" unless the owner confirms that slogan for the whole range, including Ultra Blend.
-Core Promise: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.
+Positioning: "India's Cleanest Instant Coffee" is approved. Use it. Never place it next to a zero-chicory or no-chicory claim about Ultra Blend.
+Core Promise: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Never call Ultra Blend no-chicory or zero-chicory.
 Brand Personality: Premium, Honest, Modern, Indian, Trustworthy, Scientific, Transparent
 Tone: Confident, Simple, Educational, Never exaggerated, Never misleading
 Language: ENGLISH ONLY. Never generate Hindi, Punjabi, Hinglish, Urdu, or mixed-language content. All captions, scripts, subtitles, overlays, hooks, and CTAs must be English.
@@ -265,6 +265,7 @@ Never claim:
 - Sleep benefits
 - Disease prevention
 - Scientific facts without evidence
+- A sample, sample pack, or trial sachet for a consumer. Samples are only for cafes, offices, retailers, and distributors. Point customers to the 50g Variety Box.
 
 ---
 
