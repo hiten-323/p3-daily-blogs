@@ -1199,12 +1199,11 @@ def _do_publish(content: dict, day_number: int) -> dict:
         filtered_content["carousel"] = {}
     if "instagram_post" not in valid_assets:
         filtered_content["instagram_post"] = {}
-    if "linkedin_post" not in valid_assets:
-        filtered_content["linkedin_post"] = {}
     if "blog_post" not in valid_assets:
         filtered_content["blog_post"] = {}
-    if "yt_short" not in valid_assets:
-        filtered_content["yt_short"] = {}
+    # Leave linkedin_post and yt_short in place. Those publishers post only
+    # when the piece is in approved_assets, and need the original to log
+    # held / rejected / missing. Blanking them did not stop the post.
 
     from content_generator.publisher.dispatcher import publish_all
     result = publish_all(filtered_content, day_number=day_number)
