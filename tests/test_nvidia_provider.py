@@ -43,9 +43,19 @@ def test_provider_order_starts_with_nvidia():
 
 def test_empty_model_env_keeps_the_default(monkeypatch):
     monkeypatch.setenv("NVIDIA_MODEL", "   ")
-    assert nvidia.get_model() == "meta/llama-3.3-70b-instruct"
+    assert nvidia.get_models() == [
+        "nvidia/nemotron-3-super-120b-a12b",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "google/gemma-4-31b-it",
+    ]
+    assert nvidia.get_model() == "nvidia/nemotron-3-super-120b-a12b"
+    assert "meta/llama-3.3-70b-instruct" not in nvidia.get_models()
     monkeypatch.setenv("NVIDIA_MODEL", "meta/llama-3.1-70b-instruct")
     assert nvidia.get_model() == "meta/llama-3.1-70b-instruct"
+    assert nvidia.get_models() == ["meta/llama-3.1-70b-instruct"]
+    monkeypatch.setenv("NVIDIA_MODEL", " first/model , second/model ")
+    assert nvidia.get_models() == ["first/model", "second/model"]
+    assert nvidia.get_model() == "first/model"
 
 
 def test_success_uses_chat_completions(monkeypatch):
@@ -62,10 +72,82 @@ def test_success_uses_chat_completions(monkeypatch):
     monkeypatch.setattr(nvidia._http, "post", post)
     text, usage = nvidia.call("Write a caption.", 120)
     assert text == '{"ok": true}'
-    assert usage["model"] == "meta/llama-3.3-70b-instruct"
+    assert usage["model"] == "nvidia/nemotron-3-super-120b-a12b"
     assert seen["url"] == "https://integrate.api.nvidia.com/v1/chat/completions"
     assert seen["auth"] == "Bearer nvapi-secretvalue"
-    assert seen["model"] == "meta/llama-3.3-70b-instruct"
+    assert seen["model"] == "nvidia/nemotron-3-super-120b-a12b"
+
+
+@pytest.mark.parametrize("status", [404, 410])
+def test_unavailable_model_tries_the_next_configured_model(monkeypatch, caplog, status):
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv(
+        "NVIDIA_MODEL",
+        "meta/llama-3.3-70b-instruct,nvidia/nemotron-3-super-120b-a12b,google/gemma-4-31b-it",
+    )
+    sleeps = []
+    monkeypatch.setattr(nvidia.time, "sleep", lambda seconds: sleeps.append(seconds))
+    seen = []
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen.append(json["model"])
+        if json["model"] == "meta/llama-3.3-70b-instruct":
+            return _Response(status, text="model reached end of life on 2026-08-26 nvapi-secretvalue")
+        if json["model"] == "nvidia/nemotron-3-super-120b-a12b":
+            return _Response(status, text="model not found")
+        return _Response(200, _ok_body('{"hook": "live"}'))
+
+    monkeypatch.setattr(nvidia._http, "post", post)
+    caplog.set_level(logging.WARNING)
+    text, usage = nvidia.call("prompt", 40)
+    assert text == '{"hook": "live"}'
+    assert usage["model"] == "google/gemma-4-31b-it"
+    assert seen == [
+        "meta/llama-3.3-70b-instruct",
+        "nvidia/nemotron-3-super-120b-a12b",
+        "google/gemma-4-31b-it",
+    ]
+    assert sleeps == []
+    assert f"HTTP {status}" in caplog.text
+    assert "trying next configured model nvidia/nemotron-3-super-120b-a12b" in caplog.text
+    assert "trying next configured model google/gemma-4-31b-it" in caplog.text
+    assert "nvapi-secretvalue" not in caplog.text
+
+
+def test_every_configured_model_unavailable_reports_the_last(monkeypatch, caplog):
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv("NVIDIA_MODEL", "gone/one,gone/two")
+    seen = []
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen.append(json["model"])
+        return _Response(410, text="end of life")
+
+    monkeypatch.setattr(nvidia._http, "post", post)
+    caplog.set_level(logging.WARNING)
+    text, usage = nvidia.call("prompt", 40)
+    assert text is None
+    assert usage["status_code"] == 410
+    assert usage["model"] == "gone/two"
+    assert seen == ["gone/one", "gone/two"]
+    assert "no further configured models" in caplog.text
+
+
+def test_auth_failure_does_not_try_the_next_model(monkeypatch):
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv("NVIDIA_MODEL", "bad-model,good-model")
+    seen = []
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen.append(json["model"])
+        return _Response(401, text="invalid key")
+
+    monkeypatch.setattr(nvidia._http, "post", post)
+    text, usage = nvidia.call("prompt", 40)
+    assert text is None
+    assert usage["status_code"] == 401
+    assert usage["model"] == "bad-model"
+    assert seen == ["bad-model"]
 
 
 def test_429_is_retried_then_reported(monkeypatch):

@@ -117,6 +117,7 @@ def test_duplicate_handle_or_title_is_not_attempted(monkeypatch, tmp_path):
 
 def test_missing_secrets_and_shopify_errors_skip(monkeypatch, tmp_path, caplog):
     content = _ready_post(tmp_path)
+    monkeypatch.setenv("FORCE_SLOT", "generate")
     monkeypatch.setenv("SHOPIFY_BLOG_ENABLED", "true")
     monkeypatch.setenv("BLOG_STATE_DIR", str(tmp_path))
     monkeypatch.delenv("SHOPIFY_STORE_DOMAIN", raising=False)

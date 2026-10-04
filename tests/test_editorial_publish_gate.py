@@ -269,6 +269,7 @@ def test_stock_external_posts_need_an_editor_score(monkeypatch, quiet_publish):
     assert "blog_post" not in approved
 
     _block_network(monkeypatch)
+    monkeypatch.setenv("FORCE_SLOT", "generate")
 
     def boom(*_args, **_kwargs):
         raise AssertionError("shopify blog posted a stock piece")

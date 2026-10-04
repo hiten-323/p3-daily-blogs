@@ -2,10 +2,13 @@
 
 Base URL: https://integrate.api.nvidia.com/v1
 Auth: Bearer NVIDIA_API_KEY (an nvapi- key from build.nvidia.com).
-Model: NVIDIA_MODEL, default meta/llama-3.3-70b-instruct.
+Models: NVIDIA_MODEL, a comma-separated fallback list. When it is blank the
+client uses the live defaults below. meta/llama-3.3-70b-instruct reached end
+of life on 2026-08-26 and the hosted API now answers HTTP 410.
 
-429 and 5xx are retried with backoff inside this client. When those retries
-are exhausted the router falls through to the next provider.
+404 and 410 mean that model is gone or unknown, so the next configured model
+is tried immediately. 429 and 5xx are retried with backoff on the same model.
+When those retries are exhausted the router falls through to the next provider.
 """
 from __future__ import annotations
 
@@ -20,9 +23,18 @@ logger = logging.getLogger(__name__)
 
 _BASE = "https://integrate.api.nvidia.com/v1"
 _URL = f"{_BASE}/chat/completions"
-_DEFAULT_MODEL = "meta/llama-3.3-70b-instruct"
+# Live free chat endpoints on build.nvidia.com as of 2026-10-04.
+# Super is the large general-purpose model whose hosted sample is a plain
+# chat completion. Ultra and Gemma 4 31B IT are the current fallbacks.
+_DEFAULT_MODELS = (
+    "nvidia/nemotron-3-super-120b-a12b",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "google/gemma-4-31b-it",
+)
+_DEFAULT_MODEL = _DEFAULT_MODELS[0]
 _BACKOFF_S = (2, 5, 12)
 _RETRY_STATUS = {429, 500, 502, 503, 504}
+_UNAVAILABLE = {404, 410}
 _NVAPI = re.compile(r"nvapi-[A-Za-z0-9_\-]+")
 
 
@@ -30,8 +42,19 @@ def get_key() -> str:
     return os.environ.get("NVIDIA_API_KEY", "").strip()
 
 
+def get_models() -> list[str]:
+    """Model ids in try-order. A blank NVIDIA_MODEL keeps the live defaults."""
+    raw = os.environ.get("NVIDIA_MODEL", "")
+    if not raw.strip():
+        return list(_DEFAULT_MODELS)
+    models = [part.strip() for part in raw.split(",") if part.strip()]
+    return models or list(_DEFAULT_MODELS)
+
+
 def get_model() -> str:
-    return os.environ.get("NVIDIA_MODEL", "").strip() or _DEFAULT_MODEL
+    """Primary model. Single-model callers, including the dry-run probe, use this."""
+    models = get_models()
+    return models[0] if models else _DEFAULT_MODEL
 
 
 def _redact(text: str) -> str:
@@ -42,14 +65,8 @@ def _redact(text: str) -> str:
     return _NVAPI.sub("nvapi-***", out)
 
 
-def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
-    """Return (text | None, usage_dict). A missing key is skipped, not an error."""
-    key = get_key()
-    if not key:
-        return None, {}
-
-    model = get_model()
-    headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+def _call_model(prompt: str, max_tokens: int, model: str, headers: dict) -> tuple[str | None, dict]:
+    """One configured model, including the transient-error backoff."""
     payload = {
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
@@ -67,8 +84,7 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
                 "NVIDIA %s request exception (attempt %d/%d): %s",
                 model, attempt + 1, attempts, _redact(str(e)),
             )
-            last_failure = {"status_code": 0, "model": model, "error": _redact(str(e))}
-            return None, last_failure
+            return None, {"status_code": 0, "model": model, "error": _redact(str(e))}
 
         if resp.status_code == 200:
             try:
@@ -93,6 +109,8 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
 
         detail = _redact(resp.text[:300])
         last_failure = {"status_code": resp.status_code, "model": model, "error": detail}
+        if resp.status_code in _UNAVAILABLE:
+            return None, last_failure
         if resp.status_code in _RETRY_STATUS and attempt < attempts - 1:
             wait = _BACKOFF_S[attempt]
             logger.warning(
@@ -103,6 +121,39 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
             continue
 
         logger.warning("NVIDIA %s HTTP %s: %s", model, resp.status_code, detail)
+        return None, last_failure
+
+    return None, last_failure
+
+
+def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
+    """Return (text | None, usage_dict). A missing key is skipped, not an error."""
+    key = get_key()
+    if not key:
+        return None, {}
+
+    models = get_models()
+    headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    last_failure: dict = {"status_code": 0, "model": "", "error": "no NVIDIA model configured"}
+
+    for index, model in enumerate(models):
+        text, usage = _call_model(prompt, max_tokens, model, headers)
+        if text is not None:
+            return text, usage
+        last_failure = usage
+        status = int(usage.get("status_code") or 0)
+        if status not in _UNAVAILABLE:
+            return None, last_failure
+        if index + 1 < len(models):
+            logger.warning(
+                "NVIDIA %s HTTP %s — model unavailable (%s); trying next configured model %s",
+                model, status, usage.get("error") or "no body", models[index + 1],
+            )
+            continue
+        logger.warning(
+            "NVIDIA %s HTTP %s — model unavailable (%s); no further configured models",
+            model, status, usage.get("error") or "no body",
+        )
         return None, last_failure
 
     return None, last_failure
