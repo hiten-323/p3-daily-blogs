@@ -2,7 +2,8 @@
 
 Owner guardrails for Purity Beans copy:
 - Prima / Premium Agglomerate is 100% Arabica and agglomerated, not freeze-dried.
-- Ultra Blend is 70% coffee. A lower-caffeine description is allowed for that jar.
+- Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed for that jar.
+- Never call Ultra Blend no-chicory, zero-chicory, or 0% chicory.
 - Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica.
 - Do not invent other product claims, and do not apply a pure-jar claim to Ultra Blend.
 """
@@ -26,7 +27,7 @@ _OTHER_THAN_ULTRA = re.compile(
 )
 _PURE_CLAIM = re.compile(
     r"100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee|"
-    r"zero\s+chicory|0\s*%\s*chicory|\bno chicory\b|\bwithout chicory\b|"
+    r"zero\s+chicory|(?<!\d)0\s*%\s*chicory|\bno chicory\b|\bwithout chicory\b|"
     r"\bchicory[-\s]?free\b|"
     r"\b(?:does not|doesn't|doesnt)\s+contain\s+chicory\b|"
     r"\bcontains?\s+no\s+chicory\b",
@@ -40,9 +41,11 @@ _BRAND_IS_FREEZE_ARABICA = re.compile(
     re.I,
 )
 _INVENTED = re.compile(
-    r"100\s*x\s+purer|lab-tested purity certificate|single-origin style|"
+    r"100\s*x\s+purer|lab-tested purity certificate|lab[\s-]?certified|"
+    r"single-origin style|"
     r"70\s*[-–]\s*80\s*%\s*chicory|hand-selected chicory|"
-    r"\bsmall[\s-]batch(?:es)?\b",
+    r"\bsmall[\s-]batch(?:es)?\b|"
+    r"\borganic\b|india'?s\s+(?:first|only)\b",
     re.I,
 )
 _PERCENT = re.compile(
@@ -104,7 +107,7 @@ def product_truth_findings(text: str) -> list[dict]:
                         if not _locally_negated(segment, match.start()):
                             findings.append(_finding(
                                 segment,
-                                "Ultra Blend is 70% coffee and is not a zero-chicory jar",
+                                "Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar",
                             ))
                             break
                 if (_LOW_CAFFEINE.search(segment) and _OTHER_THAN_ULTRA.search(segment)
@@ -136,12 +139,30 @@ def product_truth_findings(text: str) -> list[dict]:
                     if _ULTRA.search(segment) and kind == "coffee" and number != 70:
                         findings.append(_finding(
                             segment,
-                            "Ultra Blend is 70% coffee; do not invent a different coffee percentage",
+                            "Ultra Blend is 70% coffee and 30% chicory; do not invent a different coffee percentage",
                         ))
-                    if _ULTRA.search(segment) and kind in {"arabica", "robusta"} and number == 100:
+                    if _ULTRA.search(segment) and kind == "chicory" and number != 30:
                         findings.append(_finding(
                             segment,
-                            "Ultra Blend is 70% coffee, not a 100% Arabica or 100% Robusta jar",
+                            "Ultra Blend is 30% chicory; do not invent a different chicory percentage",
+                        ))
+                    if (_ULTRA.search(segment) and kind in {"arabica", "robusta"} and number == 100):
+                        findings.append(_finding(
+                            segment,
+                            "Ultra Blend is 70% coffee and 30% chicory, not a 100% Arabica or 100% Robusta jar",
+                        ))
+                    if (kind == "chicory" and number not in (0, 30)
+                            and not _ULTRA.search(segment)):
+                        findings.append(_finding(
+                            segment,
+                            "chicory is 0% on the pure jars and 30% only in Ultra Blend",
+                        ))
+                    if (kind == "chicory" and number == 30
+                            and _OTHER_THAN_ULTRA.search(segment)
+                            and not _ULTRA.search(segment)):
+                        findings.append(_finding(
+                            segment,
+                            "only Ultra Blend is 30% chicory",
                         ))
                     if _PRIMA.search(segment) and kind == "arabica" and number != 100:
                         findings.append(_finding(segment, "Prima / Premium Agglomerate is 100% Arabica"))

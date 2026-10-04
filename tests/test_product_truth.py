@@ -11,9 +11,30 @@ def test_ultra_blend_cannot_inherit_pure_jar_claims():
 
     flagged = verify_claims("Ultra Blend is 100% coffee with zero chicory.")
     assert any(item["type"] == "product_truth" for item in flagged)
+    assert any("30% chicory" in item["reason"] for item in flagged)
 
     clean = verify_claims("Ultra Blend is 70% coffee, so a lower-caffeine cup is fair.")
     assert clean == []
+
+
+def test_ultra_blend_is_thirty_percent_chicory():
+    from content_generator.core.claim_verifier import verify_claims
+    from content_generator.core.product_truth import product_truth_findings
+    from content_generator.core.shopify_catalog import SHOPIFY_PRODUCTS, format_catalog_for_prompt
+
+    stated = "Ultra Blend is 70% coffee and 30% chicory."
+    assert product_truth_findings(stated) == []
+    assert verify_claims(stated) == []
+    assert product_truth_findings("Ultra Blend is zero chicory.")
+    assert product_truth_findings("Ultra Blend is no chicory.")
+    assert product_truth_findings("Ultra Blend is 40% chicory.")
+    assert product_truth_findings("Bold is 30% chicory.")
+    assert SHOPIFY_PRODUCTS["ultra_blend"]["chicory_percent"] == 30
+    assert SHOPIFY_PRODUCTS["ultra_blend"]["coffee_percent"] == 70
+    assert SHOPIFY_PRODUCTS["prima"]["bean_type"] == "100% Arabica"
+    prompt = format_catalog_for_prompt()
+    assert "30% chicory" in prompt
+    assert "100% Arabica" in prompt
 
 
 def test_low_caffeine_is_only_for_ultra_blend():
@@ -52,6 +73,9 @@ def test_true_jar_percentages_are_kept_and_mixed_stats_are_not():
 
     kept = "Ultra Blend is 70% coffee."
     assert strip(kept) == kept
+    both = "Ultra Blend is 70% coffee and 30% chicory."
+    assert strip(both) == both
+    assert strip("Bold is 30% chicory.").strip() == ""
     arabica = "Prima is 100% Arabica."
     assert strip(arabica) == arabica
     assert strip("We sell 100% coffee and 40% chicory.").strip() == ""
@@ -92,6 +116,8 @@ def test_blog_links_lose_glued_punctuation_and_duplicates_are_caught(tmp_path):
 
     raw = "Shop at https://p3online.in.</p>"
     assert normalize_text(raw) == "Shop at https://p3online.in</p>"
+    linked = "See [Bold](https://p3online.in/products/purity-beans-bold-instant-coffee)."
+    assert normalize_text(linked) == linked
     day = tmp_path / "content_2026-09-01.json"
     day.write_text(
         '{"blog_post": {"slug": "already-used", "title": "Already used title for the blog"}}',

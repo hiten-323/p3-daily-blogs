@@ -189,6 +189,7 @@ jobs:
           SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
           SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
           SHOPIFY_BLOG_ID: ${{ secrets.SHOPIFY_BLOG_ID }}
+          SHOPIFY_BLOG_ENABLED: "true"
           # Extended content is founder-policy controlled, never a workflow override.
           # Source: founder_policies.yaml -> content.enable_extended_content.
           WEBSITE_URL: https://p3online.in
@@ -324,6 +325,7 @@ jobs:
           git add -f output/creative/ 2>/dev/null || true
           ist_date=$(TZ=Asia/Kolkata date +%Y-%m-%d)
           git add -f "output/content_${ist_date}.json" 2>/dev/null || true
+          git add -f "output/blog_${ist_date}.json" "output/blog_${ist_date}.md" "output/blog_${ist_date}.html" "output/blog_${ist_date}.llms.txt" 2>/dev/null || true
           git add -f output/reports/ 2>/dev/null || true
           git add -f output/.running* 2>/dev/null || true
           if ! git diff --staged --quiet; then git commit -m "chore: run ${{ github.run_number }} — validated content + learning data [skip ci]"; fi

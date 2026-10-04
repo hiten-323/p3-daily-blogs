@@ -44,6 +44,7 @@ VERIFIED_FACTS = (
     "no chicory", "without chicory", "nothing added", "no additives",
     "no added sugar", "no preservatives", "freeze dried", "freeze-dried",
     "premium instant coffee", "arabica", "robusta", "p3online.in",
+    "70% coffee", "70 percent coffee", "30% chicory", "30 percent chicory",
 )
 
 # Claims that are prohibited outright — no source makes these publishable for

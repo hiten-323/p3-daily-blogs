@@ -378,6 +378,8 @@ BRAND_FACT_ALIASES = {
     "70% coffee": [
         "70% coffee",
         "70 percent coffee",
+        "30% chicory",
+        "30 percent chicory",
     ],
     "Zero Chicory": [
         "zero chicory",
