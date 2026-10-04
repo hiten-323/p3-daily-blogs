@@ -1,9 +1,11 @@
 """
 Shopify Blog publisher.
 
-SAFETY: this engine is not the Purity Beans blog source of truth. Blog publishing
-is therefore disabled by default and requires an explicit SHOPIFY_BLOG_ENABLED=true.
-The separate Cowork blog workflow remains the intended production publisher.
+Publishing is off unless SHOPIFY_BLOG_ENABLED=true. The daily workflow turns it
+on for the generate slot only. A post is written only when it is editor-approved
+and passes every blog gate. Duplicate handles and titles are not attempted,
+because Cowork may already have published the same article. Shopify errors and
+missing secrets are warnings, not run failures.
 """
 from __future__ import annotations
 import base64
@@ -95,66 +97,189 @@ def _article_body(blog: dict) -> str:
     return body
 
 
+def _skip(reason: str, **extra) -> dict:
+    logger.warning("[shopify_blog] Skipping publish (%s); not attempted. The run is not failed.", reason)
+    payload = {
+        "success": False,
+        "attempted": False,
+        "skipped": True,
+        "error": "not_attempted",
+        "reason": reason,
+    }
+    payload.update(extra)
+    return payload
+
+
+def _missing_secrets() -> list[str]:
+    return [
+        key for key in ("SHOPIFY_STORE_DOMAIN", "SHOPIFY_ADMIN_TOKEN", "SHOPIFY_BLOG_ID")
+        if not os.getenv(key, "").strip()
+    ]
+
+
+def _mark_path(on_date: str) -> str:
+    root = os.getenv("BLOG_STATE_DIR", "output")
+    return os.path.join(root, f"blog_published_{on_date}.json")
+
+
+def _already_published(on_date: str) -> dict | None:
+    path = _mark_path(on_date)
+    if not os.path.exists(path):
+        return None
+    try:
+        data = json.loads(open(path, encoding="utf-8").read())
+    except (OSError, json.JSONDecodeError):
+        return None
+    return data if isinstance(data, dict) and data.get("url") else None
+
+
+def _remember_publish(on_date: str, payload: dict) -> None:
+    path = _mark_path(on_date)
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(payload, handle, indent=2)
+
+
+def _titles_match(left: str, right: str) -> bool:
+    return " ".join(str(left or "").split()).casefold() == " ".join(str(right or "").split()).casefold()
+
+
+def _editor_approved(blog: dict) -> bool:
+    score = blog.get("editorial_score")
+    if not isinstance(score, dict) or score.get("overall") in (None, ""):
+        return False
+    try:
+        overall = float(score["overall"])
+    except (TypeError, ValueError):
+        return False
+    from content_generator.core.editorial_engine import get_current_pass_score
+    verdict = str(score.get("verdict") or "").strip().upper()
+    return overall >= get_current_pass_score() and verdict in {"PASS", "APPROVE"}
+
+
+def _find_existing(blog_id: str, handle: str, title: str) -> tuple[str | None, dict | None]:
+    """Return a duplicate kind, or lookup_failed when Shopify cannot be read."""
+    if handle:
+        data = _admin(
+            f"blogs/{blog_id}/articles.json?handle={urllib.parse.quote(handle)}&fields=id,title,handle"
+        )
+        if data is None:
+            return "lookup_failed", None
+        articles = data.get("articles") or []
+        if articles:
+            return "duplicate_handle", articles[0]
+    since = 0
+    for _page in range(8):
+        data = _admin(
+            f"blogs/{blog_id}/articles.json?limit=250&since_id={since}&fields=id,title,handle"
+        )
+        if data is None:
+            return "lookup_failed", None
+        articles = data.get("articles") or []
+        for art in articles:
+            if _titles_match(art.get("title"), title):
+                return "duplicate_title", art
+        if len(articles) < 250:
+            return None, None
+        try:
+            since = int(articles[-1]["id"])
+        except (KeyError, TypeError, ValueError):
+            return None, None
+    return None, None
+
+
 def post_content(content: dict, day: int = 0) -> dict:
-    """Publish only when explicitly enabled; otherwise make a hard no-write decision."""
+    """Publish one approved post per IST day, from the generate slot only."""
     if not blog_enabled():
         logger.info("[shopify_blog] Disabled by SHOPIFY_BLOG_ENABLED (default=false); no Shopify write")
         return {"success": False, "error": "blog_disabled"}
-    if not is_configured():
-        return {"success": False, "error": "not_configured"}
+
+    slot = os.getenv("FORCE_SLOT", "").strip()
+    if slot and slot != "generate":
+        return _skip("wrong_slot", slot=slot)
 
     from content_generator.core.blog_quality import assess, normalize_blog_piece
+    from content_generator.core.ist_dates import today_ist
+    from content_generator.core.schema_validation import BlogSchema, validate_or_fail
 
     blog = normalize_blog_piece(dict(content.get("blog_post") or {}))
     title = str(blog.get("title") or "").strip()
     body = _article_body(blog)
     if not title or not body:
         logger.warning("[shopify_blog] Blog enabled but generation produced no blog content")
-        return {"success": False, "error": "no_blog_content"}
+        return {"success": False, "attempted": False, "skipped": True, "error": "no_blog_content"}
 
-    blog_id = _resolve_blog_id()
-    if not blog_id:
-        return {"success": False, "error": "no_blog_id"}
+    on_date = today_ist().isoformat()
+    prior = _already_published(on_date)
+    if prior:
+        logger.warning("[shopify_blog] Already published today (%s); not attempted", prior.get("url"))
+        return _skip("already_published_today", url=prior.get("url") or "")
 
-    from content_generator.core.ist_dates import today_ist
-    website = os.getenv("WEBSITE_URL", "https://p3online.in")
-    if "p3online.in" not in body:
-        body += f'\n<p>Explore Purity Beans: <a href="{html.escape(website, quote=True)}">{html.escape(website)}</a></p>'
-    defects = assess(blog, on_date=today_ist().isoformat())
+    if str(blog.get("hold_reason") or "").strip():
+        logger.error("[blog] HELD blog_post — not publishing: %s", blog["hold_reason"])
+        return _skip("held", hold_reason=str(blog["hold_reason"]))
+
+    if not _editor_approved(blog):
+        return _skip("not_editor_approved")
+
+    defects = assess(blog, on_date=on_date)
+    try:
+        validate_or_fail(BlogSchema, blog)
+    except Exception as exc:
+        defects = [*defects, str(exc)[:240]]
     if defects:
         logger.warning("[shopify_blog] Refusing to write; blog failed quality checks: %s", defects[0])
-        return {"success": False, "error": "blog_quality", "issues": defects[:8]}
+        return _skip("blog_quality", issues=defects[:8])
+
+    missing = _missing_secrets()
+    if missing:
+        logger.warning("[shopify_blog] Missing Shopify secrets (%s); skipping publish", ", ".join(missing))
+        return _skip("missing_secrets", missing=missing)
+
+    blog_id = os.getenv("SHOPIFY_BLOG_ID", "").strip() or _resolve_blog_id()
+    if not blog_id:
+        logger.warning("[shopify_blog] No Shopify blog id; skipping publish")
+        return _skip("missing_secrets", missing=["SHOPIFY_BLOG_ID"])
+
+    website = os.getenv("WEBSITE_URL", "https://p3online.in").rstrip("/")
+    if "p3online.in" not in body:
+        body += f'\n<p>Explore Purity Beans: <a href="{html.escape(website, quote=True)}">{html.escape(website)}</a></p>'
+
+    handle = str(blog.get("slug") or "").strip()
+    kind, existing = _find_existing(blog_id, handle, title)
+    if kind == "lookup_failed":
+        logger.warning("[shopify_blog] Shopify duplicate lookup failed; skipping publish")
+        return _skip("shopify_error", detail="duplicate lookup failed")
+    if kind in {"duplicate_handle", "duplicate_title"}:
+        logger.warning("[shopify_blog] %s already exists (%s); not attempted", kind, handle or title)
+        return _skip(kind, handle=handle, title=title)
 
     tags = blog.get("tags")
     if isinstance(tags, list):
-        tags = ", ".join(str(t) for t in tags)
-
+        tags = ", ".join(str(item) for item in tags)
     article = {
         "title": title,
-        "author": "Purity Beans",
+        "author": str(blog.get("author") or "Purity Beans"),
         "body_html": body,
         "tags": str(tags or "coffee, instant coffee, purity beans"),
         "published": True,
         "summary_html": str(blog.get("meta_description") or "")[:320],
     }
-    handle = str(blog.get("slug") or "").strip()
     if handle:
         article["handle"] = handle
-        existing = _admin(f"blogs/{blog_id}/articles.json?handle={urllib.parse.quote(handle)}")
-        articles = (existing or {}).get("articles") or []
-        if articles:
-            logger.warning("[shopify_blog] Refusing duplicate handle %s", handle)
-            return {"success": False, "error": "duplicate_handle", "handle": handle}
     hero = _hero_image_b64()
     if hero:
         article["image"] = {"attachment": hero, "alt": str(blog.get("image_alt") or title)}
 
     resp = _admin(f"blogs/{blog_id}/articles.json", method="POST", body={"article": article})
     art = (resp or {}).get("article") or {}
-    if art.get("id"):
-        domain = os.getenv("SHOPIFY_STORE_DOMAIN", "")
-        handle = art.get("handle", "")
-        url = f"https://{domain}/blogs/news/{handle}" if handle else ""
-        logger.info("[shopify_blog] Published article %s (%s)", art["id"], title)
-        return {"success": True, "article_id": str(art["id"]), "url": url, "error": None}
-    return {"success": False, "error": (resp or {}).get("errors", "publish_failed")}
+    if not art.get("id"):
+        detail = (resp or {}).get("errors", "publish_failed")
+        logger.warning("[shopify_blog] Shopify error, skipping publish without failing the run: %s", detail)
+        return _skip("shopify_error", detail=str(detail)[:300])
+
+    public_handle = str(art.get("handle") or handle)
+    url = f"{website}/blogs/news/{public_handle}" if public_handle else ""
+    logger.info("[shopify_blog] Published article URL: %s (id=%s)", url, art["id"])
+    _remember_publish(on_date, {"url": url, "article_id": str(art["id"]), "handle": public_handle, "title": title})
+    return {"success": True, "attempted": True, "article_id": str(art["id"]), "url": url, "error": None}

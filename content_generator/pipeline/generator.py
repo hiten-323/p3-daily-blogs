@@ -25,7 +25,7 @@ from content_generator.rotation import (
     get_day_number, get_todays_blog_topic, pick,
 )
 from content_generator.prompts import (
-    reels, instagram_post, carousel, linkedin, blog, stories, yt_short, video_prompts,
+    reels, instagram_post, carousel, linkedin, stories, yt_short, video_prompts,
 )
 from content_generator.prompts import growth_reel
 from content_generator.prompts.brand import build_avoid_block
@@ -33,6 +33,27 @@ from content_generator.providers.llm_router import call as llm_call, get_usage_l
 from content_generator.core.ist_dates import content_date_iso, today_ist
 
 logger = logging.getLogger(__name__)
+
+
+def _generate_blog(day_number: int, topic: str, context: str) -> dict:
+    """Sectioned blog. Never returns {} when generation was attempted."""
+    try:
+        from content_generator.core.blog_writer import generate_blog_post
+        piece = generate_blog_post(
+            day_number,
+            context_suffix=(context or "") + (f"\n\nANGLE: {topic}" if topic else ""),
+            write_files=False,
+        )
+    except Exception as exc:
+        logger.error("[blog] HELD blog_post — generation raised and the piece was not dropped: %s", exc)
+        return {"held": True, "hold_reason": f"provider_failure during blog generation: {exc}"}
+    if not isinstance(piece, dict) or not piece:
+        reason = "blog generation returned an empty piece"
+        logger.error("[blog] HELD blog_post: %s", reason)
+        return {"held": True, "hold_reason": reason}
+    if piece.get("hold_reason"):
+        logger.error("[blog] HELD blog_post: %s", piece["hold_reason"])
+    return piece
 
 
 def _extended_content_enabled() -> bool:
@@ -242,7 +263,6 @@ def generate_daily_content(
     if _extended:
         phase1_tasks.update({
             "reel_2":   (reels.build,    ("reel_2", arch_2, "evening/night (8-10pm)", "reel_night", avoid, day_number), 1800),
-            "blog_post": (blog.build,    (topic,),                                                           3000),
             "stories":   (stories.build, (day_number,),                                                      1500),
             "yt_short":  (yt_short.build,(product, day_number),                                              1500),
         })
@@ -266,6 +286,12 @@ def generate_daily_content(
             except Exception as e:
                 logger.error("[pipeline] %s failed: %s", label, e)
                 raise
+
+    # The blog is sectioned (outline, then one expansion per heading). A provider
+    # failure keeps the draft and records why it was held. It must not cancel
+    # the other assets, and it must not be replaced with an empty object.
+    if _extended:
+        phase1_results["blog_post"] = _generate_blog(day_number, topic, ctx)
 
     # Fill optional keys with empty dicts so downstream code doesn't KeyError
     for optional in ("reel_2", "blog_post", "stories", "yt_short"):
@@ -407,5 +433,12 @@ def save_content(content_data: dict, output_dir: str = "output") -> str:
     filepath = os.path.join(output_dir, f"content_{date_str}.json")
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(content_data, f, indent=2, ensure_ascii=False)
+    blog = content_data.get("blog_post")
+    if isinstance(blog, dict) and str(blog.get("title") or "").strip() and str(blog.get("body") or "").strip():
+        try:
+            from content_generator.core.blog_render import write_blog_files
+            write_blog_files(blog, output_dir, date_str)
+        except Exception as exc:
+            logger.error("[blog] HELD file write failed for %s: %s", date_str, exc)
     logger.info("[pipeline] Saved → %s", filepath)
     return filepath

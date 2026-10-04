@@ -201,17 +201,35 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
         logger.info("[publisher] Posting to YouTube...")
         results["youtube"] = _attempt("youtube", lambda: yt_post(content, day=day_number))
 
-    # ── Blog (Shopify article — SEO / organic search) ──────────────────────────
-    from content_generator.publisher.shopify_blog import post_content as blog_post
-    logger.info("[publisher] Posting blog to Shopify...")
-    results["blog"] = _attempt("blog", lambda: blog_post(content, day=day_number))
+    # ── Blog (Shopify article — once per day, generate slot only) ──────────────
+    # Same canonical gate as LinkedIn and YouTube. A piece that is not approved
+    # is not an attempt. Shopify errors are also skips, inside the publisher.
+    blog_slot = _os.getenv("FORCE_SLOT", "").strip()
+    blog_state = editorial_disposition(content, "blog_post", approved)
+    if blog_slot and blog_slot != "generate":
+        logger.info("[publisher] Skipping blog_post — outside generate slot (%s); not attempted", blog_slot)
+        results["blog"] = not_attempted_result("blog_post", "wrong_slot")
+    elif blog_state != "approved":
+        held_reason = ""
+        blog_piece = content.get("blog_post") if isinstance(content, dict) else {}
+        if isinstance(blog_piece, dict) and str(blog_piece.get("hold_reason") or "").strip():
+            held_reason = f" ({blog_piece['hold_reason']})"
+            logger.error("[blog] HELD blog_post — %s%s; not attempted", blog_state, held_reason)
+        else:
+            logger.info("[publisher] Skipping blog_post — %s; not attempted", blog_state)
+        results["blog"] = not_attempted_result("blog_post", blog_state)
+    else:
+        from content_generator.publisher.shopify_blog import post_content as blog_post
+        logger.info("[publisher] Posting blog to Shopify...")
+        results["blog"] = _attempt("blog", lambda: blog_post(content, day=day_number))
 
     # ── Summary ───────────────────────────────────────────────────────────────
     # Held (timed slots) and skipped (not configured / no content) are NOT
     # failures — label them honestly so the summary reflects reality.
     _SKIP_ERRORS = (
         "not_configured", "no_blog_content", "no_content", "no_video", "no_image",
-        "not_attempted",
+        "not_attempted", "blog_disabled", "shopify_error", "missing_secrets",
+        "duplicate_handle", "duplicate_title", "blog_quality",
     )
     def _cat(r):
         if r.get("success"):

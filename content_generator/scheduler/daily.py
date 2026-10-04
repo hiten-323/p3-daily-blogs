@@ -463,9 +463,11 @@ _ALLOWED_PERCENT_SPAN = re.compile(
     r"^(?:100\s*(?:%|percent)\s*(?:pure\s+)?(?:coffee|arabica|robusta)"
     r"|100\s*%\s*pure"
     r"|0\s*(?:%|percent)\s*chicory"
-    r"|70\s*(?:%|percent)\s*coffee)\b",
+    r"|70\s*(?:%|percent)\s*coffee"
+    r"|30\s*(?:%|percent)\s*chicory)\b",
     re.I,
 )
+_THIRTY_CHICORY = re.compile(r"^30\s*(?:%|percent)\s*chicory\b", re.I)
 
 
 def _percent_claims_allowed(sentence: str) -> bool:
@@ -474,8 +476,12 @@ def _percent_claims_allowed(sentence: str) -> bool:
     if not matches:
         return False
     for match in matches:
-        span = sentence[match.start(): match.end() + 32]
+        span = sentence[match.start(): match.end() + 40]
         if not _ALLOWED_PERCENT_SPAN.match(span):
+            return False
+        # 30% chicory is a fact about Ultra Blend only. The same number
+        # attached to another jar, or to no jar, is not a verified fact.
+        if _THIRTY_CHICORY.match(span) and not re.search(r"ultra[\s-]?blend", sentence, re.I):
             return False
     return True
 
@@ -849,6 +855,14 @@ def _do_editorial(content: dict) -> None:
     providers_ok = llm_router.any_provider_available()
     if not providers_ok:
         logger.warning("[editorial] All providers exhausted — skipping LLM review, accepting content as-is")
+        blog = content.get("blog_post")
+        if isinstance(blog, dict) and blog:
+            reason = str(blog.get("hold_reason") or "").strip() or (
+                "editorial review skipped because every AI provider was unavailable"
+            )
+            blog["hold_reason"] = reason
+            blog["held"] = True
+            logger.error("[blog] HELD blog_post: %s", reason)
         return
 
     review_targets = [
@@ -908,6 +922,9 @@ def _do_editorial(content: dict) -> None:
                 score = float(review.get("overall"))
                 verdict = review.get("verdict", "")
                 if verdict == "PASS":
+                    if label == "blog_post" and not str(piece.get("hold_reason") or "").startswith("provider_failure"):
+                        piece.pop("hold_reason", None)
+                        piece.pop("held", None)
                     logger.info("[editorial] %s PASS — score %.1f (threshold %.1f)", label, score, threshold)
                     break
                 feedback = str(review.get("feedback") or "")
@@ -936,10 +953,15 @@ def _do_editorial(content: dict) -> None:
                     content[key] = merged
                     piece = merged
             else:
+                reason = feedback or piece.get("editorial_error") or piece.get("hold_reason") or "below threshold"
                 logger.error(
                     "[editorial] %s still not publishable after %d attempts: %s",
-                    label, attempts_allowed, feedback or piece.get("editorial_error") or "below threshold",
+                    label, attempts_allowed, reason,
                 )
+                if label == "blog_post":
+                    piece["hold_reason"] = f"rewrites exhausted: {reason}"[:500]
+                    piece["held"] = True
+                    logger.error("[blog] HELD blog_post: %s", piece["hold_reason"])
 
 
 def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | None:
@@ -966,6 +988,9 @@ def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | No
         "blog_post": BlogSchema,
     }
     merged = ensure_structural_fields(merge_regenerated_piece(original, improved), label)
+    if label == "blog_post" and not str((improved or {}).get("hold_reason") or "").strip():
+        merged.pop("hold_reason", None)
+        merged.pop("held", None)
     schema = schemas.get(label)
     if schema is None:
         return merged
@@ -1004,6 +1029,20 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict) -> 
             f"- Do not include an editorial_score. Scoring happens after you return.\n\n"
             f"Return ONLY the improved JSON object."
         )
+        if label == "blog_post":
+            from content_generator.core.blog_writer import generate_blog_post
+            improved = generate_blog_post(
+                int(content.get("day_number") or 0),
+                context_suffix=f"REJECTION TO FIX:\n{feedback}",
+                write_files=False,
+            )
+            if improved.get("body"):
+                if improved.get("hold_reason"):
+                    logger.error("[blog] HELD blog_post during rewrite: %s", improved["hold_reason"])
+                else:
+                    logger.info("[editorial] Regeneration successful for %s", label)
+                return improved
+            return None
         result = llm_call(regen_prompt, label=f"regen_{label}", max_tokens=1500)
         if isinstance(result, dict) and result:
             logger.info("[editorial] Regeneration successful for %s", label)
@@ -1199,11 +1238,10 @@ def _do_publish(content: dict, day_number: int) -> dict:
         filtered_content["carousel"] = {}
     if "instagram_post" not in valid_assets:
         filtered_content["instagram_post"] = {}
-    if "blog_post" not in valid_assets:
-        filtered_content["blog_post"] = {}
-    # Leave linkedin_post and yt_short in place. Those publishers post only
-    # when the piece is in approved_assets, and need the original to log
-    # held / rejected / missing. Blanking them did not stop the post.
+    # Leave blog_post, linkedin_post, and yt_short in place. Those publishers
+    # post only when the piece is in approved_assets, and need the original to
+    # log held / rejected / missing. Blanking the blog used to drop the draft
+    # and the reason it was held.
 
     from content_generator.publisher.dispatcher import publish_all
     result = publish_all(filtered_content, day_number=day_number)
