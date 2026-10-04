@@ -120,12 +120,39 @@ def test_scoring_failure_is_retried_and_not_stored_as_zero():
     assert scored["shareability"] == 8.4
 
 
-def test_editorial_pass_repairs_day_275_without_zero_scores():
+def test_editorial_pass_repairs_day_275_without_zero_scores(monkeypatch):
+    import time
+    import urllib.error
+    import urllib.request
+
+    import requests
+
     import content_generator.providers.llm_router as router
     from content_generator.core.brand_validator import validate_asset
     from content_generator.core.editorial_engine import approved_assets
     from content_generator.core.schema_validation import InstagramSchema, validate_or_fail
     from content_generator.scheduler.daily import _do_editorial
+
+    # Blog repair walks every provider and sleeps 2+5+12+12+12s per section.
+    # The assertions below still run that path; they just must not wait on it
+    # or on a live HTTP timeout.
+    monkeypatch.setattr(time, "sleep", lambda _seconds: None)
+
+    class _Offline:
+        status_code = 401
+        text = "unauthorized"
+
+        def json(self):
+            return {"error": "unauthorized"}
+
+    monkeypatch.setattr(requests, "post", lambda *_args, **_kwargs: _Offline())
+    monkeypatch.setattr(requests, "get", lambda *_args, **_kwargs: _Offline())
+    monkeypatch.setattr(requests, "request", lambda *_args, **_kwargs: _Offline())
+
+    def _blocked(*_args, **_kwargs):
+        raise urllib.error.URLError("network disabled in unit tests")
+
+    monkeypatch.setattr(urllib.request, "urlopen", _blocked)
 
     content = _load()
     os.environ["QUALITY_MAX_REGEN"] = "2"
