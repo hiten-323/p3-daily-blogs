@@ -10,6 +10,7 @@ Each daily run produces:
 All prompts and image paths are written to output/ugc/ so you can
 paste them directly into Nano Banana Pro → Seedance → OpenArt VFX.
 """
+from content_generator.core.ist_dates import today_ist
 import datetime
 import json
 import logging
@@ -42,7 +43,7 @@ def generate_daily_ugc(day: int, product: str = None) -> dict:
     Returns a dict with all prompts, image paths, and the tool brief.
     """
     os.makedirs(_UGC_OUT_DIR, exist_ok=True)
-    date_str = datetime.date.today().isoformat()
+    date_str = today_ist().isoformat()
 
     package = get_daily_creative_package(day=day, product=product)
 

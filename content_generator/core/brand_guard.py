@@ -41,6 +41,7 @@ PRODUCT_KEYWORDS: dict[str, list[str]] = {
     "bold":        ["bold"],
     "purista":     ["purista"],
     "purica":      ["purica"],
+    "prima":       ["prima", "premium agglomerate"],
 }
 
 def get_product_references(text: str) -> list[str]:
@@ -120,7 +121,7 @@ PRODUCT_CATALOG = {
     },
     "ultra_blend": {
         "name":     "Purity Beans Ultra Blend",
-        "tagline":  "Agglomerated Coffee — Balanced Everyday Brew",
+        "tagline":  "70% coffee — lower caffeine is allowed; not a zero-chicory jar",
         "skus":     ["ultra_blend_50g", "ultra_blend_100g"],
         "best_for": ["corporate offices", "everyday drinkers", "first-time buyers"],
     },
@@ -132,9 +133,15 @@ PRODUCT_CATALOG = {
     },
     "purista": {
         "name":     "Purity Beans Purista",
-        "tagline":  "Premium Instant Coffee",
+        "tagline":  "Freeze-dried 100% Robusta",
         "skus":     ["purista_50g", "purista_100g"],
         "best_for": ["premium buyers", "corporate gifting", "connoisseurs"],
+    },
+    "prima": {
+        "name":     "Purity Beans Prima",
+        "tagline":  "Premium Agglomerate — 100% Arabica, not freeze-dried",
+        "skus":     ["prima_50g", "prima_100g"],
+        "best_for": ["everyday arabica", "cafe-style cups"],
     },
 }
 
@@ -233,8 +240,8 @@ while protecting the Purity Beans brand.
 Brand Name: Purity Beans
 Company: Pure Pantry Provisions
 Website: https://p3online.in
-Positioning: India's Cleanest Instant Coffee
-Core Promise: 100% Coffee, Zero Chicory, No Fillers, No Hidden Ingredients
+Positioning: name the jar. Do not write "India's Cleanest Instant Coffee" unless the owner confirms that slogan for the whole range, including Ultra Blend.
+Core Promise: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.
 Brand Personality: Premium, Honest, Modern, Indian, Trustworthy, Scientific, Transparent
 Tone: Confident, Simple, Educational, Never exaggerated, Never misleading
 Language: ENGLISH ONLY. Never generate Hindi, Punjabi, Hinglish, Urdu, or mixed-language content. All captions, scripts, subtitles, overlays, hooks, and CTAs must be English.
@@ -363,8 +370,14 @@ BRAND_FACT_ALIASES = {
     "100% Coffee": [
         "100% coffee",
         "100 percent coffee",
+        "100% arabica",
+        "100% robusta",
         "pure coffee",
         "only coffee"
+    ],
+    "70% coffee": [
+        "70% coffee",
+        "70 percent coffee",
     ],
     "Zero Chicory": [
         "zero chicory",
@@ -544,7 +557,7 @@ Examples:
 ## SEO KEYWORDS (USE NATURALLY IN EVERY ASSET)
 
 Primary: premium instant coffee, gourmet instant coffee, freeze dried coffee, agglomerated coffee
-Secondary: best instant coffee in India, coffee without preservatives, pure instant coffee, coffee lovers India, instant coffee brand India, no chicory coffee, preservative free coffee
+Secondary: instant coffee in India, coffee without preservatives, pure instant coffee, coffee lovers India, instant coffee brand India, no chicory coffee, preservative free coffee
 
 ---
 

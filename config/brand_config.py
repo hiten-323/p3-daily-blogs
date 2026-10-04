@@ -13,7 +13,7 @@ Import from anywhere in the engine:
 BRAND = {
     "name":        "Purity Beans",
     "company":     "Pure Pantry Provisions",
-    "tagline":     "100% Pure. Zero Chicory.",
+    "tagline":     "Read the jar. Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee.",
     "category":    "Premium Instant Coffee",
     "origin":      "India",
     "website":     "https://p3online.in",
@@ -29,11 +29,11 @@ BRAND = {
 # ── Market positioning ────────────────────────────────────────────────────────
 
 POSITIONING = {
-    "usp":              "100% pure coffee — zero chicory, zero compromise",
+    "usp":              "Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
     "price_per_cup":    18,            # Rs
     "cafe_price":       180,           # Rs (average cafe latte)
     "price_ratio":      "10x cheaper than cafes",
-    "purity_claim":     "No chicory. No fillers. Just coffee.",
+    "purity_claim":     "Zero chicory applies to the 100% coffee jars. Ultra Blend is 70% coffee.",
     "target_segments": {
         "consumer":     "urban Indians 25-45 who care about what they drink",
         "distributor":  "FMCG distributors in Tier-1 and Tier-2 cities",
@@ -42,16 +42,15 @@ POSITIONING = {
     },
     "competitors_to_avoid_naming": ["Nescafé", "Bru", "Davidoff", "Continental"],
     "key_pain_points": [
-        "Most instant coffee is 70-80% chicory, not coffee",
-        "Consumers are unknowingly drinking chicory filler",
+        "Many instant coffees sold in India list chicory on the ingredient panel",
+        "The ingredient list is the place to check for chicory",
         "Premium cafe quality is unaffordable daily",
         "No transparency about coffee purity on labels",
     ],
     "proof_points": [
-        "100% Arabica / Robusta blend — zero adulterants",
+        "Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica. Prima is 100% Arabica Premium Agglomerate.",
+        "Ultra Blend is 70% coffee. A lower-caffeine description is allowed only for that jar.",
         "Rs 18 per cup vs Rs 180 at cafes",
-        "Ships from roaster to door — freshest possible",
-        "Lab-tested purity certificate on every batch",
     ],
 }
 
@@ -60,30 +59,30 @@ POSITIONING = {
 HASHTAG_SETS = {
     # Generic reel fallback
     "reels": (
-        "#PurityBeans #PureCoffee #InstantCoffee #NoCicory #CoffeeLover "
+        "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
         "#IndianCoffee #CoffeeIndia #PremiumCoffee #CoffeeReels "
         "#CoffeeOfTheDay #MorningCoffee"
     ),
     # Morning reel (7-9am slot) — used by generator.py → reels.build()
     "reel_morning": (
         "#PurityBeans #PureCoffee #MorningCoffee #CoffeeLover #InstantCoffee "
-        "#NoCicory #IndianCoffee #CoffeeIndia #MorningRoutine #CoffeeTime"
+        "#NoChicory #IndianCoffee #CoffeeIndia #MorningRoutine #CoffeeTime"
     ),
     # Night reel (8-10pm slot) — used by generator.py → reels.build()
     "reel_night": (
         "#PurityBeans #PureCoffee #EveningCoffee #CoffeeLover #InstantCoffee "
-        "#NoCicory #IndianCoffee #NightCoffee #CoffeeReels #CoffeeLovers"
+        "#NoChicory #IndianCoffee #NightCoffee #CoffeeReels #CoffeeLovers"
     ),
     "viral_reel": (
-        "#PurityBeans #NoCicory #CoffeeTruth #InstantCoffee #CoffeeLover "
+        "#PurityBeans #NoChicory #CoffeeTruth #InstantCoffee #CoffeeLover "
         "#PureCoffee #IndianCoffee #CoffeeShorts #CoffeeReels #FoodFacts"
     ),
     "educational_reel": (
-        "#PurityBeans #CoffeeFacts #InstantCoffee #PureCoffee #NoCicory "
+        "#PurityBeans #CoffeeFacts #InstantCoffee #PureCoffee #NoChicory "
         "#CoffeeEducation #IndianCoffee #CoffeeLover #KnowYourCoffee"
     ),
     "carousel": (
-        "#PurityBeans #PureCoffee #InstantCoffee #NoCicory #CoffeeLover "
+        "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
         "#IndianCoffee #PremiumCoffee #CoffeeCarousel #SaveThis #LearnWithCoffee"
     ),
     "linkedin": (
@@ -91,15 +90,15 @@ HASHTAG_SETS = {
         "#CPGIndia #FMCGIndia #BrandBuilding #Entrepreneurship"
     ),
     "instagram": (
-        "#PurityBeans #PureCoffee #InstantCoffee #NoCicory #CoffeeLover "
+        "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
         "#IndianCoffee #CoffeeIndia #MorningBrew #CoffeeDaily"
     ),
     "story": (
-        "#PurityBeans #PureCoffee #InstantCoffee #NoCicory #CoffeeLover"
+        "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover"
     ),
     "blog": (
         "purity beans, pure instant coffee, no chicory coffee, "
-        "best instant coffee india, 100% arabica instant coffee"
+        "instant coffee india, 100% arabica instant coffee"
     ),
     "b2b": (
         "#PurityBeans #DistributorOpportunity #FMCGIndia #CPGIndia "

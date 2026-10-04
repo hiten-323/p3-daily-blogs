@@ -10,6 +10,7 @@ Answers the questions that actually matter for Purity Beans:
 All data comes from metrics_store.revenue_attribution — feed it via
 attribution.record_conversion() or the Shopify webhook integration.
 """
+from content_generator.core.ist_dates import today_ist
 import datetime
 import logging
 
@@ -69,7 +70,7 @@ def get_revenue_by_audience(days: int = 30) -> list[dict]:
     """
     from content_generator.analytics.metrics_store import _ensure_init, _conn
     _ensure_init()
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
     with _conn() as con:
         rows = con.execute("""
             SELECT
@@ -112,7 +113,7 @@ def get_week_over_week() -> dict:
 def _get_revenue_for_range(days_ago_start: int, days_ago_end: int) -> dict:
     from content_generator.analytics.metrics_store import _ensure_init, _conn
     _ensure_init()
-    today   = datetime.date.today()
+    today   = today_ist()
     start   = (today - datetime.timedelta(days=days_ago_start)).isoformat()
     end     = (today - datetime.timedelta(days=days_ago_end)).isoformat()
     with _conn() as con:

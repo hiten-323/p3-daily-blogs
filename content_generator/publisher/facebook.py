@@ -129,19 +129,17 @@ def _post_to_page(
             with open(image_path, "rb") as f:
                 resp = requests.post(
                     f"{_GRAPH_API}/{page_id}/photos",
-                    data={"message": message, "access_token": token},
+                    data={"message": message},
                     files={"source": f},
+                    headers={"Authorization": f"Bearer {token}"},
                     timeout=60,
                 )
         else:
             # Link post (text + link preview)
             resp = requests.post(
                 f"{_GRAPH_API}/{page_id}/feed",
-                params={
-                    "message":      message,
-                    "link":         link,
-                    "access_token": token,
-                },
+                params={"message": message, "link": link},
+                headers={"Authorization": f"Bearer {token}"},
                 timeout=20,
             )
 

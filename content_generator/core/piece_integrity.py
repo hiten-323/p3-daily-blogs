@@ -29,7 +29,7 @@ _REEL_LABELS = {"reel_1", "reel_2", "growth_reel"}
 
 _DEFAULT_HASHTAGS = (
     "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
-    "#IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #FreezeDriedCoffee "
+    "#IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar "
     "#GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture "
     "#SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience "
     "#MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove"
@@ -204,8 +204,12 @@ def _compose_caption(piece: dict, label: str, seed: str) -> str:
         text += " Purity Beans."
     if not any(token in low for token in (
         "100% coffee", "100 percent coffee", "zero chicory", "no chicory", "pure coffee",
+        "100% arabica", "100% robusta", "70% coffee", "70 percent coffee",
     )):
-        text += " 100% coffee, zero chicory."
+        if "ultra" in low:
+            text += " Ultra Blend is 70% coffee."
+        else:
+            text += " Bold, Purista, Purica, and Prima are 100% coffee with zero chicory."
     if "p3online.in" not in low:
         text += " Visit p3online.in."
     return text.strip()
@@ -259,6 +263,8 @@ def _alias_blog_fields(piece: dict) -> None:
             if isinstance(closing, str) and closing.strip():
                 piece["conclusion"] = _plain_text(closing)
                 break
+    from content_generator.core.blog_quality import normalize_blog_piece
+    normalize_blog_piece(piece)
 
 
 def ensure_structural_fields(piece: dict, label: str = "") -> dict:

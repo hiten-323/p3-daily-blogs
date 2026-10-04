@@ -13,9 +13,11 @@ def test_missing_instagram_credentials_fail_closed() -> None:
     text = TOKEN_WORKFLOW.read_text(encoding="utf-8")
     marker = "if not account_id or not token:"
     assert marker in text
-    block = text.split(marker, 1)[1].split("query =", 1)[0]
+    block = text.split(marker, 1)[1].split("url =", 1)[0]
     assert "sys.exit(1)" in block
     assert "sys.exit(0)" not in block
+    assert "access_token" not in text
+    assert "Authorization" in text
 
 
 def test_token_health_uses_graph_v24() -> None:

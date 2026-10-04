@@ -16,14 +16,14 @@ follower counts a personal reply converts far better than automation anyway.
 LEAD_MAGNETS = [
     {
         "keyword": "CHICORY",
-        "promise": "the 30-second test to check if YOUR coffee has chicory",
+        "promise": "how to read a jar and see whether chicory is listed",
         "deliverable": (
-            "The Chicory Test (works on any instant coffee):\n"
-            "1. Add a spoon of your coffee to a glass of COLD water. Do not stir.\n"
-            "2. Pure coffee floats and dissolves slowly, staining the water evenly.\n"
-            "3. Chicory sinks fast and sends brown streaks straight down.\n"
-            "The faster and heavier it sinks, the more chicory it has.\n"
-            "Purity Beans is 100% coffee — it floats. See for yourself: p3online.in"
+            "Check the label, not a kitchen experiment:\n"
+            "1. Read the ingredient list. Chicory is named when it is in the jar.\n"
+            "2. 'Coffee-chicory mix' means chicory is in that jar.\n"
+            "3. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. "
+            "Ultra Blend is 70% coffee.\n"
+            "See the jars: p3online.in"
         ),
     },
     {
@@ -32,12 +32,12 @@ LEAD_MAGNETS = [
         "deliverable": (
             "Pure Coffee Buyer's Guide (India):\n"
             "- 'Coffee-chicory mix' = it has chicory, however small the print.\n"
-            "- 'Instant coffee' with no % usually means a blend.\n"
-            "- Look for '100% coffee' stated plainly — if it's not there, assume filler.\n"
-            "- Freeze-dried = gentler process, keeps aroma. Agglomerated = spray-dried "
-            "then clumped, still pure if labelled 100% coffee.\n"
-            "- Price is not proof of purity. The label is.\n"
-            "Purity Beans prints exactly what's inside: p3online.in"
+            "- Look for chicory on the ingredient list. If it is named, it is in the jar.\n"
+            "- '100% coffee' has to name the jar. Purity Beans Bold, Purista, Purica, and Prima are 100% coffee.\n"
+            "- Purica is freeze-dried 100% Arabica. Prima is Premium Agglomerate 100% Arabica, not freeze-dried.\n"
+            "- Bold and Purista are 100% Robusta. Ultra Blend is 70% coffee.\n"
+            "- Price is not proof of what is in the jar. The label is.\n"
+            "Purity Beans prints the jar facts at p3online.in"
         ),
     },
     {
@@ -69,10 +69,11 @@ LEAD_MAGNETS = [
         "promise": "which Purity Beans variant matches how YOU drink coffee",
         "deliverable": (
             "Find your match:\n"
-            "- Drink it black / like it strong -> BOLD\n"
-            "- With milk, every morning, everyday cup -> ULTRA BLEND\n"
-            "- You notice quality, want a smooth gourmet cup -> PURISTA\n"
-            "- Gifting, hosting, or want the premium jar -> PURICA\n"
+            "- 100% Robusta, freeze-dried granules -> PURISTA\n"
+            "- 100% Robusta, agglomerated -> BOLD\n"
+            "- Freeze-dried 100% Arabica -> PURICA\n"
+            "- Premium Agglomerate, 100% Arabica -> PRIMA\n"
+            "- 70% coffee, the jar a lower-caffeine description fits -> ULTRA BLEND\n"
             "Tell me how you drink it and I'll confirm. Shop: p3online.in"
         ),
     },
@@ -83,7 +84,7 @@ LEAD_MAGNETS = [
             "Your coffee math:\n"
             "- Cafe cup ~Rs 180 x 300 days = ~Rs 54,000/year\n"
             "- Purity Beans at home ~Rs 18 a cup = ~Rs 5,400/year\n"
-            "- Same caffeine. No chicory. Roughly Rs 48,000 back in your pocket.\n"
+            "- Those two prices are the comparison. Do not assume every jar has the same caffeine: Ultra Blend is 70% coffee.\n"
             "Do the math on your own habit — then see p3online.in"
         ),
     },
@@ -106,8 +107,8 @@ LEAD_MAGNETS = [
             "7-day swap (so the taste change never jolts you):\n"
             "Day 1-2: your usual, but half a spoon less.\n"
             "Day 3-4: half your usual + half Purity Beans in the same cup.\n"
-            "Day 5-6: mostly Purity Beans, slightly less sugar (pure coffee needs less).\n"
-            "Day 7: full cup, no chicory. Most people stop wanting the old taste here.\n"
+            "Day 5-6: mostly a 100% coffee Purity Beans jar (not Ultra Blend).\n"
+            "Day 7: a full cup of that jar. Ultra Blend is 70% coffee, so do not call it zero chicory.\n"
             "Start the swap: p3online.in"
         ),
     },

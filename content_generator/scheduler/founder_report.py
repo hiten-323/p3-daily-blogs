@@ -37,6 +37,7 @@ If WhatsApp is not configured, the report is printed to the console
 and sent via the watchdog alert channel (Slack/Discord webhook).
 """
 from __future__ import annotations
+from content_generator.core.ist_dates import today_ist
 import datetime
 import logging
 import os
@@ -70,7 +71,7 @@ def send_founder_report(content: dict, pipeline_result: dict = None) -> bool:
 
 def _build_report(content: dict, pipeline_result: dict) -> str:
     """Compose the full founder report message."""
-    today    = datetime.date.today().strftime("%d %b %Y")
+    today    = today_ist().strftime("%d %b %Y")
     day_num  = content.get("day_number", "?")
     source   = content.get("_source", "")
     recycled = content.get("_recycled", False)

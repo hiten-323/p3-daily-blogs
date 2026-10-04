@@ -13,6 +13,7 @@ smarter", it doesn't belong here.
 Runs Mondays inside the daily pipeline; writes output/reports/founder_brief_<date>.md
 """
 from __future__ import annotations
+from content_generator.core.ist_dates import today_ist
 import datetime
 import json
 import logging
@@ -29,7 +30,7 @@ _EQUITY_INPUTS = os.path.join(_LEARNING_DIR, "brand_equity_inputs.json")
 
 def compute_evpoi(days: int = 7) -> dict:
     """IG-attributed revenue per 1000 organic impressions (reach as proxy)."""
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
 
     ig_revenue = 0.0
     rev_path = os.path.join(_LEARNING_DIR, "revenue_log.json")
@@ -111,7 +112,7 @@ def compute_brand_equity(days: int = 30) -> dict:
 
 def compute_learning_velocity(days: int = 7) -> dict:
     """What did the system validate / retire this week?"""
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
     validated, retired = [], []
     try:
         from content_generator.core.learning_engine import analyze, _load_log
@@ -136,7 +137,7 @@ def compute_learning_velocity(days: int = 7) -> dict:
 
 def generate_founder_brief() -> str:
     """Write the weekly brief; returns the file path."""
-    today  = datetime.date.today()
+    today  = today_ist()
     evpoi  = compute_evpoi()
     equity = compute_brand_equity()
     learn  = compute_learning_velocity()

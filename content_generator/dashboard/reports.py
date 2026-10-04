@@ -11,6 +11,7 @@ Usage:
     print_report(days=7)
     save_report(days=7, output_path="output/report_2026-W23.json")
 """
+from content_generator.core.ist_dates import today_ist
 import json
 import logging
 import os
@@ -35,7 +36,7 @@ def save_report(days: int = 7, output_path: str = None) -> str:
     """Save JSON report to file. Returns file path."""
     report  = get_report(days=days)
     if output_path is None:
-        date_str     = datetime.date.today().isoformat()
+        date_str     = today_ist().isoformat()
         os.makedirs("output", exist_ok=True)
         output_path  = os.path.join("output", f"report_{date_str}_days{days}.json")
 

@@ -14,6 +14,7 @@ it clearly teaches, demonstrates or tells a story. Over-counting promotion is th
 safe direction to be wrong in — it makes the engine publish more value, not less.
 """
 from __future__ import annotations
+from content_generator.core.ist_dates import today_ist
 import datetime
 import json
 import logging
@@ -79,7 +80,7 @@ def record(asset_id: str, kind: str) -> None:
     """Log what was actually published, so the ratio reflects reality."""
     rows = _load()
     rows.append({"asset_id": asset_id, "kind": kind,
-                 "date": datetime.date.today().isoformat()})
+                 "date": today_ist().isoformat()})
     os.makedirs(_LEARNING_DIR, exist_ok=True)
     with open(_LEDGER, "w", encoding="utf-8") as f:
         json.dump(rows[-200:], f, indent=2)

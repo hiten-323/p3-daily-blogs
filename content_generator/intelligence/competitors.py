@@ -7,6 +7,7 @@ by replacing the fetch stubs with real API calls.
 
 Data stored in: output/competitors.json  (or COMPETITOR_DATA_PATH env var)
 """
+from content_generator.core.ist_dates import today_ist
 import json
 import os
 import logging
@@ -84,7 +85,7 @@ def record_competitor_post(
         "saves":        saves,
         "notes":        notes,
         "platform":     platform,
-        "recorded_at":  datetime.date.today().isoformat(),
+        "recorded_at":  today_ist().isoformat(),
     })
     _save(data)
     logger.info("[competitors] Logged '%s' from %s (%d views)", hook_text[:40], competitor, views)

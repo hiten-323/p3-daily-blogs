@@ -430,12 +430,12 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
 # without a fact fails brand validation and gets the whole asset rejected.
 # Framing still varies, and only 2 of 6 mention chicory (no daily sermon).
 _BRAND_TAGLINES = (
-    "Try Purity Beans — 100% pure coffee.",
-    "Purity Beans — pure coffee, nothing added.",
-    "Purity Beans — premium instant coffee with no fillers.",
-    "Try Purity Beans — zero chicory, 100% coffee.",
-    "Purity Beans — pure coffee, the way it should be.",
-    "Purity Beans — read the label: no chicory, no fillers.",
+    "Bold, Purista, Purica, and Prima are 100% coffee.",
+    "Purity Beans — Ultra Blend is 70% coffee.",
+    "Purity Beans — 100% Arabica in Purica and Prima.",
+    "Try Purity Beans — zero chicory on the 100% coffee jars.",
+    "Purity Beans — Bold and Purista are 100% Robusta.",
+    "Purity Beans — read the label: 70% coffee in Ultra Blend.",
 )
 
 def _brand_tagline(seed_text: str) -> str:
@@ -452,9 +452,34 @@ _UNSUPPORTED_STATS = [
 # Everything else numeric about coffee/chicory/the market is unsupported.
 _ALLOWED_NUMERIC = re.compile(
     r"\b100\s*%\s*(pure\s+)?coffee|\b100\s*percent\s+coffee|zero\s+chicory|"
-    r"\b0\s*%\s*chicory|\b100\s*%\s*pure|\brs\.?\s*\d+\s*(/-)?\s*(per\s+cup|a\s+cup)?",
+    r"\b0\s*%\s*chicory|\b100\s*%\s*pure|"
+    r"\b100\s*(?:%|percent)\s*(?:pure\s+)?(?:arabica|robusta)|"
+    r"\b70\s*(?:%|percent)\s*coffee|"
+    r"\brs\.?\s*\d+\s*(/-)?\s*(per\s+cup|a\s+cup)?",
     re.I,
 )
+_PERCENT_TOKEN = re.compile(r"\b\d+\s*(?:%|percent\b)", re.I)
+_ALLOWED_PERCENT_SPAN = re.compile(
+    r"^(?:100\s*(?:%|percent)\s*(?:pure\s+)?(?:coffee|arabica|robusta)"
+    r"|100\s*%\s*pure"
+    r"|0\s*(?:%|percent)\s*chicory"
+    r"|70\s*(?:%|percent)\s*coffee)\b",
+    re.I,
+)
+
+
+def _percent_claims_allowed(sentence: str) -> bool:
+    """Every percentage in the sentence has to be one of our jar facts."""
+    matches = list(_PERCENT_TOKEN.finditer(sentence))
+    if not matches:
+        return False
+    for match in matches:
+        span = sentence[match.start(): match.end() + 32]
+        if not _ALLOWED_PERCENT_SPAN.match(span):
+            return False
+    return True
+
+
 # Any other numeric/statistical claim pattern — fabricated unless whitelisted.
 # Quantities spelled as words. "40%" was caught; "50 percent" and "fifty
 # percent" were not — the pattern required the % symbol, so the exact claim
@@ -473,6 +498,19 @@ _STAT_PATTERNS = re.compile(
     r"\b(most|majority of|\d+)\s+(people|indians|brands|coffees)\s+(don'?t know|are|have|contain)\b",
     re.I,
 )
+
+
+def sentence_has_unsupported_statistic(sentence: str) -> bool:
+    """True when a numeric claim is not a verified jar, price, or zero-chicory fact.
+
+    One allowed percentage used to whitelist the rest of the sentence, so
+    "100% coffee and 40% chicory" survived. Each percentage is checked.
+    """
+    if not sentence or not _STAT_PATTERNS.search(sentence):
+        return False
+    if _PERCENT_TOKEN.search(sentence):
+        return not _percent_claims_allowed(sentence)
+    return not bool(_ALLOWED_NUMERIC.search(sentence))
 
 # Assertions about what is inside SOMEONE ELSE'S product.
 #
@@ -544,7 +582,7 @@ def _strip_unsupported_stats(text: str) -> str:
     # 2. pattern-based: drop any sentence carrying a non-whitelisted number claim
     kept = []
     for sentence in re.split(r'(?<=[.!?])\s+', text):
-        if _STAT_PATTERNS.search(sentence) and not _ALLOWED_NUMERIC.search(sentence):
+        if sentence_has_unsupported_statistic(sentence):
             logger.warning("[brand] stripped unsupported statistic: %r", sentence[:90])
             continue
         # 3. any claim about what a COMPETITOR puts in their product, with or
@@ -559,8 +597,8 @@ def _strip_unsupported_stats(text: str) -> str:
 
 
 _DEFAULT_HASHTAGS = (
-    "#PurityBeans #PureCoffee #InstantCoffee #NoCicory #CoffeeLover "
-    "#IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #FreezeDriedCoffee "
+    "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
+    "#IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar "
     "#GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture "
     "#SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience "
     "#MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove"
@@ -1264,7 +1302,8 @@ def _filter_recently_nurtured(leads: list[dict], cooldown_days: int = 3) -> list
 def _maybe_weekly_summary() -> None:
     if os.getenv("ENABLE_WEEKLY_SUMMARY", "true").lower() != "true":
         return
-    if datetime.date.today().weekday() != 0:   # 0 = Monday
+    from content_generator.core.ist_dates import today_ist
+    if today_ist().weekday() != 0:   # 0 = Monday IST, not the runner's UTC date
         return
     try:
         from content_generator.dashboard.weekly_summary import generate_weekly_summary

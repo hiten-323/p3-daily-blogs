@@ -151,10 +151,15 @@ def _graph_get(path: str, params: dict, bypass_circuit: bool = False) -> dict | 
     token = os.getenv("INSTAGRAM_ACCESS_TOKEN")
     if not token or (_circuit_open and not bypass_circuit):
         return None
-    params = {**params, "access_token": token}
     url = f"{_GRAPH_API}/{path}?{urllib.parse.urlencode(params)}"
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "PurityBeans/1.0"})
+        req = urllib.request.Request(
+            url,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "User-Agent": "PurityBeans/1.0",
+            },
+        )
         resp = urllib.request.urlopen(req, timeout=_TIMEOUT)
         payload = json.loads(resp.read().decode("utf-8"))
         _consecutive_failures = 0

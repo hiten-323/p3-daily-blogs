@@ -11,6 +11,7 @@ Output:
 
 Schedule: triggered from scheduler/daily.py when weekday == Monday (0).
 """
+from content_generator.core.ist_dates import today_ist
 import datetime
 import json
 import logging
@@ -35,7 +36,7 @@ def generate_weekly_summary(days: int = 7) -> dict:
     from content_generator.strategy.content_mix_optimizer import get_todays_mix, get_weekly_content_plan
     from content_generator.strategy.hook_optimizer import get_hook_performance_table
 
-    today     = datetime.date.today()
+    today     = today_ist()
     week_str  = today.strftime("%Y-W%V")
     metrics   = get_all_metrics(days=days)
 

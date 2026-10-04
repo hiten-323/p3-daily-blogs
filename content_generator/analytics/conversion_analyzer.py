@@ -7,6 +7,7 @@ Answers:
   • Which hook archetype drives the most purchases?
   • Is distributor content undervalued by views but overvalued by revenue?
 """
+from content_generator.core.ist_dates import today_ist
 import datetime
 import logging
 
@@ -31,7 +32,7 @@ def get_funnel_report(days: int = 30) -> dict:
     """
     from content_generator.analytics.metrics_store import _ensure_init, _conn
     _ensure_init()
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
 
     with _conn() as con:
         rows = con.execute("""
@@ -68,7 +69,7 @@ def get_content_type_roi(days: int = 30) -> list[dict]:
     """
     from content_generator.analytics.metrics_store import _ensure_init, _conn
     _ensure_init()
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
 
     with _conn() as con:
         rows = con.execute("""
@@ -101,7 +102,7 @@ def get_hook_roi(days: int = 30) -> list[dict]:
     """
     from content_generator.analytics.metrics_store import _ensure_init, _conn
     _ensure_init()
-    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    cutoff = (today_ist() - datetime.timedelta(days=days)).isoformat()
 
     with _conn() as con:
         rows = con.execute("""

@@ -266,7 +266,7 @@ def main():
 
     try:
         calls.clear()
-        def errored(method, url, params=None, timeout=None):
+        def errored(method, url, params=None, timeout=None, headers=None):
             calls.append((method, url, params or {}))
             if method == "GET":
                 return _Resp({"status_code": "ERROR", "status": "Media download failed"})
@@ -278,7 +278,7 @@ def main():
         check("ERROR reason is surfaced", "Media download failed" in (result.get("error") or ""), result.get("error"))
 
         calls.clear()
-        def stalled(method, url, params=None, timeout=None):
+        def stalled(method, url, params=None, timeout=None, headers=None):
             calls.append((method, url, params or {}))
             if method == "GET":
                 return _Resp({"status_code": "IN_PROGRESS"})
@@ -290,7 +290,7 @@ def main():
         check("timeout names the last status", "timeout" in (result.get("error") or "").lower(), result.get("error"))
 
         calls.clear()
-        def one_child(method, url, params=None, timeout=None):
+        def one_child(method, url, params=None, timeout=None, headers=None):
             calls.append((method, url, params or {}))
             params = params or {}
             if method == "GET":
@@ -315,7 +315,7 @@ def main():
 
         calls.clear()
         state = {"n": 0}
-        def flaky(method, url, params=None, timeout=None):
+        def flaky(method, url, params=None, timeout=None, headers=None):
             calls.append((method, url, params or {}))
             state["n"] += 1
             if state["n"] == 1:

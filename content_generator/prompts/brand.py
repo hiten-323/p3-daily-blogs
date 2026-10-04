@@ -31,8 +31,7 @@ def brand_block() -> str:
     return (
         f"BRAND: {BRAND['name']} (by {BRAND.get('company', 'Pure Pantry Provisions')}) — premium pure instant coffee, India.\n"
         f"USP: {POSITIONING['usp']}\n"
-        f"Price: Rs{POSITIONING['price_per_cup']}/cup vs Rs{POSITIONING['cafe_price']} at cafes "
-        f"(10x cheaper, 100x purer)\n"
+        f"Price: Rs{POSITIONING['price_per_cup']}/cup vs Rs{POSITIONING['cafe_price']} at cafes.\n"
         f"Website: {WEBSITE_URL} | Tagline: \"{BRAND['tagline']}\"\n"
         f"Tone: Premium but human. Honest, not corporate. Indian in DNA.\n"
         f"\n"
@@ -41,8 +40,14 @@ def brand_block() -> str:
         f"MANDATORY BRAND RULES — these are non-negotiable:\n"
         f"1. The brand name 'Purity Beans' MUST appear at least once in every caption, hook, body, and CTA.\n"
         f"2. The website '{WEBSITE_URL}' MUST appear in every caption and CTA.\n"
-        f"3. At least one of these must appear: 'zero chicory' / '100% coffee' / 'pure coffee' / 'no chicory'.\n"
-        f"4. Never use generic phrases. Every line must be specific to Purity Beans.\n"
+        f"3. Bold, Purista, Purica, and Prima may be called 100% coffee and zero chicory. "
+        f"Prima / Premium Agglomerate is 100% Arabica and agglomerated, not freeze-dried. "
+        f"Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta.\n"
+        f"4. Ultra Blend is 70% coffee. You may describe only that jar as lower caffeine. "
+        f"Never call Ultra Blend 100% coffee, zero chicory, no chicory, or 0% chicory.\n"
+        f"5. Do not invent prices, percentages, health outcomes, certificates, sourcing, or competitor recipes. "
+        f"Do not write \"India's cleanest\", \"India's first\", or \"India's only\".\n"
+        f"6. Never use generic phrases. Every line must be specific to Purity Beans.\n"
         f"\n"
         f"{psych}\n"
         f"\n"
@@ -53,19 +58,45 @@ def brand_block() -> str:
     )
 
 
+def _recent_saved_content(days: int = 14) -> list[dict]:
+    """Last N days of committed content files. There is no engine.database."""
+    import datetime
+    import json
+    import re
+    from pathlib import Path
+
+    from content_generator.core.ist_dates import today_ist
+
+    cutoff = today_ist() - datetime.timedelta(days=days)
+    history: list[dict] = []
+    root = Path("output")
+    if not root.is_dir():
+        return history
+    for path in sorted(root.glob("content_*.json")):
+        found = re.search(r"content_(\d{4}-\d{2}-\d{2})\.json$", path.name)
+        if not found:
+            continue
+        try:
+            stamped = datetime.date.fromisoformat(found.group(1))
+        except ValueError:
+            continue
+        if stamped < cutoff:
+            continue
+        try:
+            content = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if isinstance(content, dict):
+            history.append({"date": found.group(1), "content": content})
+    return history
+
+
 def build_avoid_block() -> str:
     """
-    Reads last 14 days of published content from the DB and returns a
-    DO-NOT-REPEAT block listing used archetypes, hooks, titles, and angles.
-    Returns empty string on first run or DB error.
+    Last 14 days of saved content, so today's post does not repeat a slug,
+    title, hook, or angle. Returns empty string when nothing has been saved.
     """
-    try:
-        from engine.database import get_recent_content_history
-        history = get_recent_content_history(days=14)
-    except Exception as e:
-        logger.debug("Could not load content history: %s", e)
-        return ""
-
+    history = _recent_saved_content(days=14)
     if not history:
         return ""
 
@@ -74,6 +105,7 @@ def build_avoid_block() -> str:
     carousel_titles: list[str] = []
     save_mechs: list[str]      = []
     li_angles: list[str]       = []
+    blog_posts: list[str]      = []
 
     for entry in history:
         c    = entry.get("content", {})
@@ -91,8 +123,14 @@ def build_avoid_block() -> str:
         li = (c.get("linkedin_post") or {})
         ag = (li.get("angle") or li.get("linkedin_angle") or "").strip()
         if ag: li_angles.append(f"[{date}] {ag[:80]}")
+        blog = c.get("blog_post") or {}
+        if isinstance(blog, dict):
+            title = str(blog.get("title") or "").strip()
+            slug = str(blog.get("slug") or "").strip()
+            if title or slug:
+                blog_posts.append(f"[{date}] {title} (slug: {slug})")
 
-    if not any([reel_hooks, reel_archetypes, carousel_titles]):
+    if not any([reel_hooks, reel_archetypes, carousel_titles, blog_posts]):
         return ""
 
     lines = [
@@ -119,4 +157,8 @@ def build_avoid_block() -> str:
     if li_angles:
         lines.append("LINKEDIN ANGLES USED (use a completely different POV):")
         lines += [f"  - {a}" for a in li_angles[-4:]]
+        lines.append("")
+    if blog_posts:
+        lines.append("BLOG TITLES AND SLUGS ALREADY USED (write a new slug and a new angle):")
+        lines += [f"  - {b}" for b in blog_posts[-14:]]
     return "\n".join(lines)

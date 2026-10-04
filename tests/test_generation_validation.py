@@ -1,6 +1,8 @@
 """Generation must leave carousel, instagram_post, and a reel able to publish.
 
-The fixture is output/content_2026-10-03.json from gen_2026-10-03_3af01357:
+The fixture is tests/fixtures/day275_pre_repair.json from gen_2026-10-03_3af01357.
+The daily pipeline overwrites output/content_YYYY-MM-DD.json, so this test must
+not read that live file.
 reel_1 had 4 frames, carousel and growth were stored as editorial 0 without a
 measured review, instagram scored 7.9, and the blog used intro/body_html.
 """
@@ -10,7 +12,7 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTENT = ROOT / "output" / "content_2026-10-03.json"
+CONTENT = ROOT / "tests" / "fixtures" / "day275_pre_repair.json"
 
 _DIMS = ("shareability", "saveability", "emotion_pull", "hook_strength", "brand_clarity")
 

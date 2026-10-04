@@ -17,6 +17,7 @@ import os
 import json
 import logging
 import datetime
+import uuid
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from content_generator.rotation import (
@@ -391,11 +392,18 @@ def generate_daily_content(
 
 
 def save_content(content_data: dict, output_dir: str = "output") -> str:
+    if not isinstance(content_data, dict):
+        raise TypeError("content_data must be a dict")
     os.makedirs(output_dir, exist_ok=True)
     # Filename and the date field are the same IST day. Legacy long-form
     # dates already in the dict are normalized so later slots can match them.
     date_str = content_date_iso(content_data.get("date")) or today_ist().isoformat()
     content_data["date"] = date_str
+    if not str(content_data.get("generation_id") or "").strip():
+        source = str(content_data.get("_source") or content_data.get("source") or "generated").strip()
+        prefix = "fallback" if source.startswith("emergency_fallback") else "gen"
+        content_data["generation_id"] = f"{prefix}_{date_str}_{uuid.uuid4().hex[:8]}"
+        logger.info("[pipeline] assigned missing generation_id=%s", content_data["generation_id"])
     filepath = os.path.join(output_dir, f"content_{date_str}.json")
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(content_data, f, indent=2, ensure_ascii=False)

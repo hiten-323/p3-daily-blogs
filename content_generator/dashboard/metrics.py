@@ -4,6 +4,7 @@ Dashboard metrics aggregator.
 Single entry point for all KPI data — called by reports.py and weekly_summary.py.
 Every metric degrades gracefully when data is sparse.
 """
+from content_generator.core.ist_dates import today_ist
 import datetime
 import logging
 
@@ -28,8 +29,8 @@ def get_all_metrics(days: int = 7) -> dict:
         "system_health":    { api status, last run, errors },
     }
     """
-    cutoff = datetime.date.today() - datetime.timedelta(days=days)
-    period = f"{days} days ending {datetime.date.today().isoformat()}"
+    cutoff = today_ist() - datetime.timedelta(days=days)
+    period = f"{days} days ending {today_ist().isoformat()}"
 
     metrics: dict = {"period": period, "days": days}
 

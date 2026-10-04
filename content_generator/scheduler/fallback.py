@@ -20,7 +20,6 @@ Usage (called automatically by daily.py):
     content = emergency_content_set(day_number=42)
 """
 from __future__ import annotations
-import datetime
 import logging
 import random
 
@@ -75,9 +74,9 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "YOUR TURN",
              "spoken": "Check the jar in your kitchen tonight and see what it says."},
         ],
-        "body":    "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
+        "body":    "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
         "caption": ("The front of a coffee pack is marketing. The back is the recipe.\n\n"
-                    "Purity Beans lists one ingredient: coffee. Zero chicory, nothing added.\n\n"
+                    "Purity Beans — Bold, Purista, Purica, and Prima list one ingredient: coffee, with zero chicory. Ultra Blend is 70% coffee.\n\n"
                     "Check the jar in your kitchen tonight.\n\np3online.in"),
         "cta":     "Read the label, then shop at p3online.in",
         "comment_trigger": "What does the label on your jar actually say?",
@@ -107,7 +106,7 @@ _EVERGREEN: list[dict] = [
              "body": "Ingredients are listed by weight, so the first one is the bulk of it.",
              "visual": "Ingredient panel with the first line highlighted"},
             {"slide": 5, "heading": "What ours says",
-             "body": "Purity Beans lists coffee. Zero chicory, no additives.",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
              "visual": "Purity Beans jar, label facing camera"},
             # The schema requires the website on the final slide — the carousel
             # is the one format where the CTA lives in the image, not the caption.
@@ -117,7 +116,7 @@ _EVERGREEN: list[dict] = [
              "visual": "Hand turning a jar on a kitchen counter"},
         ],
         "caption": ("Three things worth checking on any coffee label.\n\n"
-                    "Purity Beans lists one ingredient: coffee.\n\n"
+                    "Purity Beans — Bold, Purista, Purica, and Prima list one ingredient: coffee. Ultra Blend is 70% coffee.\n\n"
                     "Zero chicory, no additives.\n\np3online.in"),
         "cta":     "Shop pure coffee at p3online.in",
         "comment_trigger": "Which of the three surprised you?",
@@ -128,11 +127,11 @@ _EVERGREEN: list[dict] = [
     },
     {
         "type":    "instagram_post",
-        "hook":    "One ingredient. That is the whole list.",
-        "body":    "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
-        "caption": ("One ingredient. That is the whole list.\n\n"
-                    "Purity Beans is 100% coffee — zero chicory, no additives, "
-                    "no preservatives.\n\nTurn your jar around and compare.\n\np3online.in"),
+        "hook":    "Read the jar. The list is the product.",
+        "body":    "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": ("Read the jar. The list is the product.\n\n"
+                    "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. "
+                    "Ultra Blend is 70% coffee.\n\nTurn your jar around and compare.\n\np3online.in"),
         "cta":     "Shop at p3online.in",
         "comment_trigger": "How many ingredients are on your jar?",
         "save_trigger":    "Save this for your next grocery run.",
@@ -146,8 +145,8 @@ _EVERGREEN: list[dict] = [
         "body": (
             "Instant coffee in India is a category where the ingredient list is "
             "the most informative thing on the pack, and the least read.\n\n"
-            "We built Purity Beans around a simple constraint: one ingredient. "
-            "Coffee. Zero chicory, no additives, no preservatives.\n\n"
+            "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. "
+            "Ultra Blend is 70% coffee.\n\n"
             "That constraint decides sourcing, cost and shelf positioning — it is "
             "a harder product to make and an easier one to explain.\n\n"
             "For distributors and retailers interested in stocking it, my DMs are open.\n\n"
@@ -172,11 +171,11 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "ANYTHING ELSE",
              "spoken": "Everything after the first line is there for a reason. Worth knowing which."},
             {"on_screen": "WHAT OURS SAYS",
-             "spoken": "Purity Beans lists coffee. Zero chicory, no additives, no preservatives."},
+             "spoken": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee."},
             {"on_screen": "GO COUNT",
              "spoken": "Go count the lines on the jar in your kitchen right now."},
         ],
-        "body": "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
         "caption": "Count the ingredients on your instant coffee.\n\nCoffee needs one. Purity Beans lists one: coffee.\n\nCheck the jar in your kitchen tonight.\n\np3online.in",
         "cta": "Count yours, then shop at p3online.in",
         "comment_trigger": "How many ingredients does your jar list?",
@@ -206,13 +205,13 @@ _EVERGREEN: list[dict] = [
              "body": "The front of a pack is designed. The back is declared.",
              "visual": "Jar being turned from front to back"},
             {"slide": 5, "heading": "What ours says",
-             "body": "Purity Beans lists coffee. Zero chicory, no additives.",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
              "visual": "Purity Beans jar, label facing camera"},
             {"slide": 6, "heading": "Check yours tonight",
              "body": "Turn the jar around and read the list. Purity Beans - p3online.in",
              "visual": "Hand turning a jar on a kitchen counter"},
         ],
-        "caption": "100% coffee is a claim about the ingredient list, not about strength or roast.\n\nPurity Beans lists one ingredient: coffee.\n\nCheck the jar in your kitchen tonight.\n\np3online.in",
+        "caption": "100% coffee is a claim about the ingredient list, not about strength or roast.\n\nPurity Beans — Bold, Purista, Purica, and Prima list one ingredient: coffee. Ultra Blend is 70% coffee.\n\nCheck the jar in your kitchen tonight.\n\np3online.in",
         "cta": "Read your label, then shop at p3online.in",
         "comment_trigger": "What does your jar list after the first line?",
         "save_trigger": "Save this for your next grocery run.",
@@ -223,8 +222,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Ingredients are listed by weight, so the first line is most of the jar.",
-        "body": "That is why the order matters as much as the list. Purity Beans lists coffee. Zero chicory, no additives.",
-        "caption": "Ingredients are listed by weight, so the first line is most of what you are buying.\n\nThe order tells you as much as the list does.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "That is why the order matters as much as the list. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": "Ingredients are listed by weight, so the first line is most of what you are buying.\n\nThe order tells you as much as the list does.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Read the label, then shop at p3online.in",
         "comment_trigger": "What is the first ingredient on your jar?",
         "save_trigger": "Save this for your next grocery run.",
@@ -248,12 +247,12 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "FIVE SECONDS",
              "spoken": "Which means you can find out by turning the jar around."},
             {"on_screen": "WHAT OURS SAYS",
-             "spoken": "Purity Beans lists coffee and nothing else. Zero chicory."},
+             "spoken": "Purity Beans — Bold, Purista, Purica, and Prima list coffee and nothing else, with zero chicory. Ultra Blend is 70% coffee."},
             {"on_screen": "CHECK YOURS",
              "spoken": "Turn your jar around tonight and look for the word."},
         ],
-        "body": "Chicory is a roasted root. It is declared on the label when present. Purity Beans lists coffee only.",
-        "caption": "Chicory is a root, not a bean. Roasted and ground, it looks like coffee.\n\nWhen it is in a jar it is named on the label, so you can check in seconds.\n\nPurity Beans lists coffee. Zero chicory.\n\np3online.in",
+        "body": "Chicory is a roasted root. It is declared on the label when present. Purity Beans — Bold, Purista, Purica, and Prima list coffee only.",
+        "caption": "Chicory is a root, not a bean. Roasted and ground, it looks like coffee.\n\nWhen it is in a jar it is named on the label, so you can check in seconds.\n\nPurity Beans — Bold, Purista, Purica, and Prima list coffee, with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Check your label, then shop at p3online.in",
         "comment_trigger": "Does the word chicory appear on your jar?",
         "save_trigger": "Save this so you remember what to look for.",
@@ -285,10 +284,10 @@ _EVERGREEN: list[dict] = [
              "body": "Turning the jar around answers the question in seconds.",
              "visual": "Hand rotating a jar to the back label"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans lists coffee. Zero chicory. p3online.in",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima list coffee, with zero chicory. Ultra Blend is 70% coffee. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Chicory is a root, not a bean. Roasted and ground it looks like coffee, and it is always named on the label when present.\n\nPurity Beans lists coffee. Zero chicory.\n\nCheck the jar in your kitchen tonight.\n\np3online.in",
+        "caption": "Chicory is a root, not a bean. Roasted and ground it looks like coffee, and it is always named on the label when present.\n\nPurity Beans — Bold, Purista, Purica, and Prima list coffee, with zero chicory. Ultra Blend is 70% coffee.\n\nCheck the jar in your kitchen tonight.\n\np3online.in",
         "cta": "Check your label, then shop at p3online.in",
         "comment_trigger": "Does the word chicory appear on your jar?",
         "save_trigger": "Save this so you know what to look for.",
@@ -299,8 +298,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Chicory is a root, not a coffee bean.",
-        "body": "Roasted and ground it looks like coffee, and it is named on the ingredient list whenever it is in the jar. Purity Beans lists coffee. Zero chicory.",
-        "caption": "Chicory is a root, not a bean.\n\nRoasted and ground it looks like coffee - and it is always named on the label when it is there.\n\nPurity Beans lists coffee. Zero chicory.\n\np3online.in",
+        "body": "Roasted and ground it looks like coffee, and it is named on the ingredient list whenever it is in the jar. Purity Beans — Bold, Purista, Purica, and Prima list coffee, with zero chicory. Ultra Blend is 70% coffee.",
+        "caption": "Chicory is a root, not a bean.\n\nRoasted and ground it looks like coffee - and it is always named on the label when it is there.\n\nPurity Beans — Bold, Purista, Purica, and Prima list coffee, with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Check your label, then shop at p3online.in",
         "comment_trigger": "Does the word chicory appear on your jar?",
         "save_trigger": "Save this so you remember what to look for.",
@@ -327,8 +326,8 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "TONIGHT",
              "spoken": "Close it tight, move it off the stove, and taste the difference this week."},
         ],
-        "body": "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
-        "caption": "Instant coffee usually goes stale in the jar, not in the shop.\n\nClose it tight, keep it off the stove, use a dry spoon.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": "Instant coffee usually goes stale in the jar, not in the shop.\n\nClose it tight, keep it off the stove, use a dry spoon.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Store it right, then restock at p3online.in",
         "comment_trigger": "Where does the coffee jar live in your kitchen?",
         "save_trigger": "Save this and move your jar tonight.",
@@ -360,10 +359,10 @@ _EVERGREEN: list[dict] = [
              "body": "Lid closed, dry spoon, cool shelf, out of the sun.",
              "visual": "Jar being moved into a closed cupboard"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is 100% coffee. Zero chicory. p3online.in",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Four things stale your coffee at home: an open lid, a wet spoon, the shelf above the stove, and direct sun.\n\nAll four are free to fix tonight.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "caption": "Four things stale your coffee at home: an open lid, a wet spoon, the shelf above the stove, and direct sun.\n\nAll four are free to fix tonight.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Store it right, then restock at p3online.in",
         "comment_trigger": "Which of the four is happening in your kitchen?",
         "save_trigger": "Save this and fix one tonight.",
@@ -374,8 +373,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "A wet spoon will clump a whole jar of instant coffee.",
-        "body": "Keep one dry spoon for coffee, close the lid between cups, and keep the jar off the shelf above the stove. Purity Beans is 100% coffee. Zero chicory.",
-        "caption": "A wet spoon will clump a whole jar.\n\nOne dry spoon, lid closed between cups, and keep it off the shelf above the stove.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Keep one dry spoon for coffee, close the lid between cups, and keep the jar off the shelf above the stove. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
+        "caption": "A wet spoon will clump a whole jar.\n\nOne dry spoon, lid closed between cups, and keep it off the shelf above the stove.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Store it right, then restock at p3online.in",
         "comment_trigger": "Where does your coffee jar live?",
         "save_trigger": "Save this and move your jar tonight.",
@@ -401,10 +400,10 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "LOOK AT IT",
              "spoken": "Freeze dried looks like crystals. Spray dried looks like fine powder."},
             {"on_screen": "OURS",
-             "spoken": "Purity Beans is freeze dried arabica. 100% coffee, zero chicory."},
+             "spoken": "Purity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory."},
         ],
-        "body": "Purity Beans is freeze dried arabica. 100% coffee, zero chicory, no additives.",
-        "caption": "Freeze dried and spray dried are not the same thing.\n\nSpray drying uses hot air. Freeze drying works cold, so more aroma survives.\n\nLook at the granules: crystals or powder.\n\nPurity Beans is freeze dried arabica. 100% coffee, zero chicory.\n\np3online.in",
+        "body": "Purity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory, no additives.",
+        "caption": "Freeze dried and spray dried are not the same thing.\n\nSpray drying uses hot air. Freeze drying works cold, so more aroma survives.\n\nLook at the granules: crystals or powder.\n\nPurity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory.\n\np3online.in",
         "cta": "Look at your granules, then shop at p3online.in",
         "comment_trigger": "Crystals or powder in your jar?",
         "save_trigger": "Save this for your next grocery run.",
@@ -436,10 +435,10 @@ _EVERGREEN: list[dict] = [
              "body": "The method is usually printed on the label. Look for it.",
              "visual": "Label with the drying method in frame"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is freeze dried arabica. 100% coffee, zero chicory. p3online.in",
+             "body": "Purity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Tip some granules into your palm before the water goes in.\n\nCrystals mean freeze dried. Fine powder means spray dried, which uses hot air.\n\nPurity Beans is freeze dried arabica. 100% coffee, zero chicory.\n\np3online.in",
+        "caption": "Tip some granules into your palm before the water goes in.\n\nCrystals mean freeze dried. Fine powder means spray dried, which uses hot air.\n\nPurity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory.\n\np3online.in",
         "cta": "Look at your granules, then shop at p3online.in",
         "comment_trigger": "Crystals or powder in your jar?",
         "save_trigger": "Save this and check your jar tonight.",
@@ -450,8 +449,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Two jars of instant coffee can look completely different in your palm.",
-        "body": "Irregular glassy crystals mean freeze dried. Even fine powder means spray dried, which uses hot air. Purity Beans is freeze dried arabica. 100% coffee, zero chicory.",
-        "caption": "Tip some into your palm before the water goes in.\n\nCrystals mean freeze dried. Fine powder means spray dried, made with hot air.\n\nPurity Beans is freeze dried arabica. 100% coffee, zero chicory.\n\np3online.in",
+        "body": "Irregular glassy crystals mean freeze dried. Even fine powder means spray dried, which uses hot air. Purity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory.",
+        "caption": "Tip some into your palm before the water goes in.\n\nCrystals mean freeze dried. Fine powder means spray dried, made with hot air.\n\nPurity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory.\n\np3online.in",
         "cta": "Look at your granules, then shop at p3online.in",
         "comment_trigger": "Crystals or powder in your jar?",
         "save_trigger": "Save this and check your jar tonight.",
@@ -478,8 +477,8 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "THREE DAYS",
              "spoken": "Three mornings and you will have your number. Then it is the same every day."},
         ],
-        "body": "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
-        "caption": "Weak coffee is usually a dose problem.\n\nOne level teaspoon, same cup, adjust by a quarter spoon at a time. Three mornings and you have your number.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": "Weak coffee is usually a dose problem.\n\nOne level teaspoon, same cup, adjust by a quarter spoon at a time. Three mornings and you have your number.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Find your spoon, then restock at p3online.in",
         "comment_trigger": "How many spoons go into your cup?",
         "save_trigger": "Save this and try it tomorrow morning.",
@@ -511,10 +510,10 @@ _EVERGREEN: list[dict] = [
              "body": "You have a number. Every cup after this one is the same.",
              "visual": "Spoon resting beside a filled cup"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is 100% coffee. Zero chicory. p3online.in",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Three mornings to find your spoon.\n\nOne level teaspoon, same cup, adjust by a quarter. Then it is the same cup every day.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "caption": "Three mornings to find your spoon.\n\nOne level teaspoon, same cup, adjust by a quarter. Then it is the same cup every day.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Find your spoon, then restock at p3online.in",
         "comment_trigger": "How many spoons go into your cup?",
         "save_trigger": "Save this and start tomorrow morning.",
@@ -525,8 +524,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Weak coffee is usually a dose problem, not a coffee problem.",
-        "body": "One level teaspoon, the same cup every morning, and adjust by a quarter spoon at a time. Three mornings and you have your number. Purity Beans is 100% coffee. Zero chicory.",
-        "caption": "Weak coffee is usually a dose problem.\n\nOne level teaspoon, same cup, adjust a quarter at a time. Three mornings and you have your number.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "One level teaspoon, the same cup every morning, and adjust by a quarter spoon at a time. Three mornings and you have your number. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
+        "caption": "Weak coffee is usually a dose problem.\n\nOne level teaspoon, same cup, adjust a quarter at a time. Three mornings and you have your number.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Find your spoon, then restock at p3online.in",
         "comment_trigger": "How many spoons go into your cup?",
         "save_trigger": "Save this and try it tomorrow.",
@@ -554,8 +553,8 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "TRY BOTH",
              "spoken": "Make one cup each way tomorrow and taste them side by side."},
         ],
-        "body": "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
-        "caption": "Water straight off the boil is hotter than coffee wants.\n\nTake the kettle off, count to thirty, then pour. That pause is the whole technique.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": "Water straight off the boil is hotter than coffee wants.\n\nTake the kettle off, count to thirty, then pour. That pause is the whole technique.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Try it tomorrow, then restock at p3online.in",
         "comment_trigger": "Do you pour straight off the boil?",
         "save_trigger": "Save this and try it in the morning.",
@@ -587,10 +586,10 @@ _EVERGREEN: list[dict] = [
              "body": "Very hot water pulls harder, and it pulls the bitterness hardest.",
              "visual": "Two cups, one darker than the other"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is 100% coffee. Zero chicory. p3online.in",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Boil, take it off, count to thirty, then pour.\n\nVery hot water pulls harder, and it pulls bitterness hardest. That pause is the whole technique.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "caption": "Boil, take it off, count to thirty, then pour.\n\nVery hot water pulls harder, and it pulls bitterness hardest. That pause is the whole technique.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Try it tomorrow, then restock at p3online.in",
         "comment_trigger": "Do you pour straight off the boil?",
         "save_trigger": "Save this and try it in the morning.",
@@ -601,8 +600,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Take the kettle off and count to thirty before you pour.",
-        "body": "Water straight off the boil pulls harder, and what it pulls hardest is the bitterness. Take it off the heat, count to thirty, then pour. Purity Beans is 100% coffee. Zero chicory.",
-        "caption": "Take the kettle off the heat and count to thirty before you pour.\n\nVery hot water pulls harder, and it pulls bitterness hardest.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Water straight off the boil pulls harder, and what it pulls hardest is the bitterness. Take it off the heat, count to thirty, then pour. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
+        "caption": "Take the kettle off the heat and count to thirty before you pour.\n\nVery hot water pulls harder, and it pulls bitterness hardest.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Try it tomorrow, then restock at p3online.in",
         "comment_trigger": "Do you pour straight off the boil?",
         "save_trigger": "Save this and try it in the morning.",
@@ -628,10 +627,10 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "IT IS ON THE PACK",
              "spoken": "Which one you are drinking is usually printed on the label."},
             {"on_screen": "OURS",
-             "spoken": "Purity Beans is freeze dried arabica. 100% coffee, zero chicory."},
+             "spoken": "Purity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory."},
         ],
-        "body": "Purity Beans is freeze dried arabica. 100% coffee, zero chicory, no additives.",
-        "caption": "Arabica and robusta are two different plants, not two grades.\n\nArabica grows higher and slower and tends to be softer. Robusta is hardier and tends to be stronger and more bitter.\n\nPurity Beans is freeze dried arabica. 100% coffee, zero chicory.\n\np3online.in",
+        "body": "Purity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory, no additives.",
+        "caption": "Arabica and robusta are two different plants, not two grades.\n\nArabica grows higher and slower and tends to be softer. Robusta is hardier and tends to be stronger and more bitter.\n\nPurity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory.\n\np3online.in",
         "cta": "Check your pack, then shop at p3online.in",
         "comment_trigger": "Which one does your pack say?",
         "save_trigger": "Save this for your next grocery run.",
@@ -663,10 +662,10 @@ _EVERGREEN: list[dict] = [
              "body": "The type is usually printed on the label. Look for it.",
              "visual": "Label with the bean type in frame"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is freeze dried arabica. 100% coffee, zero chicory. p3online.in",
+             "body": "Purity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Arabica and robusta are two species, not two grades.\n\nArabica grows higher and tends softer. Robusta is hardier and tends stronger. Neither is a verdict.\n\nPurity Beans is freeze dried arabica. 100% coffee, zero chicory.\n\np3online.in",
+        "caption": "Arabica and robusta are two species, not two grades.\n\nArabica grows higher and tends softer. Robusta is hardier and tends stronger. Neither is a verdict.\n\nPurity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory.\n\np3online.in",
         "cta": "Check your pack, then shop at p3online.in",
         "comment_trigger": "Which one does your pack say?",
         "save_trigger": "Save this for your next grocery run.",
@@ -677,8 +676,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Arabica and robusta are two different plants, not two grades.",
-        "body": "Arabica grows higher and slower and tends to taste softer. Robusta is hardier and tends to taste stronger and more bitter. Neither is a verdict. Purity Beans is freeze dried arabica. 100% coffee, zero chicory.",
-        "caption": "Arabica and robusta are two species, not two grades.\n\nArabica tends softer and more aromatic. Robusta tends stronger and more bitter. Different is not better.\n\nPurity Beans is freeze dried arabica. 100% coffee, zero chicory.\n\np3online.in",
+        "body": "Arabica grows higher and slower and tends to taste softer. Robusta is hardier and tends to taste stronger and more bitter. Neither is a verdict. Purity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory.",
+        "caption": "Arabica and robusta are two species, not two grades.\n\nArabica tends softer and more aromatic. Robusta tends stronger and more bitter. Different is not better.\n\nPurity Beans Purica is freeze-dried 100% Arabica. Bold and Purista are 100% Robusta. 100% coffee, zero chicory.\n\np3online.in",
         "cta": "Check your pack, then shop at p3online.in",
         "comment_trigger": "Which one does your pack say?",
         "save_trigger": "Save this for your next grocery run.",
@@ -704,10 +703,10 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "CHECK IN A MONTH",
              "spoken": "Smell it again in a month. If it has faded, your storage is the reason."},
             {"on_screen": "OURS",
-             "spoken": "Purity Beans is 100% coffee. Zero chicory, nothing added to smell of."},
+             "spoken": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee."},
         ],
-        "body": "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
-        "caption": "Smell the jar the moment you break the seal.\n\nThat is your reference. Smell it again in a month, and if it has faded, storage is the reason.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": "Smell the jar the moment you break the seal.\n\nThat is your reference. Smell it again in a month, and if it has faded, storage is the reason.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Smell yours tonight, then restock at p3online.in",
         "comment_trigger": "When did you last smell your coffee jar?",
         "save_trigger": "Save this and do it with your next jar.",
@@ -739,10 +738,10 @@ _EVERGREEN: list[dict] = [
              "body": "Faded means air, heat or damp got in. All three are fixable.",
              "visual": "Lid being closed firmly"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is 100% coffee. Zero chicory. p3online.in",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Smell a fresh jar the moment you open it. That is your baseline.\n\nSmell it again in a month. Faded means air, heat or damp got in, and all three are fixable.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "caption": "Smell a fresh jar the moment you open it. That is your baseline.\n\nSmell it again in a month. Faded means air, heat or damp got in, and all three are fixable.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Run the test, then restock at p3online.in",
         "comment_trigger": "When did you last smell your coffee jar?",
         "save_trigger": "Save this and start with your next jar.",
@@ -753,8 +752,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Smell a fresh jar the moment you break the seal.",
-        "body": "That is the strongest it will ever be, and it is your baseline. Smell it again in a month, and if it has faded, air, heat or damp got in. Purity Beans is 100% coffee. Zero chicory.",
-        "caption": "Smell the jar the moment you break the seal. That is your baseline.\n\nSmell it again in a month. Faded means air, heat or damp got in, and all three are fixable.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "That is the strongest it will ever be, and it is your baseline. Smell it again in a month, and if it has faded, air, heat or damp got in. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
+        "caption": "Smell the jar the moment you break the seal. That is your baseline.\n\nSmell it again in a month. Faded means air, heat or damp got in, and all three are fixable.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Run the test, then restock at p3online.in",
         "comment_trigger": "When did you last smell your coffee jar?",
         "save_trigger": "Save this and start with your next jar.",
@@ -781,8 +780,8 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "NO LUMPS",
              "spoken": "Same coffee, same milk, no lumps. The order is the whole trick."},
         ],
-        "body": "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
-        "caption": "Milk straight onto the granules is why you get lumps.\n\nSplash of hot water first, stir to a smooth paste, then top up with milk.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": "Milk straight onto the granules is why you get lumps.\n\nSplash of hot water first, stir to a smooth paste, then top up with milk.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Try it tomorrow, then restock at p3online.in",
         "comment_trigger": "Do you add water or milk first?",
         "save_trigger": "Save this and try it in the morning.",
@@ -814,10 +813,10 @@ _EVERGREEN: list[dict] = [
              "body": "Coffee dissolves in water more easily than in milk.",
              "visual": "Two cups, one smooth and one grainy"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is 100% coffee. Zero chicory. p3online.in",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Coffee in the cup, splash of hot water, stir to a smooth paste, then milk.\n\nCoffee dissolves in water more easily than in milk, which is the whole reason for the order.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "caption": "Coffee in the cup, splash of hot water, stir to a smooth paste, then milk.\n\nCoffee dissolves in water more easily than in milk, which is the whole reason for the order.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Try it tomorrow, then restock at p3online.in",
         "comment_trigger": "Do you add water or milk first?",
         "save_trigger": "Save this and try it in the morning.",
@@ -828,8 +827,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Lumps in your milk coffee are an order problem, not a coffee problem.",
-        "body": "Splash of hot water onto the granules first, stir to a smooth paste, then top up with milk. Coffee dissolves in water more easily than in milk. Purity Beans is 100% coffee. Zero chicory.",
-        "caption": "Lumps are an order problem.\n\nHot water onto the granules first, stir smooth, then milk. Coffee dissolves in water more easily than in milk.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Splash of hot water onto the granules first, stir to a smooth paste, then top up with milk. Coffee dissolves in water more easily than in milk. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
+        "caption": "Lumps are an order problem.\n\nHot water onto the granules first, stir smooth, then milk. Coffee dissolves in water more easily than in milk.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Try it tomorrow, then restock at p3online.in",
         "comment_trigger": "Do you add water or milk first?",
         "save_trigger": "Save this and try it in the morning.",
@@ -857,8 +856,8 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "ONE GLASS",
              "spoken": "One glass, one spoon, no kettle, and nothing added that was not yours."},
         ],
-        "body": "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
-        "caption": "Cold coffee without boiling anything.\n\nCoffee, sugar and two spoons of cold water. Stir hard for a minute until it goes pale and thick, then add cold milk and ice.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": "Cold coffee without boiling anything.\n\nCoffee, sugar and two spoons of cold water. Stir hard for a minute until it goes pale and thick, then add cold milk and ice.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Make one this afternoon, then restock at p3online.in",
         "comment_trigger": "Hot or cold in your house this week?",
         "save_trigger": "Save this for the next hot afternoon.",
@@ -890,10 +889,10 @@ _EVERGREEN: list[dict] = [
              "body": "Pour it in, stir it through, and it is done.",
              "visual": "Milk poured over ice in the glass"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is 100% coffee. Zero chicory. p3online.in",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. p3online.in",
              "visual": "Purity Beans jar beside the finished glass"},
         ],
-        "caption": "Cold coffee without boiling anything.\n\nCoffee, sugar, two spoons of cold water. Stir hard for a minute until pale and thick, then cold milk and ice.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "caption": "Cold coffee without boiling anything.\n\nCoffee, sugar, two spoons of cold water. Stir hard for a minute until pale and thick, then cold milk and ice.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Make one this afternoon, then restock at p3online.in",
         "comment_trigger": "Hot or cold in your house this week?",
         "save_trigger": "Save this for the next hot afternoon.",
@@ -904,8 +903,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Cold coffee does not need a kettle at all.",
-        "body": "Coffee and sugar in the glass, two spoons of cold water, stir hard for a minute until it goes pale and thick, then cold milk and ice. Purity Beans is 100% coffee. Zero chicory.",
-        "caption": "Cold coffee, no kettle.\n\nCoffee and sugar, two spoons of cold water, stir hard for a minute until pale and thick, then cold milk and ice.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Coffee and sugar in the glass, two spoons of cold water, stir hard for a minute until it goes pale and thick, then cold milk and ice. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
+        "caption": "Cold coffee, no kettle.\n\nCoffee and sugar, two spoons of cold water, stir hard for a minute until pale and thick, then cold milk and ice.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Make one this afternoon, then restock at p3online.in",
         "comment_trigger": "Hot or cold in your house this week?",
         "save_trigger": "Save this for the next hot afternoon.",
@@ -933,8 +932,8 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "NOW COMPARE",
              "spoken": "Compare jars on mornings, not on the number on the front."},
         ],
-        "body": "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
-        "caption": "A jar is not a price, it is a number of mornings.\n\nNet weight, divided by your usual spoon, divided by cups a day. Compare jars on that.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": "A jar is not a price, it is a number of mornings.\n\nNet weight, divided by your usual spoon, divided by cups a day. Compare jars on that.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Do the sum, then shop at p3online.in",
         "comment_trigger": "How many cups a day does your house make?",
         "save_trigger": "Save this for your next grocery run.",
@@ -966,10 +965,10 @@ _EVERGREEN: list[dict] = [
              "body": "Now the two jars are actually comparable to each other.",
              "visual": "Two jars side by side"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is 100% coffee. Zero chicory. p3online.in",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Compare coffee jars on mornings, not on the number on the front.\n\nNet weight, divided by your usual spoon, divided by cups a day.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "caption": "Compare coffee jars on mornings, not on the number on the front.\n\nNet weight, divided by your usual spoon, divided by cups a day.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Do the sum, then shop at p3online.in",
         "comment_trigger": "How many cups a day does your house make?",
         "save_trigger": "Save this for your next grocery run.",
@@ -980,8 +979,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "A jar of coffee is not a price. It is a number of mornings.",
-        "body": "Net weight, divided by the spoon you actually use, divided by cups a day. That is how long it lasts, and it is the only way two jars are comparable. Purity Beans is 100% coffee. Zero chicory.",
-        "caption": "A jar is not a price. It is a number of mornings.\n\nNet weight, divided by your usual spoon, divided by cups a day. Compare jars on that number.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Net weight, divided by the spoon you actually use, divided by cups a day. That is how long it lasts, and it is the only way two jars are comparable. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
+        "caption": "A jar is not a price. It is a number of mornings.\n\nNet weight, divided by your usual spoon, divided by cups a day. Compare jars on that number.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Do the sum, then shop at p3online.in",
         "comment_trigger": "How many cups a day does your house make?",
         "save_trigger": "Save this for your next grocery run.",
@@ -1009,8 +1008,8 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "CHECK TONIGHT",
              "spoken": "Turn your jar around and find both dates. It takes five seconds."},
         ],
-        "body": "Purity Beans is 100% coffee. Zero chicory, no additives, no preservatives.",
-        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date as well. The gap between the two tells you how fresh the jar was when you bought it.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date as well. The gap between the two tells you how fresh the jar was when you bought it.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Check both dates, then shop at p3online.in",
         "comment_trigger": "What dates are printed on your jar?",
         "save_trigger": "Save this for your next grocery run.",
@@ -1042,10 +1041,10 @@ _EVERGREEN: list[dict] = [
              "body": "Same five seconds as reading the ingredient list.",
              "visual": "Hand turning a jar in a shop aisle"},
             {"slide": 6, "heading": "What ours says",
-             "body": "Purity Beans is 100% coffee. Zero chicory. p3online.in",
+             "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date too. The gap tells you how much of the jar's life was gone before you bought it.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date too. The gap tells you how much of the jar's life was gone before you bought it.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Check both dates, then shop at p3online.in",
         "comment_trigger": "What dates are printed on your jar?",
         "save_trigger": "Save this for your next grocery run.",
@@ -1056,8 +1055,8 @@ _EVERGREEN: list[dict] = [
     {
         "type": "instagram_post",
         "hook": "Best before is a quality note, not a safety deadline.",
-        "body": "Find the packed or manufactured date as well. The gap between the two tells you how much of the jar's life was already gone when you bought it. Purity Beans is 100% coffee. Zero chicory.",
-        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date too. The gap tells you how fresh the jar was when you bought it.\n\nPurity Beans is 100% coffee. Zero chicory.\n\np3online.in",
+        "body": "Find the packed or manufactured date as well. The gap between the two tells you how much of the jar's life was already gone when you bought it. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
+        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date too. The gap tells you how fresh the jar was when you bought it.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
         "cta": "Check both dates, then shop at p3online.in",
         "comment_trigger": "What dates are printed on your jar?",
         "save_trigger": "Save this for your next grocery run.",
@@ -1074,8 +1073,8 @@ _DISTRIBUTOR_TEMPLATES: list[dict] = [
         "body": (
             "The first question is always the ingredient list, because it is what "
             "the customer asks them about at the counter.\n\n"
-            "Purity Beans is 100% coffee — zero chicory, no additives, no "
-            "preservatives — which makes it a straightforward product to stand "
+            "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. "
+            "Ultra Blend is 70% coffee. That is a straightforward range to stand "
             "behind on a shelf full of blends.\n\n"
             "We are expanding our distributor network. If you distribute FMCG and "
             "want the details, message me.\n\np3online.in"
@@ -1087,7 +1086,7 @@ _DISTRIBUTOR_TEMPLATES: list[dict] = [
     {
         "type": "linkedin_post",
         "hook": "One ingredient is easier to sell across a counter",
-        "body": "A single-ingredient product answers the shopper's question before it is asked. There is no blend ratio to defend and no second ingredient to explain.\n\nPurity Beans is 100% coffee - zero chicory, no additives, no preservatives - which makes counter conversations short and repeatable for the person selling it.\n\nWe are expanding our distributor network. If you distribute FMCG and want the details, message me.\n\np3online.in",
+        "body": "A short ingredient list answers the shopper's question before it is asked.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee. That makes counter conversations short and repeatable for the person selling it.\n\nWe are expanding our distributor network. If you distribute FMCG and want the details, message me.\n\np3online.in",
         "cta": "DM for the distributor pack",
         "hashtags": "#FMCG #Distribution #Coffee #IndianBrands #PurityBeans",
         "source": "evergreen_distributor",
@@ -1095,7 +1094,7 @@ _DISTRIBUTOR_TEMPLATES: list[dict] = [
     {
         "type": "linkedin_post",
         "hook": "What we get asked about shelf life",
-        "body": "Stockists ask about rotation before they ask about margin, because slow-moving stock is the expensive problem.\n\nPurity Beans is freeze dried arabica in sealed glass - 100% coffee, zero chicory - and we are direct about pack sizes and dating so a buyer can plan rotation rather than guess at it.\n\nWe are expanding our distributor network. If you distribute FMCG and want the details, message me.\n\np3online.in",
+        "body": "Stockists ask about rotation before they ask about margin, because slow-moving stock is the expensive problem.\n\nPurity Beans Purica is freeze-dried 100% Arabica and Bold is agglomerated 100% Robusta, both in glass jars - 100% coffee, zero chicory - and we are direct about pack sizes and dating so a buyer can plan rotation rather than guess at it.\n\nWe are expanding our distributor network. If you distribute FMCG and want the details, message me.\n\np3online.in",
         "cta": "DM for the distributor pack",
         "hashtags": "#FMCG #Distribution #Retail #IndianBrands #PurityBeans",
         "source": "evergreen_distributor",
@@ -1103,7 +1102,7 @@ _DISTRIBUTOR_TEMPLATES: list[dict] = [
     {
         "type": "linkedin_post",
         "hook": "The label question comes up at every meeting",
-        "body": "Every buyer conversation reaches the ingredient panel, usually within the first few minutes. It is the fastest way to understand what a product actually is.\n\nPurity Beans lists coffee. 100% coffee, zero chicory, no additives - which means the panel is the pitch, and there is nothing further down it to work around.\n\nWe are expanding our distributor network. If you distribute FMCG and want the details, message me.\n\np3online.in",
+        "body": "Every buyer conversation reaches the ingredient panel, usually within the first few minutes. It is the fastest way to understand what a product actually is.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee. The panel is the pitch.\n\nWe are expanding our distributor network. If you distribute FMCG and want the details, message me.\n\np3online.in",
         "cta": "DM for the distributor pack",
         "hashtags": "#FMCG #Distribution #Coffee #IndianBrands #PurityBeans",
         "source": "evergreen_distributor",
@@ -1111,7 +1110,7 @@ _DISTRIBUTOR_TEMPLATES: list[dict] = [
     {
         "type": "linkedin_post",
         "hook": "Category education is doing our selling for us",
-        "body": "The shoppers who turn a jar around before buying are the ones who become repeat customers. They are not looking for a brand, they are looking for a short ingredient list.\n\nPurity Beans is 100% coffee - zero chicory, no additives - so the more label-literate a category gets, the easier the product is to place.\n\nWe are expanding our distributor network. If you distribute FMCG and want the details, message me.\n\np3online.in",
+        "body": "The shoppers who turn a jar around before buying are the ones who become repeat customers. They are not looking for a brand, they are looking for a short ingredient list.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee. The more label-literate a category gets, the easier those jars are to place.\n\nWe are expanding our distributor network. If you distribute FMCG and want the details, message me.\n\np3online.in",
         "cta": "DM for the distributor pack",
         "hashtags": "#FMCG #Distribution #Coffee #IndianBrands #PurityBeans",
         "source": "evergreen_distributor",
@@ -1164,9 +1163,6 @@ def _from_yesterday_snapshot(day_number: int) -> dict | None:
         yesterday_content["_source"]    = "emergency_fallback_yesterday"
         yesterday_content["_recycled"]  = True
         yesterday_content["day_number"] = day_number
-
-        # Freshen the date references in copy (basic swap)
-        today_str = datetime.date.today().strftime("%B %d")
         return yesterday_content
     except Exception as e:
         logger.debug("[fallback] yesterday snapshot failed: %s", e)
@@ -1188,8 +1184,8 @@ def _from_best_historical(day_number: int) -> dict | None:
         for r in top[:2]:
             reels.append({
                 "hook":   r.get("hook_archetype", "Pure coffee. Real taste."),
-                "body":   "Purity Beans — 100% pure instant coffee. Rs 18/cup.",
-                "cta":    "Link in bio.",
+                "body":   "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
+                "cta":    "Read the label, then shop at p3online.in",
                 "_source": f"recycled:{r.get('content_id', '')}",
             })
 

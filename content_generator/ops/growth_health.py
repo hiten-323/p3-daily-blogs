@@ -14,7 +14,6 @@ import json
 import os
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -83,24 +82,26 @@ def meta_preflight() -> dict[str, Any]:
     token = os.getenv("INSTAGRAM_ACCESS_TOKEN")
     if not account or not token:
         return {"status": "not_configured"}
-    query = urlencode({"fields": "id,username", "access_token": token})
-    url = f"https://graph.facebook.com/v24.0/{account}?{query}"
+    from urllib.parse import quote
+    url = f"https://graph.facebook.com/v24.0/{quote(str(account), safe='')}?fields=id,username"
     try:
-        req = Request(url, headers={"User-Agent": "PurityBeans/1.0"})
+        req = Request(
+            url,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "User-Agent": "PurityBeans/1.0",
+            },
+        )
         with urlopen(req, timeout=15) as response:
             payload = json.loads(response.read().decode("utf-8"))
         if payload.get("id"):
             return {"status": "ok", "account_id": str(payload["id"])}
         return {"status": "failed", "detail": "missing_id_in_response"}
     except Exception as exc:
-        res = {"status": "failed", "error_type": type(exc).__name__, "error_detail": str(exc)}
+        detail = str(exc).replace(token, "***")
+        res = {"status": "failed", "error_type": type(exc).__name__, "error_detail": detail}
         if hasattr(exc, "code"):
             res["status_code"] = exc.code
-        if hasattr(exc, "read"):
-            try:
-                res["response_body"] = exc.read().decode("utf-8", errors="replace")
-            except Exception:
-                pass
         return res
 
 

@@ -19,6 +19,7 @@ effective date to output/learning/policy_history.json, so performance can be
 traced back to the policy that produced it (every asset stamps policy_version).
 """
 from __future__ import annotations
+from content_generator.core.ist_dates import today_ist
 import datetime
 import json
 import logging
@@ -202,7 +203,7 @@ def record_policy_version() -> dict:
 
     record = {
         "number":         number,
-        "effective_date": ver_block.get("effective_date") or datetime.date.today().isoformat(),
+        "effective_date": ver_block.get("effective_date") or today_ist().isoformat(),
         "author":         ver_block.get("author", "Founder"),
         "changes":        ver_block.get("changes", []),
         "recorded_at":    datetime.datetime.now().isoformat(timespec="seconds"),

@@ -16,14 +16,14 @@ from __future__ import annotations
 # on-screen text + a spoken line so all three match how people actually search.
 SEARCH_QUESTIONS = [
     "which instant coffee has no chicory",
-    "best instant coffee in India without chicory",
+    "which instant coffee in India lists no chicory",
     "how to check if my coffee has chicory",
     "is instant coffee actually coffee",
     "how to make cafe like coffee at home",
     "freeze dried vs agglomerated coffee which is better",
-    "which is the purest instant coffee in India",
-    "how much chicory is in Indian coffee",
-    "best coffee for office pantry India",
+    "how to tell if instant coffee is 100% coffee",
+    "how to see if chicory is listed on Indian instant coffee",
+    "what to stock in an office coffee pantry in India",
     "how to make strong black coffee at home",
     "premium instant coffee brands in India",
     "how to read a coffee label",

@@ -15,24 +15,24 @@ WEBSITE_URL = os.getenv("WEBSITE_URL", "https://p3online.in")
 # ── Rotation banks ────────────────────────────────────────────────────────────
 
 BLOG_TOPIC_CLUSTERS = [
-    "instant coffee benefits India — antioxidants, clean energy, mental clarity science",
-    "instant coffee recipe India — 2-minute preparation, flavour variations, pro tips",
-    "best coffee for students India — exam focus, affordable, zero crash caffeine",
-    "morning coffee routine India — productivity ritual, habit-stacking, lifestyle design",
-    "pure coffee vs adulterated India — chicory exposed, zero additives explained",
-    "coffee price comparison India — Rs18/cup vs Rs180 cafe, 10-year savings breakdown",
-    "work from home coffee India — deep focus, Pomodoro pairing, WFH productivity guide",
-    "coffee health myths India — caffeine facts debunked, what doctors actually say",
-    "instant coffee brand comparison India — what ingredient labels never tell you",
-    "coffee for gym fitness India — pre-workout, clean energy, no jitters guide",
-    "founder story Purity Beans — bootstrapped FMCG India, zero VC, 10x growth",
-    "single origin vs blended coffee India — quality, taste profile, ethical sourcing",
-    "coffee gifting India — premium corporate gifts, occasion boxes, personalised sets",
-    "sustainable coffee India — ethical sourcing, clean supply chain, carbon footprint",
-    "caffeine and productivity science India — focus mechanisms, Indian professionals study",
-    "cold brew at home India — step-by-step guide, Purity Beans method",
-    "coffee culture India — from filter kaapi to specialty, the evolution story",
-    "chicory in Indian coffee — the 80-year adulterant history nobody talks about",
+    "how to brew instant coffee at home in India — dose, water, and what the label should say",
+    "instant coffee recipe India — 2-minute preparation and flavour variations without invented health claims",
+    "instant coffee for students in India — price per cup, jar sizes, and how to read the label",
+    "morning coffee routine India — a home cup with the jar that matches how you drink it",
+    "how to check an instant coffee label in India for chicory — and which Purity Beans jars are 100% coffee",
+    "coffee price comparison India — Rs 18 per cup at home vs Rs 180 at a cafe, using only those two prices",
+    "work from home coffee India — a repeatable home cup, not a productivity study",
+    "caffeine on the label — Ultra Blend is 70% coffee and may be called lower caffeine; the 100% coffee jars may not",
+    "instant coffee jars in India — Bold, Purista, Purica, Prima, and Ultra Blend, each described only as labeled",
+    "which Purity Beans jar to take before a workout — name the jar, no jitter or fat-loss claims",
+    "how Purity Beans labels its jars — Bold, Purista, Purica, Prima, and Ultra Blend",
+    "arabica vs robusta instant coffee in India — Purica and Prima are 100% Arabica; Bold and Purista are 100% Robusta",
+    "coffee gifting India — variety box and duo jars, with the Ultra Blend jar called out as 70% coffee",
+    "glass jar instant coffee in India — what is printed on a Purity Beans jar",
+    "100% coffee jars vs Ultra Blend at 70% coffee — when a lower-caffeine description is allowed",
+    "cold brew at home India — a method using a named Purity Beans jar",
+    "coffee culture India — from filter kaapi to instant, without invented market statistics",
+    "chicory on Indian instant-coffee labels — how to read the panel, without a percentage we cannot source",
 ]
 
 HOOK_ARCHETYPES = [
@@ -100,7 +100,7 @@ LINKEDIN_ANGLES = [
 
 LINKEDIN_SEO_KEYWORDS = (
     "coffee benefits, health benefits of coffee, coffee consumption, "
-    "coffee market in India, instant coffee India, best instant coffee, "
+    "coffee market in India, instant coffee India, instant coffee brand, "
     "coffee for productivity, workplace coffee culture, premium coffee brands India, "
     "coffee industry trends"
 )
@@ -203,7 +203,9 @@ VIRAL_HOOKS = [
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def get_day_number() -> int:
-    return (datetime.date.today() - CONTENT_ENGINE_START_DATE).days
+    """Founder day on the IST calendar, same day the content file is named for."""
+    from content_generator.core.ist_dates import today_ist
+    return (today_ist() - CONTENT_ENGINE_START_DATE).days
 
 
 def get_todays_blog_topic(day: int) -> str:

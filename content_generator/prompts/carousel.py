@@ -4,7 +4,7 @@ from content_generator.rotation import WEBSITE_URL, get_todays_viral_idea
 
 HASHTAG_25 = (
     "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime "
-    "#PremiumCoffee #FreezeDriedCoffee #GourmetCoffee #PureCoffee #CoffeeCommunity "
+    "#PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity "
     "#IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands "
     "#CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife "
     "#PurityBeans #PurityBeansCoffee #PurityBeansExperience #BrewPure #PureCoffeeExperience"
@@ -55,7 +55,7 @@ If yes → proceed. If no → reframe until it passes. The best carousel design 
 PSYCHOLOGY REQUIREMENT:
 Pick ONE primary frame from the PSYCHOLOGY FRAMES list above.
 Put its id in "psychology_frame". The frame must drive the cover hook, the emotional arc, and the share/save triggers.
-Product claims (100% coffee, zero chicory, Rs 18) support the frame — they are not the frame.
+Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Never apply the 100% coffee line to Ultra Blend.
 
 ABSOLUTE RULES:
 - NEVER invent statistics or percentages
@@ -77,15 +77,15 @@ ABSOLUTE RULES:
     {{"slide": 3, "heading": "Myth Busted", "body": "The assumption everyone holds that is actually wrong. Contrarian and surprising.", "visual": "Ingredient or product detail close-up"}},
     {{"slide": 4, "heading": "The Revelation", "body": "The I-did-not-know-this moment. Specific truth about coffee purity vs adulterants.", "visual": "Before/after or label close-up"}},
     {{"slide": 5, "heading": "Why It Matters", "body": "Specific Indian scenario — what this means for a real coffee lover in India.", "visual": "Indian person + coffee, natural light"}},
-    {{"slide": 6, "heading": "Purity Beans Difference", "body": "No preservatives. No artificial aroma. 100% coffee. Zero chicory. Available freeze-dried and agglomerated. Shop {WEBSITE_URL}", "visual": "Product hero — full Purity Beans jar, cinematic, gold accent"}},
+    {{"slide": 6, "heading": "Purity Beans Difference", "body": "Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Purica is freeze-dried. Prima is Premium Agglomerate. Shop {WEBSITE_URL}", "visual": "Product hero — full Purity Beans jar, cinematic, gold accent"}},
     {{"slide": 7, "heading": "Share This", "body": "Tag the friend who deserves real coffee. Visit {WEBSITE_URL}", "visual": "Brand CTA — dark bg, Purity Beans logo, minimal gold"}}
   ],
-  "caption": "HOOK LINE that stops the scroll.\\n\\nWhat you will learn in this carousel (preview the value). Tell the story of why this matters to a real coffee lover. Mention Purity Beans naturally. Include: No preservatives. No artificial aroma. 100% coffee. Freeze-dried and agglomerated variants.\\n\\nThis is a 200-300 word paste-ready caption with emotional storytelling and brand facts.\\n\\nShop now: {WEBSITE_URL}",
+  "caption": "HOOK LINE that stops the scroll.\\n\\nWhat you will learn in this carousel (preview the value). Tell the story of why this matters to a real coffee lover. Mention Purity Beans naturally. Include: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Purica is freeze-dried 100% Arabica. Prima is Premium Agglomerate 100% Arabica.\\n\\nThis is a 200-300 word paste-ready caption with emotional storytelling and brand facts.\\n\\nShop now: {WEBSITE_URL}",
   "cta": "Direct action with {WEBSITE_URL}",
   "comment_trigger": "Comment SAVE if you are switching to real coffee this week.",
   "save_trigger": "Save this carousel — it will change how you buy coffee forever.",
   "share_trigger": "Share with someone who deserves to know what is really in their coffee.",
-  "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "agglomerated coffee", "coffee without preservatives", "pure instant coffee india", "best instant coffee brand india"],
+  "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "agglomerated coffee", "coffee without preservatives", "pure instant coffee india", "instant coffee brand india"],
   "hashtags": "{HASHTAG_25}"
 }}"""
 

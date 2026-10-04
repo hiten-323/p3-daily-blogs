@@ -39,6 +39,7 @@ Usage:
         engagement_type="whatsapp_inquiry",
     )
 """
+from content_generator.core.ist_dates import today_ist
 import datetime
 import logging
 import os
@@ -178,7 +179,7 @@ def get_stalling_leads() -> list[dict]:
 def _generate_lead_id(segment: str) -> str:
     """Generate a unique, human-readable lead ID."""
     prefix   = {"distributor": "dist", "modern_trade": "mt", "retailer": "ret", "consumer": "con"}
-    date_str = datetime.date.today().strftime("%Y%m%d")
+    date_str = today_ist().strftime("%Y%m%d")
     counter  = _next_counter()
     return f"{prefix.get(segment, 'unk')}_{date_str}_{counter:03d}"
 
@@ -186,7 +187,7 @@ def _generate_lead_id(segment: str) -> str:
 def _next_counter() -> int:
     """Thread-safe incrementing daily counter for lead IDs."""
     os.makedirs("output", exist_ok=True)
-    today = datetime.date.today().isoformat()
+    today = today_ist().isoformat()
     try:
         if os.path.exists(_COUNTER_PATH):
             with open(_COUNTER_PATH) as f:
