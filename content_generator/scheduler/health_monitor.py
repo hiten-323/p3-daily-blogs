@@ -104,8 +104,11 @@ def _check_api_keys() -> dict:
     present = []
     missing = []
     for key, label in [
-        ("GEMINI_API_KEY",     "Gemini"),
+        ("NVIDIA_API_KEY",     "NVIDIA"),
         ("GROQ_API_KEY",       "Groq"),
+        ("GEMINI_API_KEY",     "Gemini"),
+        ("CEREBRAS_API_KEY",   "Cerebras"),
+        ("DEEPSEEK_API_KEY",   "DeepSeek"),
         ("OPENROUTER_API_KEY", "OpenRouter"),
     ]:
         if os.getenv(key):

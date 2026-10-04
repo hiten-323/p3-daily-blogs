@@ -27,6 +27,7 @@ import datetime
 import json
 import logging
 import os
+import re
 import urllib.parse
 import urllib.request
 
@@ -41,13 +42,42 @@ _IG_MARKERS = ("instagram.com", "l.instagram.com", "utm_source=instagram", "utm_
 
 
 def is_configured() -> bool:
-    return bool(os.getenv("SHOPIFY_STORE_DOMAIN")) and bool(os.getenv("SHOPIFY_ADMIN_TOKEN"))
+    return bool(normalize_shopify_domain(os.getenv("SHOPIFY_STORE_DOMAIN"))) and bool(
+        os.getenv("SHOPIFY_ADMIN_TOKEN")
+    )
+
+
+def normalize_shopify_domain(raw: str | None) -> str:
+    """Host only. Strips scheme, userinfo, port, path, query, and trailing slashes.
+
+    A value like ``https://shop.myshopify.com/admin`` otherwise becomes the
+    request host and the sales fetch fails DNS. The admin token is never part
+    of the returned host and must not be logged.
+    """
+    text = str(raw or "").strip()
+    text = re.sub(r"^[a-z][a-z0-9+.-]*://", "", text, flags=re.I)
+    if "@" in text:
+        text = text.split("@", 1)[1]
+    text = text.split("?", 1)[0].split("#", 1)[0]
+    text = text.split("/", 1)[0]
+    if text.startswith("[") and "]" in text:
+        text = text[1:text.index("]")]
+    elif ":" in text:
+        text = text.split(":", 1)[0]
+    return text.strip().strip(".").lower()
+
+
+def shopify_store_host() -> str:
+    host = normalize_shopify_domain(os.getenv("SHOPIFY_STORE_DOMAIN"))
+    if host:
+        logger.info("[shopify] store host: %s", host)
+    return host
 
 
 # ── Shopify API ───────────────────────────────────────────────────────────────
 
 def _shopify_get(path: str, params: dict) -> dict | None:
-    domain = os.getenv("SHOPIFY_STORE_DOMAIN")
+    domain = shopify_store_host()
     token  = os.getenv("SHOPIFY_ADMIN_TOKEN")
     if not domain or not token:
         return None
@@ -113,7 +143,7 @@ query($q: String!) {
 
 
 def _shopify_graphql(query: str, variables: dict) -> dict | None:
-    domain = os.getenv("SHOPIFY_STORE_DOMAIN")
+    domain = shopify_store_host()
     token  = os.getenv("SHOPIFY_ADMIN_TOKEN")
     if not domain or not token:
         return None

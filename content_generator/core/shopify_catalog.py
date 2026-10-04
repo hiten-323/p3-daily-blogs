@@ -304,7 +304,12 @@ def format_catalog_for_prompt() -> str:
         "All three are 100% coffee and zero chicory.\n"
         "3. Prima / Premium Agglomerate is 100% Arabica. It is agglomerated, not freeze-dried.\n"
         "4. Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed for Ultra Blend only. "
-        "Never call Ultra Blend 100% coffee, zero chicory, no chicory, chicory-free, or 0% chicory.\n"
-        "5. Variety Box is three 100% coffee jars plus Ultra Blend. Do not call the box zero chicory."
+        "Never call Ultra Blend 100% coffee, zero chicory, no chicory, no-chicory, zero-chicory, chicory-free, or 0% chicory.\n"
+        "5. Variety Box is three 100% coffee jars plus Ultra Blend. Do not call the box zero chicory.\n"
+        "6. \"India's Cleanest Instant Coffee\" is approved. Never use it alongside a zero-chicory or no-chicory claim about Ultra Blend.\n"
+        "7. Samples are only for businesses (cafes, offices, retailers, distributors). "
+        "Consumer-facing content must not offer a sample. Point customers to the 50g Variety Box: "
+        + product_page_url(SHOPIFY_PRODUCTS["variety_box"]) + "\n"
+        "8. The listed prices are correct. Prima is out of stock — do not tell people to buy it."
     )
     return "\n".join(lines)

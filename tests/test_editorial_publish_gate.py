@@ -238,6 +238,49 @@ def test_publish_skip_does_not_record_an_attempt(monkeypatch, quiet_publish):
     assert "youtube" not in attempts
 
 
+def test_stock_external_posts_need_an_editor_score(monkeypatch, quiet_publish):
+    """Run 37192396900 sent a stock linkedin_post because evergreen counted as pre-vetted."""
+    from content_generator.core.editorial_engine import (
+        EditorialRejectException,
+        _editorial_ok,
+        approved_assets,
+    )
+    from content_generator.publisher import shopify_blog
+    from content_generator.scheduler.fallback import _from_evergreen
+
+    stock = {"source": "evergreen_distributor", "hook": "Stock", "body": "Stock body"}
+    with pytest.raises(EditorialRejectException):
+        _editorial_ok("linkedin_post", stock)
+    with pytest.raises(EditorialRejectException):
+        _editorial_ok("yt_short", {"source": "evergreen_template", "hook": "Stock"})
+    with pytest.raises(EditorialRejectException):
+        _editorial_ok("blog_post", {"source": "evergreen_distributor", "title": "Stock", "body": "x"})
+    assert _editorial_ok("carousel", {"source": "evergreen_template", "hook": "On platform"}) is True
+    assert _editorial_ok("instagram_post", {"source": "evergreen_template"}) is True
+    scored = dict(stock, editorial_score=_score(9.0, "PASS"))
+    assert _editorial_ok("linkedin_post", scored) is True
+
+    content = _from_evergreen(3)
+    content["yt_short"] = {"source": "evergreen_template", "hook": "Stock short", "script": "Stock"}
+    content["blog_post"] = {"source": "evergreen_distributor", "title": "Stock blog", "body": "Stock"}
+    approved = approved_assets(content)
+    assert "linkedin_post" not in approved
+    assert "yt_short" not in approved
+    assert "blog_post" not in approved
+
+    _block_network(monkeypatch)
+
+    def boom(*_args, **_kwargs):
+        raise AssertionError("shopify blog posted a stock piece")
+
+    monkeypatch.setattr(shopify_blog, "post_content", boom)
+    result = dispatcher.publish_all(content, day_number=3)
+    for key in ("linkedin", "youtube", "blog"):
+        assert result[key]["attempted"] is False
+        assert result[key]["error"] == "not_attempted"
+        assert result[key]["gate"] == "rejected"
+
+
 def test_daily_publish_keeps_rejected_pieces_visible(monkeypatch):
     seen = {}
 

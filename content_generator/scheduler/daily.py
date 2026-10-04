@@ -1417,6 +1417,8 @@ if __name__ == "__main__":
     import sys
     from content_generator import configure
     configure(load_env=True, setup_logging=True)
+    from content_generator.providers.llm_router import log_provider_status
+    log_provider_status()
 
     if "--now" in sys.argv:
         import json

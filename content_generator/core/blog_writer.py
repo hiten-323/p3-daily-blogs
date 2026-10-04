@@ -2,11 +2,15 @@
 
 Outline first, then expand each section. A short section is retried and, if
 the model stays short, filled from catalog facts. A provider failure does not
-delete the draft: the piece is kept and marked held.
+delete the draft: the piece is kept, the partial sections are saved, and a
+later run resumes at the section that failed.
 """
 from __future__ import annotations
 
+import json
 import logging
+import os
+import time
 
 from content_generator.core.blog_plan import (
     choose_topic,
@@ -32,6 +36,7 @@ logger = logging.getLogger(__name__)
 
 SECTION_MIN_WORDS = 120
 _SECTION_ATTEMPTS = 3
+_SECTION_BACKOFF = (2, 5, 12)
 
 
 def _copy_ok(text: str) -> bool:
@@ -143,7 +148,70 @@ def _fit_length(intro: str, sections: list[dict], conclusion: str, table: str, l
         guard += 1
 
 
+def _draft_path(output_dir: str, on_date: str) -> str:
+    return os.path.join(output_dir, f"blog_draft_{on_date}.json")
+
+
+def save_partial_draft(output_dir: str, on_date: str, payload: dict) -> str:
+    """Persist completed sections and the section that failed, for a later resume."""
+    os.makedirs(output_dir, exist_ok=True)
+    path = _draft_path(output_dir, on_date)
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(payload, handle, indent=2, ensure_ascii=False)
+    logger.error(
+        "[blog] saved partial draft %s sections=%d failed=%s",
+        path, len(payload.get("sections") or []), payload.get("failed_section_id"),
+    )
+    return path
+
+
+def load_partial_draft(output_dir: str, on_date: str) -> dict | None:
+    path = _draft_path(output_dir, on_date)
+    if not os.path.isfile(path):
+        return None
+    try:
+        data = json.loads(open(path, encoding="utf-8").read())
+    except (OSError, json.JSONDecodeError) as exc:
+        logger.warning("[blog] partial draft unreadable (%s): %s", path, exc)
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def call_section_with_fallback(prompt: str, label: str, max_tokens: int = 900) -> dict:
+    """Try each provider for one section. Back off, then the next provider."""
+    from content_generator.core.brand_guard import build_system_prompt
+    from content_generator.providers.llm_router import _PROVIDERS, _try_provider, extract
+
+    full = f"SYSTEM RULES:\n{build_system_prompt()}\n\nUSER REQUEST:\n{prompt}"
+    last = "no provider answered"
+    for index, (name, fn) in enumerate(_PROVIDERS):
+        retries = 1 if name == "nvidia" else 2
+        raw = _try_provider(name, fn, full, max_tokens, label, retries)
+        data = None
+        if raw:
+            try:
+                data = extract(raw)
+            except Exception as exc:
+                last = str(exc)
+                data = None
+            if data:
+                return data
+            last = f"{name} answered but the section did not parse"
+        else:
+            last = f"{name} failed"
+        if index < len(_PROVIDERS) - 1:
+            wait = _SECTION_BACKOFF[min(index, len(_SECTION_BACKOFF) - 1)]
+            logger.warning(
+                "[blog] %s failed on %s; backing off %ss then next provider",
+                label, name, wait,
+            )
+            time.sleep(wait)
+    raise RuntimeError(f"All LLM providers failed for {label}: {last}")
+
+
 def _default_llm(prompt: str, label: str = "", max_tokens: int = 900) -> dict:
+    if str(label).startswith("blog_section_"):
+        return call_section_with_fallback(prompt, label=label, max_tokens=max_tokens)
     from content_generator.providers.llm_router import call as llm_call
     return llm_call(prompt, label=label, max_tokens=max_tokens)
 
@@ -178,8 +246,40 @@ def generate_blog_post(
         notes.append(f"outline provider failed: {exc}")
         logger.warning("[blog] outline provider failed (%s); using the topic plan", exc)
 
+    saved = load_partial_draft(output_dir, on_date)
+    resumed: dict[str, dict] = {}
+    if (
+        isinstance(saved, dict)
+        and saved.get("topic_id") == topic["id"]
+        and int(saved.get("day_number") or -1) == int(day_number)
+    ):
+        for prior in saved.get("sections") or []:
+            if isinstance(prior, dict) and prior.get("complete") and prior.get("id"):
+                resumed[str(prior["id"])] = prior
+        if resumed or saved.get("failed_section_id"):
+            logger.info(
+                "[blog] resuming partial draft for %s at %s (%d sections kept)",
+                topic["id"], saved.get("failed_section_id"), len(resumed),
+            )
+            notes.append(
+                f"resumed draft at {saved.get('failed_section_id')} "
+                f"with {len(resumed)} completed sections"
+            )
+
     sections = []
+    completed_rows: list[dict] = []
     for index, spec in enumerate(headings_for(topic)):
+        prior = resumed.get(spec["id"])
+        if prior and spec["id"] != (saved or {}).get("failed_section_id"):
+            sections.append({
+                "id": spec["id"],
+                "heading": prior.get("heading") or spec["heading"],
+                "body": str(prior.get("body") or ""),
+                "h3": prior.get("h3") or spec["h3"],
+                "h3_body": str(prior.get("h3_body") or h3_prose(topic)),
+            })
+            completed_rows.append(prior)
+            continue
         prompt = _section_prompt(topic, spec, catalog)
         if context_suffix:
             prompt += "\n\n" + context_suffix
@@ -187,6 +287,20 @@ def generate_blog_post(
         if failure is not None and not hold_reason:
             hold_reason = f"provider_failure during {spec['id']}: {failure}"
             logger.error("[blog] HELD blog_post: %s", hold_reason)
+            save_partial_draft(output_dir, on_date, {
+                "day_number": int(day_number),
+                "on_date": on_date,
+                "topic_id": topic["id"],
+                "failed_section_id": spec["id"],
+                "sections": completed_rows + [{
+                    "id": spec["id"],
+                    "heading": spec["heading"],
+                    "body": prose,
+                    "h3": spec["h3"],
+                    "h3_body": "",
+                    "complete": False,
+                }],
+            })
         elif failure is not None:
             logger.warning("[blog] later section %s also lost its provider: %s", spec["id"], failure)
         if word_count(prose) < SECTION_MIN_WORDS or not _copy_ok(prose):
@@ -195,12 +309,22 @@ def generate_blog_post(
                 spec["id"], word_count(prose),
             )
             prose = section_prose(topic, index)
-        sections.append({
+        row = {
             "id": spec["id"],
             "heading": spec["heading"],
             "body": prose,
             "h3": spec["h3"],
             "h3_body": h3_prose(topic),
+            "complete": failure is None,
+        }
+        if failure is None:
+            completed_rows.append(row)
+        sections.append({
+            "id": row["id"],
+            "heading": row["heading"],
+            "body": row["body"],
+            "h3": row["h3"],
+            "h3_body": row["h3_body"],
         })
 
     intro = introduction_for(topic)
@@ -261,6 +385,10 @@ def generate_blog_post(
         piece["held"] = True
         logger.error("[blog] HELD blog_post — draft kept, not dropped: %s", hold_reason)
     else:
+        try:
+            os.remove(_draft_path(output_dir, on_date))
+        except OSError:
+            pass
         issues = assess(piece, on_date=on_date, output_dir=output_dir)
         if issues:
             piece["hold_reason"] = "blog gates failed: " + "; ".join(issues[:6])

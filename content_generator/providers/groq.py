@@ -24,6 +24,15 @@ def get_key() -> str:
     return os.environ.get("GROQ_API_KEY", "").strip()
 
 
+# Free-tier TPM is 8k. A single 11–13k-token prompt is a 413 before any model
+# runs. Skip the request and let the router use the next provider.
+_TOKEN_LIMIT = int(os.getenv("GROQ_MAX_PROMPT_TOKENS", "8000"))
+
+
+def _estimated_tokens(prompt: str, max_tokens: int) -> int:
+    return max(1, len(prompt) // 4) + max(0, int(max_tokens))
+
+
 def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
     """
     Tries each model in MODELS in order.
@@ -34,6 +43,18 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
     key = get_key()
     if not key:
         return None, {}
+
+    estimate = _estimated_tokens(prompt, max_tokens)
+    if estimate > _TOKEN_LIMIT:
+        logger.warning(
+            "Groq skipped — request is about %d tokens, over the %d token limit",
+            estimate, _TOKEN_LIMIT,
+        )
+        return None, {
+            "status_code": 413,
+            "model": "",
+            "error": f"skipped: ~{estimate} tokens exceeds {_TOKEN_LIMIT}",
+        }
 
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
     last_failure: dict = {}

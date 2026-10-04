@@ -24,14 +24,14 @@ from __future__ import annotations
 
 import os
 
-from content_generator.providers import cerebras, gemini, groq, openrouter
+from content_generator.providers import cerebras, gemini, groq, nvidia, openrouter
 
 # Substrings that mark a model as something other than a general text generator.
 _NOT_A_GENERATOR = ("safeguard", "prompt-guard", "content-safety", "-guard-", "/guard")
 
 
 def _all_defaults() -> list[tuple[str, str]]:
-    out = [("gemini", gemini._MODEL)]
+    out = [("gemini", gemini._MODEL), ("nvidia", nvidia._DEFAULT_MODEL)]
     for name, mod in (("groq", groq), ("cerebras", cerebras), ("openrouter", openrouter)):
         out += [(name, m) for m in mod.MODELS]
     return out

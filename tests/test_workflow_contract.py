@@ -9,6 +9,11 @@ POLICY = ROOT / "founder_policies.yaml"
 def main() -> None:
     text = WORKFLOW.read_text(encoding="utf-8")
 
+    # NVIDIA is the primary LLM. A blank NVIDIA_MODEL secret must not be
+    # required; the code default applies when the env value is empty.
+    assert "NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}" in text
+    assert "NVIDIA_MODEL: ${{ secrets.NVIDIA_MODEL }}" in text
+
     # Canonical production windows.
     assert "cron: '30 0 * * *'" in text
     assert "cron: '30 4 * * *'" in text
