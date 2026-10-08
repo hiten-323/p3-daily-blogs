@@ -228,6 +228,17 @@ def generate_daily_content(
         ig_growth = get_instagram_growth_block()
         if ig_growth:
             ctx += "\n\n" + ig_growth
+        # Post-generation visual QA becomes an input to the NEXT generation.
+        # This is deliberately separate from measured performance learning:
+        # heuristics can constrain bad/repetitive visuals, but never masquerade
+        # as evidence that a format is viral.
+        try:
+            from content_generator.analytics.creative_post_audit import get_adaptation_block
+            visual_adaptation = get_adaptation_block()
+            if visual_adaptation:
+                ctx += "\n\n" + visual_adaptation
+        except Exception as visual_exc:
+            logger.debug("[pipeline] visual adaptation block unavailable: %s", visual_exc)
     except Exception as e:
         logger.debug("[pipeline] learning block unavailable: %s", e)
 
