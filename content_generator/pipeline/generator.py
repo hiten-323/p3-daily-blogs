@@ -261,10 +261,12 @@ def generate_daily_content(
     }
 
     if _extended:
+        from content_generator.prompts import threads
         phase1_tasks.update({
             "reel_2":   (reels.build,    ("reel_2", arch_2, "evening/night (8-10pm)", "reel_night", avoid, day_number), 1800),
             "stories":   (stories.build, (day_number,),                                                      1500),
             "yt_short":  (yt_short.build,(product, day_number),                                              1500),
+            "threads_post": (threads.build, (angle, avoid, day_number),                                      600),
         })
 
     phase1_results: dict[str, dict] = {}
@@ -382,6 +384,7 @@ def generate_daily_content(
         "stories":        phase1_results["stories"],
         "yt_short":       phase1_results["yt_short"],
         "growth_reel":    phase1_results.get("growth_reel", {}),
+        "threads_post":   phase1_results.get("threads_post", {}),
         **vp,
         **_image_prompts(),
         "performance_targets": {

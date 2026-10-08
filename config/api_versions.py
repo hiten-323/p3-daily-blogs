@@ -3,3 +3,6 @@ META_GRAPH_BASE = f"https://graph.facebook.com/{META_GRAPH_API_VERSION}"
 INSTAGRAM_GRAPH_BASE = f"https://graph.instagram.com/{META_GRAPH_API_VERSION}"
 
 SHOPIFY_API_VERSION = "2026-07"
+
+THREADS_API_VERSION = "v1.0"
+THREADS_BASE_URL = f"https://graph.threads.net/{THREADS_API_VERSION}"

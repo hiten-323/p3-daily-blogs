@@ -201,6 +201,15 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
         logger.info("[publisher] Posting to YouTube...")
         results["youtube"] = _attempt("youtube", lambda: yt_post(content, day=day_number))
 
+    # ── Threads (Meta Threads API) ───────────────────────────────────────────
+    from content_generator.publisher.threads import is_configured as threads_ready, post_content as threads_post
+    if not threads_ready():
+        logger.info("[publisher] Threads not configured — skipping")
+        results["threads"] = {"success": False, "attempted": False, "skipped": True, "error": "not_configured"}
+    else:
+        logger.info("[publisher] Posting to Threads...")
+        results["threads"] = _attempt("threads", lambda: threads_post(content, day=day_number))
+
     # ── Blog (Shopify article — once per day, generate slot only) ──────────────
     # Same canonical gate as LinkedIn and YouTube. A piece that is not approved
     # is not an attempt. Shopify errors are also skips, inside the publisher.
