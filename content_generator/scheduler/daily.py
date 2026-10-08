@@ -197,6 +197,7 @@ def _run_generate_slot(day_number: int = None) -> dict:
                 day_number=dn,
                 generation_id=str(content.get("generation_id") or ""),
                 image_results=image_results,
+                content=content,
             )
             content["_creative_audit"] = audit
             logger.info("[creative-audit] %s", audit_summary(audit))
