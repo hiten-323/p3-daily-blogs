@@ -58,7 +58,7 @@ ABSOLUTE MANDATORY RULES:
   "body": "300+ words. Pedagogical, insightful, beautifully formatted with clean paragraph breaks and bullet points. Deep dive into the science, economics, or brewing facts. Real, grounded, professional Indian tone.",
   "brand_bridge": "1-2 sentences seamlessly connecting the science to Purity Beans (Pure Pantry Provisions) — our commitment to 100% pure coffee, zero chicory, and uncompromised ingredient integrity.",
   "closing_question": "A thoughtful, debate-worthy question that invites founders, executives, and professionals to share their own coffee routines or pantry standards.",
-  "cta": "Clear call to action directing readers to explore pure coffee at {WEBSITE_URL} or request an office pantry trial.",
+  "cta": "Clear call to action: invite readers to follow Hiten Jain for weekly deep-dives into food science and coffee industry transparency, and explore 100% pure coffee at {WEBSITE_URL}.",
   "hashtags": "{HASHTAG_SET}",
   "image_prompt": "Clean executive desk setup, glass jar of Purity Beans pure coffee, warm natural morning light, ceramic cup, premium minimalist aesthetic, 1200x628."
 }}"""

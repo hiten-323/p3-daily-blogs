@@ -67,12 +67,12 @@ ABSOLUTE RULES:
     {{"on_screen": "THE TWIST", "spoken": "The thing they did not expect — contrarian, relatable"}},
     {{"on_screen": "THE VILLAIN", "spoken": "Name it precisely — chicory, preservatives, artificial aroma"}},
     {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee."}},
-    {{"on_screen": "COMMENT PURE BELOW", "spoken": "CTA that feels rewarding to follow"}}
+    {{"on_screen": "FOLLOW @PURITYBEANS", "spoken": "Follow @puritybeans so you never drink roasted root again."}}
   ],
   "loop_note": "One sentence: how the last frame connects back to frame 1 for infinite loop",
   "alt_hook": "A/B option — 4 words, completely different archetype",
-  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Available at {WEBSITE_URL}\\n\\nThis is a 150-250 word paste-ready caption with emotional storytelling, brand facts woven in naturally, and a clear reason to act.\\n\\nShop now: {WEBSITE_URL}",
-  "cta": "Direct action line — shop / visit / comment. Must include {WEBSITE_URL}",
+  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Available at {WEBSITE_URL}\\n\\nFollow @puritybeans for daily honest coffee craft. Shop pure: {WEBSITE_URL}",
+  "cta": "Follow @puritybeans for daily pure coffee craft. Explore 100% pure jars at {WEBSITE_URL}",
   "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
   "save_trigger": "Save this before your next grocery run so you never buy the wrong coffee again.",
   "share_trigger": "Share with someone who starts every morning with coffee — they deserve to know.",

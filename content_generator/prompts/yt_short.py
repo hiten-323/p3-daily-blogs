@@ -37,9 +37,9 @@ ABSOLUTE RULES:
     {{"scene": 2, "type": "agitation",      "duration_s": 5, "on_screen": "4 WORDS MAX — the betrayal made visible",           "spoken": "8-12 words — the reveal that makes them angry or curious",  "visual_direction": "Label close-up or chicory/preservative reveal"}},
     {{"scene": 3, "type": "product_reveal", "duration_s": 8, "on_screen": "READ THE JAR",                        "spoken": "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee.", "visual_direction": "Slow Purity Beans jar reveal, gold light, steam"}},
     {{"scene": 4, "type": "benefit",        "duration_s": 5, "on_screen": "4 WORDS MAX — specific result",                    "spoken": "8-12 words — transformation tied to this specific product",  "visual_direction": "Person + mug, natural light, real energy"}},
-    {{"scene": 5, "type": "cta",            "duration_s": 5, "on_screen": "SHOP P3ONLINE.IN",                                 "spoken": "Visit p3online.in — real coffee, no compromises.",          "visual_direction": "Static Purity Beans product, logo, URL held 2 seconds"}}
+    {{"scene": 5, "type": "cta",            "duration_s": 5, "on_screen": "SUBSCRIBE FOR REAL COFFEE",                       "spoken": "Subscribe for daily honest coffee truths. Real coffee at p3online.in.", "visual_direction": "Static Purity Beans product, logo, Subscribe cue held 2 seconds"}}
   ],
-  "cta": "Visit {WEBSITE_URL} — Purity Beans. 100% coffee jars, and Ultra Blend at 70% coffee.",
+  "cta": "Subscribe for daily pure coffee craft. Explore 100% coffee jars at {WEBSITE_URL}",
   "title": "YouTube Shorts title — max 60 chars, includes SEO keyword",
   "description": "Purity Beans. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Purica is freeze-dried. Prima is Premium Agglomerate. Shop now: {WEBSITE_URL} #PurityBeans #InstantCoffee #PureCoffee #CoffeeIndia",
   "tags": ["purity beans", "premium instant coffee", "freeze dried coffee", "agglomerated coffee", "coffee without preservatives", "pure instant coffee india", "gourmet instant coffee", "indian coffee brand"],

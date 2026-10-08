@@ -236,5 +236,13 @@ time, cut it — shorter with full retention beats longer with drop-off.
 
 {seo}
 
+CROSS-PLATFORM VIRALITY & MAX FOLLOWER ENGINE:
+Views alone are vanity. A viral post that gains 0 followers is a failed post.
+Every single platform must pair high viral reach with an explicit FOLLOWER CONVERSION BRIDGE:
+1. REELS & SHORTS: Ranked by SHARES (Send to DM) and Completion/Loop Rate. Give a selfish reason to follow: "Follow @puritybeans so you never drink roasted root again."
+2. CAROUSELS: Ranked by SAVES. Slide 1 must have an impossible-to-ignore curiosity gap; Slides 2-6 must be screenshot-worthy utility; Final Slide MUST command: "Save this guide + Follow @puritybeans for daily pure coffee truths."
+3. LINKEDIN: Ranked by COMMENTS & DWELL TIME. Hook must provoke in the first 2 lines (before "see more"); end with a debate-igniting question; CTA must invite following Hiten Jain for unfiltered beverage science.
+4. THREADS: Ranked by REPLIES & QUOTES. Short, punchy truth-bombs (<480 chars); expose industry tricks; prompt quick debate; end with "Follow for daily coffee truths Big Coffee hides."
+
 THE ONLY QUESTION THAT MATTERS TODAY:
 What is the fastest way to gain followers tomorrow? Generate for that."""
