@@ -320,11 +320,13 @@ def publisher_status() -> dict:
     Return configuration status for all publishers.
     Used by health_monitor and dashboard.
     """
-    from content_generator.publisher import linkedin, instagram, facebook, youtube
+    from content_generator.publisher import linkedin, instagram, facebook, youtube, threads, shopify_blog
 
     return {
         "linkedin":  {"configured": linkedin.is_configured()},
         "instagram": {"configured": instagram.is_configured()},
         "facebook":  {"configured": facebook.is_configured()},
         "youtube":   {"configured": youtube.is_configured()},
+        "threads":   {"configured": threads.is_configured()},
+        "shopify":   {"configured": shopify_blog.is_configured()},
     }

@@ -120,6 +120,9 @@ jobs:
         env:
           INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           META_TOKEN_MODE: soft
         run: python -m content_generator.ops.meta_token_health
 
@@ -150,6 +153,8 @@ jobs:
           LI_AUTHOR_URN: ${{ secrets.LI_AUTHOR_URN }}
           INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
           IG_PRODUCT_ID: ${{ secrets.IG_PRODUCT_ID }}
           IG_CATALOG_ID: ${{ secrets.IG_CATALOG_ID }}

@@ -65,11 +65,13 @@ publishing:
   facebook: true
   linkedin: true
   youtube: true
+  threads: true
   max_daily_posts:
     instagram: 3
     facebook: 2
     linkedin: 1
     youtube: 1
+    threads: 1
 
 experiments:
   enabled: true

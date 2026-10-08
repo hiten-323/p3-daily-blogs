@@ -53,8 +53,8 @@ _DEFAULTS = {
                                 "you to read any other label."},
     "marketing": {"priority_segments": ["general"], "active_campaign_override": ""},
     "quality":  {"minimum_score": 8.0, "legal_risk_threshold": 0.25, "plagiarism_threshold": 0},
-    "publishing": {"instagram": True, "facebook": True, "linkedin": True, "youtube": True,
-                   "max_daily_posts": {"instagram": 3, "facebook": 2, "linkedin": 1, "youtube": 1}},
+    "publishing": {"instagram": True, "facebook": True, "linkedin": True, "youtube": True, "threads": True,
+                   "max_daily_posts": {"instagram": 3, "facebook": 2, "linkedin": 1, "youtube": 1, "threads": 1}},
     "experiments": {"enabled": True, "max_parallel": 2},
 }
 
