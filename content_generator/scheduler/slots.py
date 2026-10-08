@@ -455,9 +455,15 @@ def _mirror_to_facebook(content: dict, day: int, slot: str,
     """
     try:
         from content_generator.publisher.facebook import post_content as fb_post
-        r = fb_post(content, day=day, preferred_image=image, message_override=message)
-        logger.info("[slots] facebook mirror (%s): %s", slot, r.get("success"))
-        return r or {}
+        r = fb_post(content, day=day, preferred_image=image, message_override=message) or {}
+        if r.get("success"):
+            logger.info("[slots] facebook mirror (%s): published", slot)
+        else:
+            logger.warning(
+                "[slots] facebook mirror failed (%s): %s",
+                slot, r.get("error") or "unpublished",
+            )
+        return r
     except Exception as e:
         logger.warning("[slots] facebook mirror failed (%s): %s", slot, e)
         return {"success": False, "error": str(e)[:200]}

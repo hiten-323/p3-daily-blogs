@@ -41,10 +41,20 @@ def main():
                     results={"instagram": {"status": "published", "remote_id": "ig1"},
                              "facebook":  {"status": "failed", "error": "token expired"}})
     v = evaluate(partial)
-    check("instagram ok + facebook failed -> not ok", not v["ok"], v["status"])
-    check("the failing platform is named",
-          any("facebook" in m for m in v["missing"]), str(v["missing"]))
+    check("instagram ok + facebook expired -> still ok", v["ok"] and v["status"] == "published", v["status"])
+    check("facebook failure is a warning, not a missing publish",
+          any("facebook" in m for m in v["warnings"]) and not v["missing"], str(v))
     check("the reason is carried through", "token expired" in v["detail"], v["detail"])
+    instagram_down = build(
+        "morning", 1,
+        expected={"instagram": ["carousel"], "facebook": ["carousel"]},
+        results={"instagram": {"status": "failed", "error": "container error"},
+                 "facebook": {"status": "failed", "error": "token expired"}},
+    )
+    down = evaluate(instagram_down)
+    check("instagram failure stays fatal", (not down["ok"]) and down["status"] == "partial", down["status"])
+    check("the fatal platform is instagram",
+          any("instagram" in m for m in down["missing"]), str(down["missing"]))
     check("published_platforms still lists only real successes",
           partial["published_platforms"] == ["instagram"],
           str(partial["published_platforms"]))
@@ -93,8 +103,9 @@ def main():
     #    reader can tell "not due this slot" from "failed".
     print("\nReport distinguishes not-expected from failed:")
     rep = format_report(partial)
-    check("report marks the failure", "FAIL" in rep, rep)
+    check("report warns on the facebook mirror", "WARN" in rep and "FAIL" not in rep, rep)
     check("report marks the success", "OK" in rep, rep)
+    check("report marks an instagram failure", "FAIL" in format_report(instagram_down), format_report(instagram_down))
     rep2 = format_report(build("generate", 1, {"linkedin": ["post"]},
                                {"linkedin": {"status": "published"},
                                 "instagram": {"status": "skipped"}}))
@@ -200,6 +211,39 @@ def test_main():
     """Let pytest collect this suite too — one runner sees both styles."""
     rc = main()
     assert rc in (0, None), f"suite reported failures (rc={rc})"
+
+
+def test_facebook_mirror_failure_is_a_warning(monkeypatch, caplog):
+    import logging
+    from content_generator.core.publish_contract import evaluate
+    from content_generator.scheduler import slots as sl
+
+    def expired(*_args, **_kwargs):
+        return {"success": False, "error": "Error validating access token: session has expired"}
+
+    monkeypatch.setattr("content_generator.publisher.facebook.post_content", expired)
+    caplog.set_level(logging.WARNING)
+    mirrored = sl._mirror_to_facebook({"generation_id": "gen"}, 4, "morning")
+    assert mirrored["success"] is False
+    assert "facebook mirror failed" in caplog.text
+    assert "session has expired" in caplog.text
+
+    contract = sl._contract(
+        "morning", 4, {"generation_id": "gen"},
+        {"instagram": {"success": True, "media_id": "ig1"}, "facebook": mirrored},
+        {"instagram": ["carousel"], "facebook": ["carousel"]},
+    )
+    verdict = evaluate(contract)
+    assert verdict["ok"] is True
+    assert verdict["warnings"]
+    assert "expired" in verdict["detail"]
+
+    fatal = sl._contract(
+        "morning", 4, {"generation_id": "gen"},
+        {"instagram": {"success": False, "error": "container error"}, "facebook": mirrored},
+        {"instagram": ["carousel"], "facebook": ["carousel"]},
+    )
+    assert evaluate(fatal)["ok"] is False
 
 
 if __name__ == "__main__":

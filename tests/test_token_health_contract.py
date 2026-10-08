@@ -9,20 +9,32 @@ DAILY_WORKFLOW = ROOT / ".github" / "workflows" / "daily.yml"
 FOUNDER_POLICY = ROOT / "founder_policies.yaml"
 
 
-def test_missing_instagram_credentials_fail_closed() -> None:
+def test_missing_instagram_credentials_fail_closed(monkeypatch, capsys) -> None:
+    from content_generator.ops import meta_token_health as health
+
     text = TOKEN_WORKFLOW.read_text(encoding="utf-8")
-    marker = "if not account_id or not token:"
-    assert marker in text
-    block = text.split(marker, 1)[1].split("url =", 1)[0]
-    assert "sys.exit(1)" in block
-    assert "sys.exit(0)" not in block
+    assert "python -m content_generator.ops.meta_token_health" in text
+    assert "META_TOKEN_MODE: strict" in text
     assert "access_token" not in text
-    assert "Authorization" in text
+    monkeypatch.delenv("INSTAGRAM_ACCOUNT_ID", raising=False)
+    monkeypatch.delenv("INSTAGRAM_ACCESS_TOKEN", raising=False)
+    monkeypatch.setenv("META_TOKEN_MODE", "strict")
+
+    def fetch(*_args, **_kwargs):
+        raise AssertionError("Graph was called without credentials")
+
+    monkeypatch.setattr(health, "_fetch", fetch)
+    assert health.run_checks() == 1
+    assert "INSTAGRAM_ACCESS_TOKEN is not configured" in capsys.readouterr().out
 
 
 def test_token_health_uses_graph_v24() -> None:
-    text = TOKEN_WORKFLOW.read_text(encoding="utf-8")
-    assert "https://graph.facebook.com/v24.0/" in text
+    from config.api_versions import META_GRAPH_BASE
+    from content_generator.ops.meta_token_health import account_url, debug_token_url
+
+    assert META_GRAPH_BASE == "https://graph.facebook.com/v24.0"
+    assert debug_token_url("tok").startswith(f"{META_GRAPH_BASE}/debug_token?")
+    assert account_url("1789").startswith(f"{META_GRAPH_BASE}/1789?fields=id,username")
 
 
 def test_extended_content_is_owned_by_founder_policy() -> None:

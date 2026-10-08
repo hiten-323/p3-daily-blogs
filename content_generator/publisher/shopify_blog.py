@@ -200,7 +200,7 @@ def post_content(content: dict, day: int = 0) -> dict:
     if slot and slot != "generate":
         return _skip("wrong_slot", slot=slot)
 
-    from content_generator.core.blog_quality import assess, normalize_blog_piece
+    from content_generator.core.blog_quality import assess, content_output_dir, normalize_blog_piece
     from content_generator.core.ist_dates import today_ist
     from content_generator.core.schema_validation import BlogSchema, validate_or_fail
 
@@ -224,7 +224,7 @@ def post_content(content: dict, day: int = 0) -> dict:
     if not _editor_approved(blog):
         return _skip("not_editor_approved")
 
-    defects = assess(blog, on_date=on_date)
+    defects = assess(blog, on_date=on_date, output_dir=content_output_dir())
     try:
         validate_or_fail(BlogSchema, blog)
     except Exception as exc:

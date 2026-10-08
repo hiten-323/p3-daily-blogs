@@ -29,9 +29,16 @@ def main() -> None:
     assert "GENERATE verified" in text
 
     # Publishing slots have an actual Meta preflight, before the pipeline runs.
+    # The scope check lives in meta_token_health so generate and publish share it.
     assert "Verify Meta publishing access" in text
-    assert "graph.facebook.com/v24.0/" in text
+    assert "python -m content_generator.ops.meta_token_health" in text
     assert "env.FORCE_SLOT != 'generate'" in text
+    health = (ROOT / "content_generator" / "ops" / "meta_token_health.py").read_text(encoding="utf-8")
+    assert "instagram_basic" in health and "instagram_content_publish" in health
+    assert "debug_token" in health and "id,username" in health
+    from config.api_versions import META_GRAPH_BASE
+    assert META_GRAPH_BASE == "https://graph.facebook.com/v24.0"
+    assert "META_GRAPH_BASE" in health
 
     # Soft Meta notice on generate (does not fail the generate slot).
     assert "Soft Meta token notice" in text or "Meta token soft-check" in text
@@ -232,6 +239,49 @@ def test_llm_probe_is_one_chat_call_per_provider(monkeypatch, capsys):
     skipped = dict(llm_probe.probe_results())
     assert skipped["nvidia"] == "skipped"
     assert all("api.nvidia.com" not in call["url"] for call in calls)
+
+
+def test_llm_probe_fails_nvidia_on_empty_content(monkeypatch, capsys):
+    from content_generator.providers import llm_probe
+
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv("NVIDIA_MODEL", "google/gemma-4-31b-it")
+    for name in (
+        "GROQ_API_KEY", "GEMINI_API_KEY", "CEREBRAS_API_KEY",
+        "DEEPSEEK_API_KEY", "OPENROUTER_API_KEY",
+    ):
+        monkeypatch.delenv(name, raising=False)
+
+    class _Resp:
+        def __init__(self, status_code, text):
+            self.status_code = status_code
+            self.text = text
+
+    def post(url, headers=None, json=None, params=None, timeout=None):
+        assert "nvapi-secretvalue" not in url
+        return _Resp(200, '{"choices":[{"message":{"content":"  \\n"}}]}')
+
+    monkeypatch.setattr(llm_probe.requests, "post", post)
+    assert llm_probe.main() == 1
+    out = capsys.readouterr().out
+    assert "nvidia: empty content" in out
+    assert "nvidia: OK" not in out
+    assert "nvapi-secretvalue" not in out
+
+
+def test_meta_preflight_checks_instagram_publish_scopes():
+    data = _workflow_document()
+    steps = {step["name"]: step for step in data["jobs"]["run-pipeline"]["steps"]}
+    soft = steps["Meta token soft-check (generate)"]
+    hard = steps["Verify Meta publishing access"]
+    assert "content_generator.ops.meta_token_health" in soft["run"]
+    assert "content_generator.ops.meta_token_health" in hard["run"]
+    assert soft["env"]["META_TOKEN_MODE"] == "soft"
+    assert hard["env"]["META_TOKEN_MODE"] == "strict"
+    assert "INSTAGRAM_ACCESS_TOKEN" in soft["env"]
+    assert "INSTAGRAM_ACCESS_TOKEN" in hard["env"]
+    verify = steps["Verify slot result"]["run"]
+    assert 'verdict.get("warnings")' in verify
 
 
 if __name__ == "__main__":
