@@ -1088,9 +1088,10 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     from content_generator.creative.real_jar_composer import (
         compose_carousel_slides,
         compose_reel_thumbnail,
+        compose_post_image,
     )
 
-    results = {"carousel": [], "reel": None}
+    results = {"carousel": [], "reel": None, "instagram_post": None, "facebook_post": None}
 
     # Carousel slides — one real jar photo per slide, rotating daily
     carousel = content.get("carousel") or {}
@@ -1120,15 +1121,15 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
         results["carousel"] = paths
         logger.info("[images] Composed %d carousel slides from real jar photos", len(paths))
 
-    if not results["carousel"]:
-        # Fallback: AI generation (may not match the real jar)
+    if not results["carousel"] and slides:
+        # Fallback: Pillow composition with real jar photos
         try:
-            from content_generator.creative.flux_generator import generate_carousel_images
-            paths = generate_carousel_images(slides, day_number) if slides else []
+            paths = compose_carousel_slides(slides, day_number)
             results["carousel"] = paths
-            logger.warning("[images] Fell back to AI-generated carousel (%d slides)", len(paths))
+            if paths:
+                logger.info("[images] Composed %d fallback carousel slides from real jar photos", len(paths))
         except Exception as e:
-            logger.error("[images] Carousel image fallback failed: %s", e)
+            logger.error("[images] Carousel real jar composer fallback failed: %s", e)
 
     # Reel thumbnail — Gemini scene with real jar first, card composer fallback
     reel = content.get("reels", [{}])[0] if content.get("reels") else {}
@@ -1150,13 +1151,68 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
             path = compose_reel_thumbnail(reel, day_number, label="reel_1")
         if not path:
             try:
-                from content_generator.creative.flux_generator import generate_reel_thumbnail
-                path = generate_reel_thumbnail(reel, day_number, label="reel_1")
-            except Exception:
-                path = None
+                from content_generator.creative.cinematic_frame import compose_cinematic_frame
+                hook_txt = str(reel.get("hook_text") or reel.get("hook") or "100% PURE COFFEE")
+                path = compose_cinematic_frame(
+                    headline=hook_txt, day=day_number, idx=7, label=f"reel_1_thumb_day{day_number}"
+                )
+            except Exception as e:
+                logger.debug("[images] Cinematic frame reel thumb skipped: %s", e)
         results["reel"] = path
         if path:
-            logger.info("[images] Reel thumbnail: %s", path)
+            logger.info("[images] Reel thumbnail from real jar photo: %s", path)
+
+    # Instagram feed post image — composed from real jar photo
+    ig_post = content.get("instagram_post") or {}
+    if ig_post and isinstance(ig_post, dict):
+        ig_img = None
+        headline = (ig_post.get("hook_line")
+                    or ig_post.get("hook")
+                    or (ig_post.get("caption", "").split("\n")[0][:60] if ig_post.get("caption") else "")
+                    or "100% PURE COFFEE")
+        body = (ig_post.get("caption", "").split("\n")[-1][:120]
+                if ig_post.get("caption") and "\n" in ig_post.get("caption") else "")
+        try:
+            from content_generator.creative.gemini_scene import generate_scene_with_real_jar
+            scene_prompt = (ig_post.get("image_prompt")
+                            or "dark marble kitchen counter at dawn, warm golden side light, "
+                               "pure coffee granules scattered, deep shadows, premium editorial FMCG photography")
+            ig_img = generate_scene_with_real_jar(
+                str(scene_prompt)[:400], day=day_number, idx=1,
+                label=f"instagram_post_day{day_number}",
+            )
+        except Exception as e:
+            logger.debug("[images] Gemini scene for instagram_post skipped: %s", e)
+        if not ig_img:
+            ig_img = compose_post_image(
+                headline=str(headline)[:60],
+                body=str(body)[:140],
+                day=day_number,
+                idx=1,
+                width=1080,
+                height=1080,
+                label=f"instagram_post_day{day_number}",
+            )
+        results["instagram_post"] = ig_img
+        if ig_img:
+            logger.info("[images] Instagram post image composed from real jar photo: %s", ig_img)
+
+    # Facebook post image — composed from real jar photo
+    fb_post = content.get("facebook_post") or {}
+    if fb_post and isinstance(fb_post, dict):
+        fb_hook = fb_post.get("hook") or "100% COFFEE. ZERO CHICORY."
+        fb_img = compose_post_image(
+            headline=str(fb_hook)[:60],
+            body="",
+            day=day_number,
+            idx=2,
+            width=1080,
+            height=1080,
+            label=f"facebook_post_day{day_number}",
+        )
+        results["facebook_post"] = fb_img
+        if fb_img:
+            logger.info("[images] Facebook post image composed from real jar photo: %s", fb_img)
 
     # UGC + Avatar + Reel Hook — jar-reference creative package
     try:

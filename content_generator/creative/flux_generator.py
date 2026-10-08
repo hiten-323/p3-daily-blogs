@@ -138,7 +138,15 @@ Reference images (product-matched):
 
 
 def generate_carousel_images(slides: list[dict], day: int) -> list[str]:
-    """Generate one image per carousel slide."""
+    """Generate one image per carousel slide using the real jar composer."""
+    try:
+        from content_generator.creative.real_jar_composer import compose_carousel_slides
+        paths = compose_carousel_slides(slides, day)
+        if paths:
+            return paths
+    except Exception as e:
+        logger.debug("[image] real_jar_composer carousel failed: %s", e)
+
     paths = []
     for i, slide in enumerate(slides):
         if isinstance(slide, str):
@@ -158,7 +166,15 @@ def generate_carousel_images(slides: list[dict], day: int) -> list[str]:
 
 
 def generate_reel_thumbnail(reel: dict, day: int, label: str = "reel") -> str | None:
-    """Generate a 9:16 thumbnail for a reel."""
+    """Generate a 9:16 thumbnail for a reel using real jar photos."""
+    try:
+        from content_generator.creative.real_jar_composer import compose_reel_thumbnail
+        path = compose_reel_thumbnail(reel, day, label=label)
+        if path:
+            return path
+    except Exception as e:
+        logger.debug("[image] real_jar_composer reel thumbnail failed: %s", e)
+
     prompt = (
         reel.get("visual_description")
         or reel.get("image_prompt")
@@ -317,10 +333,23 @@ def _fal_flux(
 
 def _pillow_placeholder(prompt: str, width: int, height: int, label: str) -> str | None:
     """
-    Generate a branded dark placeholder image using Pillow.
-    Zero external dependencies. Always succeeds if Pillow is installed.
-    Brand spec: BG #0D0905, gold accent #C8962E, cream text #F5EED8.
+    Generate a branded image using the real jar photo from brand_assets.
+    Guarantees that all renders feature an authentic Purity Beans jar photo.
     """
+    try:
+        from content_generator.creative.real_jar_composer import compose_post_image
+        composed = compose_post_image(
+            headline="PURITY BEANS",
+            body="100% Pure Coffee. Zero Chicory.",
+            width=width,
+            height=height,
+            label=label,
+        )
+        if composed:
+            return composed
+    except Exception as e:
+        logger.debug("[image] real_jar_composer in placeholder failed: %s", e)
+
     try:
         from PIL import Image, ImageDraw, ImageFont
     except ImportError:

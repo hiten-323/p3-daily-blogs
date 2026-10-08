@@ -117,6 +117,8 @@ def _find_image(content: dict) -> str | None:
     today        = _today()
 
     patterns = [
+        os.path.join(creative_dir, f"facebook_post_*{today}.jpg"),
+        os.path.join(creative_dir, f"instagram_post_*{today}.jpg"),
         os.path.join(creative_dir, f"carousel_slide_1_{today}.jpg"),
         os.path.join(creative_dir, f"carousel_cover_{today}.jpg"),
         os.path.join(creative_dir, f"*_{today}.jpg"),

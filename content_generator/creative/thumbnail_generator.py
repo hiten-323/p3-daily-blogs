@@ -39,33 +39,51 @@ def generate_reel_thumbnail(
 
     prompt = _build_thumbnail_prompt(hook, visual, "reel")
 
-    # Try Flux first
+    # 1. Try Gemini scene with real jar
     try:
-        from content_generator.creative.flux_generator import generate_image, is_configured
-        if is_configured():
-            path = generate_image(
-                prompt, width=1080, height=1920,
-                label=f"{reel_id}_thumb_day{day}",
-                seed=day,
-            )
-            if path:
-                return {"file_path": path, "mode": "flux", "prompt": prompt,
-                        "spec": "1080x1920", "hook_text": hook}
+        from content_generator.creative.gemini_scene import generate_scene_with_real_jar
+        path = generate_scene_with_real_jar(
+            prompt[:400], day=day, label=f"{reel_id}_thumb_day{day}"
+        )
+        if path:
+            return {"file_path": path, "mode": "gemini_scene", "prompt": prompt,
+                    "spec": "1080x1920", "hook_text": hook}
     except Exception as e:
-        logger.debug("[thumbnail] Flux failed: %s", e)
+        logger.debug("[thumbnail] Gemini scene failed: %s", e)
 
-    # Try Pillow render
+    # 2. Try cinematic frame with real jar (white knocked out on cinematic gradient)
     try:
-        from content_generator.creative.carousel_renderer import is_configured as pillow_ok
-        if pillow_ok():
-            path = _render_pillow_thumbnail(hook, visual, day, label=f"{reel_id}_thumb")
-            if path:
-                return {"file_path": path, "mode": "pillow", "prompt": prompt,
-                        "spec": "1080x1920", "hook_text": hook}
+        from content_generator.creative.cinematic_frame import compose_cinematic_frame
+        path = compose_cinematic_frame(
+            headline=hook or "100% PURE COFFEE",
+            day=day,
+            label=f"{reel_id}_thumb_day{day}",
+        )
+        if path:
+            return {"file_path": path, "mode": "cinematic_frame", "prompt": prompt,
+                    "spec": "1080x1920", "hook_text": hook}
+    except Exception as e:
+        logger.debug("[thumbnail] Cinematic frame failed: %s", e)
+
+    # 3. Try real jar composer
+    try:
+        from content_generator.creative.real_jar_composer import compose_reel_thumbnail
+        path = compose_reel_thumbnail(reel_data, day, label=reel_id)
+        if path:
+            return {"file_path": path, "mode": "real_jar", "prompt": prompt,
+                    "spec": "1080x1920", "hook_text": hook}
+    except Exception as e:
+        logger.debug("[thumbnail] Real jar composer failed: %s", e)
+
+    # 4. Fallback Pillow render with real jar photo
+    try:
+        path = _render_pillow_thumbnail(hook, visual, day, label=f"{reel_id}_thumb")
+        if path:
+            return {"file_path": path, "mode": "pillow_real_jar", "prompt": prompt,
+                    "spec": "1080x1920", "hook_text": hook}
     except Exception as e:
         logger.debug("[thumbnail] Pillow render failed: %s", e)
 
-    # Fallback — return prompt for manual creation
     return {
         "file_path": None,
         "mode":      "prompt_only",
@@ -79,21 +97,34 @@ def generate_yt_thumbnail(
     yt_data: dict,
     day: int,
 ) -> dict:
-    """Generate or describe a YouTube Short thumbnail (1280x720)."""
+    """Generate YouTube Short thumbnail (1280x720) using real jar photo."""
     product = yt_data.get("product", "Purity Beans")
     prompt  = (
         f"YouTube thumbnail — {product} coffee jar, bold cinematic composition, "
         f"dark background, large readable headline space, warm gold accent light, "
         f"16:9 horizontal framing, premium FMCG editorial style"
     )
+
+    # Try Gemini scene with real jar
     try:
-        from content_generator.creative.flux_generator import generate_image, is_configured
-        if is_configured():
-            path = generate_image(prompt, width=1280, height=720, label=f"yt_thumb_day{day}")
-            if path:
-                return {"file_path": path, "mode": "flux", "prompt": prompt, "spec": "1280x720"}
-    except Exception as _e:
-        logger.debug("[thumbnail_generator] optional step failed: %s", _e)
+        from content_generator.creative.gemini_scene import generate_scene_with_real_jar
+        path = generate_scene_with_real_jar(prompt, day=day, label=f"yt_thumb_day{day}")
+        if path:
+            return {"file_path": path, "mode": "gemini_scene", "prompt": prompt, "spec": "1280x720"}
+    except Exception as e:
+        logger.debug("[thumbnail] Gemini YT scene failed: %s", e)
+
+    # Try real jar composer
+    try:
+        from content_generator.creative.real_jar_composer import compose_post_image
+        path = compose_post_image(
+            headline=product, body="100% PURE COFFEE. ZERO CHICORY.",
+            day=day, width=1280, height=720, label=f"yt_thumb_day{day}"
+        )
+        if path:
+            return {"file_path": path, "mode": "real_jar", "prompt": prompt, "spec": "1280x720"}
+    except Exception as e:
+        logger.debug("[thumbnail] Real jar composer failed: %s", e)
 
     return {"file_path": None, "mode": "prompt_only", "prompt": prompt, "spec": "1280x720"}
 
@@ -116,45 +147,18 @@ def _render_pillow_thumbnail(
     day: int,
     label: str = "thumb",
 ) -> str | None:
-    """Render a simple branded thumbnail with text overlay using Pillow."""
+    """Render a branded thumbnail with real jar photo using Pillow."""
     try:
-        from PIL import Image, ImageDraw
-        from content_generator.creative.carousel_renderer import _font, _draw_wrapped_text, _BG, _GOLD, _WHITE, _CREAM
-    except ImportError:
-        return None
-
-    import datetime
-    os.makedirs(_OUT_DIR, exist_ok=True)
-
-    img  = Image.new("RGB", (1080, 1920), color=_BG)
-    draw = ImageDraw.Draw(img)
-
-    # Gradient-like top-to-bottom darkening via rectangle overlays
-    for i in range(20):
-        alpha = int(i * 6)
-        draw.rectangle([(0, 1920 - i * 60), (1080, 1920)],
-                       fill=(max(0, 13 - i), max(0, 9 - i), max(0, 5 - i)))
-
-    # Gold diagonal accent
-    draw.polygon([(0, 600), (200, 0), (220, 0), (20, 600)], fill=_GOLD)
-
-    # Hook text
-    if hook_text:
-        _draw_wrapped_text(
-            draw, hook_text,
-            x=80, y=200,
-            max_width=920,
-            font=_font(size=80),
-            fill=_WHITE,
-            line_spacing=1.3,
+        from content_generator.creative.real_jar_composer import compose_post_image
+        return compose_post_image(
+            headline=hook_text or "100% PURE COFFEE",
+            body="ZERO CHICORY. 100% COFFEE.",
+            day=day,
+            idx=7,
+            width=1080,
+            height=1920,
+            label=f"{label}_day{day}",
         )
-
-    # Brand mark
-    draw.text((1080 - 60, 1920 - 80), "PURITY BEANS", fill=_GOLD,
-              anchor="rb", font=_font(size=40))
-
-    from content_generator.core.ist_dates import today_ist
-    date_str = today_ist().isoformat()
-    filepath = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}.png")
-    img.save(filepath, "PNG")
-    return filepath
+    except Exception as e:
+        logger.debug("[thumbnail] Real jar compose failed in _render_pillow_thumbnail: %s", e)
+        return None

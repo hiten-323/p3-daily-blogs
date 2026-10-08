@@ -255,6 +255,18 @@ def _find_carousel_images(content: dict) -> list[str]:
     # so without this filter we would post a mix of old days' slides.
     images = [p for p in dict.fromkeys(images) if today in os.path.basename(p)]
 
+    # If no carousel slides found, look for feed post / instagram post images generated today
+    if not images:
+        single_patterns = [
+            f"instagram_post_*{today}.jpg",
+            f"instagram_post_*{today}.png",
+            f"feed_post_*{today}.jpg",
+            f"feed_post_*{today}.png",
+        ]
+        for sp in single_patterns:
+            images.extend(sorted(_glob.glob(os.path.join(creative_dir, sp))))
+        images = list(dict.fromkeys(images))
+
     logger.info("[instagram] CREATIVE_OUTPUT_DIR=%s", creative_dir)
     if not images:
         logger.info("[instagram] Images discovered: %s", images)

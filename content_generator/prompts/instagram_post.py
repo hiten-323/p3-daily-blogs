@@ -37,7 +37,7 @@ ABSOLUTE RULES:
   "comment_trigger": "Comment COFFEE if you are a real coffee lover who refuses to drink chicory.",
   "save_trigger": "Save this post before your next grocery run.",
   "share_trigger": "Share with someone who starts every morning with coffee.",
-  "image_prompt": "Detailed AI image prompt — Purity Beans jar, dark marble surface, warm amber studio light, premium editorial FMCG photography, 1080x1080. No text in image. No generic jars.",
+  "image_prompt": "Detailed image prompt — authentic Purity Beans jar photo from brand_assets/ (puritybeans_*.png), dark marble surface, warm amber studio light, premium editorial FMCG photography, 1080x1080. No text in image. Must strictly feature real jar photo, never generic coffee jars.",
   "image_alt": "Purity Beans glass jar — name the jar, do not call Ultra Blend 100% coffee",
   "post_type": "one of: product-truth / founder-moment / customer-story / cultural-hook / myth-busting",
   "hook_line": "The first line of the caption repeated here — must stop scroll before the More button cuts it",

@@ -70,22 +70,70 @@ def generate_daily_ugc(day: int, product: str = None) -> dict:
 
 
 def _process_creative(package: dict, label: str, day: int) -> dict:
-    """Generate a reference image for one creative package and return enriched dict."""
+    """Generate a reference image for one creative package using the real jar photo."""
     image_prompt = package.get("image_prompt", "")
+    hook_text = str(package.get("hook_text") or package.get("concept") or "REAL COFFEE. ZERO CHICORY.")[:60]
 
-    # Generate reference image using existing flux pipeline
     image_path = None
+
+    # Tier 1: Gemini multimodal scene editing (passes real jar photo PNG bytes as reference input)
     try:
-        image_path = generate_image(
-            image_prompt,
-            width=1080,
-            height=1920,   # 9:16 vertical for reels
+        from content_generator.creative.gemini_scene import generate_scene_with_real_jar
+        image_path = generate_scene_with_real_jar(
+            image_prompt[:400],
+            day=day,
             label=f"{label}_day{day}",
-            seed=day * 7 + hash(label) % 1000,
         )
-        logger.info("[ugc] Generated reference image for %s: %s", label, image_path)
+        if image_path:
+            logger.info("[ugc] Gemini placed real jar in UGC scene for %s: %s", label, image_path)
     except Exception as e:
-        logger.warning("[ugc] Image generation failed for %s: %s", label, e)
+        logger.debug("[ugc] Gemini real jar scene skipped for %s: %s", label, e)
+
+    # Tier 2: Cinematic frame compositor (real jar photo knocked out on gradient)
+    if not image_path:
+        try:
+            from content_generator.creative.cinematic_frame import compose_cinematic_frame
+            image_path = compose_cinematic_frame(
+                headline=hook_text,
+                day=day,
+                width=1080,
+                height=1920,
+                label=f"{label}_day{day}",
+            )
+            if image_path:
+                logger.info("[ugc] Cinematic frame composed from real jar for %s: %s", label, image_path)
+        except Exception as e:
+            logger.debug("[ugc] Cinematic frame skipped for %s: %s", label, e)
+
+    # Tier 3: Real jar post composer
+    if not image_path:
+        try:
+            from content_generator.creative.real_jar_composer import compose_post_image
+            image_path = compose_post_image(
+                headline=hook_text,
+                day=day,
+                width=1080,
+                height=1920,
+                label=f"{label}_day{day}",
+            )
+            if image_path:
+                logger.info("[ugc] Real jar composer built image for %s: %s", label, image_path)
+        except Exception as e:
+            logger.debug("[ugc] Real jar composer fallback failed for %s: %s", label, e)
+
+    # Tier 4: Flux generator fallback (uses real jar placeholder if AI providers fail)
+    if not image_path:
+        try:
+            image_path = generate_image(
+                image_prompt,
+                width=1080,
+                height=1920,   # 9:16 vertical for reels
+                label=f"{label}_day{day}",
+                seed=day * 7 + hash(label) % 1000,
+            )
+            logger.info("[ugc] Generated reference image for %s: %s", label, image_path)
+        except Exception as e:
+            logger.warning("[ugc] Image generation failed for %s: %s", label, e)
 
     return {
         **package,

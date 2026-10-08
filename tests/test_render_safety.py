@@ -106,6 +106,32 @@ def main():
         check(f"role '{role}' resolves a TrueType", getattr(f, "path", None) is not None,
               type(f).__name__)
 
+    # 8. Real jar assets integrity: BrandProfile jar_reference_path must exist
+    print("\nReal jar assets integrity:")
+    from content_generator.core.brand_guard import BRAND, REFERENCE_IMAGES
+    check("BRAND jar reference exists on disk", os.path.exists(BRAND.jar_reference_path), BRAND.jar_reference_path)
+    existing_refs = [p for p in REFERENCE_IMAGES if os.path.exists(p)]
+    check("all 32 jar references exist on disk", len(existing_refs) == 32, f"{len(existing_refs)}/32")
+
+    # 9. Thumbnail generation creates image with real jar photo
+    print("\nThumbnail generator real jar usage:")
+    from content_generator.creative.thumbnail_generator import generate_reel_thumbnail, generate_yt_thumbnail
+    reel_thumb = generate_reel_thumbnail({"hook_text": "ZERO CHICORY TEST"}, day=1, label="test_reel")
+    check("reel thumbnail generates real jar file", bool(reel_thumb.get("file_path") and os.path.exists(reel_thumb["file_path"])), str(reel_thumb))
+    yt_thumb = generate_yt_thumbnail({"product": "Purista"}, day=1)
+    check("yt thumbnail generates real jar file", bool(yt_thumb.get("file_path") and os.path.exists(yt_thumb["file_path"])), str(yt_thumb))
+
+    # 10. Image generation pipeline creates real jar images for instagram_post and facebook_post
+    print("\nDaily image generation includes instagram_post and facebook_post with real jar:")
+    from content_generator.scheduler.daily import _do_generate_images
+    sample_content = {
+        "instagram_post": {"hook": "PURE COFFEE ONLY", "caption": "Real coffee caption\n\np3online.in"},
+        "facebook_post": {"hook": "ZERO CHICORY ALWAYS", "body": "Facebook body text"},
+    }
+    gen_results = _do_generate_images(sample_content, day_number=1)
+    check("instagram_post image generated from real jar", bool(gen_results.get("instagram_post") and os.path.exists(gen_results["instagram_post"])), str(gen_results.get("instagram_post")))
+    check("facebook_post image generated from real jar", bool(gen_results.get("facebook_post") and os.path.exists(gen_results["facebook_post"])), str(gen_results.get("facebook_post")))
+
     print(f"\n{'RENDER SAFETY BROKEN' if failures else 'render safety OK'} "
           f"({len(failures)} failure(s))")
     return 1 if failures else 0

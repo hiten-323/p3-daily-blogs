@@ -21,7 +21,7 @@ BRAND: BrandProfile = BrandProfile(
     website="https://p3online.in",
     language="English",
     minimum_editorial_score=EDITORIAL_THRESHOLD,
-    jar_reference_path="brand_assets/puritybeans_front.png"
+    jar_reference_path="brand_assets/puritybeans_reference.png"
 )
 
 PRODUCTS = ["ultra_blend", "bold", "purista", "purica"]
