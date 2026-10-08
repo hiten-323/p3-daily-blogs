@@ -7,6 +7,7 @@ saved as if it were ready to publish.
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 
@@ -260,12 +261,21 @@ def structure_issues(piece: dict) -> list[str]:
     return issues
 
 
-def duplicate_slug_issue(slug: str, on_date: str | None = None, output_dir: str = "output") -> str | None:
+def content_output_dir() -> str:
+    """Where content_YYYY-MM-DD.json lives. PB_OUTPUT_DIR isolates tests from committed output."""
+    return (
+        os.getenv("PB_OUTPUT_DIR", "").strip()
+        or os.getenv("OUTPUT_DIR", "").strip()
+        or "output"
+    )
+
+
+def duplicate_slug_issue(slug: str, on_date: str | None = None, output_dir: str | None = None) -> str | None:
     """A slug already used on an earlier day is a duplicate post."""
     slug = str(slug or "").strip().lower()
     if not slug:
         return None
-    root = Path(output_dir)
+    root = Path(output_dir or content_output_dir())
     if not root.is_dir():
         return None
     for path in sorted(root.glob("content_*.json")):
@@ -288,7 +298,7 @@ def duplicate_slug_issue(slug: str, on_date: str | None = None, output_dir: str 
     return None
 
 
-def assess(piece: dict, on_date: str | None = None, output_dir: str = "output") -> list[str]:
+def assess(piece: dict, on_date: str | None = None, output_dir: str | None = None) -> list[str]:
     """Actionable blog defects. Empty means the asset can be saved.
 
     Slugs already used on an earlier IST day are duplicates. The file for

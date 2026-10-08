@@ -1,6 +1,7 @@
 """Shopify blog publishes once, from the generate slot, after every gate."""
 from __future__ import annotations
 
+import datetime
 import logging
 from pathlib import Path
 
@@ -8,6 +9,7 @@ from content_generator.core.blog_writer import generate_blog_post
 from content_generator.publisher import dispatcher, shopify_blog
 
 ROOT = Path(__file__).resolve().parents[1]
+_FIXED_DAY = datetime.date(2026, 10, 4)
 
 
 def _long_body() -> str:
@@ -45,14 +47,32 @@ def _ready_post(tmp_path) -> dict:
     return {"blog_post": piece, "day_number": 6}
 
 
-def _enable(monkeypatch, tmp_path):
+def _isolate(monkeypatch, tmp_path, slot=None):
+    """Keep publish checks off committed output/, the runner date, and FORCE_SLOT."""
+    monkeypatch.setenv("PB_OUTPUT_DIR", str(tmp_path))
+    monkeypatch.setenv("OUTPUT_DIR", str(tmp_path))
+    monkeypatch.setattr(
+        "content_generator.core.blog_quality.content_output_dir",
+        lambda: str(tmp_path),
+    )
+    monkeypatch.setattr(
+        "content_generator.core.ist_dates.today_ist",
+        lambda now=None: _FIXED_DAY,
+    )
+    if slot is None:
+        monkeypatch.delenv("FORCE_SLOT", raising=False)
+    else:
+        monkeypatch.setenv("FORCE_SLOT", slot)
+
+
+def _enable(monkeypatch, tmp_path, slot=None):
+    _isolate(monkeypatch, tmp_path, slot=slot)
     monkeypatch.setenv("SHOPIFY_BLOG_ENABLED", "true")
     monkeypatch.setenv("SHOPIFY_STORE_DOMAIN", "purity-beans.myshopify.com")
     monkeypatch.setenv("SHOPIFY_ADMIN_TOKEN", "test-token")
     monkeypatch.setenv("SHOPIFY_BLOG_ID", "991")
     monkeypatch.setenv("BLOG_STATE_DIR", str(tmp_path))
     monkeypatch.setenv("WEBSITE_URL", "https://p3online.in")
-    monkeypatch.delenv("FORCE_SLOT", raising=False)
     monkeypatch.setattr(shopify_blog, "_hero_image_b64", lambda: None)
 
 
@@ -116,8 +136,8 @@ def test_duplicate_handle_or_title_is_not_attempted(monkeypatch, tmp_path):
 
 
 def test_missing_secrets_and_shopify_errors_skip(monkeypatch, tmp_path, caplog):
+    _isolate(monkeypatch, tmp_path, slot="generate")
     content = _ready_post(tmp_path)
-    monkeypatch.setenv("FORCE_SLOT", "generate")
     monkeypatch.setenv("SHOPIFY_BLOG_ENABLED", "true")
     monkeypatch.setenv("BLOG_STATE_DIR", str(tmp_path))
     monkeypatch.delenv("SHOPIFY_STORE_DOMAIN", raising=False)
@@ -189,6 +209,7 @@ def test_second_publish_the_same_day_is_not_attempted(monkeypatch, tmp_path):
 
 
 def test_dispatcher_does_not_fail_the_run_for_a_blog_skip(monkeypatch, tmp_path):
+    _isolate(monkeypatch, tmp_path, slot="generate")
     monkeypatch.setenv("ENABLE_TIMED_SLOTS", "true")
     monkeypatch.setattr(dispatcher, "_PUBLISH_LOG", str(tmp_path / "publish_log.json"))
     monkeypatch.setattr(

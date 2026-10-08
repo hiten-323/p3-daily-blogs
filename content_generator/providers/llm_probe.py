@@ -1,9 +1,12 @@
 """One real chat completion per LLM provider, for the dry-run workflow.
 
 No retries and no /models listing. NVIDIA is a chat completion, same as production.
+An HTTP 200 whose message content is empty or whitespace fails the NVIDIA check:
+that is the failure mode that burned the editorial deadline in run 341.
 """
 from __future__ import annotations
 
+import json
 import logging
 
 import requests
@@ -34,22 +37,52 @@ def _clip(text: str, key: str) -> str:
     return " ".join(out.split())[:160]
 
 
-def _outcome(resp: requests.Response, key: str) -> str:
+def _message_text(resp: requests.Response) -> str:
+    """OpenAI-style message content. Missing or unparsable content is empty."""
+    raw = getattr(resp, "text", "") or ""
+    try:
+        body = json.loads(raw)
+        content = body["choices"][0]["message"].get("content")
+    except (KeyError, IndexError, TypeError, ValueError, AttributeError):
+        return ""
+    if content is None:
+        return ""
+    return str(content)
+
+
+def _outcome(resp: requests.Response, key: str, *, reject_empty: bool = False) -> str:
     if resp.status_code == 200:
+        if reject_empty and not _message_text(resp).strip():
+            return "empty content"
         return "OK"
     body = " ".join((resp.text or "").split())
     return _clip(f"HTTP {resp.status_code} {body}".strip(), key)
 
 
-def _post(url: str, *, headers: dict, payload: dict, key: str, params: dict | None = None) -> str:
+def _post(
+    url: str,
+    *,
+    headers: dict,
+    payload: dict,
+    key: str,
+    params: dict | None = None,
+    reject_empty: bool = False,
+) -> str:
     try:
         resp = requests.post(url, headers=headers, json=payload, params=params, timeout=_TIMEOUT)
     except Exception as exc:
         return _clip(f"{type(exc).__name__}: {exc}", key)
-    return _outcome(resp, key)
+    return _outcome(resp, key, reject_empty=reject_empty)
 
 
-def _openai_chat(url: str, key: str, model: str, extra_headers: dict | None = None) -> str:
+def _openai_chat(
+    url: str,
+    key: str,
+    model: str,
+    extra_headers: dict | None = None,
+    *,
+    reject_empty: bool = False,
+) -> str:
     if not key or not model:
         return "skipped"
     headers = {
@@ -68,6 +101,7 @@ def _openai_chat(url: str, key: str, model: str, extra_headers: dict | None = No
             "max_tokens": _MAX_TOKENS,
         },
         key=key,
+        reject_empty=reject_empty,
     )
 
 
@@ -92,7 +126,7 @@ def _gemini_chat(key: str) -> str:
 def probe_results() -> list[tuple[str, str]]:
     """One tiny chat call per provider. Missing keys are skipped, not errors."""
     return [
-        ("nvidia", _openai_chat(nvidia._URL, nvidia.get_key(), nvidia.get_model())),
+        ("nvidia", _openai_chat(nvidia._URL, nvidia.get_key(), nvidia.get_model(), reject_empty=True)),
         ("groq", _openai_chat(groq._URL, groq.get_key(), _first_model(groq.MODELS))),
         ("gemini", _gemini_chat(gemini.get_key())),
         ("cerebras", _openai_chat(cerebras._URL, cerebras.get_key(), _first_model(cerebras.MODELS))),
@@ -117,10 +151,15 @@ def main() -> int:
     summary = "providers with keys: " + (", ".join(present) if present else "(none)")
     print(summary)
     logger.info("[llm] %s", summary)
-    for name, status in probe_results():
+    rows = probe_results()
+    for name, status in rows:
         row = f"{name}: {status}"
         print(row)
         logger.info("[llm] probe %s", row)
+    nvidia_status = dict(rows).get("nvidia", "skipped")
+    if nvidia_status == "empty content":
+        print("::error::NVIDIA probe returned empty content")
+        return 1
     return 0
 
 

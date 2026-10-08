@@ -44,11 +44,11 @@ def test_provider_order_starts_with_nvidia():
 def test_empty_model_env_keeps_the_default(monkeypatch):
     monkeypatch.setenv("NVIDIA_MODEL", "   ")
     assert nvidia.get_models() == [
-        "nvidia/nemotron-3-super-120b-a12b",
-        "nvidia/nemotron-3-ultra-550b-a55b",
         "google/gemma-4-31b-it",
+        "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3-super-120b-a12b",
     ]
-    assert nvidia.get_model() == "nvidia/nemotron-3-super-120b-a12b"
+    assert nvidia.get_model() == "google/gemma-4-31b-it"
     assert "meta/llama-3.3-70b-instruct" not in nvidia.get_models()
     monkeypatch.setenv("NVIDIA_MODEL", "meta/llama-3.1-70b-instruct")
     assert nvidia.get_model() == "meta/llama-3.1-70b-instruct"
@@ -67,15 +67,18 @@ def test_success_uses_chat_completions(monkeypatch):
         seen["url"] = url
         seen["auth"] = headers["Authorization"]
         seen["model"] = json["model"]
+        seen["timeout"] = timeout
         return _Response(200, _ok_body())
 
     monkeypatch.setattr(nvidia._http, "post", post)
     text, usage = nvidia.call("Write a caption.", 120)
     assert text == '{"ok": true}'
-    assert usage["model"] == "nvidia/nemotron-3-super-120b-a12b"
+    assert usage["model"] == "google/gemma-4-31b-it"
     assert seen["url"] == "https://integrate.api.nvidia.com/v1/chat/completions"
     assert seen["auth"] == "Bearer nvapi-secretvalue"
-    assert seen["model"] == "nvidia/nemotron-3-super-120b-a12b"
+    assert seen["model"] == "google/gemma-4-31b-it"
+    assert seen["timeout"] == nvidia._CALL_TIMEOUT_S
+    assert nvidia._CALL_TIMEOUT_S <= 30
 
 
 @pytest.mark.parametrize("status", [404, 410])
@@ -243,6 +246,74 @@ def test_health_check_skips_without_a_key(monkeypatch, caplog):
     router.log_provider_status()
     assert "skipped (no key)" in caplog.text
     assert "providers with keys present:" in caplog.text
+
+
+@pytest.mark.parametrize("content", ["", "   ", "\n\t"])
+def test_empty_content_tries_the_next_model(monkeypatch, caplog, content):
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv("NVIDIA_MODEL", "nvidia/nemotron-3-super-120b-a12b,google/gemma-4-31b-it")
+    sleeps = []
+    monkeypatch.setattr(nvidia.time, "sleep", lambda seconds: sleeps.append(seconds))
+    seen = []
+
+    def post(url, headers=None, json=None, timeout=None):
+        assert timeout == nvidia._CALL_TIMEOUT_S
+        seen.append(json["model"])
+        if json["model"] == "nvidia/nemotron-3-super-120b-a12b":
+            return _Response(200, _ok_body(content))
+        return _Response(200, _ok_body('{"hook": "from gemma"}'))
+
+    monkeypatch.setattr(nvidia._http, "post", post)
+    caplog.set_level(logging.WARNING)
+    text, usage = nvidia.call("prompt", 40)
+    assert text == '{"hook": "from gemma"}'
+    assert usage["model"] == "google/gemma-4-31b-it"
+    assert seen == ["nvidia/nemotron-3-super-120b-a12b", "google/gemma-4-31b-it"]
+    assert sleeps == []
+    assert "returned empty content" in caplog.text
+    assert "trying next configured model google/gemma-4-31b-it" in caplog.text
+
+
+def test_empty_content_on_every_model_falls_back_to_groq(_clean_router, monkeypatch):
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv("NVIDIA_MODEL", "empty/one,empty/two")
+    monkeypatch.setenv("GROQ_API_KEY", "gsk_testkeyvalue")
+    monkeypatch.setattr(nvidia.time, "sleep", lambda _seconds: None)
+    seen = []
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen.append(url)
+        if "api.nvidia.com" in url:
+            assert timeout == nvidia._CALL_TIMEOUT_S
+            return _Response(200, _ok_body("  "))
+        return _Response(200, _ok_body('{"hook": "from groq"}'))
+
+    monkeypatch.setattr(nvidia._http, "post", post)
+    out = router.call("Write JSON.", "reel_1", max_tokens=40)
+    assert out["hook"] == "from groq"
+    assert sum("api.nvidia.com" in url for url in seen) == 2
+    assert any("api.groq.com" in url for url in seen)
+
+
+def test_timeout_tries_the_next_model(monkeypatch, caplog):
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv("NVIDIA_MODEL", "slow/model,google/gemma-4-31b-it")
+    seen = []
+
+    def post(url, headers=None, json=None, timeout=None):
+        assert timeout == nvidia._CALL_TIMEOUT_S
+        seen.append(json["model"])
+        if json["model"] == "slow/model":
+            raise TimeoutError("timed out")
+        return _Response(200, _ok_body('{"hook": "after timeout"}'))
+
+    monkeypatch.setattr(nvidia._http, "post", post)
+    caplog.set_level(logging.WARNING)
+    text, usage = nvidia.call("prompt", 40)
+    assert text == '{"hook": "after timeout"}'
+    assert usage["model"] == "google/gemma-4-31b-it"
+    assert seen == ["slow/model", "google/gemma-4-31b-it"]
+    assert "trying next configured model google/gemma-4-31b-it" in caplog.text
 
 
 def test_nvidia_only_satisfies_the_key_check(monkeypatch):

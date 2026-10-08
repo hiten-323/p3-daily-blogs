@@ -7,8 +7,13 @@ client uses the live defaults below. meta/llama-3.3-70b-instruct reached end
 of life on 2026-08-26 and the hosted API now answers HTTP 410.
 
 404 and 410 mean that model is gone or unknown, so the next configured model
-is tried immediately. 429 and 5xx are retried with backoff on the same model.
-When those retries are exhausted the router falls through to the next provider.
+is tried immediately. Empty or whitespace-only HTTP 200 content is the same
+kind of miss: run 341 and run 344 showed nemotron-3-super answering 200 with
+an empty body, and editorial_review then hit its 420s hard timeout. The next
+configured model is tried, and when none of them return text the router falls
+through to the next provider. 429 and 5xx are retried with backoff on the
+same model. Each call has a short timeout so one hung model cannot consume
+the editorial deadline.
 """
 from __future__ import annotations
 
@@ -23,18 +28,25 @@ logger = logging.getLogger(__name__)
 
 _BASE = "https://integrate.api.nvidia.com/v1"
 _URL = f"{_BASE}/chat/completions"
-# Live free chat endpoints on build.nvidia.com as of 2026-10-04.
-# Super is the large general-purpose model whose hosted sample is a plain
-# chat completion. Ultra and Gemma 4 31B IT are the current fallbacks.
+# Live free chat endpoints on build.nvidia.com.
+# Runs 341 (2026-10-05) and 344 (2026-10-06) called nemotron-3-super first.
+# It often returned HTTP 200 with empty content (reel_1, carousel, stories,
+# yt_short, blog sections) and the calls that did answer took 12–17s.
+# Gemma 4 31B IT is the instruct model already used as a content fallback,
+# so it goes first. Ultra is next. Super stays available but last.
 _DEFAULT_MODELS = (
-    "nvidia/nemotron-3-super-120b-a12b",
-    "nvidia/nemotron-3-ultra-550b-a55b",
     "google/gemma-4-31b-it",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3-super-120b-a12b",
 )
 _DEFAULT_MODEL = _DEFAULT_MODELS[0]
 _BACKOFF_S = (2, 5, 12)
+# Successful super replies in run 341 finished in under 20s. Empty replies in
+# run 344 sat for 23–50s and still returned nothing. 30s fails those fast.
+_CALL_TIMEOUT_S = 30
 _RETRY_STATUS = {429, 500, 502, 503, 504}
 _UNAVAILABLE = {404, 410}
+_AUTH_STATUS = {401, 403}
 _NVAPI = re.compile(r"nvapi-[A-Za-z0-9_\-]+")
 
 
@@ -78,7 +90,7 @@ def _call_model(prompt: str, max_tokens: int, model: str, headers: dict) -> tupl
 
     for attempt in range(attempts):
         try:
-            resp = _http.post(_URL, headers=headers, json=payload, timeout=120)
+            resp = _http.post(_URL, headers=headers, json=payload, timeout=_CALL_TIMEOUT_S)
         except Exception as e:
             logger.error(
                 "NVIDIA %s request exception (attempt %d/%d): %s",
@@ -97,7 +109,7 @@ def _call_model(prompt: str, max_tokens: int, model: str, headers: dict) -> tupl
                     "model": model,
                     "error": f"malformed success payload: {e}",
                 }
-            if not text:
+            if text is None or (isinstance(text, str) and not text.strip()):
                 logger.warning("NVIDIA %s returned empty content", model)
                 return None, {"status_code": 200, "model": model, "error": "empty content"}
             usage = body.get("usage") or {}
@@ -142,21 +154,40 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
             return text, usage
         last_failure = usage
         status = int(usage.get("status_code") or 0)
-        if status not in _UNAVAILABLE:
+        error = str(usage.get("error") or "")
+        if not _try_next_model(status, error):
             return None, last_failure
         if index + 1 < len(models):
             logger.warning(
-                "NVIDIA %s HTTP %s — model unavailable (%s); trying next configured model %s",
-                model, status, usage.get("error") or "no body", models[index + 1],
+                "NVIDIA %s %s; trying next configured model %s",
+                model, _skip_reason(status, error), models[index + 1],
             )
             continue
         logger.warning(
-            "NVIDIA %s HTTP %s — model unavailable (%s); no further configured models",
-            model, status, usage.get("error") or "no body",
+            "NVIDIA %s %s; no further configured models",
+            model, _skip_reason(status, error),
         )
         return None, last_failure
 
     return None, last_failure
+
+
+def _try_next_model(status: int, error: str) -> bool:
+    """Auth and quota stay on this model. An empty body, timeout, or 404 moves on."""
+    if status in _AUTH_STATUS or status in _RETRY_STATUS:
+        return False
+    if status in _UNAVAILABLE or status == 0:
+        return True
+    return status == 200 and "empty content" in error
+
+
+def _skip_reason(status: int, error: str) -> str:
+    detail = error or "no body"
+    if "empty content" in error:
+        return f"returned empty content ({detail})"
+    if status == 0:
+        return f"request failed ({detail})"
+    return f"HTTP {status} — model unavailable ({detail})"
 
 
 def health_check() -> str:

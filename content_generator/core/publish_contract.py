@@ -12,7 +12,9 @@ The workflow's check was "did we publish to at least one platform", read from a
      warning. Those slots have never been verified.
 
   2. "Something published" is not the same as "what was supposed to publish did".
-     Instagram succeeding while Facebook silently failed reads as success.
+     Instagram is the publish slot's obligation. Facebook mirrors that post.
+     An expired Facebook token is logged and reported, and it does not turn
+     a successful Instagram publish into a failed run.
 
 So a run now declares what it EXPECTED to publish and what actually happened,
 per platform, and the workflow compares the two. A missing contract is a hard
@@ -23,9 +25,13 @@ DELIBERATELY DISTINCT STATES
 
     skipped   an explicit, allow-listed decision not to publish -> green
     held      unexpected hold (stale file, empty gate, ...)  -> RED
-    published everything expected succeeded                  -> green
-    partial   some expected platform failed                  -> RED
+    published Instagram (and any other fatal platform) succeeded -> green
+    partial   a fatal expected platform failed               -> RED
     missing   no contract at all                             -> RED
+
+Facebook is a mirror. When Instagram published, a Facebook failure is a
+warning on an otherwise green publish. When Instagram itself failed, the
+run stays red.
 
 A hold is green only for an explicit allow-list (already published today,
 founder dry-run). Every other hold used to exit 0, so morning and evening
@@ -119,20 +125,44 @@ def evaluate(contract: dict) -> dict:
     expected = contract.get("expected") or {}
     results  = contract.get("results") or {}
     missing  = []
+    warnings = []
+    instagram_ok = _instagram_published(expected, results)
     for platform in expected:
         r = results.get(platform) or {}
-        if str(r.get("status")) != "published":
-            missing.append(f"{platform} ({r.get('status') or 'no result'}"
-                           + (f": {r.get('error')}" if r.get("error") else "") + ")")
+        if str(r.get("status")) == "published":
+            continue
+        line = _platform_line(platform, r)
+        if platform == "facebook" and instagram_ok:
+            warnings.append(line)
+        else:
+            missing.append(line)
 
     if not expected:
         return {"status": "nothing_expected", "ok": True, "missing": [],
-                "detail": "this slot publishes nothing"}
+                "warnings": [], "detail": "this slot publishes nothing"}
     if missing:
         return {"status": "partial", "ok": False, "missing": missing,
+                "warnings": warnings,
                 "detail": "expected but not published: " + "; ".join(missing)}
-    return {"status": "published", "ok": True, "missing": [],
-                "detail": f"all {len(expected)} expected platform(s) published"}
+    if warnings:
+        return {"status": "published", "ok": True, "missing": [],
+                "warnings": warnings,
+                "detail": "instagram published; facebook mirror warning: " + "; ".join(warnings)}
+    return {"status": "published", "ok": True, "missing": [], "warnings": [],
+            "detail": f"all {len(expected)} expected platform(s) published"}
+
+
+def _instagram_published(expected: dict, results: dict) -> bool:
+    if "instagram" not in (expected or {}):
+        return False
+    return str((results.get("instagram") or {}).get("status")) == "published"
+
+
+def _platform_line(platform: str, result: dict) -> str:
+    line = f"{platform} ({result.get('status') or 'no result'}"
+    if result.get("error"):
+        line += f": {result.get('error')}"
+    return line + ")"
 
 
 def format_report(contract: dict) -> str:
@@ -146,12 +176,19 @@ def format_report(contract: dict) -> str:
         return "\n".join(lines)
     expected = contract.get("expected") or {}
     results  = contract.get("results") or {}
+    instagram_ok = _instagram_published(expected, results)
     for platform in sorted(set(expected) | set(results)):
         if platform not in expected:
             lines.append(f"  {platform.upper():<10} — not expected this slot")
             continue
         r = results.get(platform) or {}
-        mark = "OK  " if str(r.get("status")) == "published" else "FAIL"
+        published = str(r.get("status")) == "published"
+        if published:
+            mark = "OK  "
+        elif platform == "facebook" and instagram_ok:
+            mark = "WARN"
+        else:
+            mark = "FAIL"
         detail = r.get("remote_id") or r.get("error") or r.get("status") or "no result"
         lines.append(f"  {platform.upper():<10} {mark} {detail}")
     return "\n".join(lines)

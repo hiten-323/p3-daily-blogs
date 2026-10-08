@@ -67,7 +67,9 @@ def post_content(content: dict, day: int = 0,
     if result["success"]:
         logger.info("[facebook] Day %d posted | id=%s", day, result["post_id"])
     else:
-        logger.error("[facebook] Day %d failed: %s", day, result["error"])
+        # A dead page token must not look like a fatal publish. Instagram is
+        # the slot that fails the run; Facebook is a mirror.
+        logger.warning("[facebook] Day %d failed: %s", day, result["error"])
 
     return result
 
@@ -154,7 +156,7 @@ def _post_to_page(
             return {"success": False, "post_id": "", "url": "", "error": err}
 
     except Exception as e:
-        logger.error("[facebook] Request error: %s", e)
+        logger.warning("[facebook] Request error: %s", e)
         return {"success": False, "post_id": "", "url": "", "error": str(e)}
 
 
