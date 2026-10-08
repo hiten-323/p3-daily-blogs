@@ -66,7 +66,7 @@ def _div(h):
     for i,x in enumerate(h):
         for y in h[i+1:]: n+=1; d+=x!=y
     return round(d/n,3) if n else 0
-def audit_generated_creatives(*,day_number,generation_id,image_results=None,creative_dir=None):
+def audit_generated_creatives(*,day_number,generation_id,image_results=None,creative_dir=None,content=None):
     from content_generator.creative.jar_provenance import verify_jar_provenance
     image_results=image_results or {}; assets=[]; seen=set()
     def add(v,p):
@@ -77,6 +77,9 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
     root=Path(creative_dir or os.getenv("CREATIVE_OUTPUT_DIR","output/creative"))
     today=today_ist().isoformat()
     for p in root.glob(f"*_{today}.mp4"):add(str(p),"video")
+    # Audit every current-day rendered image, including renderer outputs that were not returned.
+    for pattern in (f"*_{today}.jpg", f"*_{today}.jpeg", f"*_{today}.png"):
+        for p in root.glob(pattern): add(str(p),"generated_image")
     images=[]; videos=[]
     for path,platform in assets:
         if path.lower().endswith(".mp4"):videos.append({"path":path,"platform":platform,**_video(path)});continue
@@ -86,12 +89,29 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
     diversity=_div([x["metrics"].get("visual_hash") for x in images])
     if len(images)>=3 and diversity<.45:
         for x in images:x["recommendations"].append("portfolio diversity low: vary setting, camera distance, human/context cue, and visual progression")
+    # Copy/content-type QA complements the pixel audit.
+    copy_audit=[]
+    for key in ("growth_reel","reels","yt_short","carousel","instagram_post","facebook_post","threads_post","linkedin_post","stories"):
+        pieces = content.get(key) if isinstance(content,dict) else None
+        if key == "reels" and isinstance(pieces,list): iterable=[(f"reel_{i+1}",p) for i,p in enumerate(pieces)]
+        elif isinstance(pieces,dict): iterable=[(key,pieces)]
+        else: iterable=[]
+        for label,piece in iterable:
+            if not isinstance(piece,dict) or not piece: continue
+            hook=str(piece.get("hook") or piece.get("hook_text") or piece.get("headline") or piece.get("title") or "").strip()
+            text=" ".join(str(piece.get(k) or "") for k in ("caption","body","description","cta","community_question"))
+            cr=[]
+            if len(hook)<12: cr.append("hook is too short to communicate a clear curiosity/problem")
+            if key in ("growth_reel","reels","yt_short") and "follow" not in text.lower() and "subscribe" not in text.lower(): cr.append("discovery video lacks an explicit follow/subscribe conversion cue")
+            if key in ("instagram_post","facebook_post","threads_post") and "?" not in text: cr.append("community asset lacks a question/debate trigger")
+            if text.lower().count("shop")>=2: cr.append("commercial language repeats; protect discovery value before selling")
+            copy_audit.append({"asset":label,"hook_length":len(hook),"recommendations":cr})
     recs=[]
-    for x in images+videos:
+    for x in images+videos+copy_audit:
         for r in x.get("recommendations",[]):
             if r not in recs:recs.append(r)
     row={"ts":datetime.datetime.now(datetime.timezone.utc).isoformat(),"day_number":day_number,"generation_id":generation_id,
-         "image_assets":images,"video_assets":videos,"portfolio_diversity":diversity,"recommendations":recs[:20],
+         "image_assets":images,"video_assets":videos,"copy_audit":copy_audit,"portfolio_diversity":diversity,"recommendations":recs[:20],
          "asset_count":len(images)+len(videos)}
     rows=_load();rows.append(row);_save(rows)
     logger.info("[creative-audit] day=%s assets=%s diversity=%.2f recommendations=%s",day_number,row["asset_count"],diversity,len(recs))
