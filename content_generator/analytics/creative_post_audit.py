@@ -102,9 +102,9 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
             text=" ".join(str(piece.get(k) or "") for k in ("caption","body","description","cta","community_question"))
             cr=[]
             if len(hook)<12: cr.append("hook is too short to communicate a clear curiosity/problem")
-            if key in ("growth_reel","reels","yt_short") and "follow" not in text.lower() and "subscribe" not in text.lower(): cr.append("discovery video lacks an explicit follow/subscribe conversion cue")
-            if key in ("instagram_post","facebook_post","threads_post") and "?" not in text: cr.append("community asset lacks a question/debate trigger")
-            if text.lower().count("shop")>=2: cr.append("commercial language repeats; protect discovery value before selling")
+            if key in ("growth_reel","reels","yt_short") and "follow" not in text.lower() and "subscribe" not in text.lower(): cr.append(f"{label}: discovery video lacks an explicit follow/subscribe conversion cue")
+            if key in ("instagram_post","facebook_post","threads_post") and "?" not in text: cr.append(f"{label}: community asset lacks a question/debate trigger")
+            if text.lower().count("shop")>=2: cr.append(f"{label}: commercial language repeats; protect discovery value before selling")
             copy_audit.append({"asset":label,"hook_length":len(hook),"recommendations":cr})
     recs=[]
     for x in images+videos+copy_audit:
