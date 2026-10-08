@@ -30,8 +30,8 @@ _THREADS_CHAR_LIMIT = 500
 
 
 def is_configured() -> bool:
-    """True if Threads user ID and access token are configured."""
-    return bool(os.getenv("THREADS_USER_ID")) and bool(os.getenv("THREADS_ACCESS_TOKEN"))
+    """True if Threads access token is configured."""
+    return bool(os.getenv("THREADS_ACCESS_TOKEN"))
 
 
 def _extract_thread_text(content: dict) -> str:
@@ -144,7 +144,7 @@ def post_content(content: dict, day: int = 0) -> dict:
             "error": "no_content",
         }
 
-    user_id = os.getenv("THREADS_USER_ID", "").strip()
+    user_id = os.getenv("THREADS_USER_ID", "me").strip() or "me"
     token = os.getenv("THREADS_ACCESS_TOKEN", "").strip()
 
     try:

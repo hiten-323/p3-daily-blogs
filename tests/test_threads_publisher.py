@@ -11,7 +11,6 @@ def test_threads_is_configured(monkeypatch):
     monkeypatch.delenv("THREADS_ACCESS_TOKEN", raising=False)
     assert threads.is_configured() is False
 
-    monkeypatch.setenv("THREADS_USER_ID", "123456789")
     monkeypatch.setenv("THREADS_ACCESS_TOKEN", "TH_TOKEN_XYZ")
     assert threads.is_configured() is True
 
