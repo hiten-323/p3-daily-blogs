@@ -474,6 +474,14 @@ def compose_post_image(
     path = os.path.join(_OUT_DIR, f"{label}_{date_str}.jpg")
     canvas.save(path, "JPEG", quality=88)
     logger.info("[real_jar] Composed %s from real photo %s", path, os.path.basename(jar_path))
+
+    # Record verified real-jar provenance
+    try:
+        from content_generator.creative.jar_provenance import record_jar_provenance
+        record_jar_provenance(path, jar_asset_id=jar_path, render_source="real_jar")
+    except Exception as e:
+        logger.debug("[real_jar] Provenance recording skipped: %s", e)
+
     return path
 
 

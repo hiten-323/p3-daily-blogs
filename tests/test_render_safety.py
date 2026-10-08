@@ -110,27 +110,57 @@ def main():
     print("\nReal jar assets integrity:")
     from content_generator.core.brand_guard import BRAND, REFERENCE_IMAGES
     check("BRAND jar reference exists on disk", os.path.exists(BRAND.jar_reference_path), BRAND.jar_reference_path)
-    existing_refs = [p for p in REFERENCE_IMAGES if os.path.exists(p)]
+    existing_refs = {os.path.normpath(p) for p in REFERENCE_IMAGES if os.path.exists(p)}
     check("all 32 jar references exist on disk", len(existing_refs) == 32, f"{len(existing_refs)}/32")
 
-    # 9. Thumbnail generation creates image with real jar photo
-    print("\nThumbnail generator real jar usage:")
+    # 9. Thumbnail generation creates image with verified real jar photo provenance
+    print("\nThumbnail generator real jar provenance:")
+    from content_generator.creative.jar_provenance import verify_jar_provenance, verify_creative_suite
     from content_generator.creative.thumbnail_generator import generate_reel_thumbnail, generate_yt_thumbnail
     reel_thumb = generate_reel_thumbnail({"hook_text": "ZERO CHICORY TEST"}, day=1, label="test_reel")
-    check("reel thumbnail generates real jar file", bool(reel_thumb.get("file_path") and os.path.exists(reel_thumb["file_path"])), str(reel_thumb))
-    yt_thumb = generate_yt_thumbnail({"product": "Purista"}, day=1)
-    check("yt thumbnail generates real jar file", bool(yt_thumb.get("file_path") and os.path.exists(yt_thumb["file_path"])), str(yt_thumb))
+    check("reel thumbnail generates file", bool(reel_thumb.get("file_path") and os.path.exists(reel_thumb["file_path"])), str(reel_thumb))
+    reel_prov = verify_jar_provenance(reel_thumb.get("file_path", ""))
+    check("reel thumbnail provenance verified", reel_prov.get("verified") is True, str(reel_prov))
+    check("reel thumbnail jar asset is authentic", os.path.normpath(reel_prov.get("jar_asset_id", "")) in existing_refs, str(reel_prov.get("jar_asset_id")))
 
-    # 10. Image generation pipeline creates real jar images for instagram_post and facebook_post
-    print("\nDaily image generation includes instagram_post and facebook_post with real jar:")
+    yt_thumb = generate_yt_thumbnail({"product": "Purista"}, day=1)
+    check("yt thumbnail generates file", bool(yt_thumb.get("file_path") and os.path.exists(yt_thumb["file_path"])), str(yt_thumb))
+    yt_prov = verify_jar_provenance(yt_thumb.get("file_path", ""))
+    check("yt thumbnail provenance verified", yt_prov.get("verified") is True, str(yt_prov))
+    check("yt thumbnail jar asset is authentic", os.path.normpath(yt_prov.get("jar_asset_id", "")) in existing_refs, str(yt_prov.get("jar_asset_id")))
+
+    # 10. Image generation pipeline creates verified real jar images for instagram_post and facebook_post
+    print("\nDaily image generation includes instagram_post and facebook_post with real jar provenance:")
     from content_generator.scheduler.daily import _do_generate_images
     sample_content = {
         "instagram_post": {"hook": "PURE COFFEE ONLY", "caption": "Real coffee caption\n\np3online.in"},
         "facebook_post": {"hook": "ZERO CHICORY ALWAYS", "body": "Facebook body text"},
     }
     gen_results = _do_generate_images(sample_content, day_number=1)
-    check("instagram_post image generated from real jar", bool(gen_results.get("instagram_post") and os.path.exists(gen_results["instagram_post"])), str(gen_results.get("instagram_post")))
-    check("facebook_post image generated from real jar", bool(gen_results.get("facebook_post") and os.path.exists(gen_results["facebook_post"])), str(gen_results.get("facebook_post")))
+    ig_prov = verify_jar_provenance(gen_results.get("instagram_post", ""))
+    fb_prov = verify_jar_provenance(gen_results.get("facebook_post", ""))
+    check("instagram_post provenance verified", ig_prov.get("verified") is True, str(ig_prov))
+    check("instagram_post jar asset is authentic", os.path.normpath(ig_prov.get("jar_asset_id", "")) in existing_refs, str(ig_prov.get("jar_asset_id")))
+    check("facebook_post provenance verified", fb_prov.get("verified") is True, str(fb_prov))
+    check("facebook_post jar asset is authentic", os.path.normpath(fb_prov.get("jar_asset_id", "")) in existing_refs, str(fb_prov.get("jar_asset_id")))
+
+    # 11. UGC generator strictly uses verified real jar and eliminates generic escape hatches
+    print("\nUGC generator strict real-jar verification:")
+    from content_generator.creative.ugc_generator import generate_daily_ugc
+    ugc_pack = generate_daily_ugc(day=1)
+    for role in ("avatar", "ugc", "reel_hook"):
+        asset = ugc_pack.get(role, {})
+        check(f"UGC {role} asset_real_jar_verified is True", asset.get("asset_real_jar_verified") is True, str(asset))
+        check(f"UGC {role} jar_asset_id is authentic", os.path.normpath(asset.get("jar_asset_id", "")) in existing_refs, str(asset.get("jar_asset_id")))
+        ref_img = asset.get("generated_reference_image")
+        if ref_img:
+            asset_prov = verify_jar_provenance(ref_img)
+            check(f"UGC {role} image file provenance verified", asset_prov.get("verified") is True, str(asset_prov))
+
+    # 12. Negative test: unverified image paths are rejected by provenance gate
+    print("\nUnverified images fail provenance gate:")
+    check("unregistered image fails", verify_jar_provenance("output/creative/fake_unknown_jar.jpg").get("verified") is False)
+    check("empty path fails", verify_jar_provenance("").get("verified") is False)
 
     print(f"\n{'RENDER SAFETY BROKEN' if failures else 'render safety OK'} "
           f"({len(failures)} failure(s))")

@@ -176,4 +176,11 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     os.makedirs(_OUT_DIR, exist_ok=True)
     out = os.path.join(_OUT_DIR, f"{label}_{today_ist().isoformat()}.jpg")
     canvas.save(out, "JPEG", quality=90)
+
+    try:
+        from content_generator.creative.jar_provenance import record_jar_provenance
+        record_jar_provenance(out, jar_asset_id=jar_path, render_source="cinematic_real_jar")
+    except Exception as pe:
+        logger.debug("[cinematic_frame] Provenance recording skipped: %s", pe)
+
     return out

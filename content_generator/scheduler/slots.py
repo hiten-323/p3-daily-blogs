@@ -301,7 +301,14 @@ def _execute_publish_slot(slot: str) -> dict:
         filtered_content["carousel"]        = approved.get("carousel", {})
         filtered_content["instagram_post"]  = approved.get("instagram_post", {})
 
-        from content_generator.publisher.instagram import post_content, post_story
+        from content_generator.publisher.instagram import _find_carousel_images, post_content, post_story
+        imgs = _find_carousel_images(filtered_content)
+        if imgs:
+            from content_generator.creative.jar_provenance import verify_creative_suite
+            ok, issues = verify_creative_suite(imgs)
+            if not ok:
+                return _held(slot, day, content, f"real_jar_unverified — {'; '.join(issues)}")
+
         result = post_content(filtered_content, day=day)
         # Track the approved piece — tracking content.get("carousel") could stamp
         # the learning log with a hook that never passed the gate.
@@ -383,6 +390,12 @@ def _execute_publish_slot(slot: str) -> dict:
             image = _find_reel_thumbnail()
             if not image:
                 return _held(slot, day, content, "no_image")
+
+            from content_generator.creative.jar_provenance import verify_jar_provenance
+            prov = verify_jar_provenance(image)
+            if not prov.get("verified"):
+                return _held(slot, day, content, f"real_jar_unverified — {prov.get('reason')}")
+
             feed = prepare_feed_image(image)
             if feed:
                 result = _post_single_image(feed, caption)

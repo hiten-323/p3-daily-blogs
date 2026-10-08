@@ -73,6 +73,12 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.warning("[instagram] No images found — skipping Instagram post")
         return {"success": False, "media_id": "", "permalink": "", "error": "no_images"}
 
+    from content_generator.creative.jar_provenance import verify_creative_suite
+    prov_ok, prov_issues = verify_creative_suite(images[:10] if len(images) >= 2 else [images[0]])
+    if not prov_ok:
+        logger.error("[instagram] Refusing to publish unverified jar images: %s", prov_issues)
+        return {"success": False, "media_id": "", "permalink": "", "error": f"real_jar_unverified: {'; '.join(prov_issues)}"}
+
     if len(images) >= 2:
         result = _post_carousel(images[:10], caption)   # Instagram max 10
     else:
@@ -730,6 +736,13 @@ def prepare_feed_image(path: str) -> str | None:
         out = os.path.splitext(path)[0] + "_feed45.jpg"
         im.save(out, "JPEG", quality=90)
         logger.info("[instagram] rendered feed-safe 4:5 image %s", out)
+
+        try:
+            from content_generator.creative.jar_provenance import inherit_provenance
+            inherit_provenance(out, source_path=path)
+        except Exception as pe:
+            logger.debug("[instagram] Provenance inheritance skipped: %s", pe)
+
         return out
     except Exception as e:
         logger.warning("[instagram] could not render 4:5 feed image: %s", e)
@@ -742,6 +755,12 @@ def post_local_story(image_path: str) -> dict:
         return {"success": False, "media_id": "", "error": "not_configured"}
     if not image_path or not os.path.exists(image_path):
         return {"success": False, "media_id": "", "error": "no_story_image"}
+
+    from content_generator.creative.jar_provenance import verify_jar_provenance
+    prov = verify_jar_provenance(image_path)
+    if not prov.get("verified"):
+        logger.error("[instagram] Refusing to publish unverified story image: %s (%s)", image_path, prov.get("reason"))
+        return {"success": False, "media_id": "", "error": f"real_jar_unverified: {prov.get('reason')}"}
     try:
         import requests  # noqa: F401
     except ImportError:

@@ -142,6 +142,12 @@ def _post_to_page(
 
     try:
         if image_path and os.path.exists(image_path):
+            from content_generator.creative.jar_provenance import verify_jar_provenance
+            prov = verify_jar_provenance(image_path)
+            if not prov.get("verified"):
+                logger.error("[facebook] Refusing to post unverified jar image: %s (%s)", image_path, prov.get("reason"))
+                return {"success": False, "post_id": "", "url": "", "error": f"real_jar_unverified: {prov.get('reason')}"}
+
             # Photo post
             with open(image_path, "rb") as f:
                 resp = requests.post(

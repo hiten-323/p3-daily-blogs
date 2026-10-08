@@ -115,6 +115,13 @@ def generate_scene_with_real_jar(
                         f.write(image_bytes)
                     logger.info("[gemini_scene] Real jar placed in scene -> %s (base: %s)",
                                 path, os.path.basename(jar_path))
+
+                    try:
+                        from content_generator.creative.jar_provenance import record_jar_provenance
+                        record_jar_provenance(path, jar_asset_id=jar_path, render_source="gemini_real_jar")
+                    except Exception as pe:
+                        logger.debug("[gemini_scene] Provenance recording skipped: %s", pe)
+
                     return path
     except Exception as e:
         logger.warning("[gemini_scene] Response parse failed: %s", e)

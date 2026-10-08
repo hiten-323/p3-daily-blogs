@@ -75,16 +75,23 @@ def _process_creative(package: dict, label: str, day: int) -> dict:
     hook_text = str(package.get("hook_text") or package.get("concept") or "REAL COFFEE. ZERO CHICORY.")[:60]
 
     image_path = None
+    jar_asset_id = None
+    render_source = None
 
     # Tier 1: Gemini multimodal scene editing (passes real jar photo PNG bytes as reference input)
     try:
         from content_generator.creative.gemini_scene import generate_scene_with_real_jar
+        from content_generator.creative.real_jar_composer import pick_jar_photo
+        candidate_jar = pick_jar_photo(day, idx=0, product=package.get("product"))
         image_path = generate_scene_with_real_jar(
             image_prompt[:400],
             day=day,
+            product=package.get("product"),
             label=f"{label}_day{day}",
         )
         if image_path:
+            jar_asset_id = candidate_jar
+            render_source = "gemini_real_jar"
             logger.info("[ugc] Gemini placed real jar in UGC scene for %s: %s", label, image_path)
     except Exception as e:
         logger.debug("[ugc] Gemini real jar scene skipped for %s: %s", label, e)
@@ -93,14 +100,19 @@ def _process_creative(package: dict, label: str, day: int) -> dict:
     if not image_path:
         try:
             from content_generator.creative.cinematic_frame import compose_cinematic_frame
+            from content_generator.creative.real_jar_composer import pick_jar_photo
+            candidate_jar = pick_jar_photo(day, idx=0, product=package.get("product"), overlay_safe=True, prefer_front=True)
             image_path = compose_cinematic_frame(
                 headline=hook_text,
                 day=day,
+                product=package.get("product"),
                 width=1080,
                 height=1920,
                 label=f"{label}_day{day}",
             )
             if image_path:
+                jar_asset_id = candidate_jar
+                render_source = "cinematic_real_jar"
                 logger.info("[ugc] Cinematic frame composed from real jar for %s: %s", label, image_path)
         except Exception as e:
             logger.debug("[ugc] Cinematic frame skipped for %s: %s", label, e)
@@ -108,36 +120,45 @@ def _process_creative(package: dict, label: str, day: int) -> dict:
     # Tier 3: Real jar post composer
     if not image_path:
         try:
-            from content_generator.creative.real_jar_composer import compose_post_image
+            from content_generator.creative.real_jar_composer import compose_post_image, pick_jar_photo
+            candidate_jar = pick_jar_photo(day, idx=0, product=package.get("product"), overlay_safe=True)
             image_path = compose_post_image(
                 headline=hook_text,
                 day=day,
+                product=package.get("product"),
                 width=1080,
                 height=1920,
                 label=f"{label}_day{day}",
             )
             if image_path:
+                jar_asset_id = candidate_jar
+                render_source = "real_jar"
                 logger.info("[ugc] Real jar composer built image for %s: %s", label, image_path)
         except Exception as e:
             logger.debug("[ugc] Real jar composer fallback failed for %s: %s", label, e)
 
-    # Tier 4: Flux generator fallback (uses real jar placeholder if AI providers fail)
-    if not image_path:
-        try:
-            image_path = generate_image(
-                image_prompt,
-                width=1080,
-                height=1920,   # 9:16 vertical for reels
-                label=f"{label}_day{day}",
-                seed=day * 7 + hash(label) % 1000,
-            )
-            logger.info("[ugc] Generated reference image for %s: %s", label, image_path)
-        except Exception as e:
-            logger.warning("[ugc] Image generation failed for %s: %s", label, e)
+    # HARD INVARIANT: Zero escape hatches. A product creative CANNOT exist unless
+    # a verified real-jar image is present. Never fall back to generic image generators.
+    is_verified = bool(
+        image_path
+        and render_source
+        and jar_asset_id
+        and os.path.exists(image_path)
+        and os.path.exists(jar_asset_id)
+    )
+
+    if image_path and not is_verified:
+        logger.error("[ugc] Image %s generated without verified jar asset! Rejecting.", image_path)
+        image_path = None
+        render_source = None
+        jar_asset_id = None
 
     return {
         **package,
         "generated_reference_image": image_path,
+        "asset_real_jar_verified": is_verified,
+        "jar_asset_id": jar_asset_id,
+        "render_source": render_source,
     }
 
 
@@ -148,11 +169,14 @@ def _build_tool_brief(results: dict, date_str: str) -> dict:
     """
     def _entry(data: dict, title: str) -> dict:
         entry = {
-            "title":                title,
-            "step_1_NANO_BANANA_PRO": data.get("image_prompt", ""),
-            "step_2_SEEDANCE":       data.get("motion_prompt", ""),
-            "reference_jar_files":   data.get("reference_jar_paths", []),
-            "generated_reference":   data.get("generated_reference_image", ""),
+            "title":                   title,
+            "step_1_NANO_BANANA_PRO":    data.get("image_prompt", ""),
+            "step_2_SEEDANCE":          data.get("motion_prompt", ""),
+            "reference_jar_files":      data.get("reference_jar_paths", []),
+            "generated_reference":      data.get("generated_reference_image", ""),
+            "asset_real_jar_verified":  data.get("asset_real_jar_verified", False),
+            "jar_asset_id":             data.get("jar_asset_id", ""),
+            "render_source":            data.get("render_source", ""),
         }
         if "ugc_caption" in data:
             entry["caption"] = data["ugc_caption"]
