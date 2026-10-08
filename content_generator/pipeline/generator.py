@@ -156,6 +156,13 @@ def _build_context_suffix(research: dict) -> str:
             f"Lean into this archetype where it fits naturally."
         )
 
+    parts.append(
+        "ANTI-CANNIBALIZATION DIVERSITY RULE:\n"
+        "Use trend intelligence as subtle background if applicable, but DO NOT overwrite "
+        "your specific assigned angle/format. Every platform has an independent job: do not "
+        "replicate another platform's premise."
+    )
+
     return ("\n\n" + "\n\n".join(parts)) if parts else ""
 
 
@@ -252,6 +259,11 @@ def generate_daily_content(
     _extended = _extended_content_enabled()
     logger.info("[pipeline] extended content %s (policy/env)", "ON" if _extended else "OFF")
 
+    # Anti-cannibalization: Assign independent angles to different platforms so
+    # the audience doesn't receive one topic repeated in 8 wrappers.
+    fb_angle = _optimized_pick(LINKEDIN_ANGLES, day_number, label="facebook_angle", offset=7)
+    th_angle = _optimized_pick(LINKEDIN_ANGLES, day_number, label="threads_angle", offset=3)
+
     phase1_tasks = {
         "reel_1":         (reels.build,          ("reel_1", arch_1, "morning (7-9am)",       "reel_morning", avoid, day_number), 1800),
         "carousel":       (carousel.build,       (mech, avoid, day_number),                                           2200),
@@ -261,12 +273,13 @@ def generate_daily_content(
     }
 
     if _extended:
-        from content_generator.prompts import threads
+        from content_generator.prompts import threads, facebook
         phase1_tasks.update({
-            "reel_2":   (reels.build,    ("reel_2", arch_2, "evening/night (8-10pm)", "reel_night", avoid, day_number), 1800),
-            "stories":   (stories.build, (day_number,),                                                      1500),
-            "yt_short":  (yt_short.build,(product, day_number),                                              1500),
-            "threads_post": (threads.build, (angle, avoid, day_number),                                      600),
+            "reel_2":        (reels.build,    ("reel_2", arch_2, "evening/night (8-10pm)", "reel_night", avoid, day_number), 1800),
+            "stories":       (stories.build,  (day_number,),                                                      1500),
+            "yt_short":      (yt_short.build, (product, day_number),                                              1500),
+            "threads_post":  (threads.build,  (th_angle, avoid, day_number),                                      600),
+            "facebook_post": (facebook.build, (fb_angle, avoid, day_number),                                     800),
         })
 
     phase1_results: dict[str, dict] = {}
@@ -296,7 +309,7 @@ def generate_daily_content(
         phase1_results["blog_post"] = _generate_blog(day_number, topic, ctx)
 
     # Fill optional keys with empty dicts so downstream code doesn't KeyError
-    for optional in ("reel_2", "blog_post", "stories", "yt_short"):
+    for optional in ("reel_2", "blog_post", "stories", "yt_short", "threads_post", "facebook_post"):
         phase1_results.setdefault(optional, {})
 
     # ── Phase 2: video prompts (depends on phase 1) ───────────────────────────
@@ -385,6 +398,7 @@ def generate_daily_content(
         "yt_short":       phase1_results["yt_short"],
         "growth_reel":    phase1_results.get("growth_reel", {}),
         "threads_post":   phase1_results.get("threads_post", {}),
+        "facebook_post":  phase1_results.get("facebook_post", {}),
         **vp,
         **_image_prompts(),
         "performance_targets": {

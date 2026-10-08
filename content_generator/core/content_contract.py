@@ -220,3 +220,56 @@ def _seo_keywords(piece: dict) -> list[str]:
              "freeze dried", "coffee india", "no additives", "coffee label",
              "black coffee", "coffee price")
     return [s for s in seeds if s in text]
+
+
+def check_objective_alignment(piece: dict, objective: str | None = None) -> dict:
+    """
+    Validates that an asset's CTA and conclusion align with its funnel objective.
+    e.g., An asset assigned FOLLOW must have an explicit follow/subscribe cue,
+    not a bare product buy link.
+    """
+    import re
+    obj = str(objective or piece.get("funnel_objective") or piece.get("objective") or "").upper()
+    cta = str(piece.get("cta") or piece.get("primary_cta") or "").lower()
+    caption = str(piece.get("caption") or "").lower()
+    spoken = ""
+    if "frames" in piece and isinstance(piece["frames"], list):
+        spoken = " ".join(str(f.get("spoken") or "") for f in piece["frames"]).lower()
+    elif "scenes" in piece and isinstance(piece["scenes"], list):
+        spoken = " ".join(str(s.get("spoken") or "") for s in piece["scenes"]).lower()
+    text = f"{cta} {caption} {spoken}"
+
+    if "FOLLOW" in obj:
+        has_follow = bool(re.search(r"\b(follow|subscriber?|subscribing|tap follow)\b", text))
+        return {
+            "passes": has_follow,
+            "objective": "FOLLOW",
+            "reason": "Follow CTA cue present" if has_follow else "Asset objective is FOLLOW but CTA lacks follow/subscribe invitation",
+            "suggested_cta": "Follow @puritybeans so you never drink roasted root again.",
+        }
+    elif "DISCOVERY" in obj:
+        has_share = bool(re.search(r"\b(share|send|tag|forward|pass this)\b", text))
+        return {
+            "passes": has_share,
+            "objective": "DISCOVERY",
+            "reason": "Discovery share cue present" if has_share else "Asset objective is DISCOVERY but CTA lacks share/send trigger",
+            "suggested_cta": "Send this to someone who drinks instant coffee.",
+        }
+    elif "AUTHORITY" in obj:
+        has_save = bool(re.search(r"\b(save|bookmark|keep|screenshot|note)\b", text))
+        return {
+            "passes": has_save,
+            "objective": "AUTHORITY",
+            "reason": "Authority save cue present" if has_save else "Asset objective is AUTHORITY but CTA lacks save/bookmark cue",
+            "suggested_cta": "Save this before your next grocery run.",
+        }
+    elif "COMMUNITY" in obj:
+        has_comment = bool(re.search(r"\b(comment|tell|thoughts|which|vote|drop)\b", text))
+        return {
+            "passes": has_comment,
+            "objective": "COMMUNITY",
+            "reason": "Community comment cue present" if has_comment else "Asset objective is COMMUNITY but CTA lacks discussion question/prompt",
+            "suggested_cta": "Which one would you choose? Comment below.",
+        }
+    return {"passes": True, "objective": obj, "reason": "No strict alignment constraints", "suggested_cta": ""}
+

@@ -270,37 +270,65 @@ def _upload_video(
 # ── Metadata builders ─────────────────────────────────────────────────────────
 
 def _extract_title(content: dict) -> str:
+    yt = content.get("yt_short")
+    if isinstance(yt, dict):
+        title = str(yt.get("title") or yt.get("hook") or "").strip()
+        if title:
+            return title[:100]
+
     reels = content.get("reels") or []
-    if reels:
-        hook = reels[0].get("hook", "")
+    if reels and isinstance(reels[0], dict):
+        hook = str(reels[0].get("hook") or reels[0].get("hook_text") or "").strip()
         if hook:
             return hook[:100]
     return "Purity Beans — 100% Pure Instant Coffee | No Chicory #Shorts"
 
 
 def _extract_description(content: dict) -> str:
+    yt = content.get("yt_short")
+    if isinstance(yt, dict):
+        desc = str(yt.get("description") or "").strip()
+        if desc:
+            return desc[:5000]
+        # Construct from scenes if present
+        scenes = yt.get("scenes") or []
+        if isinstance(scenes, list) and scenes:
+            spoken_lines = [s.get("spoken") for s in scenes if isinstance(s, dict) and s.get("spoken")]
+            cta = str(yt.get("cta") or "Subscribe for pure coffee truths. Explore 100% pure jars at https://p3online.in")
+            parts = [
+                str(yt.get("hook") or ""),
+                "\n".join(spoken_lines),
+                cta,
+                "\nPurity Beans — India's purest instant coffee. Rs 18/cup. Zero chicory.",
+                "Shop: https://p3online.in",
+            ]
+            return "\n".join(p for p in parts if p)[:5000]
+
     reels = content.get("reels") or []
-    if reels:
+    if reels and isinstance(reels[0], dict):
         reel  = reels[0]
         parts = [
-            reel.get("hook", ""),
-            reel.get("script", "") or reel.get("body", ""),
-            reel.get("cta", ""),
+            str(reel.get("hook") or reel.get("hook_text") or ""),
+            str(reel.get("script") or reel.get("body") or reel.get("caption") or ""),
+            str(reel.get("cta") or ""),
             "",
             "Purity Beans — India's purest instant coffee. Rs 18/cup. Zero chicory.",
             "Shop: https://p3online.in",
         ]
         return "\n".join(p for p in parts if p)[:5000]
-    return "Purity Beans — 100% pure instant coffee. Zero chicory. Shop at p3online.in"
+    return "Purity Beans — 100% pure instant coffee. Zero chicory. Shop at https://p3online.in"
 
 
 def _build_tags(content: dict) -> list[str]:
+    yt = content.get("yt_short")
+    if isinstance(yt, dict) and isinstance(yt.get("tags"), list) and yt.get("tags"):
+        return [str(t).lower()[:30] for t in yt["tags"]][:500]
+
     base = [
         "purity beans", "pure coffee", "instant coffee", "no chicory",
         "coffee india", "premium coffee", "coffee shorts", "coffee reels",
         "indiancoffee", "coffeelover",
     ]
-    # Add trend keyword if present
     trend = content.get("strategy", {}).get("top_trend", "")
     if trend:
         base.append(trend.lower()[:30])

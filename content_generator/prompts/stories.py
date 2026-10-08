@@ -34,11 +34,10 @@ Do not reuse the reels' hooks or angles.
     "screenshot_hook": "The one fact that makes them screenshot and share"
   }},
   "story_3": {{
-    "type": "proof",
-    "stat": "Specific non-round number — e.g. 11,247 customers or Rs18/cup",
-    "stat_label": "What it means — max 8 words",
-    "dm_quote": "25-40 words. First-person Indian voice. Written on mobile. Sounds real.",
-    "dm_handle": "Realistic Indian IG handle — e.g. @_karan.runs"
+    "type": "clean_truth",
+    "headline": "THE INGREDIENT TRUTH",
+    "fact": "Verifiable coffee truth: e.g. Rs 18/cup home calculation vs Rs 250 cafe cup, or 100% Arabica vs chicory root filler. ZERO fabrication: NEVER invent fake customer counts, fake DMs, or synthetic handles.",
+    "sticker_prompt": "Interactive quiz or emoji slider sticker for audience engagement"
   }},
   "story_4": {{
     "type": "cta",

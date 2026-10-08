@@ -149,22 +149,74 @@ def get_todays_objectives(day: int) -> dict:
     """
     Assign ONE funnel objective per asset for today. Never mixed.
 
-    Growth reel cycles the audience-building objectives
-    (discovery/follow/authority/community). The brand reel cycles all five,
-    but CONVERSION appears more often as the account grows.
+    Growth reel and Shorts cycle the primary audience-building objectives
+    (FOLLOW, DISCOVERY).
+    Brand reels and Carousels cycle AUTHORITY, COMMUNITY, and CONVERSION.
+    In early stages (IGNITION), CONVERSION is strictly capped to <= 5% across
+    the asset mix to maximize viral follower discovery.
     """
-    audience_objs = [FUNNEL_OBJECTIVES[i] for i in (0, 1, 2, 4)]  # no conversion
-    growth_obj = audience_objs[day % len(audience_objs)]
-
     stage = get_growth_stage()
-    # Brand reel: at early stages conversion appears 1 day in 5; later 1 in 2
-    conv_every = 5 if stage["viral_pct"] >= 85 else (3 if stage["viral_pct"] >= 70 else 2)
-    if day % conv_every == 0:
-        brand_obj = FUNNEL_OBJECTIVES[3]  # CONVERSION
-    else:
-        brand_obj = audience_objs[(day // conv_every) % len(audience_objs)]
+    viral_mode = stage["viral_pct"] >= 85  # IGNITION or TRACTION
 
-    return {"growth_reel": growth_obj, "brand_reel": brand_obj}
+    # FUNNEL_OBJECTIVES:
+    # 0: DISCOVERY, 1: FOLLOW, 2: AUTHORITY, 3: CONVERSION, 4: COMMUNITY
+    
+    # Growth reel: alternating FOLLOW and DISCOVERY — its sole job is stranger acquisition
+    growth_obj = FUNNEL_OBJECTIVES[1] if day % 2 == 1 else FUNNEL_OBJECTIVES[0]
+
+    # Brand reel (reel_2):
+    if viral_mode:
+        # Conversion appears at most 1 day in 7 during IGNITION, else AUTHORITY / COMMUNITY
+        brand_obj = FUNNEL_OBJECTIVES[3] if day % 7 == 0 else (
+            FUNNEL_OBJECTIVES[2] if day % 2 == 0 else FUNNEL_OBJECTIVES[4]
+        )
+    else:
+        conv_every = 3 if stage["viral_pct"] >= 70 else 2
+        brand_obj = FUNNEL_OBJECTIVES[3] if day % conv_every == 0 else (
+            FUNNEL_OBJECTIVES[2] if day % 2 == 0 else FUNNEL_OBJECTIVES[4]
+        )
+
+    # Reel 1: morning reel — DISCOVERY on odd days, FOLLOW on even days
+    reel_1_obj = FUNNEL_OBJECTIVES[0] if day % 2 == 1 else FUNNEL_OBJECTIVES[1]
+
+    # Carousel: AUTHORITY (saves & reference frameworks) or FOLLOW
+    carousel_obj = FUNNEL_OBJECTIVES[2] if day % 2 == 0 else FUNNEL_OBJECTIVES[1]
+
+    # Instagram feed post: COMMUNITY (debate & comments) or FOLLOW
+    ig_post_obj = FUNNEL_OBJECTIVES[4] if day % 2 == 0 else FUNNEL_OBJECTIVES[1]
+
+    # YouTube Short: FOLLOW (high completion & subscribe CTA) or DISCOVERY
+    yt_obj = FUNNEL_OBJECTIVES[1] if day % 2 == 0 else FUNNEL_OBJECTIVES[0]
+
+    # Facebook post: DISCOVERY (relatable discussion shared to friends/family)
+    fb_obj = FUNNEL_OBJECTIVES[0] if day % 2 == 0 else FUNNEL_OBJECTIVES[4]
+
+    # Threads post: COMMUNITY (hot takes, truth bombs, reply magnets)
+    th_obj = FUNNEL_OBJECTIVES[4] if day % 2 == 1 else FUNNEL_OBJECTIVES[1]
+
+    # LinkedIn post: AUTHORITY (founder transparency, food science insights)
+    li_obj = FUNNEL_OBJECTIVES[2] if day % 2 == 0 else FUNNEL_OBJECTIVES[1]
+
+    # Blog post: AUTHORITY (deep educational SEO) or CONVERSION (buyers guide)
+    blog_obj = FUNNEL_OBJECTIVES[3] if (not viral_mode and day % 3 == 0) else FUNNEL_OBJECTIVES[2]
+
+    # Stories: COMMUNITY on odd days, CONVERSION on even days
+    stories_obj = FUNNEL_OBJECTIVES[4] if day % 2 == 1 else FUNNEL_OBJECTIVES[3]
+
+    return {
+        "growth_reel":    growth_obj,
+        "brand_reel":     brand_obj,
+        "reel_1":         reel_1_obj,
+        "reel_2":         brand_obj,
+        "carousel":       carousel_obj,
+        "instagram_post": ig_post_obj,
+        "yt_short":       yt_obj,
+        "facebook_post":  fb_obj,
+        "threads_post":   th_obj,
+        "linkedin_post":  li_obj,
+        "blog_post":      blog_obj,
+        "stories":        stories_obj,
+    }
 
 
 def get_strategy_brief(day: int) -> str:
@@ -225,9 +277,16 @@ DRIVE COMMENTS (algorithmic boost): take a hard, slightly contrarian stance in
 the BODY; amplify the framing; attach strong emotion. Hedging kills comments.
 (The hook stays conversational; the stance lives in the payload.)
 
-TODAY'S FUNNEL OBJECTIVES (one per asset — NEVER mix objectives in one reel):
-- growth_reel -> [{objs['growth_reel'][0]}] {objs['growth_reel'][1]}
-- brand reel  -> [{objs['brand_reel'][0]}] {objs['brand_reel'][1]}
+TODAY'S FUNNEL OBJECTIVES (one per asset — NEVER mix objectives in one asset):
+- growth_reel    -> [{objs['growth_reel'][0]}] {objs['growth_reel'][1]}
+- reel_1         -> [{objs['reel_1'][0]}] {objs['reel_1'][1]}
+- reel_2         -> [{objs['reel_2'][0]}] {objs['reel_2'][1]}
+- carousel       -> [{objs['carousel'][0]}] {objs['carousel'][1]}
+- instagram_post -> [{objs['instagram_post'][0]}] {objs['instagram_post'][1]}
+- yt_short       -> [{objs['yt_short'][0]}] {objs['yt_short'][1]}
+- facebook_post  -> [{objs['facebook_post'][0]}] {objs['facebook_post'][1]}
+- threads_post   -> [{objs['threads_post'][0]}] {objs['threads_post'][1]}
+- linkedin_post  -> [{objs['linkedin_post'][0]}] {objs['linkedin_post'][1]}
 
 WATCH-TIME STRUCTURE (Instagram ranks by watch time, not likes):
 0-2s hook | 2-5s retention lock | 5-10s curiosity build | 10-20s reward | final 5s CTA.

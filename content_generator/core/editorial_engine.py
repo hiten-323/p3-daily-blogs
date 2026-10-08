@@ -393,7 +393,8 @@ def _apply_growth_director_gates(content: dict, valid: list[str]) -> list[str]:
                     key, share["score"], "; ".join(share["reasons"][:3]))
                 continue
         except Exception as e:
-            logger.debug("[editorial] shareability check unavailable for %s: %s", key, e)
+            logger.warning("[editorial] shareability check error for %s (%s) — failing closed", key, e)
+            continue
 
         try:
             from content_generator.core.content_balance import check as balance_check
@@ -402,7 +403,8 @@ def _apply_growth_director_gates(content: dict, valid: list[str]) -> list[str]:
                 logger.warning("[editorial] %s REJECTED by 80/20 cap: %s", key, bal["reason"])
                 continue
         except Exception as e:
-            logger.debug("[editorial] balance check unavailable for %s: %s", key, e)
+            logger.warning("[editorial] balance check error for %s (%s) — failing closed", key, e)
+            continue
 
         # ADR-002 Phase 2 — payoff. A curiosity mechanism with nothing behind it
         # is bait, and a strong hook previously passed every gate even when the
@@ -427,7 +429,23 @@ def _apply_growth_director_gates(content: dict, valid: list[str]) -> list[str]:
                                    key, hooks["reason"])
                     continue
         except Exception as e:
-            logger.debug("[editorial] scroller checks unavailable for %s: %s", key, e)
+            logger.warning("[editorial] scroller check error for %s (%s) — failing closed", key, e)
+            continue
+
+        # Funnel objective CTA alignment — ensure FOLLOWER and DISCOVERY assets have proper conversion cues
+        try:
+            from content_generator.core.content_contract import check_objective_alignment
+            alignment = check_objective_alignment(piece)
+            if not alignment["passes"] and alignment.get("suggested_cta"):
+                # Auto-heal the CTA so the asset earns followers instead of wasting reach
+                curr_cta = str(piece.get("cta") or "").strip()
+                if curr_cta:
+                    piece["cta"] = f"{alignment['suggested_cta']} {curr_cta}"
+                else:
+                    piece["cta"] = alignment["suggested_cta"]
+                logger.info("[editorial] Auto-aligned CTA for %s (%s objective)", key, alignment["objective"])
+        except Exception as e:
+            logger.debug("[editorial] objective alignment check for %s: %s", key, e)
 
         kept.append(key)
 

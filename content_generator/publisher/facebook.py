@@ -76,24 +76,37 @@ def post_content(content: dict, day: int = 0,
 
 def _build_message(content: dict) -> str:
     """Build Facebook post text from content."""
-    li = content.get("linkedin_post") or {}
-    if isinstance(li, str):
-        text = li
-    else:
-        text_fields = ["body", "text", "content", "caption"]
-        text = next((str(li.get(f, "")) for f in text_fields if li.get(f)), "")
+    fb = content.get("facebook_post")
+    if isinstance(fb, dict):
+        parts = [
+            str(fb.get("hook") or "").strip(),
+            str(fb.get("body") or "").strip(),
+            str(fb.get("community_question") or "").strip(),
+            str(fb.get("cta") or "").strip(),
+            str(fb.get("hashtags") or "").strip(),
+        ]
+        text = "\n\n".join(p for p in parts if p)
+        if text:
+            return text[:63206]
+    elif isinstance(fb, str) and fb.strip():
+        return fb.strip()[:63206]
 
-    if not text:
-        reels = content.get("reels") or []
-        if reels:
-            text = reels[0].get("hook", "")
+    # Fallback to Instagram post caption
+    ig = content.get("instagram_post") or {}
+    if isinstance(ig, dict):
+        text = str(ig.get("caption") or ig.get("body") or "").strip()
+        if text:
+            return text[:63206]
 
-    if not text:
-        text = "Pure instant coffee. Zero chicory. 100% coffee. ☕ Shop at p3online.in"
+    reels = content.get("reels") or []
+    if reels and isinstance(reels[0], dict):
+        text = str(reels[0].get("caption") or reels[0].get("hook") or "").strip()
+        if text:
+            return text[:63206]
 
-    # Facebook-friendly hashtags (broader, fewer)
+    text = "Pure instant coffee. Zero chicory. 100% coffee. ☕ Shop at https://p3online.in"
     tags = "\n\n#PurityBeans #Coffee #InstantCoffee #PureCoffee"
-    return (text + tags)[:63206]   # Facebook limit
+    return (text + tags)[:63206]
 
 
 def _find_image(content: dict) -> str | None:

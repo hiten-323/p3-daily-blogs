@@ -18,6 +18,38 @@ logger = logging.getLogger(__name__)
 
 # Default CTA copy per (objective, audience) — used until live data accumulates
 _DEFAULT_CTAS: dict[tuple[str, str], list[str]] = {
+    ("Follower Growth",         "consumer"):     [
+        "Follow @puritybeans so you never drink roasted root again",
+        "Follow — tomorrow I'll show you how to read the back of a coffee label",
+        "Follow for daily pure coffee truths Big Coffee hides",
+        "Follow Hiten Jain for unfiltered coffee science",
+    ],
+    ("FOLLOW",                  "consumer"):     [
+        "Follow @puritybeans so you never drink roasted root again",
+        "Follow — tomorrow I'll show you how to read the back of a coffee label",
+        "Follow for daily pure coffee truths Big Coffee hides",
+        "Follow Hiten Jain for unfiltered coffee science",
+    ],
+    ("DISCOVERY",               "consumer"):     [
+        "Send this to someone who drinks instant coffee",
+        "Share this with a coffee lover who deserves better",
+        "Pass this to anyone who buys commercial coffee jars",
+    ],
+    ("AUTHORITY",               "consumer"):     [
+        "Save this before your next grocery run",
+        "Bookmark this quick reference guide",
+        "Save this so you have it when checking coffee ingredients",
+    ],
+    ("COMMUNITY",               "consumer"):     [
+        "Which one would you pick? Comment below",
+        "Have you checked the back of your coffee jar? Tell us below",
+        "Drop a coffee emoji if you only drink 100% pure beans",
+    ],
+    ("CONVERSION",              "consumer"):     [
+        "Buy at p3online.in — Rs 18 per cup, free delivery",
+        "Order 100% pure coffee at p3online.in",
+        "Try Purity Beans → p3online.in",
+    ],
     ("Consumer Purchase",       "consumer"):     [
         "Buy at p3online.in — Rs 18 per cup, free delivery",
         "Order now at p3online.in",
@@ -52,7 +84,7 @@ _DEFAULT_CTAS: dict[tuple[str, str], list[str]] = {
     ],
 }
 
-_FALLBACK_CTA = "Follow Purity Beans for daily coffee truth"
+_FALLBACK_CTA = "Follow @puritybeans for daily pure coffee truths"
 
 
 def get_best_cta(
@@ -72,8 +104,25 @@ def get_best_cta(
         return data_cta
 
     # Fallback to defaults with day-based rotation
-    key     = (objective, audience)
-    options = _DEFAULT_CTAS.get(key) or _DEFAULT_CTAS.get((objective, "consumer"), [_FALLBACK_CTA])
+    key = (objective, audience)
+    options = _DEFAULT_CTAS.get(key)
+    if not options:
+        # Check normalized / alias
+        obj_upper = str(objective or "").upper()
+        if "FOLLOW" in obj_upper:
+            options = _DEFAULT_CTAS.get(("FOLLOW", audience))
+        elif "DISCOVERY" in obj_upper:
+            options = _DEFAULT_CTAS.get(("DISCOVERY", audience))
+        elif "AUTHORITY" in obj_upper:
+            options = _DEFAULT_CTAS.get(("AUTHORITY", audience))
+        elif "COMMUNITY" in obj_upper:
+            options = _DEFAULT_CTAS.get(("COMMUNITY", audience))
+        elif "CONVERT" in obj_upper or "PURCHASE" in obj_upper:
+            options = _DEFAULT_CTAS.get(("CONVERSION", audience))
+
+    if not options:
+        options = _DEFAULT_CTAS.get((objective, "consumer"), [_FALLBACK_CTA])
+
     return options[day % len(options)]
 
 
