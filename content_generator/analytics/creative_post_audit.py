@@ -2,6 +2,7 @@
 from __future__ import annotations
 import datetime, hashlib, json, logging, os
 from pathlib import Path
+from content_generator.core.ist_dates import today_ist
 logger=logging.getLogger(__name__)
 _DIR=Path(os.getenv("LEARNING_DIR","output/learning"))
 _PATH=_DIR/"creative_post_audits.json"
@@ -74,7 +75,7 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
         v=image_results.get(k)
         for x in v if isinstance(v,list) else [v]:add(x,p)
     root=Path(creative_dir or os.getenv("CREATIVE_OUTPUT_DIR","output/creative"))
-    today=datetime.date.today().isoformat()
+    today=today_ist().isoformat()
     for p in root.glob(f"*_{today}.mp4"):add(str(p),"video")
     images=[]; videos=[]
     for path,platform in assets:
