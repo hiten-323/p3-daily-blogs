@@ -33,11 +33,7 @@ Capture and manage leads (Sales Engine):
     advance_stage(lead_id, notes="Sample sent to Nagpur warehouse")
     close_deal(lead_id, revenue=900_000, notes="6-month agreement signed")
 """
-from content_generator.pipeline.generator import generate_daily_content, save_content
-from content_generator.analytics.metrics_store import record_metrics
-from content_generator.analytics.attribution import record_conversion, generate_tracking_url
-from content_generator.leads.lead_capture import record_lead
-from content_generator.crm.pipeline_tracker import advance_stage, close_deal
+
 
 __all__ = [
     # Core pipeline
@@ -100,6 +96,21 @@ def _load_env() -> None:
 # each with its own copy of every module-level object. That is what the
 # RuntimeWarning in the run logs was reporting. The public name is unchanged.
 def __getattr__(name):
+    if name in ("generate_daily_content", "save_content"):
+        from content_generator.pipeline import generator
+        return getattr(generator, name)
+    if name == "record_metrics":
+        from content_generator.analytics.metrics_store import record_metrics
+        return record_metrics
+    if name in ("record_conversion", "generate_tracking_url"):
+        from content_generator.analytics import attribution
+        return getattr(attribution, name)
+    if name == "record_lead":
+        from content_generator.leads.lead_capture import record_lead
+        return record_lead
+    if name in ("advance_stage", "close_deal"):
+        from content_generator.crm import pipeline_tracker
+        return getattr(pipeline_tracker, name)
     if name == "run_daily_pipeline":
         from content_generator.scheduler.daily import run_now
         return run_now
