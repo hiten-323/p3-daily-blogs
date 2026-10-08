@@ -182,10 +182,29 @@ def _run_generate_slot(day_number: int = None) -> dict:
     with timed_step("snapshot", timeout_s=30):
         rm.run(fn=lambda: _do_snapshot(content, dn), label="snapshot", max_retries=1)
 
-    # ── 7b. Image generation (carousel slides + reel thumbnail) ───────────────
-    # Must run BEFORE publish so Instagram/LinkedIn can find the image files.
+    # ── 7b. Render + inspect actual creatives before publish ─────────────────
+    # The audit sees the rendered files, not just prompts or metadata.
+    image_results = {}
     with timed_step("image_generation", timeout_s=300):
-        rm.run(fn=lambda: _do_generate_images(content, dn), label="image_generation", max_retries=1)
+        step = rm.run(fn=lambda: _do_generate_images(content, dn), label="image_generation", max_retries=1)
+        if step.success and isinstance(step.value, dict):
+            image_results = step.value
+
+    with timed_step("creative_post_audit", timeout_s=120, fatal=False):
+        try:
+            from content_generator.analytics.creative_post_audit import audit_generated_creatives, audit_summary
+            audit = audit_generated_creatives(
+                day_number=dn,
+                generation_id=str(content.get("generation_id") or ""),
+                image_results=image_results,
+            )
+            content["_creative_audit"] = audit
+            logger.info("[creative-audit] %s", audit_summary(audit))
+            # Persist before publishing so the NEXT generation can consume it.
+            from content_generator.pipeline.generator import save_content
+            save_content(content)
+        except Exception as e:
+            logger.warning("[creative-audit] non-blocking audit failed: %s", e)
 
     # ── 8. Nurture dispatch ───────────────────────────────────────────────────
     nurture_result: dict = {}
