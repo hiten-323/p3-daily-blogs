@@ -75,27 +75,69 @@ SAVE_MECHANICS = [
 ]
 
 LINKEDIN_ANGLES = [
-    # Value-first education (keyword-rich — what professionals actually search)
-    ("COFFEE HEALTH EDUCATION", "Coffee and focus/energy for working professionals — antioxidants, "
-                                "clean caffeine, what research broadly suggests. Educational hedged "
-                                "framing only, NEVER medical claims or cures"),
-    ("COFFEE CONSUMPTION GUIDE","How much coffee per day, best timing for productivity, caffeine "
-                                "half-life explained simply — practical value a reader saves"),
-    ("COFFEE MARKET INDIA",     "The Indian coffee market: chai-to-coffee shift, cafe culture growth, "
-                                "what it means for consumers and businesses — observation, not invented stats"),
-    ("COFFEE BUYING GUIDE",     "How to read an instant coffee label like an expert — chicory, "
-                                "agglomerated vs freeze-dried, what 'premium' actually means"),
-    ("WORKPLACE COFFEE",        "Coffee culture in Indian offices — pantry decisions, corporate gifting, "
-                                "what your office coffee says about your company"),
-    ("COFFEE ECONOMICS",        "Rs18 home cup vs Rs180 cafe cup — the honest math of coffee spending "
-                                "for professionals, 10-year view"),
-    # Founder / business angles
-    ("FOUNDER CONFESSION",  "Raw honest failure/insight building premium FMCG in India without VC"),
-    ("INDUSTRY EXPOSE",     "What the Indian instant coffee industry hides from buyers"),
-    ("CONTRARIAN BUSINESS", "Why competing on price destroys FMCG brands — compete on purity instead"),
-    ("CONSUMER PSYCHOLOGY", "Why Indians accept chicory in coffee but revolt over adulterated milk"),
-    ("STARTUP LESSON",      "The hardest thing about building a food brand Indians actually trust"),
-    ("DISTRIBUTION TRUTH",  "Why the best product in India never wins without cracking distribution"),
+    # ── Deep Coffee Science & Processing ──
+    ("FREEZE-DRIED VS SPRAY-DRIED",
+     "The science of coffee dehydration: why freeze-drying at -40°C preserves volatile aromatics "
+     "and essential oils via sublimation, while 200°C spray-drying scorches the bean and forces artificial "
+     "flavour replenishment."),
+    ("ARABICA VS ROBUSTA BOTANY",
+     "Bean botany breakdown: Arabica (high altitude, 60% more lipids, delicate acidity like Purica) vs "
+     "Robusta (low altitude, double the chlorogenic acid and caffeine, thick persistent crema like Bold & Purista). "
+     "Why blending pure varieties works and why chicory is an adulterant, not a bean."),
+    ("BREWING THERMODYNAMICS",
+     "Why boiling water (100°C) destroys coffee: the chemistry of tannin extraction. How water between "
+     "80°C and 85°C extracts sweet aromatic compounds without scorching, yielding natural cup sweetness without sugar."),
+    ("WATER CHEMISTRY IN EXTRACTION",
+     "98% of your morning brew is water. How Total Dissolved Solids (TDS), calcium, and magnesium dictate "
+     "aroma solubility, and why office tap water produces bitter coffee regardless of the brand."),
+
+    # ── Clean-Label Awareness & Industry Transparency ──
+    ("CHICORY ROOT ECONOMICS",
+     "The economic reality of Indian coffee: why mass brands blend 30% to 49% roasted chicory root. "
+     "A historical wartime substitute that became an FMCG margin trick. The physiological difference between "
+     "pure caffeine alertness and chicory inulin digestion."),
+    ("LABEL LITERACY FOR EXECUTIVES",
+     "How to read an Indian food label in 10 seconds: decoding 'Coffee-Chicory mixture' vs 'Pure Instant Coffee'. "
+     "Why ingredient hierarchy matters and how front-of-pack claims obscure back-of-pack reality."),
+    ("THE ADULTERATION PARADOX",
+     "Why Indian consumers inspect olive oil, milk, and protein powder labels with intense scrutiny, yet "
+     "drink 40% root filler in their morning cup without checking the ingredients."),
+    ("CLEAN-LABEL MANUFACTURING",
+     "What it actually takes to build a zero-compromise clean food brand in India: sourcing certified pure beans, "
+     "refusing artificial flow agents, and rejecting artificial aromas."),
+
+    # ── Cognitive Performance & Executive Chronobiology ──
+    ("CAFFEINE CHRONOBIOLOGY",
+     "Adenosine receptor dynamics: why drinking coffee within 15 minutes of waking impairs cortisol awakening "
+     "and creates the dreaded 2 PM crash. The science of delaying caffeine 60-90 minutes for sustained deep work."),
+    ("CLEAN CAFFEINE VS JITTERS",
+     "The biochemical reason some coffee causes jitters and stomach acid: high-heat burnt beans and filler spikes "
+     "vs clean, gently processed 100% coffee that fuels calm, razor-sharp focus."),
+    ("THE DESK RITUAL PARADOX",
+     "Transforming the autopilot pantry caffeine fix into a deliberate cognitive boundary: how sensory "
+     "micro-rituals prime the brain for high-output flow state."),
+
+    # ── Workplace Culture & Corporate Gifting ──
+    ("CORPORATE PANTRY ROI",
+     "The invisible tax of terrible office pantry coffee: how vending machine syrup sludge drags down team morale, "
+     "and the surprising talent-retention ROI of upgrading to pure, premium coffee."),
+    ("EXECUTIVE GIFTING ETHOS",
+     "Why modern corporate gifting is abandoning generic sweets and plastic hampers in favor of clean, "
+     "functional wellness: the rise of premium glass-jar coffee gifting for clients and leadership teams."),
+    ("COFFEE CULTURE IN TECH HUBS",
+     "From Bengaluru and Gurgaon tech parks to Mumbai founders: how India's knowledge workers are shifting "
+     "from roadside sugar tea to artisan pure coffee."),
+
+    # ── Founder Insights & Purity Beans Mission ──
+    ("THE BOOTSTRAPPED PURITY BET",
+     "Building Pure Pantry Provisions without VC capital: why refusing cheap fillers is harder in year one "
+     "but creates an unbreakable moat in year five."),
+    ("COFFEE VALUE MATH",
+     "The honest economics of the daily cup: Rs 18 for pure, cafe-grade coffee at home vs Rs 180-250 at commercial "
+     "chains. Calculating the 5-year compounding cost of routine coffee spending."),
+    ("THE INDIAN COFFEE REVIVAL",
+     "From the legendary Bababudan hills of Chikmagalur and Coorg: why India's shade-grown beans are celebrated "
+     "in European specialty markets, and why Indian professionals deserve world-class purity at home."),
 ]
 
 LINKEDIN_SEO_KEYWORDS = (

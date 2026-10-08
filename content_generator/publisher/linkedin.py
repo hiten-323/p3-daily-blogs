@@ -83,12 +83,48 @@ def post_content(content: dict, day: int = 0) -> dict:
 
 
 def _extract_post_text(content: dict) -> str:
-    """Extract LinkedIn post text from content dict."""
+    """Extract complete, beautifully formatted LinkedIn post text from content dict."""
     li = content.get("linkedin_post") or {}
     if isinstance(li, str):
-        return li[:3000]   # LinkedIn cap
+        return li[:3000]
 
-    text_fields = ["body", "text", "content", "caption", "post"]
+    if isinstance(li, dict) and (li.get("body") or li.get("hook")):
+        parts = []
+        hook = str(li.get("hook") or "").strip()
+        body = str(li.get("body") or "").strip()
+        bridge = str(li.get("brand_bridge") or "").strip()
+        question = str(li.get("closing_question") or "").strip()
+        cta = str(li.get("cta") or "").strip()
+        hashtags = str(li.get("hashtags") or "").strip()
+
+        if hook:
+            parts.append(hook)
+        if body:
+            parts.append(body)
+        if bridge and bridge not in body:
+            parts.append(bridge)
+        if question and question not in body:
+            parts.append(question)
+        if cta and cta not in body:
+            parts.append(cta)
+        if hashtags and hashtags not in body:
+            parts.append(hashtags)
+
+        full_post = "\n\n".join(parts)
+        if len(full_post) <= 3000:
+            return full_post
+
+        # If over LinkedIn's 3000-character cap, preserve hook, cta and hashtags while cleanly trimming body
+        essential_parts = [p for p in (bridge, question, cta, hashtags) if p and p not in body]
+        trailer = "\n\n".join(essential_parts)
+        available_body = 3000 - len(hook) - len(trailer) - 10
+        if available_body > 100:
+            trimmed_body = body[:available_body].rsplit(" ", 1)[0] + "..."
+            trimmed_post = "\n\n".join(p for p in [hook, trimmed_body, trailer] if p)
+            return trimmed_post[:3000]
+        return full_post[:3000]
+
+    text_fields = ["text", "content", "caption", "post"]
     for f in text_fields:
         val = li.get(f, "")
         if val:
