@@ -275,6 +275,22 @@ def run_checks(now: int | None = None) -> int:
                     "Facebook page token: " + "; ".join(notes),
                 ))
 
+    threads_tok = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
+    threads_uid = os.environ.get("THREADS_USER_ID", "me").strip() or "me"
+    if threads_tok:
+        secrets.append(threads_tok)
+        try:
+            th_url = f"https://graph.threads.net/v1.0/{urllib.parse.quote(threads_uid, safe='')}?fields=id,username"
+            th_res = _fetch(th_url, _headers(threads_tok))
+            th_user = str(th_res.get("username") or "")
+            th_id = str(th_res.get("id") or "")
+            messages.append(("notice", f"Threads token valid: username={th_user} id={th_id}"))
+        except TokenHttpError as exc:
+            detail = _redact(exc.body, secrets)[:300]
+            messages.append(("warning", f"Threads token check (HTTP {exc.code}): {detail}"))
+        except Exception as exc:
+            messages.append(("warning", f"Threads token check: {type(exc).__name__}"))
+
     return _finish(messages, secrets, failed)
 
 
