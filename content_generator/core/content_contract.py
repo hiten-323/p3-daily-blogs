@@ -208,7 +208,20 @@ def build_contract(piece: dict, asset_id: str = "", day: int = 0) -> dict:
         "best_posting_time":   best_time,
         "shareability":    share,
     }
-    contract.update(_predictions())
+    preds = _predictions()
+    contract.update(preds)
+    contract["actual_viral_score"] = preds.get("viral_score")
+
+    try:
+        from content_generator.core.viral_readiness import evaluate_viral_readiness
+        readiness = evaluate_viral_readiness(piece)
+        contract["viral_readiness_score"] = readiness["score"]
+        contract["readiness_breakdown"] = readiness["dimensions"]
+    except Exception as e:
+        logger.debug("[contract] viral readiness unavailable: %s", e)
+        contract["viral_readiness_score"] = None
+        contract["readiness_breakdown"] = {}
+
     return contract
 
 
@@ -225,8 +238,7 @@ def _seo_keywords(piece: dict) -> list[str]:
 def check_objective_alignment(piece: dict, objective: str | None = None) -> dict:
     """
     Validates that an asset's CTA and conclusion align with its funnel objective.
-    e.g., An asset assigned FOLLOW must have an explicit follow/subscribe cue,
-    not a bare product buy link.
+    e.g., An asset assigned FOLLOW must have an explicit follow/subscribe cue.
     """
     import re
     obj = str(objective or piece.get("funnel_objective") or piece.get("objective") or "").upper()
@@ -272,4 +284,35 @@ def check_objective_alignment(piece: dict, objective: str | None = None) -> dict
             "suggested_cta": "Which one would you choose? Comment below.",
         }
     return {"passes": True, "objective": obj, "reason": "No strict alignment constraints", "suggested_cta": ""}
+
+
+def check_objective_compliance(piece: dict, objective: str | None = None) -> dict:
+    """
+    Deep creative compliance check:
+    Distinguishes CTA compliance from Objective compliance.
+    An asset assigned FOLLOW or DISCOVERY must NOT be a product pitch with a follow CTA
+    tacked on. If the creative is product-first, it FAILS objective compliance and cannot
+    be auto-healed simply by prepending a follow CTA.
+    """
+    from content_generator.core.content_balance import classify_asset
+    obj = str(objective or piece.get("funnel_objective") or piece.get("objective") or "").upper()
+    kind = classify_asset(piece)
+
+    if ("FOLLOW" in obj or "DISCOVERY" in obj) and kind == "product":
+        return {
+            "passes": False,
+            "creative_compliant": False,
+            "cta_compliant": False,
+            "reason": f"Asset assigned {obj} objective is primarily promotional/commercial copy — selling to strangers wastes viral reach",
+            "suggested_cta": "",
+        }
+
+    cta_align = check_objective_alignment(piece, objective)
+    return {
+        "passes": cta_align["passes"],
+        "creative_compliant": True,
+        "cta_compliant": cta_align["passes"],
+        "reason": cta_align["reason"],
+        "suggested_cta": cta_align.get("suggested_cta", ""),
+    }
 

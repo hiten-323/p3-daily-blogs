@@ -1,42 +1,30 @@
-"""Threads post prompt — snappy, conversation-starting, high-engagement micro-content."""
+"""Threads post prompt — snappy, conversation-starting, native micro-content."""
 from content_generator.prompts.brand import brand_block
-from content_generator.rotation import WEBSITE_URL
-
-HASHTAG_SET = "#PurityBeans #CoffeeKnowledge #PureCoffee"
 
 
 def build(angle: tuple, avoid: str = "", day: int = 0) -> str:
     return f"""{brand_block()}
 
-Generate ONE ultra-viral, high-engagement, follower-converting Threads post for Purity Beans (Pure Pantry Provisions). Return a single JSON object.
+Generate ONE ultra-viral, conversation-starting, follower-converting Threads post. Return a single JSON object.
 
 {avoid}
 
 KNOWLEDGE ANGLE: [{angle[0]}] — {angle[1]}
 
-VIRALITY & FOLLOWER ENGINE (THREADS 2026):
-1. THE HOOK: Conversational disruption or surprising contrast (e.g. 'Unpopular truth:', 'Turn your instant coffee jar around right now.', 'Most people boil their coffee to death.').
-2. THE PAYOFF: Expose the reality of instant coffee adulteration, freeze-drying vs spray-drying, or extraction temperature in 1-2 punchy sentences.
-3. THE ENGAGEMENT TRIGGER: Prompt effortless comments or debate ('Check your kitchen jar right now — what does it say?', 'Agree or disagree?').
-4. THE FOLLOWER CONVERSION: Give a clear reason to follow ('Follow for daily unfiltered coffee truths.').
+NATIVE THREADS ARCHITECTURE (OPTIMIZED FOR REPLIES, QUOTES & FOLLOWS):
+1. CONVERSATION HOOK: Raw observation or contrarian stance that sparks immediate mental reaction (e.g. 'Unpopular opinion: adding two spoons of sugar to instant coffee isn't preference. It's self-defense against roasted root.').
+2. UNVARNISHED INSIGHT: 1-2 punchy lines breaking down the reality (chicory filler economics, freeze-drying vs spray scorching, or 85°C extraction thermodynamics).
+3. DISCUSSION SPARK: Prompt an effortless reply or quote ('Check the ingredient panel on your kitchen jar right now — what does it list?', 'Agree or disagree?').
+4. FOLLOWER CONVERSION: Give a clear reason to follow ('Follow for daily coffee truths Big Coffee hides.').
 
-PLATFORM CONSTRAINTS (THREADS):
-- Character limit: MUST BE UNDER 480 CHARACTERS TOTAL.
-- Style: Raw, conversational, direct, witty, insider perspective. Zero generic corporate speak.
-- Structure:
-  1. Disruptive hook.
-  2. Concrete coffee fact / clean-label insight.
-  3. Brand + follow bridge: Purity Beans (100% pure coffee, zero chicory).
-  4. Link / CTA: {WEBSITE_URL}
-  5. 2 hashtags: {HASHTAG_SET}
-
-MANDATORY RULES:
-- Must mention 'Purity Beans'.
-- Must mention '{WEBSITE_URL}'.
-- Total length of 'text' field MUST NOT EXCEED 480 characters.
-- No medical claims or cures.
+PLATFORM RULES (STRICT):
+- Total length MUST BE UNDER 480 CHARACTERS.
+- NO PROMOTIONAL LINKS (links suppress reach in the Threads algorithm).
+- NO HASHTAG CLUTTER (Threads is conversation-led, not tag-stuffed).
+- Raw, witty, insider perspective. Zero corporate pitch.
+- Optional subtle brand signature only if natural (e.g., '— Hiten Jain / Purity Beans').
 
 {{
   "angle": "{angle[0]}",
-  "text": "Your sharp, punchy viral thread under 480 characters with Purity Beans and {WEBSITE_URL}."
+  "text": "Your sharp, conversational viral thread under 480 characters ending with a discussion prompt and follower reason."
 }}"""

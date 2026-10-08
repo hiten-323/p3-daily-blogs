@@ -140,6 +140,49 @@ LINKEDIN_ANGLES = [
      "in European specialty markets, and why Indian professionals deserve world-class purity at home."),
 ]
 
+# ── Platform-Dedicated Semantic Angle Banks (Semantic Anti-Cannibalization) ──
+FACEBOOK_ANGLES = [
+    ("FAMILY KITCHEN TRUTH",
+     "Why Indian households grew up on 40% roasted chicory without realizing it was wartime root filler, "
+     "and how to spot the difference on your kitchen shelf today."),
+    ("MORNING HOME MATH",
+     "Rs 18 home pure coffee vs Rs 250 cafe cup: what an Indian family actually saves in a year while drinking 100% Arabica."),
+    ("THE FILTER KAAPI DEBATE",
+     "Traditional South Indian filter coffee vs pure instant: why true coffee lovers care about what is printed under the brand name."),
+    ("SUGAR COPING HABIT",
+     "Why most people need 3 spoons of sugar in instant coffee: it is not a sweet tooth, it is masking burnt filler in mass-market jars."),
+    ("MOTHERS AND GRANDMOTHERS TEST",
+     "Checking the kitchen shelf: turning the glass jar around to see whether it says pure coffee or chicory mixture."),
+    ("WEEKEND HOSTING RITUAL",
+     "Serving guests real coffee instead of vending powder: the subtle hospitality difference people remember."),
+]
+
+THREADS_ANGLES = [
+    ("UNPOPULAR OPINION ON SUGAR",
+     "Adding two spoonfuls of sugar to instant coffee isn't preference. It's coping with 40% roasted chicory root."),
+    ("FRONT VS BACK OF JAR",
+     "Big Coffee spends millions on the front of the jar so you don't look at the tiny print on the back."),
+    ("THE 100C WATER MISTAKE",
+     "Boiling water burns coffee in 5 seconds. Let it cool for 60 seconds and the bitterness disappears."),
+    ("ROASTED ROOT SCAM",
+     "Chicory was invented because Napoleon had a coffee shortage during wartime. Why are Indians still drinking it in 2026?"),
+    ("INSTANT COFFEE SNOBBERY",
+     "Specialty cafes convinced you instant coffee is inherently trash. Bad instant is trash. Freeze-dried 100% Arabica at -40°C is pure science."),
+    ("THE INGREDIENT LIST TEST",
+     "If your coffee jar ingredient list has more than one word, you didn't buy coffee."),
+]
+
+YOUTUBE_ANGLES = [
+    ("WATER TEMPERATURE EXPERIMENT",
+     "Brewing instant coffee at 100°C vs 85°C: visual extraction test and why boiling destroys natural sweetness."),
+    ("COLD WATER DISSOLUTION TEST",
+     "100% Pure Coffee vs 40% Chicory mixture in cold water: watch how chicory dyes the water instantly like food coloring."),
+    ("FREEZE DRIED VS SPRAY DRIED",
+     "The geometric crystal structure of -40°C freeze-dried crystals vs burnt spray-dried dust under close-up macro lens."),
+    ("CAFE ESPRESSO VS HOME RS 18 CUP",
+     "Blind taste comparison: Rs 250 commercial chain cup vs Rs 18 pure Arabica home brew."),
+]
+
 LINKEDIN_SEO_KEYWORDS = (
     "coffee benefits, health benefits of coffee, coffee consumption, "
     "coffee market in India, instant coffee India, instant coffee brand, "

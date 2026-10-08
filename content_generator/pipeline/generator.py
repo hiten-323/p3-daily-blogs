@@ -21,7 +21,7 @@ import uuid
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from content_generator.rotation import (
-    HOOK_ARCHETYPES, SAVE_MECHANICS, LINKEDIN_ANGLES, PRODUCTS,
+    HOOK_ARCHETYPES, SAVE_MECHANICS, LINKEDIN_ANGLES, FACEBOOK_ANGLES, THREADS_ANGLES, PRODUCTS,
     get_day_number, get_todays_blog_topic, pick,
 )
 from content_generator.prompts import (
@@ -259,10 +259,9 @@ def generate_daily_content(
     _extended = _extended_content_enabled()
     logger.info("[pipeline] extended content %s (policy/env)", "ON" if _extended else "OFF")
 
-    # Anti-cannibalization: Assign independent angles to different platforms so
-    # the audience doesn't receive one topic repeated in 8 wrappers.
-    fb_angle = _optimized_pick(LINKEDIN_ANGLES, day_number, label="facebook_angle", offset=7)
-    th_angle = _optimized_pick(LINKEDIN_ANGLES, day_number, label="threads_angle", offset=3)
+    # Semantic Anti-Cannibalization: Assign independent angles from dedicated platform premise banks
+    fb_angle = _optimized_pick(FACEBOOK_ANGLES, day_number, label="facebook_angle")
+    th_angle = _optimized_pick(THREADS_ANGLES, day_number, label="threads_angle")
 
     phase1_tasks = {
         "reel_1":         (reels.build,          ("reel_1", arch_1, "morning (7-9am)",       "reel_morning", avoid, day_number), 1800),
@@ -311,6 +310,15 @@ def generate_daily_content(
     # Fill optional keys with empty dicts so downstream code doesn't KeyError
     for optional in ("reel_2", "blog_post", "stories", "yt_short", "threads_post", "facebook_post"):
         phase1_results.setdefault(optional, {})
+
+    # Semantic Premise Lock: verify portfolio premise diversity
+    try:
+        from content_generator.core.semantic_lock import verify_portfolio_diversity
+        div_check = verify_portfolio_diversity(phase1_results)
+        if not div_check["passes"]:
+            logger.warning("[pipeline] Premise diversity notice: duplicates=%s", div_check["duplicates"])
+    except Exception as e:
+        logger.debug("[pipeline] semantic diversity check error: %s", e)
 
     # ── Phase 2: video prompts (depends on phase 1) ───────────────────────────
     vp = llm_call(

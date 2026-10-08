@@ -129,3 +129,54 @@ def check(piece: dict, asset_id: str = "") -> dict:
                    if not allowed else
                    f"product share {share_after:.0%} is within the {MAX_PRODUCT_SHARE:.0%} cap"),
     }
+
+
+def get_stage_product_cap(followers: int | None = None) -> float:
+    """Return the stage-dependent product ratio (e.g. 0.05 in IGNITION, 0.15 in TRACTION)."""
+    try:
+        from content_generator.core.growth_director import get_growth_stage
+        stage = get_growth_stage(followers)
+        return float(stage.get("sell_pct", 20)) / 100.0
+    except Exception:
+        return MAX_PRODUCT_SHARE
+
+
+def enforce_portfolio_commercial_cap(valid_keys: list[str], content: dict) -> list[str]:
+    """
+    Level 1 Portfolio Gate:
+    Enforce hard portfolio ratio: commercial_assets <= floor(total_assets * max_sell_pct).
+    In IGNITION (0-1K), sell_pct is 5%:
+    If total_assets <= 19, floor(total_assets * 0.05) == 0.
+    Meaning commercial/product assets are strictly prohibited on ordinary days.
+    """
+    import math
+    if not valid_keys:
+        return []
+
+    max_share = get_stage_product_cap()
+    allowed_commercial = math.floor(len(valid_keys) * max_share)
+
+    from content_generator.core.editorial_engine import _piece_for
+    commercial_keys = []
+
+    for k in valid_keys:
+        piece = _piece_for(content, k)
+        kind = classify_asset(piece)
+        obj = str(piece.get("funnel_objective") or piece.get("objective") or "").upper()
+        if kind == "product" or obj in ("CONVERSION", "CONSUMER PURCHASE"):
+            commercial_keys.append(k)
+
+    if len(commercial_keys) <= allowed_commercial:
+        return valid_keys
+
+    # Drop excess commercial assets to strictly enforce the portfolio invariant
+    dropped_commercial = commercial_keys[allowed_commercial:]
+    logger.warning(
+        "[portfolio_gate] Dropped %d commercial asset(s) %s: stage cap allows max %d commercial in portfolio of %d (%.0f%% limit)",
+        len(dropped_commercial),
+        dropped_commercial,
+        allowed_commercial,
+        len(valid_keys),
+        max_share * 100,
+    )
+    return [k for k in valid_keys if k not in dropped_commercial]

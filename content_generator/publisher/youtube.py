@@ -81,7 +81,13 @@ def post_content(content: dict, day: int = 0) -> dict:
     # Find video file
     video_path = _find_video(content)
     if not video_path:
-        video_path = _create_slideshow_short(content, day)
+        if os.getenv("ALLOW_YOUTUBE_SLIDESHOW", "").lower() in ("true", "1", "yes"):
+            video_path = _create_slideshow_short(content, day)
+        else:
+            logger.info(
+                "[youtube] No native video file rendered — holding YouTube Short to protect channel retention & viewed-vs-swiped ratio"
+            )
+            return {"success": False, "video_id": "", "url": "", "error": "held_no_native_video", "held": True}
 
     if not video_path:
         logger.warning("[youtube] No video available — skipping YouTube Short")

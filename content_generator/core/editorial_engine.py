@@ -355,9 +355,15 @@ def _piece_for(content: dict, key: str) -> dict:
     """Map an asset key back to the content piece it was built from."""
     reels = content.get("reels") or []
     if key == "reel_1":
-        return reels[0] if len(reels) > 0 and isinstance(reels[0], dict) else {}
+        if len(reels) > 0 and isinstance(reels[0], dict):
+            return reels[0]
+        p = content.get("reel_1")
+        return p if isinstance(p, dict) else {}
     if key == "reel_2":
-        return reels[1] if len(reels) > 1 and isinstance(reels[1], dict) else {}
+        if len(reels) > 1 and isinstance(reels[1], dict):
+            return reels[1]
+        p = content.get("reel_2")
+        return p if isinstance(p, dict) else {}
     if key == "growth_reel":
         piece = content.get("growth_reel")
         return piece if isinstance(piece, dict) else {}
@@ -432,22 +438,50 @@ def _apply_growth_director_gates(content: dict, valid: list[str]) -> list[str]:
             logger.warning("[editorial] scroller check error for %s (%s) — failing closed", key, e)
             continue
 
-        # Funnel objective CTA alignment — ensure FOLLOWER and DISCOVERY assets have proper conversion cues
+        # Pre-publish Creative Viral Readiness Gate (Level 3 Creative)
         try:
-            from content_generator.core.content_contract import check_objective_alignment
-            alignment = check_objective_alignment(piece)
-            if not alignment["passes"] and alignment.get("suggested_cta"):
-                # Auto-heal the CTA so the asset earns followers instead of wasting reach
+            from content_generator.core.viral_readiness import evaluate_viral_readiness
+            readiness = evaluate_viral_readiness(piece, platform=key)
+            piece["viral_readiness_score"] = readiness["score"]
+            if not readiness["passes"]:
+                logger.warning(
+                    "[editorial] %s REJECTED by viral readiness gate (%.1f/100): %s",
+                    key, readiness["score"], "; ".join(readiness["reasons"][:3]),
+                )
+                continue
+        except Exception as e:
+            logger.warning("[editorial] viral readiness check error for %s (%s) — failing closed", key, e)
+            continue
+
+        # Funnel objective compliance — ensure creative is genuinely value-first when assigned FOLLOW/DISCOVERY
+        try:
+            from content_generator.core.content_contract import check_objective_compliance
+            compliance = check_objective_compliance(piece)
+            if not compliance.get("creative_compliant", True):
+                logger.warning(
+                    "[editorial] %s REJECTED by objective compliance: %s",
+                    key, compliance["reason"],
+                )
+                continue
+            # If creative is compliant, heal CTA if follow/share cue was missing
+            if not compliance["passes"] and compliance.get("suggested_cta"):
                 curr_cta = str(piece.get("cta") or "").strip()
                 if curr_cta:
-                    piece["cta"] = f"{alignment['suggested_cta']} {curr_cta}"
+                    piece["cta"] = f"{compliance['suggested_cta']} {curr_cta}"
                 else:
-                    piece["cta"] = alignment["suggested_cta"]
-                logger.info("[editorial] Auto-aligned CTA for %s (%s objective)", key, alignment["objective"])
+                    piece["cta"] = compliance["suggested_cta"]
+                logger.info("[editorial] Auto-aligned CTA for %s (%s objective)", key, piece.get("funnel_objective"))
         except Exception as e:
-            logger.debug("[editorial] objective alignment check for %s: %s", key, e)
+            logger.debug("[editorial] objective compliance check for %s: %s", key, e)
 
         kept.append(key)
+
+    # ── Level 1: Portfolio-level 95% viral / 5% selling hard invariant ───────
+    try:
+        from content_generator.core.content_balance import enforce_portfolio_commercial_cap
+        kept = enforce_portfolio_commercial_cap(kept, content)
+    except Exception as e:
+        logger.warning("[editorial] portfolio commercial cap error (%s) — failing closed", e)
 
     dropped = [k for k in valid if k not in kept]
     if dropped:
