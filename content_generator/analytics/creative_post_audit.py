@@ -26,7 +26,7 @@ def _img(path):
         small=Image.open(path).convert("L").resize((16,16))
         return {"width":w,"height":h,"aspect_ratio":round(w/h,3) if h else 0,
                 "brightness":round(float(g.mean()),4),"contrast":round(float(g.std()),4),
-                "edge_density":round(float((np.abs(np.diff(g,1)).mean()+np.abs(np.diff(g,0)).mean())/2),4),
+                "edge_density":round(float((np.abs(np.diff(g,axis=1)).mean()+np.abs(np.diff(g,axis=0)).mean())/2),4),
                 "upper_activity":round(float(g[:max(1,int(g.shape[0]*.35))].std()),4),
                 "center_delta":round(abs(float(g[int(g.shape[0]*.2):int(g.shape[0]*.8),int(g.shape[1]*.2):int(g.shape[1]*.8)].mean())-float(g.mean())),4),
                 "visual_hash":hashlib.sha1(small.tobytes()).hexdigest()[:16]}
