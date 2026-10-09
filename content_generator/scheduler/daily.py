@@ -70,7 +70,7 @@ def run_full_pipeline(day_number: int = None) -> dict:
 
 def _run_generate_slot(day_number: int = None) -> dict:
     """The generate slot's work. The lock lifecycle belongs to run_full_pipeline."""
-    from content_generator.scheduler.watchdog import timed_step, timed_step_hard
+    from content_generator.scheduler.watchdog import timed_step, run_with_hard_timeout
     from content_generator.scheduler.retry_manager import RetryManager
     from content_generator.scheduler.health_monitor import assert_healthy
 
@@ -155,8 +155,11 @@ def _run_generate_slot(day_number: int = None) -> dict:
 
     # ── 3. Brand injection + editorial review ────────────────────────────────
     _inject_brand_into_content(content, day=dn)
-    with timed_step_hard("editorial_review", timeout_s=420):
-        rm.run(fn=lambda: _do_editorial(content), label="editorial_review", max_retries=1)
+    run_with_hard_timeout(
+        "editorial_review",
+        lambda: rm.run(fn=lambda: _do_editorial(content), label="editorial_review", max_retries=1),
+        timeout_s=1800,
+    )
 
     # ── 4. Business objectives ────────────────────────────────────────────────
     with timed_step("objective_assignment", timeout_s=10):
