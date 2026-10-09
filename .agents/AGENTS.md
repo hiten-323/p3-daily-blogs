@@ -1,210 +1,26 @@
-# Purity Beans Creative Asset Generation Policy (Strict Product Consistency)
+# Purity Beans Creative Asset Generation Policy
 
-## Objective
-Generate high-converting marketing creatives for Purity Beans while maintaining 100% product authenticity.
-The system must never generate, redesign, recreate, or hallucinate the coffee jar.
-The product shown in every creative must always be my real Purity Beans jar.
+## Non-negotiable product integrity
+The exact real Purity Beans jar must be used as an immutable asset. Never redraw or regenerate the jar, label, logo, typography, colors, cap, shape, proportions, glass, neck label, or packaging. Never invent certifications, awards, claims, ingredients, or packaging. If no matching verified product image is available, hold the asset rather than inventing one.
 
----
+## Art direction and photorealism
+Create premium editorial lifestyle photography, not generic AI stock art. Each brief must specify:
+- A believable location and human context where useful (real kitchen, office pantry, café, breakfast table).
+- One clear subject and visual story, with intentional foreground/background separation.
+- A plausible camera angle, lens/depth of field, natural or motivated lighting, correct contact shadow and reflections.
+- Realistic hands, skin, cups, liquid, steam and coffee texture; avoid impossible anatomy, floating objects, plastic-looking surfaces, warped geometry and contradictory shadows.
+- A different composition for each slide/frame. Do not repeat the same centered jar-on-gradient layout across a carousel.
+- Avoid excessive props, fake UI, fake labels, decorative text generated inside the image, and generic luxury clichés.
+- Composite the authentic product photo into the generated scene; do not ask a text-to-image model to recreate package artwork.
 
-## Product Authenticity Rules (Mandatory)
-The coffee jar is the brand. It must remain exactly as provided.
-Never modify:
-- Label
-- Logo
-- Typography
-- Colors
-- Cap
-- Shape
-- Glass reflections
-- Product proportions
-- Branding
-- Text
-- Packaging
-- Stickers
-- Neck label
+## Carousel design standard
+A carousel must have one explicit audience problem, one hook/cover, a logical sequence of useful information, and a clear final action. Each slide should do one job. Vary framing and image/text balance while maintaining a consistent brand system. Use legible mobile typography, generous margins, deliberate hierarchy, and restrained color. Keep visible copy short; no template labels such as "Slide 1", "Headline" or "Body text". Render then inspect every slide at mobile size; regenerate or hold any weak, repetitive, clipped, low-contrast or visibly artificial slide. One SKU per hero creative unless a multi-SKU composition is explicitly requested.
 
-The AI must never "improve" or redesign the jar. The original jar image is always the source of truth.
+## Reels and audio
+Reels need a first-second hook, a shot-by-shot motion plan, a strong payoff, and a clean loop or intentional ending. Audio metadata must distinguish a creative suggestion from a verified track. Never claim a sound is trending unless it was returned by a live authorized catalogue query. Verify account/region availability and commercial usage rights. If no licensed audio is actually attached or a native selection is required, mark the Reel as requiring manual/native audio and do not silently treat a suggestion as an attached soundtrack.
 
----
+## Release gate
+A successful image-generation API response is not a visual QA pass. Validate the actual rendered assets and product provenance. Require a visual QA result for carousel/story/reel assets; fail closed on missing product references, malformed output, broken text, implausible composition, or unverified audio when audio is required. Regenerate once with a more specific art direction; if it still fails, hold it and surface the reason. Never lower the quality threshold just to fill a posting slot.
 
-## Allowed Operations
-The AI may:
-- ✅ Remove background
-- ✅ Extract only the jar
-- ✅ Clean the cutout
-- ✅ Improve image quality
-- ✅ Remove shadows
-- ✅ Add realistic shadows
-- ✅ Add realistic reflections
-- ✅ Add realistic lighting
-- ✅ Place the jar in new scenes
-- ✅ Rotate camera angle around the scene (not the jar artwork)
-- ✅ Change background
-- ✅ Change environment
-- ✅ Change props
-- ✅ Change composition
-- ✅ Change mood
-- ✅ Change season
-- ✅ Change colors of surroundings
-- ✅ Add coffee beans
-- ✅ Add steam
-- ✅ Add cups
-- ✅ Add café interiors
-- ✅ Add office desk
-- ✅ Add kitchen
-- ✅ Add luxury environment
-- ✅ Add festive scenes
-- ✅ Add rain
-- ✅ Add winter
-- ✅ Add wooden tables
-- ✅ Add premium lifestyle backgrounds
-
-The jar itself must remain untouched.
-
----
-
-## Not Allowed
-Never:
-- Generate a new jar
-- Redraw the jar
-- Recreate the label
-- Replace branding
-- Invent another package
-- Create another bottle
-- Change fonts
-- Change logo
-- Change colors
-- Change lid
-- Change label design
-- Add fake awards
-- Add fake certifications
-- Add extra graphics
-- Hallucinate packaging
-- (Even if prompted.)
-
----
-
-## Image Source
-Always use the uploaded Purity Beans product images.
-If multiple images exist:
-1. Extract only the jar from every image.
-2. Create a transparent PNG library.
-3. Reuse those extracted jars for all future creatives.
-*Never regenerate the product.*
-
----
-
-## Creative Workflow
-For every marketing script:
-1. **Step 1**: Select the most suitable real jar.
-2. **Step 2**: Extract the jar if required.
-3. **Step 3**: Generate an entirely new background matching the script.
-4. **Step 4**: Blend lighting naturally.
-5. **Step 5**: Maintain photorealism.
-6. **Step 6**: Output production-ready creative.
-
----
-
-## Background Examples
-Depending on script:
-- Luxury café
-- Office pantry
-- Corporate meeting room
-- Modern kitchen
-- Minimal studio
-- Tabletop
-- Coffee farm
-- Morning breakfast
-- Rainy window
-- Festival décor
-- Christmas
-- Diwali
-- Luxury hotel
-- Restaurant
-- Gym café
-- Coworking space
-- College cafeteria
-- Corporate gifting
-- Premium grocery shelf
-- E-commerce hero image
-- Dark premium studio
-- Light Scandinavian kitchen
-- Travel desk
-- Business workspace
-- Hotel buffet
-- Airport lounge
-- Coffee tasting setup
-- Retail display
-- Warehouse
-- Industrial pantry
-- Modern office reception
-*The jar remains unchanged.*
-
----
-
-## Scene Adaptation
-Every script may require a different mood.
-- **Morning Energy**: Bright sunrise, golden light, warm coffee steam.
-- **Corporate Supply**: Conference room, presentation table, corporate pantry, premium office.
-- **Luxury Coffee**: Dark premium lighting, marble table, elegant cup, luxury ambiance.
-- **Fitness**: Gym counter, protein snacks, healthy breakfast.
-- **Festive**: Gift box, decorative lights, ribbon, premium packaging.
-
----
-
-## Single Product Creatives
-Instead of creating carousels by default:
-- Generate one premium creative for one SKU.
-- **Example**:
-  - Purica → One hero image
-  - Purista → One hero image
-  - Bold → One hero image
-  - Ultra Blend → One hero image
-*Every creative focuses on one product only.*
-
----
-
-## Multi-SKU Rule
-Only generate multi-product compositions when explicitly requested.
-Otherwise:
-`One SKU -> One Hero Image`
-
----
-
-## Realism Rules
-- Lighting must match scene.
-- Perspective must match table.
-- Shadow must match light source.
-- Reflection must match surface.
-- Depth of field must be realistic.
-- No floating jars.
-- No distorted labels.
-- No warped glass.
-
----
-
-## AI Prompt Construction
-Before generating any creative:
-1. Understand marketing script.
-2. Determine emotion.
-3. Choose best background.
-4. Select correct real jar.
-5. Composite naturally.
-6. Maintain brand authenticity.
-
----
-
-## Brand Consistency
-Every creative must reinforce:
-- Purity Beans
-- 100% Coffee
-- Zero Chicory
-- Premium Instant Coffee
-- Pure Pantry Provisions
-*without altering the physical product.*
-
----
-
-## Final Rule
-The Purity Beans jar is a protected brand asset. Treat it as immutable. Generate unlimited creative scenes around it, but never recreate, redesign, or replace it. Every marketing visual must use the real extracted jar from the uploaded product images while only changing the background, environment, lighting, props, and composition to match the script.
+## Reporting
+For each generated asset, record product asset used, scene/art direction, aspect ratio, image provider, QA status/issues, audio track ID/name/source when available, rights/availability verification, and final publish mode. Do not log tokens or credentials.
