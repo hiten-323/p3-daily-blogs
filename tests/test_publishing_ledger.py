@@ -8,6 +8,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def test_success_is_persisted_and_duplicate_is_blocked(tmp_path, monkeypatch):
     from content_generator.publisher import publishing_ledger as ledger
+    from content_generator.publisher import platform_verification as verifier
+    monkeypatch.setattr(verifier, "verify_remote_post", lambda platform, record: {"state": "found", "method": "test_readback", "detail": "confirmed"})
     monkeypatch.setattr(ledger, "_PATH", tmp_path / "ledger.json")
     content = {"date": "2026-10-09", "generation_id": "gen-1", "_asset_metadata": [{"content_id": "post-1"}]}
     ticket = ledger.begin_attempt(content, "instagram", "morning", 1)
