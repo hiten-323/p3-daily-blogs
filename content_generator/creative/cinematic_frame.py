@@ -130,7 +130,9 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     dirs = {}
     try:
         from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
-        dirs = get_visual_adaptation_directives()
+        lower_label = str(label or "").lower()
+        target_platform = "youtube" if ("youtube" in lower_label or "yt_" in lower_label or "short" in lower_label) else "instagram"
+        dirs = get_visual_adaptation_directives(platform=target_platform)
     except Exception:
         dirs = {}
 
