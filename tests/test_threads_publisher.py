@@ -27,7 +27,7 @@ def test_threads_extract_text_direct_dict():
     assert len(extracted) <= 500
 
 
-def test_threads_extract_text_fallback_linkedin():
+def test_threads_missing_native_copy_does_not_fallback_to_linkedin():
     content = {
         "linkedin_post": {
             "hook": "Why pouring 100°C water destroys your morning coffee.",
@@ -35,9 +35,7 @@ def test_threads_extract_text_fallback_linkedin():
         }
     }
     extracted = threads._extract_thread_text(content)
-    assert "100°C water" in extracted
-    assert "p3online.in" in extracted
-    assert len(extracted) <= 500
+    assert extracted == ""
 
 
 def test_threads_extract_text_clips_long_text():
