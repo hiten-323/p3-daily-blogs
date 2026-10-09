@@ -130,3 +130,28 @@ def test_carousel_slide_copy_is_scanned(tmp_path, monkeypatch):
         day_number=2, generation_id="g2", image_results={}, content=content,
     )
     assert not any("carousel lacks an explicit save/share cue" in x for x in row["recommendations"])
+
+
+
+def test_centered_catalog_directive_changes_real_jar_placement(tmp_path, monkeypatch):
+    from content_generator.creative import real_jar_composer
+
+    audit_path = tmp_path / "creative_post_audits.json"
+    monkeypatch.setattr(audit, "_PATH", audit_path)
+    monkeypatch.setattr(audit, "_DIR", tmp_path)
+    monkeypatch.setattr(real_jar_composer, "OUTPUT_DIR", str(tmp_path / "out"), raising=False)
+    monkeypatch.setattr(real_jar_composer, "get_visual_adaptation_directives", lambda: {
+        "break_centered_catalog": True,
+        "boost_exposure": True,
+        "boost_upper_activity": True,
+    }, raising=False)
+
+    # Exercise the real composer with the same authentic source inventory that
+    # render-safety tests require; the result must retain registered provenance.
+    result = real_jar_composer.compose_post_image(
+        headline="VISUAL ADAPTATION TEST", body="Authentic jar", day=3, idx=2,
+        width=600, height=600, label="adaptation_test",
+    )
+    assert result and Path(result).exists()
+    from content_generator.creative.jar_provenance import verify_jar_provenance
+    assert verify_jar_provenance(result)["verified"] is True
