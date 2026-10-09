@@ -81,6 +81,30 @@ def authorize_publish(content: Any, platform: str) -> dict:
         if score_value is None or score_value < threshold:
             return {"allowed": False, "asset_key": key, "reason": "native_asset_missing_passing_editorial_score", "checks": {"editorial": False}}
 
+    # Platform-native content also receives the anti-fabrication and platform
+    # format diagnostics. These are blocking errors, not advisory logging.
+    try:
+        from content_generator.core.growth_contract import audit_asset
+        objective = str(asset.get("funnel_objective") or asset.get("objective") or "")
+        native_audit = audit_asset(platform, asset, objective)
+        if native_audit.get("errors"):
+            return {"allowed": False, "asset_key": key, "reason": "platform_contract_failed",
+                    "checks": {"editorial": True, "platform_contract": native_audit}}
+    except Exception as exc:
+        logger.exception("[prepublish] Platform contract failed for %s", platform)
+        return {"allowed": False, "asset_key": key, "reason": f"platform_contract_error:{type(exc).__name__}", "checks": {"editorial": True}}
+
+    try:
+        from content_generator.core.brand_validator import validate_no_prohibited_claims
+        native_text = " ".join(str(asset.get(field) or "") for field in
+                               ("hook", "title", "body", "text", "caption", "cta", "content"))
+        if not validate_no_prohibited_claims(native_text):
+            return {"allowed": False, "asset_key": key, "reason": "prohibited_claim_detected",
+                    "checks": {"editorial": True, "platform_contract": native_audit}}
+    except Exception as exc:
+        logger.exception("[prepublish] Claim safety gate failed for %s", platform)
+        return {"allowed": False, "asset_key": key, "reason": f"claim_safety_error:{type(exc).__name__}", "checks": {"editorial": True}}
+
     try:
         from content_generator.core.viral_readiness import evaluate_viral_readiness
         readiness = evaluate_viral_readiness(asset, platform=platform)
