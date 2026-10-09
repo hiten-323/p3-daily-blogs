@@ -1,0 +1,64 @@
+[
+  {
+    "date": "2026-10-09",
+    "day_number": 281,
+    "results": {
+      "linkedin": {
+        "success": false,
+        "post_id": "",
+        "url": "",
+        "error": "HTTP 426: {\"status\":426,\"code\":\"NONEXISTENT_VERSION\",\"message\":\"Requested version 20250601 is not active\"}",
+        "ledger_status": "FAILED",
+        "ledger_attempt_count": 2,
+        "duration_ms": 1209
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": false,
+        "video_id": "",
+        "url": "",
+        "error": "held_no_native_video",
+        "held": true,
+        "ledger_status": "SKIPPED",
+        "ledger_attempt_count": 3,
+        "duration_ms": 203
+      },
+      "threads": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "retry_backoff",
+        "ledger_status": "FAILED",
+        "post_id": "",
+        "media_id": "",
+        "video_id": "",
+        "permalink": "",
+        "url": "",
+        "duration_ms": 0
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "blog_post",
+        "gate": "rejected",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "summary": "Held for slot: Instagram, Facebook, Youtube | Skipped: Threads, Blog | Failed: Linkedin",
+      "published_platforms": [],
+      "timestamp": "2026-10-09T10:54:16"
+    }
+  }
+]
