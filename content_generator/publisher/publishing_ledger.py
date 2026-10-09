@@ -57,7 +57,13 @@ def _identity(content: dict, platform: str, slot: str, day_number: int) -> tuple
     from content_generator.core.ist_dates import today_ist
     meta = (content.get("_asset_metadata") or [{}])[0] if isinstance(content, dict) else {}
     content_id = str(meta.get("content_id") or content.get("generation_id") or f"day-{day_number}")
-    content_date = str(content.get("date") or today_ist().isoformat()) if isinstance(content, dict) else today_ist().isoformat()
+    raw_date = str(content.get("date") or today_ist().isoformat()) if isinstance(content, dict) else today_ist().isoformat()
+    try:
+        from content_generator.core.ist_dates import content_matches_today
+        fresh, _ = content_matches_today(content)
+        content_date = today_ist().isoformat() if fresh else raw_date
+    except Exception:
+        content_date = raw_date
     key = "|".join((content_date, slot, platform.lower(), content_id))
     return key, {"content_date": content_date, "content_id": content_id, "platform": platform.lower(), "slot": slot, "day_number": day_number}
 
