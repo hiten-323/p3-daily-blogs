@@ -2,25 +2,14 @@
 AI image generator — free provider cascade, no paid API required to start.
 
 Provider priority:
-  1. Hugging Face Inference API  — FREE with a free HF account token
-                                   Model: FLUX.1-schnell (fastest FLUX variant)
-                                   Signup: huggingface.co → Settings → Access Tokens
-                                   Secret: HF_TOKEN (GitHub Actions)
-                                   ~1,000 free images/month on free tier
+  1. Pixazo                      — configured model endpoint, PIXAZO_API_KEY
+  2. Self-hosted Cloudflare API  — FREE Worker, FREE_IMAGE_API_URL + key
+  3. Hugging Face                — optional free-token provider
+  4. Pollinations                — anonymous provider where available
+  5. fal.ai                      — optional paid fallback
+  6. Real-jar Pillow composition — safe final fallback
 
-  2. Pollinations AI             — Attempted as anonymous fallback.
-                                   Free tier may work without a key in some regions.
-                                   No signup needed (falls back silently if blocked).
-
-  3. fal.ai Flux                 — Paid fallback, highest quality.
-                                   Only used if FAL_KEY / FLUX_API_KEY secret is set.
-
-  4. Pillow placeholder          — Always works, zero dependencies beyond Pillow.
-                                   Generates a branded dark-background placeholder
-                                   so the pipeline never hard-fails on images.
-
-GitHub Actions setup (required for real images):
-    Secrets → New secret → HF_TOKEN = your Hugging Face access token
+See IMAGE_PROVIDER_SETUP.md for GitHub Actions secrets and Worker setup.
 
 Usage:
     from content_generator.creative.flux_generator import generate_image
@@ -88,7 +77,7 @@ def generate_image(
     """
     Generate an image and save it locally.
 
-    Tries providers in order: HuggingFace → Pollinations → fal.ai → Pillow placeholder.
+    Tries Pixazo → self-hosted Cloudflare Worker → Hugging Face → Pollinations → fal.ai → real-jar Pillow composition.
     Always returns a path (placeholder at minimum) — never blocks the pipeline.
 
     Args:
@@ -211,9 +200,9 @@ def _pixazo(
     import json
     from urllib.error import HTTPError, URLError
 
-    body_data = {"prompt": prompt, "aspect_ratio": _aspect_ratio(width, height)}
-    if seed is not None:
-        body_data["seed"] = seed
+    # Pixazo Flux quick-start documents prompt as the portable request field.
+    # Avoid sending model-specific parameters that may be rejected by other plans.
+    body_data = {"prompt": prompt}
     try:
         req = urllib.request.Request(
             _PIXAZO_ENDPOINT,
