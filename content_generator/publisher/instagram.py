@@ -80,6 +80,20 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.warning("[instagram] No images found — skipping Instagram post")
         return {"success": False, "media_id": "", "permalink": "", "error": "no_images"}
 
+    # Fail closed on broken, low-resolution, blank, or duplicate rendered assets.
+    # This is technical QA; it does not replace human review for realism or brand taste.
+    from content_generator.creative.rendered_asset_qa import audit_rendered_images
+    visual_qa = audit_rendered_images(images[:10])
+    if not visual_qa.get("ok"):
+        logger.error("[instagram] Refusing to publish assets that failed visual QA: %s", visual_qa.get("issues"))
+        return {
+            "success": False,
+            "media_id": "",
+            "permalink": "",
+            "error": "visual_qa_failed: " + "; ".join(visual_qa.get("issues", [])),
+            "visual_qa": visual_qa,
+        }
+
     from content_generator.creative.jar_provenance import verify_creative_suite
     prov_ok, prov_issues = verify_creative_suite(images[:10] if len(images) >= 2 else [images[0]])
     if not prov_ok:
