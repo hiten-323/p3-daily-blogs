@@ -80,7 +80,33 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
         old = data["records"].get(key, {})
         status = old.get("status")
         now = _now()
-        if status in ("VERIFIED_LIVE", "PUBLISHED_UNVERIFIED"):
+        if status == "PUBLISHED_UNVERIFIED" or (status == "FAILED" and old.get("remote_id")):
+            from content_generator.publisher.platform_verification import verify_remote_post
+            verification = verify_remote_post(platform, old)
+            old["verification_method"] = verification.get("method", "")
+            old["verification_detail"] = verification.get("detail", "")
+            old["last_verification_at"] = _iso(now)
+            if verification.get("state") == "found":
+                old.update({"status": "VERIFIED_LIVE", "verified_at": _iso(now), "error": "", "next_retry_at": None, "updated_at": _iso(now)})
+                data["records"][key] = old
+                _save(data)
+                return {"allowed": False, "reason": "already_published", "record": old, "key": key}
+            if verification.get("state") == "exists_not_public":
+                old.update({"status": "PUBLISHED_UNVERIFIED", "error": verification.get("detail", "remote object exists but is not public"), "next_retry_at": None, "updated_at": _iso(now)})
+                data["records"][key] = old
+                _save(data)
+                return {"allowed": False, "reason": "remote_object_exists_not_public", "record": old, "key": key}
+            if verification.get("state") == "unknown":
+                old.update({"status": "PUBLISHED_UNVERIFIED" if status == "PUBLISHED_UNVERIFIED" else "UNCERTAIN", "error": verification.get("detail", "read-back verification unavailable"), "next_retry_at": _iso(now + dt.timedelta(hours=1)) if status == "PUBLISHED_UNVERIFIED" else None, "updated_at": _iso(now)})
+                data["records"][key] = old
+                _save(data)
+                return {"allowed": False, "reason": "readback_unavailable_no_duplicate", "record": old, "key": key}
+            if status == "PUBLISHED_UNVERIFIED":
+                old.update({"status": "FAILED", "error": verification.get("detail", "remote object not found on read-back"), "next_retry_at": _iso(now + dt.timedelta(minutes=5)), "updated_at": _iso(now)})
+                data["records"][key] = old
+                _save(data)
+                return {"allowed": False, "reason": "remote_confirmed_missing_wait_for_retry", "record": old, "key": key}
+        if status == "VERIFIED_LIVE":
             return {"allowed": False, "reason": "already_published", "record": old, "key": key}
         if status == "UNCERTAIN":
             return {"allowed": False, "reason": "ambiguous_result_requires_reconciliation", "record": old, "key": key}
