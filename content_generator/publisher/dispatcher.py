@@ -136,7 +136,9 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
         start = _t.perf_counter()
         exc = None
         try:
-            res = fn() or {}
+            from content_generator.publisher.publishing_ledger import publish_with_ledger
+            slot = os.getenv("FORCE_SLOT", "").strip() or "generate"
+            res = publish_with_ledger(platform, content, slot, day_number, fn) or {}
         except Exception as e:          # recoverable: one platform must not kill the rest
             logger.error("[publisher] %s exception: %s", platform, e, exc_info=True)
             res, exc = {"success": False, "error": str(e)}, e
