@@ -166,7 +166,7 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
             next_retry = None
         else:
             text = error.lower()
-            ambiguous = any(token in text for token in ("timeout", "timed out", "connection reset", "connection aborted", "remote end closed", "read error"))
+            ambiguous = any(token in text for token in ("timeout", "timed out", "connection reset", "connection aborted", "remote end closed", "read error")) or any(f"http {code}" in text for code in range(500, 600))
             permanent = any(token in text for token in ("not_configured", "unauthorized", "expired_access_token", "permission", "prepublish_gate", "no_content", "no_images", "no_video"))
             if ambiguous:
                 status, next_retry = "UNCERTAIN", None
