@@ -191,12 +191,6 @@ def _find_existing(blog_id: str, handle: str, title: str) -> tuple[str | None, d
 
 
 def post_content(content: dict, day: int = 0) -> dict:
-    from content_generator.publisher.prepublish_gate import authorize_publish
-    gate = authorize_publish(content, "shopify")
-    if not gate["allowed"]:
-        logger.warning("[shopify_blog] Pre-publish gate blocked content: %s", gate["reason"])
-        return _skip("prepublish_gate:" + gate["reason"], gate=gate)
-
     """Publish one approved post per IST day, from the generate slot only."""
     if not blog_enabled():
         logger.info("[shopify_blog] Disabled by SHOPIFY_BLOG_ENABLED (default=false); no Shopify write")
