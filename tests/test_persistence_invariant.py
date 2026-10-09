@@ -38,7 +38,7 @@ def main() -> None:
 
     # Publishing ledger and lock state must persist even when a platform fails,
     # otherwise a later recovery run can forget an attempt and duplicate a post.
-    persist_block = re.search(r"Persist validated state[\\s\\S]{0,300}", wf)
+    persist_block = re.search(r"Persist validated state[\s\S]{0,300}", wf)
     assert persist_block and "always()" in persist_block.group(0), (
         "publishing state must persist after both successful and failed attempts"
     )
