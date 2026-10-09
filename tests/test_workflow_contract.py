@@ -154,7 +154,8 @@ def test_dry_run_gates_publishing_steps():
 
     assert "success()" in by_name["Run autonomous pipeline"]["if"]
     assert "success()" in by_name["Verify slot result"]["if"]
-    assert "success()" in by_name["Persist validated state to Git"]["if"]
+    assert "always()" in by_name["Persist validated state to Git"]["if"]
+    assert "github.event.inputs.dry_run != 'true'" in by_name["Persist validated state to Git"]["if"]
     assert "failure()" in by_name["Alert on failure"]["if"]
     assert "github.event.inputs.force_run == 'true'" in by_name["Clear run lock (if force_run)"]["if"]
     assert "env.FORCE_SLOT == 'generate'" in by_name["Meta token soft-check (generate)"]["if"]
