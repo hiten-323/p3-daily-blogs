@@ -322,9 +322,14 @@ def _hours_since(published_at: str, now: datetime.datetime) -> float:
 
 def _next_due_window(post: dict, now: datetime.datetime) -> tuple[str, int] | None:
     completed = {str(s.get("window")) for s in (post.get("measurement_snapshots") or [])}
+    # A window that exhausted its bounded retry budget is terminal. Excluding
+    # it here is essential: otherwise it remains the first due window forever,
+    # starving the later 72h/7d observations on every scheduled run.
+    abandoned = {str(name) for name in (post.get("failed_windows") or [])}
+    resolved = completed | abandoned
     age = _hours_since(str(post.get("published_at") or ""), now)
     for name, hours in MEASUREMENT_WINDOWS:
-        if name not in completed and age >= hours:
+        if name not in resolved and age >= hours:
             return name, hours
     return None
 
