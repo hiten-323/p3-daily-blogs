@@ -439,16 +439,25 @@ def compose_post_image(
             # radial spotlight drawn above is completely hidden behind it.
             jar = knockout_white(Image.open(jar_path))
 
-            # Paste jar at bottom 55%
-            target_h = int(height * 0.52)
-            ratio    = target_h / jar.height
-            jar      = jar.resize((int(jar.width * ratio), target_h), resample_filter)
+            # Adapt the real-jar composition from prior visual QA. Provenance is unchanged:
+            # only scale/placement/background vary; the source jar pixels stay authentic.
+            break_centered = bool(dirs.get("break_centered_catalog"))
+            target_h = int(height * (0.44 if break_centered else 0.52))
+            ratio = target_h / jar.height
+            jar = jar.resize((int(jar.width * ratio), target_h), resample_filter)
             if jar.width > width - 80:
-                r   = (width - 80) / jar.width
+                r = (width - 80) / jar.width
                 jar = jar.resize((width - 80, int(jar.height * r)), resample_filter)
-            jx = (width - jar.width) // 2
-            jy = height - max(8, height // 90) - jar.height - int(height * 0.02)
-            canvas.paste(jar, (jx, jy), jar)       # alpha mask = the jar itself
+            # Offset the jar on recurring catalogue-style findings. Alternate sides
+            # deterministically so the composition remains reproducible in CI.
+            if break_centered:
+                side = -1 if (day + idx) % 2 else 1
+                jx = max(20, min(width - jar.width - 20, int((width - jar.width) / 2 + side * width * 0.10)))
+                jy = height - max(8, height // 90) - jar.height - int(height * 0.02)
+            else:
+                jx = (width - jar.width) // 2
+                jy = height - max(8, height // 90) - jar.height - int(height * 0.02)
+            canvas.paste(jar, (jx, jy), jar)       # alpha mask = the authentic jar itself
             
     except Exception as e:
         logger.warning("[real_jar] Could not process jar photo %s: %s", jar_path, e)
