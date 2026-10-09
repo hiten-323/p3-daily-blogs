@@ -201,3 +201,31 @@ def test_diagnostic_runs_even_though_the_breaker_is_open(monkeypatch) -> None:
     assert seen.get("called"), "the diagnostic must bypass the breaker it reports on"
     assert insights._graph_get("123/insights", {}) is None, "normal calls stay blocked"
     insights._reset_circuit()
+
+
+def test_abandoned_window_does_not_starve_later_measurements() -> None:
+    """A 24h window exhausted after five failures must not block 72h/7d."""
+    post = {
+        "published_at": "2026-10-01T00:00:00",
+        "measurement_snapshots": [],
+        "failed_windows": ["24h"],
+    }
+    # At 30h the failed 24h window is skipped, but 72h is not due yet.
+    assert insights._next_due_window(
+        post, insights.datetime.datetime(2026, 10, 2, 6, 0, 0)
+    ) is None
+    # At 80h the 72h window can proceed despite the abandoned 24h window.
+    assert insights._next_due_window(
+        post, insights.datetime.datetime(2026, 10, 4, 8, 0, 0)
+    ) == ("72h", 72)
+
+
+def test_completed_window_is_not_repeated() -> None:
+    post = {
+        "published_at": "2026-10-01T00:00:00",
+        "measurement_snapshots": [{"window": "24h", "metrics": {"reach": 10}}],
+        "failed_windows": [],
+    }
+    assert insights._next_due_window(
+        post, insights.datetime.datetime(2026, 10, 4, 8, 0, 0)
+    ) == ("72h", 72)
