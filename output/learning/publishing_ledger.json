@@ -28,7 +28,7 @@
         "error": "HTTP 401: {\"status\":401,\"serviceErrorCode\":65602,\"code\":\"EXPIRED_ACCESS_TOKEN\",\"message\":\"The token used in the request has expired\"}",
         "success": false
       },
-      "next_retry_at": null,
+      "next_retry_at": "2026-10-09T10:00:00+00:00",
       "platform": "linkedin",
       "remote_id": "",
       "slot": "generate",
