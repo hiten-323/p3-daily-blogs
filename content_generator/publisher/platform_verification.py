@@ -17,7 +17,8 @@ def verify_remote_post(platform: str, record: dict) -> dict:
 
     try:
         if platform in ("instagram", "instagram_video", "instagram_story", "facebook", "threads"):
-            from config.api_versions import META_GRAPH_BASE
+            from config.api_versions import META_GRAPH_BASE, THREADS_BASE_URL
+            graph_base = THREADS_BASE_URL if platform == "threads" else META_GRAPH_BASE
             if platform == "facebook":
                 token = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
                 fields = "id,permalink_url,created_time"
@@ -30,7 +31,7 @@ def verify_remote_post(platform: str, record: dict) -> dict:
             if not token or not remote_id:
                 return {"state": "unknown", "method": "meta_graph_readback", "detail": "missing token or remote ID"}
             response = requests.get(
-                f"{META_GRAPH_BASE.rstrip('/')}/{quote(remote_id, safe='')}",
+                f"{graph_base.rstrip('/')}/{quote(remote_id, safe='')}",
                 params={"fields": fields, "access_token": token}, timeout=15,
             )
             if response.status_code == 200:
@@ -98,9 +99,10 @@ def verify_remote_post(platform: str, record: dict) -> dict:
             token = os.getenv("SHOPIFY_ADMIN_TOKEN", "").strip()
             blog_id = os.getenv("SHOPIFY_BLOG_ID", "").strip()
             if domain and token and blog_id and remote_id:
+                from config.api_versions import SHOPIFY_API_VERSION
                 domain = domain.removeprefix("https://").removeprefix("http://").rstrip("/")
                 response = requests.get(
-                    f"https://{domain}/admin/api/2025-01/blogs/{quote(blog_id, safe='')}/articles/{quote(remote_id, safe='')}.json",
+                    f"https://{domain}/admin/api/{SHOPIFY_API_VERSION}/blogs/{quote(blog_id, safe='')}/articles/{quote(remote_id, safe='')}.json",
                     headers={"X-Shopify-Access-Token": token}, timeout=15,
                 )
                 if response.status_code == 200 and response.json().get("article", {}).get("id") is not None:
