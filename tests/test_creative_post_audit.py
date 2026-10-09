@@ -90,3 +90,43 @@ def test_multi_platform_copy_audit_rules():
     assert "Threads post needs an open-ended question" in recs
     assert "LinkedIn hook exceeds 140 chars" in recs
 
+
+
+
+def test_all_current_run_images_are_included(tmp_path, monkeypatch):
+    audit_path = tmp_path / "creative_post_audits.json"
+    monkeypatch.setattr(audit, "_PATH", audit_path)
+    monkeypatch.setattr(audit, "_DIR", tmp_path)
+    creative_dir = tmp_path / "creative"
+    creative_dir.mkdir()
+    img = Image.new("RGB", (300, 300), "white")
+    jar = tmp_path / "real_jar.png"
+    img.save(jar)
+    render = creative_dir / "unreturned_renderer_asset_2026-10-09.jpg"
+    img.save(render)
+
+    from content_generator.creative import jar_provenance
+    monkeypatch.setattr(jar_provenance, "_MEMORY_REGISTRY", {})
+    monkeypatch.setattr(jar_provenance, "_PROVENANCE_FILE", str(tmp_path / "prov.json"))
+    jar_provenance.record_jar_provenance(str(render), str(jar), "real_jar")
+
+    row = audit.audit_generated_creatives(
+        day_number=4, generation_id="g4", image_results={},
+        creative_dir=str(creative_dir), content={},
+    )
+    assert any(x["path"] == str(render) for x in row["image_assets"])
+
+
+def test_carousel_slide_copy_is_scanned(tmp_path, monkeypatch):
+    audit_path = tmp_path / "creative_post_audits.json"
+    monkeypatch.setattr(audit, "_PATH", audit_path)
+    monkeypatch.setattr(audit, "_DIR", tmp_path)
+    content = {
+        "carousel": {
+            "slides": [{"heading": "A useful slide headline", "body": "Save this for the next time you shop."}]
+        }
+    }
+    row = audit.audit_generated_creatives(
+        day_number=2, generation_id="g2", image_results={}, content=content,
+    )
+    assert not any("carousel lacks an explicit save/share cue" in x for x in row["recommendations"])
