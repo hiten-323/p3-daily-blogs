@@ -46,25 +46,80 @@ def _img(path):
                 "lower_center_edge_density":round(focal_edges,4),
                 "visual_hash":hashlib.sha1(small.tobytes()).hexdigest()[:16]}
     except Exception as e: return {"error":f"{type(e).__name__}: {e}"}
+def _sample_video_frames(path, max_frames=8, decode_limit=3600):
+    """Sample frames across a clip, preferring evenly spaced timeline positions."""
+    import imageio.v3 as iio
+    import numpy as np
+    from PIL import Image
+
+    meta={}
+    try:
+        meta=iio.immeta(path,plugin="ffmpeg") or {}
+    except Exception:
+        meta={}
+    fps=meta.get("fps")
+    duration=meta.get("duration")
+    total=None
+    try:
+        if fps and duration and float(fps)>0 and float(duration)>0:
+            total=max(1,int(float(fps)*float(duration)))
+    except (TypeError,ValueError):
+        total=None
+
+    if total:
+        limit=min(total,decode_limit)
+        targets=sorted(set(int(round(i*(limit-1)/max(max_frames-1,1))) for i in range(min(max_frames,limit))))
+        frame_map={}
+        for i,frame in enumerate(iio.imiter(path,plugin="ffmpeg")):
+            if i in targets:
+                frame_map[i]=Image.fromarray(np.asarray(frame).astype("uint8")).convert("RGB")
+            if i>=targets[-1] if targets else True:
+                break
+        frames=[frame_map[i] for i in targets if i in frame_map]
+        return {"frames":frames,"fps":float(fps),"duration_s":float(duration),
+                "strategy":"timeline_evenly_spaced","frames_decoded_to":targets[-1] if targets else 0}
+
+    # Metadata may be unavailable for damaged files/codecs. Build a bounded,
+    # low-resolution reservoir over the entire readable stream instead of
+    # accidentally treating only the opening second as the whole video.
+    candidates=[]
+    decoded=0
+    for i,frame in enumerate(iio.imiter(path,plugin="ffmpeg")):
+        decoded=i+1
+        if i%12==0:
+            im=Image.fromarray(np.asarray(frame).astype("uint8")).convert("RGB")
+            im.thumbnail((320,320))
+            candidates.append((i,im.copy()))
+        if decoded>=decode_limit:
+            break
+    if not candidates:
+        return {"frames":[],"fps":None,"duration_s":None,"strategy":"no_frames","frames_decoded_to":decoded}
+    take=min(max_frames,len(candidates))
+    idxs=sorted(set(int(round(i*(len(candidates)-1)/max(take-1,1))) for i in range(take)))
+    return {"frames":[candidates[i][1] for i in idxs],"fps":None,"duration_s":None,
+            "strategy":"stream_reservoir","frames_decoded_to":decoded,"truncated":decoded>=decode_limit}
+
+
 def _video(path):
     out={"path":path,"frames_sampled":0,"frame_delta":0.0,"recommendations":[]}
     try:
-        import imageio.v3 as iio, numpy as np
-        frames=[]; brightness=[]; contrasts=[]
-        for i,f in enumerate(iio.imiter(path,plugin="ffmpeg")):
-            if i>=24: break
-            if i%3: continue
-            a=np.asarray(f).astype("float32")
-            if a.ndim==3:a=a.mean(2)
-            brightness.append(float(a.mean()/255.0))
-            contrasts.append(float(a.std()/255.0))
-            from PIL import Image
-            frames.append(np.asarray(Image.fromarray(a.astype("uint8")).resize((32,32))).astype("float32"))
-            if len(frames)>=8:break
+        import numpy as np
+        sample=_sample_video_frames(path,max_frames=8)
+        frames=[]
+        brightness=[]; contrasts=[]
+        for im in sample["frames"]:
+            gray=np.asarray(im.convert("L").resize((32,32))).astype("float32")
+            frames.append(gray)
+            rgb=np.asarray(im.convert("RGB")).astype("float32")/255.0
+            brightness.append(float(rgb.mean()))
+            contrasts.append(float(rgb.std()))
         out["frames_sampled"]=len(frames)
+        out["sample_strategy"]=sample.get("strategy")
+        out["duration_s"]=sample.get("duration_s")
         out["mean_brightness"]=round(sum(brightness)/len(brightness),4) if brightness else None
         out["mean_contrast"]=round(sum(contrasts)/len(contrasts),4) if contrasts else None
-        if len(frames)>1: out["frame_delta"]=round(sum(float(np.abs(frames[i]-frames[i-1]).mean()/255) for i in range(1,len(frames)))/(len(frames)-1),4)
+        if len(frames)>1:
+            out["frame_delta"]=round(sum(float(np.abs(frames[i]-frames[i-1]).mean()/255) for i in range(1,len(frames)))/(len(frames)-1),4)
         if not frames:
             out["recommendations"].append("video visual audit failed: no frames could be decoded; inspect before treating QA as passed")
         elif len(frames)<3:
@@ -75,10 +130,13 @@ def _video(path):
             out["recommendations"].append("video is consistently dark; raise exposure/background separation")
         if contrasts and sum(contrasts)/len(contrasts)<.10:
             out["recommendations"].append("video has low frame contrast; strengthen foreground/background separation")
+        if sample.get("truncated"):
+            out["recommendations"].append("video exceeded visual-audit sampling cap; inspect the omitted tail")
     except Exception as e:
         out["error"]=f"{type(e).__name__}: {e}"
         out["recommendations"].append("video visual audit failed: frame decoder error; inspect before treating QA as passed")
     return out
+
 def _recs(m,platform):
     r=[]
     if m.get("error"):
