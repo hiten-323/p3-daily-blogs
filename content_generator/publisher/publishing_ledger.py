@@ -174,7 +174,12 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
         result = result if isinstance(result, dict) else {}
         error = str(result.get("error") or result.get("message") or "")
         success = bool(result.get("success"))
-        if success:
+        not_attempted = bool(result.get("skipped") or result.get("held") or result.get("attempted") is False)
+        if not_attempted and not success:
+            # A deliberate hold/skip (e.g. no native Threads copy or no native video)
+            # is not a failed delivery and must not enter the automatic retry queue.
+            status, next_retry = "SKIPPED", None
+        elif success:
             status = "VERIFIED_LIVE" if result.get("verified_live") is True else "PUBLISHED_UNVERIFIED"
             next_retry = None
         else:
