@@ -313,3 +313,39 @@ def get_failure_rate(label: str = None, hours: int = 24) -> float:
         return 0.0
     failures = sum(1 for r in relevant if r["status"] != "ok")
     return round(failures / len(relevant), 2)
+
+
+def run_with_hard_timeout(label: str, fn, timeout_s: int = 1800):
+    """Run a callable in a daemon thread and return at the real deadline.
+
+    Unlike timed_step_hard's context-manager interface, this callable wrapper
+    can actually stop waiting at the deadline. Python cannot safely kill a
+    running thread, so the worker is daemonized and the caller raises promptly;
+    the workflow process then exits instead of hanging until the callable ends.
+    """
+    import time
+    started = time.monotonic()
+    result = {}
+    def _target():
+        try:
+            result["value"] = fn()
+        except BaseException as exc:
+            result["error"] = exc
+    worker = threading.Thread(target=_target, name=f"watchdog-{label}", daemon=True)
+    worker.start()
+    worker.join(max(0.01, float(timeout_s)))
+    elapsed = time.monotonic() - started
+    if worker.is_alive():
+        message = f"{label} hard timeout after {timeout_s}s"
+        logger.error("[watchdog] HARD TIMEOUT: %s — abandoning daemon worker", label)
+        _log_run(label, "timeout", elapsed, message)
+        _alert(message)
+        raise TimeoutError(message)
+    if "error" in result:
+        error = result["error"]
+        _log_run(label, "fail", elapsed, str(error))
+        _alert(f"PIPELINE FAILURE: {label}\nError: {error}")
+        raise error
+    _log_run(label, "ok", elapsed, "")
+    logger.info("[watchdog] END (hard): %s — ok in %.1fs", label, elapsed)
+    return result.get("value")
