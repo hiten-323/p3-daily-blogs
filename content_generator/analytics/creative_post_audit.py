@@ -73,7 +73,7 @@ def _sample_video_frames(path, max_frames=8, decode_limit=3600):
         for i,frame in enumerate(iio.imiter(path,plugin="ffmpeg")):
             if i in targets:
                 frame_map[i]=Image.fromarray(np.asarray(frame).astype("uint8")).convert("RGB")
-            if i>=targets[-1] if targets else True:
+            if not targets or i >= targets[-1]:
                 break
         frames=[frame_map[i] for i in targets if i in frame_map]
         return {"frames":frames,"fps":float(fps),"duration_s":float(duration),
