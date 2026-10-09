@@ -72,7 +72,7 @@ _PREVETTED_SOURCES = ("evergreen_template", "evergreen_distributor")
 # LinkedIn, YouTube, and the Shopify blog post off-platform. A stock or
 # evergreen piece has no measured editor score, and that used to count as
 # pre-vetted — run 37192396900 sent a stock linkedin_post that way.
-_EXTERNAL_AUTOPOST = ("linkedin_post", "yt_short", "blog_post")
+_EXTERNAL_AUTOPOST = ("linkedin_post", "yt_short", "blog_post", "facebook_post", "threads_post")
 
 
 def _editorial_ok(label: str, piece: dict) -> bool:
