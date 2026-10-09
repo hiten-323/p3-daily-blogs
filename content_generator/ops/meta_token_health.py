@@ -270,9 +270,10 @@ def run_checks(now: int | None = None) -> int:
             ))
         else:
             resolved_id = str(report.get("resolved_account_id") or "").strip()
+            publish_account_id = resolved_id or account_id
             if resolved_id and resolved_id != account_id:
-                # GITHUB_ENV updates later workflow steps, so the publisher uses
-                # the linked Instagram professional account rather than the Page ID.
+                # GITHUB_ENV helps non-overridden steps; GITHUB_OUTPUT is used
+                # explicitly by publish workflows to beat a secret-valued step env.
                 os.environ["INSTAGRAM_ACCOUNT_ID"] = resolved_id
                 env_file = os.environ.get("GITHUB_ENV", "").strip()
                 if env_file:
@@ -280,6 +281,10 @@ def run_checks(now: int | None = None) -> int:
                         handle.write(f"INSTAGRAM_ACCOUNT_ID={resolved_id}\\n")
                 secrets.append(resolved_id)
                 messages.append(("notice", f"Resolved linked Instagram professional account username={report.get('username')}; using its account ID for this job."))
+            output_file = os.environ.get("GITHUB_OUTPUT", "").strip()
+            if report.get("ok") and publish_account_id and output_file:
+                with open(output_file, "a", encoding="utf-8") as handle:
+                    handle.write(f"instagram_account_id={publish_account_id}\\n")
             messages.append(("notice", format_instagram(report)))
             if not report["ok"]:
                 failed = True
