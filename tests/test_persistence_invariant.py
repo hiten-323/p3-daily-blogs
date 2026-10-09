@@ -36,11 +36,13 @@ def main() -> None:
     assert "_extended_content_enabled" in gen
     assert "enable_extended_content" in gen
 
-    # Validated state is intentionally persisted only after the pipeline and
-    # slot verification succeed. The publish slots must never consume
-    # unvalidated runner-local state.
-    persist_on_success = bool(re.search(r"Persist validated state[\s\S]{0,200}?success\(\)", wf))
-    assert persist_on_success, "validated state must be persisted only after a successful run"
+    # Publishing ledger and lock state must persist even when a platform fails,
+    # otherwise a later recovery run can forget an attempt and duplicate a post.
+    persist_block = re.search(r"Persist validated state[\\s\\S]{0,300}", wf)
+    assert persist_block and "always()" in persist_block.group(0), (
+        "publishing state must persist after both successful and failed attempts"
+    )
+    assert "github.event.inputs.dry_run != 'true'" in persist_block.group(0)
 
     # Diagnostics are operational evidence, not the source of truth. Artifact
     # exhaustion or an upload outage must therefore never turn a valid run into
