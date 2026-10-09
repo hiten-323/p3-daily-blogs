@@ -155,3 +155,61 @@ def test_centered_catalog_directive_changes_real_jar_placement(tmp_path, monkeyp
     assert result and Path(result).exists()
     from content_generator.creative.jar_provenance import verify_jar_provenance
     assert verify_jar_provenance(result)["verified"] is True
+
+
+
+def test_visual_pixel_audit_failure_is_explicit():
+    result = audit._recs({"error": "decoder failed"}, "instagram")
+    assert result
+    assert "visual pixel audit failed" in result[0]
+
+
+def test_video_decode_failure_is_explicit(tmp_path):
+    p = tmp_path / "bad.mp4"
+    p.write_bytes(b"not video bytes")
+    result = audit._video(str(p))
+    assert result.get("error")
+    assert any("visual audit failed" in x for x in result["recommendations"])
+
+
+def test_renderer_directives_ignore_copy_only_recommendations(tmp_path, monkeypatch):
+    audit_path = tmp_path / "creative_post_audits.json"
+    monkeypatch.setattr(audit, "_PATH", audit_path)
+    monkeypatch.setattr(audit, "_DIR", tmp_path)
+    audit._save([{
+        "recommendations": ["carousel lacks an explicit save/share cue for algorithmic distribution"],
+        "image_assets": [],
+        "video_assets": [],
+    }])
+    dirs = audit.get_visual_adaptation_directives()
+    assert dirs["diversify_palette"] is False
+    assert dirs["boost_contrast"] is False
+
+
+def test_platform_filter_keeps_visual_adaptation_local(tmp_path, monkeypatch):
+    audit_path = tmp_path / "creative_post_audits.json"
+    monkeypatch.setattr(audit, "_PATH", audit_path)
+    monkeypatch.setattr(audit, "_DIR", tmp_path)
+    audit._save([{
+        "image_assets": [
+            {"platform": "facebook", "recommendations": ["raise exposure/background separation; avoid another near-black frame"]},
+            {"platform": "instagram", "recommendations": ["increase foreground/background contrast"]},
+        ],
+        "video_assets": [],
+        "recommendations": [],
+    }])
+    fb = audit.get_visual_adaptation_directives(platform="facebook")
+    ig = audit.get_visual_adaptation_directives(platform="instagram")
+    assert fb["boost_exposure"] is True
+    assert fb["boost_contrast"] is False
+    assert ig["boost_contrast"] is True
+    assert ig["boost_exposure"] is False
+
+
+def test_centered_layout_recommendation_requires_pixel_evidence():
+    flat = {"brightness": .5, "contrast": .1, "edge_density": .04,
+            "upper_activity": .1, "lower_center_edge_ratio": 1.0,
+            "lower_center_edge_density": .02}
+    assert not any("focal composition dominates" in x for x in audit._recs(flat, "instagram"))
+    centered = dict(flat, lower_center_edge_ratio=2.1, lower_center_edge_density=.04)
+    assert any("focal composition dominates" in x for x in audit._recs(centered, "instagram"))
