@@ -139,12 +139,12 @@ def test_centered_catalog_directive_changes_real_jar_placement(tmp_path, monkeyp
     audit_path = tmp_path / "creative_post_audits.json"
     monkeypatch.setattr(audit, "_PATH", audit_path)
     monkeypatch.setattr(audit, "_DIR", tmp_path)
-    monkeypatch.setattr(real_jar_composer, "OUTPUT_DIR", str(tmp_path / "out"), raising=False)
-    monkeypatch.setattr(real_jar_composer, "get_visual_adaptation_directives", lambda: {
+    monkeypatch.setattr(real_jar_composer, "_OUT_DIR", str(tmp_path / "out"))
+    monkeypatch.setattr(audit, "get_visual_adaptation_directives", lambda: {
         "break_centered_catalog": True,
         "boost_exposure": True,
         "boost_upper_activity": True,
-    }, raising=False)
+    })
 
     # Exercise the real composer with the same authentic source inventory that
     # render-safety tests require; the result must retain registered provenance.
