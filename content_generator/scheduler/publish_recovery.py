@@ -57,8 +57,7 @@ def main() -> int:
             from content_generator.scheduler.slots import run_publish_slot
             from content_generator.core.publish_contract import evaluate, format_report
             result = run_publish_slot(slot, force_retry=True)
-            log.info("Slot recovery result:
-%s", format_report(result))
+            log.info("Slot recovery result:\n%s", format_report(result))
             verdict = evaluate(result)
             if not verdict.get("ok"):
                 failures.append(f"{slot}: {verdict.get('detail', verdict.get('status'))}")
