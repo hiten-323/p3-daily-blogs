@@ -161,6 +161,29 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
         # Sit the hero just below the copy block, ending above Instagram's
         # bottom UI (~10% is covered by the reply bar).
         jy = int(height * (0.36 if is_tall else 0.50))
+
+        # Ground Contact Shadow + Ambient Occlusion (grounds jar physically)
+        try:
+            from PIL import ImageFilter
+            shadow_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+            sdraw = ImageDraw.Draw(shadow_layer)
+            s_w = int(jar.width * 1.30)
+            s_h = int(jar.height * 0.08)
+            s_x = jx + (jar.width - s_w) // 2
+            s_y = jy + jar.height - int(s_h * 0.50)
+            sdraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(6, 4, 2, 140))
+
+            c_w = int(jar.width * 0.94)
+            c_h = int(jar.height * 0.035)
+            c_x = jx + (jar.width - c_w) // 2
+            c_y = jy + jar.height - int(c_h * 0.70)
+            sdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 230))
+
+            shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(10))
+            canvas = Image.alpha_composite(canvas.convert("RGBA"), shadow_layer).convert("RGB")
+        except Exception as se:
+            logger.debug("[cine] Shadow compositing skipped: %s", se)
+
         canvas.paste(jar, (jx, jy), jar)   # alpha mask = jar itself
     except Exception as e:
         logger.warning("[cine] jar paste failed: %s", e)

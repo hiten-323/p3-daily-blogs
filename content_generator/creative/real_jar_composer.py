@@ -31,10 +31,74 @@ _CREAM  = (245, 238, 216)   # #F5EED8
 _MUTED  = (170, 150, 120)
 
 _THEMES = [
-    {"bg": (246, 240, 228), "accent": (190, 140, 35), "text_primary": (22, 15, 10), "text_body": (70, 52, 38), "spotlight": (235, 218, 185), "footer_bg": (230, 220, 202)},
-    {"bg": (38, 24, 15), "accent": (215, 165, 55), "text_primary": (248, 242, 226), "text_body": (220, 205, 185), "spotlight": (85, 54, 26), "footer_bg": (25, 16, 10)},
-    {"bg": (52, 32, 18), "accent": (225, 175, 60), "text_primary": (250, 245, 230), "text_body": (225, 212, 192), "spotlight": (105, 66, 32), "footer_bg": (32, 20, 12)},
-    {"bg": (18, 12, 8), "accent": (205, 155, 48), "text_primary": (245, 238, 216), "text_body": (210, 195, 170), "spotlight": (60, 42, 18), "footer_bg": (12, 8, 5)},
+    # 0: Espresso Obsidian (Deep roast espresso dark canvas, warm amber softbox glow, gold accents)
+    {
+        "bg": (13, 9, 6),
+        "bg_top": (13, 9, 6),
+        "bg_mid": (22, 15, 10),
+        "table_top": (28, 19, 13),
+        "table_bot": (16, 11, 8),
+        "horizon": (140, 95, 45),
+        "spotlight": (105, 68, 28),
+        "pill_bg": (22, 15, 10, 220),
+        "pill_border": (212, 163, 64, 230),
+        "pill_text": (245, 225, 175),
+        "accent": (212, 163, 64),
+        "text_primary": (255, 248, 238),
+        "text_body": (225, 208, 182),
+        "footer_bg": (14, 10, 7),
+    },
+    # 1: Roasted Mocha & Velvet Walnut (Rich dark cocoa tone, warm honey studio light)
+    {
+        "bg": (18, 11, 8),
+        "bg_top": (18, 11, 8),
+        "bg_mid": (32, 20, 14),
+        "table_top": (38, 24, 16),
+        "table_bot": (22, 14, 10),
+        "horizon": (160, 110, 55),
+        "spotlight": (120, 75, 32),
+        "pill_bg": (26, 17, 12, 220),
+        "pill_border": (225, 175, 75, 230),
+        "pill_text": (250, 232, 185),
+        "accent": (225, 175, 75),
+        "text_primary": (255, 250, 242),
+        "text_body": (230, 215, 190),
+        "footer_bg": (18, 12, 8),
+    },
+    # 2: Artisan Cafe Copper (Warm roasted hazelnut with copper-amber directional studio lighting)
+    {
+        "bg": (20, 13, 10),
+        "bg_top": (20, 13, 10),
+        "bg_mid": (36, 22, 16),
+        "table_top": (32, 21, 15),
+        "table_bot": (18, 12, 8),
+        "horizon": (150, 100, 50),
+        "spotlight": (115, 70, 30),
+        "pill_bg": (28, 18, 12, 220),
+        "pill_border": (205, 155, 60, 230),
+        "pill_text": (245, 225, 180),
+        "accent": (205, 155, 60),
+        "text_primary": (252, 246, 236),
+        "text_body": (220, 205, 180),
+        "footer_bg": (16, 11, 7),
+    },
+    # 3: Alabaster Latte Luxury (Warm ivory/latte studio wall with dark espresso table contrast)
+    {
+        "bg": (244, 238, 228),
+        "bg_top": (244, 238, 228),
+        "bg_mid": (235, 225, 210),
+        "table_top": (42, 28, 18),
+        "table_bot": (26, 17, 11),
+        "horizon": (180, 130, 70),
+        "spotlight": (255, 248, 235),
+        "pill_bg": (32, 22, 15, 230),
+        "pill_border": (195, 145, 45, 230),
+        "pill_text": (245, 230, 195),
+        "accent": (195, 145, 45),
+        "text_primary": (24, 16, 11),
+        "text_body": (65, 48, 35),
+        "footer_bg": (22, 15, 10),
+    },
 ]
 
 _PRODUCTS = ["ultra_blend", "bold", "purista", "purica"]
@@ -132,12 +196,11 @@ def pick_jar_photo(day: int, idx: int = 0, product: str | None = None,
             # Widen before giving up: a different product still beats overlaying
             # a headline onto a finished creative.
             safe = [p for p in everything if is_overlay_safe(p)]
-        # Prefer the FRONT of the jar. The _side shots are the back label —
-        # barcode, batch number, directions for use — which reads as a warehouse
-        # photo rather than a hero shot. Fall back to any safe asset if needed.
+        # Prefer front-facing hero presentations (front shots or clean lifestyle hero photos).
+        # Exclude rear label side shots (barcode, batch number, directions for use).
         if prefer_front:
-            fronts = [p for p in safe if "_front" in os.path.basename(p).lower()]
-            safe = fronts or safe
+            heroes = [p for p in safe if "_side" not in os.path.basename(p).lower()]
+            safe = heroes or safe
         if safe:
             pool = safe
         else:
@@ -191,19 +254,35 @@ def _scan_for_any_ttf() -> str | None:
 
 def knockout_white(img):
     """
-    Return an RGBA jar with the white studio sweep made transparent, cropped to
-    the jar itself. Flood-fills inward from the corners so whites *inside* the
-    label and cap survive. Without this the sweep pastes as a hard white
-    rectangle on the espresso canvas.
+    Return an RGBA jar with the white studio sweep cleanly made transparent,
+    cropped to the jar itself. Flood-fills inward from boundary seeds (thresh=95)
+    and removes residual studio sweep floor shadow while preserving whites
+    inside the authentic label and cap.
     """
     from PIL import Image, ImageDraw
     img = img.convert("RGBA")
     w, h = img.size
-    for seed in ((0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)):
+    seeds = (
+        (0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1),
+        (w // 2, 0), (w // 2, h - 1), (0, h // 2), (w - 1, h // 2),
+    )
+    for seed in seeds:
         try:
-            ImageDraw.floodfill(img, seed, (0, 0, 0, 0), thresh=40)
+            ImageDraw.floodfill(img, seed, (0, 0, 0, 0), thresh=95)
         except Exception as e:
             logger.debug("[real_jar] floodfill at %s failed: %s", seed, e)
+    # Clean residual studio floor sweep shadow under the glass base (zero memory overhead)
+    try:
+        y_start = int(h * 0.85)
+        pix = img.load()
+        for y in range(y_start, h):
+            for x in range(w):
+                r, g, b, a = pix[x, y]
+                if a > 0 and r > 120 and g > 120 and b > 120:
+                    if abs(r - g) < 25 and abs(r - b) < 25 and abs(g - b) < 25:
+                        pix[x, y] = (r, g, b, 0)
+    except Exception as e:
+        logger.debug("[real_jar] floor shadow cleaning skipped: %s", e)
     try:
         bbox = img.getbbox()
         if bbox:
@@ -401,7 +480,7 @@ def compose_post_image(
             resample_filter = Image.LANCZOS
 
         if is_lifestyle:
-            # Lifestyle photo: scale to COVER the entire canvas, crop center, and apply dark overlay
+            # Lifestyle photo: scale to COVER the entire canvas, crop center
             img_ratio = jar.width / jar.height
             canvas_ratio = width / height
             if img_ratio > canvas_ratio:
@@ -417,53 +496,118 @@ def compose_post_image(
             jar = jar.crop((x_offset, y_offset, x_offset + width, y_offset + height))
             canvas.paste(jar, (0, 0))
             
-            # Apply dark espresso overlay to ensure high copy contrast
-            overlay = Image.new("RGBA", (width, height), (13, 9, 5, 130)) # ~50% opacity
-            canvas = Image.alpha_composite(canvas.convert("RGBA"), overlay).convert("RGB")
+            # Subtle luxury gradient scrim:
+            # - Top gradient: ensures category pill, headline, and body copy pop with high legibility
+            # - Bottom gradient: ensures brand signature is crisp
+            # - Middle: transparent so the real jar and lifestyle scene stay vivid
+            scrim = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+            spx = scrim.load()
+            top_bound = int(height * 0.42)
+            bot_bound = int(height * 0.86)
+            for y in range(height):
+                if y < top_bound:
+                    alpha = int(185 * (1.0 - (y / top_bound) ** 1.4))
+                    for x in range(width):
+                        spx[x, y] = (12, 8, 5, alpha)
+                elif y > bot_bound:
+                    alpha = int(200 * ((y - bot_bound) / (height - bot_bound)))
+                    for x in range(width):
+                        spx[x, y] = (10, 7, 4, alpha)
+            canvas = Image.alpha_composite(canvas.convert("RGBA"), scrim).convert("RGB")
         else:
-            # Regular jar photo: draw radial spotlight and paste jar centered at bottom
+            # Studio setting: Studio Wall (upper ~68%) + Ground Tabletop Surface (bottom ~32%)
+            table_h = int(height * 0.32)
+            table_y = height - table_h
+
+            # Studio wall backdrop gradient
+            bg_top = theme.get("bg_top", theme["bg"])
+            bg_mid = theme.get("bg_mid", theme["bg"])
+            for y in range(table_y):
+                f = y / max(1, table_y)
+                c = tuple(int(bg_top[i] + (bg_mid[i] - bg_top[i]) * f) for i in range(3))
+                ImageDraw.Draw(canvas).line([(0, y), (width, y)], fill=c)
+
+            # Softbox radial glow centered on the product scene
             try:
-                glow_size = int(width * 0.6)
+                glow_size = int(width * 0.95)
                 glow_mask = Image.new("L", (glow_size, glow_size), 0)
                 glow_draw = ImageDraw.Draw(glow_mask)
-                for r in range(glow_size // 2, 0, -2):
-                    alpha = int(210 * (1.0 - (r / (glow_size // 2))) ** 2)
+                for r in range(glow_size // 2, 0, -3):
+                    alpha = int(195 * (1.0 - (r / (glow_size // 2))) ** 1.8)
                     glow_draw.ellipse(
                         [(glow_size // 2 - r, glow_size // 2 - r), 
                          (glow_size // 2 + r, glow_size // 2 + r)], 
                         fill=alpha
                     )
-                glow_mask = glow_mask.filter(ImageFilter.GaussianBlur(20))
+                glow_mask = glow_mask.filter(ImageFilter.GaussianBlur(38))
                 spotlight = Image.new("RGB", (glow_size, glow_size), theme["spotlight"]) 
                 gx = (width - glow_size) // 2
-                gy = height - max(8, height // 90) - int(height * 0.55)
+                gy = int(height * 0.20)
                 canvas.paste(spotlight, (gx, gy), mask=glow_mask)
             except Exception as e:
                 logger.debug("[real_jar] Radial spotlight failed: %s", e)
 
-            # Cut the white sweep away before pasting, or the studio background
-            # lands as a hard white rectangle over the espresso canvas and the
-            # radial spotlight drawn above is completely hidden behind it.
+            # Ground Tabletop Surface
+            table_surf = Image.new("RGBA", (width, table_h), (0, 0, 0, 0))
+            t_top = theme.get("table_top", (26, 18, 12))
+            t_bot = theme.get("table_bot", (16, 11, 8))
+            tpx = table_surf.load()
+            for y in range(table_h):
+                f = y / max(1, table_h)
+                c = tuple(int(t_top[i] + (t_bot[i] - t_top[i]) * f) for i in range(3))
+                for x in range(width):
+                    tpx[x, y] = (c[0], c[1], c[2], 255)
+            
+            # Subtle warm horizon line
+            tdraw = ImageDraw.Draw(table_surf)
+            horizon_color = theme.get("horizon", (140, 95, 45))
+            tdraw.line([(0, 0), (width, 0)], fill=horizon_color, width=2)
+            canvas.paste(table_surf.convert("RGB"), (0, table_y))
+
+            # Clean knockout of the authentic jar (preserves internal whites, drops white sweep)
             jar = knockout_white(Image.open(jar_path))
 
-            # Adapt the real-jar composition from prior visual QA. Provenance is unchanged:
-            # only scale/placement/background vary; the source jar pixels stay authentic.
+            # Sizing and placement (adapts according to audit directives)
             break_centered = bool(dirs.get("break_centered_catalog"))
-            target_h = int(height * (0.44 if break_centered else 0.52))
+            target_h = int(height * (0.45 if break_centered else 0.52))
             ratio = target_h / jar.height
             jar = jar.resize((int(jar.width * ratio), target_h), resample_filter)
             if jar.width > width - 80:
                 r = (width - 80) / jar.width
                 jar = jar.resize((width - 80, int(jar.height * r)), resample_filter)
-            # Offset the jar on recurring catalogue-style findings. Alternate sides
-            # deterministically so the composition remains reproducible in CI.
+
             if break_centered:
                 side = -1 if (day + idx) % 2 else 1
                 jx = max(20, min(width - jar.width - 20, int((width - jar.width) / 2 + side * width * 0.10)))
-                jy = height - max(8, height // 90) - jar.height - int(height * 0.02)
+                jy = height - jar.height - int(height * 0.07)
             else:
                 jx = (width - jar.width) // 2
-                jy = height - max(8, height // 90) - jar.height - int(height * 0.02)
+                jy = height - jar.height - int(height * 0.07)
+
+            # Ground Contact Shadow + Ambient Occlusion (grounds jar physically on tabletop)
+            try:
+                shadow_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+                sdraw = ImageDraw.Draw(shadow_layer)
+                
+                # Diffuse cast shadow
+                s_w = int(jar.width * 1.35)
+                s_h = int(jar.height * 0.10)
+                s_x = jx + (jar.width - s_w) // 2
+                s_y = jy + jar.height - int(s_h * 0.50)
+                sdraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(6, 4, 2, 140))
+                
+                # Tight ambient occlusion contact shadow under the glass base
+                c_w = int(jar.width * 0.94)
+                c_h = int(jar.height * 0.04)
+                c_x = jx + (jar.width - c_w) // 2
+                c_y = jy + jar.height - int(c_h * 0.70)
+                sdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 230))
+                
+                shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(10))
+                canvas = Image.alpha_composite(canvas.convert("RGBA"), shadow_layer).convert("RGB")
+            except Exception as se:
+                logger.debug("[real_jar] Shadow compositing skipped: %s", se)
+
             canvas.paste(jar, (jx, jy), jar)       # alpha mask = the authentic jar itself
             
     except Exception as e:
@@ -471,38 +615,68 @@ def compose_post_image(
         return None
 
     draw = ImageDraw.Draw(canvas)
-    bar = max(8, height // 90)
-    draw.rectangle([(0, 0), (width, bar)], fill=theme["accent"])
-    draw.rectangle([(0, height - bar), (width, height)], fill=theme["accent"])
 
-    # Headline (top area)
-    margin = int(width * 0.07)
+    # 1. Category Badge Pill in upper area
+    pill_text = "100% COFFEE  |  ZERO CHICORY"
+    hl_lower = (headline or "").lower()
+    if "chicory" in hl_lower:
+        pill_text = "THE CHICORY TEST  |  100% PURE"
+    elif "label" in hl_lower or "ingredient" in hl_lower:
+        pill_text = "LABEL TRUTH  |  100% COFFEE"
+    elif "instant" in hl_lower:
+        pill_text = "INSTANT COFFEE AUDIT"
+    elif "taste" in hl_lower or "bitter" in hl_lower:
+        pill_text = "PURE TASTE STANDARD"
+
+    pill_text = _sanitize_text(pill_text)
+    p_font = _font("footer", max(17, width // 44))
+    pw = int(draw.textlength(pill_text, font=p_font))
+    px = (width - pw) // 2
+    py = int(height * 0.048)
+    pad_x, pad_y = int(width * 0.022), int(height * 0.008)
+
+    try:
+        pill_box = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+        pdraw = ImageDraw.Draw(pill_box)
+        pdraw.rounded_rectangle(
+            [(px - pad_x, py - pad_y), (px + pw + pad_x, py + p_font.size + pad_y)],
+            radius=16,
+            fill=theme.get("pill_bg", (20, 14, 9, 220)),
+            outline=theme.get("pill_border", theme["accent"]),
+            width=2,
+        )
+        canvas = Image.alpha_composite(canvas.convert("RGBA"), pill_box).convert("RGB")
+        draw = ImageDraw.Draw(canvas)
+        draw.text((width // 2, py + p_font.size // 2), pill_text, font=p_font,
+                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
+    except Exception as pe:
+        logger.debug("[real_jar] Pill box skipped: %s", pe)
+
+    # 2. Headline (top area)
+    margin = int(width * 0.08)
     max_w  = width - 2 * margin
-    h_font = _font("title", max(34, width // 14))
-    y      = int(height * 0.06)
+    h_font = _font("title", max(34, width // 15))
+    y = py + p_font.size + pad_y + int(height * 0.025)
     for line in _wrap(draw, headline.upper(), h_font, max_w):
+        draw.text((width // 2 + 2, y + 2), line, font=h_font, fill=(0, 0, 0, 200), anchor="ma")
         draw.text((width // 2, y), line, font=h_font, fill=theme["text_primary"], anchor="ma")
         y += int(h_font.size * 1.18)
 
-    # Body
+    # 3. Body
     if body:
-        b_font = _font("body", max(20, width // 32))
+        b_font = _font("body", max(19, width // 35))
         y += int(height * 0.015)
         for line in _wrap(draw, body, b_font, max_w):
+            draw.text((width // 2 + 1, y + 1), line, font=b_font, fill=(0, 0, 0, 170), anchor="ma")
             draw.text((width // 2, y), line, font=b_font, fill=theme["text_body"], anchor="ma")
-            y += int(b_font.size * 1.3)
+            y += int(b_font.size * 1.28)
 
-    # Footer brand strip (above bottom gold bar, over dark strip)
-    f_font = _font("footer", max(18, width // 36))
-    strip_h = int(height * 0.045)
-    
-    # Gold separator line above the footer strip
-    draw.line([(0, height - bar - strip_h), (width, height - bar - strip_h)], fill=theme["accent"], width=2)
-    
-    draw.rectangle([(0, height - bar - strip_h), (width, height - bar)], fill=theme["footer_bg"])
-    draw.text((width // 2, height - bar - strip_h // 2),
-              "PURITY BEANS  |  100% COFFEE, ZERO CHICORY  |  p3online.in",
-              font=f_font, fill=theme["accent"], anchor="mm")
+    # 4. Refined Minimalist Brand Footer (replaces rigid full-width yellow block)
+    f_font = _font("footer", max(16, width // 44))
+    fy = height - int(height * 0.040)
+    draw.line([(int(width * 0.08), fy - 16), (int(width * 0.92), fy - 16)], fill=theme["accent"], width=1)
+    footer_text = _sanitize_text("PURITY BEANS  |  100% PURE COFFEE  |  p3online.in")
+    draw.text((width // 2, fy), footer_text, font=f_font, fill=theme["accent"], anchor="mm")
 
     # Save
     import io

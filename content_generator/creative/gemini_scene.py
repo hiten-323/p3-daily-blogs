@@ -26,7 +26,7 @@ import urllib.request
 logger = logging.getLogger(__name__)
 
 _OUT_DIR  = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
-_MODEL    = os.getenv("GEMINI_IMAGE_MODEL", "gemini-2.5-flash-image")
+_MODEL    = os.getenv("GEMINI_IMAGE_MODEL", "gemini-2.0-flash-exp")
 _TIMEOUT  = 120
 
 _SCENE_RULES = (
