@@ -112,6 +112,16 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
                 data["records"][key] = old
                 _save(data)
                 return {"allowed": False, "reason": "remote_confirmed_missing_wait_for_retry", "record": old, "key": key}
+        if status == "FAILED" and verification.get("state") == "missing":
+            # The prior remote ID is confirmed absent. Preserve it in history,
+            # but clear it before retry so a new response without an ID cannot
+            # accidentally verify against the old, missing object.
+            old["remote_id"] = ""
+            old["url"] = ""
+            old["verification_detail"] = "prior remote object confirmed missing; retry uses a fresh remote identity"
+            old["updated_at"] = _iso(now)
+            data["records"][key] = old
+            _save(data)
         if status == "VERIFIED_LIVE":
             return {"allowed": False, "reason": "already_published", "record": old, "key": key}
         if status == "UNCERTAIN":
