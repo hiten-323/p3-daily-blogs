@@ -38,6 +38,68 @@ def is_configured() -> bool:
     )
 
 
+def resolve_page_access_token(page_id: str, candidate_token: str) -> str:
+    """
+    Ensure the token used for Facebook Page publishing is a Page-scoped Access Token.
+    If the supplied candidate_token is a User Access Token with pages_manage_posts,
+    exchange it via GET /{page_id}?fields=access_token.
+    Falls back to INSTAGRAM_ACCESS_TOKEN if it is already a Page token.
+    """
+    if not page_id or not candidate_token:
+        return candidate_token
+
+    try:
+        import requests
+        resp = requests.get(
+            f"{_GRAPH_API}/{page_id}",
+            params={"fields": "access_token"},
+            headers={"Authorization": f"Bearer {candidate_token}"},
+            timeout=15,
+        )
+        if resp.status_code == 200:
+            resolved = resp.json().get("access_token")
+            if resolved:
+                logger.info("[facebook] Resolved Page Access Token from Page query")
+                return resolved
+    except Exception as exc:
+        logger.debug("[facebook] Page token resolution failed: %s", exc)
+
+    try:
+        import requests
+        resp = requests.get(
+            f"{_GRAPH_API}/me/accounts",
+            headers={"Authorization": f"Bearer {candidate_token}"},
+            timeout=15,
+        )
+        if resp.status_code == 200:
+            for item in resp.json().get("data", []):
+                if str(item.get("id")) == str(page_id) and item.get("access_token"):
+                    logger.info("[facebook] Resolved Page Access Token from /me/accounts")
+                    return item["access_token"]
+    except Exception as exc:
+        logger.debug("[facebook] /me/accounts lookup failed: %s", exc)
+
+    ig_token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
+    if ig_token and ig_token != candidate_token:
+        try:
+            import requests
+            resp = requests.get(
+                f"{_GRAPH_API}/{page_id}",
+                params={"fields": "access_token"},
+                headers={"Authorization": f"Bearer {ig_token}"},
+                timeout=15,
+            )
+            if resp.status_code == 200:
+                resolved = resp.json().get("access_token")
+                if resolved:
+                    logger.info("[facebook] Resolved Page Access Token via INSTAGRAM_ACCESS_TOKEN")
+                    return resolved
+        except Exception:
+            pass
+
+    return candidate_token
+
+
 def post_content(content: dict, day: int = 0,
                  preferred_image: str | None = None,
                  message_override: str | None = None) -> dict:
@@ -62,7 +124,8 @@ def post_content(content: dict, day: int = 0,
 
 
     page_id = os.getenv("FACEBOOK_PAGE_ID", "")
-    token   = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
+    raw_token = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
+    token = resolve_page_access_token(page_id, raw_token)
     message = message_override or _build_message(content)
     link    = os.getenv("WEBSITE_URL", "https://p3online.in")
 

@@ -617,12 +617,10 @@ def _get_permalink(media_id: str, token: str) -> str:
 def _upload_to_public_url(image_path: str) -> str | None:
     """
     Instagram requires a publicly accessible HTTPS URL for image containers.
-    We use a temporary image hosting service (Imgbb — free 32MB/image).
-
-    If IMGBB_API_KEY is not set, tries to use the image as a base64 data URL
-    via the Graph API's built-in upload (available for some endpoints).
-
-    For production, set IMGBB_API_KEY (free at api.imgbb.com).
+    We try:
+    1. Imgbb (IMGBB_API_KEY)
+    2. Cloudinary (CLOUDINARY_URL)
+    3. Meta Facebook Page CDN (native fallback using connected Facebook Page)
     """
     try:
         import requests, base64
@@ -630,34 +628,87 @@ def _upload_to_public_url(image_path: str) -> str | None:
         imgbb_key = os.getenv("IMGBB_API_KEY")
 
         if imgbb_key:
-            # Upload to Imgbb — returns a permanent public URL
-            with open(image_path, "rb") as f:
-                encoded = base64.b64encode(f.read()).decode("utf-8")
+            try:
+                with open(image_path, "rb") as f:
+                    encoded = base64.b64encode(f.read()).decode("utf-8")
 
-            resp = requests.post(
-                "https://api.imgbb.com/1/upload",
-                data={"key": imgbb_key, "image": encoded},
-                timeout=30,
-            )
-            url = resp.json().get("data", {}).get("url", "")
-            if url:
-                logger.debug("[instagram] Image hosted at: %s", url)
-                return url
+                resp = requests.post(
+                    "https://api.imgbb.com/1/upload",
+                    data={"key": imgbb_key, "image": encoded},
+                    timeout=30,
+                )
+                url = resp.json().get("data", {}).get("url", "")
+                if url:
+                    logger.debug("[instagram] Image hosted at: %s", url)
+                    return url
+                logger.warning("[instagram] ImgBB upload rejected (%d): %s", resp.status_code, resp.text[:200])
+            except Exception as e:
+                logger.warning("[instagram] ImgBB request error: %s", e)
 
-        # Fallback: try Cloudinary if configured
+        # Fallback 1: try Cloudinary if configured
         cloud_url = _cloudinary_upload(image_path)
         if cloud_url:
             return cloud_url
 
+        # Fallback 2: Meta Facebook CDN upload
+        meta_cdn_url = _upload_to_facebook_cdn(image_path)
+        if meta_cdn_url:
+            return meta_cdn_url
+
         logger.warning(
-            "[instagram] No image hosting configured. "
-            "Set IMGBB_API_KEY (free: api.imgbb.com) to enable image posting."
+            "[instagram] No working image hosting available. "
+            "Tried Imgbb, Cloudinary, and Facebook CDN."
         )
         return None
 
     except Exception as e:
         logger.debug("[instagram] Image upload error: %s", e)
         return None
+
+
+def _upload_to_facebook_cdn(image_path: str) -> str | None:
+    """
+    Fallback upload to connected Facebook Page as unpublished photo to obtain
+    a Meta CDN (scontent.xx.fbcdn.net) URL.
+    """
+    page_id = os.getenv("FACEBOOK_PAGE_ID", "").strip()
+    token = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN", "").strip() or os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
+    if not page_id or not token:
+        return None
+    try:
+        from content_generator.publisher.facebook import resolve_page_access_token
+        page_token = resolve_page_access_token(page_id, token)
+    except Exception:
+        page_token = token
+
+    try:
+        import requests
+        with open(image_path, "rb") as f:
+            resp = requests.post(
+                f"{_GRAPH_API}/{page_id}/photos",
+                data={"published": "false", "temporary": "true"},
+                files={"source": f},
+                headers={"Authorization": f"Bearer {page_token}"},
+                timeout=30,
+            )
+        photo_id = resp.json().get("id")
+        if not photo_id:
+            logger.debug("[instagram] Facebook CDN photo upload failed: %s", resp.text[:200])
+            return None
+        img_resp = requests.get(
+            f"{_GRAPH_API}/{photo_id}",
+            params={"fields": "images"},
+            headers={"Authorization": f"Bearer {page_token}"},
+            timeout=15,
+        )
+        images = img_resp.json().get("images", [])
+        if images and isinstance(images, list) and images[0].get("source"):
+            cdn_url = images[0]["source"]
+            logger.info("[instagram] Image hosted via Meta Facebook CDN: %s", cdn_url[:60])
+            return cdn_url
+    except Exception as exc:
+        logger.debug("[instagram] Facebook CDN upload exception: %s", exc)
+    return None
 
 
 def _cloudinary_upload(image_path: str) -> str | None:
@@ -667,11 +718,12 @@ def _cloudinary_upload(image_path: str) -> str | None:
         return None
     try:
         import re, requests, base64, hashlib, time as _time
-        # Parse cloudinary://api_key:api_secret@cloud_name
-        m = re.match(r"cloudinary://(\w+):(\S+)@(\S+)", cloud_url)
+        m = re.match(r"cloudinary://(\w+):(\S+)@(\S+)", cloud_url.strip())
         if not m:
+            logger.warning("[instagram] Cloudinary URL format invalid")
             return None
         api_key, api_secret, cloud_name = m.groups()
+        cloud_name = cloud_name.strip("/")
 
         with open(image_path, "rb") as f:
             encoded = base64.b64encode(f.read()).decode()
@@ -685,8 +737,13 @@ def _cloudinary_upload(image_path: str) -> str | None:
                   "timestamp": ts, "api_key": api_key, "signature": sig},
             timeout=60,
         )
-        return resp.json().get("secure_url", "")
-    except Exception:
+        url = resp.json().get("secure_url", "")
+        if url:
+            return url
+        logger.warning("[instagram] Cloudinary upload returned no URL: %s", resp.text[:200])
+        return None
+    except Exception as exc:
+        logger.warning("[instagram] Cloudinary upload error: %s", exc)
         return None
 
 

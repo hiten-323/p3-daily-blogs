@@ -66,12 +66,8 @@ def refresh_access_token(client_id: str, client_secret: str, refresh_token: str)
 def get_access_token(force_refresh: bool = False) -> str:
     """Return active LinkedIn access token, refreshing if refresh credentials exist."""
     global _cached_token
-    if not force_refresh:
-        if _cached_token:
-            return _cached_token
-        explicit = os.getenv("LI_API_ACCESS", "").strip()
-        if explicit:
-            return explicit
+    if not force_refresh and _cached_token:
+        return _cached_token
 
     client_id     = os.getenv("LI_CLIENT_ID", "").strip()
     client_secret = os.getenv("LI_CLIENT_SECRET", "").strip()
@@ -83,7 +79,11 @@ def get_access_token(force_refresh: bool = False) -> str:
             _cached_token = tok
             return tok
 
-    return os.getenv("LI_API_ACCESS", "").strip()
+    explicit = os.getenv("LI_API_ACCESS", "").strip()
+    if explicit:
+        return explicit
+
+    return ""
 
 
 def is_configured() -> bool:

@@ -293,6 +293,7 @@ def run_checks(now: int | None = None) -> int:
                     "Instagram token cannot publish: " + "; ".join(report["problems"]),
                 ))
 
+    fb_page_id = os.environ.get("FACEBOOK_PAGE_ID", "").strip()
     if facebook:
         try:
             page = inspect_token(facebook, now=now)
@@ -310,6 +311,20 @@ def run_checks(now: int | None = None) -> int:
                 notes.append("missing " + ", ".join(missing))
             if page["expired"]:
                 notes.append(f"token expired (expires={page['expires']})")
+            if page.get("type") == "USER" and fb_page_id:
+                try:
+                    resolved_url = f"{META_GRAPH_BASE}/{urllib.parse.quote(fb_page_id, safe='')}?fields=access_token"
+                    page_res = _fetch(resolved_url, _headers(facebook))
+                    resolved_tok = str(page_res.get("access_token") or "").strip()
+                    if resolved_tok:
+                        secrets.append(resolved_tok)
+                        env_file = os.environ.get("GITHUB_ENV", "").strip()
+                        if env_file:
+                            with open(env_file, "a", encoding="utf-8") as handle:
+                                handle.write(f"FACEBOOK_PAGE_ACCESS_TOKEN={resolved_tok}\n")
+                        messages.append(("notice", f"Resolved Page Access Token for Facebook Page ID {fb_page_id}"))
+                except Exception as exc:
+                    notes.append(f"could not resolve Page token for {fb_page_id}: {type(exc).__name__}")
             if notes:
                 messages.append((
                     "warning",
@@ -331,6 +346,58 @@ def run_checks(now: int | None = None) -> int:
             messages.append(("warning", f"Threads token check (HTTP {exc.code}): {detail}"))
         except Exception as exc:
             messages.append(("warning", f"Threads token check: {type(exc).__name__}"))
+
+    # LinkedIn credentials check
+    li_refresh = os.environ.get("LI_REFRESH_TOKEN", "").strip()
+    li_cid = os.environ.get("LI_CLIENT_ID", "").strip()
+    li_csec = os.environ.get("LI_CLIENT_SECRET", "").strip()
+    li_token = os.environ.get("LI_API_ACCESS", "").strip()
+    li_author = os.environ.get("LI_AUTHOR_URN", "").strip()
+
+    if li_refresh and li_cid and li_csec:
+        secrets.extend([li_refresh, li_cid, li_csec])
+        try:
+            from content_generator.publisher.linkedin import refresh_access_token
+            fresh_li_tok = refresh_access_token(li_cid, li_csec, li_refresh)
+            if fresh_li_tok:
+                secrets.append(fresh_li_tok)
+                env_file = os.environ.get("GITHUB_ENV", "").strip()
+                if env_file:
+                    with open(env_file, "a", encoding="utf-8") as handle:
+                        handle.write(f"LI_API_ACCESS={fresh_li_tok}\n")
+                try:
+                    u_res = _fetch("https://api.linkedin.com/v2/userinfo", _headers(fresh_li_tok))
+                    name = u_res.get("name", "") or u_res.get("sub", "")
+                    messages.append(("notice", f"LinkedIn 365-day refresh token active: user={name} author={li_author}"))
+                except Exception:
+                    messages.append(("notice", f"LinkedIn 365-day refresh token active: author={li_author}"))
+            else:
+                messages.append(("warning", "LinkedIn token refresh returned empty token"))
+        except Exception as exc:
+            messages.append(("warning", f"LinkedIn refresh token check: {type(exc).__name__}"))
+    elif li_token:
+        secrets.append(li_token)
+        try:
+            u_res = _fetch("https://api.linkedin.com/v2/userinfo", _headers(li_token))
+            name = u_res.get("name", "") or u_res.get("sub", "")
+            messages.append(("notice", f"LinkedIn access token valid: user={name} author={li_author}"))
+        except TokenHttpError as exc:
+            detail = _redact(exc.body, secrets)[:200]
+            messages.append(("warning", f"LinkedIn token check failed (HTTP {exc.code}): {detail}"))
+        except Exception as exc:
+            messages.append(("warning", f"LinkedIn token check: {type(exc).__name__}"))
+
+    # Image hosting readiness
+    imgbb = os.environ.get("IMGBB_API_KEY", "").strip()
+    cloud = os.environ.get("CLOUDINARY_URL", "").strip()
+    if imgbb:
+        secrets.append(imgbb)
+        messages.append(("notice", "Image hosting: IMGBB_API_KEY configured"))
+    if cloud:
+        secrets.append(cloud)
+        messages.append(("notice", "Image hosting: CLOUDINARY_URL configured"))
+    if not imgbb and not cloud:
+        messages.append(("notice", "Image hosting: Meta Facebook CDN fallback active"))
 
     return _finish(messages, secrets, failed)
 
