@@ -168,10 +168,13 @@ def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int
         import logging
         logging.getLogger(__name__).warning(logger_message)
         return {
-            "success": False, "attempted": False, "skipped": True,
-            "error": ticket.get("reason", "ledger_skip"),
+            "success": ticket.get("reason") == "already_published", "attempted": False, "skipped": True,
+            "error": "" if ticket.get("reason") == "already_published" else ticket.get("reason", "ledger_skip"),
             "ledger_status": (ticket.get("record") or {}).get("status", ""),
             "post_id": (ticket.get("record") or {}).get("remote_id", ""),
+            "media_id": (ticket.get("record") or {}).get("remote_id", ""),
+            "video_id": (ticket.get("record") or {}).get("remote_id", ""),
+            "permalink": (ticket.get("record") or {}).get("url", ""),
             "url": (ticket.get("record") or {}).get("url", ""),
         }
     try:
