@@ -67,7 +67,13 @@ def main() -> int:
             failures.append(f"{slot}: unknown slot")
 
     if failures:
+        message = "PURITY BEANS PUBLISH RECOVERY INCOMPLETE\nDate: " + date + "\n" + "\n".join(failures)
         log.error("RECOVERY INCOMPLETE: %s", "; ".join(failures))
+        try:
+            from content_generator.scheduler.watchdog import alert_failure
+            alert_failure(message)
+        except Exception as exc:
+            log.error("Failure alert could not be delivered: %s", exc)
         return 1
     log.info("Due publishing retries completed. Ledger remains authoritative; unverified and ambiguous outcomes are not reported as verified live.")
     return 0
