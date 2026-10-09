@@ -306,6 +306,9 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
     for p,k in (("instagram","instagram_post"),("facebook","facebook_post"),("instagram_carousel","carousel"),("instagram_reel_thumbnail","reel")):
         v=image_results.get(k)
         for x in v if isinstance(v,list) else [v]:add(x,p)
+    # Preserve platform identity for files returned from this generation.
+    # Do not relabel these paths as generic merely because they also live in the
+    # output directory; duplicate discoveries are ignored by add().
     root=Path(creative_dir or os.getenv("CREATIVE_OUTPUT_DIR","output/creative"))
     today=today_ist().isoformat()
     for p in root.glob(f"*_{today}.mp4"):add(str(p),"video")
