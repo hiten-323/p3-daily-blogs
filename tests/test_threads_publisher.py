@@ -75,6 +75,8 @@ def test_threads_post_success_mock(monkeypatch):
         return {"id": "container_111222"}
 
     monkeypatch.setattr(threads, "_post_request", mock_post_request)
+    monkeypatch.setattr(threads, "is_configured", lambda: True)
+    monkeypatch.setattr("content_generator.publisher.prepublish_gate.authorize_publish", lambda content, platform: {"allowed": True, "reason": "test-approved"})
 
     content = {"threads_post": {"text": "Test thread post for Purity Beans! https://p3online.in"}}
     res = threads.post_content(content, day=1)

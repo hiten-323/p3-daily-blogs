@@ -54,6 +54,13 @@ def post_content(content: dict, day: int = 0,
         logger.info("[facebook] Not configured — FACEBOOK_PAGE_ID or token missing")
         return {"success": False, "post_id": "", "url": "", "error": "not_configured"}
 
+    from content_generator.publisher.prepublish_gate import authorize_publish
+    gate = authorize_publish(content, "facebook")
+    if not gate["allowed"]:
+        logger.warning("[facebook] Pre-publish gate blocked content: %s", gate["reason"])
+        return {"success": False, "post_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
+
+
     page_id = os.getenv("FACEBOOK_PAGE_ID", "")
     token   = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
     message = message_override or _build_message(content)
@@ -91,22 +98,8 @@ def _build_message(content: dict) -> str:
     elif isinstance(fb, str) and fb.strip():
         return fb.strip()[:63206]
 
-    # Fallback to Instagram post caption
-    ig = content.get("instagram_post") or {}
-    if isinstance(ig, dict):
-        text = str(ig.get("caption") or ig.get("body") or "").strip()
-        if text:
-            return text[:63206]
-
-    reels = content.get("reels") or []
-    if reels and isinstance(reels[0], dict):
-        text = str(reels[0].get("caption") or reels[0].get("hook") or "").strip()
-        if text:
-            return text[:63206]
-
-    text = "Pure instant coffee. Zero chicory. 100% coffee. ☕ Shop at https://p3online.in"
-    tags = "\n\n#PurityBeans #Coffee #InstantCoffee #PureCoffee"
-    return (text + tags)[:63206]
+    # Fail closed: never publish another platform's copy or generic filler.
+    return ""
 
 
 def _find_image(content: dict) -> str | None:
