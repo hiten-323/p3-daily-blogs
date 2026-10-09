@@ -278,13 +278,13 @@ def run_checks(now: int | None = None) -> int:
                 env_file = os.environ.get("GITHUB_ENV", "").strip()
                 if env_file:
                     with open(env_file, "a", encoding="utf-8") as handle:
-                        handle.write(f"INSTAGRAM_ACCOUNT_ID={resolved_id}\\n")
+                        handle.write(f"INSTAGRAM_ACCOUNT_ID={resolved_id}\n")
                 secrets.append(resolved_id)
                 messages.append(("notice", f"Resolved linked Instagram professional account username={report.get('username')}; using its account ID for this job."))
             output_file = os.environ.get("GITHUB_OUTPUT", "").strip()
             if report.get("ok") and publish_account_id and output_file:
                 with open(output_file, "a", encoding="utf-8") as handle:
-                    handle.write(f"instagram_account_id={publish_account_id}\\n")
+                    handle.write(f"instagram_account_id={publish_account_id}\n")
             messages.append(("notice", format_instagram(report)))
             if not report["ok"]:
                 failed = True
