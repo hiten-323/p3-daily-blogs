@@ -140,7 +140,7 @@ def test_centered_catalog_directive_changes_real_jar_placement(tmp_path, monkeyp
     monkeypatch.setattr(audit, "_PATH", audit_path)
     monkeypatch.setattr(audit, "_DIR", tmp_path)
     monkeypatch.setattr(real_jar_composer, "_OUT_DIR", str(tmp_path / "out"))
-    monkeypatch.setattr(audit, "get_visual_adaptation_directives", lambda: {
+    monkeypatch.setattr(audit, "get_visual_adaptation_directives", lambda platform=None: {
         "break_centered_catalog": True,
         "boost_exposure": True,
         "boost_upper_activity": True,
