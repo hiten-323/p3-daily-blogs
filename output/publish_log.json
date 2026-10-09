@@ -124,5 +124,71 @@
       ],
       "timestamp": "2026-10-09T10:59:48"
     }
+  },
+  {
+    "date": "2026-10-09",
+    "day_number": 281,
+    "results": {
+      "linkedin": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "readback_unavailable_no_duplicate",
+        "ledger_status": "PUBLISHED_UNVERIFIED",
+        "post_id": "urn:li:share:7514278436295716864",
+        "media_id": "urn:li:share:7514278436295716864",
+        "video_id": "urn:li:share:7514278436295716864",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7514278436295716864/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7514278436295716864/",
+        "duration_ms": 548
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": false,
+        "video_id": "",
+        "url": "",
+        "error": "held_no_native_video",
+        "held": true,
+        "ledger_status": "SKIPPED",
+        "ledger_attempt_count": 5,
+        "duration_ms": 205
+      },
+      "threads": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "retry_backoff",
+        "ledger_status": "FAILED",
+        "post_id": "",
+        "media_id": "",
+        "video_id": "",
+        "permalink": "",
+        "url": "",
+        "duration_ms": 0
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "blog_post",
+        "gate": "rejected",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "summary": "Held for slot: Instagram, Facebook, Youtube | Skipped: Linkedin, Threads, Blog",
+      "published_platforms": [],
+      "timestamp": "2026-10-09T15:19:55"
+    }
   }
 ]
