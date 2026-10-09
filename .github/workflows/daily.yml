@@ -285,7 +285,7 @@ jobs:
           compression-level: 6
 
       - name: Persist validated state to Git
-        if: ${{ success() && github.event.inputs.dry_run != 'true' }}
+        if: ${{ always() && github.event.inputs.dry_run != 'true' }}
         run: |
           set -euo pipefail
           git config user.name "Purity Beans Engine"
