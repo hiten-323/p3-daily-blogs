@@ -362,14 +362,22 @@ def get_visual_adaptation_directives(max_days=5, platform=None) -> dict:
             counts[rec]=counts.get(rec,0)+1
     latest=set(visual_rows[-1] if visual_rows else [])
     active={r for r,n in counts.items() if n>=2} | latest
+    semantic_directives=set()
+    for row in rows:
+        va=row.get("vision_audit") or {}
+        by_platform=va.get("_renderer_directives") or {}
+        for recorded_platform, directives in by_platform.items():
+            if platform and platform not in str(recorded_platform) and str(recorded_platform) not in {"generated_image","video"}:
+                continue
+            semantic_directives.update(d for d in directives if isinstance(d,str))
     return {
-        "boost_exposure": any("exposure" in r or "near-black" in r or "consistently dark" in r for r in active),
-        "boost_contrast": any("contrast" in r for r in active),
-        "add_action_texture": any("action/texture" in r or "steam" in r for r in active),
-        "break_centered_catalog": any("lower-center focal composition dominates" in r for r in active),
-        "boost_upper_activity": any("upper safe zone" in r or "first-frame visual hook" in r for r in active),
-        "boost_motion": any("visually static" in r or "motion change" in r for r in active),
-        "diversify_palette": any("diversity low" in r for r in active),
+        "boost_exposure": "boost_exposure" in semantic_directives or any("exposure" in r or "near-black" in r or "consistently dark" in r for r in active),
+        "boost_contrast": "boost_contrast" in semantic_directives or any("contrast" in r for r in active),
+        "add_action_texture": "add_action_texture" in semantic_directives or any("action/texture" in r or "steam" in r for r in active),
+        "break_centered_catalog": "break_centered_catalog" in semantic_directives or any("lower-center focal composition dominates" in r for r in active),
+        "boost_upper_activity": "boost_upper_activity" in semantic_directives or any("upper safe zone" in r or "first-frame visual hook" in r for r in active),
+        "boost_motion": "boost_motion" in semantic_directives or any("visually static" in r or "motion change" in r for r in active),
+        "diversify_palette": "diversify_palette" in semantic_directives or any("diversity low" in r for r in active),
         "active_recommendations": sorted(list(active)),
     }
 def get_adaptation_block(max_days=5):
