@@ -23,41 +23,74 @@ def _img(path):
         im=Image.open(path).convert("RGB"); w,h=im.size
         im=im.resize((min(320,w),max(1,int(h*min(320,w)/w))))
         a=np.asarray(im).astype("float32")/255; g=a.mean(2)
+        # Detect whether visual edge activity is concentrated in the lower-middle
+        # region versus the lower side rails. This is only a composition proxy,
+        # not object recognition or proof that the central object is the jar.
+        lower=g[int(g.shape[0]*.38):max(int(g.shape[0]*.9),int(g.shape[0]*.38)+1),:]
+        cut0=max(1,int(lower.shape[1]*.25)); cut1=min(lower.shape[1]-1,int(lower.shape[1]*.75))
+        focal=lower[:,cut0:cut1]
+        sides=np.concatenate([lower[:,:cut0],lower[:,cut1:]],axis=1) if cut1>cut0 else lower
+        def edges(region):
+            if region.size==0:return 0.0
+            dx=np.abs(np.diff(region,axis=1)).mean() if region.shape[1]>1 else 0.0
+            dy=np.abs(np.diff(region,axis=0)).mean() if region.shape[0]>1 else 0.0
+            return float((dx+dy)/2)
+        focal_edges=edges(focal); side_edges=edges(sides)
         small=Image.open(path).convert("L").resize((16,16))
         return {"width":w,"height":h,"aspect_ratio":round(w/h,3) if h else 0,
                 "brightness":round(float(g.mean()),4),"contrast":round(float(g.std()),4),
-                "edge_density":round(float((np.abs(np.diff(g,axis=1)).mean()+np.abs(np.diff(g,axis=0)).mean())/2),4),
+                "edge_density":round(edges(g),4),
                 "upper_activity":round(float(g[:max(1,int(g.shape[0]*.35))].std()),4),
-                "center_delta":round(abs(float(g[int(g.shape[0]*.2):int(g.shape[0]*.8),int(g.shape[1]*.2):int(g.shape[1]*.8)].mean())-float(g.mean())),4),
+                "center_brightness_delta":round(abs(float(g[int(g.shape[0]*.2):int(g.shape[0]*.8),int(g.shape[1]*.2):int(g.shape[1]*.8)].mean())-float(g.mean())),4),
+                "lower_center_edge_ratio":round(focal_edges/(side_edges+0.0001),3),
+                "lower_center_edge_density":round(focal_edges,4),
                 "visual_hash":hashlib.sha1(small.tobytes()).hexdigest()[:16]}
     except Exception as e: return {"error":f"{type(e).__name__}: {e}"}
 def _video(path):
     out={"path":path,"frames_sampled":0,"frame_delta":0.0,"recommendations":[]}
     try:
         import imageio.v3 as iio, numpy as np
-        frames=[]
+        frames=[]; brightness=[]; contrasts=[]
         for i,f in enumerate(iio.imiter(path,plugin="ffmpeg")):
             if i>=24: break
             if i%3: continue
             a=np.asarray(f).astype("float32")
             if a.ndim==3:a=a.mean(2)
+            brightness.append(float(a.mean()/255.0))
+            contrasts.append(float(a.std()/255.0))
             from PIL import Image
-            frames.append(np.asarray(Image.fromarray(a.astype("uint8")).resize((16,16))).astype("float32"))
+            frames.append(np.asarray(Image.fromarray(a.astype("uint8")).resize((32,32))).astype("float32"))
             if len(frames)>=8:break
         out["frames_sampled"]=len(frames)
+        out["mean_brightness"]=round(sum(brightness)/len(brightness),4) if brightness else None
+        out["mean_contrast"]=round(sum(contrasts)/len(contrasts),4) if contrasts else None
         if len(frames)>1: out["frame_delta"]=round(sum(float(np.abs(frames[i]-frames[i-1]).mean()/255) for i in range(1,len(frames)))/(len(frames)-1),4)
-        if len(frames)<3:out["recommendations"].append("video sampling incomplete; do not treat visual QA as passed")
-        elif out["frame_delta"]<.025:out["recommendations"].append("increase scene/motion change; video is visually static")
-    except Exception as e:out["error"]=f"{type(e).__name__}: {e}"
+        if not frames:
+            out["recommendations"].append("video visual audit failed: no frames could be decoded; inspect before treating QA as passed")
+        elif len(frames)<3:
+            out["recommendations"].append("video sampling incomplete; render QA is uncertain and requires inspection")
+        elif out["frame_delta"]<.025:
+            out["recommendations"].append("increase scene/motion change; video is visually static")
+        if brightness and sum(brightness)/len(brightness)<.22:
+            out["recommendations"].append("video is consistently dark; raise exposure/background separation")
+        if contrasts and sum(contrasts)/len(contrasts)<.10:
+            out["recommendations"].append("video has low frame contrast; strengthen foreground/background separation")
+    except Exception as e:
+        out["error"]=f"{type(e).__name__}: {e}"
+        out["recommendations"].append("video visual audit failed: frame decoder error; inspect before treating QA as passed")
     return out
 def _recs(m,platform):
     r=[]
+    if m.get("error"):
+        return ["visual pixel audit failed: inspect this render; metrics are unavailable"]
     if m.get("brightness",1)<.24:r.append("raise exposure/background separation; avoid another near-black frame")
     if m.get("contrast",1)<.12:r.append("increase foreground/background contrast")
     if m.get("edge_density",1)<.035:r.append("add visible action/texture such as pour, hand, steam, granules, or environment")
     if m.get("upper_activity",1)<.035:r.append("strengthen the first-frame visual hook in the upper safe zone")
-    if m.get("center_delta",1)<.015:r.append("break centered product-only composition with depth or human action")
-    if platform in {"instagram","facebook"}:r.append("prefer human/context cue over catalogue-style isolated jar when appropriate")
+    if (m.get("lower_center_edge_ratio",0)>1.8
+            and m.get("lower_center_edge_density",0)>.025
+            and platform in {"instagram","facebook","instagram_carousel","instagram_reel_thumbnail","generated_image"}):
+        r.append("lower-center focal composition dominates; vary into a contextual or off-center composition")
     return r
 def _div(h):
     h=[x for x in h if x]
@@ -140,24 +173,39 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
     rows=_load();rows.append(row);_save(rows)
     logger.info("[creative-audit] day=%s assets=%s diversity=%.2f recommendations=%s",day_number,row["asset_count"],diversity,len(recs))
     return row
-def get_visual_adaptation_directives(max_days=5) -> dict:
-    """Extract actionable visual directives for media renderers (Pillow, Gemini, MoviePy)."""
+def get_visual_adaptation_directives(max_days=5, platform=None) -> dict:
+    """Extract actionable render directives from pixel/video findings, never copy-only warnings."""
     rows=_load()[-max_days:]
+    visual_rows=[]
+    for row in rows:
+        recs=[]
+        for asset in row.get("image_assets") or []:
+            ap=str(asset.get("platform") or "")
+            if platform and platform not in ap and ap not in {"generated_image","video"}:
+                continue
+            recs.extend(asset.get("recommendations") or [])
+        for asset in row.get("video_assets") or []:
+            ap=str(asset.get("platform") or "")
+            if platform and platform not in ap and ap not in {"video","generated_image"}:
+                continue
+            recs.extend(asset.get("recommendations") or [])
+        visual_rows.append(list(dict.fromkeys(recs)))
     if not rows:
         return {"boost_exposure":False,"boost_contrast":False,"add_action_texture":False,
                 "break_centered_catalog":False,"boost_upper_activity":False,"boost_motion":False,
                 "diversify_palette":False,"active_recommendations":[]}
     counts={}
-    for row in rows:
-        for r in row.get("recommendations") or []:
-            counts[r]=counts.get(r,0)+1
-    active={r for r,n in counts.items() if n>=2} | set(rows[-1].get("recommendations") or [])
+    for recs in visual_rows:
+        for rec in recs:
+            counts[rec]=counts.get(rec,0)+1
+    latest=set(visual_rows[-1] if visual_rows else [])
+    active={r for r,n in counts.items() if n>=2} | latest
     return {
-        "boost_exposure": any("exposure" in r or "near-black" in r for r in active),
+        "boost_exposure": any("exposure" in r or "near-black" in r or "consistently dark" in r for r in active),
         "boost_contrast": any("contrast" in r for r in active),
         "add_action_texture": any("action/texture" in r or "steam" in r for r in active),
-        "break_centered_catalog": any("centered product-only" in r or "catalogue-style" in r for r in active),
-        "boost_upper_activity": any("upper safe zone" in r or "hook" in r for r in active),
+        "break_centered_catalog": any("lower-center focal composition dominates" in r for r in active),
+        "boost_upper_activity": any("upper safe zone" in r or "first-frame visual hook" in r for r in active),
         "boost_motion": any("visually static" in r or "motion change" in r for r in active),
         "diversify_palette": any("diversity low" in r for r in active),
         "active_recommendations": sorted(list(active)),
