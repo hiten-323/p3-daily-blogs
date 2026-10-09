@@ -45,6 +45,10 @@ _OUT_DIR  = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 _TIMEOUT  = int(os.getenv("IMAGE_TIMEOUT", "90"))
 
 # Provider keys
+_PIXAZO_KEY = os.getenv("PIXAZO_API_KEY") or os.getenv("PIXAZO_KEY")
+_PIXAZO_ENDPOINT = os.getenv("PIXAZO_IMAGE_ENDPOINT", "https://gateway.pixazo.ai/flux/text-to-image")
+_FREE_IMAGE_API_URL = os.getenv("FREE_IMAGE_API_URL", "").strip().rstrip("/")
+_FREE_IMAGE_API_KEY = os.getenv("FREE_IMAGE_API_KEY") or os.getenv("CLOUDFLARE_IMAGE_API_KEY")
 _HF_TOKEN = os.getenv("HF_TOKEN")                                    # free
 _FAL_KEY  = os.getenv("FAL_KEY") or os.getenv("FLUX_API_KEY")        # paid fallback
 if _FAL_KEY:
@@ -116,24 +120,36 @@ Reference images (product-matched):
 
 {safe_prompt}"""
 
-    # 1. Hugging Face (free with token — skip entirely if no token to avoid 402)
+    # 1. Pixazo
+    if _PIXAZO_KEY:
+        path = _pixazo(ai_prompt, width, height, label, seed)
+        if path:
+            return path
+
+    # 2. Optional self-hosted Cloudflare Worker; configured by URL and matching API key.
+    if _FREE_IMAGE_API_URL and _FREE_IMAGE_API_KEY:
+        path = _free_image_worker(ai_prompt, width, height, label)
+        if path:
+            return path
+
+    # 3. Hugging Face
     if _HF_TOKEN and _HF_TOKEN.startswith("hf_"):
         path = _huggingface(ai_prompt, width, height, label, seed)
         if path:
             return path
 
-    # 2. Pollinations (free anonymous — works in most environments)
+    # 4. Pollinations
     path = _pollinations(ai_prompt, width, height, label, seed)
     if path:
         return path
 
-    # 3. fal.ai (paid fallback)
+    # 5. fal.ai
     if _FAL_KEY:
         path = _fal_flux(ai_prompt, width, height, label, seed)
         if path:
             return path
 
-    # 4. Pillow placeholder — guaranteed output
+    # 6. Real-jar branded composition fallback
     return _pillow_placeholder(safe_prompt, width, height, label)
 
 
@@ -183,6 +199,125 @@ def generate_reel_thumbnail(reel: dict, day: int, label: str = "reel") -> str | 
     if not prompt:
         return None
     return generate_image(prompt, width=1080, height=1920, label=f"{label}_thumb_day{day}")
+
+
+# ── Pixazo provider ──────────────────────────────────────────────────────────
+
+def _pixazo(prompt: str, width: int, height: int, label: str, seed: int | None) -> str | None:
+    """Call the configured Pixazo model endpoint; accepts binary images or media URLs."""
+    import json
+    from urllib.error import HTTPError, URLError
+    try:
+        req = urllib.request.Request(
+            _PIXAZO_ENDPOINT,
+            data=json.dumps({"prompt": prompt}).encode("utf-8"),
+            headers={
+                "Ocp-Apim-Subscription-Key": _PIXAZO_KEY or "",
+                "Content-Type": "application/json",
+                "User-Agent": "PurityBeans/1.0",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=_TIMEOUT) as resp:
+            body, content_type = resp.read(), resp.headers.get("Content-Type", "")
+        if _is_image_response(body, content_type):
+            return _save_image(body, label, ext=_extension_from_type(content_type))
+        data = json.loads(body.decode("utf-8"))
+        url = _extract_media_url(data)
+        if not url and data.get("request_id"):
+            request_id = urllib.parse.quote(str(data["request_id"]), safe="")
+            poll_url = "https://gateway.pixazo.ai/v2/requests/status/" + request_id
+            attempts = max(1, min(30, int(os.getenv("PIXAZO_POLL_ATTEMPTS", "12"))))
+            interval = max(1, min(30, int(os.getenv("PIXAZO_POLL_INTERVAL_SECONDS", "5"))))
+            import time
+            for _ in range(attempts):
+                time.sleep(interval)
+                poll = urllib.request.Request(poll_url, headers={
+                    "Ocp-Apim-Subscription-Key": _PIXAZO_KEY or "",
+                    "User-Agent": "PurityBeans/1.0",
+                })
+                with urllib.request.urlopen(poll, timeout=_TIMEOUT) as resp:
+                    result = json.loads(resp.read().decode("utf-8"))
+                if str(result.get("status", "")).upper() in {"FAILED", "ERROR", "CANCELLED"}:
+                    return None
+                url = _extract_media_url(result)
+                if url:
+                    break
+        return _download_image_url(url, label) if url else None
+    except Exception as exc:
+        logger.warning("[image] Pixazo failed: %s", type(exc).__name__)
+        return None
+
+
+# ── Self-hosted free-image-generation-api Worker ──────────────────────────────
+
+def _free_image_worker(prompt: str, width: int, height: int, label: str) -> str | None:
+    """Call the user's deployed Cloudflare Worker and validate its binary response."""
+    import json
+    try:
+        req = urllib.request.Request(
+            _FREE_IMAGE_API_URL,
+            data=json.dumps({"prompt": prompt}).encode("utf-8"),
+            headers={
+                "Authorization": f"Bearer {_FREE_IMAGE_API_KEY}",
+                "Content-Type": "application/json",
+                "Accept": "image/jpeg, image/png, application/octet-stream",
+                "User-Agent": "PurityBeans/1.0",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=_TIMEOUT) as resp:
+            body, content_type = resp.read(), resp.headers.get("Content-Type", "")
+        if not _is_image_response(body, content_type):
+            logger.warning("[image] Free image Worker returned non-image response")
+            return None
+        return _save_image(body, label, ext=_extension_from_type(content_type))
+    except Exception as exc:
+        logger.warning("[image] Free image Worker failed: %s", type(exc).__name__)
+        return None
+
+
+def _extension_from_type(content_type: str) -> str:
+    mime = (content_type or "").split(";", 1)[0].strip().lower()
+    return {"image/png": "png", "image/webp": "webp", "image/jpeg": "jpg"}.get(mime, "jpg")
+
+
+def _is_image_response(body: bytes, content_type: str) -> bool:
+    mime = (content_type or "").lower()
+    signature = (
+        body[:3] == b"\\xff\\xd8\\xff"
+        or body[:8] == b"\\x89PNG\\r\\n\\x1a\\n"
+        or (body[:4] == b"RIFF" and body[8:12] == b"WEBP")
+    )
+    return len(body) > 1000 and (mime.startswith("image/") or signature)
+
+
+def _extract_media_url(payload: dict) -> str | None:
+    from urllib.parse import urlparse
+    output = payload.get("output") if isinstance(payload.get("output"), dict) else {}
+    for value in (payload.get("image"), payload.get("url"), payload.get("media_url"),
+                  output.get("image"), output.get("url"), output.get("media_url")):
+        if isinstance(value, list):
+            value = value[0] if value else None
+        if isinstance(value, str) and urlparse(value).scheme == "https" and urlparse(value).netloc:
+            return value
+    return None
+
+
+def _download_image_url(url: str, label: str) -> str | None:
+    from urllib.parse import urlparse
+    if urlparse(url).scheme != "https" or not urlparse(url).netloc:
+        return None
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "PurityBeans/1.0"})
+        with urllib.request.urlopen(req, timeout=_TIMEOUT) as resp:
+            body, content_type = resp.read(), resp.headers.get("Content-Type", "")
+        if not _is_image_response(body, content_type):
+            return None
+        return _save_image(body, label, ext=_extension_from_type(content_type))
+    except Exception as exc:
+        logger.warning("[image] Pixazo media download failed: %s", type(exc).__name__)
+        return None
 
 
 # ── Provider 1: Hugging Face Inference API (FREE) ─────────────────────────────
