@@ -436,6 +436,27 @@ def generate_daily_content(
         },
     }
 
+    # Platform-native follower-growth diagnostics are persisted with every
+    # generation so reports can identify missing native assets and risky copy.
+    # Diagnostics do not fabricate a score or silently block unrelated assets.
+    try:
+        from content_generator.core.growth_contract import audit_portfolio
+        output["follower_growth_audit"] = audit_portfolio(output)
+        for platform, result in output["follower_growth_audit"]["results"].items():
+            if not result["passes"] or result["warnings"]:
+                logger.warning(
+                    "[growth-contract] %s passes=%s errors=%s warnings=%s",
+                    platform, result["passes"], result["errors"], result["warnings"],
+                )
+    except Exception as exc:
+        # Record failure as a visible hold in diagnostics, never as a silent pass.
+        logger.exception("[growth-contract] audit failed")
+        output["follower_growth_audit"] = {
+            "contract_version": "follower-growth-v1",
+            "passes": False,
+            "audit_error": str(exc),
+        }
+
     if os.getenv("ENABLE_USAGE_LOG", "false").lower() == "true":
         output["usage"] = get_usage_log()
 
