@@ -77,7 +77,7 @@
       "verified_at": null
     },
     "2026-10-09|generate|youtube|pb_41bc89afb4": {
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-10-09",
       "content_id": "pb_41bc89afb4",
       "day_number": 281,
@@ -97,19 +97,34 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-09T08:46:36+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-09T08:46:37+00:00",
+          "attempt": 2,
+          "error": "held_no_native_video",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-09T08:21:11+00:00",
+      "last_attempt_at": "2026-10-09T08:46:36+00:00",
       "last_result": {
         "error": "held_no_native_video",
         "success": false
       },
-      "next_retry_at": "2026-10-09T08:26:11+00:00",
+      "next_retry_at": null,
       "platform": "youtube",
       "remote_id": "",
       "slot": "generate",
-      "status": "FAILED",
-      "updated_at": "2026-10-09T08:21:11+00:00",
+      "status": "SKIPPED",
+      "updated_at": "2026-10-09T08:46:37+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
