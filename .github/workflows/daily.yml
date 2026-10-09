@@ -2,7 +2,7 @@
 # Canonical slots: 06:00 IST generate, 10:00 IST morning, 22:00 IST evening.
 # Git is authoritative persistent state. Actions cache is intentionally not used for output state.
 
-name: Purity Beans Daily Pipeline
+name: P3 daily content
 
 on:
   schedule:
@@ -46,7 +46,7 @@ concurrency:
 
 jobs:
   run-pipeline:
-    name: Daily Content Pipeline
+    name: P3 daily content
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
