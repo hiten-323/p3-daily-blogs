@@ -45,25 +45,9 @@ def _extract_thread_text(content: dict) -> str:
         if text:
             return text[:_THREADS_CHAR_LIMIT]
 
-    # Fallback to LinkedIn hook + CTA or Reel hook
-    li = content.get("linkedin_post")
-    if isinstance(li, dict):
-        hook = str(li.get("hook") or "").strip()
-        cta = str(li.get("cta") or "").strip()
-        website = os.getenv("WEBSITE_URL", "https://p3online.in")
-        combined = f"{hook}\n\n100% coffee. Zero chicory. {website}\n#PurityBeans #PureCoffee"
-        return combined[:_THREADS_CHAR_LIMIT]
-
-    reels = content.get("reels") or []
-    if reels and isinstance(reels[0], dict):
-        hook = str(reels[0].get("hook") or reels[0].get("hook_text") or "").strip()
-        if hook:
-            website = os.getenv("WEBSITE_URL", "https://p3online.in")
-            combined = f"{hook}\n\n{website}\n#PurityBeans"
-            return combined[:_THREADS_CHAR_LIMIT]
-
+    # Never silently repurpose another platform's asset. Missing native Threads
+    # copy is a generation failure and must be held for regeneration.
     return ""
-
 
 def _post_request(url: str, params: dict) -> dict:
     """Execute a POST request with form-encoded data against Threads API."""
