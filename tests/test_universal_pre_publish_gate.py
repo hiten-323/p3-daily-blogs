@@ -33,7 +33,7 @@ def test_threads_over_limit_fails_closed_even_with_score(monkeypatch):
     result = authorize_publish({"threads_post": piece}, "threads")
     assert result["allowed"] is False
     assert result["reason"] in {
-        "viral_readiness_failed", "shareability_failed", "threads_text_over_500_characters"
+        "platform_contract_failed", "viral_readiness_failed", "shareability_failed", "threads_text_over_500_characters"
     }
 
 
