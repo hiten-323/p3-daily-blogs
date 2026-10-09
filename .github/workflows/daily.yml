@@ -171,6 +171,11 @@ jobs:
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          # Image generation providers: Pixazo first, optional self-hosted Cloudflare Worker next.
+          PIXAZO_API_KEY: ${{ secrets.PIXAZO_API_KEY || secrets.PIXAZO_KEY }}
+          PIXAZO_IMAGE_ENDPOINT: ${{ vars.PIXAZO_IMAGE_ENDPOINT || 'https://gateway.pixazo.ai/flux/text-to-image' }}
+          FREE_IMAGE_API_URL: ${{ vars.FREE_IMAGE_API_URL || secrets.FREE_IMAGE_API_URL }}
+          FREE_IMAGE_API_KEY: ${{ secrets.FREE_IMAGE_API_KEY || secrets.CLOUDFLARE_IMAGE_API_KEY || secrets.API_KEY }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           FAL_KEY: ${{ secrets.FLUX_API_KEY }}
           RUNWAY_API_KEY: ${{ secrets.RUNWAY_API_KEY }}
