@@ -62,7 +62,14 @@ def test_visual_adaptation_directives_extraction(tmp_path, monkeypatch):
             "raise exposure/background separation; avoid another near-black frame",
             "increase scene/motion change; video is visually static",
             "strengthen the first-frame visual hook in the upper safe zone",
-        ]}
+        ],
+         "image_assets": [
+            {"platform":"instagram","recommendations":[
+                "raise exposure/background separation; avoid another near-black frame",
+                "strengthen the first-frame visual hook in the upper safe zone"]}],
+         "video_assets": [
+            {"platform":"video","recommendations":[
+                "increase scene/motion change; video is visually static"]}]}
     ])
     dirs = audit.get_visual_adaptation_directives()
     assert dirs["boost_exposure"] is True
