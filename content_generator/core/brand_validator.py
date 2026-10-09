@@ -235,6 +235,21 @@ def validate_asset(label: str, piece: dict,
             is_valid = False
             issues.extend(extra)
 
+    elif clean_label == "threads_post":
+        # Threads is intentionally native, short, and link-light. Do not impose
+        # the website/brand-fact requirements used for sales-oriented assets.
+        native_text = str(piece.get("text") or piece.get("body") or piece.get("content") or "").strip()
+        is_valid, issues = validate_asset_copy(
+            native_text,
+            check_brand_facts=False,
+            check_website=False,
+            check_brand_mention=False,
+            check_length=True,
+        )
+        if len(native_text) > 480:
+            is_valid = False
+            issues.append("Threads native text exceeds 480 characters")
+
     elif clean_label == "yt_short":
         # Support both Format 1 (hook/script/cta) and Format 2 (scenes)
         if "scenes" in piece and piece["scenes"]:
