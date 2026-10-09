@@ -99,6 +99,148 @@ def _div(h):
     for i,x in enumerate(h):
         for y in h[i+1:]: n+=1; d+=x!=y
     return round(d/n,3) if n else 0
+def _vision_review(images, videos, content=None) -> dict:
+    """
+    Optional multimodal critique of the actual rendered pixels.
+    This is advisory: unavailable API, malformed responses, or timeouts never
+    block a generation, and model findings are kept separate from performance data.
+    """
+    if os.getenv("ENABLE_VISION_CREATIVE_AUDIT", "true").strip().lower() not in {"1","true","yes"}:
+        return {"status":"disabled","model":"","assets":[],"recommendations":[]}
+    api_key=os.getenv("GEMINI_API_KEY","").strip()
+    if not api_key:
+        return {"status":"skipped_no_api_key","model":"","assets":[],"recommendations":[]}
+    try:
+        import base64, io, urllib.request
+        from PIL import Image
+        model=os.getenv("GEMINI_VISION_AUDIT_MODEL","gemini-2.5-flash").strip()
+        parts=[]
+        sampled=[]
+        # Keep calls bounded for free-tier safety; prioritize one asset per platform,
+        # then one video keyframe set. All files are actual rendered outputs.
+        selected=[]
+        seen_platforms=set()
+        for asset in images:
+            platform=str(asset.get("platform") or "unknown")
+            if platform not in seen_platforms:
+                selected.append(asset); seen_platforms.add(platform)
+            if len(selected)>=6: break
+        def image_part(path, max_side=768):
+            with Image.open(path) as im:
+                im=im.convert("RGB")
+                im.thumbnail((max_side,max_side))
+                buf=io.BytesIO(); im.save(buf,format="JPEG",quality=78,optimize=True)
+                return {"inline_data":{"mime_type":"image/jpeg","data":base64.b64encode(buf.getvalue()).decode("ascii")}}
+        for idx, asset in enumerate(selected):
+            path=asset.get("path")
+            if not path or not os.path.exists(path): continue
+            prov=None
+            try:
+                from content_generator.creative.jar_provenance import verify_jar_provenance
+                prov=verify_jar_provenance(path)
+            except Exception: pass
+            parts.append({"text":f"ASSET {idx+1}: platform={asset.get('platform')}; file={os.path.basename(path)}. Inspect the actual rendered pixels."})
+            jar_path=(prov or {}).get("jar_asset_id")
+            if (prov or {}).get("verified") and jar_path and os.path.exists(jar_path):
+                parts.append({"text":"Authentic source jar reference for comparison:"})
+                parts.append(image_part(jar_path))
+            parts.append({"text":"Rendered output to critique:"})
+            parts.append(image_part(path))
+            sampled.append({"asset":os.path.basename(path),"platform":asset.get("platform")})
+        # Sample up to 2 native videos, three frames each, without uploading full video files.
+        for video in videos[:2]:
+            path=video.get("path")
+            if not path or not os.path.exists(path): continue
+            try:
+                import imageio.v3 as iio
+                frames=[]; total=0
+                for i, frame in enumerate(iio.imiter(path,plugin="ffmpeg")):
+                    total=i+1
+                    if i in (0, max(0, 12), 23):
+                        im=Image.fromarray(frame.astype("uint8")).convert("RGB")
+                        im.thumbnail((640,640)); buf=io.BytesIO(); im.save(buf,format="JPEG",quality=72)
+                        frames.append(base64.b64encode(buf.getvalue()).decode("ascii"))
+                    if i>=23: break
+                if frames:
+                    parts.append({"text":f"VIDEO: {os.path.basename(path)}; sampled opening/middle/later frames. Judge pacing, motion, continuity, first-frame hook, readability and real-jar presentation."})
+                    for frame in frames:
+                        parts.append({"inline_data":{"mime_type":"image/jpeg","data":frame}})
+                    sampled.append({"asset":os.path.basename(path),"platform":video.get("platform","video"),"sampled_video_frames":len(frames)})
+            except Exception as exc:
+                logger.info("[creative-audit] vision video sampling skipped for %s: %s",os.path.basename(path),exc)
+        if not parts:
+            return {"status":"no_assets","model":model,"assets":[],"recommendations":[]}
+        rubric=(
+            "You are a strict creative director reviewing rendered assets for Purity Beans, an Indian instant-coffee brand. "
+            "Do not claim an asset will go viral. Evaluate each actual image/video sample for: first-frame stopping power, "
+            "immediate message clarity, typography legibility, contrast/exposure, mobile-safe zones, visual hierarchy, "
+            "distinctiveness versus a generic catalogue ad, human/context/action cues, payoff-to-hook fit, realism, and "
+            "whether the visible package appears consistent with the supplied authentic source jar reference. "
+            "Never invent product facts. The jar reference is authoritative; if label fidelity is uncertain, say uncertain. "
+            "Return STRICT JSON only: {\"assets\":[{\"asset\":string,\"score\":integer_1_to_5,"
+            "\"strengths\":[string],\"issues\":[string],\"directives\":[one_or_more_of_"
+            "\"boost_exposure,boost_contrast,add_action_texture,break_centered_catalog,boost_upper_activity,boost_motion,diversify_palette\"]}],"
+            "\"portfolio_issues\":[string]}. Use concise actionable findings, not generic praise. "
+            "If a video only has sampled frames, do not infer audio or full-video details."
+        )
+        parts.insert(0,{"text":rubric})
+        body=json.dumps({"contents":[{"parts":parts}],"generationConfig":{"temperature":0.1,"maxOutputTokens":1800}}).encode("utf-8")
+        url=f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+        req=urllib.request.Request(url,data=body,headers={"Content-Type":"application/json","User-Agent":"PurityBeans-CreativeAudit/1.0"},method="POST")
+        with urllib.request.urlopen(req,timeout=35) as resp:
+            data=json.loads(resp.read().decode("utf-8"))
+        raw="".join(str(p.get("text") or "") for p in (data.get("candidates") or [{}])[0].get("content",{}).get("parts",[]) if isinstance(p,dict))
+        # Recover JSON even if the provider wraps it in a Markdown fence.
+        raw=raw.strip()
+        if raw.startswith("```"):
+            raw=raw.split("\n",1)[-1]
+            if raw.endswith("```"): raw=raw[:-3]
+        parsed=json.loads(raw)
+        if not isinstance(parsed,dict) or not isinstance(parsed.get("assets"),list):
+            raise ValueError("vision model response did not match expected JSON shape")
+        return {"status":"ok","model":model,"assets":parsed.get("assets",[])[:8],
+                "portfolio_issues":parsed.get("portfolio_issues",[])[:8],"sampled":sampled,
+                "recommendations":[]}
+    except Exception as exc:
+        logger.warning("[creative-audit] optional vision review unavailable: %s",exc)
+        return {"status":"failed_non_blocking","model":os.getenv("GEMINI_VISION_AUDIT_MODEL","gemini-2.5-flash"),
+                "assets":[],"recommendations":[],"error":f"{type(exc).__name__}: {exc}"[:240]}
+
+
+def _apply_vision_review(vision: dict, images: list[dict], videos: list[dict]) -> list[str]:
+    """Attach model critique to each audited asset and map its directives to renderer QA."""
+    asset_by_name={os.path.basename(str(a.get("path") or "")):a for a in images+videos}
+    recs=[]
+    for item in vision.get("assets") or []:
+        if not isinstance(item,dict): continue
+        name=os.path.basename(str(item.get("asset") or ""))
+        target=asset_by_name.get(name)
+        if not target: continue
+        score=item.get("score")
+        try: score=max(1,min(5,int(score)))
+        except Exception: score=None
+        directives=[d for d in (item.get("directives") or []) if d in {
+            "boost_exposure","boost_contrast","add_action_texture","break_centered_catalog",
+            "boost_upper_activity","boost_motion","diversify_palette"}]
+        target["vision_review"]={"score":score,"strengths":item.get("strengths") or [],
+                                 "issues":item.get("issues") or [],"directives":directives}
+        for issue in target["vision_review"]["issues"]:
+            recs.append(f"vision:{name}: {str(issue)[:180]}")
+    for issue in vision.get("portfolio_issues") or []:
+        recs.append(f"vision:portfolio: {str(issue)[:180]}")
+    vision["_renderer_directives"]={}
+    for item in vision.get("assets") or []:
+        if not isinstance(item,dict):continue
+        name=os.path.basename(str(item.get("asset") or "")); target=asset_by_name.get(name)
+        if not target:continue
+        platform=str(target.get("platform") or "unknown")
+        bucket=vision["_renderer_directives"].setdefault(platform,[])
+        for directive in item.get("directives") or []:
+            if directive in {"boost_exposure","boost_contrast","add_action_texture","break_centered_catalog","boost_upper_activity","boost_motion","diversify_palette"} and directive not in bucket:
+                bucket.append(directive)
+    return recs
+
+
 def audit_generated_creatives(*,day_number,generation_id,image_results=None,creative_dir=None,content=None):
     from content_generator.creative.jar_provenance import verify_jar_provenance
     image_results=image_results or {}; assets=[]; seen=set()
@@ -163,12 +305,19 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
             if text.lower().count("shop")>=2:
                 cr.append(f"{label}: commercial language repeats; protect discovery value before selling")
             copy_audit.append({"asset":label,"hook_length":len(hook),"recommendations":cr})
+    # Optional vision-model inspection of the actual rendered images and sampled video frames.
+    # Failures are recorded but never prevent a safe generation/publish.
+    vision=_vision_review(images,videos,content)
+    vision_recs=_apply_vision_review(vision,images,videos) if vision.get("status")=="ok" else []
     recs=[]
     for x in images+videos+copy_audit:
-        for r in x.get("recommendations",[]):
-            if r not in recs:recs.append(r)
+        for rec in x.get("recommendations",[]):
+            if rec not in recs:recs.append(rec)
+    for rec in vision_recs:
+        if rec not in recs:recs.append(rec)
     row={"ts":datetime.datetime.now(datetime.timezone.utc).isoformat(),"day_number":day_number,"generation_id":generation_id,
-         "image_assets":images,"video_assets":videos,"copy_audit":copy_audit,"portfolio_diversity":diversity,"recommendations":recs[:20],
+         "image_assets":images,"video_assets":videos,"copy_audit":copy_audit,"vision_audit":vision,
+         "portfolio_diversity":diversity,"recommendations":recs[:30],
          "asset_count":len(images)+len(videos)}
     rows=_load();rows.append(row);_save(rows)
     logger.info("[creative-audit] day=%s assets=%s diversity=%.2f recommendations=%s",day_number,row["asset_count"],diversity,len(recs))
