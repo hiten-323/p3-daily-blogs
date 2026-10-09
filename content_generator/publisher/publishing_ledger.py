@@ -13,7 +13,7 @@ import threading
 from pathlib import Path
 from typing import Callable
 
-_PATH = Path(os.getenv("PUBLISH_LEDGER_PATH", "output/learning/publishing_ledger.json"))
+_PATH = Path(os.getenv("PUBLISH_LEDGER_PATH", os.path.join(os.getenv("LEARNING_DIR", "output/learning"), "publishing_ledger.json")))
 _LOCK = threading.RLock()
 _MAX_ATTEMPTS = int(os.getenv("PUBLISH_MAX_ATTEMPTS", "3"))
 _STALE_PUBLISHING_MINUTES = int(os.getenv("PUBLISH_STALE_MINUTES", "30"))
