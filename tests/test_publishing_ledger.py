@@ -52,3 +52,14 @@ def test_ledger_file_is_valid_json(tmp_path, monkeypatch):
     ticket = ledger.begin_attempt(content, "youtube", "generate", 1)
     ledger.finish_attempt(ticket, {"success": True, "video_id": "yt-123", "url": "https://youtube.com/shorts/yt-123"})
     assert json.loads(path.read_text())["version"] == 1
+
+
+def test_server_error_is_not_blindly_retried(tmp_path, monkeypatch):
+    from content_generator.publisher import publishing_ledger as ledger
+    monkeypatch.setattr(ledger, "_PATH", tmp_path / "ledger.json")
+    content = {"date": "2026-10-09", "generation_id": "gen-500"}
+    ticket = ledger.begin_attempt(content, "instagram", "morning", 1)
+    record = ledger.finish_attempt(ticket, {"success": False, "error": "HTTP 500 Internal Server Error"})
+    assert record["status"] == "UNCERTAIN"
+    assert record["next_retry_at"] is None
+    assert ledger.begin_attempt(content, "instagram", "morning", 1)["allowed"] is False
