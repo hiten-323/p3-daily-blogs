@@ -212,7 +212,7 @@ def _skipped(slot: str, day: int = 0, reason: str = "") -> dict:
     return res
 
 
-def run_publish_slot(slot: str) -> dict:
+def run_publish_slot(slot: str, force_retry: bool = False) -> dict:
     """
     Execute a publish-only slot (morning or evening).
     Loads this morning's generated content and posts the slot's asset.
@@ -232,9 +232,12 @@ def run_publish_slot(slot: str) -> dict:
 
     lock = RunLock(lock_path=os.path.join("output", f".running_{slot}"))
     lock.__enter__()
-    if lock.already_ran:
+    retrying_completed_slot = bool(lock.already_ran and force_retry)
+    if lock.already_ran and not force_retry:
         logger.info("[slots] %s slot already ran today — skipping", slot)
         return _skipped(slot, reason="already_ran")
+    if retrying_completed_slot:
+        logger.warning("[slots] %s slot retry requested; platform ledger will suppress prior successes", slot)
 
     # The lock is taken BEFORE the work and marked completed only after it.
     #
@@ -250,7 +253,8 @@ def run_publish_slot(slot: str) -> dict:
         raise
     # A HOLD is a legitimate completion: we looked and decided not to publish.
     # Only a crash leaves the lock unmarked.
-    lock.mark_completed()
+    if not retrying_completed_slot:
+        lock.mark_completed()
     return result
 
 
@@ -309,7 +313,9 @@ def _execute_publish_slot(slot: str) -> dict:
             if not ok:
                 return _held(slot, day, content, f"real_jar_unverified — {'; '.join(issues)}")
 
-        result = post_content(filtered_content, day=day)
+        from content_generator.publisher.publishing_ledger import publish_with_ledger
+        result = publish_with_ledger("instagram", filtered_content, slot, day,
+                                     lambda: post_content(filtered_content, day=day))
         # Track the approved piece — tracking content.get("carousel") could stamp
         # the learning log with a hook that never passed the gate.
         piece = approved.get("carousel") or approved.get("instagram_post") or {}
@@ -317,7 +323,9 @@ def _execute_publish_slot(slot: str) -> dict:
         fb_result = _mirror_to_facebook(content, day, slot)
         # Instagram Story (image, 24h) — separate method, same slot
         try:
-            story_res = post_story(content, day=day)
+            from content_generator.publisher.publishing_ledger import publish_with_ledger
+            story_res = publish_with_ledger("instagram_story", content, slot, day,
+                                            lambda: post_story(content, day=day))
             logger.info("[slots] instagram story: %s", story_res.get("success"))
             result["story"] = story_res
         except Exception as e:
@@ -373,7 +381,9 @@ def _execute_publish_slot(slot: str) -> dict:
             if video_path and vhost_ok():
                 video_url = upload_video(video_path)
                 if video_url:
-                    result = post_reel_video(video_url, caption)
+                    from content_generator.publisher.publishing_ledger import publish_with_ledger
+                    result = publish_with_ledger("instagram_video", content, slot, day,
+                                                 lambda: post_reel_video(video_url, caption))
                     if result.get("success"):
                         logger.info("[slots] evening published as %s REEL VIDEO",
                                     "HERO" if is_hero else "motion")
@@ -398,11 +408,15 @@ def _execute_publish_slot(slot: str) -> dict:
 
             feed = prepare_feed_image(image)
             if feed:
-                result = _post_single_image(feed, caption)
+                from content_generator.publisher.publishing_ledger import publish_with_ledger
+                result = publish_with_ledger("instagram", content, slot, day,
+                                             lambda: _post_single_image(feed, caption))
                 fb_result = _mirror_to_facebook(content, day, slot, image=feed, message=caption)
             else:
                 logger.warning("[slots] reel thumbnail is not a feed aspect — posting as Story")
-                result = post_local_story(image)
+                from content_generator.publisher.publishing_ledger import publish_with_ledger
+                result = publish_with_ledger("instagram_story", content, slot, day,
+                                             lambda: post_local_story(image))
                 fb_result = _mirror_to_facebook(content, day, slot, message=caption)
         else:
             fb_result = _mirror_to_facebook(content, day, slot, message=caption)
@@ -468,7 +482,11 @@ def _mirror_to_facebook(content: dict, day: int, slot: str,
     """
     try:
         from content_generator.publisher.facebook import post_content as fb_post
-        r = fb_post(content, day=day, preferred_image=image, message_override=message) or {}
+        from content_generator.publisher.publishing_ledger import publish_with_ledger
+        r = publish_with_ledger(
+            "facebook", content, slot, day,
+            lambda: fb_post(content, day=day, preferred_image=image, message_override=message),
+        ) or {}
         if r.get("success"):
             logger.info("[slots] facebook mirror (%s): published", slot)
         else:
