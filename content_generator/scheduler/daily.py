@@ -895,6 +895,7 @@ def _do_editorial(content: dict) -> None:
         ("instagram_post", "instagram_post", None),
         ("linkedin_post",  "linkedin_post",  None),
         ("facebook_post",  "facebook_post",  None),
+        ("threads_post",   "threads_post",   None),
         ("blog_post",      "blog_post",      None),
         ("growth_reel",    "growth_reel",    None),
         ("yt_short",       "yt_short",       None),
