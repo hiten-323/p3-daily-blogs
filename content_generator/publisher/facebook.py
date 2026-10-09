@@ -50,15 +50,16 @@ def post_content(content: dict, day: int = 0,
     Returns:
         {"success": bool, "post_id": str, "url": str, "error": str|None}
     """
+    if not is_configured():
+        logger.info("[facebook] Not configured — FACEBOOK_PAGE_ID or token missing")
+        return {"success": False, "post_id": "", "url": "", "error": "not_configured"}
+
     from content_generator.publisher.prepublish_gate import authorize_publish
     gate = authorize_publish(content, "facebook")
     if not gate["allowed"]:
         logger.warning("[facebook] Pre-publish gate blocked content: %s", gate["reason"])
         return {"success": False, "post_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
 
-    if not is_configured():
-        logger.info("[facebook] Not configured — FACEBOOK_PAGE_ID or token missing")
-        return {"success": False, "post_id": "", "url": "", "error": "not_configured"}
 
     page_id = os.getenv("FACEBOOK_PAGE_ID", "")
     token   = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
