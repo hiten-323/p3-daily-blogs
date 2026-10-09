@@ -49,6 +49,12 @@ def post_content(content: dict, day: int = 0) -> dict:
     Returns:
         {"success": bool, "post_id": str, "url": str, "error": str|None}
     """
+    from content_generator.publisher.prepublish_gate import authorize_publish
+    gate = authorize_publish(content, "linkedin")
+    if not gate["allowed"]:
+        logger.warning("[linkedin] Pre-publish gate blocked content: %s", gate["reason"])
+        return {"success": False, "post_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
+
     from content_generator.publisher.dispatcher import editorial_disposition, not_attempted_result
     state = editorial_disposition(content, "linkedin_post")
     if state != "approved":
