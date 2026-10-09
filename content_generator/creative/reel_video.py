@@ -81,7 +81,9 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
     dirs = {}
     try:
         from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
-        dirs = get_visual_adaptation_directives()
+        lower_label = str(label or "").lower()
+        target_platform = "youtube" if ("youtube" in lower_label or "yt_" in lower_label or "short" in lower_label) else "instagram"
+        dirs = get_visual_adaptation_directives(platform=target_platform)
     except Exception:
         dirs = {}
 
