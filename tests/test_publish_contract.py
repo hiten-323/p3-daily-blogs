@@ -246,5 +246,26 @@ def test_facebook_mirror_failure_is_a_warning(monkeypatch, caplog):
     assert evaluate(fatal)["ok"] is False
 
 
+def test_linkedin_token_refresh_contract(monkeypatch):
+    from content_generator.publisher import linkedin
+    monkeypatch.delenv("LI_API_ACCESS", raising=False)
+    monkeypatch.delenv("LI_AUTHOR_URN", raising=False)
+    monkeypatch.delenv("LI_CLIENT_ID", raising=False)
+    monkeypatch.delenv("LI_CLIENT_SECRET", raising=False)
+    monkeypatch.delenv("LI_REFRESH_TOKEN", raising=False)
+
+    assert linkedin.is_configured() is False
+
+    monkeypatch.setenv("LI_AUTHOR_URN", "urn:li:person:123")
+    monkeypatch.setenv("LI_CLIENT_ID", "cid")
+    monkeypatch.setenv("LI_CLIENT_SECRET", "csec")
+    monkeypatch.setenv("LI_REFRESH_TOKEN", "reftok")
+
+    assert linkedin.is_configured() is True
+
+    monkeypatch.setattr(linkedin, "refresh_access_token", lambda cid, csec, rtok: "refreshed_tok")
+    assert linkedin.get_access_token(force_refresh=True) == "refreshed_tok"
+
+
 if __name__ == "__main__":
     raise SystemExit(main())

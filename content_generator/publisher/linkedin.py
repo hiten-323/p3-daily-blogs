@@ -32,10 +32,66 @@ logger = logging.getLogger(__name__)
 
 _API_BASE    = "https://api.linkedin.com/rest"
 _API_VERSION = os.getenv("LI_API_VERSION", "202506")   # Use latest monthly version; override via LI_API_VERSION secret
+_cached_token: str | None = None
+
+
+def refresh_access_token(client_id: str, client_secret: str, refresh_token: str) -> str | None:
+    """Exchange a 365-day LinkedIn refresh token for a fresh access token."""
+    import json
+    import urllib.parse
+    import urllib.request
+    url = "https://www.linkedin.com/oauth/v2/accessToken"
+    data = urllib.parse.urlencode({
+        "grant_type":    "refresh_token",
+        "refresh_token": refresh_token,
+        "client_id":     client_id,
+        "client_secret": client_secret,
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        url, data=data,
+        headers={"Content-Type": "application/x-www-form-urlencoded", "User-Agent": "PurityBeans/1.0"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+            tok = payload.get("access_token")
+            if tok:
+                logger.info("[linkedin] Successfully obtained fresh access token via refresh token")
+                return tok
+    except Exception as e:
+        logger.warning("[linkedin] Could not refresh access token: %s", e)
+    return None
+
+
+def get_access_token(force_refresh: bool = False) -> str:
+    """Return active LinkedIn access token, refreshing if refresh credentials exist."""
+    global _cached_token
+    if not force_refresh:
+        if _cached_token:
+            return _cached_token
+        explicit = os.getenv("LI_API_ACCESS", "").strip()
+        if explicit:
+            return explicit
+
+    client_id     = os.getenv("LI_CLIENT_ID", "").strip()
+    client_secret = os.getenv("LI_CLIENT_SECRET", "").strip()
+    refresh_token = os.getenv("LI_REFRESH_TOKEN", "").strip()
+
+    if client_id and client_secret and refresh_token:
+        tok = refresh_access_token(client_id, client_secret, refresh_token)
+        if tok:
+            _cached_token = tok
+            return tok
+
+    return os.getenv("LI_API_ACCESS", "").strip()
 
 
 def is_configured() -> bool:
-    return bool(os.getenv("LI_API_ACCESS")) and bool(os.getenv("LI_AUTHOR_URN"))
+    has_token = bool(os.getenv("LI_API_ACCESS")) or (
+        bool(os.getenv("LI_CLIENT_ID")) and bool(os.getenv("LI_CLIENT_SECRET")) and bool(os.getenv("LI_REFRESH_TOKEN"))
+    )
+    return has_token and bool(os.getenv("LI_AUTHOR_URN"))
+
 
 
 def post_content(content: dict, day: int = 0) -> dict:
@@ -173,7 +229,7 @@ def _upload_image(image_path: str) -> str | None:
     except ImportError:
         return None
 
-    token      = os.getenv("LI_API_ACCESS", "")
+    token      = get_access_token()
     author_urn = os.getenv("LI_AUTHOR_URN", "")
     headers    = {
         "Authorization":  f"Bearer {token}",
@@ -190,6 +246,17 @@ def _upload_image(image_path: str) -> str | None:
             json={"initializeUploadRequest": {"owner": author_urn}},
             timeout=15,
         )
+        if init_resp.status_code == 401 and os.getenv("LI_REFRESH_TOKEN"):
+            logger.info("[linkedin] Token expired during image init — refreshing token")
+            token = get_access_token(force_refresh=True)
+            headers["Authorization"] = f"Bearer {token}"
+            init_resp = requests.post(
+                f"{_API_BASE}/images?action=initializeUpload",
+                headers=headers,
+                json={"initializeUploadRequest": {"owner": author_urn}},
+                timeout=15,
+            )
+
         if init_resp.status_code != 200:
             logger.debug("[linkedin] Image init failed: %d %s", init_resp.status_code, init_resp.text[:200])
             return None
@@ -235,7 +302,7 @@ def _create_post(text: str, image_urn: str | None) -> dict:
     except ImportError:
         return {"success": False, "post_id": "", "url": "", "error": "requests_not_installed"}
 
-    token      = os.getenv("LI_API_ACCESS", "")
+    token      = get_access_token()
     author_urn = os.getenv("LI_AUTHOR_URN", "")
 
     headers = {
@@ -268,6 +335,11 @@ def _create_post(text: str, image_urn: str | None) -> dict:
 
     try:
         resp = requests.post(f"{_API_BASE}/posts", headers=headers, json=payload, timeout=20)
+        if resp.status_code == 401 and os.getenv("LI_REFRESH_TOKEN"):
+            logger.info("[linkedin] Token expired during post create — refreshing token")
+            token = get_access_token(force_refresh=True)
+            headers["Authorization"] = f"Bearer {token}"
+            resp = requests.post(f"{_API_BASE}/posts", headers=headers, json=payload, timeout=20)
 
         if resp.status_code in (200, 201):
             post_id = resp.headers.get("x-restli-id", "") or resp.json().get("id", "")
