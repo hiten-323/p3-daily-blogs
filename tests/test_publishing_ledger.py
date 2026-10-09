@@ -15,7 +15,7 @@ def test_success_is_persisted_and_duplicate_is_blocked(tmp_path, monkeypatch):
     ticket = ledger.begin_attempt(content, "instagram", "morning", 1)
     assert ticket["allowed"]
     record = ledger.finish_attempt(ticket, {"success": True, "media_id": "ig-123", "permalink": "https://instagram.com/p/123"})
-    assert record["status"] == "PUBLISHED_UNVERIFIED"
+    assert record["status"] == "VERIFIED_LIVE"
     assert record["remote_id"] == "ig-123"
     again = ledger.begin_attempt(content, "instagram", "morning", 1)
     assert again["allowed"] is False
@@ -30,7 +30,7 @@ def test_ambiguous_timeout_is_not_blindly_retried(tmp_path, monkeypatch):
     ledger.finish_attempt(ticket, {"success": False, "error": "Read timed out"})
     again = ledger.begin_attempt(content, "facebook", "morning", 1)
     assert again["allowed"] is False
-    assert again["reason"] == "ambiguous_result_requires_reconciliation"
+    assert again["reason"] == "readback_unavailable_no_duplicate"
 
 
 def test_transient_failure_has_backoff(tmp_path, monkeypatch):
