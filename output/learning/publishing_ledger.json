@@ -1,0 +1,119 @@
+{
+  "records": {
+    "2026-10-09|generate|linkedin|pb_41bc89afb4": {
+      "attempt_count": 1,
+      "content_date": "2026-10-09",
+      "content_id": "pb_41bc89afb4",
+      "day_number": 281,
+      "error": "HTTP 401: {\"status\":401,\"serviceErrorCode\":65602,\"code\":\"EXPIRED_ACCESS_TOKEN\",\"message\":\"The token used in the request has expired\"}",
+      "history": [
+        {
+          "at": "2026-10-09T08:21:10+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-09T08:21:11+00:00",
+          "attempt": 1,
+          "error": "HTTP 401: {\"status\":401,\"serviceErrorCode\":65602,\"code\":\"EXPIRED_ACCESS_TOKEN\",\"message\":\"The token used in the request has expired\"}",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-09T08:21:10+00:00",
+      "last_result": {
+        "error": "HTTP 401: {\"status\":401,\"serviceErrorCode\":65602,\"code\":\"EXPIRED_ACCESS_TOKEN\",\"message\":\"The token used in the request has expired\"}",
+        "success": false
+      },
+      "next_retry_at": null,
+      "platform": "linkedin",
+      "remote_id": "",
+      "slot": "generate",
+      "status": "FAILED",
+      "updated_at": "2026-10-09T08:21:11+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-09|generate|threads|pb_41bc89afb4": {
+      "attempt_count": 1,
+      "content_date": "2026-10-09",
+      "content_id": "pb_41bc89afb4",
+      "day_number": 281,
+      "error": "no_content",
+      "history": [
+        {
+          "at": "2026-10-09T08:21:11+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-09T08:21:11+00:00",
+          "attempt": 1,
+          "error": "no_content",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-09T08:21:11+00:00",
+      "last_result": {
+        "error": "no_content",
+        "success": false
+      },
+      "next_retry_at": null,
+      "platform": "threads",
+      "remote_id": "",
+      "slot": "generate",
+      "status": "FAILED",
+      "updated_at": "2026-10-09T08:21:11+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-09|generate|youtube|pb_41bc89afb4": {
+      "attempt_count": 1,
+      "content_date": "2026-10-09",
+      "content_id": "pb_41bc89afb4",
+      "day_number": 281,
+      "error": "held_no_native_video",
+      "history": [
+        {
+          "at": "2026-10-09T08:21:11+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-09T08:21:11+00:00",
+          "attempt": 1,
+          "error": "held_no_native_video",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-09T08:21:11+00:00",
+      "last_result": {
+        "error": "held_no_native_video",
+        "success": false
+      },
+      "next_retry_at": "2026-10-09T08:26:11+00:00",
+      "platform": "youtube",
+      "remote_id": "",
+      "slot": "generate",
+      "status": "FAILED",
+      "updated_at": "2026-10-09T08:21:11+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    }
+  },
+  "version": 1
+}
