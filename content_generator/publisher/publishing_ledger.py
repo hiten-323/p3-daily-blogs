@@ -145,6 +145,9 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
             "next_retry_at": None,
             "error": "",
         })
+        history = list(record.get("history") or [])
+        history.append({"event": "attempt_started", "attempt": attempts + 1, "at": _iso(now)})
+        record["history"] = history[-100:]
         data["records"][key] = record
         _save(data)
         return {"allowed": True, "key": key, "record": record}
@@ -201,6 +204,18 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
                 record.update({"status": "PUBLISHED_UNVERIFIED", "next_retry_at": None, "error": verification.get("detail", "remote object exists but is not public")})
             else:
                 record.update({"status": "PUBLISHED_UNVERIFIED", "next_retry_at": _iso(_now() + dt.timedelta(hours=1)), "error": verification.get("detail", "read-back verification unavailable")})
+        history = list(record.get("history") or [])
+        history.append({
+            "event": "attempt_finished",
+            "attempt": int(record.get("attempt_count", 0)),
+            "at": _iso(),
+            "status": record.get("status", ""),
+            "error": str(record.get("error") or "")[:1000],
+            "remote_id": str(record.get("remote_id") or ""),
+            "url": str(record.get("url") or ""),
+            "verification_method": str(record.get("verification_method") or ""),
+        })
+        record["history"] = history[-100:]
         data["records"][key] = record
         _save(data)
         return record
