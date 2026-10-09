@@ -181,6 +181,20 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
             "next_retry_at": next_retry,
             "last_result": {"success": success, "error": error[:1000]},
         })
+        if success:
+            from content_generator.publisher.platform_verification import verify_remote_post
+            verification = verify_remote_post(record.get("platform", ""), record)
+            record["verification_method"] = verification.get("method", "")
+            record["verification_detail"] = verification.get("detail", "")
+            record["last_verification_at"] = _iso()
+            if verification.get("state") == "found":
+                record.update({"status": "VERIFIED_LIVE", "verified_at": _iso(), "next_retry_at": None, "error": ""})
+            elif verification.get("state") == "missing":
+                record.update({"status": "PUBLISHED_UNVERIFIED", "next_retry_at": _iso(_now() + dt.timedelta(minutes=5)), "error": "POST accepted but read-back did not find it yet; recheck before any retry"})
+            elif verification.get("state") == "exists_not_public":
+                record.update({"status": "PUBLISHED_UNVERIFIED", "next_retry_at": None, "error": verification.get("detail", "remote object exists but is not public")})
+            else:
+                record.update({"status": "PUBLISHED_UNVERIFIED", "next_retry_at": _iso(_now() + dt.timedelta(hours=1)), "error": verification.get("detail", "read-back verification unavailable")})
         data["records"][key] = record
         _save(data)
         return record
@@ -224,7 +238,12 @@ def records_for_today() -> list[dict]:
 def due_retry_slots() -> list[str]:
     """Slots with due, retryable failures; uncertain outcomes are deliberately excluded."""
     now = _now()
-    return sorted({
-        str(r.get("slot")) for r in records_for_today()
-        if r.get("status") == "FAILED" and r.get("slot") and int(r.get("attempt_count", 0)) < _MAX_ATTEMPTS and _due(r, now)
-    })
+    due = []
+    for record in records_for_today():
+        if not record.get("slot"):
+            continue
+        if record.get("status") == "FAILED" and int(record.get("attempt_count", 0)) < _MAX_ATTEMPTS and _due(record, now):
+            due.append(str(record["slot"]))
+        elif record.get("status") == "PUBLISHED_UNVERIFIED" and _due(record, now):
+            due.append(str(record["slot"]))
+    return sorted(set(due))
