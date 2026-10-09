@@ -72,11 +72,27 @@ def generate_scene_with_real_jar(
         logger.warning("[gemini_scene] Could not read jar photo: %s", e)
         return None
 
+    scene_text = scene_prompt
+    try:
+        from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
+        dirs = get_visual_adaptation_directives()
+        extras = []
+        if dirs.get("boost_exposure"):
+            extras.append("bright natural morning sunlight, high exposure, strong subject separation")
+        if dirs.get("add_action_texture"):
+            extras.append("visible action: rising aromatic steam or freshly poured coffee")
+        if dirs.get("break_centered_catalog"):
+            extras.append("candid lifestyle depth with natural human context, warm organic materials")
+        if extras:
+            scene_text += "\nVISUAL DIRECTIVES: " + " | ".join(extras)
+    except Exception:
+        pass
+
     body = json.dumps({
         "contents": [{
             "parts": [
                 {"inline_data": {"mime_type": "image/png", "data": jar_b64}},
-                {"text": f"{_SCENE_RULES}\n\nSCENE: {scene_prompt}"},
+                {"text": f"{_SCENE_RULES}\n\nSCENE: {scene_text}"},
             ]
         }],
         "generationConfig": {"responseModalities": ["IMAGE"]},

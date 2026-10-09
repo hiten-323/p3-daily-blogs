@@ -30,6 +30,13 @@ _GOLD   = (200, 150, 46)    # #C8962E
 _CREAM  = (245, 238, 216)   # #F5EED8
 _MUTED  = (170, 150, 120)
 
+_THEMES = [
+    {"bg": (246, 240, 228), "accent": (190, 140, 35), "text_primary": (22, 15, 10), "text_body": (70, 52, 38), "spotlight": (235, 218, 185), "footer_bg": (230, 220, 202)},
+    {"bg": (38, 24, 15), "accent": (215, 165, 55), "text_primary": (248, 242, 226), "text_body": (220, 205, 185), "spotlight": (85, 54, 26), "footer_bg": (25, 16, 10)},
+    {"bg": (52, 32, 18), "accent": (225, 175, 60), "text_primary": (250, 245, 230), "text_body": (225, 212, 192), "spotlight": (105, 66, 32), "footer_bg": (32, 20, 12)},
+    {"bg": (18, 12, 8), "accent": (205, 155, 48), "text_primary": (245, 238, 216), "text_body": (210, 195, 170), "spotlight": (60, 42, 18), "footer_bg": (12, 8, 5)},
+]
+
 _PRODUCTS = ["ultra_blend", "bold", "purista", "purica"]
 _SIZES    = ["100g", "50g"]
 _ANGLES   = ["front", "lifestyle", "side", "variant"]
@@ -361,7 +368,22 @@ def compose_post_image(
     is_lifestyle = ("lifestyle" in os.path.basename(jar_path).lower()
                     and not _has_white_background(jar_path))
 
-    canvas = Image.new("RGB", (width, height), _BG)
+    dirs = {}
+    try:
+        from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
+        dirs = get_visual_adaptation_directives()
+    except Exception:
+        dirs = {}
+
+    # Rotate through brand themes for visual diversity and contrast
+    # When exposure boost is requested, prefer light warm cream or golden sunrise over pure dark espresso
+    if dirs.get("boost_exposure"):
+        theme_idx = (day + idx) % 3
+    else:
+        theme_idx = (day * 2 + idx) % len(_THEMES)
+    theme = _THEMES[theme_idx]
+
+    canvas = Image.new("RGB", (width, height), theme["bg"])
 
     # 1. Process and draw/paste the main background or jar photo
     try:
@@ -405,10 +427,10 @@ def compose_post_image(
                         fill=alpha
                     )
                 glow_mask = glow_mask.filter(ImageFilter.GaussianBlur(20))
-                gold_glow = Image.new("RGB", (glow_size, glow_size), (40, 28, 12)) 
+                spotlight = Image.new("RGB", (glow_size, glow_size), theme["spotlight"]) 
                 gx = (width - glow_size) // 2
                 gy = height - max(8, height // 90) - int(height * 0.55)
-                canvas.paste(gold_glow, (gx, gy), mask=glow_mask)
+                canvas.paste(spotlight, (gx, gy), mask=glow_mask)
             except Exception as e:
                 logger.debug("[real_jar] Radial spotlight failed: %s", e)
 
@@ -434,8 +456,8 @@ def compose_post_image(
 
     draw = ImageDraw.Draw(canvas)
     bar = max(8, height // 90)
-    draw.rectangle([(0, 0), (width, bar)], fill=_GOLD)
-    draw.rectangle([(0, height - bar), (width, height)], fill=_GOLD)
+    draw.rectangle([(0, 0), (width, bar)], fill=theme["accent"])
+    draw.rectangle([(0, height - bar), (width, height)], fill=theme["accent"])
 
     # Headline (top area)
     margin = int(width * 0.07)
@@ -443,7 +465,7 @@ def compose_post_image(
     h_font = _font("title", max(34, width // 14))
     y      = int(height * 0.06)
     for line in _wrap(draw, headline.upper(), h_font, max_w):
-        draw.text((width // 2, y), line, font=h_font, fill=_CREAM, anchor="ma")
+        draw.text((width // 2, y), line, font=h_font, fill=theme["text_primary"], anchor="ma")
         y += int(h_font.size * 1.18)
 
     # Body
@@ -451,7 +473,7 @@ def compose_post_image(
         b_font = _font("body", max(20, width // 32))
         y += int(height * 0.015)
         for line in _wrap(draw, body, b_font, max_w):
-            draw.text((width // 2, y), line, font=b_font, fill=_MUTED, anchor="ma")
+            draw.text((width // 2, y), line, font=b_font, fill=theme["text_body"], anchor="ma")
             y += int(b_font.size * 1.3)
 
     # Footer brand strip (above bottom gold bar, over dark strip)
@@ -459,12 +481,12 @@ def compose_post_image(
     strip_h = int(height * 0.045)
     
     # Gold separator line above the footer strip
-    draw.line([(0, height - bar - strip_h), (width, height - bar - strip_h)], fill=_GOLD, width=2)
+    draw.line([(0, height - bar - strip_h), (width, height - bar - strip_h)], fill=theme["accent"], width=2)
     
-    draw.rectangle([(0, height - bar - strip_h), (width, height - bar)], fill=(20, 14, 8))
+    draw.rectangle([(0, height - bar - strip_h), (width, height - bar)], fill=theme["footer_bg"])
     draw.text((width // 2, height - bar - strip_h // 2),
               "PURITY BEANS  |  100% COFFEE, ZERO CHICORY  |  p3online.in",
-              font=f_font, fill=_GOLD, anchor="mm")
+              font=f_font, fill=theme["accent"], anchor="mm")
 
     # Save
     import io

@@ -30,12 +30,17 @@ def _knockout_white(img):
     return knockout_white(img)
 
 
-def _gradient_bg(width, height):
+def _gradient_bg(width, height, exposure_boost=False):
     """Cinematic vertical gradient: deep espresso -> warm brown -> espresso."""
     from PIL import Image
-    top    = (13, 9, 5)      # espresso
-    mid    = (46, 28, 12)    # warm brown
-    bottom = (10, 7, 4)
+    if exposure_boost:
+        top    = (28, 18, 10)
+        mid    = (78, 48, 22)
+        bottom = (18, 12, 7)
+    else:
+        top    = (13, 9, 5)      # espresso
+        mid    = (46, 28, 12)    # warm brown
+        bottom = (10, 7, 4)
     bg = Image.new("RGB", (width, height))
     px = bg.load()
     for y in range(height):
@@ -122,9 +127,20 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     if not jar_path:
         return None
 
-    canvas = _gradient_bg(width, height)
+    dirs = {}
+    try:
+        from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
+        dirs = get_visual_adaptation_directives()
+    except Exception:
+        dirs = {}
+
+    boost_exposure = dirs.get("boost_exposure", False)
+    boost_upper = dirs.get("boost_upper_activity", False)
+
+    canvas = _gradient_bg(width, height, exposure_boost=boost_exposure)
     # warm glow behind the jar (lower-centre)
-    _radial_glow(canvas, width // 2, int(height * 0.66), int(width * 0.95))
+    glow_color = (130, 90, 36) if boost_exposure else (60, 42, 16)
+    _radial_glow(canvas, width // 2, int(height * 0.66), int(width * 0.95), color=glow_color)
     draw = ImageDraw.Draw(canvas)
 
     # Jar — knocked out, large, lower-centre
@@ -153,7 +169,27 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     max_w = width - 2 * margin
     hf = _font(max(52, width // 11), bold=True)
     y = int(height * 0.08)
-    for line in _wrap(draw, headline.upper(), hf, max_w):
+    lines = _wrap(draw, headline.upper(), hf, max_w)
+
+    if boost_upper or boost_exposure:
+        # Translucent backing pill for maximum contrast and upper frame pattern-interrupt
+        try:
+            pad_x = int(width * 0.04)
+            pad_y = int(height * 0.015)
+            pill_w = min(width - 20, max_w + pad_x * 2)
+            pill_h = int(len(lines) * hf.size * 1.16) + pad_y * 2
+            px0 = (width - pill_w) // 2
+            py0 = max(10, y - pad_y)
+            overlay = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+            odraw = ImageDraw.Draw(overlay)
+            odraw.rounded_rectangle([(px0, py0), (px0 + pill_w, py0 + pill_h)], radius=20,
+                                    fill=(12, 8, 4, 180), outline=_GOLD, width=2)
+            canvas = Image.alpha_composite(canvas.convert("RGBA"), overlay).convert("RGB")
+            draw = ImageDraw.Draw(canvas)
+        except Exception as pe:
+            logger.debug("[cine] backing pill skipped: %s", pe)
+
+    for line in lines:
         # subtle shadow for pop
         draw.text((width // 2 + 3, y + 3), line, font=hf, fill=(0, 0, 0), anchor="ma")
         draw.text((width // 2, y), line, font=hf, fill=_CREAM, anchor="ma")

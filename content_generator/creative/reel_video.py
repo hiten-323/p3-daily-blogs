@@ -78,13 +78,29 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
     if not frame_paths:
         return None
 
+    dirs = {}
+    try:
+        from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
+        dirs = get_visual_adaptation_directives()
+    except Exception:
+        dirs = {}
+
+    boost_motion = dirs.get("boost_motion", True)
+
     clips = []
-    for p in frame_paths:
+    for i, p in enumerate(frame_paths):
         try:
-            clip = ImageClip(p).with_duration(_BEAT_SECONDS)
-            # Gentle Ken Burns zoom (defensive — fall back to static on API diff)
+            dur = 2.0 if (i == 0 and boost_motion) else _BEAT_SECONDS
+            clip = ImageClip(p).with_duration(dur)
+            # Dynamic Ken Burns motion: hook beat punchy scale, alternating beats push-in/push-out
             try:
-                clip = clip.resized(lambda t: 1.0 + 0.05 * (t / _BEAT_SECONDS))
+                if boost_motion:
+                    if i % 2 == 0:
+                        clip = clip.resized(lambda t, d=dur: 1.0 + 0.10 * (t / d))
+                    else:
+                        clip = clip.resized(lambda t, d=dur: 1.08 - 0.06 * (t / d))
+                else:
+                    clip = clip.resized(lambda t, d=dur: 1.0 + 0.05 * (t / d))
             except Exception as _e:
                 logger.debug("[reel_video] optional step failed: %s", _e)
             clips.append(clip)

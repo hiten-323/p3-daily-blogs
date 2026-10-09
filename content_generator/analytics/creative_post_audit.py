@@ -102,9 +102,20 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
             text=" ".join(str(piece.get(k) or "") for k in ("caption","body","description","cta","community_question"))
             cr=[]
             if len(hook)<12: cr.append("hook is too short to communicate a clear curiosity/problem")
-            if key in ("growth_reel","reels","yt_short") and "follow" not in text.lower() and "subscribe" not in text.lower(): cr.append(f"{label}: discovery video lacks an explicit follow/subscribe conversion cue")
-            if key in ("instagram_post","facebook_post","threads_post") and "?" not in text: cr.append(f"{label}: community asset lacks a question/debate trigger")
-            if text.lower().count("shop")>=2: cr.append(f"{label}: commercial language repeats; protect discovery value before selling")
+            if key in ("growth_reel","reels","yt_short") and "follow" not in text.lower() and "subscribe" not in text.lower():
+                cr.append(f"{label}: discovery video lacks an explicit follow/subscribe conversion cue")
+            if key == "yt_short" and "subscribe" not in text.lower() and "short" not in text.lower():
+                cr.append(f"{label}: YouTube Short lacks subscribe/channel retention trigger")
+            if key == "carousel" and "save" not in text.lower() and "share" not in text.lower():
+                cr.append(f"{label}: carousel lacks an explicit save/share cue for algorithmic distribution")
+            if key in ("instagram_post","facebook_post","threads_post") and "?" not in text:
+                cr.append(f"{label}: community asset lacks a question/debate trigger")
+            if key == "threads_post" and "?" not in text:
+                cr.append(f"{label}: Threads post needs an open-ended question to fuel reply ranking")
+            if key == "linkedin_post" and len(hook)>140:
+                cr.append(f"{label}: LinkedIn hook exceeds 140 chars before the see-more fold")
+            if text.lower().count("shop")>=2:
+                cr.append(f"{label}: commercial language repeats; protect discovery value before selling")
             copy_audit.append({"asset":label,"hook_length":len(hook),"recommendations":cr})
     recs=[]
     for x in images+videos+copy_audit:
@@ -116,13 +127,43 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
     rows=_load();rows.append(row);_save(rows)
     logger.info("[creative-audit] day=%s assets=%s diversity=%.2f recommendations=%s",day_number,row["asset_count"],diversity,len(recs))
     return row
-def get_adaptation_block(max_days=5):
+def get_visual_adaptation_directives(max_days=5) -> dict:
+    """Extract actionable visual directives for media renderers (Pillow, Gemini, MoviePy)."""
     rows=_load()[-max_days:]
-    if len(rows)<2:return ""
+    if not rows:
+        return {"boost_exposure":False,"boost_contrast":False,"add_action_texture":False,
+                "break_centered_catalog":False,"boost_upper_activity":False,"boost_motion":False,
+                "diversify_palette":False,"active_recommendations":[]}
     counts={}
     for row in rows:
-        for r in set(row.get("recommendations") or []):counts[r]=counts.get(r,0)+1
-    recurring=[r for r,n in counts.items() if n>=2]
+        for r in row.get("recommendations") or []:
+            counts[r]=counts.get(r,0)+1
+    active={r for r,n in counts.items() if n>=2} | set(rows[-1].get("recommendations") or [])
+    return {
+        "boost_exposure": any("exposure" in r or "near-black" in r for r in active),
+        "boost_contrast": any("contrast" in r for r in active),
+        "add_action_texture": any("action/texture" in r or "steam" in r for r in active),
+        "break_centered_catalog": any("centered product-only" in r or "catalogue-style" in r for r in active),
+        "boost_upper_activity": any("upper safe zone" in r or "hook" in r for r in active),
+        "boost_motion": any("visually static" in r or "motion change" in r for r in active),
+        "diversify_palette": any("diversity low" in r for r in active),
+        "active_recommendations": sorted(list(active)),
+    }
+def get_adaptation_block(max_days=5):
+    rows=_load()[-max_days:]
+    if len(rows)<2:
+        if len(rows)==1:
+            raw=rows[0].get("recommendations") or []
+            cnt={}
+            for r in raw: cnt[r]=cnt.get(r,0)+1
+            recurring=[r for r,n in cnt.items() if n>=2]
+            if not recurring: return ""
+        else: return ""
+    else:
+        counts={}
+        for row in rows:
+            for r in set(row.get("recommendations") or []):counts[r]=counts.get(r,0)+1
+        recurring=[r for r,n in counts.items() if n>=2]
     if not recurring:return ""
     lines=["POST-GENERATION CREATIVE QA ADAPTATION (heuristic QA, not measured performance):",
            "Apply these recurring visual constraints to the NEXT generation:"]
@@ -131,3 +172,4 @@ def get_adaptation_block(max_days=5):
     return "\n".join(lines)
 def audit_summary(row):
     return f"creative_audit assets={row.get('asset_count',0)} diversity={row.get('portfolio_diversity',0):.2f} recommendations={len(row.get('recommendations') or [])}"
+

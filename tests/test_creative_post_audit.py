@@ -50,3 +50,43 @@ def test_adaptation_does_not_learn_from_single_outlier(tmp_path, monkeypatch):
         {"recommendations": ["different issue"]},
     ])
     assert audit.get_adaptation_block() == ""
+
+
+def test_visual_adaptation_directives_extraction(tmp_path, monkeypatch):
+    audit_path = tmp_path / "creative_post_audits.json"
+    monkeypatch.setattr(audit, "_PATH", audit_path)
+    monkeypatch.setattr(audit, "_DIR", tmp_path)
+
+    audit._save([
+        {"recommendations": [
+            "raise exposure/background separation; avoid another near-black frame",
+            "increase scene/motion change; video is visually static",
+            "strengthen the first-frame visual hook in the upper safe zone",
+        ]}
+    ])
+    dirs = audit.get_visual_adaptation_directives()
+    assert dirs["boost_exposure"] is True
+    assert dirs["boost_motion"] is True
+    assert dirs["boost_upper_activity"] is True
+    assert dirs["boost_contrast"] is False
+
+
+def test_multi_platform_copy_audit_rules():
+    content = {
+        "yt_short": {"title": "Full length title for test", "description": "Quick brewing recipe"},
+        "carousel": {"slides": [{"heading": "Slide 1 with length", "body": "Slide content"}]},
+        "threads_post": {"body": "This is a statement without any question."},
+        "linkedin_post": {"headline": "A" * 150, "body": "Long insight"},
+    }
+    row = audit.audit_generated_creatives(
+        day_number=1,
+        generation_id="test_gen",
+        image_results={},
+        content=content,
+    )
+    recs = " ".join(row["recommendations"])
+    assert "YouTube Short lacks subscribe" in recs
+    assert "carousel lacks an explicit save/share cue" in recs
+    assert "Threads post needs an open-ended question" in recs
+    assert "LinkedIn hook exceeds 140 chars" in recs
+
