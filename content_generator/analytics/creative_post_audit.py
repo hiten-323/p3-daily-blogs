@@ -77,7 +77,8 @@ def _sample_video_frames(path, max_frames=8, decode_limit=3600):
                 break
         frames=[frame_map[i] for i in targets if i in frame_map]
         return {"frames":frames,"fps":float(fps),"duration_s":float(duration),
-                "strategy":"timeline_evenly_spaced","frames_decoded_to":targets[-1] if targets else 0}
+                "strategy":"timeline_evenly_spaced","frames_decoded_to":targets[-1] if targets else 0,
+                "truncated":total>decode_limit}
 
     # Metadata may be unavailable for damaged files/codecs. Build a bounded,
     # low-resolution reservoir over the entire readable stream instead of
@@ -210,20 +211,18 @@ def _vision_review(images, videos, content=None) -> dict:
             path=video.get("path")
             if not path or not os.path.exists(path): continue
             try:
-                import imageio.v3 as iio
-                frames=[]; total=0
-                for i, frame in enumerate(iio.imiter(path,plugin="ffmpeg")):
-                    total=i+1
-                    if i in (0, max(0, 12), 23):
-                        im=Image.fromarray(frame.astype("uint8")).convert("RGB")
-                        im.thumbnail((640,640)); buf=io.BytesIO(); im.save(buf,format="JPEG",quality=72)
-                        frames.append(base64.b64encode(buf.getvalue()).decode("ascii"))
-                    if i>=23: break
+                sampled_video=_sample_video_frames(path,max_frames=3)
+                frames=[]
+                for im in sampled_video.get("frames") or []:
+                    im=im.convert("RGB"); im.thumbnail((640,640))
+                    buf=io.BytesIO(); im.save(buf,format="JPEG",quality=72)
+                    frames.append(base64.b64encode(buf.getvalue()).decode("ascii"))
                 if frames:
-                    parts.append({"text":f"VIDEO: {os.path.basename(path)}; sampled opening/middle/later frames. Judge pacing, motion, continuity, first-frame hook, readability and real-jar presentation."})
+                    parts.append({"text":f"VIDEO: {os.path.basename(path)}; sampled frames using {sampled_video.get('strategy')} strategy over the readable timeline. Judge pacing, motion, continuity, first-frame hook, readability and real-jar presentation. Do not infer audio from silent frames."})
                     for frame in frames:
                         parts.append({"inline_data":{"mime_type":"image/jpeg","data":frame}})
-                    sampled.append({"asset":os.path.basename(path),"platform":video.get("platform","video"),"sampled_video_frames":len(frames)})
+                    sampled.append({"asset":os.path.basename(path),"platform":video.get("platform","video"),
+                                    "sampled_video_frames":len(frames),"sample_strategy":sampled_video.get("strategy")})
             except Exception as exc:
                 logger.info("[creative-audit] vision video sampling skipped for %s: %s",os.path.basename(path),exc)
         if not parts:
