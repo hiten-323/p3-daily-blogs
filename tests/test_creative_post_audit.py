@@ -220,3 +220,56 @@ def test_centered_layout_recommendation_requires_pixel_evidence():
     assert not any("focal composition dominates" in x for x in audit._recs(flat, "instagram"))
     centered = dict(flat, lower_center_edge_ratio=2.1, lower_center_edge_density=.04)
     assert any("focal composition dominates" in x for x in audit._recs(centered, "instagram"))
+
+
+
+def test_vision_review_is_disabled_without_live_credentials(monkeypatch):
+    monkeypatch.setenv("ENABLE_VISION_CREATIVE_AUDIT", "true")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    result = audit._vision_review([], [])
+    assert result["status"] == "skipped_no_api_key"
+    assert result["assets"] == []
+
+
+def test_vision_directives_are_persisted_for_next_render(tmp_path, monkeypatch):
+    audit_path = tmp_path / "creative_post_audits.json"
+    monkeypatch.setattr(audit, "_PATH", audit_path)
+    monkeypatch.setattr(audit, "_DIR", tmp_path)
+    image_path = tmp_path / "ig_asset.jpg"
+    Image.new("RGB", (200, 200), "white").save(image_path)
+    monkeypatch.setattr(audit, "_vision_review", lambda images, videos, content=None: {
+        "status": "ok", "model": "mocked", "assets": [{
+            "asset": image_path.name, "score": 2, "strengths": [],
+            "issues": ["too dark"], "directives": ["boost_exposure", "add_action_texture"]
+        }], "portfolio_issues": [], "sampled": []
+    })
+    monkeypatch.setattr(audit, "_recs", lambda m, platform: [])
+    monkeypatch.setattr("content_generator.creative.jar_provenance.verify_jar_provenance",
+                        lambda path: {"verified": True, "jar_asset_id": "brand_assets/puritybeans_reference.png"})
+    row = audit.audit_generated_creatives(
+        day_number=8, generation_id="vision_test",
+        image_results={"instagram_post": str(image_path)},
+        creative_dir=str(tmp_path), content={},
+    )
+    assert row["vision_audit"]["status"] == "ok"
+    assert "too dark" in row["recommendations"][0] or any("too dark" in x for x in row["recommendations"])
+    dirs = audit.get_visual_adaptation_directives(platform="instagram")
+    assert dirs["boost_exposure"] is True
+    assert dirs["add_action_texture"] is True
+
+
+def test_vision_failure_is_recorded_and_non_blocking(tmp_path, monkeypatch):
+    monkeypatch.setenv("ENABLE_VISION_CREATIVE_AUDIT", "true")
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    monkeypatch.setattr(audit, "_vision_review", lambda images, videos, content=None: {
+        "status": "failed_non_blocking", "assets": [], "recommendations": [],
+        "error": "TimeoutError: mocked timeout"
+    })
+    # Ensure audit still returns an auditable record with no generated assets.
+    monkeypatch.setattr(audit, "_PATH", tmp_path / "audit.json")
+    monkeypatch.setattr(audit, "_DIR", tmp_path)
+    row = audit.audit_generated_creatives(
+        day_number=9, generation_id="vision_failure_test",
+        image_results={}, creative_dir=str(tmp_path), content={},
+    )
+    assert row["vision_audit"]["status"] == "failed_non_blocking"
