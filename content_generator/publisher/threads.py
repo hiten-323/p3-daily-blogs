@@ -105,12 +105,6 @@ def post_content(content: dict, day: int = 0) -> dict:
     Returns:
         {"success": bool, "post_id": str, "url": str, "error": str|None, "attempted": bool}
     """
-    from content_generator.publisher.prepublish_gate import authorize_publish
-    gate = authorize_publish(content, "threads")
-    if not gate["allowed"]:
-        logger.warning("[threads] Pre-publish gate blocked content: %s", gate["reason"])
-        return {"success": False, "attempted": False, "skipped": True, "post_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
-
     if not is_configured():
         logger.info("[threads] Not configured — THREADS_USER_ID or THREADS_ACCESS_TOKEN missing")
         return {
@@ -133,6 +127,12 @@ def post_content(content: dict, day: int = 0) -> dict:
             "url": "",
             "error": "no_content",
         }
+
+    from content_generator.publisher.prepublish_gate import authorize_publish
+    gate = authorize_publish(content, "threads")
+    if not gate["allowed"]:
+        logger.warning("[threads] Pre-publish gate blocked content: %s", gate["reason"])
+        return {"success": False, "attempted": False, "skipped": True, "post_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
 
     user_id = os.getenv("THREADS_USER_ID", "me").strip() or "me"
     token = os.getenv("THREADS_ACCESS_TOKEN", "").strip()
