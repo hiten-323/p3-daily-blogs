@@ -44,14 +44,15 @@ def verify_remote_post(platform: str, record: dict) -> dict:
             return {"state": "unknown", "method": "meta_graph_readback", "detail": f"HTTP {response.status_code}"}
 
         if platform == "linkedin":
-            token = os.getenv("LI_API_ACCESS", "")
+            from content_generator.publisher.linkedin import get_access_token, active_api_version
+            token = get_access_token()
             if not token or not remote_id:
                 return {"state": "unknown", "method": "linkedin_posts_readback", "detail": "missing token or remote ID"}
             response = requests.get(
                 "https://api.linkedin.com/rest/posts/" + quote(remote_id, safe=""),
                 headers={
                     "Authorization": f"Bearer {token}",
-                    "LinkedIn-Version": os.getenv("LI_API_VERSION", "202506"),
+                    "LinkedIn-Version": active_api_version(),
                     "X-Restli-Protocol-Version": "2.0.0",
                 }, timeout=15,
             )

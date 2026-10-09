@@ -30,8 +30,19 @@ import os
 
 logger = logging.getLogger(__name__)
 
+def active_api_version() -> str:
+    """Return active LinkedIn API version YYYYMM (targets previous month, valid for 12 months)."""
+    override = os.getenv("LI_API_VERSION", "").strip()
+    if override:
+        return override
+    import datetime
+    today = datetime.date.today()
+    first_of_month = today.replace(day=1)
+    prev_month = first_of_month - datetime.timedelta(days=1)
+    return prev_month.strftime("%Y%m")
+
+_API_VERSION = active_api_version()
 _API_BASE    = "https://api.linkedin.com/rest"
-_API_VERSION = os.getenv("LI_API_VERSION", "202506")   # Use latest monthly version; override via LI_API_VERSION secret
 _cached_token: str | None = None
 
 
