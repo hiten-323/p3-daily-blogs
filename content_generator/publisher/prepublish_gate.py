@@ -12,7 +12,7 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 _PLATFORM_KEYS = {
-    "instagram": ("carousel", "instagram_post", "reel_1", "reel_2", "growth_reel"),
+    "instagram": ("carousel", "instagram_post"),
     "facebook": ("facebook_post",),
     "threads": ("threads_post",),
     "linkedin": ("linkedin_post",),
