@@ -52,9 +52,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout repository
+      - name: Checkout latest main after concurrency queue
         uses: actions/checkout@v6
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Set up Python 3.11
@@ -127,6 +128,7 @@ jobs:
         run: python -m content_generator.ops.meta_token_health
 
       - name: Verify Meta publishing access
+        id: meta_preflight
         if: ${{ success() && env.FORCE_SLOT != 'generate' && github.event.inputs.dry_run != 'true' }}
         env:
           INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
@@ -151,7 +153,7 @@ jobs:
           WHATSAPP_PHONE_ID: ${{ secrets.WHATSAPP_PHONE_ID }}
           LI_API_ACCESS: ${{ secrets.LI_API_ACCESS }}
           LI_AUTHOR_URN: ${{ secrets.LI_AUTHOR_URN }}
-          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          INSTAGRAM_ACCOUNT_ID: ${{ steps.meta_preflight.outputs.instagram_account_id || secrets.INSTAGRAM_ACCOUNT_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
@@ -284,7 +286,7 @@ jobs:
           compression-level: 6
 
       - name: Persist validated state to Git
-        if: ${{ success() && github.event.inputs.dry_run != 'true' }}
+        if: ${{ always() && github.event.inputs.dry_run != 'true' }}
         run: |
           set -euo pipefail
           git config user.name "Purity Beans Engine"

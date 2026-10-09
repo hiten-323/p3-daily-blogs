@@ -170,6 +170,7 @@ def inspect_instagram(account_id: str, token: str, *, now: int | None = None) ->
     if report["expired"]:
         problems.append(f"token expired (expires={report['expires']})")
     username = ""
+    resolved_account_id = ""
     try:
         account = _fetch(account_url(account_id), _headers(token))
     except TokenHttpError as exc:
@@ -179,7 +180,31 @@ def inspect_instagram(account_id: str, token: str, *, now: int | None = None) ->
         got_id = str(account.get("id") or "")
         if got_id != str(account_id):
             problems.append(f"unexpected account id {got_id or '(none)'}")
+        # A Page access token can successfully read a Facebook Page ID with
+        # fields=id,username (username is absent), which is NOT an Instagram
+        # publishing account. Resolve its linked Instagram professional ID
+        # before allowing a publish job to proceed.
+        if not username:
+            query = urllib.parse.urlencode({"fields": "instagram_business_account{id,username}"})
+            page_url = f"{META_GRAPH_BASE}/{urllib.parse.quote(account_id, safe='')}?{query}"
+            try:
+                page = _fetch(page_url, _headers(token))
+                linked = page.get("instagram_business_account") or {}
+                resolved_account_id = str(linked.get("id") or "").strip()
+                username = str(linked.get("username") or "").strip()
+                if not resolved_account_id or not username:
+                    resolved_account_id = ""
+                    problems.append(
+                        "configured ID is not an Instagram user and no linked Instagram professional account was returned; "
+                        "set INSTAGRAM_ACCOUNT_ID to the Instagram professional account ID, not the Facebook Page ID"
+                    )
+            except TokenHttpError as exc:
+                problems.append(
+                    f"configured ID has no username and linked Instagram account lookup failed (HTTP {exc.code}); "
+                    "check INSTAGRAM_ACCOUNT_ID and Page permissions"
+                )
     report["username"] = username
+    report["resolved_account_id"] = resolved_account_id
     report["problems"] = problems
     report["ok"] = not problems
     return report
@@ -244,6 +269,22 @@ def run_checks(now: int | None = None) -> int:
                 f"Instagram token check failed (HTTP {exc.code}): {detail}",
             ))
         else:
+            resolved_id = str(report.get("resolved_account_id") or "").strip()
+            publish_account_id = resolved_id or account_id
+            if resolved_id and resolved_id != account_id:
+                # GITHUB_ENV helps non-overridden steps; GITHUB_OUTPUT is used
+                # explicitly by publish workflows to beat a secret-valued step env.
+                os.environ["INSTAGRAM_ACCOUNT_ID"] = resolved_id
+                env_file = os.environ.get("GITHUB_ENV", "").strip()
+                if env_file:
+                    with open(env_file, "a", encoding="utf-8") as handle:
+                        handle.write(f"INSTAGRAM_ACCOUNT_ID={resolved_id}\\n")
+                secrets.append(resolved_id)
+                messages.append(("notice", f"Resolved linked Instagram professional account username={report.get('username')}; using its account ID for this job."))
+            output_file = os.environ.get("GITHUB_OUTPUT", "").strip()
+            if report.get("ok") and publish_account_id and output_file:
+                with open(output_file, "a", encoding="utf-8") as handle:
+                    handle.write(f"instagram_account_id={publish_account_id}\\n")
             messages.append(("notice", format_instagram(report)))
             if not report["ok"]:
                 failed = True

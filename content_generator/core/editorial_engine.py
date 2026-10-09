@@ -72,7 +72,7 @@ _PREVETTED_SOURCES = ("evergreen_template", "evergreen_distributor")
 # LinkedIn, YouTube, and the Shopify blog post off-platform. A stock or
 # evergreen piece has no measured editor score, and that used to count as
 # pre-vetted — run 37192396900 sent a stock linkedin_post that way.
-_EXTERNAL_AUTOPOST = ("linkedin_post", "yt_short", "blog_post")
+_EXTERNAL_AUTOPOST = ("linkedin_post", "yt_short", "blog_post", "facebook_post", "threads_post")
 
 
 def _editorial_ok(label: str, piece: dict) -> bool:
@@ -313,6 +313,36 @@ def get_valid_assets(content: dict) -> list[str]:
                     logger.warning("[editorial] %s REJECTED by brand validation: %s", "linkedin_post", _brand_errs)
         except Exception as e:
             logger.warning("[editorial] linkedin_post validation failed: %s", e)
+
+    # Native Facebook copy is generated separately and must receive its own
+    # measured editorial score; never borrow the Instagram carousel's score.
+    facebook_post = content.get("facebook_post") or {}
+    if isinstance(facebook_post, dict) and facebook_post and has_copy(facebook_post, "hook", "body", "text", "content"):
+        try:
+            ensure_structural_fields(facebook_post, "facebook_post")
+            is_brand_ok, _brand_errs = validate_asset("facebook_post", facebook_post, _governance)
+            if is_brand_ok:
+                _editorial_ok("facebook_post", facebook_post)
+                valid.append("facebook_post")
+            else:
+                logger.warning("[editorial] facebook_post REJECTED by brand validation: %s", _brand_errs)
+        except Exception as e:
+            logger.warning("[editorial] facebook_post validation failed: %s", e)
+
+    # Threads must have native text and its own measured score. Do not infer
+    # or borrow copy from a reel, LinkedIn post, or Facebook post.
+    threads_post = content.get("threads_post") or {}
+    if isinstance(threads_post, dict) and threads_post and has_copy(threads_post, "text", "body", "content"):
+        try:
+            ensure_structural_fields(threads_post, "threads_post")
+            is_brand_ok, _brand_errs = validate_asset("threads_post", threads_post, _governance)
+            if is_brand_ok:
+                _editorial_ok("threads_post", threads_post)
+                valid.append("threads_post")
+            else:
+                logger.warning("[editorial] threads_post REJECTED by brand validation: %s", _brand_errs)
+        except Exception as e:
+            logger.warning("[editorial] threads_post validation failed: %s", e)
 
     # 6. blog_post
     if "blog_post" in REQUIRED_DAILY_ASSETS:

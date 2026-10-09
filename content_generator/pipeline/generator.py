@@ -35,6 +35,44 @@ from content_generator.core.ist_dates import content_date_iso, today_ist
 logger = logging.getLogger(__name__)
 
 
+
+
+
+def _has_native_threads_text(piece: object) -> bool:
+    """True only when a Threads-specific object contains publishable native copy."""
+    if not isinstance(piece, dict):
+        return False
+    text = str(piece.get("text") or piece.get("body") or piece.get("content") or "").strip()
+    return bool(text) and len(text) <= 480
+
+
+def _repair_threads_post(piece: object, angle: tuple, avoid: str, day_number: int, context: str) -> dict:
+    """Retry malformed Threads generation instead of storing another platform's object."""
+    if _has_native_threads_text(piece):
+        return piece
+    from content_generator.prompts import threads
+    strict_suffix = (
+        "\n\nOUTPUT CONTRACT: Return ONLY a JSON object with exactly two keys: "
+        '"angle" and "text". "text" must be a native Threads post under 480 characters. '
+        "Do not return reels, carousel, Facebook, LinkedIn, or any other asset."
+    )
+    for attempt in range(2):
+        try:
+            candidate = llm_call(
+                threads.build(angle, avoid, day_number) + (context or "") + strict_suffix,
+                f"threads_post_repair_{attempt + 1}",
+                600,
+            )
+        except Exception as exc:
+            logger.warning("[pipeline] Threads copy repair %d failed: %s", attempt + 1, exc)
+            continue
+        if _has_native_threads_text(candidate):
+            logger.info("[pipeline] Repaired malformed native Threads copy on attempt %d", attempt + 1)
+            return candidate
+    logger.error("[pipeline] Threads output was not native text after two repairs; holding Threads rather than reusing another platform's copy")
+    return {}
+
+
 def _generate_blog(day_number: int, topic: str, context: str) -> dict:
     """Sectioned blog. Never returns {} when generation was attempted."""
     try:
@@ -317,6 +355,13 @@ def generate_daily_content(
     # the other assets, and it must not be replaced with an empty object.
     if _extended:
         phase1_results["blog_post"] = _generate_blog(day_number, topic, ctx)
+
+    # A malformed model response must not smuggle another platform's assets
+    # into the Threads field. Retry the native prompt, then hold if still invalid.
+    if _extended:
+        phase1_results["threads_post"] = _repair_threads_post(
+            phase1_results.get("threads_post"), th_angle, avoid, day_number, ctx
+        )
 
     # Fill optional keys with empty dicts so downstream code doesn't KeyError
     for optional in ("reel_2", "blog_post", "stories", "yt_short", "threads_post", "facebook_post"):

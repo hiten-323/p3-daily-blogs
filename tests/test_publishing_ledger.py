@@ -64,3 +64,16 @@ def test_server_error_is_not_blindly_retried(tmp_path, monkeypatch):
     assert record["status"] == "UNCERTAIN"
     assert record["next_retry_at"] is None
     assert ledger.begin_attempt(content, "instagram", "morning", 1)["allowed"] is False
+
+    
+def test_deliberate_skip_is_not_retried(tmp_path, monkeypatch):
+    from content_generator.publisher import publishing_ledger as ledger
+    monkeypatch.setattr(ledger, "_PATH", tmp_path / "ledger.json")
+    content = {"date": "2026-10-09", "generation_id": "gen-skip"}
+    ticket = ledger.begin_attempt(content, "threads", "generate", 1)
+    record = ledger.finish_attempt(ticket, {
+        "success": False, "attempted": False, "skipped": True, "error": "no_content"
+    })
+    assert record["status"] == "SKIPPED"
+    assert record["next_retry_at"] is None
+    assert ledger.due_retry_slots() == []
