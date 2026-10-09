@@ -285,8 +285,8 @@ def _extension_from_type(content_type: str) -> str:
 def _is_image_response(body: bytes, content_type: str) -> bool:
     mime = (content_type or "").lower()
     signature = (
-        body[:3] == b"\\xff\\xd8\\xff"
-        or body[:8] == b"\\x89PNG\\r\\n\\x1a\\n"
+        body[:3] == b"\xff\xd8\xff"
+        or body[:8] == b"\x89PNG\r\n\x1a\n"
         or (body[:4] == b"RIFF" and body[8:12] == b"WEBP")
     )
     return len(body) > 1000 and (mime.startswith("image/") or signature)
