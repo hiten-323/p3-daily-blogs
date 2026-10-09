@@ -99,7 +99,20 @@ def audit_generated_creatives(*,day_number,generation_id,image_results=None,crea
         for label,piece in iterable:
             if not isinstance(piece,dict) or not piece: continue
             hook=str(piece.get("hook") or piece.get("hook_text") or piece.get("headline") or piece.get("title") or "").strip()
-            text=" ".join(str(piece.get(k) or "") for k in ("caption","body","description","cta","community_question"))
+            if key == "carousel" and isinstance(piece.get("slides"), list):
+                slide_parts=[]
+                for slide in piece.get("slides") or []:
+                    if isinstance(slide,dict):
+                        slide_parts.extend(str(slide.get(k) or "") for k in ("heading","headline","body","on_screen"))
+                text=" ".join([str(piece.get(k) or "") for k in ("caption","body","description","cta","community_question")] + slide_parts)
+            elif key == "yt_short" and isinstance(piece.get("scenes"), list):
+                scene_parts=[]
+                for scene in piece.get("scenes") or []:
+                    if isinstance(scene,dict):
+                        scene_parts.extend(str(scene.get(k) or "") for k in ("spoken","on_screen","visual"))
+                text=" ".join([str(piece.get(k) or "") for k in ("caption","body","description","cta","community_question","title")] + scene_parts)
+            else:
+                text=" ".join(str(piece.get(k) or "") for k in ("caption","body","description","cta","community_question","text","hook","hook_text","headline","title"))
             cr=[]
             if len(hook)<12: cr.append("hook is too short to communicate a clear curiosity/problem")
             if key in ("growth_reel","reels","yt_short") and "follow" not in text.lower() and "subscribe" not in text.lower():
