@@ -128,6 +128,120 @@
       "url": "",
       "verification_method": "",
       "verified_at": null
+    },
+    "2026-10-09|morning|facebook|pb_41bc89afb4": {
+      "attempt_count": 1,
+      "content_date": "2026-10-09",
+      "content_id": "pb_41bc89afb4",
+      "day_number": 281,
+      "error": "(#200) The permission(s) pages_manage_posts are not available. It could because either they are deprecated or need to be approved by App Review.",
+      "history": [
+        {
+          "at": "2026-10-09T08:48:30+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-09T08:48:31+00:00",
+          "attempt": 1,
+          "error": "(#200) The permission(s) pages_manage_posts are not available. It could because either they are deprecated or need to be approved by App Review.",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-09T08:48:30+00:00",
+      "last_result": {
+        "error": "(#200) The permission(s) pages_manage_posts are not available. It could because either they are deprecated or need to be approved by App Review.",
+        "success": false
+      },
+      "next_retry_at": null,
+      "platform": "facebook",
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-10-09T08:48:31+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-09|morning|instagram_story|pb_41bc89afb4": {
+      "attempt_count": 1,
+      "content_date": "2026-10-09",
+      "content_id": "pb_41bc89afb4",
+      "day_number": 281,
+      "error": "image_upload_failed",
+      "history": [
+        {
+          "at": "2026-10-09T08:48:31+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-09T08:48:36+00:00",
+          "attempt": 1,
+          "error": "image_upload_failed",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-09T08:48:31+00:00",
+      "last_result": {
+        "error": "image_upload_failed",
+        "success": false
+      },
+      "next_retry_at": "2026-10-09T08:53:36+00:00",
+      "platform": "instagram_story",
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-10-09T08:48:36+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-09|morning|instagram|pb_41bc89afb4": {
+      "attempt_count": 1,
+      "content_date": "2026-10-09",
+      "content_id": "pb_41bc89afb4",
+      "day_number": 281,
+      "error": "carousel_children_failed",
+      "history": [
+        {
+          "at": "2026-10-09T08:48:17+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-09T08:48:30+00:00",
+          "attempt": 1,
+          "error": "carousel_children_failed",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-09T08:48:17+00:00",
+      "last_result": {
+        "error": "carousel_children_failed",
+        "success": false
+      },
+      "next_retry_at": "2026-10-09T08:53:30+00:00",
+      "platform": "instagram",
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-10-09T08:48:30+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
     }
   },
   "version": 1
