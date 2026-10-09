@@ -75,7 +75,14 @@ def generate_scene_with_real_jar(
     scene_text = scene_prompt
     try:
         from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
-        dirs = get_visual_adaptation_directives()
+        lower_label = str(label or "").lower()
+        if "facebook" in lower_label:
+            target_platform = "facebook"
+        elif "youtube" in lower_label or "yt_" in lower_label or "short" in lower_label:
+            target_platform = "youtube"
+        else:
+            target_platform = "instagram"
+        dirs = get_visual_adaptation_directives(platform=target_platform)
         extras = []
         if dirs.get("boost_exposure"):
             extras.append("bright natural morning sunlight, high exposure, strong subject separation")
