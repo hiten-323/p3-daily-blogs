@@ -52,7 +52,7 @@ def _repair_threads_post(piece: object, angle: tuple, avoid: str, day_number: in
         return piece
     from content_generator.prompts import threads
     strict_suffix = (
-        "\\n\\nOUTPUT CONTRACT: Return ONLY a JSON object with exactly two keys: "
+        "\n\nOUTPUT CONTRACT: Return ONLY a JSON object with exactly two keys: "
         '"angle" and "text". "text" must be a native Threads post under 480 characters. '
         "Do not return reels, carousel, Facebook, LinkedIn, or any other asset."
     )
