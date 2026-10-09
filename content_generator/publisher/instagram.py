@@ -62,15 +62,16 @@ def post_content(content: dict, day: int = 0) -> dict:
     Returns:
         {"success": bool, "media_id": str, "permalink": str, "error": str|None}
     """
+    if not is_configured():
+        logger.info("[instagram] Not configured — INSTAGRAM_ACCOUNT_ID or INSTAGRAM_ACCESS_TOKEN missing")
+        return {"success": False, "media_id": "", "permalink": "", "error": "not_configured"}
+
     from content_generator.publisher.prepublish_gate import authorize_publish
     gate = authorize_publish(content, "instagram")
     if not gate["allowed"]:
         logger.warning("[instagram] Pre-publish gate blocked content: %s", gate["reason"])
         return {"success": False, "media_id": "", "permalink": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
 
-    if not is_configured():
-        logger.info("[instagram] Not configured — INSTAGRAM_ACCOUNT_ID or INSTAGRAM_ACCESS_TOKEN missing")
-        return {"success": False, "media_id": "", "permalink": "", "error": "not_configured"}
 
     images  = _find_carousel_images(content)
     caption = _extract_caption(content, day=day)
