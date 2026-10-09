@@ -86,7 +86,7 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
         old = data["records"].get(key, {})
         status = old.get("status")
         now = _now()
-        if status == "PUBLISHED_UNVERIFIED" or (status == "FAILED" and old.get("remote_id")):
+        if status in ("PUBLISHED_UNVERIFIED", "UNCERTAIN") or (status == "FAILED" and (old.get("remote_id") or old.get("url"))):
             from content_generator.publisher.platform_verification import verify_remote_post
             verification = verify_remote_post(platform, old)
             old["verification_method"] = verification.get("method", "")
@@ -107,7 +107,7 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
                 data["records"][key] = old
                 _save(data)
                 return {"allowed": False, "reason": "readback_unavailable_no_duplicate", "record": old, "key": key}
-            if status == "PUBLISHED_UNVERIFIED":
+            if status in ("PUBLISHED_UNVERIFIED", "UNCERTAIN"):
                 old.update({"status": "FAILED", "error": verification.get("detail", "remote object not found on read-back"), "next_retry_at": _iso(now + dt.timedelta(minutes=5)), "updated_at": _iso(now)})
                 data["records"][key] = old
                 _save(data)
