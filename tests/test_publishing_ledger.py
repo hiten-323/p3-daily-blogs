@@ -17,6 +17,7 @@ def test_success_is_persisted_and_duplicate_is_blocked(tmp_path, monkeypatch):
     record = ledger.finish_attempt(ticket, {"success": True, "media_id": "ig-123", "permalink": "https://instagram.com/p/123"})
     assert record["status"] == "VERIFIED_LIVE"
     assert record["remote_id"] == "ig-123"
+    assert [event["event"] for event in record["history"]] == ["attempt_started", "attempt_finished"]
     again = ledger.begin_attempt(content, "instagram", "morning", 1)
     assert again["allowed"] is False
     assert again["reason"] == "already_published"
