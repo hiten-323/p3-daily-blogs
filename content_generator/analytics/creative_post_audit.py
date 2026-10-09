@@ -189,6 +189,19 @@ def get_visual_adaptation_directives(max_days=5, platform=None) -> dict:
             if platform and platform not in ap and ap not in {"video","generated_image"}:
                 continue
             recs.extend(asset.get("recommendations") or [])
+        # Legacy audits stored only the aggregate recommendation list. Consume
+        # it for backward compatibility only when there are no structured asset
+        # findings at all; new records never learn visuals from copy-only checks.
+        if not row.get("image_assets") and not row.get("video_assets"):
+            recs.extend(
+                r for r in (row.get("recommendations") or [])
+                if any(tag in r.lower() for tag in (
+                    "exposure", "near-black", "contrast", "action/texture",
+                    "steam", "upper safe zone", "first-frame visual hook",
+                    "visually static", "motion change", "diversity low",
+                    "lower-center focal composition dominates",
+                ))
+            )
         visual_rows.append(list(dict.fromkeys(recs)))
     if not rows:
         return {"boost_exposure":False,"boost_contrast":False,"add_action_texture":False,
