@@ -1,11 +1,11 @@
 {
   "records": {
     "2026-10-09|generate|linkedin|pb_41bc89afb4": {
-      "attempt_count": 2,
+      "attempt_count": 3,
       "content_date": "2026-10-09",
       "content_id": "pb_41bc89afb4",
       "day_number": 281,
-      "error": "HTTP 426: {\"status\":426,\"code\":\"NONEXISTENT_VERSION\",\"message\":\"Requested version 20250601 is not active\"}",
+      "error": "HTTP 403",
       "history": [
         {
           "at": "2026-10-09T08:21:10+00:00",
@@ -36,21 +36,38 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-09T10:59:46+00:00",
+          "attempt": 3,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-09T10:59:48+00:00",
+          "attempt": 3,
+          "error": "HTTP 403",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7514278436295716864",
+          "status": "PUBLISHED_UNVERIFIED",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7514278436295716864/",
+          "verification_method": "linkedin_posts_readback"
         }
       ],
-      "last_attempt_at": "2026-10-09T10:54:14+00:00",
+      "last_attempt_at": "2026-10-09T10:59:46+00:00",
       "last_result": {
-        "error": "HTTP 426: {\"status\":426,\"code\":\"NONEXISTENT_VERSION\",\"message\":\"Requested version 20250601 is not active\"}",
-        "success": false
+        "error": "",
+        "success": true
       },
-      "next_retry_at": "2026-10-09T10:00:00+00:00",
+      "last_verification_at": "2026-10-09T10:59:48+00:00",
+      "next_retry_at": "2026-10-09T11:59:48+00:00",
       "platform": "linkedin",
-      "remote_id": "",
+      "remote_id": "urn:li:share:7514278436295716864",
       "slot": "generate",
-      "status": "FAILED",
-      "updated_at": "2026-10-09T10:54:16+00:00",
-      "url": "",
-      "verification_method": "",
+      "status": "PUBLISHED_UNVERIFIED",
+      "updated_at": "2026-10-09T10:59:48+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7514278436295716864/",
+      "verification_detail": "HTTP 403",
+      "verification_method": "linkedin_posts_readback",
       "verified_at": null
     },
     "2026-10-09|generate|threads|pb_41bc89afb4": {
@@ -92,7 +109,7 @@
       "verified_at": null
     },
     "2026-10-09|generate|youtube|pb_41bc89afb4": {
-      "attempt_count": 3,
+      "attempt_count": 4,
       "content_date": "2026-10-09",
       "content_id": "pb_41bc89afb4",
       "day_number": 281,
@@ -142,9 +159,24 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-09T10:59:48+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-09T10:59:48+00:00",
+          "attempt": 4,
+          "error": "held_no_native_video",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-09T10:54:16+00:00",
+      "last_attempt_at": "2026-10-09T10:59:48+00:00",
       "last_result": {
         "error": "held_no_native_video",
         "success": false
@@ -154,7 +186,7 @@
       "remote_id": "",
       "slot": "generate",
       "status": "SKIPPED",
-      "updated_at": "2026-10-09T10:54:16+00:00",
+      "updated_at": "2026-10-09T10:59:48+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
