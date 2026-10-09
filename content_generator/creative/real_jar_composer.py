@@ -371,7 +371,14 @@ def compose_post_image(
     dirs = {}
     try:
         from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
-        dirs = get_visual_adaptation_directives()
+        lower_label = str(label or "").lower()
+        if "facebook" in lower_label:
+            target_platform = "facebook"
+        elif "youtube" in lower_label or "yt_" in lower_label or "short" in lower_label:
+            target_platform = "youtube"
+        else:
+            target_platform = "instagram"
+        dirs = get_visual_adaptation_directives(platform=target_platform)
     except Exception:
         dirs = {}
 
