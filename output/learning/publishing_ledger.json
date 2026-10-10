@@ -353,6 +353,124 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-09T10:51:30+00:00"
+    },
+    "2026-10-10|generate|linkedin|pb_a8078a5fd7": {
+      "attempt_count": 1,
+      "content_date": "2026-10-10",
+      "content_id": "pb_a8078a5fd7",
+      "day_number": 282,
+      "error": "HTTP 403",
+      "history": [
+        {
+          "at": "2026-10-10T06:33:20+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-10T06:33:23+00:00",
+          "attempt": 1,
+          "error": "HTTP 403",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7514573775305195520",
+          "status": "PUBLISHED_UNVERIFIED",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7514573775305195520/",
+          "verification_method": "linkedin_posts_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-10T06:33:20+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-10T06:33:23+00:00",
+      "next_retry_at": "2026-10-10T07:33:23+00:00",
+      "platform": "linkedin",
+      "remote_id": "urn:li:share:7514573775305195520",
+      "slot": "generate",
+      "status": "PUBLISHED_UNVERIFIED",
+      "updated_at": "2026-10-10T06:33:23+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7514573775305195520/",
+      "verification_detail": "HTTP 403",
+      "verification_method": "linkedin_posts_readback",
+      "verified_at": null
+    },
+    "2026-10-10|generate|threads|pb_a8078a5fd7": {
+      "attempt_count": 1,
+      "content_date": "2026-10-10",
+      "content_id": "pb_a8078a5fd7",
+      "day_number": 282,
+      "error": "prepublish_gate:viral_readiness_failed",
+      "history": [
+        {
+          "at": "2026-10-10T06:33:25+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-10T06:33:25+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:viral_readiness_failed",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-10T06:33:25+00:00",
+      "last_result": {
+        "error": "prepublish_gate:viral_readiness_failed",
+        "success": false
+      },
+      "next_retry_at": null,
+      "platform": "threads",
+      "remote_id": "",
+      "slot": "generate",
+      "status": "SKIPPED",
+      "updated_at": "2026-10-10T06:33:25+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-10|generate|youtube|pb_a8078a5fd7": {
+      "attempt_count": 1,
+      "content_date": "2026-10-10",
+      "content_id": "pb_a8078a5fd7",
+      "day_number": 282,
+      "error": "HTTP 403",
+      "history": [
+        {
+          "at": "2026-10-10T06:33:23+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-10T06:33:25+00:00",
+          "attempt": 1,
+          "error": "HTTP 403",
+          "event": "attempt_finished",
+          "remote_id": "LHSYK9MmJiM",
+          "status": "PUBLISHED_UNVERIFIED",
+          "url": "https://www.youtube.com/shorts/LHSYK9MmJiM",
+          "verification_method": "youtube_data_api"
+        }
+      ],
+      "last_attempt_at": "2026-10-10T06:33:23+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-10T06:33:25+00:00",
+      "next_retry_at": "2026-10-10T07:33:25+00:00",
+      "platform": "youtube",
+      "remote_id": "LHSYK9MmJiM",
+      "slot": "generate",
+      "status": "PUBLISHED_UNVERIFIED",
+      "updated_at": "2026-10-10T06:33:25+00:00",
+      "url": "https://www.youtube.com/shorts/LHSYK9MmJiM",
+      "verification_detail": "HTTP 403",
+      "verification_method": "youtube_data_api",
+      "verified_at": null
     }
   },
   "version": 1
