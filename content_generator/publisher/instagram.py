@@ -517,7 +517,9 @@ def post_reel_video(video_url: str, caption: str) -> dict:
     token   = os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
     try:
         params = {"media_type": "REELS", "video_url": video_url,
-                  "caption": caption, "share_to_feed": "true", "access_token": token}
+                  "caption": caption, "share_to_feed": "true",
+                  "audio_name": "Purity Beans • 100% Pure Coffee",
+                  "access_token": token}
         # product tags on reels (if IG Shopping configured)
         try:
             from content_generator.publisher.product_tags import build_reel_product_tags
@@ -564,16 +566,18 @@ def _post_reel_direct_binary(video_path: str, caption: str) -> dict:
         from content_generator.publisher.meta_graph import ContainerNotReady, MetaRequestError
 
         file_size = os.path.getsize(video_path)
+        init_params = {
+            "media_type": "REELS",
+            "upload_type": "resumable",
+            "caption": caption,
+            "share_to_feed": "true",
+            "audio_name": "Purity Beans • 100% Pure Coffee",
+            "access_token": token,
+        }
         init_data = meta_graph.graph_request(
             "POST",
             f"{_GRAPH_API}/{acct_id}/media",
-            {
-                "media_type": "REELS",
-                "upload_type": "resumable",
-                "caption": caption,
-                "share_to_feed": "true",
-                "access_token": token,
-            },
+            init_params,
             timeout=30,
         )
         container_id = init_data.get("id")

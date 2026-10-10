@@ -218,9 +218,24 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
         from PIL import Image, ImageDraw
     except ImportError:
         return None
-    from content_generator.creative.real_jar_composer import pick_jar_photo
+    from content_generator.creative.real_jar_composer import pick_jar_photo, _has_white_background, _all_jar_photos
 
-    jar_path = pick_jar_photo(day, idx, product, overlay_safe=True, prefer_front=True)
+    # For knockout compositing, we MUST use a studio shot with a solid white background.
+    # Lifestyle photos (e.g. kitchen counter) will have erratic cutouts when knocked out.
+    everything = _all_jar_photos()
+    studio_fronts = [p for p in everything if _has_white_background(p) and "_front.png" in p.lower()]
+    if not studio_fronts:
+        studio_fronts = [p for p in everything if _has_white_background(p)]
+
+    if studio_fronts:
+        if product:
+            matched = [p for p in studio_fronts if f"_{product}_" in p]
+            jar_path = (matched or studio_fronts)[(day * 3 + idx) % len(matched or studio_fronts)]
+        else:
+            jar_path = studio_fronts[(day * 3 + idx) % len(studio_fronts)]
+    else:
+        jar_path = pick_jar_photo(day, idx, product, overlay_safe=True, prefer_front=True)
+
     if not jar_path:
         return None
 
@@ -327,11 +342,14 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
                 draw.text((width // 2, y), line, font=sf, fill=_GOLD, anchor="ma")
                 y += int(sf.size * 1.25)
 
-        # 4. Interactive Story Card
-        card_top = min(y + 16, jy - 138)
-        if card_top > 450:
-            canvas = _draw_interactive_story_card(canvas, headline, card_top, width)
-            draw = ImageDraw.Draw(canvas)
+        # 4. Interactive Story Card — ONLY for Stories (where stickers are native & expected).
+        # Never burn into Reel video beats or thumbnails, where they block copy, jar, and eyes.
+        is_story = "story" in str(label or "").lower()
+        if is_story and (y + 16 < jy - 140):
+            card_top = max(y + 24, int(height * 0.28))
+            if card_top + 130 < jy:
+                canvas = _draw_interactive_story_card(canvas, headline, card_top, width)
+                draw = ImageDraw.Draw(canvas)
 
         # 5. Bottom Safe Zone CTA Pill (above bottom 1680px UI cutoff)
         ff = _font(max(24, width // 38), bold=True)
