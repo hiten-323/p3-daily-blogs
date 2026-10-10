@@ -1288,15 +1288,14 @@ def compose_carousel_slide(
     canvas.save(path, "JPEG", quality=90)
     logger.info("[real_jar] Composed carousel slide %d/%d -> %s", idx + 1, total_slides, path)
 
-    # Record verified provenance for cover & outro slides that display the jar
-    if is_cover or is_outro:
-        try:
-            from content_generator.creative.jar_provenance import record_jar_provenance
-            jar_p = _get_studio_front_jar(day, idx)
-            if jar_p:
-                record_jar_provenance(path, jar_asset_id=jar_p, render_source="real_jar")
-        except Exception as e:
-            logger.debug("[real_jar] Provenance recording skipped: %s", e)
+    # Record verified provenance for carousel slide
+    try:
+        from content_generator.creative.jar_provenance import record_jar_provenance
+        jar_p = _get_studio_front_jar(day, idx)
+        if jar_p:
+            record_jar_provenance(path, jar_asset_id=jar_p, render_source="real_jar")
+    except Exception as e:
+        logger.debug("[real_jar] Provenance recording skipped: %s", e)
 
     return path
 

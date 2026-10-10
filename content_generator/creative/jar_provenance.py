@@ -79,10 +79,10 @@ def record_jar_provenance(
     is_verified = bool(jar_exists and valid_source)
 
     entry = {
-        "image_path": image_path,
+        "image_path": image_path.replace("\\", "/"),
         "image_filename": os.path.basename(image_path),
         "asset_real_jar_verified": is_verified,
-        "jar_asset_id": jar_asset_id,
+        "jar_asset_id": jar_asset_id.replace("\\", "/"),
         "render_source": render_source,
         "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     }
