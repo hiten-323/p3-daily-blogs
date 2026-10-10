@@ -359,7 +359,7 @@
       "content_date": "2026-10-10",
       "content_id": "pb_a8078a5fd7",
       "day_number": 282,
-      "error": "HTTP 403",
+      "error": "",
       "history": [
         {
           "at": "2026-10-10T06:33:20+00:00",
@@ -382,24 +382,24 @@
         "error": "",
         "success": true
       },
-      "last_verification_at": "2026-10-10T07:52:00+00:00",
-      "next_retry_at": "2026-10-10T08:52:00+00:00",
+      "last_verification_at": "2026-10-10T13:46:34+00:00",
+      "next_retry_at": null,
       "platform": "linkedin",
       "remote_id": "urn:li:share:7514573775305195520",
       "slot": "generate",
-      "status": "PUBLISHED_UNVERIFIED",
-      "updated_at": "2026-10-10T07:52:00+00:00",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-10T13:46:34+00:00",
       "url": "https://www.linkedin.com/feed/update/urn:li:share:7514573775305195520/",
-      "verification_detail": "HTTP 403",
-      "verification_method": "linkedin_posts_readback",
-      "verified_at": null
+      "verification_detail": "public feed URL confirmed (200)",
+      "verification_method": "linkedin_public_url",
+      "verified_at": "2026-10-10T13:46:34+00:00"
     },
     "2026-10-10|generate|threads|pb_a8078a5fd7": {
-      "attempt_count": 2,
+      "attempt_count": 3,
       "content_date": "2026-10-10",
       "content_id": "pb_a8078a5fd7",
       "day_number": 282,
-      "error": "prepublish_gate:viral_readiness_failed",
+      "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952026187297546 cannot be found.\",\"fbtrace_id\":\"AzzBxZom--uxj2S7WhgJKJ8\"}}",
       "history": [
         {
           "at": "2026-10-10T06:33:25+00:00",
@@ -430,19 +430,34 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-10T13:46:35+00:00",
+          "attempt": 3,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-10T13:46:38+00:00",
+          "attempt": 3,
+          "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952026187297546 cannot be found.\",\"fbtrace_id\":\"AzzBxZom--uxj2S7WhgJKJ8\"}}",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-10T07:52:01+00:00",
+      "last_attempt_at": "2026-10-10T13:46:35+00:00",
       "last_result": {
-        "error": "prepublish_gate:viral_readiness_failed",
+        "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952026187297546 cannot be found.\",\"fbtrace_id\":\"AzzBxZom--uxj2S7WhgJKJ8\"}}",
         "success": false
       },
       "next_retry_at": null,
       "platform": "threads",
       "remote_id": "",
       "slot": "generate",
-      "status": "SKIPPED",
-      "updated_at": "2026-10-10T07:52:02+00:00",
+      "status": "FAILED",
+      "updated_at": "2026-10-10T13:46:38+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
@@ -475,13 +490,13 @@
         "error": "",
         "success": true
       },
-      "last_verification_at": "2026-10-10T07:52:01+00:00",
-      "next_retry_at": "2026-10-10T08:52:01+00:00",
+      "last_verification_at": "2026-10-10T13:46:35+00:00",
+      "next_retry_at": "2026-10-10T14:46:35+00:00",
       "platform": "youtube",
       "remote_id": "LHSYK9MmJiM",
       "slot": "generate",
       "status": "PUBLISHED_UNVERIFIED",
-      "updated_at": "2026-10-10T07:52:01+00:00",
+      "updated_at": "2026-10-10T13:46:35+00:00",
       "url": "https://www.youtube.com/shorts/LHSYK9MmJiM",
       "verification_detail": "HTTP 403",
       "verification_method": "youtube_data_api",

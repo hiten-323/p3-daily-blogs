@@ -285,5 +285,74 @@
       "published_platforms": [],
       "timestamp": "2026-10-10T07:52:02"
     }
+  },
+  {
+    "date": "2026-10-10",
+    "day_number": 282,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "urn:li:share:7514573775305195520",
+        "media_id": "urn:li:share:7514573775305195520",
+        "video_id": "urn:li:share:7514573775305195520",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7514573775305195520/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7514573775305195520/",
+        "duration_ms": 968
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "readback_unavailable_no_duplicate",
+        "ledger_status": "PUBLISHED_UNVERIFIED",
+        "post_id": "LHSYK9MmJiM",
+        "media_id": "LHSYK9MmJiM",
+        "video_id": "LHSYK9MmJiM",
+        "permalink": "https://www.youtube.com/shorts/LHSYK9MmJiM",
+        "url": "https://www.youtube.com/shorts/LHSYK9MmJiM",
+        "duration_ms": 405
+      },
+      "threads": {
+        "success": false,
+        "attempted": true,
+        "skipped": false,
+        "post_id": "",
+        "url": "",
+        "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952026187297546 cannot be found.\",\"fbtrace_id\":\"AzzBxZom--uxj2S7WhgJKJ8\"}}",
+        "ledger_status": "FAILED",
+        "ledger_attempt_count": 3,
+        "duration_ms": 3242
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "blog_post",
+        "gate": "rejected",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "summary": "Published: Linkedin | Held for slot: Instagram, Facebook | Skipped: Youtube, Blog | Failed: Threads",
+      "published_platforms": [
+        "linkedin"
+      ],
+      "timestamp": "2026-10-10T13:46:38"
+    }
   }
 ]
