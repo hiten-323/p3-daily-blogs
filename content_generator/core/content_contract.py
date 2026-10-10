@@ -58,7 +58,7 @@ def shareability(piece: dict) -> dict:
     Deterministic heuristic over the piece's own copy — no model call, no
     network, same answer every run.
     """
-    text_parts = [str(piece.get(k) or "") for k in ("hook", "hook_text", "headline", "title", "caption", "body")]
+    text_parts = [str(piece.get(k) or "") for k in ("hook", "hook_text", "headline", "title", "caption", "body", "text")]
     
     # Also extract copy from scenes list if present (e.g. for yt_short or reels)
     if "scenes" in piece and isinstance(piece["scenes"], list):

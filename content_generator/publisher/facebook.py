@@ -50,6 +50,21 @@ def resolve_page_access_token(page_id: str, candidate_token: str) -> str:
 
     try:
         import requests
+        # If candidate_token is already a Page Access Token for this page:
+        me_resp = requests.get(
+            f"{_GRAPH_API}/me",
+            params={"fields": "id"},
+            headers={"Authorization": f"Bearer {candidate_token}"},
+            timeout=10,
+        )
+        if me_resp.status_code == 200 and str(me_resp.json().get("id")) == str(page_id):
+            logger.info("[facebook] candidate_token is already the verified Page Access Token")
+            return candidate_token
+    except Exception as exc:
+        logger.debug("[facebook] Page /me test failed: %s", exc)
+
+    try:
+        import requests
         resp = requests.get(
             f"{_GRAPH_API}/{page_id}",
             params={"fields": "access_token"},
@@ -79,8 +94,11 @@ def resolve_page_access_token(page_id: str, candidate_token: str) -> str:
     except Exception as exc:
         logger.debug("[facebook] /me/accounts lookup failed: %s", exc)
 
+    # Only fall back to INSTAGRAM_ACCESS_TOKEN if candidate_token was not explicitly set
+    # as FACEBOOK_PAGE_ACCESS_TOKEN
     ig_token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
-    if ig_token and ig_token != candidate_token:
+    has_explicit_fb_token = bool(os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN", "").strip())
+    if not has_explicit_fb_token and ig_token and ig_token != candidate_token:
         try:
             import requests
             resp = requests.get(

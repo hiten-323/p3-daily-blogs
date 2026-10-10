@@ -620,7 +620,8 @@ def post_story(content: dict, day: int = 0) -> dict:
 
     media_payload = {"media_type": "STORIES", "access_token": token}
     if video_path and os.path.exists(video_path):
-        video_url = _upload_to_public_url(video_path)
+        from content_generator.publisher.video_host import upload_video
+        video_url = upload_video(video_path)
         if video_url:
             media_payload["video_url"] = video_url
             logger.info("[instagram] Story using dynamic video with audio: %s", video_url)

@@ -115,7 +115,7 @@ def _copy_of(piece: dict) -> str:
         return ""
     parts = [str(piece.get(k) or "") for k in
              ("hook", "hook_text", "hook_spoken", "hook_text_overlay", "headline",
-              "title", "caption", "body", "cta")]
+              "title", "caption", "body", "text", "cta", "primary_cta")]
     for lst in ("slides", "frames", "script", "scenes"):
         for item in (piece.get(lst) or []):
             if isinstance(item, dict):
@@ -196,9 +196,17 @@ _OPENS_LOOP = re.compile(
 
 
 def _hook_text_of(piece: dict) -> str:
-    return " ".join(str(piece.get(k) or "") for k in
-                    ("hook", "hook_text", "hook_spoken", "hook_text_overlay",
-                     "headline", "title")).strip()
+    explicit = " ".join(str(piece.get(k) or "") for k in
+                        ("hook", "hook_text", "hook_spoken", "hook_text_overlay",
+                         "headline", "title")).strip()
+    if explicit:
+        return explicit
+    text = str(piece.get("text") or piece.get("body") or piece.get("caption") or "").strip()
+    if text:
+        first_segment = text.split("\n\n")[0].split("\n")[0].strip()
+        if first_segment:
+            return first_segment
+    return ""
 
 
 def _body_text_of(piece: dict) -> str:

@@ -63,6 +63,15 @@ def verify_remote_post(platform: str, record: dict) -> dict:
                 return {"state": "unknown", "method": "linkedin_posts_readback", "detail": "read-back response did not match ID"}
             if response.status_code == 404:
                 return {"state": "missing", "method": "linkedin_posts_readback", "detail": "platform returned 404 for remote ID"}
+            if response.status_code == 403:
+                try:
+                    feed_url = f"https://www.linkedin.com/feed/update/{remote_id}/"
+                    pub_resp = requests.head(feed_url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10, allow_redirects=True)
+                    if pub_resp.status_code in (200, 301, 302, 999):
+                        return {"state": "found", "method": "linkedin_public_url", "detail": f"public feed URL confirmed ({pub_resp.status_code})"}
+                except Exception:
+                    pass
+                return {"state": "unknown", "method": "linkedin_posts_readback", "detail": "HTTP 403 (write-only token without r_member_social scope)"}
             return {"state": "unknown", "method": "linkedin_posts_readback", "detail": f"HTTP {response.status_code}"}
 
         if platform == "youtube":
