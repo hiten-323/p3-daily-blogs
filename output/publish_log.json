@@ -190,5 +190,100 @@
       "published_platforms": [],
       "timestamp": "2026-10-09T15:19:55"
     }
+  },
+  {
+    "date": "2026-10-10",
+    "day_number": 282,
+    "results": {
+      "linkedin": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "readback_unavailable_no_duplicate",
+        "ledger_status": "PUBLISHED_UNVERIFIED",
+        "post_id": "urn:li:share:7514573775305195520",
+        "media_id": "urn:li:share:7514573775305195520",
+        "video_id": "urn:li:share:7514573775305195520",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7514573775305195520/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7514573775305195520/",
+        "duration_ms": 621
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "readback_unavailable_no_duplicate",
+        "ledger_status": "PUBLISHED_UNVERIFIED",
+        "post_id": "LHSYK9MmJiM",
+        "media_id": "LHSYK9MmJiM",
+        "video_id": "LHSYK9MmJiM",
+        "permalink": "https://www.youtube.com/shorts/LHSYK9MmJiM",
+        "url": "https://www.youtube.com/shorts/LHSYK9MmJiM",
+        "duration_ms": 326
+      },
+      "threads": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "post_id": "",
+        "url": "",
+        "error": "prepublish_gate:viral_readiness_failed",
+        "gate": {
+          "allowed": false,
+          "asset_key": "threads_post",
+          "reason": "viral_readiness_failed",
+          "checks": {
+            "editorial": true,
+            "viral_readiness": {
+              "score": 65.0,
+              "passes": false,
+              "dimensions": {
+                "hook": 4.0,
+                "novelty": 11.0,
+                "retention": 10.0,
+                "payoff": 0.0,
+                "share_reason": 10.0,
+                "follow_reason": 10.0,
+                "platform_nativeness": 10.0,
+                "truth_and_integrity": 10.0
+              },
+              "reasons": [
+                "weak or missing dedicated hook",
+                "payoff deficit: no copy to judge",
+                "explicit follower incentive present"
+              ],
+              "basis": "pre-publication creative viral-readiness evaluation"
+            }
+          }
+        },
+        "ledger_status": "SKIPPED",
+        "ledger_attempt_count": 2,
+        "duration_ms": 90
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "blog_post",
+        "gate": "rejected",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "summary": "Held for slot: Instagram, Facebook | Skipped: Linkedin, Youtube, Threads, Blog",
+      "published_platforms": [],
+      "timestamp": "2026-10-10T07:52:02"
+    }
   }
 ]
