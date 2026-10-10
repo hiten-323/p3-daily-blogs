@@ -47,6 +47,9 @@ _TIMEOUT  = int(os.getenv("IMAGE_TIMEOUT", "90"))
 # Provider keys
 _HF_TOKEN = os.getenv("HF_TOKEN")                                    # free
 _PIXAZO_KEY = os.getenv("PIXAZO_API_KEY")                            # Pixazo AI
+_PIXAZO_ENDPOINT = os.getenv("PIXAZO_IMAGE_ENDPOINT", "https://gateway.pixazo.ai/flux-3-image/v1/text-to-image")
+_FREE_IMAGE_API_URL = os.getenv("FREE_IMAGE_API_URL")
+_FREE_IMAGE_API_KEY = os.getenv("FREE_IMAGE_API_KEY")
 _FAL_KEY  = os.getenv("FAL_KEY") or os.getenv("FLUX_API_KEY")        # paid fallback
 if _FAL_KEY:
     os.environ.setdefault("FAL_KEY", _FAL_KEY)
@@ -57,6 +60,59 @@ _HF_MODEL = os.getenv(
     "black-forest-labs/FLUX.1-schnell",
 )
 _FLUX_MODEL = os.getenv("FLUX_MODEL", "fal-ai/flux/dev")
+
+
+def _aspect_ratio(width: int, height: int) -> str:
+    """Map width x height to standard AI aspect ratio format string."""
+    if width == height:
+        return "1:1"
+    return "9:16" if height > width else "16:9"
+
+
+def _is_image_response(body: bytes, content_type: str = "") -> bool:
+    """Validate that payload is a non-empty image binary, not an error JSON or string."""
+    mime = (content_type or "").lower()
+    signature = (
+        body[:3] == b"\xff\xd8\xff"
+        or body[:8] == b"\x89PNG\r\n\x1a\n"
+        or (body[:4] == b"RIFF" and body[8:12] == b"WEBP")
+    )
+    return len(body) > 1000 and (mime.startswith("image/") or signature)
+
+
+def _extension_from_type(content_type: str) -> str:
+    mime = (content_type or "").split(";", 1)[0].strip().lower()
+    return {"image/png": "png", "image/webp": "webp", "image/jpeg": "jpg"}.get(mime, "jpg")
+
+
+def _extract_media_url(payload: dict) -> str | None:
+    """Safely extract https image URL from provider JSON payload."""
+    from urllib.parse import urlparse
+    output = payload.get("output") if isinstance(payload.get("output"), dict) else {}
+    for value in (payload.get("image"), payload.get("url"), payload.get("media_url"),
+                  output.get("image"), output.get("url"), output.get("media_url")):
+        if isinstance(value, list):
+            value = value[0] if value else None
+        if isinstance(value, str) and urlparse(value).scheme == "https" and urlparse(value).netloc:
+            return value
+    return None
+
+
+def _download_image_url(url: str, label: str) -> str | None:
+    """Download image from HTTPS URL and save locally."""
+    from urllib.parse import urlparse
+    if urlparse(url).scheme != "https" or not urlparse(url).netloc:
+        return None
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "PurityBeans/1.0"})
+        with urllib.request.urlopen(req, timeout=_TIMEOUT) as resp:
+            body, content_type = resp.read(), resp.headers.get("Content-Type", "")
+        if not _is_image_response(body, content_type):
+            return None
+        return _save_image(body, label, ext=_extension_from_type(content_type))
+    except Exception as exc:
+        logger.warning("[image] media download failed: %s", type(exc).__name__)
+        return None
 
 
 # ── Public API ────────────────────────────────────────────────────────────────
@@ -126,6 +182,12 @@ Reference images (product-matched):
     # 2. Pixazo AI (unified high-performance Flux/SD generation)
     if _PIXAZO_KEY or os.getenv("PIXAZO_API_KEY"):
         path = _pixazo(ai_prompt, width, height, label, seed)
+        if path:
+            return path
+
+    # 3. Cloudflare Worker Free Image API (self-hosted fallback)
+    if _FREE_IMAGE_API_URL and _FREE_IMAGE_API_KEY:
+        path = _free_image_worker(ai_prompt, width, height, label)
         if path:
             return path
 
@@ -297,65 +359,90 @@ def _pollinations(
 # ── Provider 3: Pixazo AI (unified Flux/SD API) ───────────────────────────────
 
 def _pixazo(
-    prompt: str, width: int, height: int, label: str, seed: int | None
+    prompt: str, width: int, height: int, label: str, seed: int | None = None
 ) -> str | None:
-    """Pixazo AI image generation gateway (Flux/SDXL models) via PIXAZO_API_KEY."""
-    api_key = os.getenv("PIXAZO_API_KEY") or _PIXAZO_KEY
+    """Call the configured Pixazo model endpoint; accepts binary images or media URLs."""
+    import json
+    api_key = _PIXAZO_KEY or os.getenv("PIXAZO_API_KEY")
     if not api_key:
         return None
-
     try:
-        import requests, time
         logger.info("[image] Pixazo AI %dx%d | '%s...'", width, height, prompt[:50])
-
-        aspect = "1:1" if width == height else ("9:16" if height > width else "16:9")
-        url = os.getenv("PIXAZO_IMAGE_ENDPOINT", "https://gateway.pixazo.ai/flux-3-image/v1/text-to-image")
-        headers = {
-            "Content-Type": "application/json",
-            "Ocp-Apim-Subscription-Key": api_key,
-            "x-api-key": api_key,
-        }
         payload = {
             "prompt": prompt,
-            "aspect_ratio": aspect,
+            "aspect_ratio": _aspect_ratio(width, height),
         }
         if seed is not None:
             payload["seed"] = seed
 
-        resp = requests.post(url, json=payload, headers=headers, timeout=30)
-        if resp.status_code not in (200, 201, 202):
-            logger.debug("[image] Pixazo request returned status %d: %s", resp.status_code, resp.text[:200])
-            return None
-
-        data = resp.json()
-        media_url = data.get("media_url") or data.get("image_url") or data.get("url")
-
-        # If asynchronous with request_id:
-        request_id = data.get("request_id") or data.get("id")
-        if not media_url and request_id:
-            status_url = f"https://gateway.pixazo.ai/v2/requests/status/{request_id}"
-            for _ in range(12):  # poll up to ~60s
-                time.sleep(5)
-                s_resp = requests.get(status_url, headers=headers, timeout=15)
-                if s_resp.status_code == 200:
-                    s_data = s_resp.json()
-                    status = (s_data.get("status") or "").upper()
-                    if status in ("COMPLETED", "SUCCESS"):
-                        media_url = s_data.get("media_url") or s_data.get("image_url") or s_data.get("url")
-                        break
-                    elif status in ("FAILED", "ERROR"):
-                        logger.warning("[image] Pixazo task failed: %s", s_data)
-                        break
-
-        if media_url:
-            img_resp = requests.get(media_url, timeout=30)
-            if img_resp.status_code == 200 and len(img_resp.content) > 1000:
-                logger.info("[image] Pixazo AI OK (%d KB)", len(img_resp.content) // 1024)
-                return _save_image(img_resp.content, label, ext="jpg")
-
+        req = urllib.request.Request(
+            _PIXAZO_ENDPOINT,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Ocp-Apim-Subscription-Key": api_key,
+                "Content-Type": "application/json",
+                "User-Agent": "PurityBeans/1.0",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=_TIMEOUT) as resp:
+            body, content_type = resp.read(), resp.headers.get("Content-Type", "")
+        if _is_image_response(body, content_type):
+            return _save_image(body, label, ext=_extension_from_type(content_type))
+        data = json.loads(body.decode("utf-8"))
+        url = _extract_media_url(data)
+        if not url and data.get("request_id"):
+            request_id = urllib.parse.quote(str(data["request_id"]), safe="")
+            poll_url = f"https://gateway.pixazo.ai/v2/requests/status/{request_id}"
+            attempts = max(1, min(30, int(os.getenv("PIXAZO_POLL_ATTEMPTS", "12"))))
+            interval = max(1, min(30, int(os.getenv("PIXAZO_POLL_INTERVAL_SECONDS", "5"))))
+            import time
+            for _ in range(attempts):
+                time.sleep(interval)
+                poll = urllib.request.Request(poll_url, headers={
+                    "Ocp-Apim-Subscription-Key": api_key,
+                    "User-Agent": "PurityBeans/1.0",
+                })
+                with urllib.request.urlopen(poll, timeout=_TIMEOUT) as resp:
+                    result = json.loads(resp.read().decode("utf-8"))
+                if str(result.get("status", "")).upper() in {"FAILED", "ERROR", "CANCELLED"}:
+                    return None
+                url = _extract_media_url(result)
+                if url:
+                    break
+        return _download_image_url(url, label) if url else None
+    except Exception as exc:
+        logger.warning("[image] Pixazo failed: %s", type(exc).__name__)
         return None
-    except Exception as e:
-        logger.warning("[image] Pixazo AI call failed: %s", e)
+
+
+# ── Provider: Self-hosted free-image-generation-api Worker ───────────────────
+
+def _free_image_worker(prompt: str, width: int, height: int, label: str) -> str | None:
+    """Call the user's deployed Cloudflare Worker and validate its binary response."""
+    import json
+    if not _FREE_IMAGE_API_URL or not _FREE_IMAGE_API_KEY:
+        return None
+    try:
+        req = urllib.request.Request(
+            _FREE_IMAGE_API_URL,
+            data=json.dumps({"prompt": prompt}).encode("utf-8"),
+            headers={
+                "Authorization": f"Bearer {_FREE_IMAGE_API_KEY}",
+                "Content-Type": "application/json",
+                "Accept": "image/jpeg, image/png, application/octet-stream",
+                "User-Agent": "PurityBeans/1.0",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=_TIMEOUT) as resp:
+            body, content_type = resp.read(), resp.headers.get("Content-Type", "")
+        if not _is_image_response(body, content_type):
+            logger.warning("[image] Free image Worker returned non-image response")
+            return None
+        return _save_image(body, label, ext=_extension_from_type(content_type))
+    except Exception as exc:
+        logger.warning("[image] Free image Worker failed: %s", type(exc).__name__)
         return None
 
 
