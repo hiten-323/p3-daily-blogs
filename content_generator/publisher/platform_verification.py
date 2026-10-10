@@ -20,7 +20,13 @@ def verify_remote_post(platform: str, record: dict) -> dict:
             from config.api_versions import META_GRAPH_BASE, THREADS_BASE_URL
             graph_base = THREADS_BASE_URL if platform == "threads" else META_GRAPH_BASE
             if platform == "facebook":
-                token = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
+                raw_tok = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
+                page_id = os.getenv("FACEBOOK_PAGE_ID", "")
+                try:
+                    from content_generator.publisher.facebook import resolve_page_access_token
+                    token = resolve_page_access_token(page_id, raw_tok)
+                except Exception:
+                    token = raw_tok
                 fields = "id,permalink_url,created_time"
             elif platform == "threads":
                 token = os.getenv("THREADS_ACCESS_TOKEN", "")
@@ -36,7 +42,8 @@ def verify_remote_post(platform: str, record: dict) -> dict:
             )
             if response.status_code == 200:
                 payload = response.json()
-                if str(payload.get("id", "")) == remote_id:
+                found_id = str(payload.get("id", ""))
+                if found_id and (found_id == remote_id or remote_id.endswith(found_id) or found_id.endswith(remote_id)):
                     return {"state": "found", "method": "meta_graph_readback", "detail": "remote object ID confirmed"}
                 return {"state": "unknown", "method": "meta_graph_readback", "detail": "read-back response did not match ID"}
             if response.status_code == 404:
