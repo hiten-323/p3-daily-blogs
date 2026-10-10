@@ -102,21 +102,28 @@ def post_content(content: dict, day: int = 0) -> dict:
         from content_generator.publisher.video_host import upload_video
 
         video_url = upload_video(reel_video_path)
-        if not video_url:
-            logger.error("[instagram] Reel render exists but public video upload failed: %s", reel_video_path)
-            return {
-                "success": False, "media_id": "", "permalink": "",
-                "error": "reel_video_upload_failed", "reel_video_path": reel_video_path,
-            }
-        result = post_reel_video(video_url, caption)
-        result["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
-        result["format_used"] = "reel"
-        result["reel_video_path"] = reel_video_path
-        if result.get("success"):
-            logger.info("[instagram] Day %d Reel published | id=%s", day, result.get("media_id"))
-        else:
+        if video_url:
+            result = post_reel_video(video_url, caption)
+            if result.get("success"):
+                result["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
+                result["format_used"] = "reel"
+                result["reel_video_path"] = reel_video_path
+                logger.info("[instagram] Day %d Reel published | id=%s", day, result.get("media_id"))
+                return result
             logger.error("[instagram] Day %d rendered Reel failed to publish: %s", day, result.get("error"))
-        return result
+        else:
+            direct_res = _post_reel_direct_binary(reel_video_path, caption)
+            if direct_res.get("success"):
+                direct_res["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
+                direct_res["format_used"] = "reel"
+                direct_res["reel_video_path"] = reel_video_path
+                logger.info("[instagram] Day %d Reel published via direct binary upload | id=%s", day, direct_res.get("media_id"))
+                return direct_res
+
+        logger.warning(
+            "[instagram] Reel video upload unavailable or failed for day %d. Falling back to editorial carousel.",
+            day,
+        )
 
     logger.warning("[instagram] No rendered Reel MP4 for day %d; Reel is not publishable. Checking feed-image fallback.", day)
     images  = _find_carousel_images(content)
@@ -543,6 +550,59 @@ def post_reel_video(video_url: str, caption: str) -> dict:
     except Exception as e:
         logger.error("[instagram] Reel video error: %s", e)
         return {"success": False, "media_id": "", "error": str(e)}
+
+
+def _post_reel_direct_binary(video_path: str, caption: str) -> dict:
+    """Publish Instagram Reel directly via Meta's resumable video upload protocol."""
+    acct_id = os.getenv("INSTAGRAM_ACCOUNT_ID", "").strip()
+    token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
+    if not acct_id or not token or not os.path.isfile(video_path):
+        return {"success": False, "media_id": "", "error": "missing_prerequisites"}
+    try:
+        import requests
+        from content_generator.publisher import meta_graph
+        from content_generator.publisher.meta_graph import ContainerNotReady, MetaRequestError
+
+        file_size = os.path.getsize(video_path)
+        init_data = meta_graph.graph_request(
+            "POST",
+            f"{_GRAPH_API}/{acct_id}/media",
+            {
+                "media_type": "REELS",
+                "upload_type": "resumable",
+                "caption": caption,
+                "share_to_feed": "true",
+                "access_token": token,
+            },
+            timeout=30,
+        )
+        container_id = init_data.get("id")
+        upload_uri = init_data.get("uri")
+        if not container_id or not upload_uri:
+            return {"success": False, "media_id": "", "error": "resumable_init_failed"}
+
+        headers = {
+            "Authorization": f"OAuth {token}",
+            "offset": "0",
+            "file_size": str(file_size),
+        }
+        with open(video_path, "rb") as fh:
+            up_resp = requests.post(upload_uri, headers=headers, data=fh, timeout=120)
+        if up_resp.status_code not in (200, 201):
+            return {"success": False, "media_id": "", "error": f"resumable_transfer_failed: {up_resp.status_code}"}
+
+        meta_graph.wait_for_container(
+            container_id, token,
+            max_wait=meta_graph._VIDEO_POLL_S,
+            interval=meta_graph._POLL_INTERVAL,
+        )
+        return _publish_container(container_id, acct_id, token)
+    except (ContainerNotReady, MetaRequestError) as e:
+        logger.error("[instagram] Direct binary reel container failed: %s", e)
+        return {"success": False, "media_id": "", "error": str(e)}
+    except Exception as exc:
+        logger.debug("[instagram] Direct binary reel upload failed: %s", exc)
+        return {"success": False, "media_id": "", "error": str(exc)}
 
 
 def post_story(content: dict, day: int = 0) -> dict:
