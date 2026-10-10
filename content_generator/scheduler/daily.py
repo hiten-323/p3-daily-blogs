@@ -783,10 +783,10 @@ def _inject_brand_into_content(content: dict, day: int = 0) -> None:
             if isinstance(reel, dict) and reel:
                 hook = str(reel.get("hook_text") or reel.get("caption") or "")
                 reel["audio"] = get_audio_plan(hook, day)
-        for key in ("growth_reel", "stories", "yt_short"):
+        for key in ("carousel", "instagram_post", "facebook_post", "growth_reel", "stories", "yt_short"):
             piece = content.get(key)
             if isinstance(piece, dict) and piece:
-                txt = str(piece.get("chosen_hook") or piece.get("hook") or piece.get("title") or "")
+                txt = str(piece.get("chosen_hook") or piece.get("hook") or piece.get("title") or piece.get("caption") or "")
                 piece["audio"] = get_audio_plan(txt, day)
     except Exception as e:
         logger.warning("[creative] audio director skipped: %s", e)
@@ -1186,6 +1186,45 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
         results["reel"] = path
         if path:
             logger.info("[images] Reel thumbnail from real jar photo: %s", path)
+
+        # Render motion reel video (MP4) with audio from music_library
+        try:
+            from content_generator.creative.reel_video import build_reel_video
+            reel_video_path = build_reel_video(reel, day=day_number, label=f"reel_1_video")
+            if reel_video_path:
+                results["reel_video"] = reel_video_path
+                logger.info("[images] Reel motion video rendered: %s", reel_video_path)
+        except Exception as e:
+            logger.warning("[images] Reel motion video generation failed: %s", e)
+
+    # Instagram Story frame + Story Video (MP4) with audio
+    try:
+        from content_generator.publisher.story_copy import resolve_story_copy
+        from content_generator.creative.cinematic_frame import compose_cinematic_frame
+        from content_generator.creative.story_video import build_story_video
+        story_copy = resolve_story_copy(content, day=day_number)
+        story_frame = compose_cinematic_frame(
+            headline=story_copy["headline"],
+            sub=story_copy["sub"],
+            day=day_number,
+            idx=9,
+            width=1080,
+            height=1920,
+            label=f"story_day{day_number}",
+        )
+        results["story_frame"] = story_frame
+        if story_frame:
+            results["story_video"] = build_story_video(
+                image_path=story_frame,
+                headline=story_copy["headline"],
+                day=day_number,
+                duration=7.5,
+                label=f"story_video_day{day_number}",
+            )
+            if results["story_video"]:
+                logger.info("[images] Story video rendered: %s", results["story_video"])
+    except Exception as e:
+        logger.warning("[images] Story asset generation skipped: %s", e)
 
     # Instagram feed post image — composed from real jar photo
     ig_post = content.get("instagram_post") or {}

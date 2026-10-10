@@ -29,15 +29,22 @@ _OUT_DIR  = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 _MODEL    = os.getenv("GEMINI_IMAGE_MODEL", "gemini-2.0-flash-exp")
 _TIMEOUT  = 120
 
-_SCENE_RULES = (
-    "Take the product jar from the supplied photo and place it in this scene. "
-    "CRITICAL: keep the jar EXACTLY as photographed — same label, same text, "
-    "same cap, same shape, same colors. Do not redesign, redraw, or alter the "
-    "label in any way. Only change the environment around it. "
-    "Photographic realism: correct contact shadow where the jar meets the "
-    "surface, environment reflections on the glass, natural grain, one "
-    "believable light source. No text overlays. Vertical 9:16 composition."
-)
+def _build_scene_rules(aspect_desc: str = "Square 1:1 composition.") -> str:
+    return (
+        "Take the product jar from the supplied photo and place it in this scene. "
+        "CRITICAL: keep the jar EXACTLY as photographed — same label, same text, "
+        "same cap, same shape, same colors. Do not redesign, redraw, or alter the "
+        "label in any way. Only change the environment around it. "
+        "Photographic realism: commercial food photography shot on Hasselblad 85mm f/2.8 lens, "
+        "shallow depth of field, natural morning window directional light with soft diffusion, "
+        "correct contact shadow and ambient occlusion where the jar meets the tabletop, "
+        "subtle environment reflections on the glass, zero artificial CGI or plastic sheen, "
+        "completely realistic lifelike materials and natural grain. No text overlays. "
+        f"{aspect_desc}"
+    )
+
+
+_SCENE_RULES = _build_scene_rules("Vertical 9:16 composition.")
 
 
 def is_configured() -> bool:
@@ -95,11 +102,15 @@ def generate_scene_with_real_jar(
     except Exception:
         pass
 
+    is_tall = any(k in str(label or "").lower() for k in ["reel", "story", "yt_short", "short", "vertical"])
+    aspect_desc = "Vertical 9:16 composition." if is_tall else "Square 1:1 composition."
+    rules = _build_scene_rules(aspect_desc)
+
     body = json.dumps({
         "contents": [{
             "parts": [
                 {"inline_data": {"mime_type": "image/png", "data": jar_b64}},
-                {"text": f"{_SCENE_RULES}\n\nSCENE: {scene_text}"},
+                {"text": f"{rules}\n\nSCENE: {scene_text}"},
             ]
         }],
         "generationConfig": {"responseModalities": ["IMAGE"]},

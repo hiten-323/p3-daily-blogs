@@ -130,7 +130,9 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
     if music and os.path.exists(music):
         try:
             from moviepy import AudioFileClip
-            audio = AudioFileClip(music).subclipped(0, video.duration)
+            audio = AudioFileClip(music)
+            dur = min(audio.duration, video.duration)
+            audio = audio.subclipped(0, dur)
             video = video.with_audio(audio)
         except Exception as e:
             logger.debug("[reel_video] music attach failed: %s", e)

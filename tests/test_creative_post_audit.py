@@ -108,8 +108,9 @@ def test_all_current_run_images_are_included(tmp_path, monkeypatch):
     creative_dir.mkdir()
     img = Image.new("RGB", (300, 300), "white")
     jar = tmp_path / "real_jar.png"
-    img.save(jar)
-    render = creative_dir / "unreturned_renderer_asset_2026-10-09.jpg"
+    from content_generator.core.ist_dates import today_ist
+    today_str = today_ist().isoformat()
+    render = creative_dir / f"unreturned_renderer_asset_{today_str}.jpg"
     img.save(render)
 
     from content_generator.creative import jar_provenance

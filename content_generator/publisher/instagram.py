@@ -230,6 +230,10 @@ def _assemble_caption(body: str, piece: dict, day: int = 0) -> str:
         if extra and extra.lower() not in body.lower():
             parts.append(extra)
 
+    audio_rec = (piece.get("audio") or {}).get("recommendation")
+    if audio_rec and "🎵" not in body and "audio" not in body.lower():
+        parts.append(f"🎵 Audio: {audio_rec}")
+
     tags = _choose_hashtags(piece or {}, day)
     tag_line = " ".join(tags)
     caption_body = "\n\n".join(p for p in parts if p).strip()
@@ -554,9 +558,33 @@ def post_story(content: dict, day: int = 0) -> dict:
 
     acct_id = os.getenv("INSTAGRAM_ACCOUNT_ID", "")
     token   = os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
-    image_url = _upload_to_public_url(image_path)
-    if not image_url:
-        return {"success": False, "media_id": "", "error": "image_upload_failed"}
+
+    # Attempt to render dynamic 9:16 vertical video story with royalty-free audio
+    video_path = None
+    try:
+        from content_generator.creative.story_video import build_story_video
+        video_path = build_story_video(
+            image_path=image_path,
+            headline=headline,
+            day=day,
+            duration=7.5,
+            label=f"story_video_day{day}",
+        )
+    except Exception as ve:
+        logger.debug("[instagram] story video build skipped/failed: %s", ve)
+
+    media_payload = {"media_type": "STORIES", "access_token": token}
+    if video_path and os.path.exists(video_path):
+        video_url = _upload_to_public_url(video_path)
+        if video_url:
+            media_payload["video_url"] = video_url
+            logger.info("[instagram] Story using dynamic video with audio: %s", video_url)
+
+    if "video_url" not in media_payload:
+        image_url = _upload_to_public_url(image_path)
+        if not image_url:
+            return {"success": False, "media_id": "", "error": "media_upload_failed"}
+        media_payload["image_url"] = image_url
 
     try:
         from content_generator.publisher.meta_graph import (
@@ -565,7 +593,7 @@ def post_story(content: dict, day: int = 0) -> dict:
         data = graph_request(
             "POST",
             f"{_GRAPH_API}/{acct_id}/media",
-            {"image_url": image_url, "media_type": "STORIES", "access_token": token},
+            media_payload,
             timeout=30,
         )
         container_id = data.get("id", "")

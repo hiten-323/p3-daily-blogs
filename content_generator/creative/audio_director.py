@@ -15,22 +15,21 @@ logger = logging.getLogger(__name__)
 def _music_dir() -> str:
     return os.getenv("MUSIC_LIBRARY_DIR", "music_library")
 
-
-# category -> (local-track mood, human-readable audio direction)
+# Content category -> (mood tag, in-app viral audio recommendation with explicit search cues).
 AUDIO_MAP = {
-    "coffee_aesthetic": ("lofi", "warm café instrumental or currently rising coffee/lifestyle sound"),
-    "morning_routine": ("calm", "soft piano/acoustic sound with a calm morning mood"),
-    "productivity": ("upbeat", "light upbeat instrumental with a clean rhythm"),
-    "health_wellness": ("calm", "calm ambient audio; keep voice and claims clear"),
-    "behind_scenes": ("upbeat", "mid-energy instrumental matched to the cuts"),
-    "educational": ("ambient", "low-volume ambient bed; voiceover remains dominant"),
-    "founder_story": ("cinematic", "subtle cinematic/emotional bed"),
-    "motivation": ("cinematic", "motivational cinematic bed"),
-    "product_showcase": ("premium", "premium, rhythmic launch sound"),
-    "recipe": ("upbeat", "kitchen ASMR or licensed food-preparation sound"),
-    "lifestyle": ("lofi", "aesthetic lifestyle sound with a natural pace"),
-    "meme": ("upbeat", "the exact meme sound only after live availability/licensing check"),
-    "trend": ("upbeat", "the live-verified audio associated with this format"),
+    "coffee_aesthetic": ("lofi",      "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')"),
+    "morning_routine":  ("calm",      "Soft Acoustic & Piano Morning (Search: 'Morning Routine Acoustic' or 'Peaceful Rise')"),
+    "productivity":     ("upbeat",    "Upbeat Focus Instrumental (Search: 'Upbeat Coffeehouse Groove' or 'Positive Rhythm')"),
+    "health_wellness":  ("calm",      "Calm Ambient Wellness Tone (Search: 'Calm Piano Meditation' or 'Pure Serenity')"),
+    "behind_scenes":    ("upbeat",    "Mid-Energy Aesthetic Instrumental (Search: 'Studio Beats' or 'Process Groove')"),
+    "educational":      ("ambient",   "Minimalist Smart Ambient (Search: 'Deep Focus Ambient' or 'Subtle Brainwave')"),
+    "founder_story":    ("cinematic", "Cinematic Emotional Piano (Search: 'Cinematic Hope' or 'Origin Story Ambient')"),
+    "motivation":       ("cinematic", "Motivational Cinematic Pulse (Search: 'Cinematic Drive' or 'Inspirational Beat')"),
+    "product_showcase": ("premium",   "Luxury Brand Modern Beats (Search: 'Luxury Aesthetic' or 'Modern Neo Soul')"),
+    "recipe":           ("upbeat",    "Aesthetic Barista ASMR / Upbeat (Search: 'Coffee ASMR Beats' or 'Kitchen Groove')"),
+    "lifestyle":        ("lofi",      "Aesthetic Coffee Lo-Fi (Search: 'Coffee Shop Vibes' or 'Warm Afternoon Beat')"),
+    "meme":             ("upbeat",    "Viral Trending Audio (Search: 'Viral Sound of the Week')"),
+    "trend":            ("upbeat",    "High-Reach Trending Sound (Search: 'Trending Audio' in Instagram Audio Tab)"),
 }
 _KEYWORDS = {
     "founder_story": ["founder", "i started", "my journey", "built", "bootstrap", "lesson"],
