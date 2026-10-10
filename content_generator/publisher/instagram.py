@@ -53,6 +53,24 @@ def is_configured() -> bool:
     return bool(os.getenv("INSTAGRAM_ACCOUNT_ID")) and bool(os.getenv("INSTAGRAM_ACCESS_TOKEN"))
 
 
+def _find_reel_video(day: int) -> str | None:
+    """Return only today's rendered MP4 for this content day; never reuse a stale reel."""
+    import glob
+
+    creative_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
+    from content_generator.core.ist_dates import today_ist
+
+    today = today_ist().isoformat()
+    expected = os.path.join(creative_dir, f"reel_1_video_day{day}_{today}.mp4")
+    if os.path.isfile(expected) and os.path.getsize(expected) > 10_000:
+        return expected
+
+    # Accept the canonical label only, and still require both the current date
+    # and day number in the filename so an older video can never be reposted.
+    matches = glob.glob(os.path.join(creative_dir, f"reel_1_video_day{day}_{today}.mp4"))
+    return next((p for p in matches if os.path.isfile(p) and os.path.getsize(p) > 10_000), None)
+
+
 def post_content(content: dict, day: int = 0) -> dict:
     """
     Post today's content to Instagram.
@@ -73,8 +91,35 @@ def post_content(content: dict, day: int = 0) -> dict:
         return {"success": False, "media_id": "", "permalink": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
 
 
-    images  = _find_carousel_images(content)
     caption = _extract_caption(content, day=day)
+
+    # A rendered Reel is the preferred Instagram format when it exists. Upload
+    # to public video hosting first because Meta requires a public video_url.
+    # If upload or publishing fails, return that failure rather than silently
+    # substituting a carousel or risking a duplicate after an ambiguous result.
+    reel_video_path = _find_reel_video(day)
+    if reel_video_path:
+        from content_generator.publisher.video_host import upload_video
+
+        video_url = upload_video(reel_video_path)
+        if not video_url:
+            logger.error("[instagram] Reel render exists but public video upload failed: %s", reel_video_path)
+            return {
+                "success": False, "media_id": "", "permalink": "",
+                "error": "reel_video_upload_failed", "reel_video_path": reel_video_path,
+            }
+        result = post_reel_video(video_url, caption)
+        result["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
+        result["format_used"] = "reel"
+        result["reel_video_path"] = reel_video_path
+        if result.get("success"):
+            logger.info("[instagram] Day %d Reel published | id=%s", day, result.get("media_id"))
+        else:
+            logger.error("[instagram] Day %d rendered Reel failed to publish: %s", day, result.get("error"))
+        return result
+
+    logger.warning("[instagram] No rendered Reel MP4 for day %d; Reel is not publishable. Checking feed-image fallback.", day)
+    images  = _find_carousel_images(content)
 
     if not images:
         logger.warning("[instagram] No images found — skipping Instagram post")

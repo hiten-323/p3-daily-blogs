@@ -406,6 +406,32 @@ def main():
             else:
                 os.environ[key] = value
 
+    # 8. Reels use only a valid MP4 for the current content day; stale videos are never reused.
+    print("\\nRendered Reel discovery:")
+    from content_generator.publisher import instagram as ig
+    from content_generator.core.ist_dates import today_ist
+    previous_creative_dir = os.environ.get("CREATIVE_OUTPUT_DIR")
+    try:
+        with tempfile.TemporaryDirectory(prefix="pb_reel_assets_") as video_dir:
+            os.environ["CREATIVE_OUTPUT_DIR"] = video_dir
+            reel_day = 282
+            current_path = os.path.join(
+                video_dir, f"reel_1_video_day{reel_day}_{today_ist().isoformat()}.mp4"
+            )
+            with open(current_path, "wb") as fh:
+                fh.write(b"v" * 20_000)
+            check("finds current-day rendered reel", ig._find_reel_video(reel_day) == current_path)
+            os.remove(current_path)
+            stale_path = os.path.join(video_dir, f"reel_1_video_day{reel_day}_2026-10-09.mp4")
+            with open(stale_path, "wb") as fh:
+                fh.write(b"v" * 20_000)
+            check("never reuses stale reel video", ig._find_reel_video(reel_day) is None)
+    finally:
+        if previous_creative_dir is None:
+            os.environ.pop("CREATIVE_OUTPUT_DIR", None)
+        else:
+            os.environ["CREATIVE_OUTPUT_DIR"] = previous_creative_dir
+
     print(f"\n{'INSTAGRAM PUBLISH FIXES FAILED' if failures else 'instagram publish fixes hold'} "
           f"({len(failures)} failure(s))")
     return 1 if failures else 0
