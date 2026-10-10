@@ -172,6 +172,7 @@ jobs:
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PIXAZO_API_KEY: ${{ secrets.PIXAZO_API_KEY }}
           FAL_KEY: ${{ secrets.FLUX_API_KEY }}
           RUNWAY_API_KEY: ${{ secrets.RUNWAY_API_KEY }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}

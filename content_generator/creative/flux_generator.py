@@ -46,6 +46,7 @@ _TIMEOUT  = int(os.getenv("IMAGE_TIMEOUT", "90"))
 
 # Provider keys
 _HF_TOKEN = os.getenv("HF_TOKEN")                                    # free
+_PIXAZO_KEY = os.getenv("PIXAZO_API_KEY")                            # Pixazo AI
 _FAL_KEY  = os.getenv("FAL_KEY") or os.getenv("FLUX_API_KEY")        # paid fallback
 if _FAL_KEY:
     os.environ.setdefault("FAL_KEY", _FAL_KEY)
@@ -65,7 +66,7 @@ def is_configured() -> bool:
     Returns True if at least one image provider is available.
     Pillow placeholder always works so this is always True when Pillow is installed.
     """
-    if _HF_TOKEN:
+    if _HF_TOKEN or _PIXAZO_KEY or _FAL_KEY:
         return True
     try:
         from PIL import Image  # noqa: F401
@@ -122,12 +123,18 @@ Reference images (product-matched):
         if path:
             return path
 
-    # 2. Pollinations (free anonymous — works in most environments)
+    # 2. Pixazo AI (unified high-performance Flux/SD generation)
+    if _PIXAZO_KEY or os.getenv("PIXAZO_API_KEY"):
+        path = _pixazo(ai_prompt, width, height, label, seed)
+        if path:
+            return path
+
+    # 3. Pollinations (free anonymous — works in most environments)
     path = _pollinations(ai_prompt, width, height, label, seed)
     if path:
         return path
 
-    # 3. fal.ai (paid fallback)
+    # 4. fal.ai (paid fallback)
     if _FAL_KEY:
         path = _fal_flux(ai_prompt, width, height, label, seed)
         if path:
@@ -287,7 +294,72 @@ def _pollinations(
         return None
 
 
-# ── Provider 3: fal.ai Flux (paid fallback) ───────────────────────────────────
+# ── Provider 3: Pixazo AI (unified Flux/SD API) ───────────────────────────────
+
+def _pixazo(
+    prompt: str, width: int, height: int, label: str, seed: int | None
+) -> str | None:
+    """Pixazo AI image generation gateway (Flux/SDXL models) via PIXAZO_API_KEY."""
+    api_key = os.getenv("PIXAZO_API_KEY") or _PIXAZO_KEY
+    if not api_key:
+        return None
+
+    try:
+        import requests, time
+        logger.info("[image] Pixazo AI %dx%d | '%s...'", width, height, prompt[:50])
+
+        aspect = "1:1" if width == height else ("9:16" if height > width else "16:9")
+        url = os.getenv("PIXAZO_IMAGE_ENDPOINT", "https://gateway.pixazo.ai/flux-3-image/v1/text-to-image")
+        headers = {
+            "Content-Type": "application/json",
+            "Ocp-Apim-Subscription-Key": api_key,
+            "x-api-key": api_key,
+        }
+        payload = {
+            "prompt": prompt,
+            "aspect_ratio": aspect,
+        }
+        if seed is not None:
+            payload["seed"] = seed
+
+        resp = requests.post(url, json=payload, headers=headers, timeout=30)
+        if resp.status_code not in (200, 201, 202):
+            logger.debug("[image] Pixazo request returned status %d: %s", resp.status_code, resp.text[:200])
+            return None
+
+        data = resp.json()
+        media_url = data.get("media_url") or data.get("image_url") or data.get("url")
+
+        # If asynchronous with request_id:
+        request_id = data.get("request_id") or data.get("id")
+        if not media_url and request_id:
+            status_url = f"https://gateway.pixazo.ai/v2/requests/status/{request_id}"
+            for _ in range(12):  # poll up to ~60s
+                time.sleep(5)
+                s_resp = requests.get(status_url, headers=headers, timeout=15)
+                if s_resp.status_code == 200:
+                    s_data = s_resp.json()
+                    status = (s_data.get("status") or "").upper()
+                    if status in ("COMPLETED", "SUCCESS"):
+                        media_url = s_data.get("media_url") or s_data.get("image_url") or s_data.get("url")
+                        break
+                    elif status in ("FAILED", "ERROR"):
+                        logger.warning("[image] Pixazo task failed: %s", s_data)
+                        break
+
+        if media_url:
+            img_resp = requests.get(media_url, timeout=30)
+            if img_resp.status_code == 200 and len(img_resp.content) > 1000:
+                logger.info("[image] Pixazo AI OK (%d KB)", len(img_resp.content) // 1024)
+                return _save_image(img_resp.content, label, ext="jpg")
+
+        return None
+    except Exception as e:
+        logger.warning("[image] Pixazo AI call failed: %s", e)
+        return None
+
+
+# ── Provider 4: fal.ai Flux (paid fallback) ───────────────────────────────────
 
 def _fal_flux(
     prompt: str, width: int, height: int, label: str, seed: int | None
