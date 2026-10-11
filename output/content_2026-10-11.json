@@ -1,0 +1,2421 @@
+{
+  "date": "2026-10-11",
+  "day_number": 283,
+  "generation_id": "gen_2026-10-11_a453c6a4",
+  "prompt_version": "2.7.0",
+  "schema_version": "1.4.0",
+  "psychology_frame": "revelation",
+  "psychology_frame_version": 1,
+  "target_kpi_at_creation": "followers",
+  "policy_version_at_creation": "1.2",
+  "reels": [
+    {
+      "id": "reel_1",
+      "psychology_frame": "revelation",
+      "hook_archetype": "CONTRARIAN",
+      "hook_text": "YOUR COFFEE IS LYING",
+      "hook_options": [
+        "Turn the jar around before you buy it.",
+        "Check the ingredient list on your kitchen counter.",
+        "Most instant coffee isn't actually coffee.",
+        "Why premium pure coffee is actually cheaper.",
+        "The hidden filler in your daily mug.",
+        "You are paying for roasted root extract.",
+        "You're tired of starting your day with a bitter, muddy-tasting cup.",
+        "The bitter aftertaste isn't from the roast.",
+        "Your morning cup has a secret ingredient.",
+        "The line under the word coffee is the one that matters.",
+        "Read the back before you brew.",
+        "Why your morning cup leaves a muddy film."
+      ],
+      "hook_spoken": "Did you know most jars on Indian shelves aren't purely coffee?",
+      "hook_text_overlay": "YOUR COFFEE HAS ROASTED ROOT",
+      "frames": [
+        {
+          "on_screen": "CHECK THE BACK PANEL",
+          "spoken": "Turn your instant coffee jar around right now and look past the bold front branding."
+        },
+        {
+          "on_screen": "THE HIDDEN CHICORY",
+          "spoken": "Most commercial instant brands mix in dried chicory root to stretch volume and cut costs."
+        },
+        {
+          "on_screen": "THE MUDDY AFTERTASTE",
+          "spoken": "That heavy, bitter film at the bottom of your cup? That is roasted root, not pure bean."
+        },
+        {
+          "on_screen": "100% PURE CHOICE",
+          "spoken": "At Purity Beans, Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee."
+        },
+        {
+          "on_screen": "READ THE JAR",
+          "spoken": "Stop drinking root extract when you want real coffee. Explore the pure range at https://p3online.in."
+        },
+        {
+          "on_screen": "FOLLOW @PURITYBEANS",
+          "spoken": "Follow @puritybeans so you never get fooled by coffee fillers again."
+        }
+      ],
+      "loop_note": "The final frame's call to check the jar label loops seamlessly back into turning the jar around in frame 1.",
+      "alt_hook": "WHAT'S IN YOUR JAR?",
+      "caption": "Is instant coffee actually coffee? Turn your kitchen jar around right now and read the fine print on the back ingredient panel. You might be surprised to find roasted chicory root mixed in with your morning brew, quietly altering your cup's flavor and aroma with bitter fillers.\n\nAt Purity Beans, we believe in radical transparency. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee for those who prefer an everyday smooth blend. No hidden roots, no artificial preservatives, just honest craft starting at just Rs 18 per cup.\n\nRead the jar. Know what you drink. Explore our clean collection at https://p3online.in.\n\nFollow @puritybeans for daily honest coffee craft. Shop pure: https://p3online.in",
+      "cta": "Follow @puritybeans for daily pure coffee truths. Discover 100% pure jars at https://p3online.in — Purity Beans",
+      "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+      "save_trigger": "Save this before your next grocery run so you never buy the wrong coffee again.",
+      "share_trigger": "Share with someone who starts every morning with coffee — they deserve to know.",
+      "seo_keywords": [
+        "premium instant coffee",
+        "gourmet instant coffee",
+        "freeze dried coffee",
+        "agglomerated coffee",
+        "coffee without preservatives",
+        "pure instant coffee",
+        "coffee lovers india",
+        "instant coffee brand india"
+      ],
+      "hashtags": "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime #PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity #IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands #CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife #PurityBeans #PurityBeansCoffee #PurityBeansExperience #BrewPure #PureCoffeeExperience",
+      "visual_direction": "Vertical 9:16 format. Shot on iPhone 15, handheld feel, shallow depth of field. Dark marble kitchen counter, warm amber lamp glow mixing with soft cool daylight from a nearby window. A lived-in scene with a used ceramic spoon and a slight water ring on the dark surface. The authentic Purity Beans glass jar sits slightly off-center with sharp contact shadows and realistic reflections on the glass label.",
+      "music_vibe": "Subtle low-tempo acoustic guitar picking with ambient room tone, creating a calm, revealing, documentary-style mood.",
+      "whatsapp_forward": "Hey! Check the back of your coffee jar today. Most commercial brands mix in chicory root. Purity Beans keeps it transparent—Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Check them out at https://p3online.in",
+      "ai_image_hook_prompt": "Vertical 9:16 format, shot on iPhone 15, 85mm portrait lens equivalent, shallow depth of field, real photographic capture. A dark textured marble kitchen counter in an urban Indian apartment, lit by one warm desk lamp and cool soft daylight from a side window. In the center, slightly off-center, sits the exact Purity Beans glass jar with its authentic product label catching sharp specular highlights. Visible on the glass are subtle fingerprint smudges and a single condensation droplet. In the background, a person with visible skin pores, natural asymmetric features, flyaway hairs, and realistic clothing wrinkles holds a ceramic spoon. Real fabric textures, natural grain, perfect contact shadow under the jar. No 3D render, no CGI, no text on image.",
+      "ai_video_motion_prompt": "Subtle slow locked-off shot at 24fps film feel. The person in the background breathes naturally with slight chest movement and micro blinks. The Purity Beans jar remains completely steady and anchored with crisp lighting reflections. In the background, a tiny wisp of steam from a warm mug slowly rises and disperses naturally into the cool air. No sudden movements, natural grain, organic motion physics.",
+      "thumbnail_options": [
+        {
+          "concept": "Extreme close-up macro view of the Purity Beans ingredient label under warm golden light with a human hand pointing directly at the '100% coffee' line.",
+          "image_prompt": "Vertical 9:16 format, macro photograph shot on 85mm f/1.8, extreme close-up of a printed paper product label on a glass jar. Warm golden spotlight, visible paper fibers and ink texture reflecting light naturally. A human finger with natural skin texture and slight oil sheen points at the text. Shallow depth of field, dark moody background, film grain, hyperrealistic.",
+          "predicted_ctr_reason": "Curiosity gap combined with text-reading behavior makes coffee lovers stop scrolling immediately."
+        }
+      ],
+      "hook": "YOUR COFFEE IS LYING",
+      "chosen_hook": "YOUR COFFEE IS LYING",
+      "hook_ab": [
+        {
+          "hook": "YOUR COFFEE IS LYING",
+          "score": 79.0
+        },
+        {
+          "hook": "WHAT'S IN YOUR JAR?",
+          "score": 79.0
+        },
+        {
+          "hook": "Your morning cup has a secret ingredient.",
+          "score": 79.0
+        },
+        {
+          "hook": "The hidden filler in your daily mug.",
+          "score": 74.0
+        },
+        {
+          "hook": "Why your morning cup leaves a muddy film.",
+          "score": 74.0
+        }
+      ],
+      "audio": {
+        "audio_category": "coffee_aesthetic",
+        "mood": "lofi",
+        "local_track": "music_library/lofi_cafe.wav",
+        "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+        "trend_status": "not_live_verified",
+        "audio_name": null,
+        "audio_id": null,
+        "audio_source": null,
+        "audio_attached": false,
+        "audio_publish_mode": "licensed_embedded",
+        "audio_required": true,
+        "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+        "rights_check_required": true,
+        "confidence": 0.5,
+        "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
+      },
+      "editorial_score": {
+        "shareability": 8.5,
+        "saveability": 8.0,
+        "emotion_pull": 9.0,
+        "hook_strength": 9.5,
+        "brand_clarity": 9.0,
+        "overall": 8.8,
+        "verdict": "PASS",
+        "feedback": "The content brilliantly targets consumer betrayal and transparency, maintaining absolute compliance with product rules (correctly identifying Bold/Purista/Purica/Prima as 100% coffee with zero chicory, and Ultra Blend as 70% coffee). The flow from the contrarian hook directly into the physical action of turning the jar around drives high retention and engagement.",
+        "retention_audit": "0-2s (Hook): Strong contrarian shock value ('YOUR COFFEE IS LYING'), excellent thumb-stop. 2-5s (Frame 1-2): Clear actionable command ('Turn your instant coffee jar around') combined with an industry truth ('chicory root') maintains high curiosity. 6-10s (Frame 3-4): Effective sensory contrast ('muddy aftertaste') leading cleanly into the brand differentiator without violating any product claims. 11-15s (Frame 5-6): Seamless looping mechanism and natural CTA drive profile visits and web traffic successfully."
+      },
+      "funnel_objective": "DISCOVERY",
+      "objective": "Engagement Growth",
+      "primary_cta": "Send this to someone who drinks instant coffee",
+      "success_metric": "shares",
+      "target": 500
+    },
+    {
+      "id": "reel_2",
+      "psychology_frame": "revelation",
+      "hook_archetype": "SOCIAL PROOF",
+      "hook_text": "MOST COFFEE ISNT COFFEE",
+      "hook_options": [
+        "Did you know most instant coffee in India isn't actually coffee?",
+        "Why your morning cup leaves a bitter taste behind.",
+        "The ingredient list on your kitchen counter tells a strange story.",
+        "What Big Coffee hides behind fancy jar labels.",
+        "You've been drinking roasted chicory root instead of pure beans.",
+        "The secret ingredient in commercial instant coffee isn't coffee.",
+        "Why cheap morning coffee tastes muddy and bitter.",
+        "Let's read the back of your coffee jar together.",
+        "The truth about what is inside your daily instant jar.",
+        "How to spot the hidden fillers in your morning brew.",
+        "Most people don't know what agglomerated coffee really contains.",
+        "Why real coffee lovers are switching away from blended powders."
+      ],
+      "hook_spoken": "Did you know that jar on your kitchen counter might not actually be real coffee?",
+      "hook_text_overlay": "MOST COFFEE ISNT COFFEE",
+      "frames": [
+        {
+          "on_screen": "MOST COFFEE ISNT COFFEE",
+          "spoken": "Did you know that jar on your kitchen counter might not actually be real coffee?"
+        },
+        {
+          "on_screen": "CHECK THE BACK PANEL",
+          "spoken": "Flip your jar around right now. Look past the marketing and read the fine print."
+        },
+        {
+          "on_screen": "THE HIDDEN ROOT",
+          "spoken": "Most mass-market instant brands mix in dried chicory root to bulk up the volume and cut costs."
+        },
+        {
+          "on_screen": "ZERO CHICORY GUARANTEE",
+          "spoken": "Purity Beans keeps it transparent: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee."
+        },
+        {
+          "on_screen": "TASTE THE DIFFERENCE",
+          "spoken": "No bitter fillers, no muddy aftertaste. Just pure, clean coffee crafted for your morning routine."
+        },
+        {
+          "on_screen": "FOLLOW @PURITYBEANS",
+          "spoken": "Follow @puritybeans so you never drink roasted root filler again."
+        }
+      ],
+      "loop_note": "The final frame's call to action loops seamlessly back into the opening question about what is really inside your coffee jar.",
+      "alt_hook": "Why your morning cup leaves a bitter taste behind.",
+      "caption": "Is instant coffee actually coffee? Let's talk about what is really inside your morning cup.\n\nIf you have ever experienced a bitter, muddy aftertaste that lingers long after your last sip, you are not imagining it. Many commercial instant coffee brands pad their jars with dried chicory root filler to cut production costs. It is a quiet compromise that changes your entire coffee experience.\n\nWe believe you deserve total transparency. That is why every Purity Beans jar tells the complete truth right on the label. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. No hidden fillers, no corporate shortcuts—just clean, exceptional coffee starting at just Rs 18 per cup.\n\nReady to upgrade your daily ritual? Explore our collection and taste the difference at https://p3online.in\n\nFollow @puritybeans for daily honest coffee craft. Shop pure: https://p3online.in",
+      "cta": "Follow @puritybeans for daily pure coffee craft. Explore 100% pure jars at https://p3online.in — Purity Beans",
+      "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+      "save_trigger": "Save this before your next grocery run so you never buy the wrong coffee again.",
+      "share_trigger": "Share with someone who starts every morning with coffee—they deserve to know.",
+      "seo_keywords": [
+        "premium instant coffee",
+        "gourmet instant coffee",
+        "freeze dried coffee",
+        "agglomerated coffee",
+        "coffee without preservatives",
+        "pure instant coffee",
+        "coffee lovers india",
+        "instant coffee brand india"
+      ],
+      "hashtags": "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime #PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity #IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands #CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife #PurityBeans #PurityBeansCoffee #PurityBeansExperience #BrewPure #PureCoffeeExperience",
+      "visual_direction": "Vertical 9:16 format. Shot on iPhone 15, handheld feel with slight natural motion blur. Dark marble kitchen counter background with a warm amber lamp casting a soft glow. The exact glass Purity Beans jar sits slightly off-center with sharp contact shadows and realistic glass reflections. Visible skin texture and flyaway hairs on the human anchor pointing at the label.",
+      "music_vibe": "Subtle low-tempo lo-fi beat with warm vinyl crackle, acoustic rhythm, curious and engaging mood.",
+      "whatsapp_forward": "Hey! Did you check the back of your coffee jar lately? Most commercial instant coffee brands mix in chicory root. Purity Beans keeps it 100% pure—Bold, Purista, Purica, and Prima have zero chicory. Check it out at https://p3online.in",
+      "ai_image_hook_prompt": "Vertical 9:16 format, hyperrealistic photograph shot on iPhone 15, 85mm portrait lens equivalent, shallow depth of field. A close-up shot of a human hand with natural skin pores and slight oil sheen pointing directly at the ingredient label of an authentic Purity Beans glass jar sitting on a dark textured marble countertop. One warm amber lamp light source from the side with correct shadow direction and crisp contact shadow where the jar meets the stone. Environment reflections visible on the glass surface, a single coffee granule and a faint fingerprint smudge near the base. Background features soft natural kitchen clutter out of focus. Natural color grain, slightly imperfect framing. No text, no 3D render, no CGI.",
+      "ai_video_motion_prompt": "Subtle and organic motion added to the still frame. The human hand makes a micro adjustment while breathing naturally with slight chest movement and a natural blink. The Purity Beans jar remains completely locked-off and steady. Background ambient dust motes drift slowly in the warm amber light beam with real physics. Shot at 24fps film feel with a very slow locked-off push-in camera movement. No morphing, no distortion.",
+      "thumbnail_options": [
+        {
+          "concept": "Extreme close-up macro shot of the Purity Beans glass jar label under dramatic warm golden light, with a human thumb pointing to the ingredients list.",
+          "image_prompt": "Vertical 9:16 format, macro photograph shot on 85mm f/1.8 lens, close-up of the authentic Purity Beans glass jar label on a dark surface. Warm amber spotlight hitting the label texture, shallow depth of field, real paper texture reflecting light, visible finger skin texture, natural film grain, zero digital render artifacts.",
+          "predicted_ctr_reason": "Extreme macro framing combined with a human anchor pointing at text creates an instant curiosity gap that forces the thumb to stop."
+        },
+        {
+          "concept": "A person holding the Purity Beans jar near a kitchen window with natural morning light streaming across, showing a genuine thoughtful expression.",
+          "image_prompt": "Vertical 9:16 format, authentic UGC photograph shot on iPhone 15, slightly off-center framing. A working professional holding the exact Purity Beans glass jar in a lived-in modern kitchen."
+        }
+      ],
+      "hook": "MOST COFFEE ISNT COFFEE",
+      "chosen_hook": "Most people don't know what agglomerated coffee really contains.",
+      "hook_ab": [
+        {
+          "hook": "Most people don't know what agglomerated coffee really contains.",
+          "score": 83.0
+        },
+        {
+          "hook": "Why your morning cup leaves a bitter taste behind.",
+          "score": 74.0
+        },
+        {
+          "hook": "The truth about what is inside your daily instant jar.",
+          "score": 70.0
+        },
+        {
+          "hook": "How to spot the hidden fillers in your morning brew.",
+          "score": 70.0
+        },
+        {
+          "hook": "Why real coffee lovers are switching away from blended powders.",
+          "score": 69.0
+        }
+      ],
+      "audio": {
+        "audio_category": "coffee_aesthetic",
+        "mood": "lofi",
+        "local_track": "music_library/lofi_cafe.wav",
+        "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+        "trend_status": "not_live_verified",
+        "audio_name": null,
+        "audio_id": null,
+        "audio_source": null,
+        "audio_attached": false,
+        "audio_publish_mode": "licensed_embedded",
+        "audio_required": true,
+        "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+        "rights_check_required": true,
+        "confidence": 0.5,
+        "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
+      },
+      "editorial_score": {
+        "shareability": 8.5,
+        "saveability": 8.0,
+        "emotion_pull": 8.5,
+        "hook_strength": 9.0,
+        "brand_clarity": 9.5,
+        "overall": 8.7,
+        "verdict": "PASS",
+        "feedback": "The content hits hard with the industry truth about chicory filling, creating an immediate betrayal/curiosity trigger that stops the scroll. Brand clarity is exceptional, clearly distinguishing the 100% coffee variants (Bold, Purista, Purica, Prima) from Ultra Blend without violating any brand rules. To optimize further, tighten the middle frames so the transition from the problem directly to the exact variant breakdown feels punchy and unskippable.",
+        "retention_audit": "Frame 1 (0-2s): Hook 'MOST COFFEE ISNT COFFEE' combined with the spoken question creates a powerful pattern interrupt. No attention drop. Frame 2 (2-5s): 'CHECK THE BACK PANEL' gives an actionable micro-command that keeps eyes locked. Frame 3 (5-10s): Explaining the chicory root filler maintains high interest due to the betrayal trigger. Frame 4 (10-18s): Variant breakdown is precise and handles the product tiers accurately; viewer retention stays high because of the high-value clarity. Frame 5 & 6: Clean payoff and seamless loop setup ensure high replay value."
+      },
+      "funnel_objective": "COMMUNITY",
+      "objective": "Engagement Growth",
+      "primary_cta": "Which one would you choose? Comment below",
+      "success_metric": "comments",
+      "target": 150
+    }
+  ],
+  "instagram_post": {
+    "caption": "Did you know most instant coffee in India isn't actually coffee? If you have ever flipped a jar over in the supermarket aisle and stared at the ingredient list, you might have felt a sudden quiet confusion. Right under the word 'coffee', there is often an ingredient that has nothing to do with coffee beans at all: chicory root. For decades, mass-market brands have bulked up jars with roasted chicory to stretch margins, leaving drinkers with a bitter, muddy aftertaste that requires milk and sugar just to mask the flavor. At Purity Beans, we believe in radical transparency. That is why our Bold, Purista, Purica, and Prima jars are 100% coffee with zero chicory. Our Purica is freeze-dried 100% Arabica, while Ultra Blend is crafted with 70% coffee and 30% chicory for everyday comfort. When you want a rich, authentic brew without hidden fillers, read the jar and know exactly what is in your cup. Shop pure coffee now: https://p3online.in\n\nFollow @puritybeans for daily pure coffee truths that cut through the noise.",
+    "cta": "Explore our 100% pure coffee collection at https://p3online.in — Purity Beans",
+    "comment_trigger": "Comment COFFEE if you prefer your brew with zero chicory.",
+    "save_trigger": "Save this post before your next grocery run.",
+    "share_trigger": "Share with someone who needs to check their coffee label today.",
+    "image_prompt": "A pristine Purity Beans glass jar sitting on a dark natural marble kitchen counter, illuminated by warm morning side-lighting. A single crystal-clear glass next to the jar with rich black coffee and delicate crema on top. Editorial FMCG photography, shot on 85mm lens, shallow depth of field, natural wood textures in the soft-focus background, ultra-realistic skin and surface details, no artificial text or overlays in the image.",
+    "image_alt": "Purity Beans glass jar on dark marble counter with morning light",
+    "post_type": "product-truth",
+    "hook_line": "Did you know most instant coffee in India isn't actually coffee?",
+    "seo_keywords": [
+      "is instant coffee actually coffee",
+      "premium instant coffee",
+      "gourmet instant coffee",
+      "freeze dried coffee",
+      "pure instant coffee india",
+      "coffee without preservatives"
+    ],
+    "hashtags": "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime #PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity #IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands #CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife #PurityBeans #PurityBeansCoffee #PurityBeansExperience #BrewPure #PureCoffeeExperience",
+    "hook_text": "Did you know most instant coffee in India isn't actually coffee?",
+    "hook": "Did you know most instant coffee in India isn't actually coffee?",
+    "chosen_hook": "Did you know most instant coffee in India isn't actually coffee?",
+    "audio": {
+      "audio_category": "educational",
+      "mood": "ambient",
+      "local_track": "music_library/ambient_lounge.wav",
+      "recommendation": "Minimalist Smart Ambient (Search: 'Deep Focus Ambient' or 'Subtle Brainwave')",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Minimalist Smart Ambient (Search: 'Deep Focus Ambient' or 'Subtle Brainwave'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as 'educational' -> ambient mood. No performance history yet — exploring."
+    },
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.0,
+      "overall": 8.6,
+      "verdict": "PASS",
+      "feedback": "The content excels at using the betrayal and curiosity hook angles to immediately expose hidden industry standards regarding chicory fillers. Brand differentiation is sharp, clearly delineating 100% pure variants (Bold, Purista, Purica, Prima) from the blended Ultra Blend. The flow smoothly transitions from the eye-opening hook into transparent education and a direct call to action with the required website URL. To push scores even higher, ensure the transition between the problem and product introduction feels completely seamless without breaking the educational tone.",
+      "retention_audit": "Line 1: 'Did you know most instant coffee in India isn't actually coffee?' — Excellent scroll-stopping question, creates an immediate curiosity gap and slight betrayal trigger. No attention drop here. Middle Section: 'Right under the word 'coffee', there is often an ingredient that has nothing to do with coffee beans at all: chicory root.' — Strong investigative tone that keeps eyes locked to the text. Minor risk of slight reader fatigue if they already know about chicory, but quickly resolved by the specific product breakdown. Final Section: 'At Purity Beans, we believe in radical transparency...' — Clear, authoritative positioning that successfully turns the revelation into a definitive brand solution with a clear action path."
+    },
+    "funnel_objective": "FOLLOW",
+    "objective": "Follower Growth",
+    "primary_cta": "Follow @puritybeans so you never drink roasted root again",
+    "success_metric": "follows",
+    "target": 250
+  },
+  "carousel": {
+    "id": "carousel_1",
+    "psychology_frame": "revelation",
+    "save_mechanic": "DATA STORY",
+    "title": "Most instant coffee in India isn't what you think.",
+    "slides": [
+      {
+        "slide": 1,
+        "heading": "Most instant coffee isn't 100% coffee.",
+        "body": "Flip your jar right now. Look at the ingredient panel. What is actually sitting in your cup every single morning?",
+        "visual": "Dark slate grey studio background, single authentic Purity Beans glass jar sitting sharply in the center, dramatic warm amber accent lighting catching the crisp printed paper label."
+      },
+      {
+        "slide": 2,
+        "heading": "The 70-30 Reality Check",
+        "body": "Many commercial instant blends contain roasted chicory root fillers mixed in. It is cheaper to produce, but it changes your morning cup entirely.",
+        "visual": "Macro lens close-up of two distinct textures side by side: dark earthy root powder versus rich, uniform coffee granules under soft natural falloff light."
+      },
+      {
+        "slide": 3,
+        "heading": "Why Brands Add Fillers",
+        "body": "Adding chicory root cuts production costs significantly. But it also introduces a bitter, woody aftertaste that masks the true character of real coffee beans.",
+        "visual": "Imperfect tabletop shot with a used stainless steel spoon, a faint water ring on a dark wooden counter, and soft window daylight filtering through from the side."
+      },
+      {
+        "slide": 4,
+        "heading": "The Purity Beans Standard",
+        "body": "Real coffee lovers refuse compromise. Bold, Purista, Purica, and Prima are 100% pure coffee with zero chicory. Ultra Blend is precisely 70% coffee.",
+        "visual": "Hand with natural skin texture and slight asymmetric fingernails placing the Purity Beans jar down onto a lived-in kitchen marble surface."
+      },
+      {
+        "slide": 5,
+        "heading": "Read the Jar Before You Buy",
+        "body": "Transparency isn't a marketing trick; it's a right. When you buy pure instant coffee, you deserve to know every single ingredient without hidden filler names.",
+        "visual": "Extreme close-up on the back ingredient label of the Purity Beans jar, caught in crisp focus with realistic printed paper texture catching a warm light source."
+      },
+      {
+        "slide": 6,
+        "heading": "Upgrade Your Morning Routine",
+        "body": "Experience India's cleanest instant coffee starting at just Rs 18 per cup. Discover Bold, Purista, Purica, and Ultra Blend at https://p3online.in",
+        "visual": "Warm morning kitchen scene shot on an iPhone 15 style camera, shallow depth of field, natural coffee steam rising gently from a ceramic mug."
+      },
+      {
+        "slide": 7,
+        "heading": "Save This & Follow for More",
+        "body": "Never buy blind again. Save this carousel for your next grocery run and follow @puritybeans for daily truths Big Coffee tries to hide. Purity Beans. Shop: https://p3online.in",
+        "visual": "Clean dark amber minimalist slide with subtle product shadow, Purity Beans wordmark, and clear call to visit https://p3online.in"
+      }
+    ],
+    "caption": "Did you know most instant coffee in India isn't actually coffee? If you have never flipped your coffee jar around to read the back ingredient panel, you might be surprised by what you are drinking every morning. For decades, commercial instant brands have mixed in roasted chicory root fillers to cut costs. While chicory adds bulk, it also brings a heavy, woody bitterness that masks the authentic notes of real beans. If your morning cup leaves an unfamiliar muddy aftertaste, you aren't imagining it. At Purity Beans, we believe in radical transparency. Bold, Purista, Purica, and Prima are 100% pure coffee with zero chicory. For those who enjoy a traditional blend, our Ultra Blend features 70% coffee. No hidden fillers, no corporate smoke and mirrors—just exceptional coffee starting at Rs 18 per cup. Stop guessing what is in your mug. Read the jar, demand better transparency, and experience India's cleanest instant coffee. Save this carousel for your next grocery run and follow @puritybeans so you never drink roasted root filler again. Explore our pure coffee range and shop now at https://p3online.in",
+    "cta": "Save this carousel + Follow @puritybeans. Explore pure coffee at https://p3online.in — Purity Beans",
+    "comment_trigger": "Comment COFFEE if you refuse to drink chicory root.",
+    "save_trigger": "Save this carousel — it will change how you check your coffee labels forever.",
+    "share_trigger": "Share this with someone who drinks instant coffee every single day.",
+    "seo_keywords": [
+      "premium instant coffee",
+      "gourmet instant coffee",
+      "freeze dried coffee",
+      "agglomerated coffee",
+      "coffee without preservatives",
+      "pure instant coffee india",
+      "instant coffee brand india"
+    ],
+    "hashtags": "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime #PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity #IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands #CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife #PurityBeans #PurityBeansCoffee #PurityBeansExperience #BrewPure #PureCoffeeExperience",
+    "audio": {
+      "audio_category": "coffee_aesthetic",
+      "mood": "lofi",
+      "local_track": "music_library/lofi_cafe.wav",
+      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
+    },
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.8,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.2,
+      "overall": 8.9,
+      "verdict": "PASS",
+      "feedback": "The carousel executes a textbook betrayal/revelation hook ('Most instant coffee isn't 100% coffee') that forces immediate engagement and aligns directly with target audience frustrations. Educational pacing across slides 2 to 5 builds logical trust without sounding overly corporate. Accurate distinction maintained regarding Ultra Blend (70% coffee) vs zero-chicory variants. Saveability is high due to the 'Read the Jar' buying guide framework. No attention drops detected in the copy flow.",
+      "retention_audit": "Slide 1: Hook stops scroll instantly by challenging common assumptions. Slide 2-3: Strong data story keeps eyes moving to understand industry fillers. Slide 4: Clear differentiation of product variants prevents buyer confusion. Slide 5-7: High-utility takeaway combined with a direct, friction-free CTA to p3online.in. Zero weak transitions found."
+    },
+    "funnel_objective": "FOLLOW",
+    "objective": "Follower Growth",
+    "primary_cta": "Follow @puritybeans so you never drink roasted root again",
+    "success_metric": "follows",
+    "target": 250
+  },
+  "linkedin_post": {
+    "angle": "CORPORATE PANTRY ROI",
+    "hook": "The invisible tax of terrible office coffee.",
+    "body": "Most tech founders and executive teams obsess over ergonomic chairs, high-speed Wi-Fi, and top-tier health insurance. Here is what actually happens when an office pantry relies on cheap filler coffee:\n\n• The 2:30 PM Sludge: Employees do not experience sustained focus. They experience an initial sugar-and-caffeine spike followed by a muddy gut crash, driving them down to local cafes for an Rs 180 latte. • The Morale Signal: A pantry stocked with the cheapest possible corporate commodities sends a quiet, subtle message to your team about how their daily well-being is valued. • The Hidden Cost: When 50 knowledge workers lose 20 minutes a day walking off-site for decent caffeine or recovering from low-quality brews, the productivity leak far exceeds the modest cost of premium pantry provisions. Upgrading your office or studio pantry to 100% pure instant coffee isn't an operational expense. It is a retention and productivity investment. When you provide clean, bold, zero-chicory coffee like Bold or Purista—delivering rich aroma, natural antioxidants, and clean focus at a fraction of cafe prices—you change the entire rhythm of the workday. Quality in the cup translates directly to quality in the output.",
+    "brand_bridge": "At Purity Beans, we believe workplace coffee should never be a compromise. That is why our signature blends—like Bold and Purista—contain 100% pure coffee with zero chicory, crafted to fuel ambitious teams cleanly.",
+    "closing_question": "What is currently sitting in your office pantry right now? Real coffee beans, or a chicory-heavy industrial blend?",
+    "cta": "Follow Hiten Jain for weekly deep-dives into food science and workplace wellness, and explore our 100% pure coffee at https://p3online.in. — Purity Beans",
+    "hashtags": "#CoffeeKnowledge #FoodScience #D2CIndia #WorkplaceWellness #PureCoffee #CleanLabel #IndianStartups #ExecutiveRoutine #CoffeeCommunity #PurityBeans",
+    "image_prompt": "Clean executive desk setup, glass jar of Purity Beans pure coffee, warm natural morning light, ceramic cup, premium minimalist aesthetic, 1200x628.",
+    "hook_text": "The invisible tax of terrible office coffee.",
+    "chosen_hook": "The invisible tax of terrible office coffee.",
+    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.0,
+      "emotion_pull": 8.2,
+      "hook_strength": 8.8,
+      "brand_clarity": 9.0,
+      "overall": 8.5,
+      "verdict": "PASS",
+      "feedback": "The copy successfully targets decision-makers and office culture with a compelling economic and productivity argument. To elevate performance further, tighten the middle bullet points to increase reading velocity and ensure the transition to the brand bridge feels seamless.",
+      "retention_audit": "Hook ('The invisible tax of terrible office coffee.') is strong and creates an immediate curiosity gap for professionals. Body paragraphs maintain steady engagement through concrete operational scenarios, though the bullet points could be slightly punchier to prevent skimming fatigue. Closing question and CTA effectively drive engagement and direct traffic to https://p3online.in."
+    },
+    "funnel_objective": "FOLLOW",
+    "objective": "Follower Growth",
+    "primary_cta": "Follow @puritybeans so you never drink roasted root again",
+    "success_metric": "follows",
+    "target": 250
+  },
+  "blog_post": {
+    "title": "Bold and Purista: 100% Robusta jars",
+    "slug": "bold-and-purista-robusta-coffee",
+    "meta_description": "Robusta instant coffee at Purity Beans means Bold and Purista, both 100% Robusta with 0% chicory. Prices are the catalog prices in rupees. Prices are catalog",
+    "primary_keyword": "robusta instant coffee",
+    "focus_keyword": "robusta instant coffee",
+    "secondary_keywords": [
+      "bold instant coffee",
+      "purista freeze dried"
+    ],
+    "topic_id": "robusta-bold",
+    "tldr": "Robusta instant coffee comes down to the jar, not a slogan. Purity Beans Ultra Blend is 70% coffee and 30% chicory. Prima, also called Premium Agglomerate, is 100% Arabica and is not freeze-dried. Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica. Prices in this article are catalog prices in rupees for shoppers in India.",
+    "introduction": "If you are searching for robusta instant coffee, start with the back of the jar. In Mumbai and Bengaluru the usual cup is milk coffee, so the chicory line changes the taste. Purity Beans lists Ultra Blend as 70% coffee and 30% chicory, and the prices below are in ₹ on p3online.in.",
+    "body": "## What does robusta instant coffee mean for an Indian kitchen?\n\nMost mornings begin with a cup of coffee that promises pure energy, only to deliver a bitter, muddy aftertaste. Have you ever checked what is actually inside your pantry jar? Many commercial brands quietly bulk up their powders with chicory filler, diluting the authentic bean flavor. If you want a morning kick that cuts through the milk without hidden fillers, it is time to look at robusta instant coffee done right.\n\nPurity Beans takes a completely transparent approach with our Bold and Purista jars. Both are crafted from 100% Robusta beans with absolute zero chicory. While our Ultra Blend offers a milder cup with 70% coffee and 30% chicory, Bold and Purista deliver the deep, full-bodied strength that dedicated coffee lovers crave. Bold provides a robust agglomerated kick at ₹239 for 50g, while Purista utilizes freeze-dried gourmet granules to lock in rich crema at ₹319 for 50g. Experience the honest, bold taste of pure Robusta in your kitchen today.\n\n### A plain definition\n\nA robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.\n\n## How do you read the chicory line on the jar?\n\nMost instant coffee drinkers have spent years unknowingly sipping on chicory roots blended into their morning cup, assuming that bitter bite was simply what real coffee tastes like. When you finally inspect the ingredient label on a jar of robusta instant coffee, the transparency of true craft instantly changes your standard. At Purity Beans, both Bold and Purista stand proudly as 100% Robusta with zero chicory whatsoever. Bold delivers a deep, full-bodied moka pot kick at ₹239 for 50g, while Purista utilizes a freeze-dried process to lock in rich crema at ₹319 for 50g. By contrast, if you prefer an everyday milky blend with chicory, Ultra Blend contains 70% coffee and 30% chicory. Meanwhile, Prima is a separate 100% Arabica agglomerate. True coffee lovers demand pure ingredients, refusing to let filler dilute their morning rituals.\n\n### Where the percent sits\n\nA robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.\n\n## Which jar matches a robusta instant coffee question?\n\nMost morning coffee drinkers do not realize their daily cup relies on hidden chicory fillers rather than pure beans. When searching for a true robusta instant coffee, you deserve complete transparency about what sits in your jar. Purity Beans offers two distinct options built entirely from 100% Robusta with zero chicory. For a deep, full-bodied kick with naturally high caffeine, Bold Pure Robusta delivers an honest morning energy boost at ₹239 for 50g and ₹369 for 100g. If you prefer your robusta processed through freeze-dried granules to lock in aroma and crema while keeping a bold yet smooth profile, Purista Gourmet Robusta Granules is available at ₹319 for 50g and ₹509 for 100g. In contrast, Ultra Blend contains 70% coffee and 30% chicory, making it an everyday milk coffee option rather than pure coffee. Prima is currently out of stock. Choose the 100% Robusta jar that fits your taste today at https://p3online.in\n\n### Catalog facts only\n\nA robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.\n\n## What does each jar cost in rupees?\n\nMost commercial instant coffee jars quietly dilute their robust beans with cheap chicory powder, leaving you with a weak brew and a bitter aftertaste. If you want a deep, honest cup that wakes you up instantly, you need to look inside your pantry. Purity Beans offers two distinct options crafted from 100% pure Robusta with zero chicory: Bold and Purista. While Bold uses an agglomerated process to deliver a full-bodied, strong kick, Purista utilizes freeze-drying to lock in rich aromas and natural crema from gourmet Robusta beans. (For those who prefer a traditional milk blend, Ultra Blend combines 70% coffee and 30% chicory.) When you are ready to upgrade your morning routine, Bold is available starting at ₹239 for 50g and ₹369 for 100g. If you prefer the gourmet freeze-dried experience, Purista is priced at ₹319 for 50g and ₹509 for 100g. Explore the clean coffee movement and order your jar at https://p3online.in\n\n### Smallest size on the catalog\n\nA robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.\n\n## How do people brew instant coffee in Indian cities?\n\nMost morning coffee drinkers walk into their kitchens unaware that their favorite jars contain more than just coffee beans. Walk down any grocery aisle, and you will find commercial blends padded out with chicory root fillers. If you prefer a powerful morning kick without hidden additives, you need to know exactly what is in your cup. Purity Beans changes the standard by offering uncompromising clarity. Our Bold Pure Robusta delivers 100% coffee at ₹239 for 50g and ₹369 for 100g, while our Purista Gourmet Robusta Granules provide a freeze-dried experience at ₹319 for 50g and ₹509 for 100g. Both feature zero chicory. By comparison, our Ultra Blend contains 70% coffee and 30% chicory, priced at ₹209 for 50g and ₹309 for 100g. Meanwhile, Prima is an agglomerated 100% Arabica option priced at ₹269 for 50g and ₹449 for 100g, though it is currently out of stock. Urban coffee enthusiasts deserve transparent labeling and honest ingredients every single morning.\n\n### Milk coffee and filter habits\n\nA robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.\n\n## How do you choose a jar without a slogan?\n\nWhen you pick up a jar of robusta instant coffee, do you actually know what is resting inside your mug? Most commercial coffee aisles hide a quiet reality: many jars are padded with chicory root filler, diluting the authentic bean flavor you paid for. If you prefer a deep, full-bodied cup with a strong, honest kick, you need a jar that stays entirely true to the bean. Purity Beans offers dedicated 100% Robusta options with zero chicory whatsoever, crafted so you never have to guess what you are drinking. Choose Bold Pure Robusta at ₹239 for 50g or ₹369 for 100g if you want an agglomerated coffee designed for a powerful morning energy boost. If you prefer freeze-dried granules that lock in a bold yet smooth profile with a naturally rich crema, Purista Gourmet Robusta Granules is available at ₹319 for 50g or ₹509 for 100g. For those exploring other everyday blends, remember that Ultra Blend contains 70% coffee and 30% chicory, while Prima / Premium Agglomerate is a 100% Arabica agglomerated option. Choosing a clean, transparent cup starts with reading the label and knowing your roast.\n\n### A label-first rule\n\nA robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.\n\n| Jar | Beans | Chicory | Process | Smallest jar | Stock |\n| --- | --- | --- | --- | --- | --- |\n| Ultra Blend | 70% coffee | 30% chicory | Agglomerated instant blend | ₹209 for 50g | In stock |\n| Bold | 100% Robusta | 0% chicory | Agglomerated instant coffee | ₹239 for 50g | In stock |\n| Purista | 100% Robusta | 0% chicory | Freeze-dried granules | ₹319 for 50g | In stock |\n| Purica | 100% Arabica | 0% chicory | Freeze-dried granules | ₹329 for 50g | In stock |\n| Prima | 100% Arabica | 0% chicory | Premium Agglomerate | ₹269 for 50g | Out of stock |\n\nCatalog pages for shoppers in India: [Ultra Blend (70% coffee, 30% chicory)](https://p3online.in/products/purity-beans-ultra-blend-instant-coffee) (₹209), [Bold Pure Robusta](https://p3online.in/products/purity-beans-bold-instant-coffee) (₹239), [Purica Gourmet Arabica Granules](https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules) (₹329).",
+    "conclusion": "Purity Beans is the brand on the jar. For robusta instant coffee, read the chicory line first. Ultra Blend is 70% coffee and 30% chicory, and only that jar may be called lower caffeine. Prima, the Premium Agglomerate, is 100% Arabica. Then open the catalog at https://p3online.in",
+    "faq": [
+      {
+        "question": "What is Ultra Blend?",
+        "answer": "Ultra Blend is 70% coffee and 30% chicory. It is not a zero-chicory jar. A lower-caffeine description is allowed only for this jar. The 50g jar is ₹209."
+      },
+      {
+        "question": "Is Prima 100% Arabica?",
+        "answer": "Yes. Prima, sold as Premium Agglomerate, is 100% Arabica with 0% chicory. It is agglomerated, not freeze-dried. The catalog lists the 50g jar at ₹269 and marks it out of stock."
+      },
+      {
+        "question": "Which jars are 100% Robusta?",
+        "answer": "Bold and Purista are 100% Robusta with 0% chicory. Purista is freeze-dried. Bold is agglomerated."
+      },
+      {
+        "question": "What is Purica?",
+        "answer": "Purica is freeze-dried 100% Arabica with 0% chicory."
+      },
+      {
+        "question": "Where are robusta instant coffee jars sold?",
+        "answer": "The product pages are on p3online.in. Prices in this article are the catalog prices in rupees."
+      }
+    ],
+    "image_alt": "Purity Beans jars for robusta instant coffee on a kitchen counter in India",
+    "author": "Purity Beans",
+    "last_updated": "2026-10-11",
+    "tags": [
+      "instant coffee",
+      "purity beans",
+      "india",
+      "robusta instant coffee"
+    ],
+    "internal_links": [
+      "https://p3online.in/products/purity-beans-ultra-blend-instant-coffee",
+      "https://p3online.in/products/purity-beans-bold-instant-coffee",
+      "https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules"
+    ],
+    "llms_summary": "Robusta instant coffee comes down to the jar, not a slogan. Purity Beans Ultra Blend is 70% coffee and 30% chicory. Prima, also called Premium Agglomerate, is 100% Arabica and is not freeze-dried. Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica. Prices in this article are catalog prices in rupees for shoppers in India. Brand: Purity Beans. Site: https://p3online.in Ultra Blend is 70% coffee and 30% chicory. Prima / Premium Agglomerate is 100% Arabica and is not freeze-dried. Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica. Use the catalog prices in rupees. Do not call Ultra Blend zero chicory.",
+    "sections": [
+      {
+        "heading": "What does robusta instant coffee mean for an Indian kitchen?",
+        "level": "h2",
+        "body": "Most mornings begin with a cup of coffee that promises pure energy, only to deliver a bitter, muddy aftertaste. Have you ever checked what is actually inside your pantry jar? Many commercial brands quietly bulk up their powders with chicory filler, diluting the authentic bean flavor. If you want a morning kick that cuts through the milk without hidden fillers, it is time to look at robusta instant coffee done right.\n\nPurity Beans takes a completely transparent approach with our Bold and Purista jars. Both are crafted from 100% Robusta beans with absolute zero chicory. While our Ultra Blend offers a milder cup with 70% coffee and 30% chicory, Bold and Purista deliver the deep, full-bodied strength that dedicated coffee lovers crave. Bold provides a robust agglomerated kick at ₹239 for 50g, while Purista utilizes freeze-dried gourmet granules to lock in rich crema at ₹319 for 50g. Experience the honest, bold taste of pure Robusta in your kitchen today."
+      },
+      {
+        "heading": "How do you read the chicory line on the jar?",
+        "level": "h2",
+        "body": "Most instant coffee drinkers have spent years unknowingly sipping on chicory roots blended into their morning cup, assuming that bitter bite was simply what real coffee tastes like. When you finally inspect the ingredient label on a jar of robusta instant coffee, the transparency of true craft instantly changes your standard. At Purity Beans, both Bold and Purista stand proudly as 100% Robusta with zero chicory whatsoever. Bold delivers a deep, full-bodied moka pot kick at ₹239 for 50g, while Purista utilizes a freeze-dried process to lock in rich crema at ₹319 for 50g. By contrast, if you prefer an everyday milky blend with chicory, Ultra Blend contains 70% coffee and 30% chicory. Meanwhile, Prima is a separate 100% Arabica agglomerate. True coffee lovers demand pure ingredients, refusing to let filler dilute their morning rituals."
+      },
+      {
+        "heading": "Which jar matches a robusta instant coffee question?",
+        "level": "h2",
+        "body": "Most morning coffee drinkers do not realize their daily cup relies on hidden chicory fillers rather than pure beans. When searching for a true robusta instant coffee, you deserve complete transparency about what sits in your jar. Purity Beans offers two distinct options built entirely from 100% Robusta with zero chicory. For a deep, full-bodied kick with naturally high caffeine, Bold Pure Robusta delivers an honest morning energy boost at ₹239 for 50g and ₹369 for 100g. If you prefer your robusta processed through freeze-dried granules to lock in aroma and crema while keeping a bold yet smooth profile, Purista Gourmet Robusta Granules is available at ₹319 for 50g and ₹509 for 100g. In contrast, Ultra Blend contains 70% coffee and 30% chicory, making it an everyday milk coffee option rather than pure coffee. Prima is currently out of stock. Choose the 100% Robusta jar that fits your taste today at https://p3online.in."
+      },
+      {
+        "heading": "What does each jar cost in rupees?",
+        "level": "h2",
+        "body": "Most commercial instant coffee jars quietly dilute their robust beans with cheap chicory powder, leaving you with a weak brew and a bitter aftertaste. If you want a deep, honest cup that wakes you up instantly, you need to look inside your pantry. Purity Beans offers two distinct options crafted from 100% pure Robusta with zero chicory: Bold and Purista. While Bold uses an agglomerated process to deliver a full-bodied, strong kick, Purista utilizes freeze-drying to lock in rich aromas and natural crema from gourmet Robusta beans. (For those who prefer a traditional milk blend, Ultra Blend combines 70% coffee and 30% chicory.) When you are ready to upgrade your morning routine, Bold is available starting at ₹239 for 50g and ₹369 for 100g. If you prefer the gourmet freeze-dried experience, Purista is priced at ₹319 for 50g and ₹509 for 100g. Explore the clean coffee movement and order your jar at https://p3online.in."
+      },
+      {
+        "heading": "How do people brew instant coffee in Indian cities?",
+        "level": "h2",
+        "body": "Most morning coffee drinkers walk into their kitchens unaware that their favorite jars contain more than just coffee beans. Walk down any grocery aisle, and you will find commercial blends padded out with chicory root fillers. If you prefer a powerful morning kick without hidden additives, you need to know exactly what is in your cup. Purity Beans changes the standard by offering uncompromising clarity. Our Bold Pure Robusta delivers 100% coffee at ₹239 for 50g and ₹369 for 100g, while our Purista Gourmet Robusta Granules provide a freeze-dried experience at ₹319 for 50g and ₹509 for 100g. Both feature zero chicory. By comparison, our Ultra Blend contains 70% coffee and 30% chicory, priced at ₹209 for 50g and ₹309 for 100g. Meanwhile, Prima is an agglomerated 100% Arabica option priced at ₹269 for 50g and ₹449 for 100g, though it is currently out of stock. Urban coffee enthusiasts deserve transparent labeling and honest ingredients every single morning."
+      },
+      {
+        "heading": "How do you choose a jar without a slogan?",
+        "level": "h2",
+        "body": "When you pick up a jar of robusta instant coffee, do you actually know what is resting inside your mug? Most commercial coffee aisles hide a quiet reality: many jars are padded with chicory root filler, diluting the authentic bean flavor you paid for. If you prefer a deep, full-bodied cup with a strong, honest kick, you need a jar that stays entirely true to the bean. Purity Beans offers dedicated 100% Robusta options with zero chicory whatsoever, crafted so you never have to guess what you are drinking. Choose Bold Pure Robusta at ₹239 for 50g or ₹369 for 100g if you want an agglomerated coffee designed for a powerful morning energy boost. If you prefer freeze-dried granules that lock in a bold yet smooth profile with a naturally rich crema, Purista Gourmet Robusta Granules is available at ₹319 for 50g or ₹509 for 100g. For those exploring other everyday blends, remember that Ultra Blend contains 70% coffee and 30% chicory, while Prima / Premium Agglomerate is a 100% Arabica agglomerated option. Choosing a clean, transparent cup starts with reading the label and knowing your roast."
+      }
+    ],
+    "generation_notes": [
+      "resumed draft at s0 with 0 completed sections"
+    ],
+    "json_ld": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Article",
+          "headline": "Bold and Purista: 100% Robusta jars",
+          "description": "Robusta instant coffee at Purity Beans means Bold and Purista, both 100% Robusta with 0% chicory. Prices are the catalog prices in rupees. Prices are catalog",
+          "inLanguage": "en-IN",
+          "dateModified": "2026-10-11",
+          "datePublished": "2026-10-11",
+          "author": {
+            "@type": "Organization",
+            "name": "Purity Beans",
+            "url": "https://p3online.in"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Purity Beans",
+            "url": "https://p3online.in"
+          },
+          "mainEntityOfPage": "https://p3online.in/blogs/news/bold-and-purista-robusta-coffee"
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Ultra Blend?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ultra Blend is 70% coffee and 30% chicory. It is not a zero-chicory jar. A lower-caffeine description is allowed only for this jar. The 50g jar is ₹209."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Prima 100% Arabica?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Prima, sold as Premium Agglomerate, is 100% Arabica with 0% chicory. It is agglomerated, not freeze-dried. The catalog lists the 50g jar at ₹269 and marks it out of stock."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which jars are 100% Robusta?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Bold and Purista are 100% Robusta with 0% chicory. Purista is freeze-dried. Bold is agglomerated."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is Purica?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Purica is freeze-dried 100% Arabica with 0% chicory."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Where are robusta instant coffee jars sold?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The product pages are on p3online.in. Prices in this article are the catalog prices in rupees."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://p3online.in"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://p3online.in/blogs/news"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Bold and Purista: 100% Robusta jars",
+              "item": "https://p3online.in/blogs/news/bold-and-purista-robusta-coffee"
+            }
+          ]
+        },
+        {
+          "@type": "Product",
+          "name": "Bold Pure Robusta",
+          "url": "https://p3online.in/products/purity-beans-bold-instant-coffee",
+          "sku": "PB-BLD-50",
+          "brand": {
+            "@type": "Brand",
+            "name": "Purity Beans"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "price": "239",
+            "availability": "https://schema.org/InStock",
+            "url": "https://p3online.in/products/purity-beans-bold-instant-coffee"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Purista Gourmet Robusta Granules",
+          "url": "https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules",
+          "sku": "PB-PST-50",
+          "brand": {
+            "@type": "Brand",
+            "name": "Purity Beans"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "price": "319",
+            "availability": "https://schema.org/InStock",
+            "url": "https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Purica Gourmet Arabica Granules",
+          "url": "https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules",
+          "sku": "PB-PCA-50",
+          "brand": {
+            "@type": "Brand",
+            "name": "Purity Beans"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "price": "329",
+            "availability": "https://schema.org/InStock",
+            "url": "https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Ultra Blend (70% coffee, 30% chicory)",
+          "url": "https://p3online.in/products/purity-beans-ultra-blend-instant-coffee",
+          "sku": "PB-ULT-50",
+          "brand": {
+            "@type": "Brand",
+            "name": "Purity Beans"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "price": "209",
+            "availability": "https://schema.org/InStock",
+            "url": "https://p3online.in/products/purity-beans-ultra-blend-instant-coffee"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Variety Box (4 × 50g Jars)",
+          "url": "https://p3online.in/products/variety-box",
+          "sku": "PB-VARIETY-4x50",
+          "brand": {
+            "@type": "Brand",
+            "name": "Purity Beans"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "price": "877",
+            "availability": "https://schema.org/InStock",
+            "url": "https://p3online.in/products/variety-box"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Gourmet Duo Full Size (100g Purista + 100g Purica)",
+          "url": "https://p3online.in/products/gourmet-duo",
+          "sku": "PB-GOURMET-DUO-100",
+          "brand": {
+            "@type": "Brand",
+            "name": "Purity Beans"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "price": "908",
+            "availability": "https://schema.org/InStock",
+            "url": "https://p3online.in/products/gourmet-duo"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Gourmet Duo Mini (50g Purista + 50g Purica)",
+          "url": "https://p3online.in/products/gourmet-duo-mini",
+          "sku": "PB-GOURMET-DUO-50",
+          "brand": {
+            "@type": "Brand",
+            "name": "Purity Beans"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "price": "570",
+            "availability": "https://schema.org/InStock",
+            "url": "https://p3online.in/products/gourmet-duo-mini"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Prima Premium Arabica",
+          "url": "https://p3online.in/products/purity-beans-prima-premium-instant-coffee",
+          "sku": "PB-PRM-50",
+          "brand": {
+            "@type": "Brand",
+            "name": "Purity Beans"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "INR",
+            "price": "269",
+            "availability": "https://schema.org/OutOfStock",
+            "url": "https://p3online.in/products/purity-beans-prima-premium-instant-coffee"
+          }
+        }
+      ]
+    },
+    "body_html": "<p><strong>TL;DR.</strong> Robusta instant coffee comes down to the jar, not a slogan. Purity Beans Ultra Blend is 70% coffee and 30% chicory. Prima, also called Premium Agglomerate, is 100% Arabica and is not freeze-dried. Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica. Prices in this article are catalog prices in rupees for shoppers in India.</p>\n<p><em>By Purity Beans. Last updated 2026-10-11 (IST).</em></p>\n<p>If you are searching for robusta instant coffee, start with the back of the jar. In Mumbai and Bengaluru the usual cup is milk coffee, so the chicory line changes the taste. Purity Beans lists Ultra Blend as 70% coffee and 30% chicory, and the prices below are in ₹ on p3online.in.</p>\n<h2>What does robusta instant coffee mean for an Indian kitchen?</h2>\n<p>Most mornings begin with a cup of coffee that promises pure energy, only to deliver a bitter, muddy aftertaste. Have you ever checked what is actually inside your pantry jar? Many commercial brands quietly bulk up their powders with chicory filler, diluting the authentic bean flavor. If you want a morning kick that cuts through the milk without hidden fillers, it is time to look at robusta instant coffee done right.</p>\n<p>Purity Beans takes a completely transparent approach with our Bold and Purista jars. Both are crafted from 100% Robusta beans with absolute zero chicory. While our Ultra Blend offers a milder cup with 70% coffee and 30% chicory, Bold and Purista deliver the deep, full-bodied strength that dedicated coffee lovers crave. Bold provides a robust agglomerated kick at ₹239 for 50g, while Purista utilizes freeze-dried gourmet granules to lock in rich crema at ₹319 for 50g. Experience the honest, bold taste of pure Robusta in your kitchen today.</p>\n<h3>A plain definition</h3>\n<p>A robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.</p>\n<h2>How do you read the chicory line on the jar?</h2>\n<p>Most instant coffee drinkers have spent years unknowingly sipping on chicory roots blended into their morning cup, assuming that bitter bite was simply what real coffee tastes like. When you finally inspect the ingredient label on a jar of robusta instant coffee, the transparency of true craft instantly changes your standard. At Purity Beans, both Bold and Purista stand proudly as 100% Robusta with zero chicory whatsoever. Bold delivers a deep, full-bodied moka pot kick at ₹239 for 50g, while Purista utilizes a freeze-dried process to lock in rich crema at ₹319 for 50g. By contrast, if you prefer an everyday milky blend with chicory, Ultra Blend contains 70% coffee and 30% chicory. Meanwhile, Prima is a separate 100% Arabica agglomerate. True coffee lovers demand pure ingredients, refusing to let filler dilute their morning rituals.</p>\n<h3>Where the percent sits</h3>\n<p>A robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.</p>\n<h2>Which jar matches a robusta instant coffee question?</h2>\n<p>Most morning coffee drinkers do not realize their daily cup relies on hidden chicory fillers rather than pure beans. When searching for a true robusta instant coffee, you deserve complete transparency about what sits in your jar. Purity Beans offers two distinct options built entirely from 100% Robusta with zero chicory. For a deep, full-bodied kick with naturally high caffeine, Bold Pure Robusta delivers an honest morning energy boost at ₹239 for 50g and ₹369 for 100g. If you prefer your robusta processed through freeze-dried granules to lock in aroma and crema while keeping a bold yet smooth profile, Purista Gourmet Robusta Granules is available at ₹319 for 50g and ₹509 for 100g. In contrast, Ultra Blend contains 70% coffee and 30% chicory, making it an everyday milk coffee option rather than pure coffee. Prima is currently out of stock. Choose the 100% Robusta jar that fits your taste today at https://p3online.in</p>\n<h3>Catalog facts only</h3>\n<p>A robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.</p>\n<h2>What does each jar cost in rupees?</h2>\n<p>Most commercial instant coffee jars quietly dilute their robust beans with cheap chicory powder, leaving you with a weak brew and a bitter aftertaste. If you want a deep, honest cup that wakes you up instantly, you need to look inside your pantry. Purity Beans offers two distinct options crafted from 100% pure Robusta with zero chicory: Bold and Purista. While Bold uses an agglomerated process to deliver a full-bodied, strong kick, Purista utilizes freeze-drying to lock in rich aromas and natural crema from gourmet Robusta beans. (For those who prefer a traditional milk blend, Ultra Blend combines 70% coffee and 30% chicory.) When you are ready to upgrade your morning routine, Bold is available starting at ₹239 for 50g and ₹369 for 100g. If you prefer the gourmet freeze-dried experience, Purista is priced at ₹319 for 50g and ₹509 for 100g. Explore the clean coffee movement and order your jar at https://p3online.in</p>\n<h3>Smallest size on the catalog</h3>\n<p>A robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.</p>\n<h2>How do people brew instant coffee in Indian cities?</h2>\n<p>Most morning coffee drinkers walk into their kitchens unaware that their favorite jars contain more than just coffee beans. Walk down any grocery aisle, and you will find commercial blends padded out with chicory root fillers. If you prefer a powerful morning kick without hidden additives, you need to know exactly what is in your cup. Purity Beans changes the standard by offering uncompromising clarity. Our Bold Pure Robusta delivers 100% coffee at ₹239 for 50g and ₹369 for 100g, while our Purista Gourmet Robusta Granules provide a freeze-dried experience at ₹319 for 50g and ₹509 for 100g. Both feature zero chicory. By comparison, our Ultra Blend contains 70% coffee and 30% chicory, priced at ₹209 for 50g and ₹309 for 100g. Meanwhile, Prima is an agglomerated 100% Arabica option priced at ₹269 for 50g and ₹449 for 100g, though it is currently out of stock. Urban coffee enthusiasts deserve transparent labeling and honest ingredients every single morning.</p>\n<h3>Milk coffee and filter habits</h3>\n<p>A robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.</p>\n<h2>How do you choose a jar without a slogan?</h2>\n<p>When you pick up a jar of robusta instant coffee, do you actually know what is resting inside your mug? Most commercial coffee aisles hide a quiet reality: many jars are padded with chicory root filler, diluting the authentic bean flavor you paid for. If you prefer a deep, full-bodied cup with a strong, honest kick, you need a jar that stays entirely true to the bean. Purity Beans offers dedicated 100% Robusta options with zero chicory whatsoever, crafted so you never have to guess what you are drinking. Choose Bold Pure Robusta at ₹239 for 50g or ₹369 for 100g if you want an agglomerated coffee designed for a powerful morning energy boost. If you prefer freeze-dried granules that lock in a bold yet smooth profile with a naturally rich crema, Purista Gourmet Robusta Granules is available at ₹319 for 50g or ₹509 for 100g. For those exploring other everyday blends, remember that Ultra Blend contains 70% coffee and 30% chicory, while Prima / Premium Agglomerate is a 100% Arabica agglomerated option. Choosing a clean, transparent cup starts with reading the label and knowing your roast.</p>\n<h3>A label-first rule</h3>\n<p>A robusta instant coffee search still ends at the label. Ultra Blend is 70% coffee and 30% chicory. The other single jars on this page are 0% chicory.</p>\n<table><thead><tr><th>Jar</th><th>Beans</th><th>Chicory</th><th>Process</th><th>Smallest jar</th><th>Stock</th></tr></thead><tbody><tr><td>Ultra Blend</td><td>70% coffee</td><td>30% chicory</td><td>Agglomerated instant blend</td><td>₹209 for 50g</td><td>In stock</td></tr><tr><td>Bold</td><td>100% Robusta</td><td>0% chicory</td><td>Agglomerated instant coffee</td><td>₹239 for 50g</td><td>In stock</td></tr><tr><td>Purista</td><td>100% Robusta</td><td>0% chicory</td><td>Freeze-dried granules</td><td>₹319 for 50g</td><td>In stock</td></tr><tr><td>Purica</td><td>100% Arabica</td><td>0% chicory</td><td>Freeze-dried granules</td><td>₹329 for 50g</td><td>In stock</td></tr><tr><td>Prima</td><td>100% Arabica</td><td>0% chicory</td><td>Premium Agglomerate</td><td>₹269 for 50g</td><td>Out of stock</td></tr></tbody></table>\n<p>Catalog pages for shoppers in India: <a href=\"https://p3online.in/products/purity-beans-ultra-blend-instant-coffee\">Ultra Blend (70% coffee, 30% chicory)</a> (₹209), <a href=\"https://p3online.in/products/purity-beans-bold-instant-coffee\">Bold Pure Robusta</a> (₹239), <a href=\"https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules\">Purica Gourmet Arabica Granules</a> (₹329).</p>\n<h2>Frequently asked questions</h2>\n<h3>What is Ultra Blend?</h3>\n<p>Ultra Blend is 70% coffee and 30% chicory. It is not a zero-chicory jar. A lower-caffeine description is allowed only for this jar. The 50g jar is ₹209.</p>\n<h3>Is Prima 100% Arabica?</h3>\n<p>Yes. Prima, sold as Premium Agglomerate, is 100% Arabica with 0% chicory. It is agglomerated, not freeze-dried. The catalog lists the 50g jar at ₹269 and marks it out of stock.</p>\n<h3>Which jars are 100% Robusta?</h3>\n<p>Bold and Purista are 100% Robusta with 0% chicory. Purista is freeze-dried. Bold is agglomerated.</p>\n<h3>What is Purica?</h3>\n<p>Purica is freeze-dried 100% Arabica with 0% chicory.</p>\n<h3>Where are robusta instant coffee jars sold?</h3>\n<p>The product pages are on p3online.in. Prices in this article are the catalog prices in rupees.</p>\n<p>Purity Beans is the brand on the jar. For robusta instant coffee, read the chicory line first. Ultra Blend is 70% coffee and 30% chicory, and only that jar may be called lower caffeine. Prima, the Premium Agglomerate, is 100% Arabica. Then open the catalog at https://p3online.in</p>\n<script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@graph\": [{\"@type\": \"Article\", \"headline\": \"Bold and Purista: 100% Robusta jars\", \"description\": \"Robusta instant coffee at Purity Beans means Bold and Purista, both 100% Robusta with 0% chicory. Prices are the catalog prices in rupees. Prices are catalog\", \"inLanguage\": \"en-IN\", \"dateModified\": \"2026-10-11\", \"datePublished\": \"2026-10-11\", \"author\": {\"@type\": \"Organization\", \"name\": \"Purity Beans\", \"url\": \"https://p3online.in\"}, \"publisher\": {\"@type\": \"Organization\", \"name\": \"Purity Beans\", \"url\": \"https://p3online.in\"}, \"mainEntityOfPage\": \"https://p3online.in/blogs/news/bold-and-purista-robusta-coffee\"}, {\"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"What is Ultra Blend?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Ultra Blend is 70% coffee and 30% chicory. It is not a zero-chicory jar. A lower-caffeine description is allowed only for this jar. The 50g jar is ₹209.\"}}, {\"@type\": \"Question\", \"name\": \"Is Prima 100% Arabica?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Yes. Prima, sold as Premium Agglomerate, is 100% Arabica with 0% chicory. It is agglomerated, not freeze-dried. The catalog lists the 50g jar at ₹269 and marks it out of stock.\"}}, {\"@type\": \"Question\", \"name\": \"Which jars are 100% Robusta?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Bold and Purista are 100% Robusta with 0% chicory. Purista is freeze-dried. Bold is agglomerated.\"}}, {\"@type\": \"Question\", \"name\": \"What is Purica?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Purica is freeze-dried 100% Arabica with 0% chicory.\"}}, {\"@type\": \"Question\", \"name\": \"Where are robusta instant coffee jars sold?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"The product pages are on p3online.in. Prices in this article are the catalog prices in rupees.\"}}]}, {\"@type\": \"BreadcrumbList\", \"itemListElement\": [{\"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"https://p3online.in\"}, {\"@type\": \"ListItem\", \"position\": 2, \"name\": \"Blog\", \"item\": \"https://p3online.in/blogs/news\"}, {\"@type\": \"ListItem\", \"position\": 3, \"name\": \"Bold and Purista: 100% Robusta jars\", \"item\": \"https://p3online.in/blogs/news/bold-and-purista-robusta-coffee\"}]}, {\"@type\": \"Product\", \"name\": \"Bold Pure Robusta\", \"url\": \"https://p3online.in/products/purity-beans-bold-instant-coffee\", \"sku\": \"PB-BLD-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"239\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-bold-instant-coffee\"}}, {\"@type\": \"Product\", \"name\": \"Purista Gourmet Robusta Granules\", \"url\": \"https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules\", \"sku\": \"PB-PST-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"319\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules\"}}, {\"@type\": \"Product\", \"name\": \"Purica Gourmet Arabica Granules\", \"url\": \"https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules\", \"sku\": \"PB-PCA-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"329\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules\"}}, {\"@type\": \"Product\", \"name\": \"Ultra Blend (70% coffee, 30% chicory)\", \"url\": \"https://p3online.in/products/purity-beans-ultra-blend-instant-coffee\", \"sku\": \"PB-ULT-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"209\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-ultra-blend-instant-coffee\"}}, {\"@type\": \"Product\", \"name\": \"Variety Box (4 × 50g Jars)\", \"url\": \"https://p3online.in/products/variety-box\", \"sku\": \"PB-VARIETY-4x50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"877\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/variety-box\"}}, {\"@type\": \"Product\", \"name\": \"Gourmet Duo Full Size (100g Purista + 100g Purica)\", \"url\": \"https://p3online.in/products/gourmet-duo\", \"sku\": \"PB-GOURMET-DUO-100\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"908\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/gourmet-duo\"}}, {\"@type\": \"Product\", \"name\": \"Gourmet Duo Mini (50g Purista + 50g Purica)\", \"url\": \"https://p3online.in/products/gourmet-duo-mini\", \"sku\": \"PB-GOURMET-DUO-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"570\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/gourmet-duo-mini\"}}, {\"@type\": \"Product\", \"name\": \"Prima Premium Arabica\", \"url\": \"https://p3online.in/products/purity-beans-prima-premium-instant-coffee\", \"sku\": \"PB-PRM-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"269\", \"availability\": \"https://schema.org/OutOfStock\", \"url\": \"https://p3online.in/products/purity-beans-prima-premium-instant-coffee\"}}]}</script>",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
+    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "editorial_score": {
+      "shareability": 4.5,
+      "saveability": 5.0,
+      "emotion_pull": 4.0,
+      "hook_strength": 4.5,
+      "brand_clarity": 8.0,
+      "overall": 5.2,
+      "verdict": "REJECT",
+      "feedback": "The content reads too much like a rigid product specification sheet or an SEO keyword-stuffing exercise rather than a compelling consumer-focused article. The opening hook ('If you are searching for robusta instant coffee, start with the back of the jar') is dry and fails to create a strong emotional trigger or curiosity gap. To fix this, replace dry catalog language with consumer pain points about hidden chicory fillers and high cafe prices. Rebuild the narrative around the betrayal of paying for coffee and getting chicory, driving the reader naturally toward the Purity Beans solution.",
+      "retention_audit": "Line 1 (Introduction hook): 'If you are searching for robusta instant coffee, start with the back of the jar.' -> Drop-off risk: Too instructional and boring; readers searching for coffee want an immediate truth bomb or betrayal hook, not a librarian's instruction. Body Paragraph 1: Repetitive phrasing ('Most mornings begin with a cup of coffee...'). The copy loops around pricing and percentages too frequently ('₹239 for 50g') across multiple sections without adding new value, causing readers to scan and bounce. Conclusion/Cut-off: The text cuts off mid-sentence ('Or ₹369 for 100g. If you p...'), destroying reader trust and completion rate."
+    },
+    "hold_reason": "rewrites exhausted: The content reads too much like a rigid product specification sheet or an SEO keyword-stuffing exercise rather than a compelling consumer-focused article. The opening hook ('If you are searching for robusta instant coffee, start with the back of the jar') is dry and fails to create a strong emotional trigger or curiosity gap. To fix this, replace dry catalog language with consumer pain points about hidden chicory fillers and high cafe prices. Rebuild the narrative around the ",
+    "held": true,
+    "funnel_objective": "AUTHORITY",
+    "objective": "Brand Awareness",
+    "primary_cta": "Save this guide before your next grocery run",
+    "success_metric": "saves",
+    "target": 300
+  },
+  "stories": {
+    "story_1": {
+      "type": "poll",
+      "headline": "CHECK YOUR CUP",
+      "subtext": "Most instant coffee isn't pure.",
+      "poll_question": "Did you know your instant coffee has chicory root?",
+      "option_a": "I had no idea",
+      "option_b": "I always check labels"
+    },
+    "story_2": {
+      "type": "bts",
+      "badge": "BEHIND THE SCENES",
+      "headline": "Commercial brands bulk up jars with chicory to save money.",
+      "body": "While mainstream jars mix roasted chicory root into their powder, true coffee lovers want 100% beans. Purity Beans keeps Bold, Purista, Purica, and Prima strictly 100% coffee with zero chicory.",
+      "screenshot_hook": "Read the back panel. The ingredient list tells the truth."
+    },
+    "story_3": {
+      "type": "clean_truth",
+      "headline": "THE INGREDIENT TRUTH",
+      "fact": "Purity Beans Bold, Purista, Purica, and Prima contain 100% pure coffee and zero chicory. Ultra Blend offers a 70% coffee and 30% chicory option for everyday milk coffee drinkers.",
+      "sticker_prompt": "Are you drinking 100% coffee or chicory?"
+    },
+    "story_4": {
+      "type": "cta",
+      "headline": "Ready for 100% pure coffee?",
+      "reply_keyword": "PURE",
+      "offer": "Reply PURE and get our quick guide on reading coffee ingredient labels instantly.",
+      "question_sticker": "What's in your morning cup right now?",
+      "link": "https://p3online.in"
+    },
+    "audio": {
+      "audio_category": "coffee_aesthetic",
+      "mood": "lofi",
+      "local_track": "music_library/lofi_cafe.wav",
+      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
+    },
+    "funnel_objective": "COMMUNITY",
+    "objective": "Engagement Growth",
+    "primary_cta": "Which one would you choose? Comment below",
+    "success_metric": "comments",
+    "target": 150
+  },
+  "yt_short": {
+    "product": "Purica",
+    "tagline": "The Taste of Pure Coffee",
+    "emotion_arc": "NOSTALGIA",
+    "hook": "Why does your morning coffee taste nothing like it used to?",
+    "scenes": [
+      {
+        "scene": 1,
+        "type": "problem",
+        "duration_s": 5,
+        "on_screen": "That bitter aftertaste?",
+        "spoken": "Remember that rich aroma from decades ago before coffee was changed forever by fillers?",
+        "visual_direction": "Close-up of dark morning steam rising from a ceramic mug on a wooden kitchen table, soft window light, shot on iPhone 15."
+      },
+      {
+        "scene": 2,
+        "type": "agitation",
+        "duration_s": 5,
+        "on_screen": "Read the back panel.",
+        "spoken": "Most jars on kitchen shelves contain roasted root filler instead of pure beans.",
+        "visual_direction": "A hand slowly flipping a standard coffee jar around to reveal the small print, natural shadows, realistic kitchen counter clutter."
+      },
+      {
+        "scene": 3,
+        "type": "product_reveal",
+        "duration_s": 8,
+        "on_screen": "READ THE JAR",
+        "spoken": "With Purity Beans, Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee.",
+        "visual_direction": "Slow, cinematic pull-focus on the exact Purity Beans glass jar sitting on a dark marble surface, warm golden accent light catching the label."
+      },
+      {
+        "scene": 4,
+        "type": "benefit",
+        "duration_s": 5,
+        "on_screen": "Taste real coffee.",
+        "spoken": "Purity Beans Purica gives you freeze-dried 100% Arabica with zero compromise and natural caramel notes.",
+        "visual_direction": "A person taking a mindful first sip from a mug, subtle smile, flyaway hair, real skin texture and natural lighting."
+      },
+      {
+        "scene": 5,
+        "type": "cta",
+        "duration_s": 5,
+        "on_screen": "SUBSCRIBE FOR REAL COFFEE",
+        "spoken": "Explore 100% coffee jars at Purity Beans website, p3online.in.",
+        "visual_direction": "Static, perfectly lit Purity Beans product shot with a clear subscribe overlay held for two full seconds."
+      }
+    ],
+    "cta": "Explore 100% coffee jars at https://p3online.in — Purity Beans",
+    "title": "Is instant coffee actually coffee? The truth about pure arabica",
+    "description": "Purity Beans. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Purica is freeze-dried. Shop now: https://p3online.in #PurityBeans #InstantCoffee #PureCoffee #CoffeeIndia",
+    "tags": [
+      "purity beans",
+      "premium instant coffee",
+      "freeze dried coffee",
+      "agglomerated coffee",
+      "coffee without preservatives",
+      "pure instant coffee india",
+      "gourmet instant coffee",
+      "indian coffee brand"
+    ],
+    "audio_direction": "Warm acoustic guitar background bed, slow tempo. Voiceover by a calm Indian narrator in their 30s with a natural, grounded tone. Soft coffee-pouring sound effect in the background.",
+    "edit_pacing": "Fast 1.5s cuts on scenes 1 and 2 to build instant curiosity, followed by a smooth 3s slow-motion hold on scene 3 during the Purity Beans jar reveal.",
+    "audio": {
+      "audio_category": "morning_routine",
+      "mood": "calm",
+      "local_track": "music_library/calm_morning.wav",
+      "recommendation": "Soft Acoustic & Piano Morning (Search: 'Morning Routine Acoustic' or 'Peaceful Rise')",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Soft Acoustic & Piano Morning (Search: 'Morning Routine Acoustic' or 'Peaceful Rise'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as 'morning_routine' -> calm mood. No performance history yet — exploring."
+    },
+    "hook_text": "Why does your morning coffee taste nothing like it used to?",
+    "chosen_hook": "Why does your morning coffee taste nothing like it used to?",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
+    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee with Purity Beans.",
+    "save_trigger": "Save this before your next grocery run — real coffee matters with Purity Beans.",
+    "share_trigger": "Share with someone who starts every morning with coffee from Purity Beans.",
+    "loop_note": "Reel loops seamlessly back to the first frame as the steam restarts.",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.0,
+      "emotion_pull": 9.0,
+      "hook_strength": 8.5,
+      "brand_clarity": 9.5,
+      "overall": 8.7,
+      "verdict": "PASS",
+      "feedback": "The asset successfully leverages nostalgia and consumer frustration with chicory fillers, contrasting them directly against clear product truths without misrepresenting Ultra Blend. Pacing is sharp, and the visual direction enforces high realism and product compliance.",
+      "retention_audit": "Scene 1 (0-5s): Strong hook ('Why does your morning coffee taste nothing like it used to?') with excellent pacing. Scene 2 (5-10s): 'Read the back panel' maintains curiosity well, preventing early drop-off. Scene 3 (10-18s): Product reveal clearly delineates the 100% coffee variants from Ultra Blend, holding attention through clean asset presentation. Scene 4 (18-23s): Benefit phase grounds the narrative with realistic human interaction. Scene 5 (23-28s): Clear, low-friction CTA with the exact website URL."
+    },
+    "funnel_objective": "DISCOVERY",
+    "objective": "Engagement Growth",
+    "primary_cta": "Send this to someone who drinks instant coffee",
+    "success_metric": "shares",
+    "target": 500
+  },
+  "growth_reel": {
+    "id": "growth_reel",
+    "track": "growth",
+    "viral_idea": "Revealing how commercial coffee is graded from grading rooms to export bags, exposing why the average buyer never sees a single grade on supermarket instant jars.",
+    "psychology_used": [
+      "curiosity gap",
+      "hidden secret",
+      "contrarian opinion",
+      "status"
+    ],
+    "hook_options": [
+      "Did you know most instant coffee in India isn't actually coffee?",
+      "Your supermarket coffee never tells you its grade. Here is why.",
+      "Grade AA, Grade A, and whatever is left over.",
+      "Most people buy instant coffee without knowing how it is actually sorted.",
+      "They spend months grading coffee beans, then hide the result on grocery store shelves.",
+      "The coffee grading secret big brands do not want you to know.",
+      "Ever wondered why instant coffee jars never print the actual bean grade?",
+      "That jar in your kitchen pantry? It skipped the grading room entirely.",
+      "How coffee is graded behind closed doors in India.",
+      "The reason your morning cup tastes flat is decided before roasting even begins.",
+      "If your coffee label doesn't mention grading, you are missing half the story.",
+      "The hidden sorting process behind your daily caffeine fix."
+    ],
+    "chosen_hook": "Your supermarket coffee never tells you its grade. Here is why.",
+    "title_options": [
+      "The Secret Coffee Grading System Big Brands Hide",
+      "Why Coffee Grades Never Appear on Instant Jars",
+      "The Truth About How Instant Coffee Is Actually Sorted"
+    ],
+    "script": [
+      {
+        "time": "0-2s",
+        "beat": "pattern interrupt",
+        "on_screen": "IS YOUR COFFEE GRADED?",
+        "voiceover": "Your supermarket coffee never tells you its grade. Here is why.",
+        "visual": "Macro close-up of rough brown granules falling slowly onto a dark slate surface, cinematic natural morning light from a side window, shallow depth of field, shot on 85mm lens."
+      },
+      {
+        "time": "2-6s",
+        "beat": "curiosity",
+        "on_screen": "HIDDEN GRADES",
+        "voiceover": "In massive industrial processing plants, green coffee beans are sorted meticulously into grades based on size, density, and defect count.",
+        "visual": "A pair of human hands wearing a worn linen sleeve sorting through raw, unroasted green coffee beans on a wooden table, natural skin texture and dust visible in the light beam."
+      },
+      {
+        "time": "6-15s",
+        "beat": "story",
+        "on_screen": "WHERE DOES IT GO?",
+        "voiceover": "Top-tier grades are bagged and shipped to specialty cafes. But what happens to the lower tiers, or the broken fragments left behind?",
+        "visual": "Slow panning macro shot across a stainless steel sorting tray with varying sizes of coffee beans, water condensation ring visible on the corner of the metal surface."
+      },
+      {
+        "time": "15-25s",
+        "beat": "value",
+        "on_screen": "THE BLENDING TRICK",
+        "voiceover": "They get pulverized into instant coffee powders. And because the grinding process destroys all physical identifiers, mass-market brands don't need to print the grade on the label.",
+        "visual": "A steaming glass mug of hot black coffee sitting on a rustic kitchen counter, slight steam fog rising upward against a dark, moody background, film grain texture."
+      },
+      {
+        "time": "25-35s",
+        "beat": "unexpected insight",
+        "on_screen": "NO TRANSPARENCY",
+        "voiceover": "That means you could be paying premium prices for residual grade sweepings without ever knowing what went into your morning cup.",
+        "visual": "Close-up of a person's thumb pointing at a plain, unbranded dark glass jar sitting on a cluttered kitchen workspace, charged phone cable lying loosely beside it."
+      },
+      {
+        "time": "35-45s",
+        "beat": "payoff",
+        "on_screen": "READ THE LABELS",
+        "voiceover": "True coffee appreciation starts when you stop accepting anonymous powder and start demanding absolute transparency in your ingredients, ensuring every single jar lists exactly what is inside.",
+        "visual": "A hand slowly lifting the glass mug away, revealing a wet coffee ring left on the dark wooden tabletop, natural and lived-in environment."
+      },
+      {
+        "time": "45-60s",
+        "beat": "soft CTA",
+        "on_screen": "FOLLOW FOR MORE COFFEE TRUTHS",
+        "voiceover": "If you care about what is actually in your cup, follow along for more hidden truths about your daily brew. Check out https://p3online.in for complete ingredient clarity.",
+        "visual": "A calm, unscripted shot of a person looking thoughtfully out a rain-streaked window holding a warm mug, gentle handheld camera sway."
+      }
+    ],
+    "ai_image_prompts": [
+      "Macro photograph of raw green coffee beans scattered across an old dark wooden workbench, visible wood grain and small surface scratches, one soft warm light source from upper left creating natural shadows, cinematic depth of field, 85mm lens, shot on iPhone 15 Pro, natural color grading, slight film grain, no text, no logos.",
+      "Close-up of a person's hands sifting through dark roasted coffee beans on a rustic stone counter, visible skin texture, micro pores, natural oil sheen on skin, flyaway hairs, warm amber light mixing with cool daylight from a side window, slightly off-center framing, lived-in kitchen clutter in soft focus background, no text, no branding.",
+      "A steaming glass cup of black coffee on a dark marble countertop, visible steam rising and catching light, water ring and tiny coffee droplet near the base, realistic reflections on glass, soft natural falloff, handheld phone camera angle, subtle imperfection, no logos, no packaging.",
+      "A person holding a ceramic mug with both hands in a dimly lit apartment kitchen, visible knit fabric wrinkles on sleeve, natural relaxed hand pose, soft mixed lighting, moody atmosphere, background out of focus with everyday kitchen items, highly detailed skin texture, photographic realism."
+    ],
+    "ai_video_prompts": [
+      "Slow motion 24fps cinematic shot of brown coffee granules falling onto a dark slate surface, dust motes dancing in warm side light, handheld camera feel."
+    ],
+    "audio": {
+      "audio_category": "coffee_aesthetic",
+      "mood": "lofi",
+      "local_track": "music_library/lofi_cafe.wav",
+      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
+    },
+    "sound_suggestion": "Warm acoustic guitar background with subtle organic coffee shop ambiance, voice-forward mix with zero lyric clash.",
+    "loop_note": "The final frame's falling coffee granules match the visual cadence of the opening shot, creating an invisible infinite loop.",
+    "text_overlay_style": "Clean sans-serif typography in white with subtle dark drop shadow, centered in the upper 75% safe zone, animating word-by-word every 2 seconds.",
+    "caption": "Is instant coffee actually coffee? Most people never think to ask how commercial coffee is graded before it reaches grocery store shelves. In large-scale processing plants, green beans are sorted by size, density, and defect counts into strict quality tiers. The finest lots go to specialty cafes, while lower tiers and broken fragments are often pulverized into everyday instant powders. Because the roasting and grinding process erases physical bean characteristics, manufacturers aren't required to print the grade on your jar. That leaves everyday drinkers guessing about what is truly in their cup. True coffee appreciation begins when you look past anonymous packaging and demand absolute transparency about your ingredients. What do you look for when buying your coffee? Drop your thoughts below. Follow for more unvarnished coffee truths.",
+    "cta_options": [
+      "Follow for more daily coffee truths big brands hide.",
+      "Save this post before your next grocery run.",
+      "Share this with someone who drinks instant coffee every single day."
+    ],
+    "comment_trigger": "Have you ever checked how your instant coffee is sourced? Comment your thoughts below.",
+    "save_trigger": "Save this guide so you know what questions to ask before buying your next jar.",
+    "share_trigger": "Sharing this exposes the hidden grading system to a friend who loves their morning brew.",
+    "hashtags": "#coffee #instantcoffee #coffeelover #coffeegram #coffeetime #specialtycoffee #coffeelife #coffeaddict #coffeelovers #coffeeculture #coffeeholic #coffeeshop #morningcoffee #coffeebreak #baristalife #coffeemind #purecoffee #cleancoffee #coffeegeeks #coffeescience #delhicoffee #mumbaicoffee #bangalorecoffee #indiacoffee #coffeeloveindia",
+    "seo_keywords": [
+      "is instant coffee actually coffee",
+      "coffee grading system India",
+      "how instant coffee is made",
+      "pure instant coffee brand India",
+      "coffee bean grades explained",
+      "instant coffee quality truth"
+    ],
+    "emotion_created": "curiosity",
+    "posting_time": "08:30 AM IST",
+    "why_this_can_go_viral": "It tackles an invisible industry process using strong curiosity and educational value, giving non-followers an immediate reason to bookmark and share with friends.",
+    "predicted_weak_point": "Viewers might skim past the middle grading explanation if the pacing dips, mitigated by keeping the macro B-roll movement active every 3 seconds.",
+    "story_version": "Cut a 15-second teaser featuring the macro bean sorting shot with a poll sticker: 'Did you know how instant coffee is graded? [Yes] / [No, had no idea]'.",
+    "shorts_version": "Title: The Secret Coffee Grading System Big Brands Hide. Tighter cut, faster subtitle animations, and a pinned comment linking to the full discussion.",
+    "hook_text": "Your supermarket coffee never tells you its grade. Here is why.",
+    "hook": "Your supermarket coffee never tells you its grade. Here is why.",
+    "frames": [
+      {
+        "on_screen": "IS INSTANT COFFEE ACTUALLY COFFEE?",
+        "spoken": "Is instant coffee actually coffee? Let's talk about how coffee is graded, and why you never see the grade on your pack."
+      },
+      {
+        "on_screen": "HIDDEN GRADES",
+        "spoken": "In massive industrial processing plants, green coffee beans are sorted meticulously into grades based on size, density, and defect count."
+      },
+      {
+        "on_screen": "WHERE DOES IT GO?",
+        "spoken": "Top-tier grades are bagged and shipped to specialty cafes. But what happens to the lower tiers, or the broken fragments left behind?"
+      },
+      {
+        "on_screen": "THE BLENDING TRICK",
+        "spoken": "They get pulverized into instant coffee powders. And because the grinding process destroys all physical identifiers, brands don't need to print the grade on the label."
+      },
+      {
+        "on_screen": "NO TRANSPARENCY",
+        "spoken": "That means you could be paying premium prices for residual grade sweepings without ever knowing what went into your morning cup."
+      },
+      {
+        "on_screen": "READ THE LABELS",
+        "spoken": "True coffee appreciation starts when you stop accepting anonymous powder and start looking for absolute transparency in your ingredients."
+      },
+      {
+        "on_screen": "FOLLOW FOR MORE COFFEE TRUTHS",
+        "spoken": "If you care about what's actually in your cup, follow along for more hidden truths about your daily brew."
+      }
+    ],
+    "alt_hook": "The hidden sorting process behind your daily caffeine fix.",
+    "hook_ab": [
+      {
+        "hook": "Your supermarket coffee never tells you its grade. Here is why.",
+        "score": 75.0
+      },
+      {
+        "hook": "The hidden sorting process behind your daily caffeine fix.",
+        "score": 74.0
+      },
+      {
+        "hook": "Grade AA, Grade A, and whatever is left over.",
+        "score": 71.0
+      },
+      {
+        "hook": "Most people buy instant coffee without knowing how it is actually sorted.",
+        "score": 67.0
+      },
+      {
+        "hook": "How coffee is graded behind closed doors in India.",
+        "score": 66.0
+      }
+    ],
+    "editorial_score": {
+      "shareability": 6.5,
+      "saveability": 7.0,
+      "emotion_pull": 6.8,
+      "hook_strength": 7.2,
+      "brand_clarity": 4.0,
+      "overall": 6.3,
+      "verdict": "REJECT",
+      "feedback": "The growth-track script provides good educational curiosity about industrial coffee grading, but brand clarity is intentionally low due to growth-track rules. However, the payoff cuts off abruptly at the end ('ingre'), and to pass the CMO quality standard, it needs a cleaner finish and sharper emotional leverage around consumer awareness.",
+      "retention_audit": "0-2s: Strong hook, but 'supermarket coffee' is slightly broad. 2-6s: Good pacing with visual detail. 6-15s: Slightly dry; risks losing viewers who want immediate consumer advice. 15-25s: Good revelation about instant powder. 25-35s: Relatable tension. 35-45s: Abrupt cutoff ('ingre') breaks user immersion and kills retention."
+    },
+    "funnel_objective": "FOLLOW",
+    "objective": "Follower Growth",
+    "primary_cta": "Follow @puritybeans so you never drink roasted root again",
+    "success_metric": "follows",
+    "target": 250
+  },
+  "threads_post": {
+    "angle": "FRONT VS BACK OF JAR",
+    "text": "Unpopular opinion: Big Coffee spends crores on the front of the jar so you never look at the tiny chicory percentage printed on the back. \n\nCheck your kitchen jar right now. Does it say 100% coffee or is chicory hiding in the fine print?\n\nAgree or disagree? Drop your thoughts below.\n\n— Hiten Jain / Purity Beans\n\nFollow for daily coffee truths Big Coffee hides.",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
+    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 8.5,
+      "overall": 8.5,
+      "verdict": "PASS",
+      "feedback": "The opening line ('Unpopular opinion: Big Coffee spends crores...') acts as a powerful pattern interrupt, instantly hooking the reader by exposing an industry-wide hidden practice. The call to action ('Check your kitchen jar right now') successfully drives immediate physical engagement. Brand clarity is strong with the direct founder sign-off by Hiten Jain and the clear positioning against chicory fillers.",
+      "retention_audit": "Line 1-2 ('Unpopular opinion: Big Coffee spends crores on the front of the jar so you never look at the tiny chicory percentage printed on the back.') — Excellent scroll-stopper, creates an immediate curiosity gap and mild betrayal trigger. No attention drop. Line 3-4 ('Check your kitchen jar right now. Does it say 100% coffee or is chicory hiding in the fine print?') — Strong interactive command that forces the reader to pause and test their own habits, maintaining high retention. Line 5-6 ('Agree or disagree? Drop your thoughts below. — Hiten Jain / Purity Beans') — Solid comment bait and founder authority transfer, keeping engagement momentum right up to the final follow prompt."
+    },
+    "funnel_objective": "COMMUNITY",
+    "objective": "Engagement Growth",
+    "primary_cta": "Which one would you choose? Comment below",
+    "success_metric": "comments",
+    "target": 150
+  },
+  "facebook_post": {
+    "angle": "MORNING HOME MATH",
+    "hook": "Ever wondered why your morning home cup costs ₹18 while your café routine costs ₹180?",
+    "body": "When you stand at the kitchen counter waiting for water to boil, you are participating in the oldest morning ritual. But look at the math behind your daily caffeine routine. A café cup charges you for rent, air conditioning, and brand overhead. When you brew Purity Beans at home, you pay strictly for what goes into the cup.\n\nTake Purica, for instance—our freeze-dried 100% Arabica. It delivers smooth, aromatic notes with zero chicory and 100% coffee. Read the jar to know exactly what you are drinking, ensuring your morning routine stays transparent and entirely in your own hands.\n\nSwitching to home brewing does not mean compromising on your standards. Across a month, it saves you thousands of rupees while keeping your mornings deliberate and uncompromised. Good coffee should not require a financial sacrifice. Discover our complete collection at https://p3online.in",
+    "community_question": "What is your daily routine—are you a home-brewer, or does your week live on café runs?",
+    "cta": "Explore our pure coffee collection at https://p3online.in",
+    "hashtags": "#PurityBeans #IndianCoffee #MorningCoffee #CoffeeLovers #PureCoffee",
+    "audio": {
+      "audio_category": "morning_routine",
+      "mood": "calm",
+      "local_track": "music_library/calm_morning.wav",
+      "recommendation": "Soft Acoustic & Piano Morning",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a rising sound matching: Soft Acoustic & Piano Morning.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as morning_routine -> calm mood."
+    },
+    "hook_text": "Ever wondered why your morning home cup costs ₹18 while your café routine costs ₹180?",
+    "chosen_hook": "Ever wondered why your morning home cup costs ₹18 while your café routine costs ₹180?",
+    "comment_trigger": "Comment COFFEE below if you refuse to compromise on your morning brew.",
+    "save_trigger": "Save this before your next grocery run—real coffee makes all the difference.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "editorial_score": {
+      "shareability": 6.8,
+      "saveability": 7.2,
+      "emotion_pull": 7.6,
+      "hook_strength": 8.5,
+      "brand_clarity": 8.7,
+      "overall": 7.8,
+      "verdict": "REJECT",
+      "feedback": "The economic hook comparing ₹18 vs ₹180 performs exceptionally well for urban Indian consumers tired of café markups. However, the body text loses momentum by transitioning into a dense product catalog breakdown instead of maintaining an emotional narrative. To elevate this past the threshold, streamline the product focus exclusively onto Purica (100% Arabica, zero chicory) and cut extraneous brand names to keep the reader locked into the cost-versus-purity narrative.",
+      "retention_audit": "Line 1 (Hook): 'Ever wondered why your morning home cup costs ₹18 while your café routine costs ₹180?' — Instantly grabs attention by anchoring onto a relatable financial pain point. Line 2-4 (Body): Strong opening on morning rituals, but the text slows down significantly when listing specific variants. Readers experience an attention drop here because it shifts from an engaging consumer realization into a corporate pitch. Fix: Condense the variant description into a single crisp sentence emphasizing pure coffee transparency."
+    },
+    "asset_type": "facebook_post",
+    "funnel_objective": "COMMUNITY",
+    "objective": "Engagement Growth",
+    "primary_cta": "Which one would you choose? Comment below",
+    "success_metric": "comments",
+    "target": 150
+  },
+  "video_prompts": {
+    "reel_1": {
+      "aspect_ratio": "9:16",
+      "total_duration_s": 30,
+      "color_grade": "Warm espresso — lifted blacks, amber mids, desaturated greens, skin tones preserved",
+      "audio_direction": "Lo-fi acoustic guitar with a sharp vinyl crackle build-up, sudden bass drop landing exactly on frame 1 hook text.",
+      "frames": [
+        {
+          "frame_id": "reel_1_frame_1",
+          "duration_s": 5,
+          "on_screen_text": "CHECK THE BACK PANEL",
+          "ai_video_prompt": "Camera: shot on iPhone 15, close-up macro, 85mm lens equivalent, shallow depth of field, handheld micro-shake. Subject: An Indian man in his late 20s with visible skin pores, slight skin oil sheen, flyaway hairs, wearing a slightly worn linen shirt collar, aggressively flipping an instant coffee jar over to reveal the back label. Lighting: single warm amber key light from the side, deep natural shadows, no fill light. Motion: quick rotational wrist snap, coffee powder dust floating slightly in the air. Atmosphere: warm morning kitchen, natural daylight mixed with warm lamp glow. Style: hyperrealistic UGC, photographic, no CGI, no filters. End frame: clear view of the back label text unfocused in the background.",
+          "human_shot_list": "Location: Delhi modern apartment kitchen. Lens: 85mm f/1.8. Aperture: f/2.0. Lighting rig: single warm 3200K LED key light at 45 degrees. Talent direction: actor reacts with sudden realization, turning the jar fast. Duration: 5 seconds. Cut point: hard cut on jar rotation.",
+          "transition_to_next": "Hard snap cut on action."
+        },
+        {
+          "frame_id": "reel_1_frame_2",
+          "duration_s": 5,
+          "on_screen_text": "THE HIDDEN CHICORY",
+          "ai_video_prompt": "Camera: handheld vertical shot, 50mm lens, shallow depth of field. Subject: Extreme close-up of a commercial coffee jar back label under harsh kitchen lighting, a real finger pointing at the word 'chicory' printed in small font. Skin texture, fingerprint smudge on the glass. Lighting: top-down pendant kitchen lamp, warm glow, natural falloff. Motion: slow subtle push-in towards the text. Atmosphere: lived-in kitchen counter with a used silver spoon and a water ring on dark marble. Style: real documentary photography. End frame: finger holding steady over the ingredient list.",
+          "human_shot_list": "Location: Kitchen counter top-down setup. Lens: 50mm macro. Aperture: f/2.8. Lighting rig: overhead warm bulb. Talent direction: hand points deliberately without shaking too much. Duration: 5 seconds. Cut point: hard cut.",
+          "transition_to_next": "Fast whip pan right."
+        },
+        {
+          "frame_id": "reel_1_frame_3",
+          "duration_s": 5,
+          "on_screen_text": "THE MUDDY AFTERTASTE",
+          "ai_video_prompt": "Camera: close-up shot, 85mm f/1.8, slight motion blur. Subject: A clear glass mug filled with dark murky liquid, a thick muddy brown residue settling at the bottom. A used spoon stirs the liquid slowly, creating visible swirls. Lighting: side window daylight mixed with indoor kitchen warmth. Motion: circular stirring motion causing liquid physics, tiny steam wisps rising and dissipating. Atmosphere: morning routine, real water ring on wooden table. Style: editorial food photography. End frame: spoon lifting out of the mug.",
+          "human_shot_list": "Location: Wooden dining table. Lens: 85mm. Aperture: f/1.8. Lighting rig: natural window light from left. Talent direction: natural stirring motion, imperfect hand pose. Duration: 5 seconds. Cut point: hard cut.",
+          "transition_to_next": "Quick jump cut."
+        },
+        {
+          "frame_id": "reel_1_frame_4",
+          "duration_s": 5,
+          "on_screen_text": "100% PURE CHOICE",
+          "ai_video_prompt": "Camera: shot on iPhone 15, eye-level, 35mm lens. Subject: The exact Purity Beans glass jar sitting proudly on a dark marble countertop, catching golden morning light. The jar label is razor-sharp, showing crisp typography. In the soft-focus background, an Indian woman smiles naturally, holding a clean cup. Lighting: directional morning sunbeam cutting across the frame, amber rim light on the jar glass. Motion: subtle locked-off camera with slight handheld breath sway. Atmosphere: premium, clean, honest kitchen. Style: hyperrealistic lifestyle photography. End frame: jar stays dead-center and sharp.",
+          "human_shot_list": "Location: Modern kitchen island. Lens: 35mm. Aperture: f/2.2. Lighting rig: natural morning window light. Talent direction: relaxed background presence, natural expression. Duration: 5 seconds. Cut point: hard cut.",
+          "transition_to_next": "Match cut on zoom."
+        },
+        {
+          "frame_id": "reel_1_frame_5",
+          "duration_s": 5,
+          "on_screen_text": "READ THE JAR",
+          "ai_video_prompt": "Camera: medium close-up, 85mm portrait lens. Subject: Indian man holding the Purity Beans jar at chest height, pointing his thumb directly at the front label. Natural teeth, imperfect eyebrows, real fabric wrinkles on his dark t-shirt. Lighting: warm studio key light from the left, deep shadow on the right cheek. Motion: slight weight shift of the actor, subtle blinking. Atmosphere: intimate, trustworthy, authoritative. Style: documentary interview style. End frame: actor holds position looking directly into the lens.",
+          "human_shot_list": "Location: Studio set with dark textured wall. Lens: 85mm. Aperture: f/1.8. Lighting rig: single softbox key light. Talent direction: direct eye contact, confident relaxed posture. Duration: 5 seconds. Cut point: hard cut.",
+          "transition_to_next": "Quick push-in transition."
+        },
+        {
+          "frame_id": "reel_1_frame_6",
+          "duration_s": 5,
+          "on_screen_text": "FOLLOW @PURITYBEANS",
+          "ai_video_prompt": "Camera: macro product shot, 90mm macro lens. Subject: The exact Purity Beans jar standing alone on dark slate, with a single perfect water droplet glistening on the glass. The website URL 'https://p3online.in' overlaid cleanly at the bottom. Lighting: dramatic golden amber spotlight from above, absolute black background. Motion: extremely slow push-in, floating dust motes caught in the light ray. Atmosphere: luxury FMCG commercial realism. Style: photographic, high-contrast, clean. End frame: final freeze frame on the jar.",
+          "human_shot_list": "Location: Tabletop studio. Lens: 90mm macro. Aperture: f/4.0. Lighting rig: spot snoot light 3200K. Talent direction: none (product shot). Duration: 5 seconds. Cut point: loop back to frame 1.",
+          "transition_to_next": "Seamless loop cut back to frame 1."
+        }
+      ],
+      "thumbnail_frame": "Frame 1 at 0.5s showing the jar flipped violently with 'CHECK THE BACK PANEL' text overlay.",
+      "loop_edit_note": "Cut the final frame exactly on the last audio beat to loop seamlessly into frame 1's rotational wrist snap."
+    },
+    "reel_2": {
+      "aspect_ratio": "9:16",
+      "total_duration_s": 30,
+      "color_grade": "Cooler, moodier — night palette: deep blue-blacks, warm amber accent, lower brightness",
+      "audio_direction": "Deep ambient synth drone with a ticking clock pulse, building low tension until the product reveal.",
+      "frames": [
+        {
+          "frame_id": "reel_2_frame_1",
+          "duration_s": 5,
+          "on_screen_text": "MOST COFFEE ISNT COFFEE",
+          "ai_video_prompt": "Camera: shot on iPhone 15, low-angle dusk lighting, 35mm lens. Subject: An Indian woman sitting at a wooden desk at night, illuminated only by the warm glow of a desk lamp, looking suspiciously at a generic coffee jar in her hand. Visible flyaway hairs, tired natural eyes, worn collar on a knitted sweater. Lighting: cool blue daylight from an unlit window mixing with a warm 2700K desk lamp. Motion: slow hand tilt, slight natural micro-shaking. Atmosphere: late night work session, lived-in desk clutter with charging cables and a crumpled napkin. Style: cinematic UGC, hyperrealistic. End frame: jar held mid-tilt.",
+          "human_shot_list": "Location: Home office setup at night. Lens: 35mm. Aperture: f/2.0. Lighting rig: desk lamp warm fill + cool window ambient. Talent direction: contemplative, weary expression. Duration: 5 seconds. Cut point: hard cut.",
+          "transition_to_next": "Fast match cut on hand movement."
+        },
+        {
+          "frame_id": "reel_2_frame_2",
+          "duration_s": 5,
+          "on_screen_text": "CHECK THE BACK PANEL",
+          "ai_video_prompt": "Camera: close-up macro, 85mm lens. Subject: A thumb flipping a coffee jar around under dim yellow desk lighting. Fingerprints visible on the glass surface. Lighting: single overhead desk light creating hard shadows across the label. Motion: rapid rotational snap of the jar. Atmosphere: intimate, investigative, late night. Style: photographic realism. End frame: back label fully visible and in focus.",
+          "human_shot_list": "Location: Desk surface close-up. Lens: 85mm. Aperture: f/1.8. Lighting rig: single directional desk spotlight. Talent direction: firm hand grip, realistic motion. Duration: 5 seconds. Cut point: hard cut.",
+          "transition_to_next": "Whip pan left."
+        },
+        {
+          "frame_id": "reel_2_frame_3",
+          "duration_s": 5,
+          "on_screen_text": "THE HIDDEN ROOT",
+          "ai_video_prompt": "Camera: macro insert shot, 90mm macro lens. Subject: Extreme close-up of a commercial instant coffee label ingredient list under low light, highlighting chicory extract. Dust specs on the paper texture. Lighting: moody amber sidelight, deep background shadow. Motion: slow macro push-in. Atmosphere: serious, investigative journalism tone. Style: high-end documentary B-roll. End frame: text 'chicory' centered in frame.",
+          "human_shot_list": "Location: Studio macro bench. Lens: 90mm. Aperture: f/2.8. Lighting rig: amber LED panel side-rig. Talent direction: none. Duration: 5 seconds. Cut point: hard cut.",
+          "transition_to_next": "Sudden hard cut."
+        },
+        {
+          "frame_id": "reel_2_frame_4",
+          "duration_s": 5,
+          "on_screen_text": "ZERO CHICORY GUARANTEE",
+          "ai_video_prompt": "Camera: 50mm portrait lens, handheld cinematic sway. Subject: The exact Purity Beans jar placed on a dark marble kitchen island at night, glowing warmly under a single pendant lamp. In the background, out-of-focus city lights through a glass window. Lighting: rich warm gold spotlight hitting the Purity Beans label, cool blue night ambience elsewhere. Motion: slow locked-off push-in with subtle handheld breathing movement. Atmosphere: premium, calm, reassuring. Style: luxury FMCG advertisement look. End frame: jar sharp and centered.",
+          "human_shot_list": "Location: Luxury kitchen at night. Lens: 50mm. Aperture: f/1.8. Lighting rig: 3200K spot pendant. Talent direction: none. Duration: 5 seconds. Cut point: hard cut.",
+          "transition_to_next": "Smooth cross dissolve."
+        },
+        {
+          "frame_id": "reel_2_frame_5",
+          "duration_s": 5,
+          "on_screen_text": "TASTE THE DIFFERENCE",
+          "ai_video_prompt": "Camera: close-up, 85mm lens. Subject: An Indian man taking a slow sip from a ceramic mug of black coffee at night, eyes closed in appreciation. Natural stubble, slight skin sheen, real fabric texture on hoodie. Lighting: warm lamp glow from the side reflecting off the ceramic mug and his cheekbone. Motion: slow head tilt back, relaxing shoulders. Atmosphere: comforting late-night ritual, lived-in apartment. Style: photographic realism. End frame: man lowers mug with a satisfied expression.",
+          "human_shot_list": "Location: Apartment living room. Lens: 85mm. Aperture: f/2.0. Lighting rig: warm floor lamp on the right. Talent direction: genuine relief and calm after tasting. Duration: 5 seconds. Cut point: hard cut.",
+          "transition_to_next": "Hard cut."
+        },
+        {
+          "frame_id": "reel_2_frame_6",
+          "duration_s": 5,
+          "on_screen_text": "FOLLOW @PURITYBEANS",
+          "ai_video_prompt": "Camera: macro shot, 85mm lens. Subject: The exact Purity Beans jar standing on a dark wooden table in a dimly lit room, website URL 'https://p3online.in' displayed cleanly at the bottom. Lighting: single amber beam highlighting the brand name on the dark jar label. Motion: static camera with floating dust particles. Atmosphere: elegant, mysterious, trustworthy. Style: premium dark mode product photography. End frame: final product still frame.",
+          "human_shot_list": "Location: Studio dark set. Lens: 85mm. Aperture: f/2.8. Lighting rig: narrow spot amber light. Talent direction: none. Duration: 5 seconds. Cut point: loop to frame 1.",
+          "transition_to_next": "Seamless loop cut back to frame 1."
+        }
+      ],
+      "thumbnail_frame": "Frame 1 at 1.2s showing the woman holding a generic jar under dim blue-gold lighting with 'MOST COFFEE ISNT COFFEE' text.",
+      "loop_edit_note": "Cut final frame on the low synth drop to loop instantly back to the woman's desk tilt in frame 1."
+    },
+    "yt_short": {
+      "aspect_ratio": "9:16",
+      "total_duration_s": 27,
+      "color_grade": "Scenes 1-2 desaturated + cold. Scene 3 warm gold reveal. Scenes 4-5 warm and clear."
+    }
+  },
+  "ai_image_prompts": [
+    {
+      "id": "img_carousel_cover",
+      "use_for": "Instagram carousel cover (1080x1080)",
+      "prompt": "Cinematic dark espresso tones — Purity Beans jar centred on black marble, single diagonal golden beam from upper right, micro coffee granules scattered, editorial luxury food photography, deep shadows, faint cream steam wisps, razor-sharp product label"
+    },
+    {
+      "id": "img_reel_cover",
+      "use_for": "Instagram Reel thumbnail (1080x1920 vertical)",
+      "prompt": "Vertical cinematic coffee portrait — Purity Beans jar as sole hero, warm amber backlight through frosted glass, shallow depth of field, single thread of steam, dark moody atmosphere, no people, no text, editorial quality"
+    },
+    {
+      "id": "img_linkedin_banner",
+      "use_for": "LinkedIn post image (1200x628)",
+      "prompt": "Wide editorial product landscape — Purity Beans jar on dark weathered wooden desk, MacBook soft-blurred at left edge, single warm desk lamp, professional but human, documentary texture, 16:9 wide composition, no text"
+    },
+    {
+      "id": "img_blog_hero",
+      "use_for": "Blog hero image (1200x630)",
+      "prompt": "Lifestyle editorial — Indian professional hands cradling a dark ceramic mug, Purity Beans jar visible soft-focus on desk, warm morning window light from left, genuine moment not staged, documentary grain, 16:9 crop"
+    },
+    {
+      "id": "img_story_bg",
+      "use_for": "Instagram Story background (1080x1920)",
+      "prompt": "Vertical dark editorial — heavily blurred Purity Beans jar in background with deep amber bokeh, top two-thirds empty for text overlay, grain texture, deep blacks, warm gold accent light"
+    }
+  ],
+  "performance_targets": {
+    "reel_views_3s": 15000,
+    "reel_views_30s": 5000,
+    "reel_saves": 800,
+    "reel_shares": 300,
+    "carousel_swipe_rate_pct": 65,
+    "carousel_saves": 600,
+    "linkedin_impressions": 3000,
+    "linkedin_comments": 40,
+    "story_poll_votes": 500,
+    "story_dm_replies": 50,
+    "link_clicks": 200,
+    "new_followers": 300
+  },
+  "follower_growth_audit": {
+    "contract_version": "follower-growth-v1",
+    "passes": true,
+    "results": {
+      "facebook": {
+        "platform": "facebook",
+        "contract_version": "follower-growth-v1",
+        "passes": true,
+        "errors": [],
+        "warnings": []
+      },
+      "youtube": {
+        "platform": "youtube",
+        "contract_version": "follower-growth-v1",
+        "passes": true,
+        "errors": [],
+        "warnings": []
+      },
+      "threads": {
+        "platform": "threads",
+        "contract_version": "follower-growth-v1",
+        "passes": true,
+        "errors": [],
+        "warnings": []
+      },
+      "linkedin": {
+        "platform": "linkedin",
+        "contract_version": "follower-growth-v1",
+        "passes": true,
+        "errors": [],
+        "warnings": []
+      }
+    }
+  },
+  "_asset_metadata": [
+    {
+      "content_id": "pb_64e63093e8",
+      "day": 283,
+      "channel": "instagram",
+      "type": "reel",
+      "topic": "",
+      "hook": "YOUR COFFEE IS LYING",
+      "cta": "Follow @puritybeans for daily pure coffee truths. Discover 100% pure jars at https://p3online.in",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Always-On Growth",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "gen_2026-10-11_a453c6a4",
+      "scroller_state": "uninterested",
+      "attention_mechanism": "pattern_interrupt",
+      "psychology_frame": "revelation",
+      "psychology_frame_version": 1,
+      "hook_strategy": "question",
+      "payoff_type": "useful_test",
+      "hook_promise": null,
+      "payoff_present": true,
+      "payoff_validation_status": "satisfied",
+      "payoff_gate_version": "1.0.0",
+      "platform": "instagram",
+      "format": "reel",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": "followers",
+      "hook_layers_distinct": true,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.7.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-11T09:46:48",
+      "status": "scheduled"
+    },
+    {
+      "content_id": "pb_0938d7da2e",
+      "day": 283,
+      "channel": "instagram",
+      "type": "growth_reel",
+      "topic": "Revealing how commercial coffee is graded from grading rooms to export bags, exposing why the average buyer never sees a",
+      "hook": "Your supermarket coffee never tells you its grade. Here is why.",
+      "cta": "",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Always-On Growth",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "gen_2026-10-11_a453c6a4",
+      "scroller_state": "uninterested",
+      "attention_mechanism": "pattern_interrupt",
+      "psychology_frame": "revelation",
+      "psychology_frame_version": 1,
+      "hook_strategy": "negation",
+      "payoff_type": "new_knowledge",
+      "hook_promise": "explanation",
+      "payoff_present": true,
+      "payoff_validation_status": "satisfied",
+      "payoff_gate_version": "1.0.0",
+      "platform": "instagram",
+      "format": "growth_reel",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": "followers",
+      "hook_layers_distinct": null,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.7.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-11T09:46:48",
+      "status": "scheduled"
+    },
+    {
+      "content_id": "pb_e9c1e2f4d5",
+      "day": 283,
+      "channel": "instagram",
+      "type": "carousel",
+      "topic": "Most instant coffee in India isn't what you think.",
+      "hook": "",
+      "cta": "Save this carousel + Follow @puritybeans. Explore pure coffee at https://p3online.in",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Always-On Growth",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "gen_2026-10-11_a453c6a4",
+      "scroller_state": "uninterested",
+      "attention_mechanism": "pattern_interrupt",
+      "psychology_frame": "revelation",
+      "psychology_frame_version": 1,
+      "hook_strategy": "negation",
+      "payoff_type": "useful_test",
+      "hook_promise": "correction",
+      "payoff_present": true,
+      "payoff_validation_status": "satisfied",
+      "payoff_gate_version": "1.0.0",
+      "platform": "instagram",
+      "format": "carousel",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": "followers",
+      "hook_layers_distinct": null,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.7.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-11T09:46:48",
+      "status": "scheduled"
+    },
+    {
+      "content_id": "pb_460995fea6",
+      "day": 283,
+      "channel": "instagram",
+      "type": "story",
+      "topic": "",
+      "hook": "",
+      "cta": "",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Always-On Growth",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "gen_2026-10-11_a453c6a4",
+      "scroller_state": null,
+      "attention_mechanism": null,
+      "psychology_frame": "revelation",
+      "psychology_frame_version": 1,
+      "hook_strategy": null,
+      "payoff_type": null,
+      "hook_promise": null,
+      "payoff_present": null,
+      "payoff_validation_status": "no_copy",
+      "payoff_gate_version": "1.0.0",
+      "platform": "instagram",
+      "format": "story",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": "followers",
+      "hook_layers_distinct": null,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.7.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-11T09:46:48",
+      "status": "scheduled"
+    },
+    {
+      "content_id": "pb_4f4a999eff",
+      "day": 283,
+      "channel": "linkedin",
+      "type": "post",
+      "topic": "",
+      "hook": "The invisible tax of terrible office coffee.",
+      "cta": "Follow Hiten Jain for weekly deep-dives into food science and workplace wellness, and explore our 100% pure coffee at https://p3online.in.",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Always-On Growth",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "gen_2026-10-11_a453c6a4",
+      "scroller_state": "curious",
+      "attention_mechanism": "curiosity_gap",
+      "psychology_frame": "revelation",
+      "psychology_frame_version": 1,
+      "hook_strategy": null,
+      "payoff_type": "verified_discovery",
+      "hook_promise": null,
+      "payoff_present": true,
+      "payoff_validation_status": "satisfied",
+      "payoff_gate_version": "1.0.0",
+      "platform": "linkedin",
+      "format": "post",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": "followers",
+      "hook_layers_distinct": null,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.7.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-11T09:46:48",
+      "status": "scheduled"
+    },
+    {
+      "content_id": "pb_1cb46a7a7c",
+      "day": 283,
+      "channel": "youtube",
+      "type": "short",
+      "topic": "Is instant coffee actually coffee? The truth about pure arabica",
+      "hook": "Why does your morning coffee taste nothing like it used to?",
+      "cta": "Subscribe for daily pure coffee craft. Explore 100% coffee jars at https://p3online.in",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Always-On Growth",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "gen_2026-10-11_a453c6a4",
+      "scroller_state": "identity_seeking",
+      "attention_mechanism": "recognition",
+      "psychology_frame": "revelation",
+      "psychology_frame_version": 1,
+      "hook_strategy": "question",
+      "payoff_type": "useful_test",
+      "hook_promise": "explanation",
+      "payoff_present": true,
+      "payoff_validation_status": "satisfied",
+      "payoff_gate_version": "1.0.0",
+      "platform": "youtube",
+      "format": "short",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": "followers",
+      "hook_layers_distinct": null,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.7.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-11T09:46:48",
+      "status": "scheduled"
+    }
+  ],
+  "_creative_audit": {
+    "ts": "2026-10-11T09:54:02.646595+00:00",
+    "day_number": 283,
+    "generation_id": "gen_2026-10-11_a453c6a4",
+    "image_assets": [
+      {
+        "path": "output/creative/instagram_post_day283_2026-10-11.jpg",
+        "platform": "instagram",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1673,
+          "contrast": 0.2233,
+          "edge_density": 0.036,
+          "upper_activity": 0.2544,
+          "center_brightness_delta": 0.0676,
+          "lower_center_edge_ratio": 4.013,
+          "lower_center_edge_density": 0.0388,
+          "visual_hash": "a1e13c5288a2dec0"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/facebook_post_day283_2026-10-11.jpg",
+        "platform": "facebook",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1381,
+          "contrast": 0.2192,
+          "edge_density": 0.0307,
+          "upper_activity": 0.2652,
+          "center_brightness_delta": 0.0713,
+          "lower_center_edge_ratio": 5.851,
+          "lower_center_edge_density": 0.0224,
+          "visual_hash": "2eba44d0d42787cb"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_1_day283_2026-10-11.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.5915,
+          "contrast": 0.377,
+          "edge_density": 0.0216,
+          "upper_activity": 0.2062,
+          "center_brightness_delta": 0.0576,
+          "lower_center_edge_ratio": 7.022,
+          "lower_center_edge_density": 0.0202,
+          "visual_hash": "412b383a0c16a277"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_2_day283_2026-10-11.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.3652,
+          "contrast": 0.3666,
+          "edge_density": 0.0202,
+          "upper_activity": 0.3891,
+          "center_brightness_delta": 0.2569,
+          "lower_center_edge_ratio": 1.098,
+          "lower_center_edge_density": 0.016,
+          "visual_hash": "0d866ae07d5e3b4b"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_3_day283_2026-10-11.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.3637,
+          "contrast": 0.3672,
+          "edge_density": 0.0206,
+          "upper_activity": 0.3886,
+          "center_brightness_delta": 0.2574,
+          "lower_center_edge_ratio": 1.097,
+          "lower_center_edge_density": 0.0161,
+          "visual_hash": "d41db00c89119dae"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_4_day283_2026-10-11.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.3629,
+          "contrast": 0.3668,
+          "edge_density": 0.0209,
+          "upper_activity": 0.3887,
+          "center_brightness_delta": 0.2565,
+          "lower_center_edge_ratio": 1.18,
+          "lower_center_edge_density": 0.0171,
+          "visual_hash": "e2daa2adf003206a"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_5_day283_2026-10-11.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.3623,
+          "contrast": 0.3663,
+          "edge_density": 0.0212,
+          "upper_activity": 0.3878,
+          "center_brightness_delta": 0.2558,
+          "lower_center_edge_ratio": 1.097,
+          "lower_center_edge_density": 0.0161,
+          "visual_hash": "4aa1f6d0172c7fce"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_6_day283_2026-10-11.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.3622,
+          "contrast": 0.3649,
+          "edge_density": 0.0216,
+          "upper_activity": 0.3881,
+          "center_brightness_delta": 0.2539,
+          "lower_center_edge_ratio": 1.103,
+          "lower_center_edge_density": 0.0161,
+          "visual_hash": "9085c51c7e91679b"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_7_day283_2026-10-11.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.4176,
+          "contrast": 0.3732,
+          "edge_density": 0.0206,
+          "upper_activity": 0.3468,
+          "center_brightness_delta": 0.0778,
+          "lower_center_edge_ratio": 0.551,
+          "lower_center_edge_density": 0.0134,
+          "visual_hash": "17f7bac9c0d21893"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_thumb_day283_2026-10-11.jpg",
+        "platform": "instagram_reel_thumbnail",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1415,
+          "contrast": 0.1599,
+          "edge_density": 0.0147,
+          "upper_activity": 0.1418,
+          "center_brightness_delta": 0.0421,
+          "lower_center_edge_ratio": 3.769,
+          "lower_center_edge_density": 0.0225,
+          "visual_hash": "db64f78e758b1269"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/avatar_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1753,
+          "contrast": 0.1726,
+          "edge_density": 0.0154,
+          "upper_activity": 0.1936,
+          "center_brightness_delta": 0.0989,
+          "lower_center_edge_ratio": 28.643,
+          "lower_center_edge_density": 0.0325,
+          "visual_hash": "d8d41282c8374401"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/story_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1886,
+          "contrast": 0.2118,
+          "edge_density": 0.0203,
+          "upper_activity": 0.1649,
+          "center_brightness_delta": 0.1214,
+          "lower_center_edge_ratio": 40.008,
+          "lower_center_edge_density": 0.0448,
+          "visual_hash": "92b9e47cbc02dbca"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat0_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1744,
+          "contrast": 0.1678,
+          "edge_density": 0.0162,
+          "upper_activity": 0.181,
+          "center_brightness_delta": 0.095,
+          "lower_center_edge_ratio": 28.643,
+          "lower_center_edge_density": 0.0325,
+          "visual_hash": "8c9bc1bbad545a8e"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/story_day1_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1765,
+          "contrast": 0.1821,
+          "edge_density": 0.0135,
+          "upper_activity": 0.1626,
+          "center_brightness_delta": 0.1041,
+          "lower_center_edge_ratio": 27.806,
+          "lower_center_edge_density": 0.0301,
+          "visual_hash": "b9421800ebfb2225"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/ugc_day1_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1909,
+          "contrast": 0.2049,
+          "edge_density": 0.0172,
+          "upper_activity": 0.1936,
+          "center_brightness_delta": 0.1266,
+          "lower_center_edge_ratio": 32.109,
+          "lower_center_edge_density": 0.0367,
+          "visual_hash": "3623f7299a738efa"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/instagram_post_day1_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1344,
+          "contrast": 0.1724,
+          "edge_density": 0.0187,
+          "upper_activity": 0.1759,
+          "center_brightness_delta": 0.0214,
+          "lower_center_edge_ratio": 18.113,
+          "lower_center_edge_density": 0.0237,
+          "visual_hash": "d7f6eefcc44b9f3f"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/yt_thumb_day1_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1280,
+          "height": 720,
+          "aspect_ratio": 1.778,
+          "brightness": 0.3288,
+          "contrast": 0.2281,
+          "edge_density": 0.0221,
+          "upper_activity": 0.203,
+          "center_brightness_delta": 0.0525,
+          "lower_center_edge_ratio": 0.864,
+          "lower_center_edge_density": 0.0106,
+          "visual_hash": "42716e3495580371"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat2_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1907,
+          "contrast": 0.2023,
+          "edge_density": 0.0182,
+          "upper_activity": 0.1854,
+          "center_brightness_delta": 0.1309,
+          "lower_center_edge_ratio": 32.109,
+          "lower_center_edge_density": 0.0367,
+          "visual_hash": "eb5808176cffa3bd"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_hook_day1_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1839,
+          "contrast": 0.1933,
+          "edge_density": 0.0147,
+          "upper_activity": 0.1512,
+          "center_brightness_delta": 0.1127,
+          "lower_center_edge_ratio": 32.109,
+          "lower_center_edge_density": 0.0367,
+          "visual_hash": "627560edad07ec03"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/facebook_post_day1_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.111,
+          "contrast": 0.1737,
+          "edge_density": 0.018,
+          "upper_activity": 0.1989,
+          "center_brightness_delta": 0.0378,
+          "lower_center_edge_ratio": 12.528,
+          "lower_center_edge_density": 0.0163,
+          "visual_hash": "352010c59be4df23"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/ugc_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1753,
+          "contrast": 0.1726,
+          "edge_density": 0.0154,
+          "upper_activity": 0.1936,
+          "center_brightness_delta": 0.0989,
+          "lower_center_edge_ratio": 28.643,
+          "lower_center_edge_density": 0.0325,
+          "visual_hash": "d8d41282c8374401"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat1_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1925,
+          "contrast": 0.2139,
+          "edge_density": 0.0191,
+          "upper_activity": 0.1749,
+          "center_brightness_delta": 0.1335,
+          "lower_center_edge_ratio": 40.008,
+          "lower_center_edge_density": 0.0448,
+          "visual_hash": "e9e9fef8242d5785"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/avatar_day1_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1909,
+          "contrast": 0.2049,
+          "edge_density": 0.0172,
+          "upper_activity": 0.1936,
+          "center_brightness_delta": 0.1266,
+          "lower_center_edge_ratio": 32.109,
+          "lower_center_edge_density": 0.0367,
+          "visual_hash": "3623f7299a738efa"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat4_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1734,
+          "contrast": 0.1605,
+          "edge_density": 0.0142,
+          "upper_activity": 0.1461,
+          "center_brightness_delta": 0.0981,
+          "lower_center_edge_ratio": 26.663,
+          "lower_center_edge_density": 0.0302,
+          "visual_hash": "4bc781f3a0502235"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat5_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1666,
+          "contrast": 0.1667,
+          "edge_density": 0.0164,
+          "upper_activity": 0.1851,
+          "center_brightness_delta": 0.0853,
+          "lower_center_edge_ratio": 28.622,
+          "lower_center_edge_density": 0.0309,
+          "visual_hash": "6c906cca7823f2b9"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_hook_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1747,
+          "contrast": 0.1713,
+          "edge_density": 0.0151,
+          "upper_activity": 0.1902,
+          "center_brightness_delta": 0.0953,
+          "lower_center_edge_ratio": 28.643,
+          "lower_center_edge_density": 0.0325,
+          "visual_hash": "ef13ebcf1c465f40"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat3_day283_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.178,
+          "contrast": 0.1824,
+          "edge_density": 0.0154,
+          "upper_activity": 0.164,
+          "center_brightness_delta": 0.1081,
+          "lower_center_edge_ratio": 27.806,
+          "lower_center_edge_density": 0.0301,
+          "visual_hash": "aa3ac6b40ce0c2c4"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/test_reel_thumb_day1_2026-10-11.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1857,
+          "contrast": 0.1963,
+          "edge_density": 0.0155,
+          "upper_activity": 0.1634,
+          "center_brightness_delta": 0.1188,
+          "lower_center_edge_ratio": 32.109,
+          "lower_center_edge_density": 0.0367,
+          "visual_hash": "5e563438d7d1f756"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      }
+    ],
+    "video_assets": [
+      {
+        "path": "output/creative/story_video_day283_day283_2026-10-11.mp4",
+        "platform": "video",
+        "frames_sampled": 0,
+        "frame_delta": 0.0,
+        "recommendations": [
+          "video visual audit failed: frame decoder error; inspect before treating QA as passed"
+        ],
+        "error": "ValueError: `ffmpeg` is not a registered plugin name."
+      },
+      {
+        "path": "output/creative/story_video_day1_day1_2026-10-11.mp4",
+        "platform": "video",
+        "frames_sampled": 0,
+        "frame_delta": 0.0,
+        "recommendations": [
+          "video visual audit failed: frame decoder error; inspect before treating QA as passed"
+        ],
+        "error": "ValueError: `ffmpeg` is not a registered plugin name."
+      },
+      {
+        "path": "output/creative/reel_1_video_day283_2026-10-11.mp4",
+        "platform": "video",
+        "frames_sampled": 0,
+        "frame_delta": 0.0,
+        "recommendations": [
+          "video visual audit failed: frame decoder error; inspect before treating QA as passed"
+        ],
+        "error": "ValueError: `ffmpeg` is not a registered plugin name."
+      }
+    ],
+    "copy_audit": [
+      {
+        "asset": "growth_reel",
+        "hook_length": 63,
+        "recommendations": []
+      },
+      {
+        "asset": "reel_1",
+        "hook_length": 20,
+        "recommendations": []
+      },
+      {
+        "asset": "reel_2",
+        "hook_length": 23,
+        "recommendations": []
+      },
+      {
+        "asset": "yt_short",
+        "hook_length": 59,
+        "recommendations": []
+      },
+      {
+        "asset": "carousel",
+        "hook_length": 50,
+        "recommendations": [
+          "carousel: commercial language repeats; protect discovery value before selling"
+        ]
+      },
+      {
+        "asset": "instagram_post",
+        "hook_length": 64,
+        "recommendations": []
+      },
+      {
+        "asset": "facebook_post",
+        "hook_length": 85,
+        "recommendations": []
+      },
+      {
+        "asset": "threads_post",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem"
+        ]
+      },
+      {
+        "asset": "linkedin_post",
+        "hook_length": 44,
+        "recommendations": []
+      },
+      {
+        "asset": "stories",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem"
+        ]
+      }
+    ],
+    "vision_audit": {
+      "status": "failed_non_blocking",
+      "model": "gemini-2.5-flash",
+      "assets": [],
+      "recommendations": [],
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "portfolio_diversity": 0.995,
+    "recommendations": [
+      "raise exposure/background separation; avoid another near-black frame",
+      "lower-center focal composition dominates; vary into a contextual or off-center composition",
+      "add visible action/texture such as pour, hand, steam, granules, or environment",
+      "video visual audit failed: frame decoder error; inspect before treating QA as passed",
+      "carousel: commercial language repeats; protect discovery value before selling",
+      "hook is too short to communicate a clear curiosity/problem"
+    ],
+    "asset_count": 31
+  }
+}

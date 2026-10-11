@@ -636,6 +636,126 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-10T08:30:09+00:00"
+    },
+    "2026-10-11|generate|linkedin|pb_64e63093e8": {
+      "attempt_count": 1,
+      "content_date": "2026-10-11",
+      "content_id": "pb_64e63093e8",
+      "day_number": 283,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-11T09:54:02+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-11T09:54:04+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7514986670207823872",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7514986670207823872/",
+          "verification_method": "linkedin_public_url"
+        }
+      ],
+      "last_attempt_at": "2026-10-11T09:54:02+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-11T09:54:04+00:00",
+      "next_retry_at": null,
+      "platform": "linkedin",
+      "remote_id": "urn:li:share:7514986670207823872",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-11T09:54:04+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7514986670207823872/",
+      "verification_detail": "public feed URL confirmed (200)",
+      "verification_method": "linkedin_public_url",
+      "verified_at": "2026-10-11T09:54:04+00:00"
+    },
+    "2026-10-11|generate|threads|pb_64e63093e8": {
+      "attempt_count": 1,
+      "content_date": "2026-10-11",
+      "content_id": "pb_64e63093e8",
+      "day_number": 283,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-11T09:54:07+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-11T09:54:12+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "17901169176377692",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.threads.net/post/17901169176377692",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-11T09:54:07+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-11T09:54:12+00:00",
+      "next_retry_at": null,
+      "platform": "threads",
+      "remote_id": "17901169176377692",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-11T09:54:12+00:00",
+      "url": "https://www.threads.net/post/17901169176377692",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-11T09:54:12+00:00"
+    },
+    "2026-10-11|generate|youtube|pb_64e63093e8": {
+      "attempt_count": 1,
+      "content_date": "2026-10-11",
+      "content_id": "pb_64e63093e8",
+      "day_number": 283,
+      "error": "HTTP 403",
+      "history": [
+        {
+          "at": "2026-10-11T09:54:04+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-11T09:54:07+00:00",
+          "attempt": 1,
+          "error": "HTTP 403",
+          "event": "attempt_finished",
+          "remote_id": "dlf2G2rQ160",
+          "status": "PUBLISHED_UNVERIFIED",
+          "url": "https://www.youtube.com/shorts/dlf2G2rQ160",
+          "verification_method": "youtube_data_api"
+        }
+      ],
+      "last_attempt_at": "2026-10-11T09:54:04+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-11T09:54:07+00:00",
+      "next_retry_at": "2026-10-11T10:54:07+00:00",
+      "platform": "youtube",
+      "remote_id": "dlf2G2rQ160",
+      "slot": "generate",
+      "status": "PUBLISHED_UNVERIFIED",
+      "updated_at": "2026-10-11T09:54:06+00:00",
+      "url": "https://www.youtube.com/shorts/dlf2G2rQ160",
+      "verification_detail": "HTTP 403",
+      "verification_method": "youtube_data_api",
+      "verified_at": null
     }
   },
   "version": 1
