@@ -42,8 +42,8 @@ _DEFAULT_MODELS = (
 _DEFAULT_MODEL = _DEFAULT_MODELS[0]
 _BACKOFF_S = (2, 5, 12)
 # Successful super replies in run 341 finished in under 20s. Empty replies in
-# run 344 sat for 23–50s and still returned nothing. 30s fails those fast.
-_CALL_TIMEOUT_S = 30
+# run 344 sat for 23–50s and still returned nothing. 15s fails dead endpoints fast.
+_CALL_TIMEOUT_S = 15
 _RETRY_STATUS = {429, 500, 502, 503, 504}
 _UNAVAILABLE = {404, 410}
 _AUTH_STATUS = {401, 403}
