@@ -181,11 +181,16 @@ def call_section_with_fallback(prompt: str, label: str, max_tokens: int = 900) -
     """Try each provider for one section. Back off, then the next provider."""
     from content_generator.core.brand_guard import build_system_prompt
     from content_generator.providers.llm_router import _PROVIDERS, _try_provider, extract
+    from content_generator.providers import ollama
 
     full = f"SYSTEM RULES:\n{build_system_prompt()}\n\nUSER REQUEST:\n{prompt}"
     last = "no provider answered"
-    for index, (name, fn) in enumerate(_PROVIDERS):
-        retries = 1 if name == "nvidia" else 2
+    providers = list(_PROVIDERS)
+    if ollama.is_available():
+        providers = [("ollama", ollama.call)] + [p for p in providers if p[0] != "ollama"]
+
+    for index, (name, fn) in enumerate(providers):
+        retries = 1 if name in ("nvidia", "ollama") else 2
         raw = _try_provider(name, fn, full, max_tokens, label, retries)
         data = None
         if raw:

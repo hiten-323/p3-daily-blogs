@@ -13,7 +13,7 @@ import logging
 from threading import Semaphore, Lock
 from dataclasses import dataclass, field
 
-from content_generator.providers import gemini, groq, openrouter, deepseek, cerebras, nvidia
+from content_generator.providers import gemini, groq, openrouter, deepseek, cerebras, nvidia, ollama
 from content_generator.parsers.json_parser import extract
 
 logger = logging.getLogger(__name__)
@@ -69,6 +69,7 @@ class _ProviderState:
 
 
 _STATES = {
+    "ollama": _ProviderState("ollama"),
     "nvidia": _ProviderState("nvidia"),
     "gemini": _ProviderState("gemini"),
     "deepseek": _ProviderState("deepseek"),
@@ -146,6 +147,7 @@ _PROVIDERS = [
 ]
 
 _KEY_GETTERS = (
+    ("ollama", ollama.get_key),
     ("nvidia", nvidia.get_key),
     ("groq", groq.get_key),
     ("gemini", gemini.get_key),
@@ -278,9 +280,13 @@ def call(prompt: str, label: str, max_tokens: int = 3000) -> dict:
     system_rules = build_system_prompt()
     full_prompt = f"SYSTEM RULES:\n{system_rules}\n\nUSER REQUEST:\n{prompt}"
 
-    for name, fn in _PROVIDERS:
-        # NVIDIA backs off inside its own client, then this loop falls through.
-        if name == "nvidia":
+    active_providers = list(_PROVIDERS)
+    if ollama.is_available() and _STATES["ollama"].is_available():
+        active_providers = [("ollama", ollama.call)] + [p for p in active_providers if p[0] != "ollama"]
+
+    for name, fn in active_providers:
+        # NVIDIA and Ollama back off or fail fast; others retry
+        if name in ("nvidia", "ollama"):
             retries = 1
         elif name == "gemini":
             retries = 3
