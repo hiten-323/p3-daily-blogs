@@ -220,10 +220,11 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
         return None
     from content_generator.creative.real_jar_composer import pick_jar_photo, _has_white_background, _all_jar_photos
 
-    # For knockout compositing, we MUST use a studio shot with a solid white background.
-    # Lifestyle photos (e.g. kitchen counter) will have erratic cutouts when knocked out.
+    # For knockout compositing, we strictly prefer authentic high-resolution 100g studio
+    # hero shots on solid white sweep (clean knockout without flash glare/tearing).
     everything = _all_jar_photos()
-    studio_fronts = [p for p in everything if _has_white_background(p) and "_front.png" in p.lower()]
+    studio_100g = [p for p in everything if _has_white_background(p) and "_100g_front.png" in p.lower()]
+    studio_fronts = studio_100g or [p for p in everything if _has_white_background(p) and "_front.png" in p.lower()]
     if not studio_fronts:
         studio_fronts = [p for p in everything if _has_white_background(p)]
 
@@ -232,7 +233,10 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
             matched = [p for p in studio_fronts if f"_{product}_" in p]
             jar_path = (matched or studio_fronts)[(day * 3 + idx) % len(matched or studio_fronts)]
         else:
-            jar_path = studio_fronts[(day * 3 + idx) % len(studio_fronts)]
+            # Advance across distinct product variants across beats (idx) and days (day)
+            # studio_100g has 4 distinct products: ultra_blend, bold, purista, purica
+            # Cycling by (day + idx) guarantees no consecutive beat repeats the same variant!
+            jar_path = studio_fronts[(day + idx) % len(studio_fronts)]
     else:
         jar_path = pick_jar_photo(day, idx, product, overlay_safe=True, prefer_front=True)
 
@@ -252,64 +256,86 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     is_tall = height > width * 1.4
 
     canvas = _gradient_bg(width, height, exposure_boost=boost_exposure, is_tall=is_tall)
-
-    # Warm radial glow behind the jar
-    glow_color = (130, 90, 36) if boost_exposure else (65, 42, 18)
-    glow_y = int(height * (0.60 if is_tall else 0.64))
-    _radial_glow(canvas, width // 2, glow_y, int(width * 0.90), color=glow_color)
-
-    # Jar — knocked out, resting firmly on the grounded tabletop
-    try:
-        jar = _knockout_white(Image.open(jar_path))
-        target_h = int(height * (0.44 if is_tall else 0.46))
-        ratio = target_h / jar.height
-        jar = jar.resize((int(jar.width * ratio), target_h))
-        if jar.width > int(width * 0.78):
-            r = int(width * 0.78) / jar.width
-            jar = jar.resize((int(jar.width * r), int(jar.height * r)))
-
-        jx = (width - jar.width) // 2
-        if is_tall:
-            jar_bottom = int(height * 0.79)
-            jy = jar_bottom - jar.height
-        else:
-            jy = int(height * 0.50)
-
-        # Ground Contact Shadow + Ambient Occlusion (physics grounding)
-        try:
-            from PIL import ImageFilter
-            shadow_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-            sdraw = ImageDraw.Draw(shadow_layer)
-
-            # Diffuse cast shadow
-            s_w = int(jar.width * 1.35)
-            s_h = int(jar.height * 0.10)
-            s_x = jx + (jar.width - s_w) // 2
-            s_y = jy + jar.height - int(s_h * 0.50)
-            sdraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(6, 4, 2, 140))
-
-            # Deep contact occlusion shadow directly under jar base
-            c_w = int(jar.width * 0.94)
-            c_h = int(jar.height * 0.04)
-            c_x = jx + (jar.width - c_w) // 2
-            c_y = jy + jar.height - int(c_h * 0.70)
-            sdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 240))
-
-            shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(10))
-            canvas = Image.alpha_composite(canvas.convert("RGBA"), shadow_layer).convert("RGB")
-        except Exception as se:
-            logger.debug("[cine] Shadow compositing skipped: %s", se)
-
-        canvas.paste(jar, (jx, jy), jar)
-    except Exception as e:
-        logger.warning("[cine] jar paste failed: %s", e)
-        return None
-
     draw = ImageDraw.Draw(canvas)
     margin = int(width * 0.08)
     max_w = width - 2 * margin
 
+    resample_filter = getattr(Image, "Resampling", Image).LANCZOS
+
     if is_tall:
+        # Pre-measure text layout FIRST to eliminate any possibility of copy colliding with jar
+        hf_size = max(42, min(56, width // 18))
+        hf = _font(hf_size, bold=True)
+        h_lines = _wrap(draw, headline.upper(), hf, max_w)[:2]
+
+        sf_size = max(24, min(30, width // 36))
+        sf = _font(sf_size, bold=False)
+        s_lines = _wrap(draw, sub, sf, max_w)[:3] if sub else []
+
+        text_cursor = 345
+        text_cursor += len(h_lines) * int(hf.size * 1.15)
+        if s_lines:
+            text_cursor += 10 + len(s_lines) * int(sf.size * 1.25)
+        text_bottom = text_cursor
+
+        # Jar bounds: baseline sits right above bottom CTA pill (1568px), top stays safely below copy
+        jar_bottom = int(height * 0.80)  # 1536px
+        min_jar_top = text_bottom + 45   # Guaranteed breathing room between text and jar cap
+        available_jar_h = max(300, jar_bottom - min_jar_top)
+        target_h = min(int(height * 0.40), available_jar_h - 20)
+
+        # Knock out studio jar with high-res LANCZOS resampling
+        try:
+            jar = _knockout_white(Image.open(jar_path))
+            ratio = target_h / jar.height
+            jar = jar.resize((int(jar.width * ratio), target_h), resample=resample_filter)
+            if jar.width > int(width * 0.78):
+                r = int(width * 0.78) / jar.width
+                jar = jar.resize((int(jar.width * r), int(jar.height * r)), resample=resample_filter)
+
+            jx = (width - jar.width) // 2
+            jy = jar_bottom - jar.height
+            if jy < min_jar_top:
+                jy = min_jar_top
+
+            # Warm radial glow centered behind the jar body
+            glow_color = (130, 90, 36) if boost_exposure else (65, 42, 18)
+            glow_y = int(jy + jar.height * 0.45)
+            _radial_glow(canvas, width // 2, glow_y, int(width * 0.90), color=glow_color)
+
+            # Ground Contact Shadow + Ambient Occlusion (physics grounding)
+            try:
+                from PIL import ImageFilter
+                shadow_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+                sdraw = ImageDraw.Draw(shadow_layer)
+
+                # Diffuse cast shadow
+                s_w = int(jar.width * 1.35)
+                s_h = int(jar.height * 0.10)
+                s_x = jx + (jar.width - s_w) // 2
+                s_y = jy + jar.height - int(s_h * 0.50)
+                sdraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(6, 4, 2, 140))
+
+                # Deep contact occlusion shadow directly under jar base
+                c_w = int(jar.width * 0.94)
+                c_h = int(jar.height * 0.04)
+                c_x = jx + (jar.width - c_w) // 2
+                c_y = jy + jar.height - int(c_h * 0.70)
+                sdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 240))
+
+                shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(10))
+                canvas = Image.alpha_composite(canvas.convert("RGBA"), shadow_layer).convert("RGB")
+            except Exception as se:
+                logger.debug("[cine] Shadow compositing skipped: %s", se)
+
+            canvas.paste(jar, (jx, jy), jar)
+        except Exception as e:
+            logger.warning("[cine] jar paste failed: %s", e)
+            return None
+
+        # Re-initialize draw on composite canvas for crisp copy
+        draw = ImageDraw.Draw(canvas)
+
         # 1. Instagram Safe Zone Eyebrow Pill (y >= 260px)
         category_text = "PURITY STORY • ZERO CHICORY"
         cf = _font(22, bold=True)
@@ -326,27 +352,23 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
         draw.text((width // 2, 293), category_text, font=cf, fill=_GOLD, anchor="mm")
 
         # 2. Headline in Safe Zone
-        hf = _font(max(48, width // 12), bold=True)
         y = 345
-        lines = _wrap(draw, headline.upper(), hf, max_w)
-        for line in lines:
+        for line in h_lines:
             draw.text((width // 2 + 3, y + 3), line, font=hf, fill=(0, 0, 0), anchor="ma")
             draw.text((width // 2, y), line, font=hf, fill=_CREAM, anchor="ma")
-            y += int(hf.size * 1.14)
+            y += int(hf.size * 1.15)
 
         # 3. Sub-headline
-        if sub:
-            sf = _font(max(26, width // 30), bold=False)
+        if s_lines:
             y += 8
-            for line in _wrap(draw, sub, sf, max_w):
+            for line in s_lines:
                 draw.text((width // 2, y), line, font=sf, fill=_GOLD, anchor="ma")
                 y += int(sf.size * 1.25)
 
         # 4. Interactive Story Card — ONLY for Stories (where stickers are native & expected).
-        # Never burn into Reel video beats or thumbnails, where they block copy, jar, and eyes.
         is_story = "story" in str(label or "").lower()
-        if is_story and (y + 16 < jy - 140):
-            card_top = max(y + 24, int(height * 0.28))
+        if is_story and (text_bottom + 16 < jy - 140):
+            card_top = max(text_bottom + 20, int(height * 0.28))
             if card_top + 130 < jy:
                 canvas = _draw_interactive_story_card(canvas, headline, card_top, width)
                 draw = ImageDraw.Draw(canvas)
@@ -368,6 +390,28 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
 
     else:
         # Standard 1:1 or non-tall format
+        # Warm radial glow behind the jar
+        glow_color = (130, 90, 36) if boost_exposure else (65, 42, 18)
+        glow_y = int(height * 0.64)
+        _radial_glow(canvas, width // 2, glow_y, int(width * 0.90), color=glow_color)
+
+        try:
+            jar = _knockout_white(Image.open(jar_path))
+            target_h = int(height * 0.46)
+            ratio = target_h / jar.height
+            jar = jar.resize((int(jar.width * ratio), target_h), resample=resample_filter)
+            if jar.width > int(width * 0.78):
+                r = int(width * 0.78) / jar.width
+                jar = jar.resize((int(jar.width * r), int(jar.height * r)), resample=resample_filter)
+
+            jx = (width - jar.width) // 2
+            jy = int(height * 0.50)
+            canvas.paste(jar, (jx, jy), jar)
+        except Exception as e:
+            logger.warning("[cine] jar paste failed: %s", e)
+            return None
+
+        draw = ImageDraw.Draw(canvas)
         hf = _font(max(52, width // 11), bold=True)
         y = int(height * 0.08)
         lines = _wrap(draw, headline.upper(), hf, max_w)

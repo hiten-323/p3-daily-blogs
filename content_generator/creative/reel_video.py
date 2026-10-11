@@ -94,15 +94,15 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
         try:
             dur = 2.0 if (i == 0 and boost_motion) else _BEAT_SECONDS
             clip = ImageClip(p).with_duration(dur)
-            # Dynamic Ken Burns motion: hook beat punchy scale, alternating beats push-in/push-out
+            # Subtle Ken Burns motion: gentle push-in / push-out keeping jar textures and typography razor sharp
             try:
                 if boost_motion:
                     if i % 2 == 0:
-                        clip = clip.resized(lambda t, d=dur: 1.0 + 0.10 * (t / d))
+                        clip = clip.resized(lambda t, d=dur: 1.0 + 0.04 * (t / d))
                     else:
-                        clip = clip.resized(lambda t, d=dur: 1.08 - 0.06 * (t / d))
+                        clip = clip.resized(lambda t, d=dur: 1.04 - 0.03 * (t / d))
                 else:
-                    clip = clip.resized(lambda t, d=dur: 1.0 + 0.05 * (t / d))
+                    clip = clip.resized(lambda t, d=dur: 1.0 + 0.02 * (t / d))
             except Exception as _e:
                 logger.debug("[reel_video] optional step failed: %s", _e)
             clips.append(clip)
@@ -133,6 +133,11 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
             audio = AudioFileClip(music)
             dur = min(audio.duration, video.duration)
             audio = audio.subclipped(0, dur)
+            try:
+                # Scale volume to commercial loudness (~ -14 LUFS / dB) so it's punchy and audible
+                audio = audio.with_volume_scaled(1.8)
+            except Exception as ve:
+                logger.debug("[reel_video] volume scaling failed: %s", ve)
             video = video.with_audio(audio)
         except Exception as e:
             logger.debug("[reel_video] music attach failed: %s", e)
@@ -142,8 +147,17 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
     date_str = today_ist().isoformat()
     out = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}.mp4")
     try:
-        video.write_videofile(out, fps=24, codec="libx264", audio_codec="aac",
-                              logger=None, threads=2)
+        video.write_videofile(
+            out,
+            fps=24,
+            codec="libx264",
+            audio_codec="aac",
+            bitrate="10000k",
+            pixel_format="yuv420p",
+            ffmpeg_params=["-crf", "18"],
+            logger=None,
+            threads=2,
+        )
         logger.info("[reel_video] Rendered %ds reel -> %s", int(video.duration), out)
         return out
     except Exception as e:
