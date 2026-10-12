@@ -3,6 +3,7 @@ Brand guard definitions — single source of truth for Purity Beans brand identi
 master system prompts, language policies, and visual constraints.
 """
 from dataclasses import dataclass
+import re
 
 @dataclass
 class BrandProfile:
@@ -14,35 +15,6 @@ class BrandProfile:
     jar_reference_path: str
 
 EDITORIAL_THRESHOLD = 8.0
-
-BRAND: BrandProfile = BrandProfile(
-    brand_name="Purity Beans",
-    company_name="Pure Pantry Provisions",
-    website="https://p3online.in",
-    language="English",
-    minimum_editorial_score=EDITORIAL_THRESHOLD,
-    jar_reference_path="brand_assets/puritybeans_reference.png"
-)
-
-PRODUCTS = ["ultra_blend", "bold", "purista", "purica"]
-SIZES    = ["50g", "100g"]
-ANGLES   = ["front", "side", "lifestyle", "variant"]
-
-REFERENCE_IMAGES = [
-    f"brand_assets/puritybeans_{product}_{size}_{angle}.png"
-    for product in PRODUCTS
-    for size    in SIZES
-    for angle   in ANGLES
-]
-
-# Keywords that map content text → product slug
-PRODUCT_KEYWORDS: dict[str, list[str]] = {
-    "ultra_blend": ["ultra blend", "ultrablend", "ultra-blend"],
-    "bold":        ["bold"],
-    "purista":     ["purista"],
-    "purica":      ["purica"],
-    "prima":       ["prima", "premium agglomerate"],
-}
 
 """Variant-aware messaging guardrails for Purity Beans product days.
 
@@ -103,6 +75,37 @@ def content_variant_findings(content: dict, featured_sku: str | None = None) -> 
                 findings.append({"path": path, "claim": value[:220], "reason": reason})
     scan(content, "")
     return findings
+
+
+
+BRAND: BrandProfile = BrandProfile(
+    brand_name="Purity Beans",
+    company_name="Pure Pantry Provisions",
+    website="https://p3online.in",
+    language="English",
+    minimum_editorial_score=EDITORIAL_THRESHOLD,
+    jar_reference_path="brand_assets/puritybeans_reference.png"
+)
+
+PRODUCTS = ["ultra_blend", "bold", "purista", "purica"]
+SIZES    = ["50g", "100g"]
+ANGLES   = ["front", "side", "lifestyle", "variant"]
+
+REFERENCE_IMAGES = [
+    f"brand_assets/puritybeans_{product}_{size}_{angle}.png"
+    for product in PRODUCTS
+    for size    in SIZES
+    for angle   in ANGLES
+]
+
+# Keywords that map content text → product slug
+PRODUCT_KEYWORDS: dict[str, list[str]] = {
+    "ultra_blend": ["ultra blend", "ultrablend", "ultra-blend"],
+    "bold":        ["bold"],
+    "purista":     ["purista"],
+    "purica":      ["purica"],
+    "prima":       ["prima", "premium agglomerate"],
+}
 
 
 def _jar_paths(pairs: tuple[tuple[str, str], ...]) -> list[str]:
