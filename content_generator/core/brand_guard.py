@@ -57,8 +57,9 @@ def content_variant_findings(content: dict, featured_sku: str | None = None) -> 
         return []
     sku = featured_sku or content.get("featured_sku") or content.get("product") or content.get("featured_product")
     if not sku:
-        # Resolve conservatively from day metadata, never by guessing from ratios alone.
-        sku = ""
+        # Current daily rotation persists the featured SKU as "product".
+        # Keep this conservative rather than infer from arbitrary body copy.
+        sku = content.get("featured_sku") or content.get("featured_product") or ""
     findings: list[dict] = []
     def scan(value, path: str):
         if isinstance(value, dict):
