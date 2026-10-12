@@ -85,3 +85,33 @@ def test_threads_post_success_mock(monkeypatch):
     assert res["post_id"] == "post_777888"
     assert "post/post_777888" in res["url"]
     assert len(calls) == 2
+
+
+def test_media_id_to_shortcode():
+    # 17901169176377692 should convert to canonical base64 shortcode
+    sc = threads._media_id_to_shortcode("17901169176377692")
+    assert sc == "_mQS90nlc"
+    assert threads._media_id_to_shortcode("invalid_non_numeric") == ""
+
+
+def test_threads_numeric_id_uses_shortcode_url(monkeypatch):
+    monkeypatch.setenv("THREADS_USER_ID", "th_user_999")
+    monkeypatch.setenv("THREADS_ACCESS_TOKEN", "th_tok_123")
+
+    def mock_post_request(url, params):
+        if "threads_publish" in url:
+            return {"id": "17901169176377692"}
+        return {"id": "container_111222"}
+
+    monkeypatch.setattr(threads, "_post_request", mock_post_request)
+    monkeypatch.setattr(threads, "is_configured", lambda: True)
+    monkeypatch.setattr("content_generator.publisher.prepublish_gate.authorize_publish", lambda content, platform: {"allowed": True, "reason": "test-approved"})
+    monkeypatch.setattr(threads, "get_thread_permalink", lambda post_id, token: "")
+
+    content = {"threads_post": {"text": "Test numeric thread post"}}
+    res = threads.post_content(content, day=1)
+
+    assert res["success"] is True
+    assert res["post_id"] == "17901169176377692"
+    assert res["url"] == "https://www.threads.net/t/_mQS90nlc"
+

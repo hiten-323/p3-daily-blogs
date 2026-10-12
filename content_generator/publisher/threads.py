@@ -99,6 +99,40 @@ def publish_thread_container(user_id: str, token: str, container_id: str) -> str
     return str(post_id)
 
 
+def _media_id_to_shortcode(media_id: str | int) -> str:
+    """Convert numeric Meta media ID to canonical base64 shortcode."""
+    try:
+        num = int(media_id)
+        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+        shortcode = ""
+        while num > 0:
+            remainder = num % 64
+            num = num // 64
+            shortcode = alphabet[remainder] + shortcode
+        return shortcode
+    except Exception:
+        return ""
+
+
+def get_thread_permalink(post_id: str, token: str) -> str:
+    """Fetch the canonical public permalink from the Threads Graph API."""
+    try:
+        url = f"{THREADS_BASE_URL}/{urllib.parse.quote(post_id, safe='')}?fields=permalink&access_token={urllib.parse.quote(token, safe='')}"
+        req = urllib.request.Request(
+            url,
+            headers={"User-Agent": "PurityBeans/1.0"},
+            method="GET",
+        )
+        with urllib.request.urlopen(req, timeout=_TIMEOUT_S) as response:
+            res = json.loads(response.read().decode("utf-8"))
+            permalink = res.get("permalink")
+            if permalink:
+                return str(permalink).strip()
+    except Exception as e:
+        logger.debug("[threads] Could not fetch permalink for %s: %s", post_id, e)
+    return ""
+
+
 def post_content(content: dict, day: int = 0) -> dict:
     """
     Publish today's content to Threads.
@@ -140,8 +174,18 @@ def post_content(content: dict, day: int = 0) -> dict:
     try:
         container_id = create_thread_container(user_id, token, text)
         post_id = publish_thread_container(user_id, token, container_id)
-        url = f"https://www.threads.net/post/{post_id}"
-        logger.info("[threads] Day %d posted successfully | id=%s", day, post_id)
+
+        # 1. Prefer canonical permalink directly from Threads Graph API
+        url = get_thread_permalink(post_id, token)
+        if not url:
+            # 2. Convert numeric media ID to base64 shortcode (/t/{shortcode})
+            shortcode = _media_id_to_shortcode(post_id)
+            if shortcode:
+                url = f"https://www.threads.net/t/{shortcode}"
+            else:
+                url = f"https://www.threads.net/post/{post_id}"
+
+        logger.info("[threads] Day %d posted successfully | id=%s url=%s", day, post_id, url)
         return {
             "success": True,
             "attempted": True,
