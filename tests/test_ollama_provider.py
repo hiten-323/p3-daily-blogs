@@ -34,6 +34,7 @@ def test_ollama_ci_without_custom_url_is_skipped(monkeypatch):
 
 def test_ollama_call_success(monkeypatch):
     monkeypatch.setenv("ENABLE_OLLAMA", "true")
+    monkeypatch.setattr(ollama, "is_available", lambda: True)
 
     good_body = {
         "choices": [{"message": {"content": '{"hook": "Pure Coffee", "body": "100% Arabica"}'}}],
@@ -53,6 +54,7 @@ def test_ollama_call_success(monkeypatch):
 
 def test_ollama_call_http_error(monkeypatch):
     monkeypatch.setenv("ENABLE_OLLAMA", "true")
+    monkeypatch.setattr(ollama, "is_available", lambda: True)
 
     def fake_post(*args, **kwargs):
         return _Response(500, text="Internal server error")
