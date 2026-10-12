@@ -20,8 +20,8 @@ import os
 logger = logging.getLogger(__name__)
 
 _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
-_BEAT_SECONDS = 2.6
-_MAX_BEATS    = 8
+_BEAT_SECONDS = 2.0   # Exactly 1 bar at 120 BPM (0.5s * 4 = 2.0s) for downbeat synchronization
+_MAX_BEATS    = 6
 
 
 def _beats_from_reel(reel: dict) -> list[dict]:
@@ -64,15 +64,20 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
         from content_generator.creative.real_jar_composer import compose_post_image as _frame
 
     beats = _beats_from_reel(reel)
+    total_beats = len(beats)
     frame_paths = []
     for i, b in enumerate(beats):
-        p = _frame(
-            headline=b["on"], sub=b["sub"], day=day, idx=i,
-            width=1080, height=1920, label=f"{label}_beat{i}_day{day}",
-        ) if _frame.__name__ == "compose_cinematic_frame" else _frame(
-            headline=b["on"], body=b["sub"], day=day, idx=i,
-            width=1080, height=1920, label=f"{label}_beat{i}_day{day}",
-        )
+        if _frame.__name__ == "compose_cinematic_frame":
+            p = _frame(
+                headline=b["on"], sub=b["sub"], day=day, idx=i,
+                width=1080, height=1920, label=f"{label}_beat{i}_day{day}",
+                format_type="reel", scene_idx=i, total_scenes=total_beats,
+            )
+        else:
+            p = _frame(
+                headline=b["on"], body=b["sub"], day=day, idx=i,
+                width=1080, height=1920, label=f"{label}_beat{i}_day{day}",
+            )
         if p:
             frame_paths.append(p)
     if not frame_paths:
@@ -81,9 +86,7 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
     dirs = {}
     try:
         from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
-        lower_label = str(label or "").lower()
-        target_platform = "youtube" if ("youtube" in lower_label or "yt_" in lower_label or "short" in lower_label) else "instagram"
-        dirs = get_visual_adaptation_directives(platform=target_platform)
+        dirs = get_visual_adaptation_directives(platform="instagram")
     except Exception:
         dirs = {}
 
@@ -92,7 +95,7 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
     clips = []
     for i, p in enumerate(frame_paths):
         try:
-            dur = 2.0 if (i == 0 and boost_motion) else _BEAT_SECONDS
+            dur = _BEAT_SECONDS
             clip = ImageClip(p).with_duration(dur)
             # Subtle Ken Burns motion: gentle push-in / push-out keeping jar textures and typography razor sharp
             try:
@@ -147,6 +150,7 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
     date_str = today_ist().isoformat()
     out = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}.mp4")
     try:
+        temp_audio = os.path.join(_OUT_DIR, f"temp_{label}_{os.getpid()}_{day}.m4a")
         video.write_videofile(
             out,
             fps=24,
@@ -154,7 +158,9 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
             audio_codec="aac",
             bitrate="10000k",
             pixel_format="yuv420p",
-            ffmpeg_params=["-crf", "18"],
+            ffmpeg_params=["-crf", "18", "-movflags", "+faststart"],
+            temp_audiofile=temp_audio,
+            remove_temp=True,
             logger=None,
             threads=2,
         )

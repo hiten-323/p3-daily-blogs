@@ -1197,7 +1197,19 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
         except Exception as e:
             logger.warning("[images] Reel motion video generation failed: %s", e)
 
-    # Instagram Story frame + Story Video (MP4) with audio
+    # Render dedicated YouTube Short video (MP4) from yt_short scenes with 120 BPM beat sync
+    yt_short = content.get("yt_short") or {}
+    if yt_short:
+        try:
+            from content_generator.creative.short_video import build_short_video
+            short_video_path = build_short_video(yt_short, day=day_number, label=f"short_video")
+            if short_video_path:
+                results["short_video"] = short_video_path
+                logger.info("[images] Dedicated YouTube Short video rendered: %s", short_video_path)
+        except Exception as e:
+            logger.warning("[images] YouTube Short video generation failed: %s", e)
+
+    # Instagram Story frame + Story Video (MP4) with beat-synced audio
     try:
         from content_generator.publisher.story_copy import resolve_story_copy
         from content_generator.creative.cinematic_frame import compose_cinematic_frame
@@ -1211,6 +1223,7 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
             width=1080,
             height=1920,
             label=f"story_day{day_number}",
+            format_type="story",
         )
         results["story_frame"] = story_frame
         if story_frame:
@@ -1218,7 +1231,7 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
                 image_path=story_frame,
                 headline=story_copy["headline"],
                 day=day_number,
-                duration=7.5,
+                duration=6.0,
                 label=f"story_video_day{day_number}",
             )
             if results["story_video"]:

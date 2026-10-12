@@ -136,9 +136,13 @@ def _wrap(draw, text, font, max_w):
 
 
 def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
-                            width=1080, height=1920, label="cine_frame"):
+                            width=1080, height=1920, label="cine_frame",
+                            format_type="reel", scene_idx=0, total_scenes=0,
+                            badge="", cta_text=None):
     """
     Real jar (white knocked out) on a grounded cinematic backdrop + safe-zone copy.
+    Supports distinct visual styles for YouTube Shorts ('short'), Instagram Reels ('reel'),
+    and Instagram Stories ('story').
     """
     try:
         from PIL import Image, ImageDraw
@@ -156,7 +160,7 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
 
     if studio_fronts:
         if product:
-            matched = [p for p in studio_fronts if f"_{product}_" in p]
+            matched = [p for p in studio_fronts if f"_{product.lower().replace(' ', '_')}_" in p.lower()]
             jar_path = (matched or studio_fronts)[(day * 3 + idx) % len(matched or studio_fronts)]
         else:
             # Advance across distinct product variants across beats (idx) and days (day)
@@ -173,7 +177,7 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     try:
         from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
         lower_label = str(label or "").lower()
-        target_platform = "youtube" if ("youtube" in lower_label or "yt_" in lower_label or "short" in lower_label) else "instagram"
+        target_platform = "youtube" if ("youtube" in lower_label or "yt_" in lower_label or "short" in lower_label or format_type == "short") else "instagram"
         dirs = get_visual_adaptation_directives(platform=target_platform)
     except Exception:
         dirs = {}
@@ -190,7 +194,20 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
 
     if is_tall:
         # Pre-measure text layout FIRST to eliminate any possibility of copy colliding with jar
-        hf_size = max(42, min(56, width // 18))
+        # Distinct typography for YouTube Shorts vs Instagram Reels/Stories
+        if format_type == "short":
+            hf_size = max(44, min(60, width // 16))
+            headline_color = (255, 230, 0)  # YouTube high-visibility Canary Yellow
+            sub_color = (255, 255, 255)       # Crisp White
+        elif format_type == "story":
+            hf_size = max(44, min(58, width // 17))
+            headline_color = _CREAM
+            sub_color = _GOLD
+        else:
+            hf_size = max(42, min(56, width // 18))
+            headline_color = _CREAM
+            sub_color = _GOLD
+
         hf = _font(hf_size, bold=True)
         h_lines = _wrap(draw, headline.upper(), hf, max_w)[:2]
 
@@ -262,49 +279,91 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
         # Re-initialize draw on composite canvas for crisp copy
         draw = ImageDraw.Draw(canvas)
 
-        # 1. Instagram Safe Zone Eyebrow Pill (y >= 260px)
-        category_text = "100% PURE COFFEE • ZERO CHICORY"
+        # 1. Distinct Platform Eyebrow Badge (y >= 260px)
+        if badge:
+            category_text = badge
+        elif format_type == "short":
+            category_text = "YOUTUBE SHORTS • #100%PURECOFFEE"
+        elif format_type == "story":
+            category_text = "STORY EXCLUSIVE • ZERO CHICORY"
+        else:
+            category_text = "REEL • PURITY BEANS"
+
         cf = _font(22, bold=True)
         cat_w = draw.textlength(category_text, font=cf)
         cat_pill_w = int(cat_w + 36)
         cat_pill_x = (width - cat_pill_w) // 2
+        badge_border = (220, 50, 40) if format_type == "short" else _GOLD
         draw.rounded_rectangle(
             [(cat_pill_x, 275), (cat_pill_x + cat_pill_w, 312)],
             radius=12,
             fill=(20, 14, 8),
-            outline=_GOLD,
+            outline=badge_border,
             width=1,
         )
-        draw.text((width // 2, 293), category_text, font=cf, fill=_GOLD, anchor="mm")
+        badge_text_color = (255, 220, 100) if format_type == "short" else _GOLD
+        draw.text((width // 2, 293), category_text, font=cf, fill=badge_text_color, anchor="mm")
+
+        # Optional Scene Counter for YouTube Shorts (e.g. SCENE 1/4)
+        if format_type == "short" and total_scenes > 1:
+            scene_label = f"PART {scene_idx + 1} OF {total_scenes}"
+            scf = _font(18, bold=True)
+            sc_w = draw.textlength(scene_label, font=scf)
+            sc_pill_w = int(sc_w + 24)
+            sc_pill_x = width - margin - sc_pill_w
+            draw.rounded_rectangle(
+                [(sc_pill_x, 277), (sc_pill_x + sc_pill_w, 310)],
+                radius=8,
+                fill=(45, 12, 10),
+                outline=(220, 60, 40),
+                width=1,
+            )
+            draw.text((sc_pill_x + sc_pill_w // 2, 293), scene_label, font=scf, fill=(255, 230, 200), anchor="mm")
 
         # 2. Headline in Safe Zone
         y = 345
         for line in h_lines:
             draw.text((width // 2 + 3, y + 3), line, font=hf, fill=(0, 0, 0), anchor="ma")
-            draw.text((width // 2, y), line, font=hf, fill=_CREAM, anchor="ma")
+            draw.text((width // 2, y), line, font=hf, fill=headline_color, anchor="ma")
             y += int(hf.size * 1.15)
 
         # 3. Sub-headline
         if s_lines:
             y += 8
             for line in s_lines:
-                draw.text((width // 2, y), line, font=sf, fill=_GOLD, anchor="ma")
+                draw.text((width // 2 + 1, y + 1), line, font=sf, fill=(0, 0, 0), anchor="ma")
+                draw.text((width // 2, y), line, font=sf, fill=sub_color, anchor="ma")
                 y += int(sf.size * 1.25)
 
-        # 4. Bottom Safe Zone High-Converting CTA Pill (above bottom 1680px UI cutoff)
-        ff = _font(max(24, width // 38), bold=True)
-        cta_text = "FOLLOW @PURITYBEANS  |  TAP LINK IN BIO >"
-        cta_w = draw.textlength(cta_text, font=ff)
-        cta_pill_w = int(cta_w + 40)
-        cta_pill_x = (width - cta_pill_w) // 2
-        draw.rounded_rectangle(
-            [(cta_pill_x, 1568), (cta_pill_x + cta_pill_w, 1612)],
-            radius=14,
-            fill=(18, 12, 7, 230),
-            outline=_GOLD,
-            width=1,
-        )
-        draw.text((width // 2, 1590), cta_text, font=ff, fill=_CREAM, anchor="mm")
+        # 4. Platform-Distinct Call-to-Action / Conversion Pill
+        # For Reels: Beat 0 (hook) has NO bottom pill clutter so the hook breathes!
+        show_cta = True
+        if format_type == "reel" and idx == 0 and total_scenes > 1:
+            show_cta = False  # Let hook have maximum breathing room
+
+        if show_cta:
+            ff = _font(max(24, width // 38), bold=True)
+            if cta_text:
+                resolved_cta = cta_text
+            elif format_type == "short":
+                resolved_cta = "SUBSCRIBE @PURITYBEANS  •  SHOP P3ONLINE.IN"
+            elif format_type == "story":
+                resolved_cta = "TAP LINK IN BIO ↗  |  100% PURE COFFEE"
+            else:
+                resolved_cta = "SAVE THIS REEL  |  TAP LINK IN BIO >"
+
+            cta_w = draw.textlength(resolved_cta, font=ff)
+            cta_pill_w = int(cta_w + 40)
+            cta_pill_x = (width - cta_pill_w) // 2
+            pill_outline = (220, 60, 40) if format_type == "short" else _GOLD
+            draw.rounded_rectangle(
+                [(cta_pill_x, 1568), (cta_pill_x + cta_pill_w, 1612)],
+                radius=14,
+                fill=(18, 12, 7, 230),
+                outline=pill_outline,
+                width=1,
+            )
+            draw.text((width // 2, 1590), resolved_cta, font=ff, fill=_CREAM, anchor="mm")
 
     else:
         # Standard 1:1 or non-tall format

@@ -16,22 +16,25 @@ import os
 logger = logging.getLogger(__name__)
 
 _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
-_DEFAULT_STORY_DURATION = 7.5
+_DEFAULT_STORY_DURATION = 6.0   # Exactly 3 bars at 120 BPM (2.0s * 3 = 6.0s) for beat synchronization
 
 
 def build_story_video(
-    image_path: str,
+    image_path: str = None,
     headline: str = "",
     day: int = 0,
     duration: float = _DEFAULT_STORY_DURATION,
     label: str = "story_video",
+    frame_paths: list[str] = None,
 ) -> str | None:
     """
-    Render a 7-8s dynamic vertical story video (1080x1920 MP4) with audio.
+    Render a 6.0s dynamic vertical story video (1080x1920 MP4) with beat-synced audio.
+    Supports either a single high-impact frame or a 2-beat interactive story progression.
     Returns the path to the MP4 file or None on failure/unavailability.
     """
-    if not image_path or not os.path.exists(image_path):
-        logger.warning("[story_video] Base image path does not exist: %s", image_path)
+    paths = frame_paths or ([image_path] if image_path and os.path.exists(image_path) else [])
+    if not paths:
+        logger.warning("[story_video] No valid image paths provided for story video")
         return None
 
     if os.getenv("ENABLE_STORY_VIDEO", "true").lower() != "true":
@@ -39,7 +42,7 @@ def build_story_video(
         return None
 
     try:
-        from moviepy import ImageClip, AudioFileClip
+        from moviepy import ImageClip, AudioFileClip, concatenate_videoclips
     except Exception as e:
         logger.info("[story_video] moviepy unavailable (%s) — skipping story video", e)
         return None
@@ -47,15 +50,25 @@ def build_story_video(
     clip = None
     audio = None
     try:
-        clip = ImageClip(image_path).with_duration(duration)
-        
-        # Subtle Ken Burns zoom: 1.0 to 1.03 scale over duration
-        try:
-            clip = clip.resized(lambda t: 1.0 + 0.03 * (t / max(0.1, duration)))
-        except Exception as ze:
-            logger.debug("[story_video] zoom effect skipped: %s", ze)
+        if len(paths) == 1:
+            clip = ImageClip(paths[0]).with_duration(duration)
+            try:
+                clip = clip.resized(lambda t: 1.0 + 0.04 * (t / max(0.1, duration)))
+            except Exception as ze:
+                logger.debug("[story_video] zoom effect skipped: %s", ze)
+        else:
+            beat_dur = duration / len(paths)
+            clips = []
+            for idx, p in enumerate(paths):
+                c = ImageClip(p).with_duration(beat_dur)
+                try:
+                    c = c.resized(lambda t, d=beat_dur: 1.0 + 0.03 * (t / max(0.1, d)))
+                except Exception:
+                    pass
+                clips.append(c)
+            clip = concatenate_videoclips(clips, method="compose")
 
-        # Audio track selection: Audio Director mood-matched royalty-free track
+        # Audio track selection: Audio Director mood-matched royalty-free track (120 BPM beat-synced)
         music_path = os.getenv("STORY_MUSIC_FILE")
         if not (music_path and os.path.exists(music_path)):
             try:
@@ -83,6 +96,7 @@ def build_story_video(
         date_str = today_ist().isoformat()
         out_path = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}.mp4")
 
+        temp_audio = os.path.join(_OUT_DIR, f"temp_{label}_{os.getpid()}_{day}.m4a")
         clip.write_videofile(
             out_path,
             fps=24,
@@ -90,7 +104,9 @@ def build_story_video(
             audio_codec="aac" if clip.audio else None,
             bitrate="10000k",
             pixel_format="yuv420p",
-            ffmpeg_params=["-crf", "18"],
+            ffmpeg_params=["-crf", "18", "-movflags", "+faststart"],
+            temp_audiofile=temp_audio,
+            remove_temp=True,
             logger=None,
             threads=2,
         )

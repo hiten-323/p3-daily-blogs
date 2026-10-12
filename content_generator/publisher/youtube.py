@@ -143,8 +143,10 @@ def _find_video(content: dict) -> str | None:
     today        = _today()
 
     patterns = [
-        os.path.join(creative_dir, f"reel_*_{today}.mp4"),
+        os.path.join(creative_dir, f"short_video_day*_{today}.mp4"),
         os.path.join(creative_dir, f"short_*_{today}.mp4"),
+        os.path.join(creative_dir, f"yt_short_*_{today}.mp4"),
+        os.path.join(creative_dir, f"reel_*_{today}.mp4"),
         os.path.join(creative_dir, f"*_{today}.mp4"),
     ]
     for pat in patterns:
