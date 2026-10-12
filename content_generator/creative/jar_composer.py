@@ -399,7 +399,7 @@ def build_reel_hook_prompt(hook_id: str = None, product: str = None, day: int = 
         f"Slow, intentional motion. No cuts. No transitions. {REALISM_MOTION}"
     )
 
-    return {
+    result = {
         "image_prompt":        image_prompt,
         "motion_prompt":       motion_prompt,
         "reference_jar_paths": jar_paths,
@@ -407,6 +407,17 @@ def build_reel_hook_prompt(hook_id: str = None, product: str = None, day: int = 
         "concept":             template["concept"],
         "template_id":         template["id"],
     }
+    try:
+        from content_generator.creative.product_reel_templates import select_product_reel
+        selected = select_product_reel(product=product, text=product or "")
+    except Exception:
+        selected = None
+    if selected:
+        result["reference_reel_template_id"] = selected["template_id"]
+        result["reference_reel_path"] = selected["path"]
+        result["reference_reel_reusable"] = True
+        result["reference_reel_audio_embedded"] = False
+    return result
 
 
 def get_daily_creative_package(day: int, product: str = None) -> dict:

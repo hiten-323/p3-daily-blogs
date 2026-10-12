@@ -4,6 +4,7 @@ Owner guardrails for Purity Beans copy:
 - Prima / Premium Agglomerate is 100% Arabica and agglomerated, not freeze-dried.
 - Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed for that jar.
 - Never call Ultra Blend no-chicory, zero-chicory, or 0% chicory.
+- Gourmet Duo and Gourmet Duo Mini are 100% coffee and zero chicory. Do not apply Ultra Blend's chicory rules to either duo, and do not call either duo only Arabica or only Robusta.
 - Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica.
 - Do not invent other product claims, and do not apply a pure-jar claim to Ultra Blend.
 """
@@ -22,7 +23,11 @@ _PRIMA = re.compile(r"\b(?:prima|premium agglomerate)\b", re.I)
 _ARABICA_JARS = re.compile(r"\b(?:purica|prima|premium agglomerate)\b", re.I)
 _ROBUSTA_JARS = re.compile(r"\b(?:bold|purista)\b", re.I)
 _OTHER_THAN_ULTRA = re.compile(
-    r"\b(?:bold|purista|purica|prima|premium agglomerate)\b",
+    r"\b(?:bold|purista|purica|prima|premium agglomerate|gourmet duo(?: mini)?)\b",
+    re.I,
+)
+_DUO_SINGLE_BEAN = re.compile(
+    r"\bgourmet\s+duo(?:\s+mini)?\s+is\s+(?:a\s+)?100\s*(?:%|percent)\s*(?:pure\s+)?(arabica|robusta)\b",
     re.I,
 )
 _PURE_CLAIM = re.compile(
@@ -131,6 +136,13 @@ def product_truth_findings(text: str) -> list[dict]:
                 if (_ROBUSTA_JARS.search(segment) and not _ARABICA_JARS.search(segment)
                         and arabica and not _locally_negated(segment, arabica.start())):
                     findings.append(_finding(segment, "Bold and Purista are 100% Robusta, not Arabica"))
+                duo_bean = _DUO_SINGLE_BEAN.search(segment)
+                if duo_bean and not _locally_negated(segment, duo_bean.start()):
+                    findings.append(_finding(
+                        segment,
+                        "Gourmet Duo is Purista (100% Robusta) and Purica (100% Arabica); "
+                        "do not call the bundle only " + duo_bean.group(1),
+                    ))
                 for match in _PERCENT.finditer(segment):
                     if _locally_negated(segment, match.start()):
                         continue

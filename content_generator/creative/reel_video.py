@@ -26,16 +26,17 @@ _MAX_BEATS    = 6
 
 def _fallback_beats(reel: dict) -> list[dict]:
     """Claim-safe beats when a reel has no frames. Unknown jars stay neutral."""
+    from content_generator.creative.cinematic_frame import _product_class
     product = str(reel.get("product") or "").strip()
-    key = product.lower()
+    kind = _product_class(product)
     hook = str(reel.get("hook_text") or reel.get("hook") or "").strip()
-    if "ultra" in key:
+    if kind == "ultra":
         return [
             {"on": hook or "ULTRA BLEND", "sub": "70% coffee. 30% chicory."},
             {"on": "30% CHICORY", "sub": "The blend is on the label."},
             {"on": "PURITY BEANS", "sub": "Shop at p3online.in"},
         ]
-    if any(name in key for name in ("bold", "purista", "purica", "prima")):
+    if kind == "pure":
         return [
             {"on": hook or "ONE INGREDIENT", "sub": "100% coffee. Zero chicory."},
             {"on": "READ THE LABEL", "sub": "Coffee. Nothing else."},
@@ -69,6 +70,23 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
     """
     if os.getenv("ENABLE_REEL_VIDEO", "true").lower() != "true":
         return None
+    try:
+        from content_generator.creative.product_reel_templates import (
+            materialize_template, resolve_reusable_reel,
+        )
+        source = resolve_reusable_reel(reel if isinstance(reel, dict) else {})
+        if source:
+            hook = ""
+            if isinstance(reel, dict):
+                hook = str(reel.get("hook_text") or reel.get("caption") or "")
+            logger.info(
+                "[reel_video] reusing product reel template %s; source audio is silent "
+                "and viral music stays on the audio director",
+                os.path.basename(source),
+            )
+            return materialize_template(source, day, label, on_date=on_date, hook_text=hook)
+    except Exception as exc:
+        logger.debug("[reel_video] product reel lookup skipped: %s", exc)
     try:
         from moviepy import ImageClip, concatenate_videoclips
     except Exception as e:

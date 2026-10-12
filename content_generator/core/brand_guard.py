@@ -44,13 +44,55 @@ PRODUCT_KEYWORDS: dict[str, list[str]] = {
     "prima":       ["prima", "premium agglomerate"],
 }
 
+def _jar_paths(pairs: tuple[tuple[str, str], ...]) -> list[str]:
+    import os
+    paths = []
+    for product, size in pairs:
+        for angle in ANGLES:
+            path = f"brand_assets/puritybeans_{product}_{size}_{angle}.png"
+            if os.path.exists(path):
+                paths.append(path)
+    return paths
+
+
 def get_product_references(text: str) -> list[str]:
     """
     Return only the jar reference images for the product mentioned in text.
     Falls back to all available references if no product is detected.
+
+    Gourmet Duo Mini is Purista 50g + Purica 50g. The full Gourmet Duo is the
+    100g pair. Neither bundle pulls Ultra Blend jars unless the text names it.
     """
     import os
     text_lower = text.lower()
+    mini = (
+        "gourmet duo mini" in text_lower
+        or "gourmet_duo_mini" in text_lower
+        or "gourmet-duo-mini" in text_lower
+        or "pb-gourmet-duo-50" in text_lower
+    )
+    full = (
+        not mini
+        and "mini" not in text_lower
+        and (
+            "gourmet duo" in text_lower
+            or "gourmet_duo" in text_lower
+            or "gourmet-duo" in text_lower
+            or "pb-gourmet-duo-100" in text_lower
+        )
+    )
+    duo_pairs: tuple[tuple[str, str], ...] = ()
+    if mini:
+        duo_pairs = (("purista", "50g"), ("purica", "50g"))
+    elif full:
+        duo_pairs = (("purista", "100g"), ("purica", "100g"))
+    if duo_pairs:
+        pairs = duo_pairs
+        if "ultra" in text_lower:
+            pairs = duo_pairs + tuple(("ultra_blend", size) for size in SIZES)
+        refs = _jar_paths(pairs)
+        if refs:
+            return refs
     for product, keywords in PRODUCT_KEYWORDS.items():
         if any(kw in text_lower for kw in keywords):
             refs = [

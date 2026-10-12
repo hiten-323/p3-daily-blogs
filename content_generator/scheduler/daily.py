@@ -759,6 +759,11 @@ def _inject_brand_into_content(content: dict, day: int = 0) -> None:
     _strip_scaffolding_everywhere(content)
     _ensure_captions(content)
     _inject_jar_creative_into_reels(content, day)
+    try:
+        from content_generator.creative.product_reel_templates import attach_product_reels
+        attach_product_reels(content)
+    except Exception as e:
+        logger.warning("[creative] product reel template skipped: %s", e)
 
     # Decision layer: attach per-asset metadata (Company Memory records +
     # campaign/experiment/playbook) so every published asset carries reasoning
@@ -1251,6 +1256,7 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
                 duration=6.0,
                 label=f"story_video_day{day_number}",
                 on_date=story_day,
+                reference_text=f"{story_copy['headline']} {story_copy['sub']}",
             )
             if results["story_video"]:
                 logger.info("[images] Story video rendered: %s", results["story_video"])
@@ -1312,7 +1318,11 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     # UGC + Avatar + Reel Hook — jar-reference creative package
     try:
         from content_generator.creative.ugc_generator import generate_daily_ugc
-        ugc_result = generate_daily_ugc(day=day_number)
+        product_slug = None
+        first_reel = (content.get("reels") or [None])[0]
+        if isinstance(first_reel, dict):
+            product_slug = first_reel.get("product_slug") or first_reel.get("product")
+        ugc_result = generate_daily_ugc(day=day_number, product=product_slug)
         results["ugc_package"] = ugc_result
         brief = ugc_result.get("tool_brief_path")
         logger.info("[images] UGC creative package generated. Tool brief: %s", brief)

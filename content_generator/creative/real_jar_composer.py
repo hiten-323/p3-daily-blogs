@@ -418,11 +418,16 @@ def _wrap(draw, text: str, font, max_w: int) -> list[str]:
 
 def _claim_pill(product, headline: str) -> str:
     """Badge copy that matches the jar. Unknown products stay on the slogan."""
-    key = str(product or "").lower()
+    from content_generator.creative.cinematic_frame import _product_class
     hl = (headline or "").lower()
-    if "ultra" in key or "ultra blend" in hl:
+    kind = _product_class(product)
+    # A headline can name Ultra Blend when the frame has no product yet.
+    # It must not relabel a pure jar, including Gourmet Duo Mini, as 30% chicory.
+    if kind == "unknown" and "ultra blend" in hl:
+        kind = "ultra"
+    if kind == "ultra":
         return "ULTRA BLEND  |  70% COFFEE  30% CHICORY"
-    if any(name in key for name in ("bold", "purista", "purica", "prima")):
+    if kind == "pure":
         if "label" in hl or "ingredient" in hl:
             return "LABEL TRUTH  |  100% COFFEE"
         return "100% COFFEE  |  ZERO CHICORY"
