@@ -32,10 +32,18 @@ Ask: Is this something urban Indian coffee drinkers are curious about but nobody
 If yes → proceed. If no → reframe the angle until it passes.
 The best hooks cannot save a topic nobody cares about.
 
+FEATURED-SKU MESSAGE CONSISTENCY (mandatory):
+- Ultra Blend is 70% coffee and 30% chicory. When Ultra Blend is today's featured SKU, the story must be positive or neutral about this traditional blend and its intended everyday/milk-coffee use.
+- On an Ultra Blend day, do NOT demean chicory as "roasted root", "root filler", or "chicory filler"; do not say "never drink roasted root again", "refuse to drink chicory", or "chicory disguised as coffee".
+- Do not frame the featured Ultra Blend jar as a solution to an anti-chicory problem. Do not attack an ingredient that the featured SKU itself contains.
+- Pure-jar comparisons must be factual and clearly name the other SKU; never mix slogans or zero-chicory claims with Ultra Blend.
+- Use a product-specific CTA such as "Follow for honest coffee label explainers" or "Choose the blend that suits your cup".
+- Before returning JSON, scan hook_text, hook_options, every frame's on_screen/spoken, caption, CTA, comment_trigger, save_trigger, and share_trigger against these rules and rewrite any conflict.
+
 PSYCHOLOGY REQUIREMENT:
 Pick ONE primary frame from the PSYCHOLOGY FRAMES list above.
 Put its id in "psychology_frame". The frame must drive the hook, the spoken arc, and the share/save triggers.
-Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Never apply the 100% coffee line to Ultra Blend. Rs 18 is the home-cup price.
+Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Never apply the 100% coffee line to Ultra Blend. Rs 18 is the home-cup price.
 
 ABSOLUTE RULES:
 - NEVER invent statistics or percentages
@@ -67,14 +75,14 @@ ABSOLUTE RULES:
     {{"on_screen": "THE TWIST", "spoken": "The thing they did not expect — contrarian, relatable"}},
     {{"on_screen": "THE VILLAIN", "spoken": "Name it precisely — chicory, preservatives, artificial aroma"}},
     {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee."}},
-    {{"on_screen": "FOLLOW @PURITYBEANS", "spoken": "Follow @puritybeans so you never drink roasted root again."}}
+    {{"on_screen": "FOLLOW @PURITYBEANS", "spoken": "Follow @puritybeans for honest coffee label explainers."}}
   ],
   "loop_note": "One sentence: how the last frame connects back to frame 1 for infinite loop",
   "alt_hook": "A/B option — 4 words, completely different archetype",
   "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Available at {WEBSITE_URL}\\n\\nFollow @puritybeans for daily honest coffee craft. Shop pure: {WEBSITE_URL}",
   "cta": "Follow @puritybeans for daily pure coffee craft. Explore 100% pure jars at {WEBSITE_URL}",
-  "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
-  "save_trigger": "Save this before your next grocery run so you never buy the wrong coffee again.",
+  "comment_trigger": "Comment BLEND if you prefer a smooth, traditional milk-coffee cup.",
+  "save_trigger": "Save this before your next grocery run to compare the blend printed on each jar.",
   "share_trigger": "Share with someone who starts every morning with coffee — they deserve to know.",
   "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "agglomerated coffee", "coffee without preservatives", "pure instant coffee", "coffee lovers india", "instant coffee brand india"],
   "hashtags": "{HASHTAG_25}",
