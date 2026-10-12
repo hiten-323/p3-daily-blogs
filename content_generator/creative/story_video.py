@@ -69,6 +69,11 @@ def build_story_video(
                 audio = AudioFileClip(music_path)
                 dur = min(audio.duration, duration)
                 audio = audio.subclipped(0, dur)
+                try:
+                    # Boost volume to commercial loudness (~ -14 LUFS / dB) so story audio is clear and punchy
+                    audio = audio.with_volume_scaled(1.8)
+                except Exception as ve:
+                    logger.debug("[story_video] volume scaling failed: %s", ve)
                 clip = clip.with_audio(audio)
             except Exception as me:
                 logger.debug("[story_video] audio attach skipped: %s", me)
@@ -83,6 +88,9 @@ def build_story_video(
             fps=24,
             codec="libx264",
             audio_codec="aac" if clip.audio else None,
+            bitrate="10000k",
+            pixel_format="yuv420p",
+            ffmpeg_params=["-crf", "18"],
             logger=None,
             threads=2,
         )

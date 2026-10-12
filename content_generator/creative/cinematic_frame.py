@@ -135,80 +135,6 @@ def _wrap(draw, text, font, max_w):
     return lines[:3]
 
 
-def _draw_interactive_story_card(canvas, headline: str, y_top: int, width: int):
-    """
-    Draw an authentic interactive Instagram Story sticker (Poll / Quiz / Guarantee)
-    positioned comfortably in the safe zone between the headline and the hero jar.
-    Uses pure ASCII characters to prevent tofu boxes.
-    """
-    from PIL import Image, ImageDraw
-    h_lower = headline.lower()
-
-    if any(k in h_lower for k in ("chicory", "label", "ingredient", "adulter", "blend", "cheap")):
-        title = "POLL: Do you check your coffee label?"
-        opt1 = "100% Arabica only"
-        opt2 = "Checking right now"
-    elif any(k in h_lower for k in ("bitter", "sugar", "taste", "milk", "smooth", "flavour", "flavor")):
-        title = "TASTE TEST: Need sugar to mask bitterness?"
-        opt1 = "Never (real coffee)"
-        opt2 = "Always (chicory blend)"
-    else:
-        title = "QUICK POLL: Instant coffee drinker?"
-        opt1 = "Demanding 100% pure"
-        opt2 = "Settling for chicory"
-
-    card_w = int(width * 0.86)
-    card_h = 126
-    cx0 = (width - card_w) // 2
-    cy0 = y_top
-
-    overlay = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
-    odraw = ImageDraw.Draw(overlay)
-
-    # Sticker background card with subtle rounded corners and gold border
-    odraw.rounded_rectangle(
-        [(cx0, cy0), (cx0 + card_w, cy0 + card_h)],
-        radius=18,
-        fill=(22, 15, 9, 215),
-        outline=_GOLD,
-        width=2,
-    )
-
-    # Card Title
-    tf = _font(23, bold=True)
-    odraw.text((width // 2, cy0 + 16), title, font=tf, fill=_CREAM, anchor="mt")
-
-    # Two interactive voting pills
-    pill_w = (card_w - 48) // 2
-    pill_h = 44
-    p_y = cy0 + 62
-
-    # Pill 1
-    p1_x = cx0 + 16
-    odraw.rounded_rectangle(
-        [(p1_x, p_y), (p1_x + pill_w, p_y + pill_h)],
-        radius=12,
-        fill=(38, 25, 14, 230),
-        outline=(160, 120, 40),
-        width=1,
-    )
-    pf = _font(20, bold=True)
-    odraw.text((p1_x + pill_w // 2, p_y + pill_h // 2), f"O  {opt1}", font=pf, fill=_CREAM, anchor="mm")
-
-    # Pill 2
-    p2_x = p1_x + pill_w + 16
-    odraw.rounded_rectangle(
-        [(p2_x, p_y), (p2_x + pill_w, p_y + pill_h)],
-        radius=12,
-        fill=(38, 25, 14, 230),
-        outline=(160, 120, 40),
-        width=1,
-    )
-    odraw.text((p2_x + pill_w // 2, p_y + pill_h // 2), f"O  {opt2}", font=pf, fill=_CREAM, anchor="mm")
-
-    return Image.alpha_composite(canvas.convert("RGBA"), overlay).convert("RGB")
-
-
 def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
                             width=1080, height=1920, label="cine_frame"):
     """
@@ -337,7 +263,7 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
         draw = ImageDraw.Draw(canvas)
 
         # 1. Instagram Safe Zone Eyebrow Pill (y >= 260px)
-        category_text = "PURITY STORY • ZERO CHICORY"
+        category_text = "100% PURE COFFEE • ZERO CHICORY"
         cf = _font(22, bold=True)
         cat_w = draw.textlength(category_text, font=cf)
         cat_pill_w = int(cat_w + 36)
@@ -365,17 +291,9 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
                 draw.text((width // 2, y), line, font=sf, fill=_GOLD, anchor="ma")
                 y += int(sf.size * 1.25)
 
-        # 4. Interactive Story Card — ONLY for Stories (where stickers are native & expected).
-        is_story = "story" in str(label or "").lower()
-        if is_story and (text_bottom + 16 < jy - 140):
-            card_top = max(text_bottom + 20, int(height * 0.28))
-            if card_top + 130 < jy:
-                canvas = _draw_interactive_story_card(canvas, headline, card_top, width)
-                draw = ImageDraw.Draw(canvas)
-
-        # 5. Bottom Safe Zone CTA Pill (above bottom 1680px UI cutoff)
+        # 4. Bottom Safe Zone High-Converting CTA Pill (above bottom 1680px UI cutoff)
         ff = _font(max(24, width // 38), bold=True)
-        cta_text = "PURITY BEANS  |  TAP LINK IN BIO >"
+        cta_text = "FOLLOW @PURITYBEANS  |  TAP LINK IN BIO >"
         cta_w = draw.textlength(cta_text, font=ff)
         cta_pill_w = int(cta_w + 40)
         cta_pill_x = (width - cta_pill_w) // 2
