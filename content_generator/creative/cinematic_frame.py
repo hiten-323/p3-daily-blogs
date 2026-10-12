@@ -6,8 +6,9 @@ Solves the unpolished floating-jar look:
    countertop at the bottom 36% with horizon edge sheen and realistic physics contact shadows.
 2. Instagram Safe Zones: Keeps all on-screen copy strictly within safe zones (top >= 260px,
    bottom <= 1660px) so Instagram header and reply bar never collide with copy.
-3. Interactive Story Element: Sleek simulated Instagram Story poll/inspection card
-   for high viewer engagement.
+3. Distinct chrome: Shorts, Reels, and Stories each get their own badge and CTA.
+   Claims follow the jar — Ultra Blend is 70/30, pure jars may say zero chicory,
+   and an unknown jar stays on the slogan. No fake poll or sticker is drawn.
 4. Provenance Preserved: Authentic jar provenance tracked for every rendered asset.
 """
 from __future__ import annotations
@@ -19,6 +20,51 @@ logger = logging.getLogger(__name__)
 _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 _GOLD  = (200, 150, 46)
 _CREAM = (248, 242, 226)
+_PURE_JARS = ("bold", "purista", "purica", "prima", "premium agglomerate")
+
+
+def _product_class(product) -> str:
+    """ultra, pure, or unknown. Unknown must stay claim-neutral."""
+    key = str(product or "").strip().lower()
+    if "ultra" in key:
+        return "ultra"
+    if any(name in key for name in _PURE_JARS):
+        return "pure"
+    return "unknown"
+
+
+def onscreen_chrome(format_type: str, product=None) -> tuple[str, str]:
+    """Badge and CTA that match the format and the jar in the frame.
+
+    Shorts stay short enough that the PART counter on the right does not
+    collide with a centered badge. Zero-chicory copy is reserved for jars
+    that are actually 100% coffee.
+    """
+    kind = _product_class(product)
+    fmt = str(format_type or "reel").strip().lower()
+    if fmt == "short":
+        badge = "YOUTUBE SHORTS"
+        if kind == "ultra":
+            cta = "ULTRA BLEND  •  70% COFFEE  30% CHICORY"
+        elif kind == "pure":
+            cta = "100% COFFEE  •  ZERO CHICORY"
+        else:
+            cta = "INDIA'S CLEANEST INSTANT COFFEE"
+    elif fmt == "story":
+        if kind == "ultra":
+            badge, cta = "STORY  •  ULTRA BLEND", "70% COFFEE  •  30% CHICORY"
+        elif kind == "pure":
+            badge, cta = "STORY  •  ONE INGREDIENT", "100% COFFEE  •  TAP THE LINK"
+        else:
+            badge, cta = "STORY  •  READ THE LABEL", "INDIA'S CLEANEST INSTANT COFFEE"
+    else:
+        if kind == "ultra":
+            badge, cta = "REEL  •  ULTRA BLEND", "70% COFFEE  •  30% CHICORY"
+        elif kind == "pure":
+            badge, cta = "REEL  •  PURITY BEANS", "100% COFFEE  •  SAVE THIS"
+        else:
+            badge, cta = "REEL  •  PURITY BEANS", "SAVE THIS  •  LINK IN BIO"
+    return badge, cta
 
 
 def _knockout_white(img):
@@ -138,7 +184,7 @@ def _wrap(draw, text, font, max_w):
 def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
                             width=1080, height=1920, label="cine_frame",
                             format_type="reel", scene_idx=0, total_scenes=0,
-                            badge="", cta_text=None):
+                            badge="", cta_text=None, on_date=None):
     """
     Real jar (white knocked out) on a grounded cinematic backdrop + safe-zone copy.
     Supports distinct visual styles for YouTube Shorts ('short'), Instagram Reels ('reel'),
@@ -280,14 +326,8 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
         draw = ImageDraw.Draw(canvas)
 
         # 1. Distinct Platform Eyebrow Badge (y >= 260px)
-        if badge:
-            category_text = badge
-        elif format_type == "short":
-            category_text = "YOUTUBE SHORTS • #100%PURECOFFEE"
-        elif format_type == "story":
-            category_text = "STORY EXCLUSIVE • ZERO CHICORY"
-        else:
-            category_text = "REEL • PURITY BEANS"
+        chrome_badge, chrome_cta = onscreen_chrome(format_type, product)
+        category_text = badge or chrome_badge
 
         cf = _font(22, bold=True)
         cat_w = draw.textlength(category_text, font=cf)
@@ -343,14 +383,7 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
 
         if show_cta:
             ff = _font(max(24, width // 38), bold=True)
-            if cta_text:
-                resolved_cta = cta_text
-            elif format_type == "short":
-                resolved_cta = "SUBSCRIBE @PURITYBEANS  •  SHOP P3ONLINE.IN"
-            elif format_type == "story":
-                resolved_cta = "TAP LINK IN BIO ↗  |  100% PURE COFFEE"
-            else:
-                resolved_cta = "SAVE THIS REEL  |  TAP LINK IN BIO >"
+            resolved_cta = cta_text or chrome_cta
 
             cta_w = draw.textlength(resolved_cta, font=ff)
             cta_pill_w = int(cta_w + 40)
@@ -409,8 +442,14 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
                   "PURITY BEANS  |  p3online.in", font=ff, fill=_GOLD, anchor="mm")
 
     from content_generator.core.ist_dates import today_ist
+    if on_date is None:
+        date_str = today_ist().isoformat()
+    elif hasattr(on_date, "isoformat"):
+        date_str = on_date.isoformat()
+    else:
+        date_str = str(on_date)[:10]
     os.makedirs(_OUT_DIR, exist_ok=True)
-    out = os.path.join(_OUT_DIR, f"{label}_{today_ist().isoformat()}.jpg")
+    out = os.path.join(_OUT_DIR, f"{label}_{date_str}.jpg")
     canvas.save(out, "JPEG", quality=90)
 
     try:

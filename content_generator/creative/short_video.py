@@ -33,20 +33,27 @@ def _scenes_from_short(yt_short: dict) -> list[dict]:
                 scenes.append({"on": on or spoken[:40], "sub": spoken})
 
     if not scenes:
-        hook = str(yt_short.get("hook") or yt_short.get("title") or "WHY YOUR COFFEE HAS A ROOT").strip()
-        tagline = str(yt_short.get("tagline") or "The 80-year coffee compromise").strip()
-        product = str(yt_short.get("product") or "Ultra Blend").strip()
+        hook = str(yt_short.get("hook") or yt_short.get("title") or "READ THE LABEL").strip()
+        tagline = str(yt_short.get("tagline") or "The ingredient list is the recipe.").strip()
+        product = str(yt_short.get("product") or "").strip()
+        key = product.lower()
+        if "ultra" in key:
+            third_on, third_sub = "ULTRA BLEND", "70% coffee. 30% chicory."
+        elif any(name in key for name in ("bold", "purista", "purica", "prima")):
+            third_on, third_sub = product.upper(), "100% coffee. Zero chicory."
+        else:
+            third_on, third_sub = "READ THE LABEL", "Check the blend before you brew."
         scenes = [
             {"on": hook, "sub": tagline},
-            {"on": "CHICORY IS A ROASTED ROOT", "sub": "Not coffee beans. A cheap filler."},
-            {"on": f"SWITCH TO {product.upper()}", "sub": "100% pure coffee experience."},
-            {"on": "NO COMPROMISES", "sub": "Order authentic coffee at p3online.in"},
+            {"on": "TURN THE JAR", "sub": "The front is the promise. The back is the recipe."},
+            {"on": third_on, "sub": third_sub},
+            {"on": "PURITY BEANS", "sub": "Order at p3online.in"},
         ]
 
     return scenes[:_MAX_SCENES]
 
 
-def build_short_video(yt_short: dict, day: int, label: str = "short_video") -> str | None:
+def build_short_video(yt_short: dict, day: int, label: str = "short_video", on_date=None) -> str | None:
     """
     Render a dedicated vertical YouTube Short video (1080x1920 MP4) with beat-synced audio.
     Returns path to rendered MP4 or None.
@@ -83,6 +90,7 @@ def build_short_video(yt_short: dict, day: int, label: str = "short_video") -> s
             format_type="short",
             scene_idx=i,
             total_scenes=total_scenes,
+            on_date=on_date,
         )
         if p:
             frame_paths.append(p)
@@ -129,13 +137,22 @@ def build_short_video(yt_short: dict, day: int, label: str = "short_video") -> s
             audio = AudioFileClip(music)
             dur = min(audio.duration, video.duration)
             audio = audio.subclipped(0, dur)
+            try:
+                audio = audio.with_volume_scaled(1.8)
+            except Exception as ve:
+                logger.debug("[short_video] volume scaling failed: %s", ve)
             video = video.with_audio(audio)
         except Exception as e:
             logger.debug("[short_video] music attach failed: %s", e)
 
     os.makedirs(_OUT_DIR, exist_ok=True)
     from content_generator.core.ist_dates import today_ist
-    date_str = today_ist().isoformat()
+    if on_date is None:
+        date_str = today_ist().isoformat()
+    elif hasattr(on_date, "isoformat"):
+        date_str = on_date.isoformat()
+    else:
+        date_str = str(on_date)[:10]
     out = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}.mp4")
 
     temp_audio = os.path.join(_OUT_DIR, f"temp_{label}_{os.getpid()}_{day}.m4a")

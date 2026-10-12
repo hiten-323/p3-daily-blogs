@@ -131,6 +131,12 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.warning("[linkedin] No linkedin_post in content — skipping")
         return {"success": False, "post_id": "", "url": "", "error": "no_content"}
 
+    from content_generator.core.product_truth import product_truth_findings
+    if product_truth_findings(post_text):
+        logger.error("[linkedin] Refusing copy that contradicts the jar")
+        return {"success": False, "attempted": False, "skipped": True,
+                "post_id": "", "url": "", "error": "product_truth_failed"}
+
     # Try to attach an image (carousel cover or first reel thumbnail)
     image_path = _find_image(content)
     image_urn  = None
@@ -216,8 +222,8 @@ def _find_image(content: dict) -> str | None:
 
     # Look for carousel cover first, then any generated image — today's only
     # (creative files persist 7 days in the repo for the publish slots)
-    from content_generator.core.ist_dates import today_ist
-    today = today_ist().isoformat()
+    from content_generator.core.ist_dates import asset_date
+    today = asset_date(content)
     patterns = [
         os.path.join(creative_dir, f"carousel_slide_1_*{today}.jpg"),
         os.path.join(creative_dir, f"carousel_cover_*{today}.jpg"),

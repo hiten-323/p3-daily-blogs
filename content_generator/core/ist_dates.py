@@ -66,6 +66,37 @@ def content_date_iso(value) -> str:
     return ""
 
 
+def content_date_for_slot(slot: str, now: datetime.datetime | None = None) -> datetime.date:
+    """IST day whose content a slot should load.
+
+    GitHub often starts the 22:00 IST evening cron after midnight. That run is
+    still yesterday's reel, not a request for a file the 06:00 generate has
+    not written yet. A manual evening dispatch after noon stays on today.
+    Morning and generate only roll back when they themselves spill past
+    midnight into the next day's pre-generate window.
+    """
+    if now is None:
+        now_ist = datetime.datetime.now(IST)
+    elif now.tzinfo is None:
+        now_ist = now.replace(tzinfo=datetime.timezone.utc).astimezone(IST)
+    else:
+        now_ist = now.astimezone(IST)
+    today = now_ist.date()
+    minutes = now_ist.hour * 60 + now_ist.minute
+    slot_id = str(slot or "").strip().lower()
+    if slot_id == "evening" and minutes < 12 * 60:
+        return today - datetime.timedelta(days=1)
+    if slot_id in {"morning", "generate"} and minutes < 6 * 60:
+        return today - datetime.timedelta(days=1)
+    return today
+
+
+def asset_date(content, now: datetime.datetime | None = None) -> str:
+    """Filename date for assets that belong to this content file."""
+    parsed = content_date_iso(content.get("date") if isinstance(content, dict) else None)
+    return parsed or today_ist(now).isoformat()
+
+
 def content_matches_today(content: dict, today: datetime.date | None = None) -> tuple[bool, str]:
     """
     True when the file is today's work (or carries no date).

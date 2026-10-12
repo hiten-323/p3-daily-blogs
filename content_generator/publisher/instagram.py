@@ -53,14 +53,14 @@ def is_configured() -> bool:
     return bool(os.getenv("INSTAGRAM_ACCOUNT_ID")) and bool(os.getenv("INSTAGRAM_ACCESS_TOKEN"))
 
 
-def _find_reel_video(day: int) -> str | None:
-    """Return only today's rendered MP4 for this content day; never reuse a stale reel."""
+def _find_reel_video(day: int, on_date: str | None = None) -> str | None:
+    """Return the rendered MP4 for this content day; never reuse a stale reel."""
     import glob
 
     creative_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
     from content_generator.core.ist_dates import today_ist
 
-    today = today_ist().isoformat()
+    today = on_date or today_ist().isoformat()
     expected = os.path.join(creative_dir, f"reel_1_video_day{day}_{today}.mp4")
     if os.path.isfile(expected) and os.path.getsize(expected) > 10_000:
         return expected
@@ -93,40 +93,9 @@ def post_content(content: dict, day: int = 0) -> dict:
 
     caption = _extract_caption(content, day=day)
 
-    # A rendered Reel is the preferred Instagram format when it exists. Upload
-    # to public video hosting first because Meta requires a public video_url.
-    # If upload or publishing fails, return that failure rather than silently
-    # substituting a carousel or risking a duplicate after an ambiguous result.
-    reel_video_path = _find_reel_video(day)
-    if reel_video_path:
-        from content_generator.publisher.video_host import upload_video
-
-        video_url = upload_video(reel_video_path)
-        if video_url:
-            result = post_reel_video(video_url, caption)
-            if result.get("success"):
-                result["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
-                result["format_used"] = "reel"
-                result["reel_video_path"] = reel_video_path
-                logger.info("[instagram] Day %d Reel published | id=%s", day, result.get("media_id"))
-                return result
-            logger.error("[instagram] Day %d rendered Reel failed to publish: %s", day, result.get("error"))
-        else:
-            direct_res = _post_reel_direct_binary(reel_video_path, caption)
-            if direct_res.get("success"):
-                direct_res["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
-                direct_res["format_used"] = "reel"
-                direct_res["reel_video_path"] = reel_video_path
-                logger.info("[instagram] Day %d Reel published via direct binary upload | id=%s", day, direct_res.get("media_id"))
-                return direct_res
-
-        logger.warning(
-            "[instagram] Reel video upload unavailable or failed for day %d. Falling back to editorial carousel.",
-            day,
-        )
-
-    logger.warning("[instagram] No rendered Reel MP4 for day %d; Reel is not publishable. Checking feed-image fallback.", day)
-    images  = _find_carousel_images(content)
+    # Morning owns the feed. The evening slot publishes the reel. Posting the
+    # rendered MP4 here used to steal it, then the evening slot posted it again.
+    images = _find_carousel_images(content)
 
     if not images:
         logger.warning("[instagram] No images found — skipping Instagram post")
@@ -326,8 +295,8 @@ def _find_carousel_images(content: dict) -> list[str]:
         "carousel_*.png",
     ]
 
-    from content_generator.core.ist_dates import today_ist
-    today = today_ist().isoformat()
+    from content_generator.core.ist_dates import asset_date
+    today = asset_date(content)
 
     images = []
     for pattern in patterns:
@@ -645,6 +614,7 @@ def post_story(content: dict, day: int = 0) -> dict:
         image_path = compose_cinematic_frame(
             headline=headline, sub=sub, day=day, idx=9, product=product,
             width=1080, height=1920, label=f"story_day{day}",
+            format_type="story",
         )
     except Exception as e:
         logger.warning("[instagram] cinematic story compose failed: %s", e)
@@ -659,6 +629,16 @@ def post_story(content: dict, day: int = 0) -> dict:
             logger.warning("[instagram] story image compose failed: %s", e)
     if not image_path:
         return {"success": False, "media_id": "", "error": "no_story_image"}
+
+    from content_generator.creative.rendered_asset_qa import audit_rendered_images
+    visual = audit_rendered_images([image_path])
+    if not visual.get("ok"):
+        logger.error("[instagram] Story frame failed visual QA: %s", visual.get("issues"))
+        return {
+            "success": False,
+            "media_id": "",
+            "error": "visual_qa_failed: " + "; ".join(visual.get("issues") or ["broken_render"]),
+        }
 
     try:
         import requests
@@ -676,7 +656,7 @@ def post_story(content: dict, day: int = 0) -> dict:
             image_path=image_path,
             headline=headline,
             day=day,
-            duration=7.5,
+            duration=6.0,
             label=f"story_video_day{day}",
         )
     except Exception as ve:

@@ -61,13 +61,12 @@ def get_current_slot(now_utc: datetime.datetime = None) -> str:
     return slot
 
 
-def _load_todays_content() -> dict | None:
-    """Load the content JSON saved by this morning's generate run."""
-    from content_generator.core.ist_dates import today_ist
-    date_str = today_ist().isoformat()
+def _load_slot_content(on_date: datetime.date) -> dict | None:
+    """Load the content JSON for the IST day this slot is responsible for."""
+    date_str = on_date.isoformat()
     path = os.path.join("output", f"content_{date_str}.json")
     if not os.path.exists(path):
-        logger.error("[slots] No content file for today (%s) — generate run missing?", path)
+        logger.error("[slots] No content file for %s — generate run missing?", path)
         return None
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -77,11 +76,17 @@ def _load_todays_content() -> dict | None:
         return None
 
 
-def _find_reel_thumbnail() -> str | None:
-    """Find today's reel thumbnail image on disk."""
+def _load_todays_content() -> dict | None:
+    """Load the content JSON saved by this morning's generate run."""
+    from content_generator.core.ist_dates import today_ist
+    return _load_slot_content(today_ist())
+
+
+def _find_reel_thumbnail(date_str: str | None = None) -> str | None:
+    """Find the reel thumbnail for the content day, not the wall-clock day."""
     from content_generator.core.ist_dates import today_ist
     creative_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
-    date_str = today_ist().isoformat()
+    date_str = date_str or today_ist().isoformat()
     for pattern in (f"reel_1_thumb_*_{date_str}.jpg", f"reel_1*{date_str}.jpg",
                     f"reel_hook_*_{date_str}.jpg"):
         matches = sorted(_glob.glob(os.path.join(creative_dir, pattern)))
@@ -212,12 +217,18 @@ def _skipped(slot: str, day: int = 0, reason: str = "") -> dict:
     return res
 
 
-def run_publish_slot(slot: str, force_retry: bool = False) -> dict:
+def run_publish_slot(slot: str, force_retry: bool = False, on_date: datetime.date | None = None) -> dict:
     """
     Execute a publish-only slot (morning or evening).
-    Loads this morning's generated content and posts the slot's asset.
+    Loads the content day for this slot and posts the slot's asset.
+
+    on_date overrides the clock. Recovery passes yesterday when a delayed
+    evening cron crossed midnight.
     """
+    from content_generator.core.ist_dates import content_date_for_slot
     from content_generator.scheduler.run_lock import RunLock
+
+    slot_date = on_date or content_date_for_slot(slot)
 
     # Respect the founder policy dry-run switch here too — the publish slots
     # must honor auto_publish=false, not just the generate slot.
@@ -230,7 +241,7 @@ def run_publish_slot(slot: str, force_retry: bool = False) -> dict:
     except Exception as _e:
         logger.debug("[slots] optional step failed: %s", _e)
 
-    lock = RunLock(lock_path=os.path.join("output", f".running_{slot}"))
+    lock = RunLock(lock_path=os.path.join("output", f".running_{slot}"), for_date=slot_date)
     lock.__enter__()
     retrying_completed_slot = bool(lock.already_ran and force_retry)
     if lock.already_ran and not force_retry:
@@ -247,7 +258,7 @@ def run_publish_slot(slot: str, force_retry: bool = False) -> dict:
     # skipped slot as green, every later slot that day skipped in silence. The
     # lock file is committed to the repo, so that state outlived the container.
     try:
-        result = _execute_publish_slot(slot)
+        result = _execute_publish_slot(slot, on_date=slot_date)
     except Exception:
         lock.release()          # crashed — let the next slot attempt proceed
         raise
@@ -258,7 +269,7 @@ def run_publish_slot(slot: str, force_retry: bool = False) -> dict:
     return result
 
 
-def _execute_publish_slot(slot: str) -> dict:
+def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> dict:
     """The slot's actual work. The lock lifecycle belongs to run_publish_slot."""
     # MISSING CONTENT IS A HOLD, NEVER A GENERATION.
     #
@@ -271,17 +282,17 @@ def _execute_publish_slot(slot: str) -> dict:
     #
     # A publish slot publishes what generation already produced and validated.
     # If that does not exist, the honest outcome is to publish nothing.
-    content = _load_todays_content()
+    from content_generator.core.ist_dates import content_date_for_slot, content_matches_today
+    slot_date = on_date or content_date_for_slot(slot)
+    content = _load_slot_content(slot_date)
     if not content:
         return _held(slot, 0, {}, "no_content_for_today — the generate slot "
                                   "produced nothing; publish slots never generate")
 
-    # Correlation: the loaded file must actually be today's work. A stale file
-    # left in the working tree would otherwise republish yesterday's asset under
-    # today's decision record. content.get("date") may be ISO or the legacy
-    # "October 03, 2026" form; both are compared as an IST calendar day.
-    from content_generator.core.ist_dates import content_matches_today
-    fresh, why = content_matches_today(content)
+    # Correlation: the loaded file must be the content day this slot owns.
+    # A delayed 22:00 IST evening cron often starts after midnight; that run
+    # still belongs to yesterday's file, not a file generate has not written.
+    fresh, why = content_matches_today(content, today=slot_date)
     if content.get("date") and not fresh:
         # stale_content: why names the file date and today's IST date.
         return _held(slot, content.get("day_number", 0), content, why)
@@ -377,7 +388,7 @@ def _execute_publish_slot(slot: str) -> dict:
                 logger.info("[slots] using HERO video: %s", os.path.basename(hero))
             else:
                 from content_generator.creative.reel_video import build_reel_video
-                video_path, is_hero = build_reel_video(reel, day), False
+                video_path, is_hero = build_reel_video(reel, day, on_date=slot_date), False
             if video_path and vhost_ok():
                 video_url = upload_video(video_path)
                 if video_url:
@@ -397,7 +408,7 @@ def _execute_publish_slot(slot: str) -> dict:
         #    rendered to 4:5. If that render fails, it goes out as a Story
         #    instead of a feed image the API will reject.
         if not result or not result.get("success"):
-            image = _find_reel_thumbnail()
+            image = _find_reel_thumbnail(slot_date.isoformat())
             if not image:
                 return _held(slot, day, content, "no_image")
 
@@ -408,6 +419,13 @@ def _execute_publish_slot(slot: str) -> dict:
 
             feed = prepare_feed_image(image)
             if feed:
+                from content_generator.creative.rendered_asset_qa import audit_rendered_images
+                visual = audit_rendered_images([feed])
+                if not visual.get("ok"):
+                    return _held(
+                        slot, day, content,
+                        "visual_qa_failed — " + "; ".join(visual.get("issues") or ["broken_render"]),
+                    )
                 from content_generator.publisher.publishing_ledger import publish_with_ledger
                 result = publish_with_ledger("instagram", content, slot, day,
                                              lambda: _post_single_image(feed, caption))

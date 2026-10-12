@@ -24,6 +24,30 @@ _BEAT_SECONDS = 2.0   # Exactly 1 bar at 120 BPM (0.5s * 4 = 2.0s) for downbeat 
 _MAX_BEATS    = 6
 
 
+def _fallback_beats(reel: dict) -> list[dict]:
+    """Claim-safe beats when a reel has no frames. Unknown jars stay neutral."""
+    product = str(reel.get("product") or "").strip()
+    key = product.lower()
+    hook = str(reel.get("hook_text") or reel.get("hook") or "").strip()
+    if "ultra" in key:
+        return [
+            {"on": hook or "ULTRA BLEND", "sub": "70% coffee. 30% chicory."},
+            {"on": "30% CHICORY", "sub": "The blend is on the label."},
+            {"on": "PURITY BEANS", "sub": "Shop at p3online.in"},
+        ]
+    if any(name in key for name in ("bold", "purista", "purica", "prima")):
+        return [
+            {"on": hook or "ONE INGREDIENT", "sub": "100% coffee. Zero chicory."},
+            {"on": "READ THE LABEL", "sub": "Coffee. Nothing else."},
+            {"on": "PURITY BEANS", "sub": "Shop at p3online.in"},
+        ]
+    return [
+        {"on": hook or "READ THE LABEL", "sub": "India's cleanest instant coffee."},
+        {"on": "CHECK THE BACK", "sub": "The ingredient list is the recipe."},
+        {"on": "PURITY BEANS", "sub": "Shop at p3online.in"},
+    ]
+
+
 def _beats_from_reel(reel: dict) -> list[dict]:
     """Extract (on_screen, spoken) beats from a reel in any of its shapes."""
     beats = []
@@ -34,16 +58,11 @@ def _beats_from_reel(reel: dict) -> list[dict]:
             if on or sub:
                 beats.append({"on": on or (sub[:32] + "…"), "sub": sub})
     if not beats:
-        hook = str(reel.get("hook_text") or reel.get("hook") or "REAL COFFEE. ZERO CHICORY.")
-        beats = [
-            {"on": hook, "sub": ""},
-            {"on": "NO CHICORY", "sub": "100% coffee. Nothing else."},
-            {"on": "PURITY BEANS", "sub": "Shop at p3online.in"},
-        ]
+        beats = _fallback_beats(reel)
     return beats[:_MAX_BEATS]
 
 
-def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | None:
+def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=None) -> str | None:
     """
     Render a vertical motion reel. Returns mp4 path or None (caller falls back
     to an image post).
@@ -65,17 +84,19 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
 
     beats = _beats_from_reel(reel)
     total_beats = len(beats)
+    product = reel.get("product")
     frame_paths = []
     for i, b in enumerate(beats):
         if _frame.__name__ == "compose_cinematic_frame":
             p = _frame(
-                headline=b["on"], sub=b["sub"], day=day, idx=i,
+                headline=b["on"], sub=b["sub"], day=day, idx=i, product=product,
                 width=1080, height=1920, label=f"{label}_beat{i}_day{day}",
                 format_type="reel", scene_idx=i, total_scenes=total_beats,
+                on_date=on_date,
             )
         else:
             p = _frame(
-                headline=b["on"], body=b["sub"], day=day, idx=i,
+                headline=b["on"], body=b["sub"], day=day, idx=i, product=product,
                 width=1080, height=1920, label=f"{label}_beat{i}_day{day}",
             )
         if p:
@@ -147,7 +168,12 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video") -> str | N
 
     os.makedirs(_OUT_DIR, exist_ok=True)
     from content_generator.core.ist_dates import today_ist
-    date_str = today_ist().isoformat()
+    if on_date is None:
+        date_str = today_ist().isoformat()
+    elif hasattr(on_date, "isoformat"):
+        date_str = on_date.isoformat()
+    else:
+        date_str = str(on_date)[:10]
     out = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}.mp4")
     try:
         temp_audio = os.path.join(_OUT_DIR, f"temp_{label}_{os.getpid()}_{day}.m4a")

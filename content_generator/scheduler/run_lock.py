@@ -63,16 +63,23 @@ class RunLock:
         was_acquired (bool): True if this instance holds the lock.
     """
 
-    def __init__(self, lock_path: str = _LOCK_FILE):
+    def __init__(self, lock_path: str = _LOCK_FILE, for_date: datetime.date | None = None):
         self._path        = lock_path
+        self._for_date    = for_date
         self.already_ran  = False
         self.was_acquired = False
+
+    def _lock_date(self) -> str:
+        """Calendar day this lock represents. Slot runs pass the content day."""
+        if self._for_date is not None:
+            return self._for_date.isoformat()
+        return today_ist().isoformat()
 
     # ── Context manager ───────────────────────────────────────────────────────
 
     def __enter__(self) -> "RunLock":
         os.makedirs(os.path.dirname(self._path) or ".", exist_ok=True)
-        today = today_ist().isoformat()
+        today = self._lock_date()
 
         if os.path.exists(self._path):
             try:
@@ -143,7 +150,7 @@ class RunLock:
 
     def _write(self, status: str) -> None:
         with open(self._path, "w") as f:
-            f.write(f"{today_ist().isoformat()}|{os.getpid()}|{status}"
+            f.write(f"{self._lock_date()}|{os.getpid()}|{status}"
                     f"|{datetime.datetime.now().isoformat(timespec='seconds')}")
 
     def mark_completed(self) -> None:

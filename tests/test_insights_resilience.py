@@ -229,3 +229,37 @@ def test_completed_window_is_not_repeated() -> None:
     assert insights._next_due_window(
         post, insights.datetime.datetime(2026, 10, 4, 8, 0, 0)
     ) == ("72h", 72)
+
+
+def test_systemic_insights_error_does_not_abandon_the_window(monkeypatch) -> None:
+    """A missing insights scope is the account, not this post. Do not burn 24h."""
+    post = {
+        "media_id": "1789",
+        "published_at": "2026-10-01T00:00:00",
+        "measurement_snapshots": [],
+        "failed_windows": [],
+        "fetch_attempts_by_window": {"24h": 4},
+        "asset_id": "asset-1",
+    }
+    saved = {}
+    monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "token")
+    monkeypatch.setattr(insights, "_load_posts", lambda: [post])
+    monkeypatch.setattr(insights, "_save_posts", lambda posts: saved.setdefault("posts", posts))
+    monkeypatch.setattr(insights, "_fetch_follower_count", lambda: 10)
+    monkeypatch.setattr(insights, "_fetch_account_insights", lambda: {})
+    monkeypatch.setattr(insights, "_append_account_snapshot", lambda *args, **kwargs: None)
+    monkeypatch.setattr(insights, "_append_follower_snapshot", lambda *args, **kwargs: None)
+    monkeypatch.setattr(insights, "diagnose_access", lambda: {})
+
+    def _fail(media_id: str):
+        insights._note_failure(
+            f"{media_id}/insights",
+            "(#100) Tried accessing nonexisting field (insights)",
+        )
+        return None
+
+    monkeypatch.setattr(insights, "_fetch_media_insights", _fail)
+    insights.fetch_pending_insights()
+    stored = saved["posts"][0]
+    assert stored["fetch_attempts_by_window"]["24h"] == 4
+    assert stored["failed_windows"] == []

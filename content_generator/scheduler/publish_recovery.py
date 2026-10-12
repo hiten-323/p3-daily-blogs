@@ -1,48 +1,55 @@
 """Retry due, explicitly retryable publishing failures without duplicating prior successes."""
 from __future__ import annotations
 
+import datetime
 import json
 import logging
 import os
 import sys
 from pathlib import Path
 
-from content_generator.core.ist_dates import today_ist, content_matches_today
-from content_generator.publisher.publishing_ledger import due_retry_slots, records_for_today
+from content_generator.core.ist_dates import content_matches_today
+from content_generator.publisher.publishing_ledger import due_retry_groups, records_for_today
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
 
 
-def main() -> int:
-    date = today_ist().isoformat()
-    path = Path("output") / f"content_{date}.json"
+def _load_content(date_iso: str) -> tuple[dict | None, str]:
+    path = Path("output") / f"content_{date_iso}.json"
     if not path.exists():
-        log.warning("No generated content for %s; no publish retry is safe.", date)
-        return 0
+        return None, f"missing content file {path}"
     try:
         content = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
-        log.error("Today's content file cannot be parsed; refusing retries: %s", exc)
-        return 1
-    fresh, why = content_matches_today(content)
+        return None, f"content file cannot be parsed: {exc}"
+    fresh, why = content_matches_today(content, today=datetime.date.fromisoformat(date_iso))
     if not fresh:
-        log.error("Today's content failed freshness check; refusing retries: %s", why)
-        return 1
+        return None, why
+    return content, ""
 
-    slots = due_retry_slots()
-    if not slots:
+
+def main() -> int:
+    groups = due_retry_groups()
+    if not groups:
         today_records = records_for_today()
         counts = {}
         for record in today_records:
             status = str(record.get("status", "UNKNOWN"))
             counts[status] = counts.get(status, 0) + 1
-        log.info("No due retries for %s. Ledger states: %s", date, counts)
+        log.info("No due retries. Ledger states: %s", counts)
         return 0
 
     failures = []
-    day = int(content.get("day_number") or 0)
-    for slot in slots:
+    for item in groups:
+        slot = item["slot"]
+        date = item["content_date"]
+        content, why = _load_content(date)
+        if content is None:
+            log.error("Refusing retry for %s %s: %s", date, slot, why)
+            failures.append(f"{date} {slot}: {why}")
+            continue
+        day = int(content.get("day_number") or 0)
         log.warning("Retrying due failed platform(s) for slot=%s date=%s", slot, date)
         if slot == "generate":
             from content_generator.publisher.dispatcher import publish_all
@@ -56,7 +63,7 @@ def main() -> int:
         elif slot in ("morning", "evening"):
             from content_generator.scheduler.slots import run_publish_slot
             from content_generator.core.publish_contract import evaluate, format_report
-            result = run_publish_slot(slot, force_retry=True)
+            result = run_publish_slot(slot, force_retry=True, on_date=datetime.date.fromisoformat(date))
             log.info("Slot recovery result:\n%s", format_report(result))
             verdict = evaluate(result)
             if not verdict.get("ok"):
@@ -66,7 +73,7 @@ def main() -> int:
             failures.append(f"{slot}: unknown slot")
 
     if failures:
-        message = "PURITY BEANS PUBLISH RECOVERY INCOMPLETE\nDate: " + date + "\n" + "\n".join(failures)
+        message = "PURITY BEANS PUBLISH RECOVERY INCOMPLETE\n" + "\n".join(failures)
         log.error("RECOVERY INCOMPLETE: %s", "; ".join(failures))
         try:
             from content_generator.scheduler.watchdog import alert_failure

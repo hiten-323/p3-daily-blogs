@@ -48,6 +48,23 @@ _FAKE_PROOF_PATTERNS = re.compile(
 )
 
 
+def _has_timed_beats(piece: dict) -> bool:
+    for key in ("frames", "scenes", "script"):
+        items = piece.get(key)
+        if isinstance(items, list) and items and isinstance(items[0], dict):
+            return True
+    return False
+
+
+def _first_onscreen(piece: dict) -> str:
+    for key in ("frames", "scenes", "script"):
+        items = piece.get(key)
+        if isinstance(items, list) and items and isinstance(items[0], dict):
+            first = items[0]
+            return str(first.get("on_screen") or first.get("headline") or "").strip()
+    return ""
+
+
 def evaluate_viral_readiness(
     piece: dict,
     platform: str = "",
@@ -196,6 +213,11 @@ def evaluate_viral_readiness(
         if not ("scenes" in piece or "frames" in piece or piece.get("script")):
             native_score = 4.0
             reasons.append("YouTube Short lacks native video scene breakdown")
+    # Mute viewers never hear the voiceover. A video whose first beat has no
+    # on-screen words fails the hook even when the spoken script is strong.
+    if _has_timed_beats(piece) and not _first_onscreen(piece):
+        native_score = min(native_score, 2.0)
+        reasons.append("first beat has no on-screen text; mute viewers miss the hook")
     dimensions["platform_nativeness"] = native_score
 
     # 8. TRUTH & INTEGRITY (0-10): zero fake social proof or medical claims
@@ -207,7 +229,13 @@ def evaluate_viral_readiness(
     dimensions["truth_and_integrity"] = truth_score
 
     total_score = round(sum(dimensions.values()), 1)
-    passes = total_score >= READINESS_THRESHOLD and truth_score > 0 and dimensions.get("payoff", 0) >= 8.0
+    mute_ok = (not _has_timed_beats(piece)) or bool(_first_onscreen(piece))
+    passes = (
+        total_score >= READINESS_THRESHOLD
+        and truth_score > 0
+        and dimensions.get("payoff", 0) >= 8.0
+        and mute_ok
+    )
 
     return {
         "score": total_score,

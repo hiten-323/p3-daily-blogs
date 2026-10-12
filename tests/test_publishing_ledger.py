@@ -77,3 +77,38 @@ def test_deliberate_skip_is_not_retried(tmp_path, monkeypatch):
     assert record["status"] == "SKIPPED"
     assert record["next_retry_at"] is None
     assert ledger.due_retry_slots() == []
+
+
+def test_yesterday_failure_is_retryable_and_old_failures_are_not(tmp_path, monkeypatch):
+    from datetime import timedelta
+    from content_generator.core.ist_dates import today_ist
+    from content_generator.publisher import publishing_ledger as ledger
+    monkeypatch.setattr(ledger, "_PATH", tmp_path / "ledger.json")
+    today = today_ist()
+    yesterday = (today - timedelta(days=1)).isoformat()
+    stale = (today - timedelta(days=10)).isoformat()
+    past = "2020-01-01T00:00:00+00:00"
+    payload = {
+        "version": 1,
+        "records": {
+            "yesterday": {
+                "content_date": yesterday,
+                "slot": "evening",
+                "status": "FAILED",
+                "attempt_count": 1,
+                "next_retry_at": past,
+                "platform": "instagram",
+            },
+            "stale": {
+                "content_date": stale,
+                "slot": "evening",
+                "status": "FAILED",
+                "attempt_count": 1,
+                "next_retry_at": past,
+                "platform": "instagram",
+            },
+        },
+    }
+    (tmp_path / "ledger.json").write_text(json.dumps(payload))
+    assert ledger.due_retry_groups() == [{"content_date": yesterday, "slot": "evening"}]
+    assert ledger.due_retry_slots() == []

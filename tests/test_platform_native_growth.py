@@ -179,15 +179,23 @@ def test_creative_viral_readiness_evaluation():
         "caption": "Boiling water extracts bitter tannins. Let water cool to 85°C. Bold and Purista are 100% Robusta with zero chicory. Send this to someone who drinks instant coffee.",
         "cta": "Follow @puritybeans so you never drink roasted root again.",
         "frames": [
-            {"spoken": "Never pour boiling water directly on coffee."},
-            {"spoken": "At 100°C you scorch the delicate aromatics."},
-            {"spoken": "Cool the water for 60 seconds to 85°C."},
-            {"spoken": "Taste the natural sweetness without adding sugar."},
-            {"spoken": "Follow @puritybeans for daily honest coffee craft."},
+            {"on_screen": "100°C KILLS THE CUP", "spoken": "Never pour boiling water directly on coffee."},
+            {"on_screen": "SCORCHED AROMATICS", "spoken": "At 100°C you scorch the delicate aromatics."},
+            {"on_screen": "COOL TO 85°C", "spoken": "Cool the water for 60 seconds to 85°C."},
+            {"on_screen": "TASTE THE BEAN", "spoken": "Taste the natural sweetness without adding sugar."},
+            {"on_screen": "FOLLOW FOR THE LABEL", "spoken": "Follow @puritybeans for daily honest coffee craft."},
         ],
     }
     viral_res = evaluate_viral_readiness(viral_value_piece, platform="reel_1")
     assert viral_res["passes"]
     assert viral_res["score"] >= 70.0
+
+    silent_hook = {
+        **viral_value_piece,
+        "frames": [{"spoken": frame["spoken"]} for frame in viral_value_piece["frames"]],
+    }
+    mute_res = evaluate_viral_readiness(silent_hook, platform="reel_1")
+    assert not mute_res["passes"]
+    assert any("on-screen" in reason for reason in mute_res["reasons"])
 
 

@@ -16,6 +16,15 @@ logger = logging.getLogger(__name__)
 _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 
 
+def _cover_claim(product: str) -> str:
+    key = str(product or "").lower()
+    if "ultra" in key:
+        return "70% COFFEE. 30% CHICORY."
+    if any(name in key for name in ("bold", "purista", "purica", "prima")):
+        return "100% COFFEE. ZERO CHICORY."
+    return "INDIA'S CLEANEST INSTANT COFFEE."
+
+
 def generate_reel_thumbnail(
     reel_data: dict,
     day: int,
@@ -55,8 +64,9 @@ def generate_reel_thumbnail(
     try:
         from content_generator.creative.cinematic_frame import compose_cinematic_frame
         path = compose_cinematic_frame(
-            headline=hook or "100% PURE COFFEE",
+            headline=hook or "READ THE LABEL",
             day=day,
+            product=reel_data.get("product"),
             label=f"{reel_id}_thumb_day{day}",
         )
         if path:
@@ -118,7 +128,7 @@ def generate_yt_thumbnail(
     try:
         from content_generator.creative.real_jar_composer import compose_post_image
         path = compose_post_image(
-            headline=product, body="100% PURE COFFEE. ZERO CHICORY.",
+            headline=product, body=_cover_claim(product), product=product,
             day=day, width=1280, height=720, label=f"yt_thumb_day{day}"
         )
         if path:
@@ -151,8 +161,8 @@ def _render_pillow_thumbnail(
     try:
         from content_generator.creative.real_jar_composer import compose_post_image
         return compose_post_image(
-            headline=hook_text or "100% PURE COFFEE",
-            body="ZERO CHICORY. 100% COFFEE.",
+            headline=hook_text or "READ THE LABEL",
+            body="INDIA'S CLEANEST INSTANT COFFEE.",
             day=day,
             idx=7,
             width=1080,

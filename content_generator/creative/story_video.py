@@ -2,8 +2,8 @@
 Dynamic vertical Story Video generator with audio for Instagram Stories.
 
 Turns a safe-zone compliant cinematic story frame into an engaging 9:16 vertical
-MP4 story video (7-8 seconds) with gentle Ken Burns motion and royalty-free
-background audio from music_library/.
+MP4 story video (6.0 seconds, three bars at 120 BPM) with gentle Ken Burns motion
+and royalty-free background audio from music_library/.
 
 This enables Instagram Stories to play with full sound and motion rather than
 being a silent, static, flat image.
@@ -26,6 +26,7 @@ def build_story_video(
     duration: float = _DEFAULT_STORY_DURATION,
     label: str = "story_video",
     frame_paths: list[str] = None,
+    on_date=None,
 ) -> str | None:
     """
     Render a 6.0s dynamic vertical story video (1080x1920 MP4) with beat-synced audio.
@@ -93,7 +94,12 @@ def build_story_video(
 
         os.makedirs(_OUT_DIR, exist_ok=True)
         from content_generator.core.ist_dates import today_ist
-        date_str = today_ist().isoformat()
+        if on_date is None:
+            date_str = today_ist().isoformat()
+        elif hasattr(on_date, "isoformat"):
+            date_str = on_date.isoformat()
+        else:
+            date_str = str(on_date)[:10]
         out_path = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}.mp4")
 
         temp_audio = os.path.join(_OUT_DIR, f"temp_{label}_{os.getpid()}_{day}.m4a")

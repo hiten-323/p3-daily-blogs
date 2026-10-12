@@ -60,6 +60,13 @@ def shareability(piece: dict) -> dict:
     """
     text_parts = [str(piece.get(k) or "") for k in ("hook", "hook_text", "headline", "title", "caption", "body", "text")]
     
+    # Reels store the words a mute viewer actually reads on frames.
+    if "frames" in piece and isinstance(piece["frames"], list):
+        for frame in piece["frames"]:
+            if isinstance(frame, dict):
+                text_parts.append(str(frame.get("on_screen") or frame.get("headline") or ""))
+                text_parts.append(str(frame.get("spoken") or frame.get("voiceover") or ""))
+
     # Also extract copy from scenes list if present (e.g. for yt_short or reels)
     if "scenes" in piece and isinstance(piece["scenes"], list):
         for s in piece["scenes"]:

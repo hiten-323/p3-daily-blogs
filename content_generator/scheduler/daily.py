@@ -1177,9 +1177,10 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
         if not path:
             try:
                 from content_generator.creative.cinematic_frame import compose_cinematic_frame
-                hook_txt = str(reel.get("hook_text") or reel.get("hook") or "100% PURE COFFEE")
+                hook_txt = str(reel.get("hook_text") or reel.get("hook") or "READ THE LABEL")
                 path = compose_cinematic_frame(
-                    headline=hook_txt, day=day_number, idx=7, label=f"reel_1_thumb_day{day_number}"
+                    headline=hook_txt, day=day_number, idx=7, product=reel.get("product"),
+                    label=f"reel_1_thumb_day{day_number}",
                 )
             except Exception as e:
                 logger.debug("[images] Cinematic frame reel thumb skipped: %s", e)
@@ -1190,7 +1191,10 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
         # Render motion reel video (MP4) with audio from music_library
         try:
             from content_generator.creative.reel_video import build_reel_video
-            reel_video_path = build_reel_video(reel, day=day_number, label=f"reel_1_video")
+            from content_generator.core.ist_dates import asset_date
+            reel_video_path = build_reel_video(
+                reel, day=day_number, label="reel_1_video", on_date=asset_date(content),
+            )
             if reel_video_path:
                 results["reel_video"] = reel_video_path
                 logger.info("[images] Reel motion video rendered: %s", reel_video_path)
@@ -1202,7 +1206,10 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     if yt_short:
         try:
             from content_generator.creative.short_video import build_short_video
-            short_video_path = build_short_video(yt_short, day=day_number, label=f"short_video")
+            from content_generator.core.ist_dates import asset_date
+            short_video_path = build_short_video(
+                yt_short, day=day_number, label="short_video", on_date=asset_date(content),
+            )
             if short_video_path:
                 results["short_video"] = short_video_path
                 logger.info("[images] Dedicated YouTube Short video rendered: %s", short_video_path)
@@ -1215,15 +1222,25 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
         from content_generator.creative.cinematic_frame import compose_cinematic_frame
         from content_generator.creative.story_video import build_story_video
         story_copy = resolve_story_copy(content, day=day_number)
+        story_product = None
+        try:
+            from content_generator.rotation import PRODUCTS, pick as pick_product
+            story_product = pick_product(PRODUCTS, day_number)
+        except Exception as prod_exc:
+            logger.debug("[images] story product pick skipped: %s", prod_exc)
+        from content_generator.core.ist_dates import asset_date
+        story_day = asset_date(content)
         story_frame = compose_cinematic_frame(
             headline=story_copy["headline"],
             sub=story_copy["sub"],
             day=day_number,
             idx=9,
+            product=story_product,
             width=1080,
             height=1920,
             label=f"story_day{day_number}",
             format_type="story",
+            on_date=story_day,
         )
         results["story_frame"] = story_frame
         if story_frame:
@@ -1233,6 +1250,7 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
                 day=day_number,
                 duration=6.0,
                 label=f"story_video_day{day_number}",
+                on_date=story_day,
             )
             if results["story_video"]:
                 logger.info("[images] Story video rendered: %s", results["story_video"])
