@@ -270,3 +270,41 @@ def test_hashtag_typo_is_gone():
     assert "NoCicory" not in daily
     assert "NoCicory" not in brand
     assert "NoChicory" in daily
+
+
+def test_ultra_blend_day_rejects_anti_chicory_framing_but_keeps_true_ratio():
+    from content_generator.core.brand_guard import ultra_blend_messaging_findings
+
+    bad = (
+        "Ultra Blend is 70% coffee and 30% chicory. "
+        "Follow so you never drink roasted root again."
+    )
+    findings = ultra_blend_messaging_findings(bad, "Ultra Blend")
+    assert findings
+    assert "never drink roasted root" in findings[0].lower()
+
+    good = "Ultra Blend is 70% coffee and 30% chicory for a traditional milk-coffee cup."
+    assert ultra_blend_messaging_findings(good, "Ultra Blend") == []
+
+
+def test_ultra_blend_consistency_scans_nested_reel_fields():
+    from content_generator.core.brand_guard import content_variant_findings
+
+    content = {
+        "featured_sku": "Ultra Blend",
+        "reels": [
+            {"hook_text": "A morning ritual"},
+            {"frames": [{"spoken": "Never drink roasted root again."}]},
+        ],
+    }
+    findings = content_variant_findings(content)
+    assert len(findings) == 1
+    assert findings[0]["path"].endswith("spoken")
+
+
+def test_anti_chicory_framing_is_not_banned_on_pure_sku_days():
+    from content_generator.core.brand_guard import ultra_blend_messaging_findings
+
+    assert ultra_blend_messaging_findings(
+        "Never drink roasted root again.", "Bold"
+    ) == []
