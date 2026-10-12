@@ -281,6 +281,39 @@ def validate_asset(label: str, piece: dict,
         combined_text = " ".join([str(v) for v in piece.values() if isinstance(v, str)])
         is_valid, issues = validate_asset_copy(combined_text, check_brand_facts=True, check_website=True, check_brand_mention=True, check_length=True)
 
+    # 1b. Featured-SKU messaging consistency. Ultra Blend contains chicory,
+    # so anti-chicory "root filler" rhetoric contradicts the featured product.
+    if clean_label in ("reel_1", "reel_2", "growth_reel", "carousel",
+                       "instagram_post", "linkedin_post", "blog_post",
+                       "yt_short", "threads_post", "facebook_post"):
+        try:
+            from content_generator.core.brand_guard import ultra_blend_messaging_findings
+            featured = piece.get("featured_sku") or piece.get("product") or piece.get("featured_product")
+            copy_parts = []
+            for key in ("hook", "hook_text", "title", "headline", "caption", "body",
+                        "text", "cta", "comment_trigger", "save_trigger", "share_trigger"):
+                if isinstance(piece.get(key), str):
+                    copy_parts.append(piece[key])
+            for collection in ("frames", "scenes", "slides", "script", "hook_options"):
+                value = piece.get(collection)
+                if isinstance(value, list):
+                    for item in value:
+                        if isinstance(item, dict):
+                            copy_parts.extend(str(item.get(k) or "") for k in
+                                               ("on_screen", "spoken", "heading", "body", "voiceover"))
+                        elif isinstance(item, str):
+                            copy_parts.append(item)
+            findings = []
+            for part in copy_parts:
+                findings.extend(ultra_blend_messaging_findings(part, str(featured or "")))
+            if findings:
+                is_valid = False
+                issues.extend(findings)
+        except Exception as e:
+            # Do not block all publishing because this optional variant-only guard
+            # cannot load, but log clearly so CI and telemetry can surface it.
+            logger.warning("[validator] featured-SKU messaging guard exception: %s", e)
+
     # 2. Instagram Native Quality Gate integration
     if clean_label in ("reel_1", "reel_2", "growth_reel", "carousel", "instagram_post", "stories"):
         try:
