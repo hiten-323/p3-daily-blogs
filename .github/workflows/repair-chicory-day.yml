@@ -1,5 +1,10 @@
 # One-shot repair for a chicory-featured content file.
 # workflow_dispatch only. No schedule. No morning slot. No evening slot. No publish.
+#
+# Re-run a write for 2026-10-12 (does not publish):
+#   python scripts/repair_chicory_day.py --date 2026-10-12 --dry-run
+#   python scripts/repair_chicory_day.py --date 2026-10-12 --write
+# Or dispatch this workflow with date=2026-10-12 and dry_run=false.
 
 name: Repair chicory-day copy
 
