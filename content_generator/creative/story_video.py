@@ -27,19 +27,37 @@ def build_story_video(
     label: str = "story_video",
     frame_paths: list[str] = None,
     on_date=None,
+    reference_text: str | None = None,
 ) -> str | None:
     """
     Render a 6.0s dynamic vertical story video (1080x1920 MP4) with beat-synced audio.
     Supports either a single high-impact frame or a 2-beat interactive story progression.
     Returns the path to the MP4 file or None on failure/unavailability.
     """
+    if os.getenv("ENABLE_STORY_VIDEO", "true").lower() != "true":
+        logger.info("[story_video] Story video disabled via ENABLE_STORY_VIDEO=false")
+        return None
+
+    try:
+        from content_generator.creative.product_reel_templates import (
+            materialize_template, select_product_reel,
+        )
+        selected = select_product_reel(text=reference_text if reference_text is not None else headline)
+        if selected:
+            logger.info(
+                "[story_video] reusing product reel template %s; source audio is silent "
+                "and viral music stays on the audio director",
+                os.path.basename(selected["path"]),
+            )
+            return materialize_template(
+                selected["path"], day, label, on_date=on_date, hook_text=headline,
+            )
+    except Exception as exc:
+        logger.debug("[story_video] product reel lookup skipped: %s", exc)
+
     paths = frame_paths or ([image_path] if image_path and os.path.exists(image_path) else [])
     if not paths:
         logger.warning("[story_video] No valid image paths provided for story video")
-        return None
-
-    if os.getenv("ENABLE_STORY_VIDEO", "true").lower() != "true":
-        logger.info("[story_video] Story video disabled via ENABLE_STORY_VIDEO=false")
         return None
 
     try:

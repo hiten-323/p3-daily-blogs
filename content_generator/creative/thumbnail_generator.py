@@ -17,10 +17,11 @@ _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 
 
 def _cover_claim(product: str) -> str:
-    key = str(product or "").lower()
-    if "ultra" in key:
+    from content_generator.creative.cinematic_frame import _product_class
+    kind = _product_class(product)
+    if kind == "ultra":
         return "70% COFFEE. 30% CHICORY."
-    if any(name in key for name in ("bold", "purista", "purica", "prima")):
+    if kind == "pure":
         return "100% COFFEE. ZERO CHICORY."
     return "INDIA'S CLEANEST INSTANT COFFEE."
 

@@ -24,9 +24,20 @@ _PURE_JARS = ("bold", "purista", "purica", "prima", "premium agglomerate")
 
 
 def _product_class(product) -> str:
-    """ultra, pure, or unknown. Unknown must stay claim-neutral."""
-    key = str(product or "").strip().lower()
-    if "ultra" in key:
+    """ultra, pure, or unknown. Unknown must stay claim-neutral.
+
+    Gourmet Duo and Gourmet Duo Mini are 100% coffee. A label that names
+    one of those duos together with Ultra Blend stays neutral so neither
+    jar inherits the other's chicory line.
+    """
+    key = " ".join(str(product or "").strip().lower().replace("_", " ").replace("-", " ").split())
+    duo = "gourmet duo" in key
+    ultra = "ultra" in key
+    if duo and ultra:
+        return "unknown"
+    if duo:
+        return "pure"
+    if ultra:
         return "ultra"
     if any(name in key for name in _PURE_JARS):
         return "pure"

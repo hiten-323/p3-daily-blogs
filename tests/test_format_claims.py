@@ -59,6 +59,33 @@ def test_empty_short_fallback_does_not_call_ultra_blend_pure():
     assert "30%" in text
 
 
+def test_gourmet_duo_mini_chrome_is_zero_chicory_and_ultra_is_not():
+    from content_generator.creative.cinematic_frame import _product_class
+
+    assert _product_class("Gourmet Duo Mini") == "pure"
+    assert _product_class("gourmet_duo_mini") == "pure"
+    assert _product_class("Ultra Blend") == "ultra"
+    assert _product_class("Gourmet Duo Mini vs Ultra Blend") == "unknown"
+
+    badge, cta = onscreen_chrome("reel", "Gourmet Duo Mini")
+    assert "ZERO CHICORY" in cta or "100% COFFEE" in cta
+    assert "30%" not in cta
+    ultra_badge, ultra_cta = onscreen_chrome("reel", "Ultra Blend")
+    assert "30%" in ultra_cta
+    assert "ZERO CHICORY" not in ultra_cta
+    mixed = " ".join(onscreen_chrome("reel", "Gourmet Duo Mini vs Ultra Blend")).upper()
+    assert "ZERO CHICORY" not in mixed
+    assert "30%" not in mixed
+
+    duo = " ".join(
+        f"{beat['on']} {beat['sub']}" for beat in _beats_from_reel({"product": "Gourmet Duo Mini"})
+    ).upper()
+    assert "ZERO CHICORY" in duo
+    assert "30%" not in duo
+    assert "ZERO CHICORY" in _claim_pill("Gourmet Duo Mini", "unlike Ultra Blend").upper()
+    assert "30%" not in _claim_pill("Gourmet Duo Mini", "unlike Ultra Blend")
+
+
 def test_feed_pill_follows_the_product():
     assert "30%" in _claim_pill("Ultra Blend", "Morning coffee")
     assert "ZERO CHICORY" not in _claim_pill("Ultra Blend", "Morning coffee").upper()

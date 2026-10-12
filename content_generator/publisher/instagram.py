@@ -658,6 +658,7 @@ def post_story(content: dict, day: int = 0) -> dict:
             day=day,
             duration=6.0,
             label=f"story_video_day{day}",
+            reference_text=f"{headline} {sub}",
         )
     except Exception as ve:
         logger.debug("[instagram] story video build skipped/failed: %s", ve)

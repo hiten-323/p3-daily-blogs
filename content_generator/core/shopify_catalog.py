@@ -310,6 +310,9 @@ def format_catalog_for_prompt() -> str:
         "7. Samples are only for businesses (cafes, offices, retailers, distributors). "
         "Consumer-facing content must not offer a sample. Point customers to the 50g Variety Box: "
         + product_page_url(SHOPIFY_PRODUCTS["variety_box"]) + "\n"
-        "8. The listed prices are correct. Prima is out of stock — do not tell people to buy it."
+        "8. The listed prices are correct. Prima is out of stock — do not tell people to buy it.\n"
+        "9. Gourmet Duo Mini (Purista 50g + Purica 50g) and Gourmet Duo (100g + 100g) are 100% coffee "
+        "and zero chicory. Do not describe either duo as 30% chicory, lower caffeine, only Arabica, or only Robusta. "
+        "Do not describe Ultra Blend as zero chicory, no chicory, or 100% coffee."
     )
     return "\n".join(lines)

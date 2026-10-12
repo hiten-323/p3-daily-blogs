@@ -36,11 +36,12 @@ def _scenes_from_short(yt_short: dict) -> list[dict]:
         hook = str(yt_short.get("hook") or yt_short.get("title") or "READ THE LABEL").strip()
         tagline = str(yt_short.get("tagline") or "The ingredient list is the recipe.").strip()
         product = str(yt_short.get("product") or "").strip()
-        key = product.lower()
-        if "ultra" in key:
+        from content_generator.creative.cinematic_frame import _product_class
+        kind = _product_class(product)
+        if kind == "ultra":
             third_on, third_sub = "ULTRA BLEND", "70% coffee. 30% chicory."
-        elif any(name in key for name in ("bold", "purista", "purica", "prima")):
-            third_on, third_sub = product.upper(), "100% coffee. Zero chicory."
+        elif kind == "pure":
+            third_on, third_sub = (product or "100% COFFEE").upper(), "100% coffee. Zero chicory."
         else:
             third_on, third_sub = "READ THE LABEL", "Check the blend before you brew."
         scenes = [
