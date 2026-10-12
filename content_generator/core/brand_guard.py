@@ -22,9 +22,6 @@ Ultra Blend is 70% coffee and 30% chicory. It may be described accurately and
 positively; anti-chicory / anti-root rhetoric is not allowed when that SKU is
 featured. Other 100% coffee SKUs may use clear, non-misleading zero-chicory copy.
 """
-from __future__ import annotations
-
-import re
 
 _ULTRA_ALIASES = re.compile(r"\bultra[\s-]?blend\b", re.I)
 _ULTRA_ONLY_CONTEXT = re.compile(
@@ -106,6 +103,8 @@ PRODUCT_KEYWORDS: dict[str, list[str]] = {
     "purica":      ["purica"],
     "prima":       ["prima", "premium agglomerate"],
 }
+
+
 
 
 def _jar_paths(pairs: tuple[tuple[str, str], ...]) -> list[str]:
