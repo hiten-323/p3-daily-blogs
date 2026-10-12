@@ -688,12 +688,24 @@ def _inject_jar_creative_into_reels(content: dict, day: int) -> None:
         if reel.get("ai_image_hook_prompt") and reel.get("ai_video_motion_prompt"):
             continue
         try:
-            hook_package = build_reel_hook_prompt(day=day + i)
+            product = str(reel.get("product") or "")
+            text = "\n".join(
+                str(reel.get(key) or "")
+                for key in ("product", "caption", "hook_text", "hook", "hook_spoken")
+            )
+            hook_package = build_reel_hook_prompt(
+                day=day + i,
+                product=product or None,
+                text=text,
+                style_for=str(content.get("featured_product") or ""),
+            )
             reel["ai_image_hook_prompt"]    = hook_package["image_prompt"]
             reel["ai_video_motion_prompt"]  = hook_package["motion_prompt"]
             reel["reference_jar_paths"]     = hook_package["reference_jar_paths"]
             reel["hook_visual_concept"]     = hook_package["concept"]
             reel.setdefault("hook_text_overlay", hook_package["hook_text"])
+            if hook_package.get("reel_inspiration"):
+                reel["reel_inspiration"] = hook_package["reel_inspiration"]
             logger.info("[creative] Jar hook prompts injected into reel_%d", i + 1)
         except Exception as e:
             logger.warning("[creative] Could not inject jar hook into reel_%d: %s", i + 1, e)
@@ -761,7 +773,10 @@ def _inject_brand_into_content(content: dict, day: int = 0) -> None:
     _inject_jar_creative_into_reels(content, day)
     try:
         from content_generator.creative.product_reel_templates import attach_product_reels
-        attach_product_reels(content)
+        attach_product_reels(
+            content,
+            featured_product=str(content.get("featured_product") or ""),
+        )
     except Exception as e:
         logger.warning("[creative] product reel template skipped: %s", e)
 
