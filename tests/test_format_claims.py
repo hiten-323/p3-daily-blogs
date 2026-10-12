@@ -62,7 +62,7 @@ def test_empty_short_fallback_does_not_call_ultra_blend_pure():
 def test_feed_pill_follows_the_product():
     assert "30%" in _claim_pill("Ultra Blend", "Morning coffee")
     assert "ZERO CHICORY" not in _claim_pill("Ultra Blend", "Morning coffee").upper()
-    assert "ZERO CHICORY" in _claim_pill("Purica", "One ingredient").upper()
+    assert "ZERO CHICORY" in _claim_pill("Purica", "Morning cup").upper()
     assert "ZERO CHICORY" not in _claim_pill(None, "Look at this jar").upper()
 
 

@@ -324,7 +324,7 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "DRY SPOON",
              "spoken": "A wet spoon clumps the whole jar. Keep one spoon dry, just for coffee."},
             {"on_screen": "TONIGHT",
-             "spoken": "Close it tight, move it off the stove, and taste the difference this week."},
+             "spoken": "Close it tight, move it off the stove, and compare the cup this week."},
         ],
         "body": "Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory and no additives. Ultra Blend is 70% coffee.",
         "caption": "Instant coffee usually goes stale in the jar, not in the shop.\n\nClose it tight, keep it off the stove, use a dry spoon.\n\nPurity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.\n\np3online.in",
