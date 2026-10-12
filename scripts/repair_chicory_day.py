@@ -13,8 +13,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
+
+# `python scripts/repair_chicory_day.py` puts scripts/ on sys.path, not the repo
+# root. Same bootstrap as the other repo-root entry points (tests, verify_refactor).
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def _joined_copy(node) -> str:
