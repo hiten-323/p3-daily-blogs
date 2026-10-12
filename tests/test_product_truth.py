@@ -308,3 +308,34 @@ def test_anti_chicory_framing_is_not_banned_on_pure_sku_days():
     assert ultra_blend_messaging_findings(
         "Never drink roasted root again.", "Bold"
     ) == []
+
+
+def test_validator_blocks_roasted_root_copy_for_ultra_blend_reels():
+    from content_generator.core.brand_validator import validate_asset
+
+    piece = {
+        "product": "Ultra Blend",
+        "caption": "Purity Beans Ultra Blend is 70% coffee and 30% chicory. Visit https://p3online.in to explore this traditional blend.",
+        "frames": [
+            {"on_screen": "FOLLOW @PURITYBEANS", "spoken": "Follow so you never drink roasted root again."},
+        ],
+    }
+    valid, issues = validate_asset("reel_2", piece)
+    assert not valid
+    assert any("anti-chicory framing conflicts" in str(issue) for issue in issues)
+
+
+def test_validator_keeps_truthful_ultra_blend_copy():
+    from content_generator.core.brand_validator import validate_asset
+
+    piece = {
+        "product": "Ultra Blend",
+        "caption": "Purity Beans Ultra Blend is 70% coffee and 30% chicory for a smooth traditional milk-coffee cup. Visit https://p3online.in to explore this blend and choose the taste that fits your routine.",
+        "frames": [
+            {"on_screen": "A TRADITIONAL BLEND", "spoken": "A balanced everyday cup starts by reading the ingredient ratio."},
+            {"on_screen": "70% COFFEE", "spoken": "Ultra Blend contains seventy percent coffee and thirty percent chicory."},
+            {"on_screen": "YOUR CUP, YOUR CHOICE", "spoken": "Follow Purity Beans for honest coffee label explainers."},
+        ],
+    }
+    valid, issues = validate_asset("reel_2", piece)
+    assert not any("anti-chicory framing conflicts" in str(issue) for issue in issues)
