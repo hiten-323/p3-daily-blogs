@@ -213,6 +213,95 @@ def test_repair_rewrites_2026_10_12_attacks_without_publishing():
     assert "schedule:" not in workflow
     assert "python -m content_generator.scheduler.daily" not in workflow
     assert "Repair content JSON without publishing" in workflow
+    assert 'python scripts/repair_chicory_day.py --date "$REPAIR_DATE" --dry-run' in workflow
+    assert 'python scripts/repair_chicory_day.py --date "$REPAIR_DATE" --write' in workflow
+
+
+def _run_repair_cli(tmp_path, *args: str):
+    """Run the workflow command from repo root with pytest's path help removed."""
+    import json
+    import os
+    import subprocess
+    import sys
+
+    out = tmp_path / "output"
+    out.mkdir()
+    target = out / "content_2026-10-12.json"
+    original = json.dumps(
+        {
+            "date": "2026-10-12",
+            "featured_product": "Ultra Blend",
+            "reels": [
+                {
+                    "primary_cta": "Follow @puritybeans so you never drink roasted root again",
+                    "caption": "Ultra Blend for the morning cup.",
+                }
+            ],
+        },
+        indent=2,
+    ) + "\n"
+    target.write_text(original, encoding="utf-8")
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    proc = subprocess.run(
+        [
+            sys.executable,
+            "scripts/repair_chicory_day.py",
+            "--date",
+            "2026-10-12",
+            "--output-dir",
+            str(out),
+            *args,
+        ],
+        cwd=ROOT,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    return proc, target, original
+
+
+def test_repair_clears_hook_lists_and_comparison_tables():
+    import json
+
+    from content_generator.core.product_truth import product_truth_findings, repair_content
+    from scripts.repair_chicory_day import remaining_findings
+
+    table = (
+        "<table><tr><td>Ultra Blend</td><td>70% coffee</td><td>30% chicory</td>"
+        "<td>Agglomerated instant blend</td></tr>"
+        "<tr><td>Prima</td><td>100% Arabica</td><td>0% chicory</td>"
+        "<td>Premium Agglomerate</td></tr>"
+        "<tr><td>Purica</td><td>100% Arabica</td><td>0% chicory</td>"
+        "<td>Freeze-dried granules</td></tr></table>"
+    )
+    assert product_truth_findings(table, featured="Ultra Blend") == []
+    payload = {
+        "featured_product": "Ultra Blend",
+        "reels": [{"hook_options": ["You are paying cafe prices for roasted chicory root."]}],
+        "blog_post": {"body_html": table},
+    }
+    assert remaining_findings(payload)
+    repaired = repair_content(payload)
+    assert remaining_findings(repaired) == []
+    assert "roasted chicory root" not in json.dumps(repaired).lower()
+
+
+def test_repair_script_cli_dry_run_from_repo_root(tmp_path):
+    proc, target, original = _run_repair_cli(tmp_path, "--dry-run")
+    assert proc.returncode == 0, proc.stderr
+    assert "dry run" in proc.stdout.lower()
+    assert "not published" in proc.stdout.lower()
+    assert target.read_text(encoding="utf-8") == original
+
+
+def test_repair_script_cli_write_from_repo_root(tmp_path):
+    proc, target, _original = _run_repair_cli(tmp_path, "--write")
+    assert proc.returncode == 0, proc.stderr
+    saved = target.read_text(encoding="utf-8")
+    assert "roasted root" not in saved.lower()
+    assert "70% coffee" in saved
+    assert "30% chicory" in saved
 
 
 def test_ultra_blend_is_thirty_percent_chicory():

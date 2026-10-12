@@ -42,6 +42,8 @@ _PURE_CLAIM = re.compile(
     re.I,
 )
 _SEGMENT = re.compile(r"[,:;]|\s[-–—]\s")
+_HTML_BLOCK_END = re.compile(r"</(?:tr|p|li|h[1-6]|div|blockquote)\s*>|<br\s*/?>", re.I)
+_HTML_TAG = re.compile(r"<[^>]+>")
 _LOW_CAFFEINE = re.compile(r"\b(?:low(?:er)?|less)[\s-]+caffeine\b", re.I)
 _FREEZE = re.compile(r"freeze[\s-]?dried", re.I)
 _BRAND_IS_FREEZE_ARABICA = re.compile(
@@ -130,6 +132,14 @@ _REPAIR_SUBS = (
     (re.compile(r"chicory is (?:bad|muddy|a filler|filler|poison)", re.I),
      "chicory is 30% of Ultra Blend and is printed on the label"),
 )
+
+
+def _claim_text(text: str) -> str:
+    """Split HTML blocks so a comparison table is not one mixed claim."""
+    if "<" not in text or ">" not in text:
+        return text
+    plain = _HTML_BLOCK_END.sub("\n", text)
+    return _HTML_TAG.sub(" ", plain)
 
 
 def _locally_negated(text: str, start: int) -> bool:
@@ -310,6 +320,8 @@ def repair_content(content: dict) -> dict:
             return out
         if isinstance(node, list):
             return [walk(item, inherited) for item in node]
+        if isinstance(node, str):
+            return repair_text(node, chicory_scope=inherited)
         return node
 
     repaired = walk(content, day_scope)
@@ -322,8 +334,9 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
     """Unsupported or contradicted product claims in `text`."""
     if not text or not str(text).strip():
         return []
+    source = _claim_text(str(text))
     findings: list[dict] = []
-    for sentence in _SENTENCE.split(str(text)):
+    for sentence in _SENTENCE.split(source):
         s = sentence.strip()
         if not s:
             continue
@@ -412,9 +425,9 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
                         findings.append(_finding(segment, "Prima / Premium Agglomerate is 100% Arabica"))
         if chicory_in_scope(s, featured) and _ANTI_CHICORY.search(s):
             findings.append(_finding(s, _ANTI_CHICORY_REASON))
-    if chicory_in_scope(str(text), featured):
+    if chicory_in_scope(source, featured):
         # A hook can attack chicory in one sentence and name Ultra Blend in the next.
-        for sentence in _SENTENCE.split(str(text)):
+        for sentence in _SENTENCE.split(source):
             s = sentence.strip()
             if s and _ANTI_CHICORY.search(s):
                 findings.append(_finding(s, _ANTI_CHICORY_REASON))
