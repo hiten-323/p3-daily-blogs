@@ -201,7 +201,7 @@ def post_content(content: dict, day: int = 0) -> dict:
         return _skip("wrong_slot", slot=slot)
 
     from content_generator.core.blog_quality import assess, content_output_dir, normalize_blog_piece
-    from content_generator.core.ist_dates import today_ist
+    from content_generator.core.ist_dates import asset_date
     from content_generator.core.schema_validation import BlogSchema, validate_or_fail
 
     blog = normalize_blog_piece(dict(content.get("blog_post") or {}))
@@ -211,7 +211,7 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.warning("[shopify_blog] Blog enabled but generation produced no blog content")
         return {"success": False, "attempted": False, "skipped": True, "error": "no_blog_content"}
 
-    on_date = today_ist().isoformat()
+    on_date = asset_date(content)
     prior = _already_published(on_date)
     if prior:
         logger.warning("[shopify_blog] Already published today (%s); not attempted", prior.get("url"))

@@ -94,10 +94,21 @@ def authorize_publish(content: Any, platform: str) -> dict:
         logger.exception("[prepublish] Platform contract failed for %s", platform)
         return {"allowed": False, "asset_key": key, "reason": f"platform_contract_error:{type(exc).__name__}", "checks": {"editorial": True}}
 
+    native_text = " ".join(str(asset.get(field) or "") for field in
+                           ("hook", "title", "body", "text", "caption", "cta", "content",
+                            "description", "hashtags"))
+    try:
+        from content_generator.core.product_truth import product_truth_findings
+        if product_truth_findings(native_text):
+            return {"allowed": False, "asset_key": key, "reason": "product_truth_failed",
+                    "checks": {"editorial": True, "platform_contract": native_audit}}
+    except Exception as exc:
+        logger.exception("[prepublish] Product-truth gate failed for %s", platform)
+        return {"allowed": False, "asset_key": key, "reason": f"product_truth_error:{type(exc).__name__}",
+                "checks": {"editorial": True}}
+
     try:
         from content_generator.core.brand_validator import validate_no_prohibited_claims
-        native_text = " ".join(str(asset.get(field) or "") for field in
-                               ("hook", "title", "body", "text", "caption", "cta", "content"))
         if not validate_no_prohibited_claims(native_text):
             return {"allowed": False, "asset_key": key, "reason": "prohibited_claim_detected",
                     "checks": {"editorial": True, "platform_contract": native_audit}}

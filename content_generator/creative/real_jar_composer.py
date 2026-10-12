@@ -416,6 +416,23 @@ def _wrap(draw, text: str, font, max_w: int) -> list[str]:
     return lines[:4]
 
 
+def _claim_pill(product, headline: str) -> str:
+    """Badge copy that matches the jar. Unknown products stay on the slogan."""
+    key = str(product or "").lower()
+    hl = (headline or "").lower()
+    if "ultra" in key or "ultra blend" in hl:
+        return "ULTRA BLEND  |  70% COFFEE  30% CHICORY"
+    if any(name in key for name in ("bold", "purista", "purica", "prima")):
+        if "label" in hl or "ingredient" in hl:
+            return "LABEL TRUTH  |  100% COFFEE"
+        return "100% COFFEE  |  ZERO CHICORY"
+    if "label" in hl or "ingredient" in hl:
+        return "LABEL TRUTH  |  READ THE JAR"
+    if "instant" in hl:
+        return "INSTANT COFFEE AUDIT"
+    return "INDIA'S CLEANEST INSTANT COFFEE"
+
+
 def compose_post_image(
     headline: str,
     body: str = "",
@@ -617,17 +634,8 @@ def compose_post_image(
 
     draw = ImageDraw.Draw(canvas)
 
-    # 1. Category Badge Pill in upper area
-    pill_text = "100% COFFEE  |  ZERO CHICORY"
-    hl_lower = (headline or "").lower()
-    if "chicory" in hl_lower:
-        pill_text = "THE CHICORY TEST  |  100% PURE"
-    elif "label" in hl_lower or "ingredient" in hl_lower:
-        pill_text = "LABEL TRUTH  |  100% COFFEE"
-    elif "instant" in hl_lower:
-        pill_text = "INSTANT COFFEE AUDIT"
-    elif "taste" in hl_lower or "bitter" in hl_lower:
-        pill_text = "PURE TASTE STANDARD"
+    # 1. Category Badge Pill in upper area — follows the jar, not a default pure-coffee claim.
+    pill_text = _claim_pill(product, headline)
 
     pill_text = _sanitize_text(pill_text)
     p_font = _font("footer", max(17, width // 44))
@@ -1334,8 +1342,8 @@ def compose_carousel_slides(slides: list[dict], day: int) -> list[str]:
 
 def compose_reel_thumbnail(reel: dict, day: int, label: str = "reel_1") -> str | None:
     """9:16 thumbnail from the reel's hook text + a real jar photo."""
-    headline = str(reel.get("hook_text") or reel.get("hook") or "REAL COFFEE. ZERO CHICORY.")
+    headline = str(reel.get("hook_text") or reel.get("hook") or "READ THE LABEL")
     return compose_post_image(
-        headline=headline, body="", day=day, idx=7,
+        headline=headline, body="", day=day, idx=7, product=reel.get("product"),
         width=1080, height=1920, label=f"{label}_thumb_day{day}",
     )

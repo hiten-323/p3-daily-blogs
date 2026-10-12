@@ -225,7 +225,8 @@ jobs:
                       try: urllib.request.urlopen(urllib.request.Request(hook,data=json.dumps({"text":msg}).encode(),headers={"Content-Type":"application/json"}),timeout=15)
                       except Exception: pass
           if slot=="generate":
-              ist_today = datetime.datetime.now(ZoneInfo("Asia/Kolkata")).date()
+              from content_generator.core.ist_dates import content_date_for_slot
+              ist_today = content_date_for_slot(slot)
               expected = Path(f"output/content_{ist_today.isoformat()}.json")
               if not expected.exists():
                   alert(f"GENERATE completed without today's persisted content file: {expected}")
@@ -318,7 +319,7 @@ jobs:
           print(f"pruned {removed} creative files older than {cutoff}")
           PRUNE
           git add -f output/creative/ 2>/dev/null || true
-          ist_date=$(TZ=Asia/Kolkata date +%Y-%m-%d)
+          ist_date=$(python -c 'import os; from content_generator.core.ist_dates import content_date_for_slot; print(content_date_for_slot(os.environ.get("FORCE_SLOT") or "generate").isoformat())')
           git add -f "output/content_${ist_date}.json" 2>/dev/null || true
           git add -f "output/blog_${ist_date}.json" "output/blog_${ist_date}.md" "output/blog_${ist_date}.html" "output/blog_${ist_date}.llms.txt" 2>/dev/null || true
           git add -f output/reports/ 2>/dev/null || true

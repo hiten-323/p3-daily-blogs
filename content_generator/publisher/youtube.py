@@ -98,6 +98,12 @@ def post_content(content: dict, day: int = 0) -> dict:
     description = _extract_description(content)
     tags        = _build_tags(content)
 
+    from content_generator.core.product_truth import product_truth_findings
+    if product_truth_findings(f"{title}\n{description}"):
+        logger.error("[youtube] Refusing a Short whose title or description contradicts the jar")
+        return {"success": False, "attempted": False, "skipped": True,
+                "video_id": "", "url": "", "error": "product_truth_failed", "held": True}
+
     result = _upload_video(access_token, video_path, title, description, tags)
 
     if result["success"]:
@@ -140,7 +146,7 @@ def _find_video(content: dict) -> str | None:
     """Look for a rendered .mp4 Short in output/creative/."""
     import glob as _glob
     creative_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
-    today        = _today()
+    today = _today(content)
 
     patterns = [
         os.path.join(creative_dir, f"short_video_day*_{today}.mp4"),
@@ -343,8 +349,10 @@ def _build_tags(content: dict) -> list[str]:
     return base
 
 
-def _today() -> str:
-    import datetime
+def _today(content: dict | None = None) -> str:
+    if isinstance(content, dict) and content.get("date"):
+        from content_generator.core.ist_dates import asset_date
+        return asset_date(content)
     return today_ist().isoformat()
 
 

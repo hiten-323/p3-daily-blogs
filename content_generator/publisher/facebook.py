@@ -188,7 +188,8 @@ def _find_image(content: dict) -> str | None:
     import glob as _glob
 
     creative_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
-    today        = _today()
+    from content_generator.core.ist_dates import asset_date
+    today = asset_date(content)
 
     patterns = [
         os.path.join(creative_dir, f"facebook_post_*{today}.jpg"),

@@ -41,3 +41,46 @@ def test_unknown_platform_fails_closed():
     result = authorize_publish({}, "unknown")
     assert result["allowed"] is False
     assert result["reason"] == "unknown_platform"
+
+
+def _passing_native_gates(monkeypatch):
+    from content_generator.core import editorial_engine
+    monkeypatch.setattr(editorial_engine, "approved_assets", lambda content: {})
+    monkeypatch.setattr(editorial_engine, "get_current_pass_score", lambda: 8.0)
+    monkeypatch.setattr(
+        "content_generator.core.growth_contract.audit_asset",
+        lambda platform, asset, objective: {"errors": []},
+    )
+    monkeypatch.setattr(
+        "content_generator.core.viral_readiness.evaluate_viral_readiness",
+        lambda asset, platform="", objective="": {"passes": True, "score": 90},
+    )
+    monkeypatch.setattr(
+        "content_generator.core.content_contract.shareability",
+        lambda asset: {"passes": True, "score": 80},
+    )
+
+
+def test_ultra_blend_zero_chicory_fails_product_truth(monkeypatch):
+    _passing_native_gates(monkeypatch)
+    piece = {
+        "hook": "Why this jar is different",
+        "body": "Ultra Blend is zero chicory and 100% coffee.",
+        "editorial_score": {"overall": 9.0},
+    }
+    result = authorize_publish({"facebook_post": piece}, "facebook")
+    assert result["allowed"] is False
+    assert result["reason"] == "product_truth_failed"
+
+
+def test_bold_zero_chicory_is_not_a_product_truth_failure(monkeypatch):
+    _passing_native_gates(monkeypatch)
+    piece = {
+        "hook": "Why the label matters",
+        "body": "Bold is 100% coffee with zero chicory.",
+        "cta": "Send this to someone who reads the jar.",
+        "editorial_score": {"overall": 9.0},
+    }
+    result = authorize_publish({"facebook_post": piece}, "facebook")
+    assert result["reason"] != "product_truth_failed"
+    assert result["allowed"] is True

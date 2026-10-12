@@ -273,13 +273,54 @@ def records_for_today() -> list[dict]:
 
 def due_retry_slots() -> list[str]:
     """Slots with due, retryable failures; uncertain outcomes are deliberately excluded."""
+    return sorted({item["slot"] for item in due_retry_groups() if item["content_date"] == _today_iso()})
+
+
+def _today_iso() -> str:
+    from content_generator.core.ist_dates import today_ist
+    return today_ist().isoformat()
+
+
+def _retry_window_dates() -> set[str]:
+    """Today and yesterday only. Older failures are not retried automatically."""
+    from content_generator.core.ist_dates import today_ist
+    today = today_ist()
+    return {today.isoformat(), (today - dt.timedelta(days=1)).isoformat()}
+
+
+def due_retry_groups() -> list[dict]:
+    """Due retries for today and yesterday, keyed by content day and slot.
+
+    A 22:00 IST evening that starts after midnight records yesterday's content
+    date. Limiting recovery to today made that failure invisible.
+    """
     now = _now()
+    window = _retry_window_dates()
     due = []
-    for record in records_for_today():
-        if not record.get("slot"):
+    seen = set()
+    with _LOCK:
+        data = _load()
+        records = [
+            dict(record, ledger_key=key)
+            for key, record in data["records"].items()
+            if str(record.get("content_date", ""))[:10] in window
+        ]
+    for record in records:
+        slot = str(record.get("slot") or "")
+        content_date = str(record.get("content_date") or "")[:10]
+        if not slot or not content_date:
             continue
-        if record.get("status") == "FAILED" and int(record.get("attempt_count", 0)) < _MAX_ATTEMPTS and _due(record, now):
-            due.append(str(record["slot"]))
-        elif record.get("status") == "PUBLISHED_UNVERIFIED" and _due(record, now):
-            due.append(str(record["slot"]))
-    return sorted(set(due))
+        failed = (
+            record.get("status") == "FAILED"
+            and int(record.get("attempt_count", 0)) < _MAX_ATTEMPTS
+            and _due(record, now)
+        )
+        unverified = record.get("status") == "PUBLISHED_UNVERIFIED" and _due(record, now)
+        if not (failed or unverified):
+            continue
+        key = (content_date, slot)
+        if key in seen:
+            continue
+        seen.add(key)
+        due.append({"content_date": content_date, "slot": slot})
+    return sorted(due, key=lambda item: (item["content_date"], item["slot"]))

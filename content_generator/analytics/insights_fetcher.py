@@ -106,13 +106,30 @@ def track_published_post(
 _MAX_CONSECUTIVE_FAILURES = 8
 _consecutive_failures = 0
 _circuit_open = False
+_last_failure_detail = ""
+
+# These are account-wide. Burning a post's measurement window on them throws
+# away a post that never had a chance. A missing media object still counts.
+_SYSTEMIC_MARKERS = (
+    "nonexisting field (insights)",
+    "valid insights metric",
+    "instagram_manage_insights",
+    "error validating access token",
+    "session has expired",
+)
+
+
+def insight_failure_is_systemic(detail: str) -> bool:
+    text = str(detail or "").lower()
+    return any(marker in text for marker in _SYSTEMIC_MARKERS)
 
 
 def _reset_circuit() -> None:
     """Called at the start of each run so one bad day never poisons the next."""
-    global _consecutive_failures, _circuit_open
+    global _consecutive_failures, _circuit_open, _last_failure_detail
     _consecutive_failures = 0
     _circuit_open = False
+    _last_failure_detail = ""
 
 
 def _error_detail(exc: Exception, token: str | None) -> str:
@@ -134,7 +151,8 @@ def _error_detail(exc: Exception, token: str | None) -> str:
 
 
 def _note_failure(path: str, detail: str) -> None:
-    global _consecutive_failures, _circuit_open
+    global _consecutive_failures, _circuit_open, _last_failure_detail
+    _last_failure_detail = detail
     _consecutive_failures += 1
     logger.warning("[insights] Graph API call failed (%s): %s", path, detail)
     if _consecutive_failures >= _MAX_CONSECUTIVE_FAILURES and not _circuit_open:
@@ -147,7 +165,7 @@ def _note_failure(path: str, detail: str) -> None:
 
 
 def _graph_get(path: str, params: dict, bypass_circuit: bool = False) -> dict | None:
-    global _consecutive_failures
+    global _consecutive_failures, _last_failure_detail
     token = os.getenv("INSTAGRAM_ACCESS_TOKEN")
     if not token or (_circuit_open and not bypass_circuit):
         return None
@@ -163,6 +181,7 @@ def _graph_get(path: str, params: dict, bypass_circuit: bool = False) -> dict | 
         resp = urllib.request.urlopen(req, timeout=_TIMEOUT)
         payload = json.loads(resp.read().decode("utf-8"))
         _consecutive_failures = 0
+        _last_failure_detail = ""
         return payload
     except Exception as e:
         _note_failure(path, _error_detail(e, token))
@@ -402,17 +421,31 @@ def fetch_pending_insights() -> dict:
         window, hours = due
         metrics = _fetch_media_insights(str(post.get("media_id") or ""))
         if metrics is None:
+            if insight_failure_is_systemic(_last_failure_detail):
+                pending += 1
+                failed += 1
+                logger.warning(
+                    "[insights] systemic Graph failure; leaving %s window pending",
+                    window,
+                )
+                if _circuit_open:
+                    break
+                continue
             attempts = post.setdefault("fetch_attempts_by_window", {})
             attempts[window] = int(attempts.get(window, 0)) + 1
             failed += 1
             if attempts[window] >= MAX_FETCH_ATTEMPTS:
-                post.setdefault("failed_windows", []).append(window)
+                failed_windows = post.setdefault("failed_windows", [])
+                if window not in failed_windows:
+                    failed_windows.append(window)
                 logger.error(
                     "[insights] %s window abandoned after %d failed attempts; "
                     "future windows remain eligible", window, attempts[window]
                 )
             else:
                 pending += 1
+            if _circuit_open:
+                break
             continue
 
         snapshot = {
