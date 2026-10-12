@@ -916,11 +916,11 @@
       "verified_at": "2026-10-12T07:04:01+00:00"
     },
     "2026-10-12|generate|threads|pb_53f08b5ba9": {
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-10-12",
       "content_id": "pb_53f08b5ba9",
       "day_number": 284,
-      "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+      "error": "",
       "history": [
         {
           "at": "2026-10-12T07:04:04+00:00",
@@ -936,22 +936,39 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-12T11:47:23+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-12T11:47:30+00:00",
+          "attempt": 2,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18120868603939417",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.threads.com/@hiten_jain323/post/DeZKSHjmyo3",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-10-12T07:04:04+00:00",
+      "last_attempt_at": "2026-10-12T11:47:23+00:00",
       "last_result": {
-        "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
-        "success": false
+        "error": "",
+        "success": true
       },
+      "last_verification_at": "2026-10-12T11:47:30+00:00",
       "next_retry_at": null,
       "platform": "threads",
-      "remote_id": "",
+      "remote_id": "18120868603939417",
       "slot": "generate",
-      "status": "SKIPPED",
-      "updated_at": "2026-10-12T07:04:04+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-12T11:47:30+00:00",
+      "url": "https://www.threads.com/@hiten_jain323/post/DeZKSHjmyo3",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-12T11:47:30+00:00"
     },
     "2026-10-12|generate|youtube|pb_53f08b5ba9": {
       "attempt_count": 1,
@@ -981,13 +998,13 @@
         "error": "",
         "success": true
       },
-      "last_verification_at": "2026-10-12T07:04:04+00:00",
-      "next_retry_at": "2026-10-12T08:04:04+00:00",
+      "last_verification_at": "2026-10-12T11:47:22+00:00",
+      "next_retry_at": "2026-10-12T12:47:22+00:00",
       "platform": "youtube",
       "remote_id": "GCqK1k0GBo0",
       "slot": "generate",
       "status": "PUBLISHED_UNVERIFIED",
-      "updated_at": "2026-10-12T07:04:04+00:00",
+      "updated_at": "2026-10-12T11:47:22+00:00",
       "url": "https://www.youtube.com/shorts/GCqK1k0GBo0",
       "verification_detail": "HTTP 403",
       "verification_method": "youtube_data_api",

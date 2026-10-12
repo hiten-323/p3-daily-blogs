@@ -6964,5 +6964,501 @@
       }
     ],
     "emergency": false
+  },
+  {
+    "ts": "2026-10-12T11:47:33",
+    "date": "2026-10-12",
+    "day_number": 284,
+    "generation_ms": 660569,
+    "validation_ms": 0,
+    "publish_ms": 7431,
+    "assets_generated": 9,
+    "assets_valid": 8,
+    "throughput": 9,
+    "avg_editorial_score": 8.02,
+    "min_editorial_score": 5.7,
+    "max_editorial_score": 8.7,
+    "avg_confidence": 0.5,
+    "schema_failure_rate": 0.0,
+    "brand_failure_rate": 0.0,
+    "editorial_reject_rate": 0.222,
+    "retry_count": 0,
+    "providers_used": [
+      {
+        "label": "carousel",
+        "provider": "gemini",
+        "prompt_tokens": 14025,
+        "completion_tokens": 1222
+      },
+      {
+        "label": "reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 14639,
+        "completion_tokens": 1564
+      },
+      {
+        "label": "instagram_post",
+        "provider": "gemini",
+        "prompt_tokens": 13402,
+        "completion_tokens": 701
+      },
+      {
+        "label": "linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 13792,
+        "completion_tokens": 493
+      },
+      {
+        "label": "reel_2",
+        "provider": "gemini",
+        "prompt_tokens": 14645,
+        "completion_tokens": 1796
+      },
+      {
+        "label": "growth_reel",
+        "provider": "gemini",
+        "prompt_tokens": 11073,
+        "completion_tokens": 2339
+      },
+      {
+        "label": "stories",
+        "provider": "gemini",
+        "prompt_tokens": 12085,
+        "completion_tokens": 432
+      },
+      {
+        "label": "threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 13125,
+        "completion_tokens": 83
+      },
+      {
+        "label": "yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 12464,
+        "completion_tokens": 697
+      },
+      {
+        "label": "facebook_post",
+        "provider": "gemini",
+        "prompt_tokens": 13136,
+        "completion_tokens": 375
+      },
+      {
+        "label": "blog_outline",
+        "provider": "gemini",
+        "prompt_tokens": 8495,
+        "completion_tokens": 246
+      },
+      {
+        "label": "blog_section_s0",
+        "provider": "gemini",
+        "prompt_tokens": 10131,
+        "completion_tokens": 210
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "gemini",
+        "prompt_tokens": 10130,
+        "completion_tokens": 208
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "gemini",
+        "prompt_tokens": 10179,
+        "completion_tokens": 214
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "gemini",
+        "prompt_tokens": 10129,
+        "completion_tokens": 178
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "gemini",
+        "prompt_tokens": 10178,
+        "completion_tokens": 198
+      },
+      {
+        "label": "blog_section_s3",
+        "provider": "gemini",
+        "prompt_tokens": 10126,
+        "completion_tokens": 265
+      },
+      {
+        "label": "blog_section_s4",
+        "provider": "gemini",
+        "prompt_tokens": 10128,
+        "completion_tokens": 212
+      },
+      {
+        "label": "blog_section_s5",
+        "provider": "gemini",
+        "prompt_tokens": 10128,
+        "completion_tokens": 223
+      },
+      {
+        "label": "video_prompts",
+        "provider": "gemini",
+        "prompt_tokens": 8111,
+        "completion_tokens": 3496
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7449,
+        "completion_tokens": 364
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 10695,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7440,
+        "completion_tokens": 284
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 10647,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7440,
+        "completion_tokens": 318
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 10693,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7445,
+        "completion_tokens": 314
+      },
+      {
+        "label": "editorial_reel_2",
+        "provider": "gemini",
+        "prompt_tokens": 7390,
+        "completion_tokens": 309
+      },
+      {
+        "label": "editorial_carousel",
+        "provider": "gemini",
+        "prompt_tokens": 7431,
+        "completion_tokens": 277
+      },
+      {
+        "label": "editorial_instagram_post",
+        "provider": "gemini",
+        "prompt_tokens": 7381,
+        "completion_tokens": 308
+      },
+      {
+        "label": "regen_instagram_post",
+        "provider": "gemini",
+        "prompt_tokens": 10711,
+        "completion_tokens": 1430
+      },
+      {
+        "label": "editorial_instagram_post",
+        "provider": "gemini",
+        "prompt_tokens": 7386,
+        "completion_tokens": 289
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 6939,
+        "completion_tokens": 228
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "openrouter",
+        "prompt_tokens": 10258,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 7187,
+        "completion_tokens": 221
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 9941,
+        "completion_tokens": 627
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 7207,
+        "completion_tokens": 224
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 9965,
+        "completion_tokens": 603
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 7186,
+        "completion_tokens": 270
+      },
+      {
+        "label": "regen_facebook_post",
+        "provider": "gemini",
+        "prompt_tokens": 9821,
+        "completion_tokens": 897
+      },
+      {
+        "label": "editorial_facebook_post",
+        "provider": "gemini",
+        "prompt_tokens": 7264,
+        "completion_tokens": 240
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 6589,
+        "completion_tokens": 251
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 9650,
+        "completion_tokens": 338
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 7011,
+        "completion_tokens": 247
+      },
+      {
+        "label": "blog_outline",
+        "provider": "gemini",
+        "prompt_tokens": 5868,
+        "completion_tokens": 343
+      },
+      {
+        "label": "blog_section_s0",
+        "provider": "gemini",
+        "prompt_tokens": 7504,
+        "completion_tokens": 202
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "gemini",
+        "prompt_tokens": 7503,
+        "completion_tokens": 223
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "gemini",
+        "prompt_tokens": 7502,
+        "completion_tokens": 247
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "gemini",
+        "prompt_tokens": 7551,
+        "completion_tokens": 319
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "gemini",
+        "prompt_tokens": 7551,
+        "completion_tokens": 318
+      },
+      {
+        "label": "blog_section_s3",
+        "provider": "gemini",
+        "prompt_tokens": 7499,
+        "completion_tokens": 278
+      },
+      {
+        "label": "blog_section_s4",
+        "provider": "gemini",
+        "prompt_tokens": 7501,
+        "completion_tokens": 261
+      },
+      {
+        "label": "blog_section_s4",
+        "provider": "gemini",
+        "prompt_tokens": 7550,
+        "completion_tokens": 274
+      },
+      {
+        "label": "blog_section_s5",
+        "provider": "gemini",
+        "prompt_tokens": 7501,
+        "completion_tokens": 233
+      },
+      {
+        "label": "editorial_blog_post",
+        "provider": "gemini",
+        "prompt_tokens": 7383,
+        "completion_tokens": 309
+      },
+      {
+        "label": "blog_outline",
+        "provider": "gemini",
+        "prompt_tokens": 5949,
+        "completion_tokens": 233
+      },
+      {
+        "label": "blog_section_s0",
+        "provider": "gemini",
+        "prompt_tokens": 7585,
+        "completion_tokens": 260
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "gemini",
+        "prompt_tokens": 7584,
+        "completion_tokens": 272
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "gemini",
+        "prompt_tokens": 7583,
+        "completion_tokens": 247
+      },
+      {
+        "label": "blog_section_s3",
+        "provider": "gemini",
+        "prompt_tokens": 7580,
+        "completion_tokens": 252
+      },
+      {
+        "label": "blog_section_s4",
+        "provider": "gemini",
+        "prompt_tokens": 7582,
+        "completion_tokens": 234
+      },
+      {
+        "label": "blog_section_s5",
+        "provider": "gemini",
+        "prompt_tokens": 7582,
+        "completion_tokens": 264
+      },
+      {
+        "label": "editorial_blog_post",
+        "provider": "gemini",
+        "prompt_tokens": 7389,
+        "completion_tokens": 292
+      },
+      {
+        "label": "blog_outline",
+        "provider": "gemini",
+        "prompt_tokens": 5952,
+        "completion_tokens": 244
+      },
+      {
+        "label": "blog_section_s0",
+        "provider": "gemini",
+        "prompt_tokens": 7588,
+        "completion_tokens": 210
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "gemini",
+        "prompt_tokens": 7587,
+        "completion_tokens": 238
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "gemini",
+        "prompt_tokens": 7636,
+        "completion_tokens": 223
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "gemini",
+        "prompt_tokens": 7586,
+        "completion_tokens": 272
+      },
+      {
+        "label": "blog_section_s3",
+        "provider": "gemini",
+        "prompt_tokens": 7583,
+        "completion_tokens": 261
+      },
+      {
+        "label": "blog_section_s4",
+        "provider": "gemini",
+        "prompt_tokens": 7585,
+        "completion_tokens": 241
+      },
+      {
+        "label": "blog_section_s5",
+        "provider": "gemini",
+        "prompt_tokens": 7585,
+        "completion_tokens": 234
+      },
+      {
+        "label": "editorial_blog_post",
+        "provider": "gemini",
+        "prompt_tokens": 7323,
+        "completion_tokens": 286
+      },
+      {
+        "label": "editorial_growth_reel",
+        "provider": "gemini",
+        "prompt_tokens": 7400,
+        "completion_tokens": 300
+      },
+      {
+        "label": "regen_growth_reel",
+        "provider": "gemini",
+        "prompt_tokens": 10636,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_growth_reel",
+        "provider": "gemini",
+        "prompt_tokens": 7392,
+        "completion_tokens": 272
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 10486,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7516,
+        "completion_tokens": 339
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 10812,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7489,
+        "completion_tokens": 280
+      }
+    ],
+    "emergency": false
   }
 ]
