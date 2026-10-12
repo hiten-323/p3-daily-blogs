@@ -297,6 +297,14 @@ def generate_daily_content(
     except Exception as e:
         logger.debug("[pipeline] growth director unavailable: %s", e)
 
+    try:
+        from content_generator.creative.product_reel_templates import inspiration_prompt_block
+        style = inspiration_prompt_block(product)
+        if style:
+            ctx += "\n\n" + style
+    except Exception as e:
+        logger.debug("[pipeline] reel style reference unavailable: %s", e)
+
     logger.info(
         "[pipeline] Day #%d (%s) | product=%s | Reel1=%s | Reel2=%s | Carousel=%s | LinkedIn=%s",
         day_number, todays_date, product, arch_1[0], arch_2[0], mech[0], angle[0],
@@ -377,13 +385,21 @@ def generate_daily_content(
         logger.debug("[pipeline] semantic diversity check error: %s", e)
 
     # ── Phase 2: video prompts (depends on phase 1) ───────────────────────────
+    vp_prompt = video_prompts.build(
+        phase1_results["reel_1"],
+        phase1_results["reel_2"],
+        phase1_results["yt_short"],
+        product,
+    )
+    try:
+        from content_generator.creative.product_reel_templates import inspiration_prompt_block
+        style = inspiration_prompt_block(product)
+        if style:
+            vp_prompt += "\n\n" + style
+    except Exception as e:
+        logger.debug("[pipeline] reel style reference unavailable: %s", e)
     vp = llm_call(
-        video_prompts.build(
-            phase1_results["reel_1"],
-            phase1_results["reel_2"],
-            phase1_results["yt_short"],
-            product,
-        ),
+        vp_prompt,
         label="video_prompts",
         max_tokens=3500,
     )
@@ -465,6 +481,7 @@ def generate_daily_content(
         "facebook_post":  phase1_results.get("facebook_post", {}),
         **vp,
         **_image_prompts(),
+        "featured_product": product,
         "performance_targets": {
             "reel_views_3s":           15000,
             "reel_views_30s":          5000,
@@ -480,6 +497,12 @@ def generate_daily_content(
             "new_followers":           300,
         },
     }
+
+    try:
+        from content_generator.creative.product_reel_templates import attach_product_reels
+        attach_product_reels(output, featured_product=product)
+    except Exception as e:
+        logger.debug("[pipeline] reel inspiration attach skipped: %s", e)
 
     # Platform-native follower-growth diagnostics are persisted with every
     # generation so reports can identify missing native assets and risky copy.

@@ -359,7 +359,13 @@ def build_ugc_prompt(scene_id: str = None, product: str = None, day: int = 0) ->
     }
 
 
-def build_reel_hook_prompt(hook_id: str = None, product: str = None, day: int = 0) -> dict:
+def build_reel_hook_prompt(
+    hook_id: str = None,
+    product: str = None,
+    day: int = 0,
+    text: str = "",
+    style_for: str = "",
+) -> dict:
     """
     Build a cinematic scroll-stopping reel hook package using the real jar.
 
@@ -408,15 +414,28 @@ def build_reel_hook_prompt(hook_id: str = None, product: str = None, day: int = 
         "template_id":         template["id"],
     }
     try:
-        from content_generator.creative.product_reel_templates import select_product_reel
-        selected = select_product_reel(product=product, text=product or "")
+        from content_generator.creative.product_reel_templates import (
+            inspiration_record, select_product_reel, visual_style_line,
+        )
+        selected = select_product_reel(product=product, text=text or product or "")
     except Exception:
         selected = None
+        inspiration_record = None
+        visual_style_line = None
     if selected:
         result["reference_reel_template_id"] = selected["template_id"]
         result["reference_reel_path"] = selected["path"]
         result["reference_reel_reusable"] = True
         result["reference_reel_audio_embedded"] = False
+    elif inspiration_record is not None:
+        # style_for is the day's SKU. It must not decide exact-template selection.
+        label = str(product or style_for or "")
+        record = inspiration_record(label)
+        if record:
+            line = visual_style_line(label)
+            result["image_prompt"] = image_prompt + line
+            result["motion_prompt"] = motion_prompt + line
+            result["reel_inspiration"] = record
     return result
 
 

@@ -75,6 +75,15 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
             materialize_template, resolve_reusable_reel,
         )
         source = resolve_reusable_reel(reel if isinstance(reel, dict) else {})
+        inspiration = {}
+        if isinstance(reel, dict) and isinstance(reel.get("reel_inspiration"), dict):
+            inspiration = reel["reel_inspiration"]
+        if source and inspiration.get("publish_source_video") is False:
+            logger.info(
+                "[reel_video] style reference %s is not the posted asset",
+                inspiration.get("source_filename") or "gourmet_duo_mini.mp4",
+            )
+            source = None
         if source:
             hook = ""
             if isinstance(reel, dict):
@@ -85,6 +94,11 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
                 os.path.basename(source),
             )
             return materialize_template(source, day, label, on_date=on_date, hook_text=hook)
+        if inspiration.get("mode") == "style_cues":
+            cue_ids = ", ".join(
+                str(cue.get("id") or "") for cue in (inspiration.get("cues") or []) if isinstance(cue, dict)
+            )
+            logger.info("[reel_video] style cues only (%s); reference file stays in the bank", cue_ids)
     except Exception as exc:
         logger.debug("[reel_video] product reel lookup skipped: %s", exc)
     try:
