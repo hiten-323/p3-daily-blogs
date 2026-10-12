@@ -5,7 +5,8 @@ Owner guardrails for Purity Beans copy:
 - Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed for that jar.
 - Never call Ultra Blend no-chicory, zero-chicory, or 0% chicory.
 - When Ultra Blend or any other chicory blend is featured or named as the solution,
-  do not attack chicory or roasted root (filler, muddy, poison, "never drink roasted root").
+  do not attack chicory or roasted root (filler, muddy, poison, "never drink roasted root",
+  "hidden chicory fillers", "chicory fillers").
   Honest 70/30 disclosure, smooth milk coffee, and lower caffeine are allowed.
 - Gourmet Duo and Gourmet Duo Mini are 100% coffee and zero chicory. Do not apply Ultra Blend's chicory rules to either duo, and do not call either duo only Arabica or only Robusta.
 - Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica.
@@ -64,6 +65,12 @@ _PERCENT = re.compile(
 )
 _ROBUSTA_100 = re.compile(r"\b100\s*(?:%|percent)\s*(?:pure\s+)?robusta\b", re.I)
 _ARABICA_100 = re.compile(r"\b100\s*(?:%|percent)\s*(?:pure\s+)?arabica\b", re.I)
+# Filler / concealment attacks. Honest ratio copy ("30% chicory") does not match:
+# the filler form requires the word filler, and the hidden form requires "hidden chicory".
+_HIDDEN_CHICORY = r"\bhidden[\s-]+chicory(?:[\s-]+roots?)?(?:[\s-]+fillers?)?\b"
+_CHICORY_FILLER = r"\b(?:roasted[\s-]+)?chicory(?:[\s-]+root)?[\s-]+fillers?\b"
+_CHICORY_BULK = r"\bbulk(?:ed|ing)?\s+up\s+with\s+(?:roasted[\s-]+)?chicory(?:[\s-]+roots?)?\b"
+_HONEST_BLEND = "70% coffee and 30% chicory"
 # Attacks on chicory itself. Honest ratio copy ("30% chicory", "smooth milk coffee")
 # does not match. These fail only when a chicory blend is in scope.
 _ANTI_CHICORY = re.compile(
@@ -78,13 +85,18 @@ _ANTI_CHICORY = re.compile(
     r"|chicory\s+is\s+(?:bad|muddy|a\s+filler|filler|poison)"
     r"|muddy\s+taste\b.{0,80}?roasted\s+root"
     r"|\b(?:chicory|roasted\s+root)\b.{0,32}?\b(?:poison|adulterant)\b"
-    r"|\b(?:poison|adulterant)\b.{0,32}?\b(?:chicory|roasted\s+root)\b",
+    r"|\b(?:poison|adulterant)\b.{0,32}?\b(?:chicory|roasted\s+root)\b"
+    rf"|{_HIDDEN_CHICORY}"
+    rf"|{_CHICORY_FILLER}"
+    rf"|{_CHICORY_BULK}",
     re.I,
 )
+_FALSE_PURITY_TOKEN = (
+    r"zero[\s-]+chicory|(?<!\d)0\s*%\s*chicory|\bno[\s-]+chicory\b|"
+    r"\bchicory[-\s]?free\b|100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee"
+)
 _ULTRA_FALSE_PURITY = re.compile(
-    r"ultra[\s-]?blend[^,.!?\n]{0,140}?"
-    r"(?:zero[\s-]+chicory|(?<!\d)0\s*%\s*chicory|\bno[\s-]+chicory\b|"
-    r"\bchicory[-\s]?free\b|100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee)",
+    rf"ultra[\s-]?blend[^,.!?\n]{{0,140}}?(?:{_FALSE_PURITY_TOKEN})",
     re.I,
 )
 HONEST_FOLLOW_CTA = "Follow @puritybeans for Ultra Blend: 70% coffee and 30% chicory."
@@ -111,6 +123,35 @@ _COPY_KEYS = (
     "comment_trigger", "save_trigger", "share_trigger", "hashtags",
 )
 _REPAIR_SUBS = (
+    (re.compile(r"You might be drinking hidden chicory fillers\.?", re.I),
+     f"Ultra Blend is {_HONEST_BLEND}."),
+    (re.compile(
+        r"While legacy brands bulk up commercial jars with hidden chicory fillers to cut costs, smart",
+        re.I,
+    ), f"Ultra Blend is {_HONEST_BLEND}, printed on the jar. Smart"),
+    (re.compile(
+        r"yet most commercial jars rely on heavy processing and hidden chicory roots to stretch profits",
+        re.I,
+    ), f"and Ultra Blend is {_HONEST_BLEND}, printed on the label"),
+    (re.compile(
+        r"many home drinkers unknowingly compromise because commercial jars are bulked up with roasted chicory root, muting the natural aroma and leaving a muddy aftertaste\.?",
+        re.I,
+    ), f"the label states the ratio. Ultra Blend is {_HONEST_BLEND}, a smooth milk coffee."),
+    (re.compile(r"Some brands bulk up with chicory root\.?", re.I),
+     f"Ultra Blend is {_HONEST_BLEND}."),
+    (re.compile(_HIDDEN_CHICORY, re.I),
+     f"a labeled {_HONEST_BLEND} blend"),
+    (re.compile(_CHICORY_FILLER, re.I),
+     f"a labeled {_HONEST_BLEND} blend"),
+    (re.compile(_CHICORY_BULK, re.I),
+     f"state {_HONEST_BLEND}"),
+    # Prior repair inverted denials ("do not call it zero chicory" -> "do not call it 30%").
+    (re.compile(r"never called 30%\s*chicory or no[\s-]+chicory", re.I),
+     _HONEST_BLEND),
+    (re.compile(r"Do not call Ultra Blend 30%\s*chicory", re.I),
+     f"Call Ultra Blend {_HONEST_BLEND}"),
+    (re.compile(r"without any false 30%\s*chicory claims", re.I),
+     f"with an honest {_HONEST_BLEND} disclosure"),
     (re.compile(r"Follow @puritybeans so you never drink roasted root again\.?", re.I),
      HONEST_FOLLOW_CTA),
     (re.compile(r"so you never drink roasted root again", re.I),
@@ -277,6 +318,13 @@ def repair_text(text: str, *, chicory_scope: bool) -> str:
     def _strip_false_purity(match: re.Match) -> str:
         span = match.group(0)
         if _OTHER_THAN_ULTRA.search(span):
+            return span
+        purity = re.search(_FALSE_PURITY_TOKEN, span, flags=re.I)
+        # "Do not call Ultra Blend zero chicory" is a denial, not a false claim.
+        if purity and (
+            _locally_negated(match.string, match.start() + purity.start())
+            or re.search(r"\bfalse\b", span[:purity.start()], re.I)
+        ):
             return span
         span = re.sub(
             r"zero[\s-]+chicory|(?<!\d)0\s*%\s*chicory|\bno[\s-]+chicory\b|"

@@ -3,11 +3,21 @@
 
 Use this after a generate slot has already saved output/content_<date>.json
 and that day's featured jar contains chicory. The script rewrites attack
-lines (roasted root filler, never drink roasted root, chicory-as-poison)
+lines (roasted root filler, never drink roasted root, chicory-as-poison,
+"hidden chicory fillers", "chicory fillers", and the same concealment framing)
 into an honest 70% coffee / 30% chicory disclosure.
 
 It does not publish. It does not run the morning or evening slots.
 Pass --write to update the JSON. The default is a dry run.
+
+Re-run a write for 2026-10-12 from the repo root, without publishing:
+
+    python scripts/repair_chicory_day.py --date 2026-10-12 --dry-run
+    python scripts/repair_chicory_day.py --date 2026-10-12 --write
+
+Or dispatch the "Repair chicory-day copy" workflow with date 2026-10-12 and
+dry_run false. That workflow is workflow_dispatch only: no schedule, no
+morning slot, no evening slot, and no publish step.
 """
 from __future__ import annotations
 
