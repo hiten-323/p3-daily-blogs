@@ -105,9 +105,6 @@ PRODUCT_KEYWORDS: dict[str, list[str]] = {
     "prima":       ["prima", "premium agglomerate"],
 }
 
-
-
-
 def _jar_paths(pairs: tuple[tuple[str, str], ...]) -> list[str]:
     import os
     paths = []
