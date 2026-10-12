@@ -483,6 +483,15 @@ def _apply_growth_director_gates(content: dict, valid: list[str]) -> list[str]:
             logger.warning("[editorial] viral readiness check error for %s (%s) — failing closed", key, e)
             continue
 
+        try:
+            from content_generator.core.product_truth import featured_product_name
+            featured = featured_product_name(content)
+            if featured and not piece.get("featured_product"):
+                piece["featured_product"] = featured
+        except Exception as e:
+            logger.warning("[editorial] featured product unavailable for %s (%s) — failing closed", key, e)
+            continue
+
         # Funnel objective compliance — ensure creative is genuinely value-first when assigned FOLLOW/DISCOVERY
         try:
             from content_generator.core.content_contract import check_objective_compliance
@@ -503,6 +512,21 @@ def _apply_growth_director_gates(content: dict, valid: list[str]) -> list[str]:
                 logger.info("[editorial] Auto-aligned CTA for %s (%s objective)", key, piece.get("funnel_objective"))
         except Exception as e:
             logger.debug("[editorial] objective compliance check for %s: %s", key, e)
+
+        try:
+            from content_generator.core.product_truth import (
+                asset_product_truth_findings, featured_product_name,
+            )
+            hits = asset_product_truth_findings(piece, featured=featured_product_name(content))
+            if hits:
+                logger.warning(
+                    "[editorial] %s REJECTED by product truth: %s",
+                    key, hits[0].get("reason"),
+                )
+                continue
+        except Exception as e:
+            logger.warning("[editorial] product truth error for %s (%s) — failing closed", key, e)
+            continue
 
         kept.append(key)
 

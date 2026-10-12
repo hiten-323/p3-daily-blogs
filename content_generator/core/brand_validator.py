@@ -315,4 +315,15 @@ def validate_asset(label: str, piece: dict,
         except Exception as e:
             logger.warning("[validator] instagram quality gate exception: %s", e)
 
+    try:
+        from content_generator.core.product_truth import asset_product_truth_findings
+        featured = str(piece.get("featured_product") or piece.get("product") or "")
+        hits = asset_product_truth_findings(piece, featured=featured)
+    except Exception as e:
+        logger.warning("[validator] product truth unavailable: %s", e)
+        return False, issues + ["product truth check failed closed"]
+    if hits:
+        is_valid = False
+        issues.extend(f"product truth: {hit['reason']}" for hit in hits)
+
     return is_valid, issues

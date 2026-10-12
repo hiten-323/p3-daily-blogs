@@ -260,11 +260,16 @@ def check_objective_alignment(piece: dict, objective: str | None = None) -> dict
 
     if "FOLLOW" in obj:
         has_follow = bool(re.search(r"\b(follow|subscriber?|subscribing|tap follow)\b", text))
+        from content_generator.core.product_truth import follow_cta_for, piece_copy_text
+        suggested = follow_cta_for(
+            str(piece.get("featured_product") or piece.get("product") or ""),
+            piece_copy_text(piece),
+        )
         return {
             "passes": has_follow,
             "objective": "FOLLOW",
             "reason": "Follow CTA cue present" if has_follow else "Asset objective is FOLLOW but CTA lacks follow/subscribe invitation",
-            "suggested_cta": "Follow @puritybeans so you never drink roasted root again.",
+            "suggested_cta": suggested,
         }
     elif "DISCOVERY" in obj:
         has_share = bool(re.search(r"\b(share|send|tag|forward|pass this)\b", text))

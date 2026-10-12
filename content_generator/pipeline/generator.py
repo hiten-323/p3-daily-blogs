@@ -453,6 +453,7 @@ def generate_daily_content(
         "psychology_frame_version": (research_context or {}).get("psychology_frame_version", 1),
         "target_kpi_at_creation":   _kpi_at_creation(),
         "policy_version_at_creation": _policy_version_at_creation(),
+        "featured_product": product,
         "reels":          [phase1_results["reel_1"], phase1_results["reel_2"]],
         "instagram_post": phase1_results["instagram_post"],
         "carousel":       phase1_results["carousel"],

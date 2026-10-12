@@ -203,9 +203,10 @@ def verify_piece(piece: dict) -> list[dict]:
     if not isinstance(piece, dict):
         return []
     parts = []
-    for k in ("hook", "hook_text", "headline", "title", "caption", "body",
+    for k in ("hook", "hook_text", "hook_spoken", "headline", "title", "caption", "body",
               "body_html", "intro", "introduction", "conclusion",
-              "meta_description", "cta", "on_screen", "spoken"):
+              "meta_description", "cta", "primary_cta", "on_screen", "spoken",
+              "text", "content", "description", "product"):
         v = piece.get(k)
         if isinstance(v, str):
             parts.append(v)
@@ -221,6 +222,9 @@ def verify_piece(piece: dict) -> list[dict]:
     findings = []
     for part in parts:
         findings.extend(verify_claims(part))
+    from content_generator.core.product_truth import asset_product_truth_findings
+    featured = str(piece.get("featured_product") or piece.get("product") or "")
+    findings.extend(asset_product_truth_findings(piece, featured=featured))
     # De-duplicate — the same claim often appears in caption and on-screen copy.
     seen, unique = set(), []
     for f in findings:

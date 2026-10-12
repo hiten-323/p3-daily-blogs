@@ -73,6 +73,22 @@ def test_ultra_blend_zero_chicory_fails_product_truth(monkeypatch):
     assert result["reason"] == "product_truth_failed"
 
 
+def test_featured_ultra_blend_roasted_root_cta_fails_product_truth(monkeypatch):
+    _passing_native_gates(monkeypatch)
+    piece = {
+        "hook": "Cafe prices, home jar",
+        "body": "A smooth milk coffee for the everyday cup.",
+        "primary_cta": "Follow @puritybeans so you never drink roasted root again",
+        "editorial_score": {"overall": 9.0},
+    }
+    result = authorize_publish(
+        {"facebook_post": piece, "featured_product": "Ultra Blend", "day_number": 284},
+        "facebook",
+    )
+    assert result["allowed"] is False
+    assert result["reason"] == "product_truth_failed"
+
+
 def test_bold_zero_chicory_is_not_a_product_truth_failure(monkeypatch):
     _passing_native_gates(monkeypatch)
     piece = {

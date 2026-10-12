@@ -243,6 +243,22 @@ def get_strategy_brief(day: int) -> str:
     except Exception as _e:
         logger.debug("[growth_director] optional step failed: %s", _e)
 
+    from content_generator.rotation import PRODUCTS, pick
+    from content_generator.core.product_truth import name_contains_chicory
+    featured = str(pick(PRODUCTS, day))
+    if name_contains_chicory(featured):
+        chicory_line = (
+            f"FEATURED JAR: {featured} contains chicory. Ultra Blend is 70% coffee and 30% chicory. "
+            "Do not attack chicory or roasted root. Do not write zero chicory, no chicory, or "
+            "'never drink roasted root' while this jar is featured. Honest 70/30, smooth milk coffee, "
+            "and lower caffeine are correct."
+        )
+    else:
+        chicory_line = (
+            "The zero chicory, 100% coffee fact may appear as a light touch on the pure jars "
+            "(Bold, Purista, Purica, Prima, Gourmet Duo, Gourmet Duo Mini). Do not apply it to Ultra Blend."
+        )
+
     return f"""{policy_line}GROWTH DIRECTOR — TODAY'S STRATEGY (this overrides generic instincts):
 
 CURRENT STAGE: {stage['name']} — {stage['followers']} followers
@@ -254,7 +270,7 @@ STAGE FOCUS: {stage['focus']}
 TODAY'S MESSAGE ANGLE: [{angle[0]}] {angle[1]}
 Vary the ANGLE, never the avatar or topic lane above. Do NOT make every post a
 chicory exposé — only EXPOSE/CONTRAST days lead with betrayal; today leads as
-above. The "zero chicory, 100% coffee" fact may appear as a light touch.
+above. {chicory_line}
 
 STRANGER TEST (every hook + caption): would this work for someone who has NEVER
 seen Purity Beans and couldn't care less? If it only lands for existing fans, rewrite.
@@ -298,7 +314,7 @@ time, cut it — shorter with full retention beats longer with drop-off.
 CROSS-PLATFORM VIRALITY & MAX FOLLOWER ENGINE:
 Views alone are vanity. A viral post that gains 0 followers is a failed post.
 Every single platform must pair high viral reach with an explicit FOLLOWER CONVERSION BRIDGE:
-1. REELS & SHORTS: Ranked by SHARES (Send to DM) and Completion/Loop Rate. Give a selfish reason to follow: "Follow @puritybeans so you never drink roasted root again."
+1. REELS & SHORTS: Ranked by SHARES (Send to DM) and Completion/Loop Rate. Give a selfish reason to follow. On a pure-jar day: "Follow @puritybeans so you never drink roasted root again." On an Ultra Blend day: "Follow @puritybeans for Ultra Blend: 70% coffee and 30% chicory."
 2. CAROUSELS: Ranked by SAVES. Slide 1 must have an impossible-to-ignore curiosity gap; Slides 2-6 must be screenshot-worthy utility; Final Slide MUST command: "Save this guide + Follow @puritybeans for daily pure coffee truths."
 3. LINKEDIN: Ranked by COMMENTS & DWELL TIME. Hook must provoke in the first 2 lines (before "see more"); end with a debate-igniting question; CTA must invite following Hiten Jain for unfiltered beverage science.
 4. THREADS: Ranked by REPLIES & QUOTES. Short, punchy truth-bombs (<480 chars); expose industry tricks; prompt quick debate; end with "Follow for daily coffee truths Big Coffee hides."

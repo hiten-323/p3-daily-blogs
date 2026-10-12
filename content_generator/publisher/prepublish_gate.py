@@ -94,12 +94,14 @@ def authorize_publish(content: Any, platform: str) -> dict:
         logger.exception("[prepublish] Platform contract failed for %s", platform)
         return {"allowed": False, "asset_key": key, "reason": f"platform_contract_error:{type(exc).__name__}", "checks": {"editorial": True}}
 
-    native_text = " ".join(str(asset.get(field) or "") for field in
-                           ("hook", "title", "body", "text", "caption", "cta", "content",
-                            "description", "hashtags"))
+    native_text = ""
     try:
-        from content_generator.core.product_truth import product_truth_findings
-        if product_truth_findings(native_text):
+        from content_generator.core.product_truth import (
+            asset_product_truth_findings, featured_product_name, piece_copy_text,
+        )
+        native_text = piece_copy_text(asset)
+        featured = featured_product_name(content) or str(asset.get("featured_product") or asset.get("product") or "")
+        if asset_product_truth_findings(asset, featured=featured):
             return {"allowed": False, "asset_key": key, "reason": "product_truth_failed",
                     "checks": {"editorial": True, "platform_contract": native_audit}}
     except Exception as exc:
