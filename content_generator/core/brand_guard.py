@@ -44,6 +44,67 @@ PRODUCT_KEYWORDS: dict[str, list[str]] = {
     "prima":       ["prima", "premium agglomerate"],
 }
 
+"""Variant-aware messaging guardrails for Purity Beans product days.
+
+Ultra Blend is 70% coffee and 30% chicory. It may be described accurately and
+positively; anti-chicory / anti-root rhetoric is not allowed when that SKU is
+featured. Other 100% coffee SKUs may use clear, non-misleading zero-chicory copy.
+"""
+from __future__ import annotations
+
+import re
+
+_ULTRA_ALIASES = re.compile(r"\bultra[\s-]?blend\b", re.I)
+_ULTRA_ONLY_CONTEXT = re.compile(
+    r"\b(?:ultra[\s-]?blend|70\s*%\s*coffee|30\s*%\s*chicory)\b", re.I
+)
+# Degrading or rejection-based phrasing is misleading when the featured SKU itself
+# contains chicory. These are messaging guardrails, not product-composition checks.
+_ANTI_CHICORY_FRAMING = re.compile(
+    r"\b(?:roasted\s+root(?:\s+filler)?|root\s+filler|"
+    r"never\s+drink\s+(?:roasted\s+root|chicory)|"
+    r"refuse\s+to\s+drink\s+chicory|"
+    r"chicory\s+disguised\s+as\s+coffee|"
+    r"wrong\s+coffee\s+because\s+of\s+chicory|"
+    r"chicory\s+fillers?)\b", re.I
+)
+
+
+def ultra_blend_messaging_findings(text: str, featured_sku: str | None = None) -> list[str]:
+    """Return variant-conflicting anti-chicory messaging for an Ultra Blend feature."""
+    text = str(text or "")
+    sku = str(featured_sku or "").strip().lower().replace("-", "_").replace(" ", "_")
+    is_ultra_feature = sku in {"ultra_blend", "ultrablend"} or bool(_ULTRA_ALIASES.search(text))
+    if not is_ultra_feature:
+        return []
+    matches = [m.group(0) for m in _ANTI_CHICORY_FRAMING.finditer(text)]
+    return [f"anti-chicory framing conflicts with featured Ultra Blend (70% coffee / 30% chicory): {m}"
+            for m in matches]
+
+
+def content_variant_findings(content: dict, featured_sku: str | None = None) -> list[dict]:
+    """Audit generated assets on an Ultra Blend day, including captions and beat plans."""
+    if not isinstance(content, dict):
+        return []
+    sku = featured_sku or content.get("featured_sku") or content.get("product") or content.get("featured_product")
+    if not sku:
+        # Resolve conservatively from day metadata, never by guessing from ratios alone.
+        sku = ""
+    findings: list[dict] = []
+    def scan(value, path: str):
+        if isinstance(value, dict):
+            for key, item in value.items():
+                scan(item, f"{path}.{key}" if path else str(key))
+        elif isinstance(value, list):
+            for i, item in enumerate(value):
+                scan(item, f"{path}[{i}]")
+        elif isinstance(value, str):
+            for reason in ultra_blend_messaging_findings(value, str(sku)):
+                findings.append({"path": path, "claim": value[:220], "reason": reason})
+    scan(content, "")
+    return findings
+
+
 def _jar_paths(pairs: tuple[tuple[str, str], ...]) -> list[str]:
     import os
     paths = []
