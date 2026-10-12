@@ -129,10 +129,13 @@ def assign_objective(content_type: str, day: int) -> dict:
         if funnel_pair and funnel_pair[0] in _FUNNEL_MAP:
             f_name = funnel_pair[0]
             mapped = _FUNNEL_MAP[f_name]
+            cta = mapped["primary_cta"]
+            if f_name == "FOLLOW":
+                cta = _follow_cta(day)
             return {
                 "funnel_objective": f_name,
                 "objective":        mapped["objective"],
-                "primary_cta":      mapped["primary_cta"],
+                "primary_cta":      cta,
                 "success_metric":   mapped["success_metric"],
                 "target":           mapped["target"],
             }
@@ -141,7 +144,9 @@ def assign_objective(content_type: str, day: int) -> dict:
 
     rotation = _ROTATION.get(content_type, ["Brand Awareness"])
     objective: ObjectiveType = rotation[day % len(rotation)]
-    kpis = _KPI.get(objective, {})
+    kpis = dict(_KPI.get(objective, {}))
+    if objective == "Follower Growth":
+        kpis["primary_cta"] = _follow_cta(day)
     return {
         "funnel_objective": "DISCOVERY" if objective in ("Engagement Growth", "Brand Awareness") else "CONVERSION",
         "objective":        objective,
@@ -149,6 +154,13 @@ def assign_objective(content_type: str, day: int) -> dict:
         "success_metric":   kpis.get("success_metric", ""),
         "target":           kpis.get("target", 0),
     }
+
+
+def _follow_cta(day: int) -> str:
+    """Pure-jar days may reject roasted root. A chicory featured jar may not."""
+    from content_generator.core.product_truth import follow_cta_for
+    from content_generator.rotation import PRODUCTS, pick
+    return follow_cta_for(str(pick(PRODUCTS, int(day))))
 
 
 def assign_all(content: dict, day: int) -> dict:

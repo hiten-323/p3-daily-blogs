@@ -4,6 +4,9 @@ Owner guardrails for Purity Beans copy:
 - Prima / Premium Agglomerate is 100% Arabica and agglomerated, not freeze-dried.
 - Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed for that jar.
 - Never call Ultra Blend no-chicory, zero-chicory, or 0% chicory.
+- When Ultra Blend or any other chicory blend is featured or named as the solution,
+  do not attack chicory or roasted root (filler, muddy, poison, "never drink roasted root").
+  Honest 70/30 disclosure, smooth milk coffee, and lower caffeine are allowed.
 - Gourmet Duo and Gourmet Duo Mini are 100% coffee and zero chicory. Do not apply Ultra Blend's chicory rules to either duo, and do not call either duo only Arabica or only Robusta.
 - Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica.
 - Do not invent other product claims, and do not apply a pure-jar claim to Ultra Blend.
@@ -59,6 +62,74 @@ _PERCENT = re.compile(
 )
 _ROBUSTA_100 = re.compile(r"\b100\s*(?:%|percent)\s*(?:pure\s+)?robusta\b", re.I)
 _ARABICA_100 = re.compile(r"\b100\s*(?:%|percent)\s*(?:pure\s+)?arabica\b", re.I)
+# Attacks on chicory itself. Honest ratio copy ("30% chicory", "smooth milk coffee")
+# does not match. These fail only when a chicory blend is in scope.
+_ANTI_CHICORY = re.compile(
+    r"roasted[\s-]+root[\s-]+filler"
+    r"|never\s+drink\s+roasted\s+root"
+    r"|(?:do not|don't|dont)\s+drink\s+roasted\s+root"
+    r"|stop\s+drinking\s+roasted\s+root"
+    r"|\bit\s+is\s+roasted\s+root\b"
+    r"|\broot\s+filler\b"
+    r"|paying\s+.{0,48}?roasted\s+chicory"
+    r"|cafe\s+prices\s+for\s+roasted\s+chicory"
+    r"|chicory\s+is\s+(?:bad|muddy|a\s+filler|filler|poison)"
+    r"|muddy\s+taste\b.{0,80}?roasted\s+root"
+    r"|\b(?:chicory|roasted\s+root)\b.{0,32}?\b(?:poison|adulterant)\b"
+    r"|\b(?:poison|adulterant)\b.{0,32}?\b(?:chicory|roasted\s+root)\b",
+    re.I,
+)
+_ULTRA_FALSE_PURITY = re.compile(
+    r"ultra[\s-]?blend[^,.!?\n]{0,140}?"
+    r"(?:zero[\s-]+chicory|(?<!\d)0\s*%\s*chicory|\bno[\s-]+chicory\b|"
+    r"\bchicory[-\s]?free\b|100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee)",
+    re.I,
+)
+HONEST_FOLLOW_CTA = "Follow @puritybeans for Ultra Blend: 70% coffee and 30% chicory."
+PURE_JAR_FOLLOW_CTA = "Follow @puritybeans so you never drink roasted root again"
+_ANTI_CHICORY_REASON = (
+    "anti-chicory attack is not allowed when Ultra Blend or another chicory blend "
+    "is featured or named as the solution; disclose 70% coffee and 30% chicory"
+)
+_SLUG_TOKENS = (
+    ("gourmet_duo_mini", ("gourmet duo mini", "gourmet_duo_mini", "gourmet-duo-mini")),
+    ("gourmet_duo", ("gourmet duo", "gourmet_duo", "gourmet-duo")),
+    ("ultra_blend", ("ultra blend", "ultra_blend", "ultrablend", "ultra-blend")),
+    ("variety_box", ("variety box", "variety_box", "variety-box")),
+    ("prima", ("premium agglomerate", "prima")),
+    ("purista", ("purista",)),
+    ("purica", ("purica",)),
+    ("bold", ("bold",)),
+)
+_COPY_KEYS = (
+    "hook", "hook_text", "hook_spoken", "headline", "title", "caption", "body",
+    "body_html", "intro", "introduction", "conclusion", "meta_description",
+    "cta", "primary_cta", "on_screen", "spoken", "text", "content",
+    "description", "tagline", "product", "product_slug", "subtext",
+    "comment_trigger", "save_trigger", "share_trigger", "hashtags",
+)
+_REPAIR_SUBS = (
+    (re.compile(r"Follow @puritybeans so you never drink roasted root again\.?", re.I),
+     HONEST_FOLLOW_CTA),
+    (re.compile(r"so you never drink roasted root again", re.I),
+     "for the honest 70% coffee, 30% chicory cup"),
+    (re.compile(r"never drink roasted root", re.I),
+     "read the 70% coffee, 30% chicory label"),
+    (re.compile(
+        r"That muddy taste[^.!?\n]{0,160}?roasted root filler\.?",
+        re.I,
+    ), "Ultra Blend is 70% coffee and 30% chicory, a smooth milk coffee."),
+    (re.compile(r"\bit is roasted root filler\.?", re.I),
+     "Ultra Blend is 70% coffee and 30% chicory."),
+    (re.compile(r"roasted[\s-]+root[\s-]+filler", re.I),
+     "the blend printed on the label"),
+    (re.compile(r"You are paying cafe prices for roasted chicory root\.?", re.I),
+     "You are paying cafe prices. Ultra Blend is 70% coffee and 30% chicory."),
+    (re.compile(r"paying\s+.{0,48}?roasted\s+chicory(?:\s+root)?", re.I),
+     "paying cafe prices for a home cup"),
+    (re.compile(r"chicory is (?:bad|muddy|a filler|filler|poison)", re.I),
+     "chicory is 30% of Ultra Blend and is printed on the label"),
+)
 
 
 def _locally_negated(text: str, start: int) -> bool:
@@ -86,7 +157,168 @@ def _finding(sentence: str, reason: str) -> dict:
     }
 
 
-def product_truth_findings(text: str) -> list[dict]:
+def named_slugs(text: str) -> list[str]:
+    """Catalog slugs named in `text`, longest token first."""
+    raw = str(text or "").lower()
+    found: list[str] = []
+    for slug, tokens in _SLUG_TOKENS:
+        for token in tokens:
+            if re.search(rf"(?<![a-z0-9]){re.escape(token)}(?![a-z0-9])", raw):
+                found.append(slug)
+                break
+    return found
+
+
+def _catalog_has_chicory(product: dict) -> bool:
+    if not product:
+        return False
+    percent = product.get("chicory_percent")
+    if isinstance(percent, (int, float)) and percent > 0:
+        return True
+    label = str(product.get("chicory") or "")
+    return bool(re.search(r"30\s*(?:%|percent)\s*chicory", label, re.I))
+
+
+def name_contains_chicory(name: str) -> bool:
+    """True when `name` is Ultra Blend, the Variety Box, or another chicory SKU."""
+    if not str(name or "").strip():
+        return False
+    from content_generator.core.shopify_catalog import SHOPIFY_PRODUCTS, get_product
+
+    slugs = named_slugs(name)
+    if not slugs:
+        key = str(name).strip().lower().replace("-", "_").replace(" ", "_")
+        product = get_product(key)
+        if product:
+            slugs = [str(product.get("slug") or key)]
+    return any(_catalog_has_chicory(SHOPIFY_PRODUCTS.get(slug) or {}) for slug in slugs)
+
+
+def featured_product_name(content: dict | None) -> str:
+    """Day's featured jar. Explicit field wins; otherwise the day rotation."""
+    if not isinstance(content, dict):
+        return ""
+    explicit = str(content.get("featured_product") or "").strip()
+    if explicit:
+        return explicit
+    day = content.get("day_number")
+    if day in (None, ""):
+        return ""
+    try:
+        day_number = int(day)
+    except (TypeError, ValueError):
+        return ""
+    from content_generator.rotation import PRODUCTS, pick
+    return str(pick(PRODUCTS, day_number))
+
+
+def chicory_in_scope(text: str, featured: str | None = None) -> bool:
+    """Featured chicory SKU, or a chicory SKU named in this copy as the solution."""
+    if name_contains_chicory(str(featured or "")):
+        return True
+    return any(name_contains_chicory(slug) for slug in named_slugs(text))
+
+
+def follow_cta_for(featured: str | None = None, text: str = "") -> str:
+    """Follower CTA. Chicory blends get the honest 70/30 line."""
+    if chicory_in_scope(text, featured):
+        return HONEST_FOLLOW_CTA
+    return PURE_JAR_FOLLOW_CTA
+
+
+def piece_copy_text(piece: dict) -> str:
+    """Every spoken, on-screen, and CTA field the gates are allowed to read."""
+    if not isinstance(piece, dict):
+        return ""
+    parts: list[str] = []
+
+    def add(value) -> None:
+        if isinstance(value, str) and value.strip():
+            parts.append(value.strip())
+
+    for key in _COPY_KEYS:
+        add(piece.get(key))
+    for list_key in ("slides", "frames", "script", "scenes", "hook_options"):
+        for item in piece.get(list_key) or []:
+            if isinstance(item, str):
+                add(item)
+            elif isinstance(item, dict):
+                for key in _COPY_KEYS:
+                    add(item.get(key))
+    return "\n".join(parts)
+
+
+def asset_product_truth_findings(piece: dict, featured: str | None = None) -> list[dict]:
+    """Product-truth findings for one asset, including fields outside the caption."""
+    if not isinstance(piece, dict):
+        return []
+    scope = str(featured or piece.get("featured_product") or piece.get("product") or "")
+    return product_truth_findings(piece_copy_text(piece), featured=scope)
+
+
+def repair_text(text: str, *, chicory_scope: bool) -> str:
+    """Replace anti-chicory attacks with honest 70/30 wording. No other edits."""
+    if not chicory_scope or not isinstance(text, str) or not text:
+        return text
+    updated = text
+    for pattern, replacement in _REPAIR_SUBS:
+        updated = pattern.sub(replacement, updated)
+
+    def _strip_false_purity(match: re.Match) -> str:
+        span = match.group(0)
+        if _OTHER_THAN_ULTRA.search(span):
+            return span
+        span = re.sub(
+            r"zero[\s-]+chicory|(?<!\d)0\s*%\s*chicory|\bno[\s-]+chicory\b|"
+            r"\bchicory[-\s]?free\b",
+            "30% chicory",
+            span,
+            flags=re.I,
+        )
+        span = re.sub(
+            r"100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee",
+            "70% coffee",
+            span,
+            flags=re.I,
+        )
+        return span
+
+    return _ULTRA_FALSE_PURITY.sub(_strip_false_purity, updated)
+
+
+def repair_content(content: dict) -> dict:
+    """Rewrite chicory-scope attacks in a content payload. Does not publish."""
+    featured = featured_product_name(content)
+    day_scope = name_contains_chicory(featured)
+
+    def walk(node, inherited: bool):
+        if isinstance(node, dict):
+            blob = " ".join(
+                str(node.get(key) or "")
+                for key in ("product", "product_slug", "featured_product", "caption", "hook", "hook_text", "body", "primary_cta", "cta")
+                if isinstance(node.get(key), str)
+            )
+            local = inherited or chicory_in_scope(blob, str(node.get("featured_product") or node.get("product") or ""))
+            out = {}
+            for key, value in node.items():
+                if isinstance(value, str):
+                    out[key] = repair_text(value, chicory_scope=local or day_scope)
+                else:
+                    out[key] = walk(value, local or day_scope)
+            if featured and "featured_product" not in out and node is content:
+                out["featured_product"] = featured
+            return out
+        if isinstance(node, list):
+            return [walk(item, inherited) for item in node]
+        return node
+
+    repaired = walk(content, day_scope)
+    if isinstance(repaired, dict) and featured and not repaired.get("featured_product"):
+        repaired["featured_product"] = featured
+    return repaired
+
+
+def product_truth_findings(text: str, featured: str | None = None) -> list[dict]:
     """Unsupported or contradicted product claims in `text`."""
     if not text or not str(text).strip():
         return []
@@ -178,6 +410,14 @@ def product_truth_findings(text: str) -> list[dict]:
                         ))
                     if _PRIMA.search(segment) and kind == "arabica" and number != 100:
                         findings.append(_finding(segment, "Prima / Premium Agglomerate is 100% Arabica"))
+        if chicory_in_scope(s, featured) and _ANTI_CHICORY.search(s):
+            findings.append(_finding(s, _ANTI_CHICORY_REASON))
+    if chicory_in_scope(str(text), featured):
+        # A hook can attack chicory in one sentence and name Ultra Blend in the next.
+        for sentence in _SENTENCE.split(str(text)):
+            s = sentence.strip()
+            if s and _ANTI_CHICORY.search(s):
+                findings.append(_finding(s, _ANTI_CHICORY_REASON))
     seen: set[tuple[str, str]] = set()
     unique: list[dict] = []
     for item in findings:

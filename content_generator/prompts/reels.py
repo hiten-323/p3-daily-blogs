@@ -15,6 +15,27 @@ def build(reel_id: str, arch: tuple, time_slot: str,
           hashtag_key: str, avoid: str, day: int = 0) -> str:
     viral_idea = get_todays_viral_idea(day)
     suggested_hook = get_todays_hook(day)
+    from content_generator.core.product_truth import (
+        HONEST_FOLLOW_CTA, PURE_JAR_FOLLOW_CTA, name_contains_chicory,
+    )
+    from content_generator.rotation import PRODUCTS, pick
+    featured = str(pick(PRODUCTS, day))
+    if name_contains_chicory(featured):
+        follow_spoken = HONEST_FOLLOW_CTA
+        villain_spoken = "Ultra Blend is 70% coffee and 30% chicory, a smooth milk coffee."
+        featured_rule = (
+            f"FEATURED JAR TODAY: {featured}. It contains chicory. "
+            "Do not attack chicory, roasted root, or filler. "
+            "Do not say zero chicory, no chicory, or never drink roasted root. "
+            "Ultra Blend is 70% coffee and 30% chicory. Smooth milk coffee and lower caffeine are allowed."
+        )
+    else:
+        follow_spoken = PURE_JAR_FOLLOW_CTA + "."
+        villain_spoken = "Name it precisely — chicory, preservatives, artificial aroma"
+        featured_rule = (
+            f"FEATURED JAR TODAY: {featured}. Zero-chicory praise is allowed for this jar and for "
+            "Bold, Purista, Purica, Prima, and Gourmet Duo Mini. Never apply that praise to Ultra Blend."
+        )
 
     return f"""{brand_block()}
 
@@ -35,7 +56,8 @@ The best hooks cannot save a topic nobody cares about.
 PSYCHOLOGY REQUIREMENT:
 Pick ONE primary frame from the PSYCHOLOGY FRAMES list above.
 Put its id in "psychology_frame". The frame must drive the hook, the spoken arc, and the share/save triggers.
-Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Never apply the 100% coffee line to Ultra Blend. Rs 18 is the home-cup price.
+Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Never apply the 100% coffee line to Ultra Blend. Rs 18 is the home-cup price.
+{featured_rule}
 
 ABSOLUTE RULES:
 - NEVER invent statistics or percentages
@@ -65,9 +87,9 @@ ABSOLUTE RULES:
     {{"on_screen": "4 WORDS MAX ALL CAPS", "spoken": "8-12 words expanding the hook with a real Indian detail"}},
     {{"on_screen": "THE PROBLEM", "spoken": "What most Indians drink without knowing — specific, not statistical"}},
     {{"on_screen": "THE TWIST", "spoken": "The thing they did not expect — contrarian, relatable"}},
-    {{"on_screen": "THE VILLAIN", "spoken": "Name it precisely — chicory, preservatives, artificial aroma"}},
+    {{"on_screen": "THE LABEL", "spoken": "{villain_spoken}"}},
     {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee."}},
-    {{"on_screen": "FOLLOW @PURITYBEANS", "spoken": "Follow @puritybeans so you never drink roasted root again."}}
+    {{"on_screen": "FOLLOW @PURITYBEANS", "spoken": "{follow_spoken}"}}
   ],
   "loop_note": "One sentence: how the last frame connects back to frame 1 for infinite loop",
   "alt_hook": "A/B option — 4 words, completely different archetype",

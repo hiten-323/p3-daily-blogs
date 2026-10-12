@@ -79,6 +79,142 @@ def test_catalog_prices_and_prima_stock_stay_as_confirmed():
     assert SHOPIFY_PRODUCTS["prima"]["in_stock"] is False
 
 
+def test_ultra_blend_roasted_root_filler_fails():
+    from content_generator.core.claim_verifier import verify_claims
+    from content_generator.core.product_truth import product_truth_findings
+
+    attack = (
+        "That muddy taste isn't a strong bean. It is roasted root filler. "
+        "Ultra Blend is the jar on the table."
+    )
+    assert product_truth_findings(attack)
+    assert any(item["type"] == "product_truth" for item in verify_claims(attack))
+    featured = product_truth_findings(
+        "Follow @puritybeans so you never drink roasted root again",
+        featured="Ultra Blend",
+    )
+    assert featured
+    assert any("anti-chicory" in item["reason"] for item in featured)
+    hook = product_truth_findings(
+        "You are paying cafe prices for roasted chicory root.\n"
+        "Ultra Blend is 70% coffee and 30% chicory.",
+        featured="Ultra Blend",
+    )
+    assert hook
+
+
+def test_ultra_blend_seventy_thirty_passes():
+    from content_generator.core.claim_verifier import verify_claims
+    from content_generator.core.product_truth import product_truth_findings
+
+    stated = "Ultra Blend is 70% coffee and 30% chicory."
+    assert product_truth_findings(stated) == []
+    assert verify_claims(stated) == []
+    positive = (
+        "Ultra Blend is a smooth milk coffee: 70% coffee 30% chicory, "
+        "and lower caffeine is fair."
+    )
+    assert product_truth_findings(positive) == []
+    assert verify_claims(positive) == []
+
+
+def test_mini_and_purista_zero_chicory_praise_passes():
+    from content_generator.core.claim_verifier import verify_claims
+    from content_generator.core.product_truth import product_truth_findings
+
+    purista = "Purista is 100% coffee with zero chicory."
+    mini = "Gourmet Duo Mini is 100% coffee with no chicory."
+    assert product_truth_findings(purista) == []
+    assert product_truth_findings(mini) == []
+    assert verify_claims(purista) == []
+    assert verify_claims(mini) == []
+    assert product_truth_findings(
+        "Follow @puritybeans so you never drink roasted root again",
+        featured="Purista",
+    ) == []
+    assert product_truth_findings(
+        "Follow @puritybeans so you never drink roasted root again",
+        featured="Gourmet Duo Mini",
+    ) == []
+
+
+def test_ultra_blend_no_chicory_fails():
+    from content_generator.core.claim_verifier import verify_claims
+    from content_generator.core.product_truth import product_truth_findings
+
+    for sentence in (
+        "Ultra Blend is no chicory.",
+        "Ultra Blend is zero chicory.",
+        "Ultra Blend has no chicory.",
+    ):
+        assert product_truth_findings(sentence), sentence
+        assert any(item["type"] == "product_truth" for item in verify_claims(sentence))
+
+
+def test_ultra_blend_day_follow_cta_discloses_the_blend():
+    from content_generator.objectives.mapper import assign_objective
+    from content_generator.rotation import PRODUCTS, pick
+
+    assert pick(PRODUCTS, 284) == "Ultra Blend"
+    ultra = assign_objective("reel_1", 284)
+    assert ultra["funnel_objective"] == "FOLLOW"
+    assert "30% chicory" in ultra["primary_cta"]
+    assert "roasted root" not in ultra["primary_cta"].lower()
+
+    assert pick(PRODUCTS, 286) == "Purista"
+    pure = assign_objective("reel_1", 286)
+    assert pure["funnel_objective"] == "FOLLOW"
+    assert "roasted root" in pure["primary_cta"].lower()
+
+
+def test_repair_rewrites_2026_10_12_attacks_without_publishing():
+    import json
+    from pathlib import Path
+
+    from content_generator.core.product_truth import product_truth_findings, repair_content
+    from scripts.repair_chicory_day import remaining_findings
+
+    payload = {
+        "date": "2026-10-12",
+        "day_number": 284,
+        "featured_product": "Ultra Blend",
+        "reels": [
+            {
+                "primary_cta": "Follow @puritybeans so you never drink roasted root again",
+                "caption": "Ultra Blend for the morning cup.",
+            },
+            {
+                "hook_text": "You are paying cafe prices for roasted chicory root.",
+                "frames": [
+                    {
+                        "on_screen": "MUDDY CUP",
+                        "spoken": "That muddy taste isn't a strong bean. It is roasted root filler.",
+                    },
+                    {
+                        "on_screen": "THE JAR",
+                        "spoken": "Ultra Blend is 70% coffee and 30% chicory.",
+                    },
+                ],
+            },
+        ],
+    }
+    assert remaining_findings(payload)
+    repaired = repair_content(payload)
+    assert remaining_findings(repaired) == []
+    blob = json.dumps(repaired)
+    assert "roasted root" not in blob.lower()
+    assert "70% coffee" in blob
+    assert "30% chicory" in blob
+    script = Path("scripts/repair_chicory_day.py").read_text(encoding="utf-8")
+    assert "does not publish" in script.lower()
+    assert "publisher" not in script
+    workflow = Path(".github/workflows/repair-chicory-day.yml").read_text(encoding="utf-8")
+    assert "workflow_dispatch" in workflow
+    assert "schedule:" not in workflow
+    assert "python -m content_generator.scheduler.daily" not in workflow
+    assert "Repair content JSON without publishing" in workflow
+
+
 def test_ultra_blend_is_thirty_percent_chicory():
     from content_generator.core.claim_verifier import verify_claims
     from content_generator.core.product_truth import product_truth_findings

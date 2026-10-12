@@ -908,6 +908,11 @@ def _do_editorial(content: dict) -> None:
             logger.error("[blog] HELD blog_post: %s", reason)
         return
 
+    from content_generator.core.product_truth import featured_product_name
+    featured = featured_product_name(content)
+    if featured and not content.get("featured_product"):
+        content["featured_product"] = featured
+
     review_targets = [
         ("reel_1",         "reels",         0),
         ("reel_2",         "reels",         1),
@@ -933,6 +938,8 @@ def _do_editorial(content: dict) -> None:
 
         if not isinstance(piece, dict) or not piece:
             continue
+        if featured and not piece.get("featured_product"):
+            piece["featured_product"] = featured
 
         for attempt in range(attempts_allowed):
             _drop_unmeasured_score(piece)

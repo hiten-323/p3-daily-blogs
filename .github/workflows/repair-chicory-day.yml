@@ -1,0 +1,76 @@
+# One-shot repair for a chicory-featured content file.
+# workflow_dispatch only. No schedule. No morning slot. No evening slot. No publish.
+
+name: Repair chicory-day copy
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'IST content date to repair, for example 2026-10-12'
+        required: true
+        default: '2026-10-12'
+      dry_run:
+        description: 'Report the repair and do not write or commit. Does not publish either way.'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    name: Repair content JSON without publishing
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install --no-cache-dir -r requirements.txt
+
+      - name: Repair chicory copy
+        env:
+          REPAIR_DATE: ${{ github.event.inputs.date }}
+          REPAIR_DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          test "$REPAIR_DATE" != "morning"
+          test "$REPAIR_DATE" != "evening"
+          file="output/content_${REPAIR_DATE}.json"
+          git fetch origin main
+          if [ ! -f "$file" ]; then
+            git checkout origin/main -- "$file"
+          fi
+          if [ "$REPAIR_DRY_RUN" = "true" ]; then
+            python scripts/repair_chicory_day.py --date "$REPAIR_DATE" --dry-run
+          else
+            python scripts/repair_chicory_day.py --date "$REPAIR_DATE" --write
+          fi
+
+      - name: Commit repaired JSON
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        env:
+          REPAIR_DATE: ${{ github.event.inputs.date }}
+        run: |
+          set -euo pipefail
+          file="output/content_${REPAIR_DATE}.json"
+          git config user.name "Purity Beans Engine"
+          git config user.email "engine@puritybeans.auto"
+          git add -f "$file"
+          if git diff --staged --quiet; then
+            echo "No copy changes to commit."
+          else
+            git commit -m "fix: repair ${REPAIR_DATE} chicory copy without publishing"
+            git push
+          fi
+          echo "Committed the JSON only. Morning and evening were not run."
