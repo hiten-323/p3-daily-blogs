@@ -66,6 +66,13 @@ def compose_editorial_card(
         "role": "text_card",
         "scene_id": scene_id,
         "lifestyle_required": True,
+        "product": str(product or ""),
+        "on_image": {
+            "hook": heading,
+            "benefit": body,
+            "offer": "",
+            "cta": copy["cta"],
+        },
     })
     try:
         from content_generator.creative.jar_frame import select_front_asset

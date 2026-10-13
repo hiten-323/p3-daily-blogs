@@ -261,8 +261,19 @@ def audit_product_image(path: str) -> dict:
     if not geometry:
         return {"ok": False, "issues": [f"{os.path.basename(path)}: jar_geometry_missing"], "sharpness": 0.0}
     if geometry.get("jar_required") is False:
+        issues = []
         if geometry.get("lifestyle_required", True) and not geometry.get("scene_id"):
-            return {"ok": False, "issues": [f"{os.path.basename(path)}: lifestyle_scene_missing"], "sharpness": None, "jar_required": False}
+            issues.append("lifestyle_scene_missing")
+        from content_generator.creative.visual_gate import copy_and_mask_issues
+        issues.extend(copy_and_mask_issues(geometry))
+        name = os.path.basename(path)
+        if issues:
+            return {
+                "ok": False,
+                "issues": [f"{name}: {issue}" for issue in issues],
+                "sharpness": None,
+                "jar_required": False,
+            }
         return {"ok": True, "issues": [], "sharpness": None, "jar_required": False, "scene_id": geometry.get("scene_id")}
     try:
         from PIL import Image
@@ -279,7 +290,9 @@ def audit_product_image(path: str) -> dict:
     )
     if geometry.get("lifestyle_required", True):
         from content_generator.creative.lifestyle_scene import realism_issues
+        from content_generator.creative.visual_gate import copy_and_mask_issues
         extra = realism_issues(image, geometry.get("jar_bbox"), geometry.get("scene_id"), contact_shadow=bool(geometry.get("contact_shadow", False)))
+        extra.extend(copy_and_mask_issues(geometry))
         result["issues"].extend(extra)
         result["ok"] = not result["issues"]
     result["issues"] = [f"{os.path.basename(path)}: {issue}" for issue in result["issues"]]
@@ -341,6 +354,7 @@ def compose_conversion_frame(
     format_name: str = "feed",
     on_date=None,
     out_dir: str | None = None,
+    attempt: int = 0,
 ) -> str | None:
     """Story, 4:5 feed, or square carousel hero. Real jar on a rotating lifestyle plate."""
     del idx
@@ -395,7 +409,9 @@ def compose_conversion_frame(
     cta_h = int(footer_font.size * 2.4)
     cta_top = zone[3] - cta_h
     from content_generator.creative.lifestyle_scene import frame_props, place_product, scene_for_day
-    jar_rect = place_product(scene_for_day(day), width, height, y, cta_top, zone, jar.size)
+    jar_rect = place_product(
+        scene_for_day(day), width, height, y, cta_top, zone, jar.size, attempt=attempt,
+    )
     prop_boxes = [dict(prop, box=list(prop["box"])) for prop in frame_props(scene_for_day(day), width, height)]
     canvas, jar_bbox, scale = paste_product_jar(canvas, jar, jar_rect)
     canvas, cta_box = _draw_cta(canvas, copy["cta"], footer_font, cta_top + 6, width)
@@ -425,6 +441,15 @@ def compose_conversion_frame(
         "contact_shadow": True,
         "lifestyle_required": True,
         "props": prop_boxes,
+        "product": slug or str(product or ""),
+        "mask_ok": True,
+        "mask_issues": [],
+        "on_image": {
+            "hook": copy["hook"],
+            "benefit": copy["benefit"],
+            "offer": copy["offer"],
+            "cta": copy["cta"],
+        },
     })
     try:
         from content_generator.creative.jar_provenance import record_jar_provenance

@@ -185,7 +185,7 @@ def _free_spans(limit_l: int, limit_r: int, blocked: list[tuple[int, int]]) -> l
     return spans
 
 
-def place_product(scene, width, height, text_bottom, cta_top, zone, jar_size) -> tuple[int, int, int, int]:
+def place_product(scene, width, height, text_bottom, cta_top, zone, jar_size, attempt: int = 0) -> tuple[int, int, int, int]:
     """Sit the jar beside scene props. The base stays on the counter, in front of them."""
     slot = product_rect(width, height, text_bottom, cta_top, zone)
     base = slot[3]
@@ -228,9 +228,14 @@ def place_product(scene, width, height, text_bottom, cta_top, zone, jar_size) ->
                 jx = s0 + (s1 - s0 - jw) // 2
             beside = 1 if on_left or on_right else 0
             if placed is None or (beside, s1 - s0) > placed[0]:
-                placed = ((beside, s1 - s0), jx)
+                placed = ((beside, s1 - s0), jx, s0, s1)
         if placed:
-            jx = placed[1]
+            jx, s0, s1 = placed[1], placed[2], placed[3]
+            # The next try sits at the other end of the same clear span.
+            if int(attempt) % 2 == 1 and s1 - s0 >= jw:
+                alt = s0 if jx > s0 + 4 else s1 - jw
+                if s0 <= alt <= s1 - jw:
+                    jx = alt
             return (jx, top, jx + jw, base)
     return slot
 

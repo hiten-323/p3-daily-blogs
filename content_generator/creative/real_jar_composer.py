@@ -473,6 +473,7 @@ def compose_carousel_slide(
     height: int = 1080,
     label: str = "carousel_slide",
     product: str | None = None,
+    attempt: int = 0,
 ) -> str | None:
     """
     Renders an editorial D2C Instagram carousel slide:
@@ -513,6 +514,7 @@ def compose_carousel_slide(
             label=label,
             format_name="carousel",
             out_dir=_OUT_DIR,
+            attempt=attempt,
         )
 
     canvas = Image.new("RGB", (width, height), theme["bg"])
@@ -708,7 +710,7 @@ def compose_carousel_slide(
     return path
 
 
-def compose_carousel_slides(slides: list[dict], day: int, product: str | None = None) -> list[str]:
+def compose_carousel_slides(slides: list[dict], day: int, product: str | None = None, attempt: int = 0) -> list[str]:
     """
     Renders high-converting, professional 1080x1080 carousel slides:
       - Slide 1: Hero Cover with hook badge, headline, authentic jar, and 'SWIPE ->' cue.
@@ -735,6 +737,7 @@ def compose_carousel_slides(slides: list[dict], day: int, product: str | None = 
             height=1350,
             label=f"carousel_slide_{i+1}_day{day}",
             product=product,
+            attempt=attempt,
         )
         if p:
             paths.append(p)
