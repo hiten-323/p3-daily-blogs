@@ -21,6 +21,23 @@ The publishing times above are the canonical production schedule. They are
 maintained in `content_generator/core/slot_registry.py` and the workflow cron
 is checked against that registry by the config-drift test.
 
+## Visual gate
+
+Before any publish, the generate slot runs `enforce_visual_gate` on every
+surface: Story, Reel frame, carousel, feed, Facebook, LinkedIn, Threads, and
+the YouTube thumbnail. The check is fail-closed. A frame must be sharp, show
+the full jar inside the safe zone, carry a mask that passed integrity (no
+ragged edge), have no studio disc or halo under the base, sit on a contact
+shadow, and not overlap the cup, laptop, or plants. The on-image CTA must use
+`@purepantryprovisions`. Unverified stat hooks (invented rupee claims, "waste",
+"every week") fail.
+
+A failure is re-rendered on the next lifestyle scene and the other side of
+the prop, up to `QUALITY_MAX_REGEN` extra tries. What still fails is
+`BLOCKED`, moved out of the publish folder, and never posted. The same rule
+applies when a publish slot composes a Story or an evening feed. CI renders
+every scene and format and fails if any of them miss this bar.
+
 Every morning the system asks one question: *"What is the fastest way to gain
 followers tomorrow — and which of yesterday's content actually made money?"*
 

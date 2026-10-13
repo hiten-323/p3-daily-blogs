@@ -409,24 +409,19 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
         #    https://www.instagram.com/p/DebTfidGddv/. A frame that fails jar QA
         #    is skipped, not posted as a Story.
         if not result or not result.get("success"):
-            from content_generator.creative.jar_frame import audit_product_image, compose_conversion_frame
+            from content_generator.creative.visual_gate import render_passing_frame, surface_decision
+            if surface_decision(content, "feed") == "BLOCKED":
+                return _skipped(slot, day, "visual_qa_blocked")
             product = reel.get("product") or content.get("featured_product")
-            hook = str(reel.get("hook_text") or reel.get("hook") or reel.get("chosen_hook") or "")
-            feed = compose_conversion_frame(
-                headline=hook,
-                sub="",
-                product=product,
-                day=day,
-                idx=3,
-                width=1080,
-                height=1350,
+            gated = render_passing_frame(
+                {**content, "featured_product": product},
+                day,
+                "feed",
                 label=f"feed_evening_day{day}",
-                format_name="feed",
-                on_date=slot_date,
             )
-            visual = audit_product_image(feed) if feed else {"ok": False, "issues": ["no_feed_frame"]}
-            if not feed or not visual.get("ok"):
-                reason = "visual_qa_failed — " + "; ".join(visual.get("issues") or ["jar_qa_failed"])
+            feed = gated.get("path") if gated.get("decision") == "PASS" else None
+            if not feed:
+                reason = "visual_qa_blocked — " + "; ".join(gated.get("issues") or ["jar_qa_failed"])
                 logger.error("[slots] evening feed skipped: %s", reason)
                 return _skipped(slot, day, reason)
             from content_generator.publisher.publishing_ledger import publish_with_ledger

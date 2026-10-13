@@ -42,6 +42,14 @@ def authorize_publish(content: Any, platform: str) -> dict:
         return {"allowed": False, "asset_key": "", "reason": "unknown_platform", "checks": {}}
     if not isinstance(content, dict):
         return {"allowed": False, "asset_key": "", "reason": "invalid_content_payload", "checks": {}}
+    try:
+        from content_generator.creative.visual_gate import platform_blocked
+        if platform_blocked(content, platform):
+            return {"allowed": False, "asset_key": "", "reason": "visual_qa_blocked",
+                    "checks": {"visual_gate": content.get("visual_gate")}}
+    except Exception as exc:
+        logger.exception("[prepublish] Visual gate failed for %s", platform)
+        return {"allowed": False, "asset_key": "", "reason": f"visual_gate_error:{type(exc).__name__}", "checks": {}}
 
     try:
         from content_generator.core.editorial_engine import approved_assets, get_current_pass_score

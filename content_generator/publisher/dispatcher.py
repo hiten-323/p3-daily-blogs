@@ -162,8 +162,12 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
     approved = _approved_or_empty(content)
 
     # ── LinkedIn ──────────────────────────────────────────────────────────────
+    from content_generator.creative.visual_gate import platform_blocked
     li_state = editorial_disposition(content, "linkedin_post", approved)
-    if li_state != "approved":
+    if platform_blocked(content, "linkedin"):
+        logger.error("[publisher] Skipping linkedin_post — visual QA blocked")
+        results["linkedin"] = not_attempted_result("linkedin_post", "visual_qa_blocked")
+    elif li_state != "approved":
         logger.info("[publisher] Skipping linkedin_post — %s; not attempted", li_state)
         results["linkedin"] = not_attempted_result("linkedin_post", li_state)
     else:
@@ -195,7 +199,10 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
 
     # ── YouTube ───────────────────────────────────────────────────────────────
     yt_state = editorial_disposition(content, "yt_short", approved)
-    if yt_state != "approved":
+    if platform_blocked(content, "youtube"):
+        logger.error("[publisher] Skipping yt_short — visual QA blocked")
+        results["youtube"] = not_attempted_result("yt_short", "visual_qa_blocked")
+    elif yt_state != "approved":
         logger.info("[publisher] Skipping yt_short — %s; not attempted", yt_state)
         results["youtube"] = not_attempted_result("yt_short", yt_state)
     else:

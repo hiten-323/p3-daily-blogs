@@ -599,34 +599,17 @@ def post_story(content: dict, day: int = 0) -> dict:
     sub = copy["sub"]
     logger.info("[instagram] story copy source=%s headline=%r", copy.get("source"), headline)
 
-    product = None
-    try:
-        from content_generator.rotation import PRODUCTS, pick as _pick_product
-        product = _pick_product(PRODUCTS, day)
-    except Exception as e:
-        logger.debug("[instagram] product pick skipped: %s", e)
-
-    image_path = None
-    try:
-        # Cinematic frame: white background knocked out + full-bleed 9:16 gradient.
-        # (The 1:1 post composer left a white box and dead space in stories.)
-        from content_generator.creative.cinematic_frame import compose_cinematic_frame
-        image_path = compose_cinematic_frame(
-            headline=headline, sub=sub, day=day, idx=9, product=product,
-            width=1080, height=1920, label=f"story_day{day}",
-            format_type="story",
-        )
-    except Exception as e:
-        logger.warning("[instagram] cinematic story compose failed: %s", e)
+    from content_generator.creative.visual_gate import render_passing_frame, surface_decision, surface_path
+    if surface_decision(content, "story") == "BLOCKED":
+        return _skip_visual_qa(["visual_qa_blocked"])
+    image_path = surface_path(content, "story")
     if not image_path:
-        try:
-            from content_generator.creative.real_jar_composer import compose_post_image
-            image_path = compose_post_image(
-                headline=headline, body=sub, day=day, idx=9,
-                width=1080, height=1920, label=f"story_day{day}",
-            )
-        except Exception as e:
-            logger.warning("[instagram] story image compose failed: %s", e)
+        gated = render_passing_frame(
+            content, day, "story", label=f"story_day{day}",
+        )
+        if gated.get("decision") != "PASS":
+            return _skip_visual_qa(gated.get("issues") or ["visual_qa_blocked"])
+        image_path = gated.get("path")
     if not image_path:
         return {"success": False, "media_id": "", "error": "no_story_image"}
 

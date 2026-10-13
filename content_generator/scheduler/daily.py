@@ -204,6 +204,40 @@ def _run_generate_slot(day_number: int = None) -> dict:
         if step.success and isinstance(step.value, dict):
             image_results = step.value
 
+    # Visual QA is mandatory. A failing frame is re-rendered on another scene
+    # and placement, then BLOCKED. Publish will not post a blocked surface.
+    with timed_step("visual_gate", timeout_s=600, fatal=False):
+        try:
+            from content_generator.creative.visual_gate import enforce_visual_gate
+            gate = enforce_visual_gate(content, image_results, dn)
+            content["visual_gate"] = gate
+            for row in gate.get("surfaces") or []:
+                key = row.get("key")
+                if not key:
+                    continue
+                if row.get("decision") == "PASS":
+                    image_results[key] = row.get("paths") if row.get("paths") else row.get("path")
+                else:
+                    image_results.pop(key, None)
+            logger.info(
+                "[visual-gate] passes=%s blocked=%s",
+                gate.get("passes"), gate.get("blocked_surfaces"),
+            )
+        except Exception as exc:
+            logger.exception("[visual-gate] failed closed")
+            content["visual_gate"] = {
+                "passes": False,
+                "blocked_platforms": ["instagram", "facebook", "linkedin", "threads", "youtube"],
+                "blocked_surfaces": ["story", "reel", "carousel", "feed", "facebook", "linkedin", "threads", "yt_thumbnail"],
+                "error": type(exc).__name__,
+                "surfaces": [],
+            }
+        try:
+            from content_generator.pipeline.generator import save_content
+            save_content(content)
+        except Exception as exc:
+            logger.warning("[visual-gate] could not persist the gate: %s", exc)
+
     with timed_step("creative_post_audit", timeout_s=120, fatal=False):
         try:
             from content_generator.analytics.creative_post_audit import audit_generated_creatives, audit_summary
