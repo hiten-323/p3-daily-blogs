@@ -916,7 +916,7 @@
       "verified_at": "2026-10-12T23:12:29+00:00"
     },
     "2026-10-12|evening|instagram|pb_53f08b5ba9": {
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-10-12",
       "content_id": "pb_53f08b5ba9",
       "day_number": 284,
@@ -936,19 +936,34 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-13T00:44:45+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-13T00:44:55+00:00",
+          "attempt": 2,
+          "error": "Only photo or video can be accepted as media type.",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-12T23:12:11+00:00",
+      "last_attempt_at": "2026-10-13T00:44:45+00:00",
       "last_result": {
         "error": "Only photo or video can be accepted as media type.",
         "success": false
       },
-      "next_retry_at": "2026-10-12T23:17:21+00:00",
+      "next_retry_at": "2026-10-13T00:54:55+00:00",
       "platform": "instagram",
       "remote_id": "",
       "slot": "evening",
       "status": "FAILED",
-      "updated_at": "2026-10-12T23:12:21+00:00",
+      "updated_at": "2026-10-13T00:44:55+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
@@ -1076,13 +1091,13 @@
         "error": "",
         "success": true
       },
-      "last_verification_at": "2026-10-12T17:58:05+00:00",
-      "next_retry_at": "2026-10-12T18:58:05+00:00",
+      "last_verification_at": "2026-10-13T00:44:55+00:00",
+      "next_retry_at": "2026-10-13T01:44:55+00:00",
       "platform": "youtube",
       "remote_id": "GCqK1k0GBo0",
       "slot": "generate",
       "status": "PUBLISHED_UNVERIFIED",
-      "updated_at": "2026-10-12T17:58:05+00:00",
+      "updated_at": "2026-10-13T00:44:55+00:00",
       "url": "https://www.youtube.com/shorts/GCqK1k0GBo0",
       "verification_detail": "HTTP 403",
       "verification_method": "youtube_data_api",

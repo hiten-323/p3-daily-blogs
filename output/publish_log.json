@@ -565,5 +565,74 @@
       ],
       "timestamp": "2026-10-12T17:58:06"
     }
+  },
+  {
+    "date": "2026-10-13",
+    "day_number": 284,
+    "results": {
+      "linkedin": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "linkedin_post",
+        "gate": "rejected",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "readback_unavailable_no_duplicate",
+        "ledger_status": "PUBLISHED_UNVERIFIED",
+        "post_id": "GCqK1k0GBo0",
+        "media_id": "GCqK1k0GBo0",
+        "video_id": "GCqK1k0GBo0",
+        "permalink": "https://www.youtube.com/shorts/GCqK1k0GBo0",
+        "url": "https://www.youtube.com/shorts/GCqK1k0GBo0",
+        "duration_ms": 264
+      },
+      "threads": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "18120868603939417",
+        "media_id": "18120868603939417",
+        "video_id": "18120868603939417",
+        "permalink": "https://www.threads.com/@hiten_jain323/post/DeZKSHjmyo3",
+        "url": "https://www.threads.com/@hiten_jain323/post/DeZKSHjmyo3",
+        "duration_ms": 0
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "blog_post",
+        "gate": "rejected",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "summary": "Published: Threads | Held for slot: Instagram, Facebook | Skipped: Linkedin, Youtube, Blog",
+      "published_platforms": [
+        "threads"
+      ],
+      "timestamp": "2026-10-13T00:44:56"
+    }
   }
 ]
