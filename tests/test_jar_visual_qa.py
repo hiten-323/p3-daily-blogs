@@ -171,6 +171,10 @@ def test_ultra_copy_stays_70_30_and_prima_has_no_price():
     assert "P3ONLINE.IN" in bold["cta"]
     assert "FOLLOW" in bold["cta"]
 
+    today = conversion_copy("Bold", headline="Most people waste Rs 200 every week on this.")
+    assert today["hook"] == "MOST PEOPLE WASTE RS 200 EVERY WEEK"
+    assert "ROASTED ROOT" not in " ".join(today.values()).upper()
+
 
 def test_letterbox_keeps_the_top_and_bottom_of_a_story_frame(tmp_path):
     src = tmp_path / "reel_thumb.jpg"

@@ -13,14 +13,12 @@ logger = logging.getLogger(__name__)
 
 _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 
-# Variance of a 3x3 Laplacian on the grayscale jar crop.
 JAR_LAPLACIAN_MIN = 80.0
 MIN_JAR_HEIGHT_RATIO = 0.28
 FRAME_EDGE_PX = 2
 SOURCE_EDGE_PX = 12
 
 _SAFE = {
-    # top, bottom, side as fractions of height / width
     "story": (0.130, 0.146, 0.060),
     "feed": (0.055, 0.085, 0.055),
     "carousel": (0.055, 0.085, 0.055),
@@ -235,8 +233,12 @@ def conversion_copy(product, headline: str = "", sub: str = "") -> dict:
     featured = str(product or "")
     custom = _sanitize_text(headline).strip()
     if custom and not product_truth_findings(custom, featured=featured):
-        words = custom.split()
-        hook = " ".join(words[:8]).upper()
+        words = custom.split()[:8]
+        trail = {"on", "a", "an", "the", "this", "to", "for", "of", "and", "with", "your", "in", "at", "from", "by"}
+        while words and words[-1].lower().strip(".,:;!") in trail:
+            words.pop()
+        if words:
+            hook = " ".join(words).upper()
     benefit_custom = _sanitize_text(sub).strip()
     if benefit_custom and len(benefit_custom.split()) <= 12 and not product_truth_findings(benefit_custom, featured=featured):
         benefit = benefit_custom
