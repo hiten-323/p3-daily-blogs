@@ -336,33 +336,83 @@ def _glass(image, box):
     return picked.reshape(-1, 1, 3)
 
 
-def shade_plan(canvas, cx: int, by: int, jar_w: int) -> tuple[float, int]:
-    """Hold gain and shade width. A sunlit patch between darker props needs the wide band."""
-    rgb = _rgb(canvas)
-    height, width = rgb.shape[:2]
-    lum = _lum(rgb)
-    band_w = max(jar_w + 8, int(jar_w * 1.3))
-    bx0 = max(0, cx - band_w // 2)
-    bx1 = min(width, cx + band_w // 2)
-    by0 = min(max(0, by + 1), height - 1)
-    by1 = min(height, by + 41)
-    narrow = max(18, int(jar_w * 0.56))
-    if by1 - by0 < 8 or bx1 - bx0 < 8:
-        return 0.82, narrow
-    center = float(lum[by0:by1, bx0:bx1].mean())
-    side_w = max(24, min(120, jar_w // 5))
-    sides = []
-    left = lum[by0:by1, max(0, bx0 - side_w - 8): max(0, bx0 - 8)]
-    right = lum[by0:by1, min(width, bx1 + 8): min(width, bx1 + side_w + 8)]
-    if left.size:
-        sides.append(float(left.mean()))
-    if right.size:
-        sides.append(float(right.mean()))
-    side = sum(sides) / len(sides) if sides else center
-    if center - side <= 16.0:
-        return 0.84, narrow
-    hold = (side + 8.0) / max(center, 1.0)
-    return float(min(0.88, max(0.60, hold))), max(narrow, int(jar_w * 1.36))
+def _blur_axis(arr: np.ndarray, sigma: float, axis: int) -> np.ndarray:
+    sigma = max(0.6, float(sigma))
+    radius = max(1, int(round(sigma * 3)))
+    x = np.arange(-radius, radius + 1, dtype=np.float32)
+    kernel = np.exp(-0.5 * (x / sigma) ** 2)
+    kernel /= kernel.sum()
+    if axis == 1:
+        return np.stack([
+            np.convolve(np.pad(arr[y], radius, mode="edge"), kernel, mode="valid")
+            for y in range(arr.shape[0])
+        ])
+    return np.stack([
+        np.convolve(np.pad(arr[:, col], radius, mode="edge"), kernel, mode="valid")
+        for col in range(arr.shape[1])
+    ], axis=1)
+
+
+def paint_contact_shadow(canvas, cx: int, by: int, foot_w: int, light: str = "left"):
+    """Ellipse under the glass foot, Gaussian-feathered, plus a cast lobe off the key light."""
+    from PIL import Image, ImageDraw
+
+    image = canvas.convert("RGBA")
+    foot_w = max(12, int(foot_w))
+    contact = Image.new("L", image.size, 0)
+    cast = Image.new("L", image.size, 0)
+    rx = max(8, int(foot_w * 0.48))
+    ry = max(4, int(foot_w * 0.04))
+    # Back half tucks under the glass so the base touches the darkest point.
+    ImageDraw.Draw(contact).ellipse([cx - rx, by - ry, cx + rx, by + 4], fill=255)
+    direction = -1 if light == "right" else 1
+    shift = int(foot_w * 0.34) * direction
+    crx = max(8, int(foot_w * 0.28))
+    cry = max(8, int(foot_w * 0.11))
+    ImageDraw.Draw(cast).ellipse([cx + shift - crx, by - 2, cx + shift + crx, by + cry], fill=220)
+    sx = max(3.5, foot_w * 0.035)
+    core = np.asarray(contact).astype(np.float32) / 255.0
+    lobe = np.asarray(cast).astype(np.float32) / 255.0
+    core = _blur_axis(_blur_axis(core, 2.6, 0), sx, 1)
+    lobe = _blur_axis(_blur_axis(lobe, 3.4, 0), sx * 1.15, 1)
+    shade = np.clip(np.maximum(core, lobe * 0.82), 0, 1)
+    arr = np.asarray(image).astype(np.float32)
+    arr[..., :3] *= (1.0 - shade[..., None] * 0.78)
+    arr[..., :3] = np.clip(arr[..., :3], 0, 255)
+    return Image.fromarray(arr.astype(np.uint8), "RGBA")
+
+
+def shadow_hard_edge(image, jar_bbox) -> bool:
+    """A straight luminance cliff under the base. A feathered ellipse does not spike."""
+    try:
+        x0, _y0, x1, y1 = [int(v) for v in jar_bbox]
+    except Exception:
+        return False
+    lum = _lum(_rgb(image))
+    height, width = lum.shape
+    jar_w = max(1, x1 - x0)
+    y_a = min(height - 2, max(0, y1 + 1))
+    y_b = min(height, y_a + max(12, min(18, int(jar_w * 0.045))))
+    x_a = max(0, x0)
+    x_b = min(width, x1)
+    if y_b - y_a < 6 or x_b - x_a < 16:
+        return False
+    crop = lum[y_a:y_b, x_a:x_b]
+    gy = np.abs(np.diff(crop, axis=0))
+    gx = np.abs(np.diff(crop, axis=1))
+
+    def _run(flags) -> int:
+        best = run = 0
+        for value in flags:
+            run = run + 1 if value else 0
+            if run > best:
+                best = run
+        return best
+
+    span = x_b - x_a
+    horiz = max(_run(row > 22.0) for row in gy) / span
+    vert = max(_run(col > 22.0) for col in gx.T)
+    return horiz > 0.40 or vert >= (y_b - y_a - 2)
 
 
 def _shadow_agrees(image, box, light: str) -> bool:

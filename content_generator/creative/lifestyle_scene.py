@@ -323,7 +323,7 @@ def seat_base(fitted):
 
 
 def ground_product(canvas, fitted, jx: int, jy: int, light: str = "left"):
-    """A short soft shadow tucked under the glass. No floor disc and no dropped oval."""
+    """Soft ellipse on the glass foot, then a cast shadow away from the key light."""
     base = canvas.convert("RGBA")
     alpha = fitted.split()[-1]
     width, height = fitted.size
@@ -332,47 +332,18 @@ def ground_product(canvas, fitted, jx: int, jy: int, light: str = "left"):
         if any(alpha.getpixel((x, y)) > 20 for x in range(0, width, 3)):
             foot_y = y
             break
-    foot = [x for x in range(width) if alpha.getpixel((x, foot_y)) > 20]
-    if foot:
-        foot_x0, foot_x1 = foot[0], foot[-1]
+    probe = max(0, foot_y - max(4, int(height * 0.035)))
+    span = [x for x in range(width) if alpha.getpixel((x, probe)) > 20]
+    if len(span) < 4:
+        span = [x for x in range(width) if alpha.getpixel((x, foot_y)) > 20]
+    if span:
+        foot_w = max(12, span[-1] - span[0])
+        cx = jx + (span[0] + span[-1]) // 2
     else:
-        foot_x0, foot_x1 = int(width * 0.35), int(width * 0.65)
-    cx = jx + (foot_x0 + foot_x1) // 2
-    by = jy + foot_y
-    # A narrow foot on an even counter. A wider shade only where the centre is sunlit.
-    from content_generator.creative.scene_natural import shade_plan
-    hold, band = shade_plan(base, cx, by, width)
-    shift = int(width * 0.26) * (-1 if light == "right" else 1)
-    pixels = base.load()
-    for dy in range(1, 42):
-        gain = 0.34 + (hold - 0.34) * min(1.0, (dy - 1) / 6.0)
-        y = by + dy
-        if y < 0 or y >= base.size[1]:
-            continue
-        x0 = max(0, int(cx - band / 2))
-        x1 = min(base.size[0], int(cx + band / 2) + 1)
-        foot = width * 0.14
-        for x in range(x0, x1):
-            applied = gain * (0.55 if dy <= 4 and abs(x - cx) < foot else 1.0)
-            red, green, blue, alpha = pixels[x, y]
-            pixels[x, y] = (int(red * applied), int(green * applied), int(blue * applied), alpha)
-    lobe = max(18, int(width * 0.50))
-    lx = cx + shift
-    reach = 20
-    for dy in range(1, reach + 1):
-        half = (lobe / 2) * (1 - (dy / (reach + 1)) ** 2) ** 0.5
-        gain = 0.22 + 0.55 * (dy / reach)
-        y = by + dy
-        if y < 0 or y >= base.size[1]:
-            continue
-        x0 = max(0, int(lx - half))
-        x1 = min(base.size[0], int(lx + half) + 1)
-        for x in range(x0, x1):
-            edge = abs(x - lx) / max(1.0, half)
-            soft = gain + (1 - gain) * (edge ** 1.35)
-            red, green, blue, alpha = pixels[x, y]
-            pixels[x, y] = (int(red * soft), int(green * soft), int(blue * soft), alpha)
-    return base
+        foot_w = max(12, int(width * 0.62))
+        cx = jx + width // 2
+    from content_generator.creative.scene_natural import paint_contact_shadow
+    return paint_contact_shadow(base, cx, jy + foot_y, foot_w, light)
 
 
 def counter_texture(image, jar_bbox) -> float:
@@ -439,8 +410,8 @@ def contact_depth(image, jar_bbox) -> float:
 def floor_disc_delta(image, jar_bbox) -> float:
     """How much brighter a wide band under the jar is than the counter beside it.
 
-    The band is 40px tall and 1.3x the jar width. A studio ellipse is brighter than
-    the counter. A contact shadow is darker, so its delta is small or negative.
+    The band is the 40px under the jar. A studio ellipse is brighter than the
+    counter beside the footprint. A contact shadow is darker, so its delta is small.
     """
     from PIL import ImageStat
 
@@ -450,13 +421,9 @@ def floor_disc_delta(image, jar_bbox) -> float:
     except Exception:
         return 0.0
     jar_w = max(1, x1 - x0)
-    band_w = max(jar_w + 8, int(jar_w * 1.3))
-    cx = (x0 + x1) // 2
-    bx0 = max(0, cx - band_w // 2)
-    bx1 = min(width, cx + band_w // 2)
     by0 = y1 + 1
     by1 = min(height, y1 + 41)
-    if by1 - by0 < 16 or bx1 - bx0 < 16:
+    if by1 - by0 < 16 or x1 - x0 < 16:
         return 0.0
 
     def _mean(box) -> float | None:
@@ -466,13 +433,16 @@ def floor_disc_delta(image, jar_bbox) -> float:
             return None
         return float(ImageStat.Stat(image.crop(box).convert("L")).mean[0])
 
-    band = _mean((bx0, by0, bx1, by1))
-    side_w = max(24, min(120, jar_w // 5))
-    left = _mean((max(0, bx0 - side_w - 8), by0, max(0, bx0 - 8), by1))
-    right = _mean((min(width, bx1 + 8), by0, min(width, bx1 + 8 + side_w), by1))
+    band = _mean((x0, by0, x1, by1))
+    side_w = max(24, min(80, jar_w // 6))
+    left = _mean((max(0, x0 - side_w - 6), by0, max(0, x0 - 6), by1))
+    right = _mean((min(width, x1 + 6), by0, min(width, x1 + 6 + side_w), by1))
     sides = [value for value in (left, right) if value is not None]
     if band is None or not sides:
         return 0.0
+    # One side falling into a plant is not the counter. Use the lit side.
+    if len(sides) == 2 and abs(sides[0] - sides[1]) > 36:
+        return band - max(sides)
     return band - (sum(sides) / len(sides))
 
 
@@ -489,6 +459,10 @@ def realism_issues(image, jar_bbox, scene_id, *, contact_shadow: bool = True) ->
         issues.append("flat_background")
     if image is not None and floor_disc_delta(image, jar_bbox) > _FLOOR_DISC_DELTA:
         issues.append("floor_disc")
+    if image is not None:
+        from content_generator.creative.scene_natural import shadow_hard_edge
+        if shadow_hard_edge(image, jar_bbox):
+            issues.append("shadow_hard_edge")
     if image is not None and props_overlap(jar_bbox, frame_props(scene_by_id(scene_id), image.size[0], image.size[1])):
         issues.append("prop_overlap")
     if image is not None:

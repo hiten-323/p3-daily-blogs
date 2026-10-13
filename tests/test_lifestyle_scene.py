@@ -89,6 +89,23 @@ def test_story_has_no_floor_ellipse(tmp_path, monkeypatch):
     assert floor_disc_delta(Image.open(path), geometry["jar_bbox"]) <= 18
 
 
+def test_a_hard_shadow_strip_fails():
+    image = Image.new("RGB", (800, 1100), (150, 118, 96))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((220, 280, 560, 820), fill=(130, 80, 160))
+    draw.rectangle((160, 822, 640, 868), fill=(48, 36, 28))
+    from content_generator.creative.lifestyle_scene import realism_issues
+    issues = realism_issues(image, (220, 280, 560, 820), "cafe_table")
+    assert "shadow_hard_edge" in issues
+
+
+def test_a_feathered_ellipse_is_not_a_hard_edge():
+    from content_generator.creative.scene_natural import paint_contact_shadow, shadow_hard_edge
+    plate = Image.new("RGB", (800, 1100), (150, 118, 96))
+    painted = paint_contact_shadow(plate, 400, 820, 260, "left")
+    assert shadow_hard_edge(painted, (220, 280, 560, 820)) is False
+
+
 def test_a_light_ellipse_under_the_jar_fails(tmp_path):
     path = tmp_path / "ellipse.png"
     image = Image.new("RGB", (900, 1200), (48, 36, 28))
