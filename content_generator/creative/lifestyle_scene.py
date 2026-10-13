@@ -11,6 +11,7 @@ SCENES = (
 )
 _IDS = {scene["id"] for scene in SCENES}
 _MIN_TEXTURE = 9.0
+_FLOOR_DISC_DELTA = 18.0
 
 
 def scene_for_day(day: int) -> dict:
@@ -191,8 +192,9 @@ def contact_depth(image, jar_bbox) -> float:
         x0, _y0, x1, y1 = [int(v) for v in jar_bbox]
     except Exception:
         return 0.0
-    cx0 = x0 + int((x1 - x0) * 0.35)
-    cx1 = x0 + int((x1 - x0) * 0.65)
+    # The glass foot is narrower than the label. Sample under the foot, not the whole jar.
+    cx0 = x0 + int((x1 - x0) * 0.46)
+    cx1 = x0 + int((x1 - x0) * 0.54)
 
     def _mean(box) -> float | None:
         if box[2] - box[0] < 8 or box[3] - box[1] < 3:
@@ -209,6 +211,46 @@ def contact_depth(image, jar_bbox) -> float:
     return past - near
 
 
+def floor_disc_delta(image, jar_bbox) -> float:
+    """How much brighter a wide band under the jar is than the counter beside it.
+
+    The band is 40px tall and 1.3x the jar width. A studio ellipse is brighter than
+    the counter. A contact shadow is darker, so its delta is small or negative.
+    """
+    from PIL import ImageStat
+
+    width, height = image.size
+    try:
+        x0, _y0, x1, y1 = [int(v) for v in jar_bbox]
+    except Exception:
+        return 0.0
+    jar_w = max(1, x1 - x0)
+    band_w = max(jar_w + 8, int(jar_w * 1.3))
+    cx = (x0 + x1) // 2
+    bx0 = max(0, cx - band_w // 2)
+    bx1 = min(width, cx + band_w // 2)
+    by0 = y1 + 1
+    by1 = min(height, y1 + 41)
+    if by1 - by0 < 16 or bx1 - bx0 < 16:
+        return 0.0
+
+    def _mean(box) -> float | None:
+        if box[2] - box[0] < 8 or box[3] - box[1] < 8:
+            return None
+        if box[1] < 0 or box[3] > height or box[0] < 0 or box[2] > width:
+            return None
+        return float(ImageStat.Stat(image.crop(box).convert("L")).mean[0])
+
+    band = _mean((bx0, by0, bx1, by1))
+    side_w = max(24, min(120, jar_w // 5))
+    left = _mean((max(0, bx0 - side_w - 8), by0, max(0, bx0 - 8), by1))
+    right = _mean((min(width, bx1 + 8), by0, min(width, bx1 + 8 + side_w), by1))
+    sides = [value for value in (left, right) if value is not None]
+    if band is None or not sides:
+        return 0.0
+    return band - (sum(sides) / len(sides))
+
+
 def realism_issues(image, jar_bbox, scene_id, *, contact_shadow: bool = True) -> list[str]:
     """Fail closed when the frame is a flat backdrop, an unknown plate, or an ungrounded jar."""
     issues = []
@@ -220,4 +262,6 @@ def realism_issues(image, jar_bbox, scene_id, *, contact_shadow: bool = True) ->
         issues.append("contact_shadow_missing")
     if image is not None and counter_texture(image, jar_bbox) < _MIN_TEXTURE:
         issues.append("flat_background")
+    if image is not None and floor_disc_delta(image, jar_bbox) > _FLOOR_DISC_DELTA:
+        issues.append("floor_disc")
     return issues

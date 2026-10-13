@@ -58,6 +58,14 @@ def test_bold_front_mask_keeps_the_label():
     rows = np.where((alpha > 40).any(axis=1))[0]
     center = foot[rows[-1], cut.width // 2 - 20:cut.width // 2 + 20]
     assert float(np.median(center)) < 120
+    # The studio ellipse is as wide as the jar. The glass foot is narrower.
+    widths = []
+    for y in range(int(rows[0]), int(rows[-1]) + 1):
+        cols = np.where(alpha[y] > 40)[0]
+        if len(cols):
+            widths.append(int(cols[-1] - cols[0]))
+    foot_w = float(np.mean(widths[-3:]))
+    assert foot_w < max(widths) * 0.55
 
 
 def test_reel_prompts_do_not_share_a_cta_or_the_roasted_root_line():

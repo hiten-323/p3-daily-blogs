@@ -61,7 +61,11 @@ def segment_product(img: Image.Image, cache_key: str | None = None) -> Image.Ima
         raise MaskIntegrityError("mask_empty")
     chosen = chosen[rows[0]:rows[-1] + 1, cols[0]:cols[-1] + 1]
     source = source.crop((int(cols[0]), int(rows[0]), int(cols[-1]) + 1, int(rows[-1]) + 1))
-    cut = _feather(_apply_alpha(source, chosen))
+    cut = _apply_alpha(source, chosen)
+    # A blurred alpha must not paint the white floor back in.
+    cleared = np.array(cut)
+    cleared[cleared[:, :, 3] < 16, :3] = 0
+    cut = _feather(Image.fromarray(cleared))
     _cache[key] = cut
     return cut.copy()
 
@@ -154,26 +158,50 @@ def _roughness(alpha: np.ndarray) -> float:
     return float(edge.sum()) / (area ** 0.5)
 
 
+def _glass_span(dark_row: np.ndarray, alpha_row: np.ndarray) -> tuple[int, int] | None:
+    """The glass on one row, bridging a bright reflection. The floor beside it is excluded."""
+    xs = np.where((alpha_row > 16) & (dark_row < 130))[0]
+    if len(xs) < 24:
+        return None
+    groups = []
+    start = prev = int(xs[0])
+    for x in xs[1:]:
+        x = int(x)
+        if x - prev > 100:
+            groups.append((start, prev))
+            start = x
+        prev = x
+    groups.append((start, prev))
+    groups = [pair for pair in groups if pair[1] - pair[0] >= 24]
+    if not groups:
+        return None
+    center = int(np.median(xs))
+    left, right = min(groups, key=lambda pair: abs(((pair[0] + pair[1]) / 2) - center))
+    return left, right
+
+
 def _trim_floor_disc(rgb: np.ndarray, alpha: np.ndarray) -> np.ndarray:
-    """Remove the studio-floor ellipse under the glass. The label stays."""
+    """Drop the studio ellipse under the base. It is wider than the glass. The label stays."""
     out = alpha.copy()
     dark = rgb.min(axis=2)
-    cols = np.where((out > 16).any(axis=0))[0]
-    if len(cols) == 0:
+    rows = np.where((out > 40).any(axis=1))[0]
+    if len(rows) < 24:
         return out
-    center_x = int((int(cols[0]) + int(cols[-1])) / 2)
-    cx0 = max(0, center_x - 28)
-    cx1 = min(out.shape[1], center_x + 28)
-    for y in range(out.shape[0] - 1, int(out.shape[0] * 0.55), -1):
+    y0, y1 = int(rows[0]), int(rows[-1])
+    floor_top = y1 - max(24, int((y1 - y0) * 0.10))
+    for y in range(y1, floor_top, -1):
         opaque = out[y] > 16
         if int(opaque.sum()) < 8:
             continue
-        center = opaque[cx0:cx1]
-        if int(center.sum()) < 4:
+        span = _glass_span(dark[y], out[y])
+        if span is None:
+            if float(np.median(dark[y, opaque])) >= 140:
+                out[y, opaque] = 0
             continue
-        if float(np.median(dark[y, cx0:cx1][center])) < 70:
-            break
-        out[y, opaque] = 0
+        left, right = span
+        outside = opaque.copy()
+        outside[max(0, left - 2):right + 3] = False
+        out[y, outside] = 0
     return out
 
 
