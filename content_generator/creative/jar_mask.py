@@ -54,11 +54,14 @@ def segment_product(img: Image.Image, cache_key: str | None = None) -> Image.Ima
             break
     else:
         raise MaskIntegrityError(", ".join(issues))
-    cut = _feather(_apply_alpha(source, chosen))
-    bbox = cut.getbbox()
-    if not bbox:
+    chosen = _trim_floor_disc(rgb, chosen)
+    rows = np.where((chosen > 16).any(axis=1))[0]
+    cols = np.where((chosen > 16).any(axis=0))[0]
+    if len(rows) == 0 or len(cols) == 0:
         raise MaskIntegrityError("mask_empty")
-    cut = cut.crop(bbox)
+    chosen = chosen[rows[0]:rows[-1] + 1, cols[0]:cols[-1] + 1]
+    source = source.crop((int(cols[0]), int(rows[0]), int(cols[-1]) + 1, int(rows[-1]) + 1))
+    cut = _feather(_apply_alpha(source, chosen))
     _cache[key] = cut
     return cut.copy()
 
@@ -149,6 +152,29 @@ def _roughness(alpha: np.ndarray) -> float:
     right[:, :-1] = opaque[:, 1:]
     edge = opaque & ~(up & down & left & right)
     return float(edge.sum()) / (area ** 0.5)
+
+
+def _trim_floor_disc(rgb: np.ndarray, alpha: np.ndarray) -> np.ndarray:
+    """Remove the studio-floor ellipse under the glass. The label stays."""
+    out = alpha.copy()
+    dark = rgb.min(axis=2)
+    cols = np.where((out > 16).any(axis=0))[0]
+    if len(cols) == 0:
+        return out
+    center_x = int((int(cols[0]) + int(cols[-1])) / 2)
+    cx0 = max(0, center_x - 28)
+    cx1 = min(out.shape[1], center_x + 28)
+    for y in range(out.shape[0] - 1, int(out.shape[0] * 0.55), -1):
+        opaque = out[y] > 16
+        if int(opaque.sum()) < 8:
+            continue
+        center = opaque[cx0:cx1]
+        if int(center.sum()) < 4:
+            continue
+        if float(np.median(dark[y, cx0:cx1][center])) < 70:
+            break
+        out[y, opaque] = 0
+    return out
 
 
 def _apply_alpha(img: Image.Image, alpha: np.ndarray) -> Image.Image:

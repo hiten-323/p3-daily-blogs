@@ -117,46 +117,41 @@ def seat_base(fitted):
 
 
 def ground_product(canvas, fitted, jx: int, jy: int):
-    """Contact shadow wider than the glass foot, then a short reflection. Jar stays unblurred."""
-    from PIL import Image, ImageDraw, ImageFilter
-
+    """A short soft shadow tucked under the glass. No floor disc and no dropped oval."""
     base = canvas.convert("RGBA")
     alpha = fitted.split()[-1]
     width, height = fitted.size
-    foot = [x for x in range(width) if alpha.getpixel((x, height - 1)) > 20]
+    foot_y = height - 1
+    for y in range(height - 1, int(height * 0.7), -1):
+        if any(alpha.getpixel((x, y)) > 20 for x in range(0, width, 3)):
+            foot_y = y
+            break
+    foot = [x for x in range(width) if alpha.getpixel((x, foot_y)) > 20]
     if foot:
         foot_x0, foot_x1 = foot[0], foot[-1]
     else:
         foot_x0, foot_x1 = int(width * 0.35), int(width * 0.65)
     foot_w = max(12, foot_x1 - foot_x0)
     cx = jx + (foot_x0 + foot_x1) // 2
-    by = jy + height - 1
-    shadow = Image.new("RGBA", base.size, (0, 0, 0, 0))
-    draw = ImageDraw.Draw(shadow)
-    sw, sh = int(foot_w * 2.2), max(18, int(height * 0.04))
-    draw.ellipse((cx - sw // 2, by - 2, cx + sw // 2, by + sh), fill=(8, 5, 4, 210))
-    tight_w, tight_h = int(foot_w * 1.15), max(10, int(height * 0.02))
-    draw.ellipse((cx - tight_w // 2, by - 1, cx + tight_w // 2, by + tight_h), fill=(0, 0, 0, 245))
-    base = Image.alpha_composite(base, shadow.filter(ImageFilter.GaussianBlur(radius=3.5)))
-    return contact_reflection(base, fitted, jx, jy)
-
-
-def contact_reflection(base, fitted, jx: int, jy: int):
-    """Short faded reflection under the base. The product layer stays unblurred."""
-    from PIL import Image, ImageFilter
-
-    gap = base.size[1] - (jy + fitted.height)
-    reflect_h = min(18, int(fitted.height * 0.04), max(0, gap - 16))
-    if reflect_h < 8:
-        return base
-    flipped = fitted.transpose(Image.Transpose.FLIP_TOP_BOTTOM).crop((0, 0, fitted.width, reflect_h))
-    fade = Image.new("L", flipped.size, 0)
-    for row in range(reflect_h):
-        fade.paste(int(70 * (1 - row / reflect_h)), (0, row, flipped.width, row + 1))
-    alpha = Image.composite(fade, Image.new("L", flipped.size, 0), flipped.split()[-1])
-    flipped.putalpha(alpha)
-    soft = flipped.filter(ImageFilter.GaussianBlur(radius=0.7))
-    base.paste(soft, (jx, jy + fitted.height + 11), soft)
+    by = jy + foot_y
+    # Darken the counter directly under the glass. A separate oval reads as a floating disc.
+    sw = max(20, int(foot_w * 0.92))
+    sh = max(8, min(12, int(height * 0.02)))
+    pixels = base.load()
+    rx = sw / 2
+    for dy in range(1, sh + 1):
+        half = rx * (1 - (dy / (sh + 1)) ** 2) ** 0.5
+        gain = 0.30 + 0.64 * (dy / sh)
+        y = by + dy
+        if y < 0 or y >= base.size[1]:
+            continue
+        x0 = max(0, int(cx - half))
+        x1 = min(base.size[0], int(cx + half) + 1)
+        for x in range(x0, x1):
+            edge = abs(x - cx) / max(1.0, half)
+            soft = gain + (1 - gain) * (edge ** 1.5)
+            red, green, blue, alpha = pixels[x, y]
+            pixels[x, y] = (int(red * soft), int(green * soft), int(blue * soft), alpha)
     return base
 
 
@@ -188,7 +183,7 @@ def counter_texture(image, jar_bbox) -> float:
 
 
 def contact_depth(image, jar_bbox) -> float:
-    """Luminance lift from the contact line to the counter just below it."""
+    """How much darker the contact line is than the counter beside it."""
     from PIL import ImageStat
 
     width, height = image.size
@@ -196,21 +191,22 @@ def contact_depth(image, jar_bbox) -> float:
         x0, _y0, x1, y1 = [int(v) for v in jar_bbox]
     except Exception:
         return 0.0
-    cx0 = x0 + int((x1 - x0) * 0.38)
-    cx1 = x0 + int((x1 - x0) * 0.62)
+    cx0 = x0 + int((x1 - x0) * 0.35)
+    cx1 = x0 + int((x1 - x0) * 0.65)
 
     def _mean(box) -> float | None:
-        if box[2] - box[0] < 8 or box[3] - box[1] < 4:
+        if box[2] - box[0] < 8 or box[3] - box[1] < 3:
             return None
         if box[1] < 0 or box[3] > height or box[0] < 0 or box[2] > width:
             return None
         return float(ImageStat.Stat(image.crop(box).convert("L")).mean[0])
 
-    near = _mean((cx0, y1 + 1, cx1, y1 + 10))
-    far = _mean((cx0, y1 + 28, cx1, y1 + 46))
-    if near is None or far is None:
+    # The contact line against the counter a few pixels past that shadow.
+    near = _mean((cx0, y1 + 1, cx1, y1 + 4))
+    past = _mean((cx0, y1 + 6, cx1, y1 + 11))
+    if near is None or past is None:
         return 0.0
-    return far - near
+    return past - near
 
 
 def realism_issues(image, jar_bbox, scene_id, *, contact_shadow: bool = True) -> list[str]:

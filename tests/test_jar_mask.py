@@ -53,6 +53,11 @@ def test_bold_front_mask_keeps_the_label():
     rgb = np.asarray(preview.convert("RGB"))
     white = (rgb.min(axis=2) > 245).sum()
     assert white < 200
+    alpha = np.asarray(cut.split()[-1])
+    foot = np.asarray(cut.convert("RGB")).min(axis=2)
+    rows = np.where((alpha > 40).any(axis=1))[0]
+    center = foot[rows[-1], cut.width // 2 - 20:cut.width // 2 + 20]
+    assert float(np.median(center)) < 120
 
 
 def test_reel_prompts_do_not_share_a_cta_or_the_roasted_root_line():
