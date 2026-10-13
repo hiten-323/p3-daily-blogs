@@ -394,8 +394,9 @@ def compose_conversion_frame(
 
     cta_h = int(footer_font.size * 2.4)
     cta_top = zone[3] - cta_h
-    from content_generator.creative.lifestyle_scene import product_rect
-    jar_rect = product_rect(width, height, y, cta_top, zone)
+    from content_generator.creative.lifestyle_scene import frame_props, place_product, scene_for_day
+    jar_rect = place_product(scene_for_day(day), width, height, y, cta_top, zone, jar.size)
+    prop_boxes = [dict(prop, box=list(prop["box"])) for prop in frame_props(scene_for_day(day), width, height)]
     canvas, jar_bbox, scale = paste_product_jar(canvas, jar, jar_rect)
     canvas, cta_box = _draw_cta(canvas, copy["cta"], footer_font, cta_top + 6, width)
     if cta_box:
@@ -423,6 +424,7 @@ def compose_conversion_frame(
         "scene_id": scene_id,
         "contact_shadow": True,
         "lifestyle_required": True,
+        "props": prop_boxes,
     })
     try:
         from content_generator.creative.jar_provenance import record_jar_provenance

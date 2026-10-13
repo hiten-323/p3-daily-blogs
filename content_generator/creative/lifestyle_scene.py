@@ -3,11 +3,35 @@ from __future__ import annotations
 
 import os
 
+# Prop boxes are pixels of the 720×1280 plate. "side" is where the jar sits.
 SCENES = (
-    {"id": "kitchen_morning", "file": "brand_assets/scenes/kitchen_morning.jpg"},
-    {"id": "cafe_table", "file": "brand_assets/scenes/cafe_table.jpg"},
-    {"id": "work_desk", "file": "brand_assets/scenes/work_desk.jpg"},
-    {"id": "balcony_sunrise", "file": "brand_assets/scenes/balcony_sunrise.jpg"},
+    {
+        "id": "kitchen_morning",
+        "file": "brand_assets/scenes/kitchen_morning.jpg",
+        "size": (720, 1280),
+        "props": (),
+    },
+    {
+        "id": "cafe_table",
+        "file": "brand_assets/scenes/cafe_table.jpg",
+        "size": (720, 1280),
+        "props": ({"id": "cup", "box": (394, 644, 610, 896), "side": "left"},),
+    },
+    {
+        "id": "work_desk",
+        "file": "brand_assets/scenes/work_desk.jpg",
+        "size": (720, 1280),
+        "props": ({"id": "laptop", "box": (148, 470, 498, 636), "side": "right"},),
+    },
+    {
+        "id": "balcony_sunrise",
+        "file": "brand_assets/scenes/balcony_sunrise.jpg",
+        "size": (720, 1280),
+        "props": (
+            {"id": "plant_left", "box": (0, 630, 236, 880), "side": "right"},
+            {"id": "plant_right", "box": (600, 980, 720, 1120), "side": "left"},
+        ),
+    },
 )
 _IDS = {scene["id"] for scene in SCENES}
 _MIN_TEXTURE = 9.0
@@ -17,6 +41,13 @@ _FLOOR_DISC_DELTA = 18.0
 def scene_for_day(day: int) -> dict:
     """Rotate the setting each day. The jar photo does not change with the scene."""
     return SCENES[int(day or 0) % len(SCENES)]
+
+
+def scene_by_id(scene_id: str | None) -> dict | None:
+    for scene in SCENES:
+        if scene["id"] == scene_id:
+            return scene
+    return None
 
 
 def _root() -> str:
@@ -99,6 +130,109 @@ def product_rect(width: int, height: int, text_bottom: int, cta_top: int, zone) 
     left = max(int(zone[0]), (width - max_w) // 2)
     right = min(int(zone[2]), left + max_w)
     return (left, top, right, max(top + 80, base))
+
+
+def frame_props(scene, width: int, height: int) -> list[dict]:
+    """Prop boxes in the cover-cropped frame. The same crop load_plate uses."""
+    if not scene:
+        return []
+    src_w, src_h = scene.get("size", (720, 1280))
+    scale = max(width / src_w, height / src_h)
+    left = (src_w * scale - width) / 2
+    top = (src_h * scale - height) / 2
+    mapped = []
+    for prop in scene.get("props", ()):
+        x0, y0, x1, y1 = prop["box"]
+        box = (
+            int(round(x0 * scale - left)),
+            int(round(y0 * scale - top)),
+            int(round(x1 * scale - left)),
+            int(round(y1 * scale - top)),
+        )
+        if box[2] <= 0 or box[3] <= 0 or box[0] >= width or box[1] >= height:
+            continue
+        mapped.append({"id": prop["id"], "side": prop.get("side", "left"), "box": box})
+    return mapped
+
+
+def props_overlap(jar_bbox, props) -> list[str]:
+    """Prop ids whose box intersects the jar. Touching edges do not count."""
+    try:
+        x0, y0, x1, y1 = [int(v) for v in jar_bbox]
+    except Exception:
+        return []
+    hits = []
+    for prop in props or []:
+        a0, b0, a1, b1 = prop["box"]
+        if x0 < a1 and x1 > a0 and y0 < b1 and y1 > b0:
+            hits.append(prop["id"])
+    return hits
+
+
+def _free_spans(limit_l: int, limit_r: int, blocked: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    spans = [(limit_l, limit_r)]
+    for b0, b1 in sorted(blocked):
+        nxt = []
+        for s0, s1 in spans:
+            if b1 <= s0 or b0 >= s1:
+                nxt.append((s0, s1))
+                continue
+            if s0 < b0:
+                nxt.append((s0, b0))
+            if b1 < s1:
+                nxt.append((b1, s1))
+        spans = [(a, b) for a, b in nxt if b - a >= 8]
+    return spans
+
+
+def place_product(scene, width, height, text_bottom, cta_top, zone, jar_size) -> tuple[int, int, int, int]:
+    """Sit the jar beside scene props. The base stays on the counter, in front of them."""
+    slot = product_rect(width, height, text_bottom, cta_top, zone)
+    base = slot[3]
+    max_h = max(80, base - slot[1])
+    max_w = max(80, slot[2] - slot[0])
+    jar_w, jar_h = [max(1, int(v)) for v in jar_size]
+    props = frame_props(scene, width, height)
+    gap = max(24, int(width * 0.034))
+    limit_l, limit_r = int(zone[0]), int(zone[2])
+    full = min(1.0, max_w / jar_w, max_h / jar_h)
+    min_h = int(height * 0.285)
+    scales = [full]
+    for prop in props:
+        clear_h = base - prop["box"][3]
+        if min_h <= clear_h < jar_h * full:
+            scales.append(clear_h / jar_h)
+    for scale in sorted(set(scales), reverse=True):
+        jw = max(1, int(round(jar_w * scale)))
+        jh = max(1, int(round(jar_h * scale)))
+        if jh < min_h:
+            continue
+        top = base - jh
+        blocked = []
+        for prop in props:
+            a0, b0, a1, b1 = prop["box"]
+            if top >= b1 or base <= b0:
+                continue
+            blocked.append((a0 - gap, a1 + gap))
+        placed = None
+        for s0, s1 in _free_spans(limit_l, limit_r, blocked):
+            if s1 - s0 < jw:
+                continue
+            on_right = any(b0 >= s1 - 2 for b0, _b1 in blocked)
+            on_left = any(b1 <= s0 + 2 for _b0, b1 in blocked)
+            if on_right and not on_left:
+                jx = s1 - jw
+            elif on_left and not on_right:
+                jx = s0
+            else:
+                jx = s0 + (s1 - s0 - jw) // 2
+            beside = 1 if on_left or on_right else 0
+            if placed is None or (beside, s1 - s0) > placed[0]:
+                placed = ((beside, s1 - s0), jx)
+        if placed:
+            jx = placed[1]
+            return (jx, top, jx + jw, base)
+    return slot
 
 
 def seat_base(fitted):
@@ -203,12 +337,18 @@ def contact_depth(image, jar_bbox) -> float:
             return None
         return float(ImageStat.Stat(image.crop(box).convert("L")).mean[0])
 
-    # The contact line against the counter a few pixels past that shadow.
+    # Darkest at the glass, then the counter. Use the brightest step so a
+    # floor that darkens further down does not cancel the contact shadow.
     near = _mean((cx0, y1 + 1, cx1, y1 + 4))
-    past = _mean((cx0, y1 + 6, cx1, y1 + 11))
-    if near is None or past is None:
+    later = [
+        _mean((cx0, y1 + 4, cx1, y1 + 7)),
+        _mean((cx0, y1 + 6, cx1, y1 + 9)),
+        _mean((cx0, y1 + 8, cx1, y1 + 11)),
+    ]
+    later = [value for value in later if value is not None]
+    if near is None or not later:
         return 0.0
-    return past - near
+    return max(later) - near
 
 
 def floor_disc_delta(image, jar_bbox) -> float:
@@ -264,4 +404,6 @@ def realism_issues(image, jar_bbox, scene_id, *, contact_shadow: bool = True) ->
         issues.append("flat_background")
     if image is not None and floor_disc_delta(image, jar_bbox) > _FLOOR_DISC_DELTA:
         issues.append("floor_disc")
+    if image is not None and props_overlap(jar_bbox, frame_props(scene_by_id(scene_id), image.size[0], image.size[1])):
+        issues.append("prop_overlap")
     return issues

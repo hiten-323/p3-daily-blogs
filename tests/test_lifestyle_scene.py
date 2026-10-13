@@ -6,7 +6,13 @@ import json
 from PIL import Image, ImageDraw
 
 from content_generator.creative.jar_frame import audit_product_image, compose_conversion_frame
-from content_generator.creative.lifestyle_scene import floor_disc_delta, scene_for_day
+from content_generator.creative.lifestyle_scene import (
+    floor_disc_delta,
+    frame_props,
+    props_overlap,
+    scene_by_id,
+    scene_for_day,
+)
 
 
 def test_scenes_rotate_by_day():
@@ -103,6 +109,58 @@ def test_a_light_ellipse_under_the_jar_fails(tmp_path):
     result = audit_product_image(str(path))
     assert not result["ok"]
     assert any("floor_disc" in issue for issue in result["issues"])
+
+
+def test_jar_sits_beside_scene_props(tmp_path, monkeypatch):
+    import content_generator.creative.jar_frame as jar_frame
+    monkeypatch.setattr(jar_frame, "_OUT_DIR", str(tmp_path))
+    cases = (
+        (285, 1080, 1920, "story"),
+        (286, 1080, 1920, "story"),
+        (287, 1080, 1920, "story"),
+        (284, 1080, 1350, "feed"),
+    )
+    for day, width, height, fmt in cases:
+        path = compose_conversion_frame(
+            product="Bold",
+            day=day,
+            width=width,
+            height=height,
+            label=f"prop_{day}_{fmt}",
+            format_name=fmt,
+            on_date="2026-10-13",
+            out_dir=str(tmp_path),
+        )
+        assert path
+        result = audit_product_image(path)
+        assert result["ok"], result
+        geometry = json.loads(open(path + ".jar.json", encoding="utf-8").read())
+        props = frame_props(scene_by_id(geometry["scene_id"]), width, height)
+        assert props_overlap(geometry["jar_bbox"], props) == []
+
+
+def test_a_jar_covering_the_cup_fails(tmp_path):
+    scene = scene_by_id("cafe_table")
+    props = frame_props(scene, 1080, 1920)
+    cup = props[0]["box"]
+    path = tmp_path / "cover.png"
+    image = Image.new("RGB", (1080, 1920), (36, 28, 22))
+    ImageDraw.Draw(image).rectangle((80, 400, 1000, 1500), fill=(90, 70, 52))
+    image.save(path)
+    with open(str(path) + ".jar.json", "w", encoding="utf-8") as handle:
+        json.dump({
+            "jar_required": True,
+            "jar_bbox": list(cup),
+            "text_boxes": [],
+            "safe_zone": [40, 40, 1040, 1880],
+            "scale": 1.0,
+            "lifestyle_required": True,
+            "contact_shadow": True,
+            "scene_id": "cafe_table",
+        }, handle)
+    result = audit_product_image(str(path))
+    assert not result["ok"]
+    assert any("prop_overlap" in issue for issue in result["issues"])
 
 
 def test_flat_backdrop_fails_realism(tmp_path):
