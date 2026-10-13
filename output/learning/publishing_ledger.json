@@ -1238,6 +1238,84 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-12T07:06:54+00:00"
     },
+    "2026-10-13|evening|facebook|pb_6519eaa6ec": {
+      "attempt_count": 1,
+      "content_date": "2026-10-13",
+      "content_id": "pb_6519eaa6ec",
+      "day_number": 285,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-13T21:30:39+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-13T21:30:48+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "494003270464484_122168002442655685",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/posts/122168002442655685",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-13T21:30:39+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-13T21:30:48+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "remote_id": "494003270464484_122168002442655685",
+      "slot": "evening",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-13T21:30:47+00:00",
+      "url": "https://www.facebook.com/494003270464484/posts/122168002442655685",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-13T21:30:48+00:00"
+    },
+    "2026-10-13|evening|instagram|pb_6519eaa6ec": {
+      "attempt_count": 1,
+      "content_date": "2026-10-13",
+      "content_id": "pb_6519eaa6ec",
+      "day_number": 285,
+      "error": "Only photo or video can be accepted as media type.",
+      "history": [
+        {
+          "at": "2026-10-13T21:30:28+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-13T21:30:39+00:00",
+          "attempt": 1,
+          "error": "Only photo or video can be accepted as media type.",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-13T21:30:28+00:00",
+      "last_result": {
+        "error": "Only photo or video can be accepted as media type.",
+        "success": false
+      },
+      "next_retry_at": "2026-10-13T21:35:39+00:00",
+      "platform": "instagram",
+      "remote_id": "",
+      "slot": "evening",
+      "status": "FAILED",
+      "updated_at": "2026-10-13T21:30:39+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
     "2026-10-13|generate|linkedin|pb_6519eaa6ec": {
       "attempt_count": 4,
       "content_date": "2026-10-13",
