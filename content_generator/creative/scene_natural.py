@@ -7,12 +7,14 @@ from __future__ import annotations
 
 import numpy as np
 
-# A 50g jar is about a mug tall, a little shorter. The mug is 9.5cm.
+# The jar is the foreground hero. It sits closer than the mug, so it reads larger.
 JAR_CM = 8.8
 EDGE_X = 0.08
 _LUM_TOL = 36.0
 _CAST_TOL = 24.0
-_SCALE_TOL = 0.18
+# Laplacian on the label crop. The whole-jar score stays in jar_frame.
+LABEL_LAPLACIAN_MIN = 180.0
+_HERO = {"story": (0.35, 0.50), "feed": (0.30, 0.45), "landscape": (0.40, 0.64)}
 
 
 def frame_crop(scene, width: int, height: int) -> tuple[float, float, float]:
@@ -23,6 +25,11 @@ def frame_crop(scene, width: int, height: int) -> tuple[float, float, float]:
     top = (src_h * scale - height) / 2
     ref = scale_ref(scene)
     if not ref:
+        return scale, left, top
+    if height < width * 0.85:
+        # Keep the prop in the upper half. The jar stands in front of it.
+        anchored = ref["box"][3] * scale - height * 0.48
+        top = min(max(0.0, anchored), max(0.0, src_h * scale - height))
         return scale, left, top
     y0 = ref["box"][1] * scale - top
     y1 = ref["box"][3] * scale - top
@@ -39,6 +46,27 @@ def map_box(scene, box, width: int, height: int) -> tuple[float, float, float, f
     scale, left, top = frame_crop(scene, width, height)
     x0, y0, x1, y1 = box
     return (x0 * scale - left, y0 * scale - top, x1 * scale - left, y1 * scale - top)
+
+
+def hero_bounds(width: int, height: int) -> tuple[float, float]:
+    """Story/Reel 35–50% of the frame. Feed/square 30–45%. Landscape stays a hero too."""
+    if height > width * 1.3:
+        return _HERO["story"]
+    if width > height * 1.2:
+        return _HERO["landscape"]
+    return _HERO["feed"]
+
+
+def hero_height(width: int, height: int, ref_h: float, native_h: int) -> int:
+    """Foreground size: inside the hero band, at least 1.15× the prop, never above native."""
+    lo, hi = hero_bounds(width, height)
+    native_h = max(1, int(native_h))
+    mid = int(round(height * ((lo + hi) / 2.0)))
+    # Closer to the camera than the prop, so the jar is larger than the cup.
+    ahead = int(round(max(1.0, ref_h) * 1.28))
+    cap = min(native_h, int(height * hi))
+    floor = min(cap, max(int(height * lo), int(ref_h) + 1))
+    return max(floor, min(max(mid, ahead), cap))
 
 
 def scale_ref(scene) -> dict | None:
@@ -127,11 +155,8 @@ def grade_to_scene(jar, plate, rect, light: str = "left"):
     streak = np.exp(-((xs - (0.16 if light != "right" else 0.84)) ** 2) / 0.0035)
     rgb = rgb + streak[None, :, None] * clear[..., None] * 9.0
     ys = np.linspace(0.0, 1.0, height, dtype=np.float32)
-    ao = 1.0 - 0.28 * np.clip((ys - 0.82) / 0.18, 0.0, 1.0)
-    rgb = rgb * ao[:, None, None]
-    rng = np.random.default_rng(11)
-    noise = rng.normal(0.0, 2.0, rgb.shape).astype(np.float32)
-    rgb = np.clip(rgb + noise * clear[..., None], 0, 255)
+    ao = 1.0 - 0.22 * np.clip((ys - 0.84) / 0.16, 0.0, 1.0)
+    rgb = np.clip(rgb * ao[:, None, None], 0, 255)
     out = np.concatenate([rgb, alpha[..., None]], axis=2).astype(np.uint8)
     return Image.fromarray(out, "RGBA")
 
@@ -219,6 +244,37 @@ def _sample(image, box) -> np.ndarray | None:
     return rgb[y0:y1, x0:x1]
 
 
+def _nearest_prop_height(scene, width: int, height: int) -> float:
+    """Tallest photographed prop in the frame. A synthetic scale box is not a prop."""
+    from content_generator.creative.lifestyle_scene import frame_props
+
+    tallest = 0.0
+    for prop in frame_props(scene, width, height):
+        _x0, y0, _x1, y1 = prop["box"]
+        visible = min(float(y1), float(height)) - max(float(y0), 0.0)
+        if visible > tallest:
+            tallest = visible
+    return tallest
+
+
+def _label_sharpness(image, box) -> float:
+    """Laplacian variance of the label, where the words have to stay readable."""
+    from PIL import ImageFilter, ImageStat
+
+    x0, y0, x1, y1 = [int(v) for v in box]
+    width, height = max(1, x1 - x0), max(1, y1 - y0)
+    crop = image.crop((
+        x0 + int(width * 0.18),
+        y0 + int(height * 0.36),
+        x0 + int(width * 0.82),
+        y0 + int(height * 0.74),
+    )).convert("L")
+    if crop.size[0] < 8 or crop.size[1] < 8:
+        return 0.0
+    kernel = ImageFilter.Kernel((3, 3), [0, 1, 0, 1, -4, 1, 0, 1, 0], scale=1, offset=128)
+    return float(ImageStat.Stat(crop.filter(kernel)).var[0])
+
+
 def naturalism_issues(image, jar_bbox, scene) -> list[str]:
     """Fail when the jar ignores the prop's size, the frame edge, or the local light."""
     issues = []
@@ -233,14 +289,16 @@ def naturalism_issues(image, jar_bbox, scene) -> list[str]:
         issues.append("jar_at_frame_edge")
     if y0 < height * 0.03 or y1 > height * 0.97:
         issues.append("jar_at_frame_edge")
-    ref = scale_ref(scene)
-    if ref:
-        box = map_box(scene, ref["box"], width, height)
-        ref_h = max(1.0, box[3] - box[1])
-        target = (JAR_CM / float(ref["height_cm"])) * float(ref.get("depth", 0.96))
-        ratio = (y1 - y0) / ref_h
-        if ratio < target * (1 - _SCALE_TOL) or ratio > target * (1 + _SCALE_TOL):
-            issues.append("scale_unnatural")
+    lo, hi = hero_bounds(width, height)
+    frac = (y1 - y0) / max(1, height)
+    if frac < lo - 0.005 or frac > hi + 0.02:
+        issues.append("jar_not_hero")
+    prop_h = _nearest_prop_height(scene, width, height)
+    if prop_h > 8 and (y1 - y0) < prop_h:
+        issues.append("smaller_than_prop")
+    label = _label_sharpness(image, (x0, y0, x1, y1))
+    if label < LABEL_LAPLACIAN_MIN:
+        issues.append("label_soft")
     glass = _glass(image, (x0, y0, x1, y1))
     table = _surround(image, (x0, y0, x1, y1))
     if glass is not None and table is not None:
@@ -268,25 +326,43 @@ def _glass(image, box):
     crop = rgb[y0:y1, x0:x1]
     rows, cols = crop.shape[:2]
     cap = crop[: max(6, int(rows * 0.10)), int(cols * 0.12): max(int(cols * 0.12) + 6, int(cols * 0.88))]
-    if cap.size:
-        lit = _lum(cap)
-        picked = cap[lit >= max(55.0, float(np.percentile(lit, 55)))]
-        if picked.shape[0] >= 30:
-            return picked.reshape(-1, 1, 3)
-    return _side_columns(image, (x0, y0, x1, y1))
-
-
-def _side_columns(image, box):
-    x0, y0, x1, y1 = box
-    span = max(8, int((x1 - x0) * 0.16))
-    y_a = y0 + int((y1 - y0) * 0.30)
-    y_b = y0 + int((y1 - y0) * 0.82)
-    left = _sample(image, (x0 + 2, y_a, x0 + span, y_b))
-    right = _sample(image, (x1 - span, y_a, x1 - 2, y_b))
-    parts = [part for part in (left, right) if part is not None]
-    if not parts:
+    if cap.size < 30:
         return None
-    return parts[0] if len(parts) == 1 else np.concatenate(parts, axis=1)
+    lit = _lum(cap)
+    # Lit metal only. The side columns are brand ink and stay out of the check.
+    picked = cap[lit >= float(np.percentile(lit, 60))]
+    if picked.shape[0] < 20:
+        picked = cap.reshape(-1, 3)
+    return picked.reshape(-1, 1, 3)
+
+
+def shade_plan(canvas, cx: int, by: int, jar_w: int) -> tuple[float, int]:
+    """Hold gain and shade width. A sunlit patch between darker props needs the wide band."""
+    rgb = _rgb(canvas)
+    height, width = rgb.shape[:2]
+    lum = _lum(rgb)
+    band_w = max(jar_w + 8, int(jar_w * 1.3))
+    bx0 = max(0, cx - band_w // 2)
+    bx1 = min(width, cx + band_w // 2)
+    by0 = min(max(0, by + 1), height - 1)
+    by1 = min(height, by + 41)
+    narrow = max(18, int(jar_w * 0.56))
+    if by1 - by0 < 8 or bx1 - bx0 < 8:
+        return 0.82, narrow
+    center = float(lum[by0:by1, bx0:bx1].mean())
+    side_w = max(24, min(120, jar_w // 5))
+    sides = []
+    left = lum[by0:by1, max(0, bx0 - side_w - 8): max(0, bx0 - 8)]
+    right = lum[by0:by1, min(width, bx1 + 8): min(width, bx1 + side_w + 8)]
+    if left.size:
+        sides.append(float(left.mean()))
+    if right.size:
+        sides.append(float(right.mean()))
+    side = sum(sides) / len(sides) if sides else center
+    if center - side <= 16.0:
+        return 0.84, narrow
+    hold = (side + 8.0) / max(center, 1.0)
+    return float(min(0.88, max(0.60, hold))), max(narrow, int(jar_w * 1.36))
 
 
 def _shadow_agrees(image, box, light: str) -> bool:

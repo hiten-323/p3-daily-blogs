@@ -200,6 +200,31 @@ def _hue(rgb) -> float | None:
     return sector * 60
 
 
+def test_jar_shorter_than_the_cup_fails():
+    scene = scene_by_id("cafe_table")
+    width, height = 1080, 1080
+    cup = frame_props(scene, width, height)[0]["box"]
+    cup_h = cup[3] - cup[1]
+    jar_h = min(int(height * 0.33), cup_h - 8)
+    image = Image.new("RGB", (width, height), (96, 74, 54))
+    top = int(height * 0.40)
+    issues = naturalism_issues(image, (220, top, 480, top + jar_h), scene)
+    assert jar_h < cup_h
+    assert "smaller_than_prop" in issues
+
+
+def test_tiny_jar_is_not_the_hero():
+    image = Image.new("RGB", (1080, 1920), (96, 74, 54))
+    issues = naturalism_issues(image, (240, 900, 480, 1284), scene_by_id("kitchen_morning"))
+    assert "jar_not_hero" in issues
+
+
+def test_flat_label_fails_sharpness():
+    image = Image.new("RGB", (1080, 1920), (96, 74, 54))
+    issues = naturalism_issues(image, (240, 620, 720, 1426), scene_by_id("kitchen_morning"))
+    assert "label_soft" in issues
+
+
 def test_jar_against_the_frame_edge_fails():
     image = Image.new("RGB", (1080, 1920), (90, 70, 55))
     ImageDraw.Draw(image).rectangle((20, 980, 250, 1360), fill=(170, 140, 180))

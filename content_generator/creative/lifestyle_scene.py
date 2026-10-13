@@ -171,16 +171,20 @@ def frame_props(scene, width: int, height: int) -> list[dict]:
 
 
 def props_overlap(jar_bbox, props) -> list[str]:
-    """Prop ids whose box intersects the jar. Touching edges do not count."""
+    """Prop ids whose box intersects the jar. A backdrop the jar stands in front of does not count."""
     try:
         x0, y0, x1, y1 = [int(v) for v in jar_bbox]
     except Exception:
         return []
+    jar_h = max(1, y1 - y0)
     hits = []
     for prop in props or []:
         a0, b0, a1, b1 = prop["box"]
-        if x0 < a1 and x1 > a0 and y0 < b1 and y1 > b0:
-            hits.append(prop["id"])
+        if not (x0 < a1 and x1 > a0 and y0 < b1 and y1 > b0):
+            continue
+        if prop.get("behind") and y1 > b1 and (y1 - b1) >= 0.28 * jar_h:
+            continue
+        hits.append(prop["id"])
     return hits
 
 
@@ -208,8 +212,8 @@ def _place_side(scene) -> str:
 
 
 def place_product(scene, width, height, text_bottom, cta_top, zone, jar_size, attempt: int = 0) -> tuple[int, int, int, int]:
-    """Scale the jar from the reference prop and sit it on a third, off the frame edge."""
-    from content_generator.creative.scene_natural import JAR_CM, map_box, scale_ref
+    """Put the jar in the foreground, larger than the props, on a third."""
+    from content_generator.creative.scene_natural import hero_bounds, hero_height, map_box, scale_ref
 
     slot = product_rect(width, height, text_bottom, cta_top, zone)
     ref = scale_ref(scene)
@@ -217,43 +221,45 @@ def place_product(scene, width, height, text_bottom, cta_top, zone, jar_size, at
         return slot
     box = map_box(scene, ref["box"], width, height)
     ref_h = max(1.0, box[3] - box[1])
-    depth = float(ref.get("depth", 0.96))
-    lift = float(ref.get("lift", 0.08))
     native_w, native_h = [max(1, int(v)) for v in jar_size]
-    jar_h = max(1, int(round(ref_h * (JAR_CM / float(ref["height_cm"])) * depth)))
+    lo, _hi = hero_bounds(width, height)
+    jar_h = hero_height(width, height, ref_h, native_h)
     jar_w = max(1, int(round(jar_h * native_w / native_h)))
-    margin_x = int(width * 0.08)
+    margin_x = int(width * 0.08) + 3
     margin_y = int(height * 0.035)
-    max_base = min(int(cta_top) - 16, height - margin_y)
-    min_top = int(text_bottom) + 8
-    base = int(round(box[3] - ref_h * lift))
-    base = min(base, max_base)
-    base = max(base, margin_y + int(height * 0.12))
+    max_base = min(int(cta_top) - 22, height - margin_y)
+    min_top = int(text_bottom) + 6
+    # Foreground, but above the counter's front edge and the bottom scrim.
+    base = int(round(box[3] + ref_h * 0.04))
+    base = max(base, int(height * 0.68))
+    base = min(base, max_base, int(height * 0.78))
     top = base - jar_h
-    # Slide down to clear the headline before giving up physical scale.
     if top < min_top:
         top = min_top
-        base = min(max_base, top + jar_h)
-        if base - top < jar_h:
-            jar_h = max(int(height * 0.09), base - top)
-        jar_w = max(1, int(round(jar_h * native_w / native_h)))
-        top = base - jar_h
+        room = max(1, max_base - top)
+        if room < jar_h:
+            jar_h = room
+            jar_w = max(1, int(round(jar_h * native_w / native_h)))
+        base = top + jar_h
     props = frame_props(scene, width, height)
-    for prop in props:
-        if not prop.get("behind"):
-            continue
-        floor = prop["box"][3] + 4
-        if top >= floor:
-            continue
-        top = floor
-        if top + jar_h <= max_base:
-            base = top + jar_h
-            continue
-        base = max_base
-        jar_h = max(int(height * 0.09), base - top)
-        jar_w = max(1, int(round(jar_h * native_w / native_h)))
-        top = base - jar_h
     gap = max(18, int(width * 0.028))
+    limit_l = max(margin_x, int(zone[0]))
+    limit_r = min(width - margin_x, int(zone[2]))
+    blocked = []
+    for prop in props:
+        if not _prop_blocks(prop, top, base):
+            continue
+        a0, _b0, a1, _b1 = prop["box"]
+        blocked.append((a0 - gap, a1 + gap))
+    spans = _free_spans(limit_l, limit_r, blocked)
+    widest = max((b - a for a, b in spans), default=0)
+    floor_h = max(int(height * lo), int(ref_h) + 1)
+    if widest > 48 and jar_w > widest:
+        fit_h = int(jar_h * (widest - 4) / jar_w)
+        if fit_h >= floor_h:
+            jar_h = fit_h
+            jar_w = max(1, int(round(jar_h * native_w / native_h)))
+            top = base - jar_h
     side = _place_side(scene)
     thirds = (width / 3, width / 2, 2 * width / 3)
     order = {"left": (0, 1, 2), "right": (2, 1, 0)}.get(side, (1, 0, 2))
@@ -333,26 +339,29 @@ def ground_product(canvas, fitted, jx: int, jy: int, light: str = "left"):
         foot_x0, foot_x1 = int(width * 0.35), int(width * 0.65)
     cx = jx + (foot_x0 + foot_x1) // 2
     by = jy + foot_y
-    # Contact stays under the glass. A longer lobe falls away from the key light.
-    shift = int(width * 0.22) * (-1 if light == "right" else 1)
+    # A narrow foot on an even counter. A wider shade only where the centre is sunlit.
+    from content_generator.creative.scene_natural import shade_plan
+    hold, band = shade_plan(base, cx, by, width)
+    shift = int(width * 0.26) * (-1 if light == "right" else 1)
     pixels = base.load()
-    # A short contact under the glass, darkest on the first rows the QA samples.
-    band = max(14, int(width * 0.20))
-    for dy, gain in ((1, 0.40), (2, 0.50), (3, 0.62), (4, 0.76), (5, 0.90)):
+    for dy in range(1, 42):
+        gain = 0.34 + (hold - 0.34) * min(1.0, (dy - 1) / 6.0)
         y = by + dy
         if y < 0 or y >= base.size[1]:
             continue
         x0 = max(0, int(cx - band / 2))
         x1 = min(base.size[0], int(cx + band / 2) + 1)
+        foot = width * 0.14
         for x in range(x0, x1):
+            applied = gain * (0.55 if dy <= 4 and abs(x - cx) < foot else 1.0)
             red, green, blue, alpha = pixels[x, y]
-            pixels[x, y] = (int(red * gain), int(green * gain), int(blue * gain), alpha)
-    lobe = max(18, int(width * 0.34))
+            pixels[x, y] = (int(red * applied), int(green * applied), int(blue * applied), alpha)
+    lobe = max(18, int(width * 0.50))
     lx = cx + shift
-    reach = 12
+    reach = 20
     for dy in range(1, reach + 1):
         half = (lobe / 2) * (1 - (dy / (reach + 1)) ** 2) ** 0.5
-        gain = 0.38 + 0.52 * (dy / reach)
+        gain = 0.22 + 0.55 * (dy / reach)
         y = by + dy
         if y < 0 or y >= base.size[1]:
             continue

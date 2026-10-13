@@ -165,7 +165,20 @@ def fit_jar_down(jar, max_w: int, max_h: int):
         return jar, 1.0
     size = (max(1, int(round(jar.width * scale))), max(1, int(round(jar.height * scale))))
     resample = getattr(getattr(Image, "Resampling", Image), "LANCZOS")
-    return jar.resize(size, resample), scale
+    fitted = jar.resize(size, resample)
+    return _sharpen_jar(fitted), scale
+
+
+def _sharpen_jar(jar):
+    """Mild unsharp mask on the colour. The alpha and the label are not blurred."""
+    from PIL import Image, ImageFilter
+
+    red, green, blue, alpha = jar.convert("RGBA").split()
+    sharp = Image.merge("RGB", (red, green, blue)).filter(
+        ImageFilter.UnsharpMask(radius=1.3, percent=85, threshold=2)
+    )
+    red, green, blue = sharp.split()
+    return Image.merge("RGBA", (red, green, blue, alpha))
 
 
 def paste_product_jar(canvas, jar, rect: tuple[int, int, int, int], light: str = "left"):
@@ -373,7 +386,7 @@ def compose_conversion_frame(
     from content_generator.creative.lifestyle_scene import load_plate, scene_for_day
     from content_generator.creative.scene_natural import grade_to_scene, seat_perspective
     scene = scene_for_day(day)
-    canvas, scene_id = load_plate(width, height, day)
+    canvas, scene_id = load_plate(width, height, day, blur=3.2)
     if canvas is None:
         logger.warning("[jar_frame] lifestyle plate missing")
         return None
@@ -383,14 +396,15 @@ def compose_conversion_frame(
     from content_generator.creative.real_jar_composer import _font, _wrap
 
     draw = ImageDraw.Draw(canvas)
-    title_size = max(40, min(58, width // 18))
-    body_size = max(22, min(28, width // 40))
+    short = height < width
+    title_size = max(26, width // 32) if short else max(40, min(58, width // 18))
+    body_size = max(16, width // 56) if short else max(22, min(28, width // 40))
     title_font = _font("title", title_size)
     body_font = _font("body", body_size)
     footer_font = _font("footer", max(20, width // 42))
     max_w = zone[2] - zone[0]
-    hook_lines = _wrap(draw, copy["hook"], title_font, max_w)[:2]
-    benefit_lines = _wrap(draw, copy["benefit"], body_font, max_w)[:2]
+    hook_lines = _wrap(draw, copy["hook"], title_font, max_w)[:1 if short else 2]
+    benefit_lines = _wrap(draw, copy["benefit"], body_font, max_w)[:1 if short else 2]
 
     y = zone[1]
     text_boxes: list[tuple[int, int, int, int]] = []
