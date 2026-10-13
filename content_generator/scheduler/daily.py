@@ -1149,7 +1149,7 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     carousel = content.get("carousel") or {}
     slides   = carousel.get("slides") or []
     if slides:
-        paths = compose_carousel_slides(slides, day_number)
+        paths = compose_carousel_slides(slides, day_number, product=content.get("featured_product"))
 
         # Quality tier: Gemini places the REAL jar into a cinematic scene for
         # the cover slide (label preserved). Card version replaced on success.
@@ -1176,7 +1176,7 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     if not results["carousel"] and slides:
         # Fallback: Pillow composition with real jar photos
         try:
-            paths = compose_carousel_slides(slides, day_number)
+            paths = compose_carousel_slides(slides, day_number, product=content.get("featured_product"))
             results["carousel"] = paths
             if paths:
                 logger.info("[images] Composed %d fallback carousel slides from real jar photos", len(paths))

@@ -107,19 +107,19 @@ def post_content(content: dict, day: int = 0) -> dict:
     visual_qa = audit_rendered_images(images[:10])
     if not visual_qa.get("ok"):
         logger.error("[instagram] Refusing to publish assets that failed visual QA: %s", visual_qa.get("issues"))
-        return {
-            "success": False,
-            "media_id": "",
-            "permalink": "",
-            "error": "visual_qa_failed: " + "; ".join(visual_qa.get("issues", [])),
-            "visual_qa": visual_qa,
-        }
+        skipped = _skip_visual_qa(visual_qa.get("issues") or [])
+        skipped["visual_qa"] = visual_qa
+        return skipped
 
     from content_generator.creative.jar_provenance import verify_creative_suite
     prov_ok, prov_issues = verify_creative_suite(images[:10] if len(images) >= 2 else [images[0]])
     if not prov_ok:
         logger.error("[instagram] Refusing to publish unverified jar images: %s", prov_issues)
         return {"success": False, "media_id": "", "permalink": "", "error": f"real_jar_unverified: {'; '.join(prov_issues)}"}
+
+    jar_block = _jar_gate(images[:10] if len(images) >= 2 else [images[0]])
+    if jar_block:
+        return jar_block
 
     if len(images) >= 2:
         result = _post_carousel(images[:10], caption)   # Instagram max 10
@@ -634,11 +634,10 @@ def post_story(content: dict, day: int = 0) -> dict:
     visual = audit_rendered_images([image_path])
     if not visual.get("ok"):
         logger.error("[instagram] Story frame failed visual QA: %s", visual.get("issues"))
-        return {
-            "success": False,
-            "media_id": "",
-            "error": "visual_qa_failed: " + "; ".join(visual.get("issues") or ["broken_render"]),
-        }
+        return _skip_visual_qa(visual.get("issues") or ["broken_render"])
+    jar_block = _jar_gate([image_path])
+    if jar_block:
+        return jar_block
 
     try:
         import requests
@@ -900,13 +899,35 @@ def aspect_is_feed_safe(ratio: float | None) -> bool:
     return (_FEED_MIN_RATIO - 0.01) <= ratio <= (_FEED_MAX_RATIO + 0.01)
 
 
+def _skip_visual_qa(issues: list[str]) -> dict:
+    """A failed jar check is a skip, not a post and not a retry that posts later."""
+    return {
+        "success": False,
+        "attempted": False,
+        "skipped": True,
+        "media_id": "",
+        "permalink": "",
+        "error": "visual_qa_failed: " + "; ".join(issues or ["jar_qa_failed"]),
+    }
+
+
+def _jar_gate(paths: list[str]) -> dict | None:
+    from content_generator.creative.jar_frame import audit_product_images
+    visual = audit_product_images(paths)
+    if visual.get("ok"):
+        return None
+    logger.error("[instagram] Skipping publish; jar QA failed: %s", visual.get("issues"))
+    return _skip_visual_qa(visual.get("issues") or [])
+
+
 def prepare_feed_image(path: str) -> str | None:
     """
     Return a feed-safe image path.
 
     4:5 through 1.91:1 is returned unchanged. Anything taller (a 1080x1920
-    reel thumbnail) is center-cropped to 1080x1350 (4:5). None means the
-    caller should post the original as a Story instead of a feed image.
+    reel thumbnail) is letterboxed onto 1080x1350. It is not center-cropped:
+    the jar lives in the lower half of a 9:16 frame, and a center crop cuts
+    the base off.
     """
     ratio = image_aspect_ratio(path)
     if ratio is None:
@@ -917,28 +938,56 @@ def prepare_feed_image(path: str) -> str | None:
         from PIL import Image
         im = Image.open(path).convert("RGB")
         width, height = im.size
-        target = 4 / 5
         if height <= 0 or width <= 0:
             return None
-        if (width / height) < target:
-            new_h = int(round(width / target))
-            top = max(0, (height - new_h) // 2)
-            im = im.crop((0, top, width, min(height, top + new_h)))
-        else:
-            new_w = int(round(height * target))
-            left = max(0, (width - new_w) // 2)
-            im = im.crop((left, 0, min(width, left + new_w), height))
+        canvas_w, canvas_h = 1080, 1350
+        scale = min(canvas_w / width, canvas_h / height, 1.0)
+        new_w = max(1, int(round(width * scale)))
+        new_h = max(1, int(round(height * scale)))
         resample = getattr(getattr(Image, "Resampling", Image), "LANCZOS")
-        im = im.resize((1080, 1350), resample)
+        if scale < 0.999:
+            fitted = im.resize((new_w, new_h), resample)
+        else:
+            fitted = im
+        canvas = Image.new("RGB", (canvas_w, canvas_h), (18, 12, 9))
+        ox = (canvas_w - fitted.width) // 2
+        oy = (canvas_h - fitted.height) // 2
+        canvas.paste(fitted, (ox, oy))
         out = os.path.splitext(path)[0] + "_feed45.jpg"
-        im.save(out, "JPEG", quality=90)
-        logger.info("[instagram] rendered feed-safe 4:5 image %s", out)
+        canvas.save(out, "JPEG", quality=92)
+        logger.info("[instagram] letterboxed feed-safe 4:5 image %s", out)
 
         try:
             from content_generator.creative.jar_provenance import inherit_provenance
             inherit_provenance(out, source_path=path)
         except Exception as pe:
             logger.debug("[instagram] Provenance inheritance skipped: %s", pe)
+        try:
+            from content_generator.creative.jar_frame import load_geometry, write_geometry
+            geometry = load_geometry(path)
+            if geometry and geometry.get("jar_bbox"):
+                x0, y0, x1, y1 = geometry["jar_bbox"]
+                geometry = dict(geometry)
+                geometry["jar_bbox"] = [
+                    int(round(x0 * scale)) + ox,
+                    int(round(y0 * scale)) + oy,
+                    int(round(x1 * scale)) + ox,
+                    int(round(y1 * scale)) + oy,
+                ]
+                geometry["text_boxes"] = [
+                    [
+                        int(round(box[0] * scale)) + ox,
+                        int(round(box[1] * scale)) + oy,
+                        int(round(box[2] * scale)) + ox,
+                        int(round(box[3] * scale)) + oy,
+                    ]
+                    for box in (geometry.get("text_boxes") or [])
+                ]
+                geometry["safe_zone"] = [0, 0, canvas_w, canvas_h]
+                geometry["scale"] = round(float(geometry.get("scale") or 1.0) * scale, 4)
+                write_geometry(out, geometry)
+        except Exception as ge:
+            logger.debug("[instagram] geometry inheritance skipped: %s", ge)
 
         return out
     except Exception as e:
@@ -958,6 +1007,9 @@ def post_local_story(image_path: str) -> dict:
     if not prov.get("verified"):
         logger.error("[instagram] Refusing to publish unverified story image: %s (%s)", image_path, prov.get("reason"))
         return {"success": False, "media_id": "", "error": f"real_jar_unverified: {prov.get('reason')}"}
+    jar_block = _jar_gate([image_path])
+    if jar_block:
+        return jar_block
     try:
         import requests  # noqa: F401
     except ImportError:

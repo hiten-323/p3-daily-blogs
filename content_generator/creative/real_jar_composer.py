@@ -448,267 +448,21 @@ def compose_post_image(
     product: str | None = None,
     label: str = "brand_post",
 ) -> str | None:
-    """
-    Build one branded image: real jar photo + headline + body + footer.
-    Returns saved file path, or None if Pillow/photos unavailable.
-    """
-    try:
-        from PIL import Image, ImageDraw, ImageFilter
-    except ImportError:
-        logger.warning("[real_jar] Pillow not installed")
-        return None
-
-    # Any on-screen copy means we need a substrate with no copy of its own.
-    needs_clean_substrate = bool(str(headline or "").strip() or str(body or "").strip())
-    jar_path = pick_jar_photo(day, idx, product, overlay_safe=needs_clean_substrate)
-    if not jar_path:
-        return None
-
-    # Cover mode only applies to full-bleed photos. A white studio sweep is
-    # composited jar-on-canvas instead.
-    is_lifestyle = ("lifestyle" in os.path.basename(jar_path).lower()
-                    and not _has_white_background(jar_path))
-
-    dirs = {}
-    try:
-        from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
-        lower_label = str(label or "").lower()
-        if "facebook" in lower_label:
-            target_platform = "facebook"
-        elif "youtube" in lower_label or "yt_" in lower_label or "short" in lower_label:
-            target_platform = "youtube"
-        else:
-            target_platform = "instagram"
-        dirs = get_visual_adaptation_directives(platform=target_platform)
-    except Exception:
-        dirs = {}
-
-    # Rotate through brand themes for visual diversity and contrast
-    # When exposure boost is requested, prefer light warm cream or golden sunrise over pure dark espresso
-    if dirs.get("boost_exposure"):
-        theme_idx = (day + idx) % 3
-    else:
-        theme_idx = (day * 2 + idx) % len(_THEMES)
-    theme = _THEMES[theme_idx]
-
-    canvas = Image.new("RGB", (width, height), theme["bg"])
-
-    # 1. Process and draw/paste the main background or jar photo
-    try:
-        jar = Image.open(jar_path).convert("RGB")
-        try:
-            resample_filter = Image.Resampling.LANCZOS
-        except AttributeError:
-            resample_filter = Image.LANCZOS
-
-        if is_lifestyle:
-            # Lifestyle photo: scale to COVER the entire canvas, crop center
-            img_ratio = jar.width / jar.height
-            canvas_ratio = width / height
-            if img_ratio > canvas_ratio:
-                new_h = height
-                new_w = int(height * img_ratio)
-            else:
-                new_w = width
-                new_h = int(width / img_ratio)
-            
-            jar = jar.resize((new_w, new_h), resample_filter)
-            x_offset = (new_w - width) // 2
-            # Preserve airy negative space at top so headline copy stays in clean upper zone
-            y_offset = max(0, min(new_h - height, int((new_h - height) * 0.10))) if new_h > height else 0
-            jar = jar.crop((x_offset, y_offset, x_offset + width, y_offset + height))
-            canvas.paste(jar, (0, 0))
-            
-            # Subtle luxury gradient scrim:
-            # - Top gradient: ensures category pill, headline, and body copy pop with high legibility
-            # - Bottom gradient: ensures brand signature is crisp
-            # - Middle: transparent so the real jar and lifestyle scene stay vivid
-            scrim = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-            spx = scrim.load()
-            top_bound = int(height * 0.42)
-            bot_bound = int(height * 0.86)
-            for y in range(height):
-                if y < top_bound:
-                    alpha = int(185 * (1.0 - (y / top_bound) ** 1.4))
-                    for x in range(width):
-                        spx[x, y] = (12, 8, 5, alpha)
-                elif y > bot_bound:
-                    alpha = int(200 * ((y - bot_bound) / (height - bot_bound)))
-                    for x in range(width):
-                        spx[x, y] = (10, 7, 4, alpha)
-            canvas = Image.alpha_composite(canvas.convert("RGBA"), scrim).convert("RGB")
-        else:
-            # Studio setting: Studio Wall (upper ~68%) + Ground Tabletop Surface (bottom ~32%)
-            table_h = int(height * 0.32)
-            table_y = height - table_h
-
-            # Studio wall backdrop gradient
-            bg_top = theme.get("bg_top", theme["bg"])
-            bg_mid = theme.get("bg_mid", theme["bg"])
-            for y in range(table_y):
-                f = y / max(1, table_y)
-                c = tuple(int(bg_top[i] + (bg_mid[i] - bg_top[i]) * f) for i in range(3))
-                ImageDraw.Draw(canvas).line([(0, y), (width, y)], fill=c)
-
-            # Softbox radial glow centered on the product scene
-            try:
-                glow_size = int(width * 0.95)
-                glow_mask = Image.new("L", (glow_size, glow_size), 0)
-                glow_draw = ImageDraw.Draw(glow_mask)
-                for r in range(glow_size // 2, 0, -3):
-                    alpha = int(195 * (1.0 - (r / (glow_size // 2))) ** 1.8)
-                    glow_draw.ellipse(
-                        [(glow_size // 2 - r, glow_size // 2 - r), 
-                         (glow_size // 2 + r, glow_size // 2 + r)], 
-                        fill=alpha
-                    )
-                glow_mask = glow_mask.filter(ImageFilter.GaussianBlur(38))
-                spotlight = Image.new("RGB", (glow_size, glow_size), theme["spotlight"]) 
-                gx = (width - glow_size) // 2
-                gy = int(height * 0.20)
-                canvas.paste(spotlight, (gx, gy), mask=glow_mask)
-            except Exception as e:
-                logger.debug("[real_jar] Radial spotlight failed: %s", e)
-
-            # Ground Tabletop Surface
-            table_surf = Image.new("RGBA", (width, table_h), (0, 0, 0, 0))
-            t_top = theme.get("table_top", (26, 18, 12))
-            t_bot = theme.get("table_bot", (16, 11, 8))
-            tpx = table_surf.load()
-            for y in range(table_h):
-                f = y / max(1, table_h)
-                c = tuple(int(t_top[i] + (t_bot[i] - t_top[i]) * f) for i in range(3))
-                for x in range(width):
-                    tpx[x, y] = (c[0], c[1], c[2], 255)
-            
-            # Subtle warm horizon line
-            tdraw = ImageDraw.Draw(table_surf)
-            horizon_color = theme.get("horizon", (140, 95, 45))
-            tdraw.line([(0, 0), (width, 0)], fill=horizon_color, width=2)
-            canvas.paste(table_surf.convert("RGB"), (0, table_y))
-
-            # Clean knockout of the authentic jar (preserves internal whites, drops white sweep)
-            jar = knockout_white(Image.open(jar_path))
-
-            # Sizing and placement (adapts according to audit directives)
-            break_centered = bool(dirs.get("break_centered_catalog"))
-            target_h = int(height * (0.45 if break_centered else 0.52))
-            ratio = target_h / jar.height
-            jar = jar.resize((int(jar.width * ratio), target_h), resample_filter)
-            if jar.width > width - 80:
-                r = (width - 80) / jar.width
-                jar = jar.resize((width - 80, int(jar.height * r)), resample_filter)
-
-            if break_centered:
-                side = -1 if (day + idx) % 2 else 1
-                jx = max(20, min(width - jar.width - 20, int((width - jar.width) / 2 + side * width * 0.10)))
-                jy = height - jar.height - int(height * 0.07)
-            else:
-                jx = (width - jar.width) // 2
-                jy = height - jar.height - int(height * 0.07)
-
-            # Ground Contact Shadow + Ambient Occlusion (grounds jar physically on tabletop)
-            try:
-                shadow_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-                sdraw = ImageDraw.Draw(shadow_layer)
-                
-                # Diffuse cast shadow
-                s_w = int(jar.width * 1.35)
-                s_h = int(jar.height * 0.10)
-                s_x = jx + (jar.width - s_w) // 2
-                s_y = jy + jar.height - int(s_h * 0.50)
-                sdraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(6, 4, 2, 140))
-                
-                # Tight ambient occlusion contact shadow under the glass base
-                c_w = int(jar.width * 0.94)
-                c_h = int(jar.height * 0.04)
-                c_x = jx + (jar.width - c_w) // 2
-                c_y = jy + jar.height - int(c_h * 0.70)
-                sdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 230))
-                
-                shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(10))
-                canvas = Image.alpha_composite(canvas.convert("RGBA"), shadow_layer).convert("RGB")
-            except Exception as se:
-                logger.debug("[real_jar] Shadow compositing skipped: %s", se)
-
-            canvas.paste(jar, (jx, jy), jar)       # alpha mask = the authentic jar itself
-            
-    except Exception as e:
-        logger.warning("[real_jar] Could not process jar photo %s: %s", jar_path, e)
-        return None
-
-    draw = ImageDraw.Draw(canvas)
-
-    # 1. Category Badge Pill in upper area — follows the jar, not a default pure-coffee claim.
-    pill_text = _claim_pill(product, headline)
-
-    pill_text = _sanitize_text(pill_text)
-    p_font = _font("footer", max(17, width // 44))
-    pw = int(draw.textlength(pill_text, font=p_font))
-    px = (width - pw) // 2
-    py = int(height * 0.048)
-    pad_x, pad_y = int(width * 0.022), int(height * 0.008)
-
-    try:
-        pill_box = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        pdraw = ImageDraw.Draw(pill_box)
-        pdraw.rounded_rectangle(
-            [(px - pad_x, py - pad_y), (px + pw + pad_x, py + p_font.size + pad_y)],
-            radius=16,
-            fill=theme.get("pill_bg", (20, 14, 9, 220)),
-            outline=theme.get("pill_border", theme["accent"]),
-            width=2,
-        )
-        canvas = Image.alpha_composite(canvas.convert("RGBA"), pill_box).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
-        draw.text((width // 2, py + p_font.size // 2), pill_text, font=p_font,
-                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
-    except Exception as pe:
-        logger.debug("[real_jar] Pill box skipped: %s", pe)
-
-    # 2. Headline (top area)
-    margin = int(width * 0.08)
-    max_w  = width - 2 * margin
-    h_font = _font("title", max(34, width // 15))
-    y = py + p_font.size + pad_y + int(height * 0.025)
-    for line in _wrap(draw, headline.upper(), h_font, max_w):
-        draw.text((width // 2 + 2, y + 2), line, font=h_font, fill=(0, 0, 0, 200), anchor="ma")
-        draw.text((width // 2, y), line, font=h_font, fill=theme["text_primary"], anchor="ma")
-        y += int(h_font.size * 1.18)
-
-    # 3. Body
-    if body:
-        b_font = _font("body", max(19, width // 35))
-        y += int(height * 0.015)
-        for line in _wrap(draw, body, b_font, max_w):
-            draw.text((width // 2 + 1, y + 1), line, font=b_font, fill=(0, 0, 0, 170), anchor="ma")
-            draw.text((width // 2, y), line, font=b_font, fill=theme["text_body"], anchor="ma")
-            y += int(b_font.size * 1.28)
-
-    # 4. Refined Minimalist Brand Footer (replaces rigid full-width yellow block)
-    f_font = _font("footer", max(16, width // 44))
-    fy = height - int(height * 0.040)
-    draw.line([(int(width * 0.08), fy - 16), (int(width * 0.92), fy - 16)], fill=theme["accent"], width=1)
-    footer_text = _sanitize_text("PURITY BEANS  |  100% PURE COFFEE  |  p3online.in")
-    draw.text((width // 2, fy), footer_text, font=f_font, fill=theme["accent"], anchor="mm")
-
-    # Save
-    import io
-    from content_generator.core.ist_dates import today_ist
-    os.makedirs(_OUT_DIR, exist_ok=True)
-    date_str = today_ist().isoformat()
-    path = os.path.join(_OUT_DIR, f"{label}_{date_str}.jpg")
-    canvas.save(path, "JPEG", quality=88)
-    logger.info("[real_jar] Composed %s from real photo %s", path, os.path.basename(jar_path))
-
-    # Record verified real-jar provenance
-    try:
-        from content_generator.creative.jar_provenance import record_jar_provenance
-        record_jar_provenance(path, jar_asset_id=jar_path, render_source="real_jar")
-    except Exception as e:
-        logger.debug("[real_jar] Provenance recording skipped: %s", e)
-
-    return path
+    """Feed, story, or square hero. The jar is native-resolution and fully inside the safe zone."""
+    from content_generator.creative.jar_frame import compose_conversion_frame
+    fmt = "story" if height > int(width * 1.3) else "feed"
+    return compose_conversion_frame(
+        headline=headline,
+        sub=body,
+        product=product,
+        day=day,
+        idx=idx,
+        width=width,
+        height=height,
+        label=label,
+        format_name=fmt,
+        out_dir=_OUT_DIR,
+    )
 
 
 def _wrap_lines(draw, text: str, font, max_w: int, max_lines: int = 8) -> list[str]:
@@ -751,6 +505,7 @@ def compose_carousel_slide(
     width: int = 1080,
     height: int = 1080,
     label: str = "carousel_slide",
+    product: str | None = None,
 ) -> str | None:
     """
     Renders an editorial D2C Instagram carousel slide:
@@ -772,6 +527,21 @@ def compose_carousel_slide(
     is_cover = (idx == 0)
     is_outro = (idx == total_slides - 1 and total_slides > 1)
     is_middle = (not is_cover and not is_outro)
+
+    if is_cover or is_outro:
+        from content_generator.creative.jar_frame import compose_conversion_frame
+        return compose_conversion_frame(
+            headline=heading,
+            sub=body,
+            product=product,
+            day=day,
+            idx=idx,
+            width=width,
+            height=height,
+            label=label,
+            format_name="carousel",
+            out_dir=_OUT_DIR,
+        )
 
     canvas = Image.new("RGB", (width, height), theme["bg"])
 
@@ -1300,20 +1070,19 @@ def compose_carousel_slide(
     path = os.path.join(_OUT_DIR, f"{label}_{date_str}.jpg")
     canvas.save(path, "JPEG", quality=90)
     logger.info("[real_jar] Composed carousel slide %d/%d -> %s", idx + 1, total_slides, path)
-
-    # Record verified provenance for carousel slide
+    from content_generator.creative.jar_frame import select_front_asset, write_text_card_geometry
+    write_text_card_geometry(path)
     try:
         from content_generator.creative.jar_provenance import record_jar_provenance
-        jar_p = _get_studio_front_jar(day, idx)
-        if jar_p:
-            record_jar_provenance(path, jar_asset_id=jar_p, render_source="real_jar")
+        chosen = select_front_asset(product)
+        if chosen:
+            record_jar_provenance(path, jar_asset_id=chosen["path"], render_source="real_jar")
     except Exception as e:
         logger.debug("[real_jar] Provenance recording skipped: %s", e)
-
     return path
 
 
-def compose_carousel_slides(slides: list[dict], day: int) -> list[str]:
+def compose_carousel_slides(slides: list[dict], day: int, product: str | None = None) -> list[str]:
     """
     Renders high-converting, professional 1080x1080 carousel slides:
       - Slide 1: Hero Cover with hook badge, headline, authentic jar, and 'SWIPE ->' cue.
@@ -1339,6 +1108,7 @@ def compose_carousel_slides(slides: list[dict], day: int) -> list[str]:
             width=1080,
             height=1080,
             label=f"carousel_slide_{i+1}_day{day}",
+            product=product,
         )
         if p:
             paths.append(p)

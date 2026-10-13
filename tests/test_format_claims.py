@@ -118,6 +118,10 @@ def test_morning_feed_does_not_publish_the_reel(monkeypatch):
         "content_generator.creative.jar_provenance.verify_creative_suite",
         lambda paths: (True, []),
     )
+    monkeypatch.setattr(
+        "content_generator.creative.jar_frame.audit_product_images",
+        lambda paths: {"ok": True, "issues": [], "images_checked": len(paths)},
+    )
 
     def _carousel(images, caption):
         called["carousel"] += 1

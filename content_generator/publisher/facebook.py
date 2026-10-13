@@ -222,6 +222,18 @@ def _post_to_page(
             if not prov.get("verified"):
                 logger.error("[facebook] Refusing to post unverified jar image: %s (%s)", image_path, prov.get("reason"))
                 return {"success": False, "post_id": "", "url": "", "error": f"real_jar_unverified: {prov.get('reason')}"}
+            from content_generator.creative.jar_frame import audit_product_image
+            visual = audit_product_image(image_path)
+            if not visual.get("ok"):
+                logger.error("[facebook] Skipping image that failed jar QA: %s", visual.get("issues"))
+                return {
+                    "success": False,
+                    "attempted": False,
+                    "skipped": True,
+                    "post_id": "",
+                    "url": "",
+                    "error": "visual_qa_failed: " + "; ".join(visual.get("issues") or ["jar_qa_failed"]),
+                }
 
             # Photo post
             with open(image_path, "rb") as f:

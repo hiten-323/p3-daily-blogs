@@ -353,7 +353,6 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
 
         from content_generator.publisher.instagram import (
             _post_single_image, _assemble_caption, is_configured, post_reel_video,
-            prepare_feed_image, post_local_story,
         )
         if not is_configured():
             return _held(slot, day, content, "instagram_not_configured")
@@ -403,39 +402,37 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
         except Exception as e:
             logger.warning("[slots] reel video path failed (%s) — falling back to image", e)
 
-        # 2. Fallback image. Reel thumbnails are 1080x1920 (9:16). Instagram
-        #    feed posts must be between 4:5 and 1.91:1, so a raw thumbnail is
-        #    rendered to 4:5. If that render fails, it goes out as a Story
-        #    instead of a feed image the API will reject.
+        # 2. Fallback still image. Compose a native 4:5 frame. Do not center-crop
+        #    the 9:16 thumbnail — that crop cut the jar off the 13 Oct 2026 post
+        #    https://www.instagram.com/p/DebTfidGddv/. A frame that fails jar QA
+        #    is skipped, not posted as a Story.
         if not result or not result.get("success"):
-            image = _find_reel_thumbnail(slot_date.isoformat())
-            if not image:
-                return _held(slot, day, content, "no_image")
-
-            from content_generator.creative.jar_provenance import verify_jar_provenance
-            prov = verify_jar_provenance(image)
-            if not prov.get("verified"):
-                return _held(slot, day, content, f"real_jar_unverified — {prov.get('reason')}")
-
-            feed = prepare_feed_image(image)
-            if feed:
-                from content_generator.creative.rendered_asset_qa import audit_rendered_images
-                visual = audit_rendered_images([feed])
-                if not visual.get("ok"):
-                    return _held(
-                        slot, day, content,
-                        "visual_qa_failed — " + "; ".join(visual.get("issues") or ["broken_render"]),
-                    )
-                from content_generator.publisher.publishing_ledger import publish_with_ledger
-                result = publish_with_ledger("instagram", content, slot, day,
-                                             lambda: _post_single_image(feed, caption))
-                fb_result = _mirror_to_facebook(content, day, slot, image=feed, message=caption)
-            else:
-                logger.warning("[slots] reel thumbnail is not a feed aspect — posting as Story")
-                from content_generator.publisher.publishing_ledger import publish_with_ledger
-                result = publish_with_ledger("instagram_story", content, slot, day,
-                                             lambda: post_local_story(image))
-                fb_result = _mirror_to_facebook(content, day, slot, message=caption)
+            from content_generator.creative.jar_frame import audit_product_image, compose_conversion_frame
+            product = reel.get("product") or content.get("featured_product")
+            hook = str(reel.get("hook_text") or reel.get("hook") or reel.get("chosen_hook") or "")
+            feed = compose_conversion_frame(
+                headline=hook,
+                sub="",
+                product=product,
+                day=day,
+                idx=3,
+                width=1080,
+                height=1350,
+                label=f"feed_evening_day{day}",
+                format_name="feed",
+                on_date=slot_date,
+            )
+            visual = audit_product_image(feed) if feed else {"ok": False, "issues": ["no_feed_frame"]}
+            if not feed or not visual.get("ok"):
+                reason = "visual_qa_failed — " + "; ".join(visual.get("issues") or ["jar_qa_failed"])
+                logger.error("[slots] evening feed skipped: %s", reason)
+                return _skipped(slot, day, reason)
+            from content_generator.publisher.publishing_ledger import publish_with_ledger
+            result = publish_with_ledger(
+                "instagram", content, slot, day,
+                lambda: _post_single_image(feed, caption),
+            )
+            fb_result = _mirror_to_facebook(content, day, slot, image=feed, message=caption)
         else:
             fb_result = _mirror_to_facebook(content, day, slot, message=caption)
 

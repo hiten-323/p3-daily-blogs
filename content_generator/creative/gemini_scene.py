@@ -63,6 +63,11 @@ def generate_scene_with_real_jar(
     Returns the saved file path, or None on any failure (callers fall back
     to the card composer).
     """
+    # Shallow depth of field in the image-model prompt softens the jar, and the
+    # model can crop it. Product frames are composed from the native photo.
+    logger.info("[gemini_scene] local jar frame is required; not calling the image model")
+    return None
+
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         return None

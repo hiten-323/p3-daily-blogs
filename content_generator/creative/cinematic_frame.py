@@ -63,11 +63,11 @@ def onscreen_chrome(format_type: str, product=None) -> tuple[str, str]:
             cta = "INDIA'S CLEANEST INSTANT COFFEE"
     elif fmt == "story":
         if kind == "ultra":
-            badge, cta = "STORY  •  ULTRA BLEND", "70% COFFEE  •  30% CHICORY"
+            badge, cta = "STORY  •  70% COFFEE  30% CHICORY", "FOLLOW @PURITYBEANS  •  SHOP P3ONLINE.IN"
         elif kind == "pure":
-            badge, cta = "STORY  •  ONE INGREDIENT", "100% COFFEE  •  TAP THE LINK"
+            badge, cta = "STORY  •  100% COFFEE", "FOLLOW @PURITYBEANS  •  SHOP P3ONLINE.IN"
         else:
-            badge, cta = "STORY  •  READ THE LABEL", "INDIA'S CLEANEST INSTANT COFFEE"
+            badge, cta = "STORY  •  READ THE LABEL", "FOLLOW @PURITYBEANS  •  SHOP P3ONLINE.IN"
     else:
         if kind == "ultra":
             badge, cta = "REEL  •  ULTRA BLEND", "70% COFFEE  •  30% CHICORY"
@@ -201,31 +201,31 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     Supports distinct visual styles for YouTube Shorts ('short'), Instagram Reels ('reel'),
     and Instagram Stories ('story').
     """
+    if str(format_type or "").lower() == "story":
+        from content_generator.creative.jar_frame import compose_conversion_frame
+        return compose_conversion_frame(
+            headline=headline,
+            sub=sub,
+            product=product,
+            day=day,
+            idx=idx,
+            width=width,
+            height=height,
+            label=label,
+            format_name="story",
+            on_date=on_date,
+        )
+
     try:
         from PIL import Image, ImageDraw
     except ImportError:
         return None
-    from content_generator.creative.real_jar_composer import pick_jar_photo, _has_white_background, _all_jar_photos
+    from content_generator.creative.jar_frame import select_front_asset
 
-    # For knockout compositing, we strictly prefer authentic high-resolution 100g studio
-    # hero shots on solid white sweep (clean knockout without flash glare/tearing).
-    everything = _all_jar_photos()
-    studio_100g = [p for p in everything if _has_white_background(p) and "_100g_front.png" in p.lower()]
-    studio_fronts = studio_100g or [p for p in everything if _has_white_background(p) and "_front.png" in p.lower()]
-    if not studio_fronts:
-        studio_fronts = [p for p in everything if _has_white_background(p)]
-
-    if studio_fronts:
-        if product:
-            matched = [p for p in studio_fronts if f"_{product.lower().replace(' ', '_')}_" in p.lower()]
-            jar_path = (matched or studio_fronts)[(day * 3 + idx) % len(matched or studio_fronts)]
-        else:
-            # Advance across distinct product variants across beats (idx) and days (day)
-            # studio_100g has 4 distinct products: ultra_blend, bold, purista, purica
-            # Cycling by (day + idx) guarantees no consecutive beat repeats the same variant!
-            jar_path = studio_fronts[(day + idx) % len(studio_fronts)]
-    else:
-        jar_path = pick_jar_photo(day, idx, product, overlay_safe=True, prefer_front=True)
+    # Complete front photos only. A 100g file that runs off its own canvas
+    # is a cropped jar; the selector skips it while a full front exists.
+    picked = select_front_asset(product)
+    jar_path = picked["path"] if picked else None
 
     if not jar_path:
         return None
@@ -286,17 +286,16 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
 
         # Knock out studio jar with high-res LANCZOS resampling
         try:
+            from content_generator.creative.jar_frame import fit_jar_down
             jar = _knockout_white(Image.open(jar_path))
-            ratio = target_h / jar.height
-            jar = jar.resize((int(jar.width * ratio), target_h), resample=resample_filter)
-            if jar.width > int(width * 0.78):
-                r = int(width * 0.78) / jar.width
-                jar = jar.resize((int(jar.width * r), int(jar.height * r)), resample=resample_filter)
+            jar, _scale = fit_jar_down(jar, int(width * 0.72), max(1, available_jar_h - 20))
 
             jx = (width - jar.width) // 2
             jy = jar_bottom - jar.height
             if jy < min_jar_top:
                 jy = min_jar_top
+            jx = max(4, min(jx, width - jar.width - 4))
+            jy = max(4, min(jy, height - jar.height - 4))
 
             # Warm radial glow centered behind the jar body
             glow_color = (130, 90, 36) if boost_exposure else (65, 42, 18)
@@ -417,16 +416,14 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
         _radial_glow(canvas, width // 2, glow_y, int(width * 0.90), color=glow_color)
 
         try:
+            from content_generator.creative.jar_frame import fit_jar_down
             jar = _knockout_white(Image.open(jar_path))
-            target_h = int(height * 0.46)
-            ratio = target_h / jar.height
-            jar = jar.resize((int(jar.width * ratio), target_h), resample=resample_filter)
-            if jar.width > int(width * 0.78):
-                r = int(width * 0.78) / jar.width
-                jar = jar.resize((int(jar.width * r), int(jar.height * r)), resample=resample_filter)
+            jar, _scale = fit_jar_down(jar, int(width * 0.72), int(height * 0.46))
 
             jx = (width - jar.width) // 2
             jy = int(height * 0.50)
+            jx = max(4, min(jx, width - jar.width - 4))
+            jy = max(4, min(jy, height - jar.height - 4))
             canvas.paste(jar, (jx, jy), jar)
         except Exception as e:
             logger.warning("[cine] jar paste failed: %s", e)
