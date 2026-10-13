@@ -314,8 +314,8 @@ time, cut it — shorter with full retention beats longer with drop-off.
 CROSS-PLATFORM VIRALITY & MAX FOLLOWER ENGINE:
 Views alone are vanity. A viral post that gains 0 followers is a failed post.
 Every single platform must pair high viral reach with an explicit FOLLOWER CONVERSION BRIDGE:
-1. REELS & SHORTS: Ranked by SHARES (Send to DM) and Completion/Loop Rate. Give a selfish reason to follow. On a pure-jar day: "Follow @puritybeans so you never drink roasted root again." On an Ultra Blend day: "Follow @puritybeans for Ultra Blend: 70% coffee and 30% chicory."
-2. CAROUSELS: Ranked by SAVES. Slide 1 must have an impossible-to-ignore curiosity gap; Slides 2-6 must be screenshot-worthy utility; Final Slide MUST command: "Save this guide + Follow @puritybeans for daily pure coffee truths."
+1. REELS & SHORTS: Ranked by SHARES (Send to DM) and Completion/Loop Rate. Give a selfish reason to follow. reel_2 must use a different CTA from reel_1. On a pure-jar day: "Follow @purepantryprovisions. Turn the jar around." On an Ultra Blend day, or any asset that names Ultra Blend: "Follow @purepantryprovisions for Ultra Blend: 70% coffee and 30% chicory." Never write "never drink roasted root".
+2. CAROUSELS: Ranked by SAVES. Slide 1 must have an impossible-to-ignore curiosity gap; Slides 2-6 must be screenshot-worthy utility; Final Slide MUST command: "Save this guide. Follow @purepantryprovisions. Ultra Blend is 70% coffee and 30% chicory." Never write "never drink roasted root".
 3. LINKEDIN: Ranked by COMMENTS & DWELL TIME. Hook must provoke in the first 2 lines (before "see more"); end with a debate-igniting question; CTA must invite following Hiten Jain for unfiltered beverage science.
 4. THREADS: Ranked by REPLIES & QUOTES. Short, punchy truth-bombs (<480 chars); expose industry tricks; prompt quick debate; end with "Follow for daily coffee truths Big Coffee hides."
 

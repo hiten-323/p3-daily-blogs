@@ -37,7 +37,7 @@ _SHARE_TRIGGERS = re.compile(
 )
 
 _FOLLOW_TRIGGERS = re.compile(
-    r"\b(follow @?puritybeans|follow hiten|follow for|subscribe for|tap follow|"
+    r"\b(follow @?[a-z0-9_]+|follow hiten|follow for|subscribe for|tap follow|"
     r"follow — tomorrow|follow so you never)\b",
     re.I,
 )

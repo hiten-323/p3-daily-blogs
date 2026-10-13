@@ -58,7 +58,9 @@ Put its id in "psychology_frame". The frame must drive the cover hook, the emoti
 Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Never apply the 100% coffee line to Ultra Blend.
 
 ABSOLUTE RULES:
-- NEVER invent statistics or percentages
+- NEVER invent statistics, weekly spend, or percentages
+- NEVER write "never drink roasted root", "roasted root filler", or "fake coffee"
+- If Ultra Blend is named, the follow line discloses 70% coffee and 30% chicory
 - NEVER make medical claims
 - Minimum 6 slides, maximum 8 slides
 - Final slide MUST include CTA + {WEBSITE_URL} + mention of Purity Beans
@@ -78,10 +80,10 @@ ABSOLUTE RULES:
     {{"slide": 4, "heading": "The Revelation", "body": "The I-did-not-know-this moment. Specific truth about coffee purity vs adulterants.", "visual": "Before/after or label close-up"}},
     {{"slide": 5, "heading": "Why It Matters", "body": "Specific Indian scenario — what this means for a real coffee lover in India.", "visual": "Indian person + coffee, natural light"}},
     {{"slide": 6, "heading": "Purity Beans Difference", "body": "Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Purica is freeze-dried. Prima is Premium Agglomerate. Shop {WEBSITE_URL}", "visual": "Product hero — full Purity Beans jar, cinematic, gold accent"}},
-    {{"slide": 7, "heading": "Save & Follow", "body": "Save this guide for your next coffee run. Follow @puritybeans so you never drink fake coffee again. Visit {WEBSITE_URL}", "visual": "Brand CTA — dark bg, Purity Beans logo, minimal gold"}}
+    {{"slide": 7, "heading": "Save & Follow", "body": "Save this guide for your next coffee run. Follow @purepantryprovisions. Ultra Blend is 70% coffee and 30% chicory. Visit {WEBSITE_URL}", "visual": "Brand CTA — dark bg, Purity Beans logo, minimal gold"}}
   ],
-  "caption": "HOOK LINE that stops the scroll.\\n\\nWhat you will learn in this carousel (preview the value). Tell the story of why this matters to a real coffee lover. Mention Purity Beans naturally. Include: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Purica is freeze-dried 100% Arabica. Prima is Premium Agglomerate 100% Arabica.\\n\\nThis is a 200-300 word paste-ready caption with emotional storytelling and brand facts.\\n\\nSave this post & Follow @puritybeans for daily coffee truths. Shop now: {WEBSITE_URL}",
-  "cta": "Save this post + Follow @puritybeans. Explore pure coffee at {WEBSITE_URL}",
+  "caption": "HOOK LINE that stops the scroll.\\n\\nWhat you will learn in this carousel (preview the value). Tell the story of why this matters to a real coffee lover. Mention Purity Beans naturally. Include: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Purica is freeze-dried 100% Arabica. Prima is Premium Agglomerate 100% Arabica.\\n\\nThis is a 200-300 word paste-ready caption with emotional storytelling and brand facts.\\n\\nSave this post. Follow @purepantryprovisions. Ultra Blend is 70% coffee and 30% chicory. Shop now: {WEBSITE_URL}",
+  "cta": "Save this guide. Follow @purepantryprovisions. Ultra Blend is 70% coffee and 30% chicory. {WEBSITE_URL}",
   "comment_trigger": "Comment SAVE if you are switching to real coffee this week.",
   "save_trigger": "Save this carousel — it will change how you buy coffee forever.",
   "share_trigger": "Share with someone who deserves to know what is really in their coffee.",

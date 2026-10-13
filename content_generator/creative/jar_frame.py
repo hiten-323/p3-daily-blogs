@@ -146,7 +146,11 @@ def load_native_jar(product=None):
     chosen = select_front_asset(product)
     if not chosen:
         return None
-    jar = knockout_white(Image.open(chosen["path"]))
+    try:
+        jar = knockout_white(Image.open(chosen["path"]))
+    except Exception as exc:
+        logger.warning("[jar_frame] mask rejected %s: %s", chosen["path"], exc)
+        return None
     return jar, chosen["path"], chosen
 
 
@@ -180,75 +184,9 @@ def paste_product_jar(canvas, jar, rect: tuple[int, int, int, int]):
     return base.convert("RGB"), bbox, scale
 
 
-def _catalog(product):
-    slug = product_slug(product)
-    if not slug:
-        return None
-    try:
-        from content_generator.core.shopify_catalog import get_product
-        return get_product(slug)
-    except Exception:
-        return None
-
-
 def conversion_copy(product, headline: str = "", sub: str = "") -> dict:
-    """One hook, one true benefit, a catalog price only when the jar is in stock."""
-    from content_generator.creative.cinematic_frame import _product_class
-    from content_generator.creative.real_jar_composer import _sanitize_text
-    from content_generator.core.product_truth import product_truth_findings
-
-    kind = _product_class(product)
-    catalog = _catalog(product)
-    in_stock = bool(catalog and catalog.get("in_stock"))
-    offer = ""
-    if in_stock:
-        variants = [v for v in (catalog.get("variants") or []) if v.get("price")]
-        if variants:
-            variant = min(variants, key=lambda item: item["price"])
-            offer = f"{variant.get('weight', '')}  Rs {variant['price']}".strip()
-
-    if kind == "ultra":
-        hook, benefit = "THE RATIO IS ON THE JAR", "70% coffee and 30% chicory. Smooth milk coffee."
-    elif product_slug(product) == "prima" or (catalog and not catalog.get("in_stock") and product_slug(product) == "prima"):
-        hook, benefit = "PRIMA IS OUT OF STOCK", "100% Arabica. Not available to order."
-        offer = ""
-    elif product_slug(product) == "purista":
-        hook, benefit = "ONE INGREDIENT GRANULES", "Freeze-dried 100% Robusta. Zero chicory."
-    elif product_slug(product) == "purica":
-        hook, benefit = "SMOOTH ARABICA", "Freeze-dried 100% Arabica. Zero chicory."
-    elif product_slug(product) == "bold" or kind == "pure":
-        hook, benefit = "STRONG CUP. ONE INGREDIENT.", "100% Robusta. Zero chicory."
-    else:
-        hook, benefit = "READ THE LABEL", "India's cleanest instant coffee."
-        offer = ""
-
-    featured = str(product or "")
-    custom = _sanitize_text(headline).strip()
-    if custom and not product_truth_findings(custom, featured=featured):
-        words = custom.split()[:8]
-        trail = {"on", "a", "an", "the", "this", "to", "for", "of", "and", "with", "your", "in", "at", "from", "by", "its", "it's", "is", "how", "was", "are"}
-        while words and words[-1].lower().strip(".,:;!") in trail:
-            words.pop()
-        if words:
-            hook = " ".join(words).upper()
-    benefit_custom = _sanitize_text(sub).strip()
-    if benefit_custom and len(benefit_custom.split()) <= 12 and not product_truth_findings(benefit_custom, featured=featured):
-        benefit = benefit_custom
-
-    cta = "FOLLOW @PURITYBEANS  |  SHOP P3ONLINE.IN"
-    blob = " ".join(part for part in (hook, benefit, offer, cta) if part)
-    if product_truth_findings(blob, featured=featured):
-        if kind == "ultra":
-            hook, benefit = "THE RATIO IS ON THE JAR", "70% coffee and 30% chicory."
-        else:
-            hook, benefit = "READ THE LABEL", "See the jar at p3online.in."
-            offer = "" if kind != "pure" else offer
-    return {
-        "hook": _sanitize_text(hook),
-        "benefit": _sanitize_text(benefit),
-        "offer": _sanitize_text(offer),
-        "cta": _sanitize_text(cta),
-    }
+    from content_generator.creative.frame_copy import conversion_copy as _conversion_copy
+    return _conversion_copy(product, headline, sub)
 
 
 def geometry_path(image_path: str) -> str:
@@ -359,6 +297,26 @@ def audit_product_images(paths: list[str]) -> dict:
     return {"ok": not issues, "issues": issues, "images_checked": checked}
 
 
+def _draw_cta(canvas, text: str, font, y: int, width: int):
+    """Gold CTA on a dark plate so it stays readable over the counter."""
+    from PIL import Image, ImageDraw
+
+    text = (text or "").strip()
+    if not text:
+        return canvas, None
+    overlay = canvas.convert("RGBA")
+    draw = ImageDraw.Draw(overlay)
+    bbox = draw.textbbox((0, 0), text, font=font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    x = max(16, (width - tw) // 2)
+    plate = [x - 28, y - 12, x + tw + 28, y + th + 14]
+    bar = Image.new("RGBA", overlay.size, (0, 0, 0, 0))
+    ImageDraw.Draw(bar).rounded_rectangle(plate, radius=16, fill=(16, 10, 7, 196))
+    overlay = Image.alpha_composite(overlay, bar)
+    ImageDraw.Draw(overlay).text((x, y), text, font=font, fill=(245, 228, 176))
+    return overlay.convert("RGB"), tuple(plate)
+
+
 def _draw_centered(draw, text: str, font, y: int, fill, width: int) -> tuple[int, tuple[int, int, int, int] | None]:
     text = (text or "").strip()
     if not text:
@@ -408,13 +366,13 @@ def compose_conversion_frame(
     from content_generator.creative.real_jar_composer import _font, _wrap
 
     draw = ImageDraw.Draw(canvas)
-    title_size = max(36, min(62, width // 16))
-    body_size = max(22, min(30, width // 36))
+    title_size = max(40, min(58, width // 18))
+    body_size = max(22, min(28, width // 40))
     title_font = _font("title", title_size)
     body_font = _font("body", body_size)
-    footer_font = _font("footer", max(18, width // 46))
+    footer_font = _font("footer", max(20, width // 42))
     max_w = zone[2] - zone[0]
-    hook_lines = _wrap(draw, copy["hook"].upper(), title_font, max_w)[:2]
+    hook_lines = _wrap(draw, copy["hook"], title_font, max_w)[:2]
     benefit_lines = _wrap(draw, copy["benefit"], body_font, max_w)[:2]
 
     y = zone[1]
@@ -434,15 +392,12 @@ def compose_conversion_frame(
         if box:
             text_boxes.append(box)
 
-    cta_h = int(footer_font.size * 2.2)
+    cta_h = int(footer_font.size * 2.4)
     cta_top = zone[3] - cta_h
-    jar_rect = (zone[0], y + 16, zone[2], cta_top - 28)
-    if jar_rect[3] - jar_rect[1] < 80:
-        jar_rect = (zone[0], y + 8, zone[2], cta_top - 8)
+    from content_generator.creative.lifestyle_scene import product_rect
+    jar_rect = product_rect(width, height, y, cta_top, zone)
     canvas, jar_bbox, scale = paste_product_jar(canvas, jar, jar_rect)
-    draw = ImageDraw.Draw(canvas)
-    cta_y = cta_top + 4
-    _, cta_box = _draw_centered(draw, copy["cta"], footer_font, cta_y, (232, 196, 122), width)
+    canvas, cta_box = _draw_cta(canvas, copy["cta"], footer_font, cta_top + 6, width)
     if cta_box:
         text_boxes.append(cta_box)
 

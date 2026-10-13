@@ -814,7 +814,7 @@ subtitle style, sound effect, movement. Never a static frame.
 "Your cafe knows this and won't tell you."
 "This is why your coffee tastes bitter."
 "I tried this for 30 days."
-"Most people waste Rs 200 every week on this."
+"Turn the jar around before you buy it."
 "You've been lied to about instant coffee."
 "I wish someone told me this earlier."
 "Don't buy expensive coffee before watching this."

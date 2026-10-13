@@ -51,14 +51,14 @@ def _scrim(image):
 
     width, height = image.size
     mask = Image.new("L", (1, height), 0)
-    top_end = int(height * 0.30)
-    bot_start = int(height * 0.92)
+    top_end = int(height * 0.34)
+    bot_start = int(height * 0.86)
     span = max(1, height - bot_start)
     for y in range(height):
         if y < top_end:
-            alpha = int(168 * (1 - y / max(1, top_end)))
+            alpha = int(200 * (1 - y / max(1, top_end)))
         elif y > bot_start:
-            alpha = int(110 * (y - bot_start) / span)
+            alpha = int(160 * (y - bot_start) / span)
         else:
             alpha = 0
         mask.putpixel((0, y), alpha)
@@ -83,6 +83,21 @@ def match_light(jar, plate):
         for index, band in enumerate(bands[:3])
     ]
     return Image.merge("RGBA", (*shifted, bands[3]))
+
+
+def product_rect(width: int, height: int, text_bottom: int, cta_top: int, zone) -> tuple[int, int, int, int]:
+    """Cap the jar and sit its base on the counter, above the CTA."""
+    story = height > width * 1.3
+    max_h = int(height * (0.38 if story else 0.44))
+    max_w = int(width * 0.40)
+    base = int(height * (0.815 if story else 0.78))
+    base = min(base, int(cta_top) - 36, height - 52)
+    top = max(int(text_bottom) + 16, base - max_h)
+    if base - top < int(height * 0.30):
+        top = max(int(text_bottom) + 8, base - int(height * 0.30))
+    left = max(int(zone[0]), (width - max_w) // 2)
+    right = min(int(zone[2]), left + max_w)
+    return (left, top, right, max(top + 80, base))
 
 
 def seat_base(fitted):
@@ -118,11 +133,11 @@ def ground_product(canvas, fitted, jx: int, jy: int):
     by = jy + height - 1
     shadow = Image.new("RGBA", base.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(shadow)
-    sw, sh = int(foot_w * 2.4), max(16, int(height * 0.045))
-    draw.ellipse((cx - sw // 2, by - sh // 5, cx + sw // 2, by + sh), fill=(12, 8, 6, 190))
-    tight_w, tight_h = int(foot_w * 1.35), max(8, int(height * 0.018))
-    draw.ellipse((cx - tight_w // 2, by - 2, cx + tight_w // 2, by + tight_h), fill=(0, 0, 0, 230))
-    base = Image.alpha_composite(base, shadow.filter(ImageFilter.GaussianBlur(radius=7)))
+    sw, sh = int(foot_w * 2.2), max(18, int(height * 0.04))
+    draw.ellipse((cx - sw // 2, by - 2, cx + sw // 2, by + sh), fill=(8, 5, 4, 210))
+    tight_w, tight_h = int(foot_w * 1.15), max(10, int(height * 0.02))
+    draw.ellipse((cx - tight_w // 2, by - 1, cx + tight_w // 2, by + tight_h), fill=(0, 0, 0, 245))
+    base = Image.alpha_composite(base, shadow.filter(ImageFilter.GaussianBlur(radius=3.5)))
     return contact_reflection(base, fitted, jx, jy)
 
 
@@ -131,17 +146,17 @@ def contact_reflection(base, fitted, jx: int, jy: int):
     from PIL import Image, ImageFilter
 
     gap = base.size[1] - (jy + fitted.height)
-    reflect_h = min(22, int(fitted.height * 0.055), max(0, gap - 4))
+    reflect_h = min(18, int(fitted.height * 0.04), max(0, gap - 16))
     if reflect_h < 8:
         return base
     flipped = fitted.transpose(Image.Transpose.FLIP_TOP_BOTTOM).crop((0, 0, fitted.width, reflect_h))
     fade = Image.new("L", flipped.size, 0)
     for row in range(reflect_h):
-        fade.paste(int(120 * (1 - row / reflect_h)), (0, row, flipped.width, row + 1))
+        fade.paste(int(70 * (1 - row / reflect_h)), (0, row, flipped.width, row + 1))
     alpha = Image.composite(fade, Image.new("L", flipped.size, 0), flipped.split()[-1])
     flipped.putalpha(alpha)
     soft = flipped.filter(ImageFilter.GaussianBlur(radius=0.7))
-    base.paste(soft, (jx, jy + fitted.height - 1), soft)
+    base.paste(soft, (jx, jy + fitted.height + 11), soft)
     return base
 
 

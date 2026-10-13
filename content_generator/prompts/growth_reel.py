@@ -10,7 +10,7 @@ from content_generator.rotation import get_todays_viral_idea
 GROWTH_TOPICS = [
     "Why coffee tastes bitter — the mistake almost everyone makes",
     "What baristas actually think when you order instant coffee",
-    "The Rs 200-a-week habit nobody calculates",
+    "The label line nobody reads",
     "How coffee is graded — and why you never see the grade on the pack",
     "The 30-day black coffee experiment",
     "Why cafe coffee and home coffee will never taste the same",

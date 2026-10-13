@@ -220,18 +220,19 @@ def pick_jar_photo(day: int, idx: int = 0, product: str | None = None,
 # Listing only the Windows names silently downgraded every CI-rendered slide to
 # Pillow's bitmap default (missing glyphs -> tofu boxes). Keep both, per role.
 _FONT_ROLES = {
-    # elegant serif for headlines
-    "title":  (["georgiab.ttf", "georgia.ttf", "timesbd.ttf", "times.ttf", "arialbd.ttf"],
-               ["DejaVuSerif-Bold.ttf", "LiberationSerif-Bold.ttf",
-                "DejaVuSans-Bold.ttf", "LiberationSans-Bold.ttf"]),
-    # clean sans for body copy
+    # serif for the hook
+    "title":  (["georgiab.ttf", "georgia.ttf", "timesbd.ttf", "times.ttf"],
+               ["NotoSerif-Bold.ttf", "DejaVuSerif-Bold.ttf", "LiberationSerif-Bold.ttf"]),
+    # sans for the benefit line
     "body":   (["segoeui.ttf", "calibri.ttf", "arial.ttf"],
-               ["DejaVuSans.ttf", "LiberationSans-Regular.ttf", "FreeSans.ttf"]),
-    # bold sans for the footer strip
-    "footer": (["segoeuib.ttf", "segoeui.ttf", "arialbd.ttf", "arial.ttf"],
-               ["DejaVuSans-Bold.ttf", "LiberationSans-Bold.ttf", "FreeSansBold.ttf"]),
+               ["Inter-Regular.ttf", "DejaVuSans.ttf", "LiberationSans-Regular.ttf"]),
+    # semibold sans for the CTA
+    "footer": (["segoeuib.ttf", "segoeui.ttf", "arialbd.ttf"],
+               ["Inter-SemiBold.ttf", "Inter-Bold.ttf", "DejaVuSans-Bold.ttf"]),
 }
 _LINUX_FONT_DIRS = (
+    "/usr/share/fonts/truetype/noto",
+    "/usr/share/fonts/truetype/macos",
     "/usr/share/fonts/truetype/dejavu",
     "/usr/share/fonts/truetype/liberation",
     "/usr/share/fonts/truetype/msttcorefonts",
@@ -253,43 +254,9 @@ def _scan_for_any_ttf() -> str | None:
 
 
 def knockout_white(img):
-    """
-    Return an RGBA jar with the white studio sweep cleanly made transparent,
-    cropped to the jar itself. Flood-fills inward from boundary seeds (thresh=95)
-    and removes residual studio sweep floor shadow while preserving whites
-    inside the authentic label and cap.
-    """
-    from PIL import Image, ImageDraw
-    img = img.convert("RGBA")
-    w, h = img.size
-    seeds = (
-        (0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1),
-        (w // 2, 0), (w // 2, h - 1), (0, h // 2), (w - 1, h // 2),
-    )
-    for seed in seeds:
-        try:
-            ImageDraw.floodfill(img, seed, (0, 0, 0, 0), thresh=95)
-        except Exception as e:
-            logger.debug("[real_jar] floodfill at %s failed: %s", seed, e)
-    # Clean residual studio floor sweep shadow under the glass base (zero memory overhead)
-    try:
-        y_start = int(h * 0.85)
-        pix = img.load()
-        for y in range(y_start, h):
-            for x in range(w):
-                r, g, b, a = pix[x, y]
-                if a > 0 and r > 120 and g > 120 and b > 120:
-                    if abs(r - g) < 25 and abs(r - b) < 25 and abs(g - b) < 25:
-                        pix[x, y] = (r, g, b, 0)
-    except Exception as e:
-        logger.debug("[real_jar] floor shadow cleaning skipped: %s", e)
-    try:
-        bbox = img.getbbox()
-        if bbox:
-            img = img.crop(bbox)      # drop the transparent margin
-    except Exception as e:
-        logger.debug("[real_jar] bbox crop failed: %s", e)
-    return img
+    """RGBA jar with a checked alpha mask. The label is not threshold-cut."""
+    from content_generator.creative.jar_mask import segment_product
+    return segment_product(img)
 
 
 def _font(role: str, size: int):

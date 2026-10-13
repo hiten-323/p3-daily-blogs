@@ -45,12 +45,12 @@ _ROTATION: dict[str, list[ObjectiveType]] = {
 # KPI targets and CTA copy per objective
 _KPI: dict[str, dict] = {
     "Follower Growth": {
-        "primary_cta":    "Follow @puritybeans so you never drink roasted root again",
+        "primary_cta":    "Follow for the line on the jar",
         "success_metric": "follows",
         "target":         250,
     },
     "Consumer Purchase": {
-        "primary_cta":    "Buy pure 100% Arabica at p3online.in — Rs 18 per cup",
+        "primary_cta":    "Shop the jar at p3online.in",
         "success_metric": "link_clicks",
         "target":         500,
     },
@@ -84,7 +84,7 @@ _KPI: dict[str, dict] = {
 _FUNNEL_MAP = {
     "FOLLOW": {
         "objective":      "Follower Growth",
-        "primary_cta":    "Follow @puritybeans so you never drink roasted root again",
+        "primary_cta":    "Follow for the line on the jar",
         "success_metric": "follows",
         "target":         250,
     },
@@ -108,14 +108,14 @@ _FUNNEL_MAP = {
     },
     "CONVERSION": {
         "objective":      "Consumer Purchase",
-        "primary_cta":    "Buy pure 100% Arabica at p3online.in — Rs 18 per cup",
+        "primary_cta":    "Shop the jar at p3online.in",
         "success_metric": "link_clicks",
         "target":         50,
     },
 }
 
 
-def assign_objective(content_type: str, day: int) -> dict:
+def assign_objective(content_type: str, day: int, text: str = "") -> dict:
     """
     Return stage-aware objective metadata for one content piece.
 
@@ -131,7 +131,7 @@ def assign_objective(content_type: str, day: int) -> dict:
             mapped = _FUNNEL_MAP[f_name]
             cta = mapped["primary_cta"]
             if f_name == "FOLLOW":
-                cta = _follow_cta(day)
+                cta = _follow_cta(day, content_type, text)
             return {
                 "funnel_objective": f_name,
                 "objective":        mapped["objective"],
@@ -146,7 +146,7 @@ def assign_objective(content_type: str, day: int) -> dict:
     objective: ObjectiveType = rotation[day % len(rotation)]
     kpis = dict(_KPI.get(objective, {}))
     if objective == "Follower Growth":
-        kpis["primary_cta"] = _follow_cta(day)
+        kpis["primary_cta"] = _follow_cta(day, content_type, text)
     return {
         "funnel_objective": "DISCOVERY" if objective in ("Engagement Growth", "Brand Awareness") else "CONVERSION",
         "objective":        objective,
@@ -156,11 +156,12 @@ def assign_objective(content_type: str, day: int) -> dict:
     }
 
 
-def _follow_cta(day: int) -> str:
-    """Pure-jar days may reject roasted root. A chicory featured jar may not."""
+def _follow_cta(day: int, content_type: str = "", text: str = "") -> str:
+    """Chicory in the featured jar or in this copy gets the 70/30 line."""
     from content_generator.core.product_truth import follow_cta_for
     from content_generator.rotation import PRODUCTS, pick
-    return follow_cta_for(str(pick(PRODUCTS, int(day))))
+    variant = "alt" if str(content_type) == "reel_2" else "primary"
+    return follow_cta_for(str(pick(PRODUCTS, int(day))), text=text, variant=variant)
 
 
 def assign_all(content: dict, day: int) -> dict:
@@ -168,6 +169,8 @@ def assign_all(content: dict, day: int) -> dict:
     Stamp business and funnel objectives onto every content piece in the output dict.
     Non-destructive: existing keys are preserved, objective keys are added.
     """
+    from content_generator.core.product_truth import piece_copy_text
+
     out = dict(content)
 
     # Flat content types across all platforms
@@ -177,13 +180,13 @@ def assign_all(content: dict, day: int) -> dict:
     )
     for key in all_flat:
         if key in out and isinstance(out[key], dict):
-            out[key] = {**out[key], **assign_objective(key, day)}
+            out[key] = {**out[key], **assign_objective(key, day, piece_copy_text(out[key]))}
 
     # Reels array
     if "reels" in out and isinstance(out["reels"], list):
         reel_keys = ["reel_1", "reel_2"]
         out["reels"] = [
-            {**reel, **assign_objective(reel_keys[i], day)}
+            {**reel, **assign_objective(reel_keys[i], day, piece_copy_text(reel))}
             if i < len(reel_keys) else reel
             for i, reel in enumerate(out["reels"])
         ]

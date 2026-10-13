@@ -3,7 +3,14 @@ from __future__ import annotations
 
 import re
 
-SHOP_LINE = "Follow @puritybeans. Shop at https://p3online.in"
+def _shop_line() -> str:
+    from config.brand_config import platform_handle
+    handle = platform_handle("instagram")
+    follow = f"Follow {handle}. " if handle else ""
+    return f"{follow}Shop at https://p3online.in"
+
+
+SHOP_LINE = _shop_line()
 LINKEDIN_TAGS = "#PurityBeans #InstantCoffee #IndianStartups"
 
 _LIMITS = {
@@ -18,6 +25,10 @@ _BAD = re.compile(
     r"low-grade|masquerading|chicory infusion|self-defense against|heavily diluted|"
     r"grind consistency|extraction temperature|chronobiology|glycemic|adrenal|"
     r"30%\s*to\s*49%|49%\s*chicory",
+    re.I,
+)
+_MONEY_HOOK = re.compile(
+    r"(?:₹|rs\.?\s*)\s*\d|\bwaste\b|\bevery\s+week\b",
     re.I,
 )
 _UNFIT = re.compile(
@@ -271,7 +282,7 @@ def story_frame_copy(content: dict, day: int = 0) -> dict:
         growth = content.get("growth_reel") if isinstance(content.get("growth_reel"), dict) else {}
         for candidate in (growth.get("hook_text"), growth.get("hook"), story.get("headline")):
             candidate = str(candidate or "").strip()
-            if candidate and not product_truth_findings(candidate, featured=featured) and not _BAD.search(candidate):
+            if candidate and not product_truth_findings(candidate, featured=featured) and not _BAD.search(candidate) and not _MONEY_HOOK.search(candidate):
                 hook = candidate
                 break
         return {"headline": hook or "READ THE LABEL", "sub": benefit, "product": featured}
@@ -292,6 +303,6 @@ def on_image_hook(content: dict, platform: str) -> str:
     candidates.extend((growth.get("hook_text"), growth.get("hook")))
     for candidate in candidates:
         candidate = str(candidate or "").strip()
-        if candidate and not product_truth_findings(candidate, featured=featured) and not _BAD.search(candidate) and not _UNFIT.search(candidate):
+        if candidate and not product_truth_findings(candidate, featured=featured) and not _BAD.search(candidate) and not _UNFIT.search(candidate) and not _MONEY_HOOK.search(candidate):
             return candidate
     return "READ THE LABEL"

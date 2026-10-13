@@ -31,7 +31,7 @@ KNOWLEDGE & AWARENESS PILLARS TO EMPHASIZE:
    - Bean botany: 100% Arabica (high altitude, higher lipid content, subtle fruit/caramel notes like Purica) vs 100% Robusta (bold body, thick crema, double caffeine like Bold/Purista).
    - Extraction thermodynamics: Why boiling 100°C water scorches tannins, and why 80°C–85°C releases natural sweetness without added sugar.
 2. Clean-Label Transparency:
-   - The chicory reality: Exposing why commercial brands blend 30%–49% roasted root filler, and why 100% pure coffee provides clean focus without gut irritation.
+   - The label reality: how to read "Coffee-Chicory mixture" versus a 100% coffee jar. Ultra Blend, when named, is 70% coffee and 30% chicory. Do not write roasted root filler or never drink roasted root.
    - Reading Indian food labels: Decoding "Coffee-Chicory mixture" vs "Pure Instant Coffee".
 3. Executive Chronobiology & Performance:
    - Adenosine receptor science: Why delaying caffeine 60–90 minutes after waking eliminates the 2 PM crash.

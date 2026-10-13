@@ -148,6 +148,12 @@ def test_bold_feed_and_story_pass_and_do_not_upscale(tmp_path, monkeypatch):
         geometry = json.loads(open(path + ".jar.json", encoding="utf-8").read())
         assert geometry["scale"] <= 1.0
         assert "bold_50g_front" in geometry["source_asset"]
+        with Image.open(path) as frame:
+            height = frame.size[1]
+        y0, y1 = geometry["jar_bbox"][1], geometry["jar_bbox"][3]
+        ratio = (y1 - y0) / height
+        assert 0.28 <= ratio <= 0.46, ratio
+        assert 0.70 <= y1 / height <= 0.84, y1 / height
 
 
 def test_bold_uses_the_complete_front_not_the_edge_cropped_100g():
@@ -174,12 +180,18 @@ def test_ultra_copy_stays_70_30_and_prima_has_no_price():
     bold = conversion_copy("Bold")
     assert "239" in bold["offer"]
     assert "ZERO CHICORY" in bold["benefit"].upper()
-    assert "P3ONLINE.IN" in bold["cta"]
-    assert "FOLLOW" in bold["cta"]
+    assert "p3online.in" in bold["cta"].lower()
+    assert "follow" in bold["cta"].lower()
 
     today = conversion_copy("Bold", headline="Most people waste Rs 200 every week on this.")
-    assert today["hook"] == "MOST PEOPLE WASTE RS 200 EVERY WEEK"
-    assert "ROASTED ROOT" not in " ".join(today.values()).upper()
+    blob = " ".join(today.values())
+    assert "200" not in blob
+    assert "waste" not in blob.lower()
+    assert blob.lower().count("239") == 1
+    assert "turn the jar around" in today["hook"].lower()
+    assert "purepantryprovisions" in today["cta"].lower()
+    assert "puritybeans" not in blob.lower()
+    assert "ROASTED ROOT" not in blob.upper()
 
 
 def test_letterbox_keeps_the_top_and_bottom_of_a_story_frame(tmp_path):

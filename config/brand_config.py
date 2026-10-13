@@ -17,7 +17,7 @@ BRAND = {
     "category":    "Premium Instant Coffee",
     "origin":      "India",
     "website":     "https://p3online.in",
-    "instagram":   "@puritybeans",
+    "instagram":   "@purepantryprovisions",
     "tone":        "premium but human, honest not corporate, Indian in DNA",
     "colors": {
         "background": "#0D0905",   # espresso dark
@@ -25,6 +25,23 @@ BRAND = {
         "cream":      "#F5EED8",   # warm cream text
     },
 }
+
+def platform_handle(platform: str) -> str:
+    """Return a handle only when this config names that account."""
+    key = str(platform or "").strip().lower()
+    key = {
+        "ig": "instagram",
+        "insta": "instagram",
+        "reel": "instagram",
+        "reels": "instagram",
+        "story": "instagram",
+        "stories": "instagram",
+    }.get(key, key)
+    handle = str(BRAND.get(key) or "").strip()
+    if handle.startswith("@") and len(handle) > 1 and " " not in handle:
+        return handle
+    return ""
+
 
 # ── Market positioning ────────────────────────────────────────────────────────
 

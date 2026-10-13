@@ -15,13 +15,13 @@ def build(reel_id: str, arch: tuple, time_slot: str,
           hashtag_key: str, avoid: str, day: int = 0) -> str:
     viral_idea = get_todays_viral_idea(day)
     suggested_hook = get_todays_hook(day)
-    from content_generator.core.product_truth import (
-        HONEST_FOLLOW_CTA, PURE_JAR_FOLLOW_CTA, name_contains_chicory,
-    )
+    from content_generator.core.product_truth import follow_cta_for, name_contains_chicory
     from content_generator.rotation import PRODUCTS, pick
+    from config.brand_config import platform_handle
     featured = str(pick(PRODUCTS, day))
+    handle = platform_handle("instagram") or "@purepantryprovisions"
+    follow_spoken = follow_cta_for(featured, variant="alt" if reel_id == "reel_2" else "primary")
     if name_contains_chicory(featured):
-        follow_spoken = HONEST_FOLLOW_CTA
         villain_spoken = "Ultra Blend is 70% coffee and 30% chicory, a smooth milk coffee."
         featured_rule = (
             f"FEATURED JAR TODAY: {featured}. It contains chicory. "
@@ -30,11 +30,11 @@ def build(reel_id: str, arch: tuple, time_slot: str,
             "Ultra Blend is 70% coffee and 30% chicory. Smooth milk coffee and lower caffeine are allowed."
         )
     else:
-        follow_spoken = PURE_JAR_FOLLOW_CTA + "."
-        villain_spoken = "Name it precisely — chicory, preservatives, artificial aroma"
+        villain_spoken = "The ingredient list is the fact. Do not attack chicory when Ultra Blend is also named."
         featured_rule = (
             f"FEATURED JAR TODAY: {featured}. Zero-chicory praise is allowed for this jar and for "
-            "Bold, Purista, Purica, Prima, and Gourmet Duo Mini. Never apply that praise to Ultra Blend."
+            "Bold, Purista, Purica, Prima, and Gourmet Duo Mini. Never apply that praise to Ultra Blend. "
+            "This caption also names Ultra Blend, so do not write 'never drink roasted root' or 'roasted root filler'."
         )
 
     return f"""{brand_block()}
@@ -60,7 +60,10 @@ Jar facts support the frame — they are not the frame. Bold, Purista, Purica, a
 {featured_rule}
 
 ABSOLUTE RULES:
-- NEVER invent statistics or percentages
+- NEVER invent statistics, weekly spend, or percentages
+- NEVER write "never drink roasted root" or "roasted root filler"
+- The cta field MUST be exactly: "{follow_spoken}"
+- reel_2 must not reuse reel_1's call to action
 - NEVER make medical claims
 - NEVER use generic AI language
 - Caption MUST be 150-250 words
@@ -89,13 +92,13 @@ ABSOLUTE RULES:
     {{"on_screen": "THE TWIST", "spoken": "The thing they did not expect — contrarian, relatable"}},
     {{"on_screen": "THE LABEL", "spoken": "{villain_spoken}"}},
     {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee."}},
-    {{"on_screen": "FOLLOW @PURITYBEANS", "spoken": "{follow_spoken}"}}
+    {{"on_screen": "FOLLOW {handle}", "spoken": "{follow_spoken}"}}
   ],
   "loop_note": "One sentence: how the last frame connects back to frame 1 for infinite loop",
   "alt_hook": "A/B option — 4 words, completely different archetype",
-  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Available at {WEBSITE_URL}\\n\\nFollow @puritybeans for daily honest coffee craft. Shop pure: {WEBSITE_URL}",
-  "cta": "Follow @puritybeans for daily pure coffee craft. Explore 100% pure jars at {WEBSITE_URL}",
-  "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Available at {WEBSITE_URL}\\n\\n{follow_spoken} Shop: {WEBSITE_URL}",
+  "cta": "{follow_spoken}",
+  "comment_trigger": "Comment LABEL if you have turned a coffee jar around.",
   "save_trigger": "Save this before your next grocery run so you never buy the wrong coffee again.",
   "share_trigger": "Share with someone who starts every morning with coffee — they deserve to know.",
   "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "agglomerated coffee", "coffee without preservatives", "pure instant coffee", "coffee lovers india", "instant coffee brand india"],

@@ -19,13 +19,13 @@ logger = logging.getLogger(__name__)
 # Default CTA copy per (objective, audience) — used until live data accumulates
 _DEFAULT_CTAS: dict[tuple[str, str], list[str]] = {
     ("Follower Growth",         "consumer"):     [
-        "Follow @puritybeans so you never drink roasted root again",
+        "Follow @purepantryprovisions. Turn the jar around.",
         "Follow — tomorrow I'll show you how to read the back of a coffee label",
-        "Follow for daily pure coffee truths Big Coffee hides",
+        "Follow @purepantryprovisions for the line under the word coffee.",
         "Follow Hiten Jain for unfiltered coffee science",
     ],
     ("FOLLOW",                  "consumer"):     [
-        "Follow @puritybeans so you never drink roasted root again",
+        "Follow @purepantryprovisions. Turn the jar around.",
         "Follow — tomorrow I'll show you how to read the back of a coffee label",
         "Follow for daily pure coffee truths Big Coffee hides",
         "Follow Hiten Jain for unfiltered coffee science",
@@ -84,7 +84,7 @@ _DEFAULT_CTAS: dict[tuple[str, str], list[str]] = {
     ],
 }
 
-_FALLBACK_CTA = "Follow @puritybeans for daily pure coffee truths"
+_FALLBACK_CTA = "Follow @purepantryprovisions. Turn the jar around."
 
 
 def get_best_cta(

@@ -164,7 +164,17 @@ def test_ultra_blend_day_follow_cta_discloses_the_blend():
     assert pick(PRODUCTS, 286) == "Purista"
     pure = assign_objective("reel_1", 286)
     assert pure["funnel_objective"] == "FOLLOW"
-    assert "roasted root" in pure["primary_cta"].lower()
+    assert "roasted root" not in pure["primary_cta"].lower()
+    assert "purepantryprovisions" in pure["primary_cta"].lower()
+    other = assign_objective("reel_2", 286)
+    assert other["primary_cta"] != pure["primary_cta"]
+    named = assign_objective(
+        "carousel",
+        285,
+        "Ultra Blend is 70% coffee. Follow so you never drink roasted root again",
+    )
+    assert "roasted root" not in named["primary_cta"].lower()
+    assert "30% chicory" in named["primary_cta"].lower()
 
 
 def test_repair_rewrites_2026_10_12_attacks_without_publishing():

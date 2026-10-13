@@ -44,6 +44,11 @@ def _product_class(product) -> str:
     return "unknown"
 
 
+def _story_cta() -> str:
+    from content_generator.creative.frame_copy import frame_cta
+    return frame_cta()
+
+
 def onscreen_chrome(format_type: str, product=None) -> tuple[str, str]:
     """Badge and CTA that match the format and the jar in the frame.
 
@@ -63,11 +68,11 @@ def onscreen_chrome(format_type: str, product=None) -> tuple[str, str]:
             cta = "INDIA'S CLEANEST INSTANT COFFEE"
     elif fmt == "story":
         if kind == "ultra":
-            badge, cta = "STORY  •  70% COFFEE  30% CHICORY", "FOLLOW @PURITYBEANS  •  SHOP P3ONLINE.IN"
+            badge, cta = "STORY  •  70% COFFEE  30% CHICORY", _story_cta()
         elif kind == "pure":
-            badge, cta = "STORY  •  100% COFFEE", "FOLLOW @PURITYBEANS  •  SHOP P3ONLINE.IN"
+            badge, cta = "STORY  •  100% COFFEE", _story_cta()
         else:
-            badge, cta = "STORY  •  READ THE LABEL", "FOLLOW @PURITYBEANS  •  SHOP P3ONLINE.IN"
+            badge, cta = "STORY  •  READ THE LABEL", _story_cta()
     else:
         if kind == "ultra":
             badge, cta = "REEL  •  ULTRA BLEND", "70% COFFEE  •  30% CHICORY"

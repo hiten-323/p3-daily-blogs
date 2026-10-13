@@ -99,8 +99,16 @@ _ULTRA_FALSE_PURITY = re.compile(
     rf"ultra[\s-]?blend[^,.!?\n]{{0,140}}?(?:{_FALSE_PURITY_TOKEN})",
     re.I,
 )
-HONEST_FOLLOW_CTA = "Follow @puritybeans for Ultra Blend: 70% coffee and 30% chicory."
-PURE_JAR_FOLLOW_CTA = "Follow @puritybeans so you never drink roasted root again"
+def _instagram_handle() -> str:
+    from config.brand_config import platform_handle
+    return platform_handle("instagram")
+
+
+_IG = _instagram_handle()
+HONEST_FOLLOW_CTA = f"Follow {_IG} for Ultra Blend: 70% coffee and 30% chicory."
+ALT_ULTRA_FOLLOW_CTA = f"Follow {_IG}. The Ultra Blend jar prints 70% coffee and 30% chicory."
+PURE_JAR_FOLLOW_CTA = f"Follow {_IG}. Turn the jar around."
+ALT_PURE_FOLLOW_CTA = f"Follow {_IG} for the line under the word coffee."
 _ANTI_CHICORY_REASON = (
     "anti-chicory attack is not allowed when Ultra Blend or another chicory blend "
     "is featured or named as the solution; disclose 70% coffee and 30% chicory"
@@ -270,11 +278,12 @@ def chicory_in_scope(text: str, featured: str | None = None) -> bool:
     return any(name_contains_chicory(slug) for slug in named_slugs(text))
 
 
-def follow_cta_for(featured: str | None = None, text: str = "") -> str:
-    """Follower CTA. Chicory blends get the honest 70/30 line."""
+def follow_cta_for(featured: str | None = None, text: str = "", variant: str = "primary") -> str:
+    """Follower CTA. A chicory blend in the copy gets the honest 70/30 line."""
+    alt = str(variant or "") == "alt"
     if chicory_in_scope(text, featured):
-        return HONEST_FOLLOW_CTA
-    return PURE_JAR_FOLLOW_CTA
+        return ALT_ULTRA_FOLLOW_CTA if alt else HONEST_FOLLOW_CTA
+    return ALT_PURE_FOLLOW_CTA if alt else PURE_JAR_FOLLOW_CTA
 
 
 def piece_copy_text(piece: dict) -> str:
