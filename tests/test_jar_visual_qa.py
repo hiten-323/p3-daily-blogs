@@ -50,7 +50,13 @@ def _ensure_fixtures():
     blurred = sharp.filter(ImageFilter.GaussianBlur(radius=8))
     cropped_box = [80, 180, 820, height - 1]
     cropped = _striped_jar(width, height, tuple(cropped_box))
-    common = {"jar_required": True, "text_boxes": [], "safe_zone": safe, "scale": 1.0}
+    common = {
+        "jar_required": True,
+        "text_boxes": [],
+        "safe_zone": safe,
+        "scale": 1.0,
+        "lifestyle_required": False,
+    }
     return {
         "sharp": _write_fixture("sharp_full_jar.png", sharp, {**common, "jar_bbox": sharp_box}),
         "blurred": _write_fixture("blurred_jar.png", blurred, {**common, "jar_bbox": sharp_box}),

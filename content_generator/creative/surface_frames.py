@@ -20,21 +20,22 @@ def compose_editorial_card(
     out_dir: str | None = None,
 ) -> str | None:
     """Middle carousel slide: the slide's own words, no invented claims, no sticker stack."""
-    del day
     from PIL import ImageDraw
 
     from content_generator.creative.jar_frame import (
         _draw_centered,
-        _premium_background,
         conversion_copy,
         safe_zone,
-        write_text_card_geometry,
+        write_geometry,
     )
+    from content_generator.creative.lifestyle_scene import load_plate
     from content_generator.creative.real_jar_composer import _font, _wrap
     from content_generator.publisher.surface_copy import clean_slide_copy
 
     heading, body = clean_slide_copy(heading, body, product)
-    canvas = _premium_background(width, height)
+    canvas, scene_id = load_plate(width, height, day, blur=3.5)
+    if canvas is None:
+        return None
     zone = safe_zone(width, height, "carousel")
     draw = ImageDraw.Draw(canvas)
     copy = conversion_copy(product or "Bold")
@@ -60,7 +61,12 @@ def compose_editorial_card(
     from content_generator.core.ist_dates import today_ist
     path = os.path.join(folder, f"{label}_{today_ist().isoformat()}.jpg")
     canvas.save(path, "JPEG", quality=92)
-    write_text_card_geometry(path)
+    write_geometry(path, {
+        "jar_required": False,
+        "role": "text_card",
+        "scene_id": scene_id,
+        "lifestyle_required": True,
+    })
     try:
         from content_generator.creative.jar_frame import select_front_asset
         from content_generator.creative.jar_provenance import record_jar_provenance

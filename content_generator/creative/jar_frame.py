@@ -165,24 +165,16 @@ def fit_jar_down(jar, max_w: int, max_h: int):
 
 
 def paste_product_jar(canvas, jar, rect: tuple[int, int, int, int]):
-    """Paste a shadow under the jar, then the unfiltered jar, bottom-aligned."""
-    from PIL import Image, ImageDraw, ImageFilter
-
+    """Ground the jar, then paste it unfiltered and bottom-aligned."""
     x0, y0, x1, y1 = rect
     fitted, scale = fit_jar_down(jar, x1 - x0, y1 - y0)
     jx = x0 + max(0, (x1 - x0 - fitted.width) // 2)
     jy = y1 - fitted.height
     if jy < y0:
         jy = y0
-    shadow = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
-    draw = ImageDraw.Draw(shadow)
-    sw = max(8, int(fitted.width * 0.7))
-    sh = max(6, int(fitted.height * 0.035))
-    sx = jx + (fitted.width - sw) // 2
-    sy = min(canvas.size[1] - sh - 1, jy + fitted.height - sh // 2)
-    draw.ellipse((sx, sy, sx + sw, sy + sh), fill=(0, 0, 0, 80))
-    shadow = shadow.filter(ImageFilter.GaussianBlur(8))
-    base = Image.alpha_composite(canvas.convert("RGBA"), shadow)
+    from content_generator.creative.lifestyle_scene import ground_product, seat_base
+    fitted = seat_base(fitted)
+    base = ground_product(canvas, fitted, jx, jy)
     base.paste(fitted, (jx, jy), fitted)
     bbox = (jx, jy, jx + fitted.width, jy + fitted.height)
     return base.convert("RGB"), bbox, scale
@@ -331,7 +323,9 @@ def audit_product_image(path: str) -> dict:
     if not geometry:
         return {"ok": False, "issues": [f"{os.path.basename(path)}: jar_geometry_missing"], "sharpness": 0.0}
     if geometry.get("jar_required") is False:
-        return {"ok": True, "issues": [], "sharpness": None, "jar_required": False}
+        if geometry.get("lifestyle_required", True) and not geometry.get("scene_id"):
+            return {"ok": False, "issues": [f"{os.path.basename(path)}: lifestyle_scene_missing"], "sharpness": None, "jar_required": False}
+        return {"ok": True, "issues": [], "sharpness": None, "jar_required": False, "scene_id": geometry.get("scene_id")}
     try:
         from PIL import Image
         with Image.open(path) as source:
@@ -345,6 +339,11 @@ def audit_product_image(path: str) -> dict:
         safe_zone_box=geometry.get("safe_zone"),
         scale=float(geometry.get("scale") or 1.0),
     )
+    if geometry.get("lifestyle_required", True):
+        from content_generator.creative.lifestyle_scene import realism_issues
+        extra = realism_issues(image, geometry.get("jar_bbox"), geometry.get("scene_id"), contact_shadow=bool(geometry.get("contact_shadow", False)))
+        result["issues"].extend(extra)
+        result["ok"] = not result["issues"]
     result["issues"] = [f"{os.path.basename(path)}: {issue}" for issue in result["issues"]]
     return result
 
@@ -358,24 +357,6 @@ def audit_product_images(paths: list[str]) -> dict:
         if not result.get("ok"):
             issues.extend(result.get("issues") or ["jar_qa_failed"])
     return {"ok": not issues, "issues": issues, "images_checked": checked}
-
-
-def _premium_background(width: int, height: int):
-    from PIL import Image, ImageDraw
-
-    image = Image.new("RGB", (width, height))
-    draw = ImageDraw.Draw(image)
-    top, mid, bot = (28, 20, 14), (58, 40, 26), (16, 11, 8)
-    for y in range(height):
-        f = y / max(1, height - 1)
-        if f < 0.58:
-            t = f / 0.58
-            color = tuple(int(top[i] + (mid[i] - top[i]) * t) for i in range(3))
-        else:
-            t = (f - 0.58) / 0.42
-            color = tuple(int(mid[i] + (bot[i] - mid[i]) * t) for i in range(3))
-        draw.line([(0, y), (width, y)], fill=color)
-    return image
 
 
 def _draw_centered(draw, text: str, font, y: int, fill, width: int) -> tuple[int, tuple[int, int, int, int] | None]:
@@ -403,8 +384,8 @@ def compose_conversion_frame(
     on_date=None,
     out_dir: str | None = None,
 ) -> str | None:
-    """Story, 4:5 feed, or square carousel hero with a sharp full jar."""
-    del day, idx
+    """Story, 4:5 feed, or square carousel hero. Real jar on a rotating lifestyle plate."""
+    del idx
     try:
         from PIL import ImageDraw
     except ImportError:
@@ -417,7 +398,12 @@ def compose_conversion_frame(
     slug = product_slug(product) or _slug_from_path(jar_path)
     copy = conversion_copy(slug or product, headline, sub)
 
-    canvas = _premium_background(width, height)
+    from content_generator.creative.lifestyle_scene import load_plate, match_light
+    canvas, scene_id = load_plate(width, height, day)
+    if canvas is None:
+        logger.warning("[jar_frame] lifestyle plate missing")
+        return None
+    jar = match_light(jar, canvas)
     zone = safe_zone(width, height, "story" if format_name == "story" or height > width * 1.3 else format_name)
     from content_generator.creative.real_jar_composer import _font, _wrap
 
@@ -450,7 +436,7 @@ def compose_conversion_frame(
 
     cta_h = int(footer_font.size * 2.2)
     cta_top = zone[3] - cta_h
-    jar_rect = (zone[0], y + 16, zone[2], cta_top - 12)
+    jar_rect = (zone[0], y + 16, zone[2], cta_top - 28)
     if jar_rect[3] - jar_rect[1] < 80:
         jar_rect = (zone[0], y + 8, zone[2], cta_top - 8)
     canvas, jar_bbox, scale = paste_product_jar(canvas, jar, jar_rect)
@@ -479,6 +465,9 @@ def compose_conversion_frame(
         "scale": round(scale, 4),
         "source_asset": jar_path.replace("\\", "/"),
         "format": format_name,
+        "scene_id": scene_id,
+        "contact_shadow": True,
+        "lifestyle_required": True,
     })
     try:
         from content_generator.creative.jar_provenance import record_jar_provenance

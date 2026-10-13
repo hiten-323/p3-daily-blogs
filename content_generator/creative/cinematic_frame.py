@@ -243,7 +243,10 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     boost_exposure = dirs.get("boost_exposure", False)
     is_tall = height > width * 1.4
 
-    canvas = _gradient_bg(width, height, exposure_boost=boost_exposure, is_tall=is_tall)
+    from content_generator.creative.lifestyle_scene import load_plate
+    canvas, _scene_id = load_plate(width, height, day, blur=1.3)
+    if canvas is None:
+        return None
     draw = ImageDraw.Draw(canvas)
     margin = int(width * 0.08)
     max_w = width - 2 * margin
