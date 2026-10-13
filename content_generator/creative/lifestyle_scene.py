@@ -4,33 +4,50 @@ from __future__ import annotations
 import os
 
 # Prop boxes are pixels of the 720×1280 plate. "side" is where the jar sits.
+# height_cm is the real object. depth < 1 means the jar is slightly further away.
 SCENES = (
     {
         "id": "kitchen_morning",
         "file": "brand_assets/scenes/kitchen_morning.jpg",
         "size": (720, 1280),
+        "light": "left",
+        "rim": 0.32,
         "props": (),
+        "scale_ref": {"box": (280, 800, 470, 1020), "height_cm": 9.5, "depth": 1.0, "lift": 0.0},
     },
     {
         "id": "cafe_table",
         "file": "brand_assets/scenes/cafe_table.jpg",
         "size": (720, 1280),
-        "props": ({"id": "cup", "box": (394, 644, 610, 896), "side": "left"},),
+        "light": "left",
+        "rim": 0.22,
+        "props": ({
+            "id": "cup", "box": (394, 644, 610, 896), "side": "left",
+            "height_cm": 9.5, "depth": 0.96, "lift": 0.08,
+        },),
     },
     {
         "id": "work_desk",
         "file": "brand_assets/scenes/work_desk.jpg",
         "size": (720, 1280),
-        "props": ({"id": "laptop", "box": (148, 470, 498, 636), "side": "right"},),
+        "light": "left",
+        "rim": 0.30,
+        "props": ({
+            "id": "laptop", "box": (148, 470, 498, 636), "side": "right",
+            "height_cm": 16.5, "depth": 1.65, "lift": -1.0, "behind": True,
+        },),
     },
     {
         "id": "balcony_sunrise",
         "file": "brand_assets/scenes/balcony_sunrise.jpg",
         "size": (720, 1280),
+        "light": "right",
+        "rim": 0.30,
         "props": (
             {"id": "plant_left", "box": (0, 630, 236, 880), "side": "right"},
             {"id": "plant_right", "box": (600, 980, 720, 1120), "side": "left"},
         ),
+        "scale_ref": {"box": (320, 860, 500, 1060), "height_cm": 9.5, "depth": 1.0, "lift": 0.0},
     },
 )
 _IDS = {scene["id"] for scene in SCENES}
@@ -63,14 +80,15 @@ def load_plate(width: int, height: int, day: int = 0, blur: float = 1.15):
     if not os.path.exists(path):
         return None, None
     plate = Image.open(path).convert("RGB")
-    scale = max(width / plate.width, height / plate.height)
+    from content_generator.creative.scene_natural import frame_crop
+    scale, crop_left, crop_top = frame_crop(scene, width, height)
     resized = (
         plate.resize((max(1, int(round(plate.width * scale))), max(1, int(round(plate.height * scale)))), Image.Resampling.LANCZOS)
         if scale < 0.999 or scale > 1.001
         else plate
     )
-    left = max(0, (resized.width - width) // 2)
-    top = max(0, (resized.height - height) // 2)
+    left = max(0, int(round(crop_left)))
+    top = max(0, int(round(crop_top)))
     frame = resized.crop((left, top, left + width, top + height))
     if blur and blur > 0.2:
         frame = frame.filter(ImageFilter.GaussianBlur(radius=blur))
@@ -136,22 +154,19 @@ def frame_props(scene, width: int, height: int) -> list[dict]:
     """Prop boxes in the cover-cropped frame. The same crop load_plate uses."""
     if not scene:
         return []
-    src_w, src_h = scene.get("size", (720, 1280))
-    scale = max(width / src_w, height / src_h)
-    left = (src_w * scale - width) / 2
-    top = (src_h * scale - height) / 2
+    from content_generator.creative.scene_natural import map_box
     mapped = []
     for prop in scene.get("props", ()):
-        x0, y0, x1, y1 = prop["box"]
-        box = (
-            int(round(x0 * scale - left)),
-            int(round(y0 * scale - top)),
-            int(round(x1 * scale - left)),
-            int(round(y1 * scale - top)),
-        )
+        x0, y0, x1, y1 = map_box(scene, prop["box"], width, height)
+        box = (int(round(x0)), int(round(y0)), int(round(x1)), int(round(y1)))
         if box[2] <= 0 or box[3] <= 0 or box[0] >= width or box[1] >= height:
             continue
-        mapped.append({"id": prop["id"], "side": prop.get("side", "left"), "box": box})
+        mapped.append({
+            "id": prop["id"],
+            "side": prop.get("side", "left"),
+            "behind": bool(prop.get("behind")),
+            "box": box,
+        })
     return mapped
 
 
@@ -185,59 +200,104 @@ def _free_spans(limit_l: int, limit_r: int, blocked: list[tuple[int, int]]) -> l
     return spans
 
 
+def _place_side(scene) -> str:
+    for prop in scene.get("props", ()) if scene else ():
+        if prop.get("height_cm") or prop.get("side"):
+            return prop.get("side") or "left"
+    return "center"
+
+
 def place_product(scene, width, height, text_bottom, cta_top, zone, jar_size, attempt: int = 0) -> tuple[int, int, int, int]:
-    """Sit the jar beside scene props. The base stays on the counter, in front of them."""
+    """Scale the jar from the reference prop and sit it on a third, off the frame edge."""
+    from content_generator.creative.scene_natural import JAR_CM, map_box, scale_ref
+
     slot = product_rect(width, height, text_bottom, cta_top, zone)
-    base = slot[3]
-    max_h = max(80, base - slot[1])
-    max_w = max(80, slot[2] - slot[0])
-    jar_w, jar_h = [max(1, int(v)) for v in jar_size]
+    ref = scale_ref(scene)
+    if not ref:
+        return slot
+    box = map_box(scene, ref["box"], width, height)
+    ref_h = max(1.0, box[3] - box[1])
+    depth = float(ref.get("depth", 0.96))
+    lift = float(ref.get("lift", 0.08))
+    native_w, native_h = [max(1, int(v)) for v in jar_size]
+    jar_h = max(1, int(round(ref_h * (JAR_CM / float(ref["height_cm"])) * depth)))
+    jar_w = max(1, int(round(jar_h * native_w / native_h)))
+    margin_x = int(width * 0.08)
+    margin_y = int(height * 0.035)
+    max_base = min(int(cta_top) - 16, height - margin_y)
+    min_top = int(text_bottom) + 8
+    base = int(round(box[3] - ref_h * lift))
+    base = min(base, max_base)
+    base = max(base, margin_y + int(height * 0.12))
+    top = base - jar_h
+    # Slide down to clear the headline before giving up physical scale.
+    if top < min_top:
+        top = min_top
+        base = min(max_base, top + jar_h)
+        if base - top < jar_h:
+            jar_h = max(int(height * 0.09), base - top)
+        jar_w = max(1, int(round(jar_h * native_w / native_h)))
+        top = base - jar_h
     props = frame_props(scene, width, height)
-    gap = max(24, int(width * 0.034))
-    limit_l, limit_r = int(zone[0]), int(zone[2])
-    full = min(1.0, max_w / jar_w, max_h / jar_h)
-    min_h = int(height * 0.285)
-    scales = [full]
     for prop in props:
-        clear_h = base - prop["box"][3]
-        if min_h <= clear_h < jar_h * full:
-            scales.append(clear_h / jar_h)
-    for scale in sorted(set(scales), reverse=True):
-        jw = max(1, int(round(jar_w * scale)))
-        jh = max(1, int(round(jar_h * scale)))
-        if jh < min_h:
+        if not prop.get("behind"):
             continue
-        top = base - jh
-        blocked = []
-        for prop in props:
-            a0, b0, a1, b1 = prop["box"]
-            if top >= b1 or base <= b0:
-                continue
-            blocked.append((a0 - gap, a1 + gap))
-        placed = None
-        for s0, s1 in _free_spans(limit_l, limit_r, blocked):
-            if s1 - s0 < jw:
-                continue
-            on_right = any(b0 >= s1 - 2 for b0, _b1 in blocked)
-            on_left = any(b1 <= s0 + 2 for _b0, b1 in blocked)
-            if on_right and not on_left:
-                jx = s1 - jw
-            elif on_left and not on_right:
-                jx = s0
-            else:
-                jx = s0 + (s1 - s0 - jw) // 2
-            beside = 1 if on_left or on_right else 0
-            if placed is None or (beside, s1 - s0) > placed[0]:
-                placed = ((beside, s1 - s0), jx, s0, s1)
-        if placed:
-            jx, s0, s1 = placed[1], placed[2], placed[3]
-            # The next try sits at the other end of the same clear span.
-            if int(attempt) % 2 == 1 and s1 - s0 >= jw:
-                alt = s0 if jx > s0 + 4 else s1 - jw
-                if s0 <= alt <= s1 - jw:
-                    jx = alt
-            return (jx, top, jx + jw, base)
+        floor = prop["box"][3] + 4
+        if top >= floor:
+            continue
+        top = floor
+        if top + jar_h <= max_base:
+            base = top + jar_h
+            continue
+        base = max_base
+        jar_h = max(int(height * 0.09), base - top)
+        jar_w = max(1, int(round(jar_h * native_w / native_h)))
+        top = base - jar_h
+    gap = max(18, int(width * 0.028))
+    side = _place_side(scene)
+    thirds = (width / 3, width / 2, 2 * width / 3)
+    order = {"left": (0, 1, 2), "right": (2, 1, 0)}.get(side, (1, 0, 2))
+    if int(attempt) % 2 == 1:
+        order = tuple(reversed(order))
+    limit_l = max(margin_x, int(zone[0]))
+    limit_r = min(width - margin_x, int(zone[2]))
+    for index in order:
+        jx = int(thirds[index] - jar_w / 2)
+        jx = max(limit_l, min(jx, limit_r - jar_w))
+        if _clear_of_props(jx, jar_w, top, base, props, gap):
+            return (jx, top, jx + jar_w, base)
+    blocked = []
+    for prop in props:
+        if not _prop_blocks(prop, top, base):
+            continue
+        a0, _b0, a1, _b1 = prop["box"]
+        blocked.append((a0 - gap, a1 + gap))
+    for s0, s1 in _free_spans(limit_l, limit_r, blocked):
+        if s1 - s0 < jar_w:
+            continue
+        jx = s0 if side == "left" else s1 - jar_w if side == "right" else s0 + (s1 - s0 - jar_w) // 2
+        jx = max(s0, min(jx, s1 - jar_w))
+        return (jx, top, jx + jar_w, base)
     return slot
+
+
+def _prop_blocks(prop, top, base) -> bool:
+    """A jar standing in front of a backdrop prop is not blocked by it."""
+    _a0, b0, _a1, b1 = prop["box"]
+    if top >= b1 or base <= b0:
+        return False
+    jar_h = max(1, base - top)
+    return not (base > b1 and (base - b1) >= 0.45 * jar_h)
+
+
+def _clear_of_props(jx, jar_w, top, base, props, gap) -> bool:
+    for prop in props:
+        if not _prop_blocks(prop, top, base):
+            continue
+        a0, _b0, a1, _b1 = prop["box"]
+        if jx < a1 + gap and jx + jar_w > a0 - gap:
+            return False
+    return True
 
 
 def seat_base(fitted):
@@ -256,7 +316,7 @@ def seat_base(fitted):
     return fitted
 
 
-def ground_product(canvas, fitted, jx: int, jy: int):
+def ground_product(canvas, fitted, jx: int, jy: int, light: str = "left"):
     """A short soft shadow tucked under the glass. No floor disc and no dropped oval."""
     base = canvas.convert("RGBA")
     alpha = fitted.split()[-1]
@@ -271,25 +331,36 @@ def ground_product(canvas, fitted, jx: int, jy: int):
         foot_x0, foot_x1 = foot[0], foot[-1]
     else:
         foot_x0, foot_x1 = int(width * 0.35), int(width * 0.65)
-    foot_w = max(12, foot_x1 - foot_x0)
     cx = jx + (foot_x0 + foot_x1) // 2
     by = jy + foot_y
-    # Darken the counter directly under the glass. A separate oval reads as a floating disc.
-    sw = max(20, int(foot_w * 0.92))
-    sh = max(8, min(12, int(height * 0.02)))
+    # Contact stays under the glass. A longer lobe falls away from the key light.
+    shift = int(width * 0.22) * (-1 if light == "right" else 1)
     pixels = base.load()
-    rx = sw / 2
-    for dy in range(1, sh + 1):
-        half = rx * (1 - (dy / (sh + 1)) ** 2) ** 0.5
-        gain = 0.30 + 0.64 * (dy / sh)
+    # A short contact under the glass, darkest on the first rows the QA samples.
+    band = max(14, int(width * 0.20))
+    for dy, gain in ((1, 0.40), (2, 0.50), (3, 0.62), (4, 0.76), (5, 0.90)):
         y = by + dy
         if y < 0 or y >= base.size[1]:
             continue
-        x0 = max(0, int(cx - half))
-        x1 = min(base.size[0], int(cx + half) + 1)
+        x0 = max(0, int(cx - band / 2))
+        x1 = min(base.size[0], int(cx + band / 2) + 1)
         for x in range(x0, x1):
-            edge = abs(x - cx) / max(1.0, half)
-            soft = gain + (1 - gain) * (edge ** 1.5)
+            red, green, blue, alpha = pixels[x, y]
+            pixels[x, y] = (int(red * gain), int(green * gain), int(blue * gain), alpha)
+    lobe = max(18, int(width * 0.34))
+    lx = cx + shift
+    reach = 12
+    for dy in range(1, reach + 1):
+        half = (lobe / 2) * (1 - (dy / (reach + 1)) ** 2) ** 0.5
+        gain = 0.38 + 0.52 * (dy / reach)
+        y = by + dy
+        if y < 0 or y >= base.size[1]:
+            continue
+        x0 = max(0, int(lx - half))
+        x1 = min(base.size[0], int(lx + half) + 1)
+        for x in range(x0, x1):
+            edge = abs(x - lx) / max(1.0, half)
+            soft = gain + (1 - gain) * (edge ** 1.35)
             red, green, blue, alpha = pixels[x, y]
             pixels[x, y] = (int(red * soft), int(green * soft), int(blue * soft), alpha)
     return base
@@ -411,4 +482,7 @@ def realism_issues(image, jar_bbox, scene_id, *, contact_shadow: bool = True) ->
         issues.append("floor_disc")
     if image is not None and props_overlap(jar_bbox, frame_props(scene_by_id(scene_id), image.size[0], image.size[1])):
         issues.append("prop_overlap")
+    if image is not None:
+        from content_generator.creative.scene_natural import naturalism_issues
+        issues.extend(naturalism_issues(image, jar_bbox, scene_by_id(scene_id)))
     return issues

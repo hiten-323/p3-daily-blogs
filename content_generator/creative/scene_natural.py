@@ -1,0 +1,305 @@
+"""Seat a real jar in a photograph: scale, perspective, and the scene's light.
+
+The label is not redrawn. Brand hue stays put. Exposure, saturation, and a
+directional shade move the glass toward the table.
+"""
+from __future__ import annotations
+
+import numpy as np
+
+# A 50g jar is about a mug tall, a little shorter. The mug is 9.5cm.
+JAR_CM = 8.8
+EDGE_X = 0.08
+_LUM_TOL = 36.0
+_CAST_TOL = 24.0
+_SCALE_TOL = 0.18
+
+
+def frame_crop(scene, width: int, height: int) -> tuple[float, float, float]:
+    """Cover crop. Short frames slide so the reference prop stays on the table."""
+    src_w, src_h = (scene or {}).get("size", (720, 1280))
+    scale = max(width / src_w, height / src_h)
+    left = (src_w * scale - width) / 2
+    top = (src_h * scale - height) / 2
+    ref = scale_ref(scene)
+    if not ref:
+        return scale, left, top
+    y0 = ref["box"][1] * scale - top
+    y1 = ref["box"][3] * scale - top
+    if y0 >= height * 0.02 and y1 <= height * 0.98:
+        return scale, left, top
+    anchored = ref["box"][3] * scale - height * 0.62
+    anchored = min(anchored, ref["box"][1] * scale - height * 0.04)
+    top = min(max(0.0, anchored), max(0.0, src_h * scale - height))
+    return scale, left, top
+
+
+def map_box(scene, box, width: int, height: int) -> tuple[float, float, float, float]:
+    """The same cover-crop load_plate uses, without clipping to the frame."""
+    scale, left, top = frame_crop(scene, width, height)
+    x0, y0, x1, y1 = box
+    return (x0 * scale - left, y0 * scale - top, x1 * scale - left, y1 * scale - top)
+
+
+def scale_ref(scene) -> dict | None:
+    if not scene:
+        return None
+    if scene.get("scale_ref"):
+        return scene["scale_ref"]
+    for prop in scene.get("props", ()):
+        if prop.get("height_cm"):
+            return prop
+    return None
+
+
+def seat_perspective(jar, rim_aspect: float = 0.30):
+    """Flatten the cap ellipse toward the scene camera. The label is not warped."""
+    from PIL import Image
+
+    image = jar.convert("RGBA")
+    width, height = image.size
+    squash = max(0.75, min(1.0, float(rim_aspect) / 0.34))
+    band = max(8, int(height * 0.11))
+    cap = image.crop((0, 0, width, band))
+    cap_h = max(4, int(round(band * squash)))
+    cap = cap.resize((width, cap_h), Image.Resampling.LANCZOS)
+    narrowed = max(4, int(round(width * (0.92 + 0.08 * squash))))
+    pinched = Image.new("RGBA", (width, cap_h), (0, 0, 0, 0))
+    cap = cap.resize((narrowed, cap_h), Image.Resampling.LANCZOS)
+    pinched.paste(cap, ((width - narrowed) // 2, 0), cap)
+    body = image.crop((0, band, width, height))
+    out = Image.new("RGBA", (width, cap_h + body.size[1]), (0, 0, 0, 0))
+    out.paste(pinched, (0, 0), pinched)
+    out.paste(body, (0, cap_h), body)
+    return out
+
+
+def _rgb(image) -> np.ndarray:
+    return np.asarray(image.convert("RGB")).astype(np.float32)
+
+
+def _lum(rgb: np.ndarray) -> np.ndarray:
+    return rgb[..., 0] * 0.2126 + rgb[..., 1] * 0.7152 + rgb[..., 2] * 0.0722
+
+
+def _chroma(rgb: np.ndarray) -> np.ndarray:
+    return rgb.max(axis=-1) - rgb.min(axis=-1)
+
+
+def grade_to_scene(jar, plate, rect, light: str = "left"):
+    """Match the glass to the table. High-chroma label hue is not rotated."""
+    from PIL import Image
+
+    image = jar.convert("RGBA")
+    arr = np.asarray(image).astype(np.float32)
+    rgb = arr[..., :3]
+    alpha = arr[..., 3]
+    opaque = alpha > 16
+    if int(opaque.sum()) < 32 or plate is None:
+        return image
+    height, width = rgb.shape[:2]
+    rgb = _flatten_columns(rgb, opaque)
+    surround = _surround(plate, rect)
+    if surround is None:
+        out = np.concatenate([np.clip(rgb, 0, 255), alpha[..., None]], axis=2).astype(np.uint8)
+        return Image.fromarray(out, "RGBA")
+    target = float(_lum(surround).mean())
+    body = opaque.copy()
+    body[: int(height * 0.16), :] = False
+    body[int(height * 0.90) :, :] = False
+    sample = _lum(rgb)[body] if int(body.sum()) > 30 else _lum(rgb)[opaque]
+    bright = sample[sample > 70] if np.any(sample > 70) else sample
+    gain = float(np.clip(target / max(float(np.median(bright)), 1.0), 0.55, 1.22))
+    # Dark glass stays dark glass. Only the lit label and metal take the exposure.
+    protect = np.clip((_lum(rgb) - 36.0) / 80.0, 0.0, 1.0)
+    rgb = rgb * (1.0 + (gain - 1.0) * protect[..., None])
+    _rolloff_cap(rgb, opaque, target)
+    # Pull neon chroma in. Scaling around luminance keeps the hue angle.
+    chroma = _chroma(rgb)
+    sat = np.where(chroma >= 46.0, 0.64, 0.94).astype(np.float32)
+    lum = _lum(rgb)[..., None]
+    rgb = lum + (rgb - lum) * sat[..., None]
+    clear = _clear_mask(rgb, opaque)
+    _warm_clear(rgb, clear, surround)
+    xs = np.linspace(0.0, 1.0, width, dtype=np.float32)
+    shade = (1.06 - 0.14 * xs) if light != "right" else (0.92 + 0.14 * xs)
+    rgb = rgb * shade[None, :, None]
+    streak = np.exp(-((xs - (0.16 if light != "right" else 0.84)) ** 2) / 0.0035)
+    rgb = rgb + streak[None, :, None] * clear[..., None] * 9.0
+    ys = np.linspace(0.0, 1.0, height, dtype=np.float32)
+    ao = 1.0 - 0.28 * np.clip((ys - 0.82) / 0.18, 0.0, 1.0)
+    rgb = rgb * ao[:, None, None]
+    rng = np.random.default_rng(11)
+    noise = rng.normal(0.0, 2.0, rgb.shape).astype(np.float32)
+    rgb = np.clip(rgb + noise * clear[..., None], 0, 255)
+    out = np.concatenate([rgb, alpha[..., None]], axis=2).astype(np.uint8)
+    return Image.fromarray(out, "RGBA")
+
+
+def _flatten_columns(rgb: np.ndarray, opaque: np.ndarray) -> np.ndarray:
+    """Take out the packshot's left-to-right studio exposure. Hue stays."""
+    height, width = rgb.shape[:2]
+    lum = _lum(rgb)
+    col = np.full(width, np.nan, dtype=np.float32)
+    for x in range(width):
+        mask = opaque[:, x]
+        if int(mask.sum()) > 12:
+            col[x] = float(np.median(lum[:, x][mask]))
+    if not np.isfinite(col).any():
+        return rgb
+    filled = col.copy()
+    good = np.isfinite(filled)
+    filled[~good] = np.interp(np.flatnonzero(~good), np.flatnonzero(good), filled[good])
+    kernel = max(9, width // 14)
+    smooth = np.convolve(filled, np.ones(kernel, dtype=np.float32) / kernel, mode="same")
+    base = float(np.median(smooth))
+    factor = np.clip(base / np.maximum(smooth, 1.0), 0.55, 1.35)
+    protect = np.clip((_lum(rgb) - 36.0) / 80.0, 0.0, 1.0)
+    applied = 1.0 + (factor[None, :] - 1.0) * protect
+    return rgb * applied[..., None]
+
+
+def _clear_mask(rgb: np.ndarray, opaque: np.ndarray) -> np.ndarray:
+    """Glass and metal. Skips brand ink and white label type."""
+    lum = _lum(rgb)
+    return opaque & (_chroma(rgb) < 34.0) & (lum > 42.0) & (lum < 176.0)
+
+
+def _rolloff_cap(rgb: np.ndarray, opaque: np.ndarray, target: float) -> None:
+    """Pull the packshot's specular cap down into the scene. The label is left alone."""
+    height = rgb.shape[0]
+    cap = np.zeros(opaque.shape, dtype=bool)
+    cap[: max(4, int(height * 0.16)), :] = True
+    lum = _lum(rgb)
+    ceiling = max(28.0, target * 1.08)
+    hot = cap & opaque & (lum > ceiling)
+    if not np.any(hot):
+        return
+    scale = np.ones(lum.shape, dtype=np.float32)
+    scale[hot] = ceiling / np.maximum(lum[hot], 1.0)
+    rgb *= (1.0 + (scale - 1.0) * 0.92)[..., None]
+
+
+def _warm_clear(rgb: np.ndarray, clear: np.ndarray, surround: np.ndarray) -> None:
+    if int(clear.sum()) < 40:
+        return
+    src = rgb[clear].mean(axis=0)
+    dst = surround.mean(axis=(0, 1))
+    delta = (dst - dst.mean()) - (src - src.mean())
+    rgb[clear] = np.clip(rgb[clear] + delta, 0, 255)
+
+
+def _surround(plate, rect):
+    """Table pixels beside the jar, not the backdrop above it."""
+    rgb = _rgb(plate)
+    height, width = rgb.shape[:2]
+    x0, y0, x1, y1 = [int(v) for v in rect]
+    y_a = max(0, y1 - max(24, int((y1 - y0) * 0.28)))
+    y_b = min(height, max(y_a + 8, y1 - 4))
+    span = max(16, int((x1 - x0) * 0.45))
+    patches = []
+    if x0 - 8 > 12:
+        patches.append(rgb[y_a:y_b, max(0, x0 - span): max(0, x0 - 6)])
+    if x1 + 8 < width - 12:
+        patches.append(rgb[y_a:y_b, min(width, x1 + 6): min(width, x1 + span)])
+    patches = [patch for patch in patches if patch.size > 48]
+    if not patches:
+        return None
+    return patches[0] if len(patches) == 1 else np.concatenate(patches, axis=1)
+
+
+def _sample(image, box) -> np.ndarray | None:
+    rgb = _rgb(image)
+    height, width = rgb.shape[:2]
+    x0, y0, x1, y1 = [int(v) for v in box]
+    x0, y0 = max(0, x0), max(0, y0)
+    x1, y1 = min(width, x1), min(height, y1)
+    if x1 - x0 < 6 or y1 - y0 < 4:
+        return None
+    return rgb[y0:y1, x0:x1]
+
+
+def naturalism_issues(image, jar_bbox, scene) -> list[str]:
+    """Fail when the jar ignores the prop's size, the frame edge, or the local light."""
+    issues = []
+    if image is None or not scene:
+        return issues
+    width, height = image.size
+    try:
+        x0, y0, x1, y1 = [int(v) for v in jar_bbox]
+    except Exception:
+        return ["jar_bbox_invalid"]
+    if x0 < width * EDGE_X or x1 > width * (1 - EDGE_X):
+        issues.append("jar_at_frame_edge")
+    if y0 < height * 0.03 or y1 > height * 0.97:
+        issues.append("jar_at_frame_edge")
+    ref = scale_ref(scene)
+    if ref:
+        box = map_box(scene, ref["box"], width, height)
+        ref_h = max(1.0, box[3] - box[1])
+        target = (JAR_CM / float(ref["height_cm"])) * float(ref.get("depth", 0.96))
+        ratio = (y1 - y0) / ref_h
+        if ratio < target * (1 - _SCALE_TOL) or ratio > target * (1 + _SCALE_TOL):
+            issues.append("scale_unnatural")
+    glass = _glass(image, (x0, y0, x1, y1))
+    table = _surround(image, (x0, y0, x1, y1))
+    if glass is not None and table is not None:
+        table_lum = float(_lum(table).mean())
+        if abs(float(_lum(glass).mean()) - table_lum) > _LUM_TOL:
+            issues.append("light_mismatch")
+        jar_cast = float(glass[..., 0].mean() - glass[..., 2].mean())
+        tab_cast = float(table[..., 0].mean() - table[..., 2].mean())
+        if abs(jar_cast - tab_cast) > _CAST_TOL:
+            issues.append("white_balance_mismatch")
+    if not _shadow_agrees(image, (x0, y0, x1, y1), scene.get("light", "left")):
+        issues.append("shadow_direction")
+    return issues
+
+
+def _glass(image, box):
+    """Clear glass and metal inside the jar. Brand ink is not the white balance."""
+    rgb = _rgb(image)
+    height, width = rgb.shape[:2]
+    x0, y0, x1, y1 = [int(v) for v in box]
+    x0, y0 = max(0, x0), max(0, y0)
+    x1, y1 = min(width, x1), min(height, y1)
+    if x1 - x0 < 8 or y1 - y0 < 8:
+        return None
+    crop = rgb[y0:y1, x0:x1]
+    rows, cols = crop.shape[:2]
+    cap = crop[: max(6, int(rows * 0.10)), int(cols * 0.12): max(int(cols * 0.12) + 6, int(cols * 0.88))]
+    if cap.size:
+        lit = _lum(cap)
+        picked = cap[lit >= max(55.0, float(np.percentile(lit, 55)))]
+        if picked.shape[0] >= 30:
+            return picked.reshape(-1, 1, 3)
+    return _side_columns(image, (x0, y0, x1, y1))
+
+
+def _side_columns(image, box):
+    x0, y0, x1, y1 = box
+    span = max(8, int((x1 - x0) * 0.16))
+    y_a = y0 + int((y1 - y0) * 0.30)
+    y_b = y0 + int((y1 - y0) * 0.82)
+    left = _sample(image, (x0 + 2, y_a, x0 + span, y_b))
+    right = _sample(image, (x1 - span, y_a, x1 - 2, y_b))
+    parts = [part for part in (left, right) if part is not None]
+    if not parts:
+        return None
+    return parts[0] if len(parts) == 1 else np.concatenate(parts, axis=1)
+
+
+def _shadow_agrees(image, box, light: str) -> bool:
+    x0, _y0, x1, y1 = box
+    width = max(1, x1 - x0)
+    off = max(8, int(width * 0.20))
+    cx = (x0 + x1) // 2
+    y_a, y_b = y1 + 2, y1 + 16
+    half = max(6, int(width * 0.09))
+    shadow_x = cx + off if light != "right" else cx - off
+    lit_x = cx - off if light != "right" else cx + off
+    shadow = _sample(image, (shadow_x - half, y_a, shadow_x + half, y_b))
+    lit = _sample(image, (lit_x - half, y_a, lit_x + half, y_b))
+    if shadow is None or lit is None:
+        return True
+    return float(_lum(shadow).mean()) + 3.0 < float(_lum(lit).mean())

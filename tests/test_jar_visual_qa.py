@@ -150,10 +150,12 @@ def test_bold_feed_and_story_pass_and_do_not_upscale(tmp_path, monkeypatch):
         assert "bold_50g_front" in geometry["source_asset"]
         with Image.open(path) as frame:
             height = frame.size[1]
-        y0, y1 = geometry["jar_bbox"][1], geometry["jar_bbox"][3]
-        ratio = (y1 - y0) / height
-        assert 0.28 <= ratio <= 0.46, ratio
-        assert 0.70 <= y1 / height <= 0.84, y1 / height
+        x0, y0, x1, y1 = geometry["jar_bbox"]
+        with Image.open(path) as frame:
+            width = frame.size[0]
+        assert x0 >= width * 0.07, geometry["jar_bbox"]
+        assert x1 <= width * 0.93, geometry["jar_bbox"]
+        assert y1 / height < 0.97
 
 
 def test_bold_uses_the_complete_front_not_the_edge_cropped_100g():

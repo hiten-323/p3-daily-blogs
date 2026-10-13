@@ -13,6 +13,7 @@ from content_generator.creative.lifestyle_scene import (
     scene_by_id,
     scene_for_day,
 )
+from content_generator.creative.scene_natural import grade_to_scene, naturalism_issues
 
 
 def test_scenes_rotate_by_day():
@@ -182,3 +183,47 @@ def test_flat_backdrop_fails_realism(tmp_path):
     result = audit_product_image(str(path))
     assert not result["ok"]
     assert any("flat_background" in issue for issue in result["issues"])
+
+
+def _hue(rgb) -> float | None:
+    red, green, blue = [float(v) for v in rgb]
+    high, low = max(red, green, blue), min(red, green, blue)
+    span = high - low
+    if span < 8:
+        return None
+    if high == red:
+        sector = ((green - blue) / span) % 6
+    elif high == green:
+        sector = (blue - red) / span + 2
+    else:
+        sector = (red - green) / span + 4
+    return sector * 60
+
+
+def test_jar_against_the_frame_edge_fails():
+    image = Image.new("RGB", (1080, 1920), (90, 70, 55))
+    ImageDraw.Draw(image).rectangle((20, 980, 250, 1360), fill=(170, 140, 180))
+    issues = naturalism_issues(image, (20, 980, 250, 1360), scene_by_id("cafe_table"))
+    assert "jar_at_frame_edge" in issues
+
+
+def test_studio_bright_jar_fails_scene_light():
+    image = Image.new("RGB", (1080, 1920), (78, 58, 40))
+    ImageDraw.Draw(image).rectangle((280, 980, 520, 1400), fill=(198, 150, 230))
+    issues = naturalism_issues(image, (280, 980, 520, 1400), scene_by_id("cafe_table"))
+    assert "light_mismatch" in issues or "white_balance_mismatch" in issues
+
+
+def test_grade_does_not_rotate_label_hue():
+    jar = Image.new("RGBA", (180, 300), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(jar)
+    draw.rectangle((10, 8, 170, 48), fill=(168, 168, 172, 255))
+    draw.rectangle((16, 90, 164, 250), fill=(168, 48, 196, 255))
+    plate = Image.new("RGB", (800, 1200), (110, 78, 52))
+    graded = grade_to_scene(jar, plate, (260, 700, 480, 1080), "left")
+    before = jar.crop((16, 90, 164, 250)).getpixel((40, 40))[:3]
+    after = graded.crop((16, 90, 164, 250)).getpixel((40, 40))[:3]
+    start, end = _hue(before), _hue(after)
+    assert start is not None and end is not None
+    delta = abs(start - end)
+    assert min(delta, 360 - delta) < 12

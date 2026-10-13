@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 
 JAR_LAPLACIAN_MIN = 80.0
-MIN_JAR_HEIGHT_RATIO = 0.28
+MIN_JAR_HEIGHT_RATIO = 0.09
 FRAME_EDGE_PX = 2
 SOURCE_EDGE_PX = 12
 
@@ -168,7 +168,7 @@ def fit_jar_down(jar, max_w: int, max_h: int):
     return jar.resize(size, resample), scale
 
 
-def paste_product_jar(canvas, jar, rect: tuple[int, int, int, int]):
+def paste_product_jar(canvas, jar, rect: tuple[int, int, int, int], light: str = "left"):
     """Ground the jar, then paste it unfiltered and bottom-aligned."""
     x0, y0, x1, y1 = rect
     fitted, scale = fit_jar_down(jar, x1 - x0, y1 - y0)
@@ -178,7 +178,7 @@ def paste_product_jar(canvas, jar, rect: tuple[int, int, int, int]):
         jy = y0
     from content_generator.creative.lifestyle_scene import ground_product, seat_base
     fitted = seat_base(fitted)
-    base = ground_product(canvas, fitted, jx, jy)
+    base = ground_product(canvas, fitted, jx, jy, light=light)
     base.paste(fitted, (jx, jy), fitted)
     bbox = (jx, jy, jx + fitted.width, jy + fitted.height)
     return base.convert("RGB"), bbox, scale
@@ -370,12 +370,15 @@ def compose_conversion_frame(
     slug = product_slug(product) or _slug_from_path(jar_path)
     copy = conversion_copy(slug or product, headline, sub)
 
-    from content_generator.creative.lifestyle_scene import load_plate, match_light
+    from content_generator.creative.lifestyle_scene import load_plate, scene_for_day
+    from content_generator.creative.scene_natural import grade_to_scene, seat_perspective
+    scene = scene_for_day(day)
     canvas, scene_id = load_plate(width, height, day)
     if canvas is None:
         logger.warning("[jar_frame] lifestyle plate missing")
         return None
-    jar = match_light(jar, canvas)
+    plate = canvas.copy()
+    jar = seat_perspective(jar, float(scene.get("rim", 0.30)))
     zone = safe_zone(width, height, "story" if format_name == "story" or height > width * 1.3 else format_name)
     from content_generator.creative.real_jar_composer import _font, _wrap
 
@@ -408,12 +411,14 @@ def compose_conversion_frame(
 
     cta_h = int(footer_font.size * 2.4)
     cta_top = zone[3] - cta_h
-    from content_generator.creative.lifestyle_scene import frame_props, place_product, scene_for_day
+    from content_generator.creative.lifestyle_scene import frame_props, place_product
     jar_rect = place_product(
-        scene_for_day(day), width, height, y, cta_top, zone, jar.size, attempt=attempt,
+        scene, width, height, y, cta_top, zone, jar.size, attempt=attempt,
     )
+    light = scene.get("light", "left")
+    jar = grade_to_scene(jar, plate, jar_rect, light)
     prop_boxes = [dict(prop, box=list(prop["box"])) for prop in frame_props(scene_for_day(day), width, height)]
-    canvas, jar_bbox, scale = paste_product_jar(canvas, jar, jar_rect)
+    canvas, jar_bbox, scale = paste_product_jar(canvas, jar, jar_rect, light=light)
     canvas, cta_box = _draw_cta(canvas, copy["cta"], footer_font, cta_top + 6, width)
     if cta_box:
         text_boxes.append(cta_box)
