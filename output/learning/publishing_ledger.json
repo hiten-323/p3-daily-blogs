@@ -1239,7 +1239,7 @@
       "verified_at": "2026-10-12T07:06:54+00:00"
     },
     "2026-10-13|generate|linkedin|pb_6519eaa6ec": {
-      "attempt_count": 3,
+      "attempt_count": 4,
       "content_date": "2026-10-13",
       "content_id": "pb_6519eaa6ec",
       "day_number": 285,
@@ -1289,9 +1289,24 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-13T21:18:05+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-13T21:18:06+00:00",
+          "attempt": 4,
+          "error": "product_truth_failed",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-13T16:02:03+00:00",
+      "last_attempt_at": "2026-10-13T21:18:05+00:00",
       "last_result": {
         "error": "product_truth_failed",
         "success": false
@@ -1301,7 +1316,7 @@
       "remote_id": "",
       "slot": "generate",
       "status": "SKIPPED",
-      "updated_at": "2026-10-13T16:02:03+00:00",
+      "updated_at": "2026-10-13T21:18:06+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
@@ -1402,13 +1417,13 @@
         "error": "",
         "success": true
       },
-      "last_verification_at": "2026-10-13T16:02:03+00:00",
-      "next_retry_at": "2026-10-13T17:02:03+00:00",
+      "last_verification_at": "2026-10-13T21:18:06+00:00",
+      "next_retry_at": "2026-10-13T22:18:06+00:00",
       "platform": "youtube",
       "remote_id": "fitCx5xMcM4",
       "slot": "generate",
       "status": "PUBLISHED_UNVERIFIED",
-      "updated_at": "2026-10-13T16:02:03+00:00",
+      "updated_at": "2026-10-13T21:18:06+00:00",
       "url": "https://www.youtube.com/shorts/fitCx5xMcM4",
       "verification_detail": "HTTP 403",
       "verification_method": "youtube_data_api",
