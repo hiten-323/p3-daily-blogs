@@ -114,9 +114,10 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
     except Exception:
         from content_generator.creative.real_jar_composer import compose_post_image as _frame
 
-    beats = _beats_from_reel(reel)
+    from content_generator.publisher.surface_copy import clean_reel_beats
+    beats = clean_reel_beats(reel)
     total_beats = len(beats)
-    product = reel.get("product")
+    product = reel.get("product") or reel.get("featured_product")
     frame_paths = []
     for i, b in enumerate(beats):
         if _frame.__name__ == "compose_cinematic_frame":
@@ -132,6 +133,15 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
                 width=1080, height=1920, label=f"{label}_beat{i}_day{day}",
             )
         if p:
+            try:
+                from content_generator.creative.jar_frame import audit_product_image
+                visual = audit_product_image(p)
+            except Exception as exc:
+                logger.warning("[reel_video] jar QA failed closed: %s", exc)
+                visual = {"ok": False}
+            if not visual.get("ok"):
+                logger.error("[reel_video] skipping beat %s: %s", i, visual.get("issues"))
+                continue
             frame_paths.append(p)
     if not frame_paths:
         return None

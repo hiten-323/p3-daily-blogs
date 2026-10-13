@@ -126,19 +126,27 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.info("[linkedin] Not configured — LI_API_ACCESS or LI_AUTHOR_URN missing")
         return {"success": False, "post_id": "", "url": "", "error": "not_configured"}
 
-    post_text = _extract_post_text(content)
+    from content_generator.publisher.surface_copy import finalize_linkedin
+    post_text = finalize_linkedin(content)
     if not post_text:
         logger.warning("[linkedin] No linkedin_post in content — skipping")
         return {"success": False, "post_id": "", "url": "", "error": "no_content"}
 
     from content_generator.core.product_truth import product_truth_findings
-    if product_truth_findings(post_text):
+    featured = str((content.get("linkedin_post") or {}).get("featured_product") or content.get("featured_product") or "")
+    if product_truth_findings(post_text, featured=featured):
         logger.error("[linkedin] Refusing copy that contradicts the jar")
         return {"success": False, "attempted": False, "skipped": True,
                 "post_id": "", "url": "", "error": "product_truth_failed"}
 
     # Try to attach an image (carousel cover or first reel thumbnail)
     image_path = _find_image(content)
+    if image_path:
+        from content_generator.creative.jar_frame import audit_product_image
+        visual = audit_product_image(image_path)
+        if not visual.get("ok"):
+            logger.error("[linkedin] Not attaching an image that failed jar QA: %s", visual.get("issues"))
+            image_path = None
     image_urn  = None
     if image_path:
         image_urn = _upload_image(image_path)
@@ -225,6 +233,7 @@ def _find_image(content: dict) -> str | None:
     from content_generator.core.ist_dates import asset_date
     today = asset_date(content)
     patterns = [
+        os.path.join(creative_dir, f"linkedin_post_*{today}.jpg"),
         os.path.join(creative_dir, f"carousel_slide_1_*{today}.jpg"),
         os.path.join(creative_dir, f"carousel_cover_*{today}.jpg"),
         os.path.join(creative_dir, f"*{today}.jpg"),

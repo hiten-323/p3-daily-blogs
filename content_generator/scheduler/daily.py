@@ -1245,16 +1245,11 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
 
     # Instagram Story frame + Story Video (MP4) with beat-synced audio
     try:
-        from content_generator.publisher.story_copy import resolve_story_copy
+        from content_generator.publisher.surface_copy import story_frame_copy
         from content_generator.creative.cinematic_frame import compose_cinematic_frame
         from content_generator.creative.story_video import build_story_video
-        story_copy = resolve_story_copy(content, day=day_number)
-        story_product = None
-        try:
-            from content_generator.rotation import PRODUCTS, pick as pick_product
-            story_product = pick_product(PRODUCTS, day_number)
-        except Exception as prod_exc:
-            logger.debug("[images] story product pick skipped: %s", prod_exc)
+        story_copy = story_frame_copy(content, day=day_number)
+        story_product = story_copy.get("product") or content.get("featured_product")
         from content_generator.core.ist_dates import asset_date
         story_day = asset_date(content)
         story_frame = compose_cinematic_frame(
@@ -1308,12 +1303,13 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
             logger.debug("[images] Gemini scene for instagram_post skipped: %s", e)
         if not ig_img:
             ig_img = compose_post_image(
-                headline=str(headline)[:60],
-                body=str(body)[:140],
+                headline=str(headline)[:80],
+                body="",
                 day=day_number,
                 idx=1,
+                product=content.get("featured_product"),
                 width=1080,
-                height=1080,
+                height=1350,
                 label=f"instagram_post_day{day_number}",
             )
         results["instagram_post"] = ig_img
@@ -1323,19 +1319,47 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     # Facebook post image — composed from real jar photo
     fb_post = content.get("facebook_post") or {}
     if fb_post and isinstance(fb_post, dict):
-        fb_hook = fb_post.get("hook") or "100% COFFEE. ZERO CHICORY."
+        from content_generator.publisher.surface_copy import on_image_hook
+        fb_hook = on_image_hook(content, "facebook")
         fb_img = compose_post_image(
-            headline=str(fb_hook)[:60],
+            headline=str(fb_hook)[:80],
             body="",
             day=day_number,
             idx=2,
+            product=content.get("featured_product"),
             width=1080,
-            height=1080,
+            height=1350,
             label=f"facebook_post_day{day_number}",
         )
         results["facebook_post"] = fb_img
         if fb_img:
             logger.info("[images] Facebook post image composed from real jar photo: %s", fb_img)
+
+    try:
+        from content_generator.publisher.surface_copy import on_image_hook
+        featured = content.get("featured_product")
+        results["linkedin_post"] = compose_post_image(
+            headline=on_image_hook(content, "linkedin"),
+            body="",
+            day=day_number,
+            idx=4,
+            product=featured,
+            width=1080,
+            height=1080,
+            label=f"linkedin_post_day{day_number}",
+        )
+        results["threads_post"] = compose_post_image(
+            headline=on_image_hook(content, "threads"),
+            body="",
+            day=day_number,
+            idx=5,
+            product=featured,
+            width=1080,
+            height=1350,
+            label=f"threads_post_day{day_number}",
+        )
+    except Exception as exc:
+        logger.debug("[images] LinkedIn/Threads frames skipped: %s", exc)
 
     # UGC + Avatar + Reel Hook — jar-reference creative package
     try:

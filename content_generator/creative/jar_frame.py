@@ -234,7 +234,7 @@ def conversion_copy(product, headline: str = "", sub: str = "") -> dict:
     custom = _sanitize_text(headline).strip()
     if custom and not product_truth_findings(custom, featured=featured):
         words = custom.split()[:8]
-        trail = {"on", "a", "an", "the", "this", "to", "for", "of", "and", "with", "your", "in", "at", "from", "by"}
+        trail = {"on", "a", "an", "the", "this", "to", "for", "of", "and", "with", "your", "in", "at", "from", "by", "its", "it's", "is", "how", "was", "are"}
         while words and words[-1].lower().strip(".,:;!") in trail:
             words.pop()
         if words:

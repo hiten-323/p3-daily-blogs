@@ -144,7 +144,13 @@ def post_content(content: dict, day: int = 0,
     page_id = os.getenv("FACEBOOK_PAGE_ID", "")
     raw_token = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
     token = resolve_page_access_token(page_id, raw_token)
-    message = message_override or _build_message(content)
+    from content_generator.publisher.surface_copy import finalize_facebook
+    from content_generator.core.product_truth import product_truth_findings
+    message = finalize_facebook(content, message_override)
+    featured = str((content.get("facebook_post") or {}).get("featured_product") or content.get("featured_product") or "")
+    if product_truth_findings(message, featured=featured):
+        logger.error("[facebook] Refusing copy that contradicts the jar")
+        return {"success": False, "attempted": False, "skipped": True, "post_id": "", "url": "", "error": "product_truth_failed"}
     link    = os.getenv("WEBSITE_URL", "https://p3online.in")
 
     # Find an image to attach

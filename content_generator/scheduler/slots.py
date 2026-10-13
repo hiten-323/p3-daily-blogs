@@ -372,9 +372,11 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
 
         body = str(reel.get("caption") or reel.get("hook_text") or reel.get("chosen_hook") or reel.get("hook") or "").strip()
         cta  = str(reel.get("cta") or "").strip()
-        if cta and cta.lower() not in body.lower():
+        if cta and "roasted root" not in cta.lower() and cta.lower() not in body.lower():
             body = f"{body}\n\n{cta}"
-        caption = _assemble_caption(body, reel, day)
+        from content_generator.publisher.surface_copy import finalize_instagram
+        featured = reel.get("product") or reel.get("featured_product") or content.get("featured_product")
+        caption = finalize_instagram(body, reel, day, featured)
 
         # 1. Try an actual REEL VIDEO — HERO video first (founder-produced,
         #    the format that actually spreads), else the free motion reel.
@@ -432,9 +434,9 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
                 "instagram", content, slot, day,
                 lambda: _post_single_image(feed, caption),
             )
-            fb_result = _mirror_to_facebook(content, day, slot, image=feed, message=caption)
+            fb_result = _mirror_to_facebook(content, day, slot, image=feed)
         else:
-            fb_result = _mirror_to_facebook(content, day, slot, message=caption)
+            fb_result = _mirror_to_facebook(content, day, slot)
 
         result["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
         _track(result, content, slot, reel)

@@ -150,7 +150,8 @@ def post_content(content: dict, day: int = 0) -> dict:
             "error": "not_configured",
         }
 
-    text = _extract_thread_text(content)
+    from content_generator.publisher.surface_copy import finalize_threads
+    text = finalize_threads(content) or _extract_thread_text(content)
     if not text:
         logger.warning("[threads] No thread text found in content — skipping")
         return {
@@ -161,6 +162,12 @@ def post_content(content: dict, day: int = 0) -> dict:
             "url": "",
             "error": "no_content",
         }
+
+    from content_generator.core.product_truth import product_truth_findings
+    featured = str((content.get("threads_post") or {}).get("featured_product") or content.get("featured_product") or "")
+    if product_truth_findings(text, featured=featured):
+        logger.error("[threads] Refusing copy that contradicts the jar")
+        return {"success": False, "attempted": False, "skipped": True, "post_id": "", "url": "", "error": "product_truth_failed"}
 
     from content_generator.publisher.prepublish_gate import authorize_publish
     gate = authorize_publish(content, "threads")

@@ -201,7 +201,8 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     Supports distinct visual styles for YouTube Shorts ('short'), Instagram Reels ('reel'),
     and Instagram Stories ('story').
     """
-    if str(format_type or "").lower() == "story":
+    kind = str(format_type or "").lower()
+    if kind in {"story", "reel"}:
         from content_generator.creative.jar_frame import compose_conversion_frame
         return compose_conversion_frame(
             headline=headline,
@@ -212,7 +213,7 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
             width=width,
             height=height,
             label=label,
-            format_name="story",
+            format_name="story" if kind == "story" or height > width * 1.3 else "feed",
             on_date=on_date,
         )
 

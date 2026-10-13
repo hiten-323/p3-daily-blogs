@@ -527,6 +527,11 @@ def compose_carousel_slide(
     is_cover = (idx == 0)
     is_outro = (idx == total_slides - 1 and total_slides > 1)
     is_middle = (not is_cover and not is_outro)
+    try:
+        from content_generator.publisher.surface_copy import clean_slide_copy
+        heading, body = clean_slide_copy(heading, body, product)
+    except Exception as exc:
+        logger.debug("[real_jar] slide copy clean skipped: %s", exc)
 
     if is_cover or is_outro:
         from content_generator.creative.jar_frame import compose_conversion_frame
@@ -703,365 +708,19 @@ def compose_carousel_slide(
 
     # ── MIDDLE SLIDES: EDITORIAL VALUE CARDS ──────────────────────────────────
     elif is_middle:
-        bg_top = theme.get("bg_top", (18, 12, 8))
-        bg_mid = theme.get("bg_mid", (26, 17, 12))
-        for y in range(height):
-            f = y / max(1, height)
-            c = tuple(int(bg_top[j] + (bg_mid[j] - bg_top[j]) * f) for j in range(3))
-            ImageDraw.Draw(canvas).line([(0, y), (width, y)], fill=c)
-
-        draw = ImageDraw.Draw(canvas)
-
-        content_full = (heading + " " + body).lower()
-        if "chicory" in content_full:
-            ch_tag = "CHICORY AUDIT"
-        elif "filler" in content_full or "blend" in content_full:
-            ch_tag = "THE BLEND TRUTH"
-        elif "freeze" in content_full:
-            ch_tag = "ROASTING METHOD"
-        elif "standard" in content_full or "switch" in content_full:
-            ch_tag = "COFFEE STANDARD"
-        else:
-            ch_tag = "KEY INSIGHT"
-
-        # Header Bar: Chapter / Topic Kicker
-        kicker_font = _font("footer", 16)
-        kicker_text = f"CHAPTER 0{idx}  |  {ch_tag}"
-        kw = int(draw.textlength(kicker_text, font=kicker_font))
-        kx = 64
-        ky = 52
-        k_box = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        kdraw = ImageDraw.Draw(k_box)
-        kdraw.rounded_rectangle([(kx - 14, ky - 8), (kx + kw + 14, ky + kicker_font.size + 8)],
-                                radius=14, fill=theme.get("pill_bg", (24, 16, 11, 220)),
-                                outline=theme.get("pill_border", theme["accent"]), width=1)
-
-        # Header Bar: Slide Counter on Right
-        counter_text = f"{idx + 1:02d} / {total_slides:02d}"
-        cw = int(draw.textlength(counter_text, font=kicker_font))
-        cx = width - cw - 70
-        kdraw.rounded_rectangle([(cx - 14, ky - 8), (cx + cw + 14, ky + kicker_font.size + 8)],
-                                radius=14, fill=theme.get("pill_bg", (24, 16, 11, 220)),
-                                outline=theme.get("pill_border", theme["accent"]), width=1)
-        canvas = Image.alpha_composite(canvas.convert("RGBA"), k_box).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
-        draw.text((kx + kw // 2, ky + kicker_font.size // 2), kicker_text, font=kicker_font,
-                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
-        draw.text((cx + cw // 2, ky + kicker_font.size // 2), counter_text, font=kicker_font,
-                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
-
-        # Slide Headline
-        h_font = _font("title", 40)
-        hy = 115
-        max_w = width - 130
-        for line in _wrap(draw, heading.upper(), h_font, max_w)[:2]:
-            draw.text((width // 2 + 2, hy + 2), line, font=h_font, fill=(0, 0, 0, 200), anchor="ma")
-            draw.text((width // 2, hy), line, font=h_font, fill=theme["text_primary"], anchor="ma")
-            hy += int(h_font.size * 1.20)
-
-        # Editorial Card Container
-        card_x0, card_x1 = 60, width - 60
-        card_y0, card_y1 = hy + 20, height - 90
-        card_w = card_x1 - card_x0
-        card_h = card_y1 - card_y0
-
-        card_img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        cdraw = ImageDraw.Draw(card_img)
-        cdraw.rounded_rectangle([(card_x0, card_y0), (card_x1, card_y1)],
-                                radius=24, fill=(22, 15, 10, 235),
-                                outline=theme.get("pill_border", (212, 163, 64, 160)), width=2)
-        canvas = Image.alpha_composite(canvas.convert("RGBA"), card_img).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
-
-        # Content Card Interior
-        badge_font = _font("footer", 16)
-        pill_label = "EXPERT ANALYSIS" if "blend" in content_full else "TRUTH & TRANSPARENCY"
-        pl_w = int(draw.textlength(pill_label, font=badge_font))
-        pl_x = card_x0 + 32
-        pl_y = card_y0 + 26
-        pl_box = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        pldraw = ImageDraw.Draw(pl_box)
-        pldraw.rounded_rectangle([(pl_x - 12, pl_y - 6), (pl_x + pl_w + 12, pl_y + badge_font.size + 6)],
-                                 radius=12, fill=(35, 24, 15, 230), outline=theme["accent"], width=1)
-        canvas = Image.alpha_composite(canvas.convert("RGBA"), pl_box).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
-        draw.text((pl_x + pl_w // 2, pl_y + badge_font.size // 2), pill_label, font=badge_font,
-                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
-
-        # Dynamic Body Insights
-        b_font = _font("body", 26)
-        by_pos = pl_y + 56
-        sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", body) if s.strip()]
-        if not sentences:
-            sentences = [body]
-
-        for s_idx, sent in enumerate(sentences[:2]):
-            bullet_prefix = "[ • ] "
-            bullet_w = int(draw.textlength(bullet_prefix, font=b_font))
-            draw.text((card_x0 + 32, by_pos), bullet_prefix, font=b_font, fill=theme["accent"], anchor="la")
-
-            wrapped_lines = _wrap_lines(draw, sent, b_font, card_w - 64 - bullet_w, max_lines=3)
-            for l_idx, wline in enumerate(wrapped_lines):
-                draw.text((card_x0 + 32 + bullet_w, by_pos), wline, font=b_font,
-                          fill=theme["text_primary"] if l_idx == 0 else theme["text_body"], anchor="la")
-                by_pos += int(b_font.size * 1.35)
-            by_pos += 16
-
-        # Lower Highlight Banner inside card
-        banner_h = 68
-        banner_y0 = card_y1 - banner_h - 22
-
-        # 1. Feature Box: "WHAT THIS MEANS FOR YOUR CUP"
-        box1_y0 = by_pos + 12
-        box1_h = 195
-        box1_y1 = box1_y0 + box1_h
-
-        box_img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        b_draw = ImageDraw.Draw(box_img)
-        b_draw.rounded_rectangle([(card_x0 + 28, box1_y0), (card_x1 - 28, box1_y1)],
-                                 radius=16, fill=(30, 20, 13, 235),
-                                 outline=theme.get("pill_border", (212, 163, 64, 180)), width=1)
-        canvas = Image.alpha_composite(canvas.convert("RGBA"), box_img).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
-
-        draw.line([(card_x0 + 44, box1_y0 + 20), (card_x0 + 44, box1_y1 - 20)], fill=theme["accent"], width=4)
-
-        q_font = _font("title", 22)
-        box_header = "WHAT THIS MEANS FOR YOUR CUP"
-        if "freeze" in content_full:
-            box_header = "THE PURITY AROMA DIFFERENCE"
-        elif "standard" in content_full or "100%" in content_full:
-            box_header = "WHY 100% ARABICA & ROBUSTA WINS"
-        draw.text((card_x0 + 64, box1_y0 + 22), box_header, font=q_font, fill=theme.get("pill_text", theme["accent"]))
-
-        exp_font = _font("body", 21)
-        if "chicory" in content_full or "filler" in content_full:
-            exp_text = "Chicory root is not coffee. When brands add chicory, you miss out on genuine coffee antioxidants and natural bean sweetness, drinking burnt root filler instead."
-        elif "blend" in content_full:
-            exp_text = "Always look for '100% Pure Coffee' on the ingredients panel. Real single-origin coffee never requires roasted chicory to fake its body or color."
-        elif "freeze" in content_full:
-            exp_text = "Freeze-drying operates under gentle vacuum freezing, locking in delicate natural coffee oils that commercial high-heat spray drying completely destroys."
-        else:
-            exp_text = "Pure coffee delivers clean, sustained alertness without jittery filler crashes or artificial bitter aftertastes. Taste the honest bean difference."
-
-        ey = box1_y0 + 62
-        for eline in _wrap_lines(draw, exp_text, exp_font, card_w - 120, max_lines=4):
-            draw.text((card_x0 + 64, ey), eline, font=exp_font, fill=theme["text_primary"])
-            ey += int(exp_font.size * 1.34)
-
-        # 2. Checklist Box: "3-SECOND LABEL CHECK"
-        box2_y0 = box1_y1 + 16
-        box2_y1 = banner_y0 - 18
-        if box2_y1 - box2_y0 >= 130:
-            box2_img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-            b2_draw = ImageDraw.Draw(box2_img)
-            b2_draw.rounded_rectangle([(card_x0 + 28, box2_y0), (card_x1 - 28, box2_y1)],
-                                      radius=16, fill=(26, 18, 12, 230),
-                                      outline=(212, 163, 64, 100), width=1)
-            canvas = Image.alpha_composite(canvas.convert("RGBA"), box2_img).convert("RGB")
-            draw = ImageDraw.Draw(canvas)
-
-            check_font = _font("title", 20)
-            draw.text((card_x0 + 44, box2_y0 + 16), "QUICK LABEL CHECKLIST", font=check_font, fill=theme["accent"])
-
-            chk_font = _font("body", 19)
-            steps = [
-                ("1.", "Inspect the Back Panel: The ingredients must read '100% Coffee' only."),
-                ("2.", "Spot the Word 'Blend': Often used to disguise 30% to 49% chicory filler."),
-                ("3.", "Choose Purity Beans: Bold, Purista, and Purica never contain added root filler."),
-            ]
-            cy = box2_y0 + 48
-            for num, stext in steps:
-                draw.text((card_x0 + 44, cy), num, font=chk_font, fill=theme["accent"])
-                for sline in _wrap_lines(draw, stext, chk_font, card_w - 110, max_lines=2):
-                    draw.text((card_x0 + 72, cy), sline, font=chk_font, fill=theme["text_body"])
-                    cy += int(chk_font.size * 1.30)
-                cy += 6
-
-        banner_box = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        bndraw = ImageDraw.Draw(banner_box)
-        bndraw.rounded_rectangle([(card_x0 + 24, banner_y0), (card_x1 - 24, banner_y0 + banner_h)],
-                                 radius=16, fill=(30, 21, 13, 240), outline=(212, 163, 64, 120), width=1)
-        canvas = Image.alpha_composite(canvas.convert("RGBA"), banner_box).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
-        callout_font = _font("footer", 16)
-        c_text = "THE PURITY STANDARD: 100% PURE COFFEE  |  ZERO FILLERS  |  p3online.in"
-        draw.text((card_x0 + card_w // 2, banner_y0 + banner_h // 2), c_text, font=callout_font,
-                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
-
-        # Progress Bar Line
-        p_track_y = height - 52
-        draw.line([(60, p_track_y), (width - 60, p_track_y)], fill=(55, 38, 22), width=3)
-        prog_w = int((width - 120) * (idx + 1) / total_slides)
-        draw.line([(60, p_track_y), (60 + prog_w, p_track_y)], fill=theme["accent"], width=3)
-
-        # Minimalist Brand Footer
-        f_font = _font("footer", 14)
-        draw.text((width // 2, height - 26), "PURITY BEANS  |  THE CLEAN COFFEE STANDARD  |  p3online.in",
-                  font=f_font, fill=theme["accent"], anchor="mm")
-
-    # ── FINAL SLIDE: HIGH-CONVERTING OUTRO & CTA ──────────────────────────────
-    else:
-        table_h = int(height * 0.36)
-        table_y = height - table_h
-
-        bg_top = theme.get("bg_top", theme["bg"])
-        bg_mid = theme.get("bg_mid", theme["bg"])
-        for y in range(table_y):
-            f = y / max(1, table_y)
-            c = tuple(int(bg_top[j] + (bg_mid[j] - bg_top[j]) * f) for j in range(3))
-            ImageDraw.Draw(canvas).line([(0, y), (width, y)], fill=c)
-
-        try:
-            glow_size = int(width * 0.90)
-            glow_mask = Image.new("L", (glow_size, glow_size), 0)
-            glow_draw = ImageDraw.Draw(glow_mask)
-            for r in range(glow_size // 2, 0, -3):
-                alpha = int(190 * (1.0 - (r / (glow_size // 2))) ** 1.8)
-                glow_draw.ellipse(
-                    [(glow_size // 2 - r, glow_size // 2 - r), (glow_size // 2 + r, glow_size // 2 + r)],
-                    fill=alpha
-                )
-            glow_mask = glow_mask.filter(ImageFilter.GaussianBlur(38))
-            spotlight = Image.new("RGB", (glow_size, glow_size), theme["spotlight"])
-            canvas.paste(spotlight, (width - glow_size + 100, int(height * 0.25)), mask=glow_mask)
-        except Exception as e:
-            logger.debug("[real_jar] Outro spotlight failed: %s", e)
-
-        table_surf = Image.new("RGBA", (width, table_h), (0, 0, 0, 0))
-        t_top = theme.get("table_top", (26, 18, 12))
-        t_bot = theme.get("table_bot", (16, 11, 8))
-        tpx = table_surf.load()
-        for y in range(table_h):
-            f = y / max(1, table_h)
-            c = tuple(int(t_top[j] + (t_bot[j] - t_top[j]) * f) for j in range(3))
-            for x in range(width):
-                tpx[x, y] = (c[0], c[1], c[2], 255)
-        tdraw = ImageDraw.Draw(table_surf)
-        tdraw.line([(0, 0), (width, 0)], fill=theme.get("horizon", (140, 95, 45)), width=2)
-        canvas.paste(table_surf.convert("RGB"), (0, table_y))
-
-        # Real Studio Jar Staged on Right
-        jar_path = _get_studio_front_jar(day, idx)
-        if jar_path:
-            try:
-                jar = knockout_white(Image.open(jar_path))
-                target_h = int(height * 0.48)
-                ratio = target_h / jar.height
-                jar = jar.resize((int(jar.width * ratio), target_h), resample_filter)
-                jx = width - jar.width - 50
-                jy = height - jar.height - int(height * 0.08)
-
-                shadow_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-                sdraw = ImageDraw.Draw(shadow_layer)
-                s_w = int(jar.width * 1.35)
-                s_h = int(jar.height * 0.10)
-                s_x = jx + (jar.width - s_w) // 2
-                s_y = jy + jar.height - int(s_h * 0.50)
-                sdraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(6, 4, 2, 140))
-
-                c_w = int(jar.width * 0.94)
-                c_h = int(jar.height * 0.04)
-                c_x = jx + (jar.width - c_w) // 2
-                c_y = jy + jar.height - int(c_h * 0.70)
-                sdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 230))
-
-                shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(10))
-                canvas = Image.alpha_composite(canvas.convert("RGBA"), shadow_layer).convert("RGB")
-                canvas.paste(jar, (jx, jy), jar)
-            except Exception as e:
-                logger.debug("[real_jar] Outro jar staging failed: %s", e)
-
-        draw = ImageDraw.Draw(canvas)
-
-        # Header: Verdict Pill + Counter
-        kicker_font = _font("footer", 16)
-        kicker_text = "THE VERDICT  |  TAKE ACTION"
-        kw = int(draw.textlength(kicker_text, font=kicker_font))
-        kx = 60
-        ky = 52
-        k_box = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        kdraw = ImageDraw.Draw(k_box)
-        kdraw.rounded_rectangle([(kx - 14, ky - 8), (kx + kw + 14, ky + kicker_font.size + 8)],
-                                radius=14, fill=theme.get("pill_bg", (24, 16, 11, 220)),
-                                outline=theme.get("pill_border", theme["accent"]), width=1)
-
-        counter_text = f"{total_slides:02d} / {total_slides:02d}"
-        cw = int(draw.textlength(counter_text, font=kicker_font))
-        cx = width - cw - 70
-        kdraw.rounded_rectangle([(cx - 14, ky - 8), (cx + cw + 14, ky + kicker_font.size + 8)],
-                                radius=14, fill=theme.get("pill_bg", (24, 16, 11, 220)),
-                                outline=theme.get("pill_border", theme["accent"]), width=1)
-        canvas = Image.alpha_composite(canvas.convert("RGBA"), k_box).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
-        draw.text((kx + kw // 2, ky + kicker_font.size // 2), kicker_text, font=kicker_font,
-                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
-        draw.text((cx + cw // 2, ky + kicker_font.size // 2), counter_text, font=kicker_font,
-                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
-
-        # Headline
-        h_font = _font("title", 40)
-        hy = 120
-        max_w = width - 120
-        outro_heading = heading if heading else "DRINK 100% REAL COFFEE. NEVER SETTLE."
-        for line in _wrap(draw, outro_heading.upper(), h_font, max_w)[:2]:
-            draw.text((60, hy), line, font=h_font, fill=theme["text_primary"], anchor="la")
-            hy += int(h_font.size * 1.20)
-
-        # High-Converting CTA Action Card (Left Area)
-        card_w = int(width * 0.52)
-        card_h = int(height * 0.53)
-        card_x0, card_y0 = 60, hy + 24
-        card_x1, card_y1 = card_x0 + card_w, card_y0 + card_h
-
-        card_img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        cdraw = ImageDraw.Draw(card_img)
-        cdraw.rounded_rectangle([(card_x0, card_y0), (card_x1, card_y1)],
-                                radius=20, fill=(22, 15, 10, 235),
-                                outline=theme["accent"], width=2)
-        canvas = Image.alpha_composite(canvas.convert("RGBA"), card_img).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
-
-        act_font = _font("body", 21)
-        actions = [
-            ("SAVE THIS POST", "Bookmark for your next grocery or coffee run"),
-            ("SHARE THE TRUTH", "Send to a friend who drinks instant coffee"),
-            ("TASTE REAL COFFEE", "Single-origin 100% pure starting at Rs 18/cup"),
-        ]
-        ay = card_y0 + 24
-        for title, desc in actions:
-            draw.text((card_x0 + 20, ay), f"[ • ]  {title}", font=act_font, fill=theme.get("pill_text", theme["accent"]), anchor="la")
-            ay += 28
-            desc_font = _font("body", 17)
-            for dline in _wrap_lines(draw, desc, desc_font, card_w - 40, max_lines=2):
-                draw.text((card_x0 + 44, ay), dline, font=desc_font, fill=theme["text_body"], anchor="la")
-                ay += 24
-            ay += 14
-
-        # Glowing CTA Button with vector arrow
-        btn_w = card_w - 40
-        btn_h = 52
-        btn_x0 = card_x0 + 20
-        btn_y0 = card_y1 - btn_h - 20
-        btn_box = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        bdraw = ImageDraw.Draw(btn_box)
-        bdraw.rounded_rectangle([(btn_x0, btn_y0), (btn_x0 + btn_w, btn_y0 + btn_h)],
-                                radius=16, fill=(212, 163, 64, 240), outline=(255, 235, 180), width=1)
-        canvas = Image.alpha_composite(canvas.convert("RGBA"), btn_box).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
-        btn_font = _font("footer", 18)
-        btn_title = "ORDER AT p3online.in"
-        btw = int(draw.textlength(btn_title, font=btn_font))
-        draw.text((btn_x0 + (btn_w - btw) // 2 - 8, btn_y0 + btn_h // 2), btn_title,
-                  font=btn_font, fill=(18, 12, 7), anchor="mm")
-        _draw_vector_arrow(draw, btn_x0 + (btn_w + btw) // 2 + 4, btn_y0 + btn_h // 2, size=12, fill=(18, 12, 7))
-
-        # Footer
-        f_font = _font("footer", 15)
-        fy = height - 36
-        draw.line([(60, fy - 14), (width - 60, fy - 14)], fill=theme["accent"], width=1)
-        draw.text((width // 2, fy), "PURITY BEANS  |  100% PURE COFFEE  |  p3online.in",
-                  font=f_font, fill=theme["accent"], anchor="mm")
+        from content_generator.creative.surface_frames import compose_editorial_card
+        return compose_editorial_card(
+            heading=heading,
+            body=body,
+            day=day,
+            idx=idx,
+            total_slides=total_slides,
+            width=width,
+            height=height,
+            label=label,
+            product=product,
+            out_dir=_OUT_DIR,
+        )
 
     # Save
     from content_generator.core.ist_dates import today_ist
@@ -1106,7 +765,7 @@ def compose_carousel_slides(slides: list[dict], day: int, product: str | None = 
             idx=i,
             total_slides=total_slides,
             width=1080,
-            height=1080,
+            height=1350,
             label=f"carousel_slide_{i+1}_day{day}",
             product=product,
         )
