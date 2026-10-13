@@ -169,8 +169,9 @@ def assign_all(content: dict, day: int) -> dict:
     Stamp business and funnel objectives onto every content piece in the output dict.
     Non-destructive: existing keys are preserved, objective keys are added.
     """
-    from content_generator.core.product_truth import piece_copy_text
+    from content_generator.core.product_truth import piece_copy_text, repair_content
 
+    content = repair_content(content) if isinstance(content, dict) else content
     out = dict(content)
 
     # Flat content types across all platforms
@@ -191,4 +192,54 @@ def assign_all(content: dict, day: int) -> dict:
             for i, reel in enumerate(out["reels"])
         ]
 
+    _separate_reel_ctas(out, day)
+    _drop_roasted_root_ctas(out, day)
     return out
+
+
+def _norm_cta(value: str) -> str:
+    return " ".join(str(value or "").lower().split())
+
+
+def _separate_reel_ctas(content: dict, day: int) -> None:
+    """reel_2 must not ship the same call to action as reel_1."""
+    reels = content.get("reels")
+    if not isinstance(reels, list) or len(reels) < 2:
+        return
+    first, second = reels[0], reels[1]
+    if not isinstance(first, dict) or not isinstance(second, dict):
+        return
+    if not _norm_cta(second.get("cta")) or _norm_cta(second.get("cta")) != _norm_cta(first.get("cta")):
+        return
+    from content_generator.core.product_truth import piece_copy_text
+    second["cta"] = _follow_cta(day, "reel_2", piece_copy_text(second))
+    if _norm_cta(second.get("primary_cta")) == _norm_cta(first.get("primary_cta")):
+        second["primary_cta"] = second["cta"]
+
+
+def _drop_roasted_root_ctas(content: dict, day: int) -> None:
+    """An asset that names Ultra Blend cannot keep an anti-chicory follow line."""
+    from content_generator.core.product_truth import chicory_in_scope, piece_copy_text
+
+    def clean(piece: dict, content_type: str) -> None:
+        if not isinstance(piece, dict):
+            return
+        text = piece_copy_text(piece)
+        blob = f"{piece.get('cta') or ''} {piece.get('primary_cta') or ''}"
+        if "roasted root" not in blob.lower():
+            return
+        if not chicory_in_scope(text, str(piece.get("featured_product") or piece.get("product") or "")):
+            return
+        fresh = _follow_cta(day, content_type, text)
+        if "roasted root" in str(piece.get("cta") or "").lower():
+            piece["cta"] = fresh
+        if "roasted root" in str(piece.get("primary_cta") or "").lower():
+            piece["primary_cta"] = fresh
+
+    for key in (
+        "instagram_post", "carousel", "linkedin_post", "blog_post",
+        "stories", "yt_short", "facebook_post", "threads_post", "growth_reel",
+    ):
+        clean(content.get(key), key)
+    for index, reel in enumerate(content.get("reels") or []):
+        clean(reel, "reel_1" if index == 0 else "reel_2")

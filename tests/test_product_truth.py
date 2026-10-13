@@ -177,6 +177,33 @@ def test_ultra_blend_day_follow_cta_discloses_the_blend():
     assert "30% chicory" in named["primary_cta"].lower()
 
 
+def test_assign_all_strips_roasted_root_and_splits_reel_ctas():
+    from content_generator.objectives.mapper import assign_all
+
+    shared = "Follow @puritybeans for daily pure coffee craft. Explore 100% pure jars at https://p3online.in"
+    packed = assign_all({
+        "day_number": 285,
+        "featured_product": "Bold",
+        "reels": [
+            {"cta": shared, "caption": "Bold is 100% Robusta."},
+            {"cta": shared, "caption": "Turn the jar around."},
+        ],
+        "carousel": {
+            "primary_cta": "Follow @puritybeans so you never drink roasted root again",
+            "caption": "Ultra Blend is 70% coffee and 30% chicory.",
+            "cta": "Follow @puritybeans so you never drink roasted root again",
+        },
+    }, 285)
+    assert packed["reels"][0]["cta"] != packed["reels"][1]["cta"]
+    blob = " ".join([
+        packed["carousel"].get("cta") or "",
+        packed["carousel"].get("primary_cta") or "",
+        packed["carousel"].get("caption") or "",
+    ]).lower()
+    assert "roasted root" not in blob
+    assert "30% chicory" in blob
+
+
 def test_repair_rewrites_2026_10_12_attacks_without_publishing():
     import json
     from pathlib import Path
