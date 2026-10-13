@@ -1,0 +1,115 @@
+"""Per-platform prompt blocks. Each one is the native job, not a shared caption."""
+from __future__ import annotations
+
+from content_generator.prompts.growth_engine.plans import (
+    BANNED_OPENERS,
+    LABEL_PLATFORM,
+    asset_plan,
+)
+
+_NATIVE = {
+    "reel": (
+        "IG Reel. Three hook variants. First frame carries the tension. "
+        "Voiceover and on-screen text complement each other. One pattern interrupt that serves the story. "
+        "A payoff, a loop or a clean ending, a caption that adds a fact the frames did not already say, "
+        "one comment prompt, one follow line, one commercial line, and a small hashtag set. "
+        "It must work with the sound off. Use the real jar when the SKU is in frame."
+    ),
+    "carousel": (
+        "IG carousel. Slide 1 is a specific curiosity. One idea per slide. "
+        "The last slide delivers the takeaway and one next action. "
+        "The caption adds context and a reason to save or share. Keep the existing slide schema."
+    ),
+    "ig_single": (
+        "IG single image. One visual concept, one short headline, one caption, one follow reason, one action. "
+        "The real jar stays legible on the lifestyle scene. No quote poster."
+    ),
+    "stories": (
+        "IG Stories as one connected sequence: a relatable hook, then a useful fact or demo, "
+        "then one real interaction, then the product next step. "
+        "A link sticker only uses a verified destination. No fake poll results."
+    ),
+    "facebook": (
+        "Facebook. A direct opener about a real situation, a practical insight, "
+        "one discussion prompt, and one product or business-inquiry CTA. "
+        "Write it as its own post. Do not paste the Instagram caption."
+    ),
+    "threads": (
+        "Threads. One observation or question under the character limit. "
+        "A reason to reply. Product only when it adds. No hashtag pile and no forced link."
+    ),
+    "linkedin": (
+        "LinkedIn. A professional opener on a real business question, a lesson, "
+        "an observation labelled as an observation, and a qualified wholesale or distribution next step. "
+        "Name the B2B audience. No invented metrics and no motivational filler."
+    ),
+    "yt_short": (
+        "YouTube Short. A hook, a fast setup, a payoff, a subscribe line that says what the next video is for, "
+        "and a separate product CTA only if this one is commercial. Title and description stand alone."
+    ),
+    "blog": (
+        "Shopify blog. An intent-aligned title, a meta description, an intro about why the search matters, "
+        "accurate sections, catalog links only, and a conclusion with one CTA. "
+        "Keep the existing word-count and schema rules. No fake research."
+    ),
+    "whatsapp": (
+        "WhatsApp or B2B note, only when outreach is enabled and the lead is verified. "
+        "Short, relevant, one next step. No fake prior contact and no follow-up to an opt-out."
+    ),
+}
+
+
+def ultra_positive_story(sku: str) -> str:
+    """The blend story that must be in the prompt before any Ultra Blend asset is written."""
+    from content_generator.core.product_truth import name_contains_chicory
+
+    if not name_contains_chicory(str(sku or "")):
+        return ""
+    return (
+        "ULTRA BLEND STORY, REQUIRED BEFORE YOU WRITE: "
+        "Ultra Blend is 70% coffee and 30% chicory, a smooth milk coffee. "
+        "Say that ratio accurately. Do not call it 100% coffee, zero chicory, chicory-free, or no chicory. "
+        "Do not attack chicory, roasted root, or filler. Do not make this jar the problem another jar solves."
+    )
+
+
+def generation_preface(sku: str, day: int = 0) -> str:
+    """Shared rules appended to every generation prompt for this day."""
+    banned = "; ".join(f'"{line}"' for line in BANNED_OPENERS[:5])
+    story = ultra_positive_story(sku)
+    lines = [
+        "GROWTH ENGINE v1 — binding. Do not copy one caption across platforms.",
+        "Journey, in this order: STOP, CURIOSITY, VALUE, TRUST, FOLLOW, BUY.",
+        "STOP is a specific hook. CURIOSITY must be paid off. VALUE is one concrete takeaway.",
+        "TRUST uses the real jar and the catalog. FOLLOW is a specific promise. BUY is one verified next step.",
+        f"Banned openers: {banned}.",
+        "Do not repeat today's hook or CTA on another platform. Same fact, different treatment.",
+        "No invented prices, stock, reviews, awards, or health claims. Shopify catalog is the source of truth.",
+        f"Featured SKU: {sku or 'unset'}. The SKU controls which claims are allowed.",
+    ]
+    if story:
+        lines.append(story)
+    lines.append(f"Day {int(day or 0)}.")
+    return "\n".join(lines)
+
+
+def prompt_block(label: str, sku: str = "", day: int = 0, *, variant: int = 0) -> str:
+    """Native instructions plus the declared plan for this asset."""
+    platform = LABEL_PLATFORM.get(label, label)
+    if platform not in _NATIVE:
+        return ""
+    if label == "reel_2":
+        variant = max(variant, 1)
+    plan = asset_plan(platform, day, sku, variant=variant)
+    secondary = plan["secondary_objective"] or "none"
+    return "\n".join([
+        f"PLATFORM MODULE ({platform}).",
+        _NATIVE[platform],
+        f"Primary objective: {plan['primary_objective']}.",
+        f"Secondary objective: {secondary}.",
+        f"Audience: {plan['audience']}.",
+        f"Angle: {plan['angle']}. Rationale: {plan['rationale']}",
+        f"Follow promise: {plan['follow_promise']}",
+        "Write only this platform. Do not reuse another asset's hook or CTA.",
+        ultra_positive_story(sku),
+    ]).strip()

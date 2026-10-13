@@ -148,5 +148,16 @@ def authorize_publish(content: Any, platform: str) -> dict:
         if not (isinstance(scenes, list) and len(scenes) >= 3) and not (isinstance(script, list) and len(script) >= 3):
             return {"allowed": False, "asset_key": key, "reason": "youtube_short_missing_3_beat_plan", "checks": {"editorial": True, "viral_readiness": readiness, "shareability": share}}
 
+    try:
+        from content_generator.core.growth_engine import review_asset
+        growth = review_asset(platform, asset, content if isinstance(content, dict) else {}, label=key)
+        if growth.get("decision") != "PASS":
+            return {"allowed": False, "asset_key": key, "reason": "growth_engine_" + str(growth.get("decision") or "blocked").lower(),
+                    "checks": {"editorial": True, "viral_readiness": readiness, "shareability": share, "growth_engine": growth}}
+    except Exception as exc:
+        logger.exception("[prepublish] Growth engine failed for %s", platform)
+        return {"allowed": False, "asset_key": key, "reason": f"growth_engine_error:{type(exc).__name__}",
+                "checks": {"editorial": True, "viral_readiness": readiness, "shareability": share}}
+
     return {"allowed": True, "asset_key": key, "reason": "all_pre_publish_checks_passed",
-            "checks": {"editorial": True, "viral_readiness": readiness, "shareability": share}}
+            "checks": {"editorial": True, "viral_readiness": readiness, "shareability": share, "growth_engine": growth}}

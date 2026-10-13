@@ -15,7 +15,7 @@ because the founder owns it (see founder_policy.py).
 """
 from __future__ import annotations
 
-PROMPT_VERSION    = "2.7.0"   # + distinct visual/spoken/on-screen video hooks
+PROMPT_VERSION    = "2.8.0"   # + platform-native growth engine modules
 SCHEMA_VERSION    = "1.4.0"   # engagement fields, ai prompts, thumbnails, hook_options
 PUBLISHER_VERSION = "2.3.0"   # timed slots, reel video, product tags, telemetry
 ASSET_FORMAT      = "3.1.0"   # cinematic frames, white-knockout, safe-zone text
