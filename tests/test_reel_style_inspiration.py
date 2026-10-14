@@ -150,12 +150,14 @@ def test_non_mini_day_receives_style_cues_without_publishing_the_mini_file(tmp_p
     assert rendered is None
     assert list(tmp_path.glob("*.mp4")) == []
     assert source.stat().st_size == before
-    assert build_story_video(
+    story = build_story_video(
         headline="PURISTA",
         day=9,
         on_date=date(2026, 10, 12),
         reference_text=caption,
-    ) is None
+    )
+    # A non-mini day may render its own motion story, but never the mini file.
+    assert story is None or (Path(story).stat().st_size != before and "gourmet_duo_mini" not in story)
     assert source.stat().st_size == before
 
 

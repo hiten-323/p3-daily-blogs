@@ -22,6 +22,7 @@ Evidence base (condensed):
     paradox without status anxiety.
 """
 from __future__ import annotations
+from content_generator.core import price_truth as _PT
 import logging
 
 logger = logging.getLogger(__name__)
@@ -171,7 +172,7 @@ PSYCHOLOGY_FRAMES = [
         },
         "creative_application": {
             "example_hooks": [
-                "Ultra Blend: at least 50 cups from one 100g jar.",
+                f"Ultra Blend: at least {_PT.ultra('cups')} cups from one 100g jar.",
                 "Real coffee does not require a machine or a weekend.",
                 "Premium is not the price. Premium is what is missing from the jar."
             ],
@@ -179,7 +180,7 @@ PSYCHOLOGY_FRAMES = [
             "share_trigger": "Send this to anyone who thinks pure coffee has to be expensive."
         },
         "governance": {
-            "allowed_claims": ["Ultra Blend only: about ₹6 a cup (100g = ₹309, at least 50 cups)", "cafe coffee often costs Rs 180+", "Purica is freeze-dried pure Arabica"],
+            f"allowed_claims": ["Ultra Blend only: {_PT.cup_phrase()}", "cafe coffee often costs Rs 180+", "Purica is freeze-dried pure Arabica"],
             "prohibited_claims": ["cafe coffee is unhealthy", "unverified price calculations"]
         }
     },

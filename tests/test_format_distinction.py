@@ -19,7 +19,8 @@ class TestFormatDistinction(unittest.TestCase):
     def test_beat_timing_locked_to_120_bpm(self):
         """Both reel beats and story duration must lock to 120 BPM musical bars (2.0s per bar)."""
         self.assertEqual(_BEAT_SECONDS, 2.0)
-        self.assertEqual(_DEFAULT_STORY_DURATION, 6.0)  # Exactly 3 bars
+        self.assertTrue(8.0 <= _DEFAULT_STORY_DURATION <= 12.0)  # motion story: 8-12s
+        self.assertEqual(_DEFAULT_STORY_DURATION % 2.0, 0.0)  # whole bars
 
     def test_short_scenes_extraction(self):
         yt_short = {

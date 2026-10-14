@@ -12,6 +12,7 @@ useful — that is what converts a follow into trust.
 Delivery is MANUAL by the founder (Policy #001: no mass auto-DM tools). At low
 follower counts a personal reply converts far better than automation anyway.
 """
+from content_generator.core import price_truth as _PT
 
 LEAD_MAGNETS = [
     {
@@ -83,7 +84,7 @@ LEAD_MAGNETS = [
         "deliverable": (
             "Your coffee math:\n"
             "- Cafe cup ~Rs 180 x 300 days = ~Rs 54,000/year\n"
-            "- Purity Beans Ultra Blend at home ~₹6 a cup (100g = ₹309, at least 50 cups) = ~₹1,800/year\n"
+            f"- Purity Beans Ultra Blend at home ~₹{_PT.ultra('per_cup')} a cup (100g = ₹309, at least {_PT.ultra('cups')} cups) = ~₹{300 * _PT.ultra('per_cup'):,}/year\n"
             "- The per-cup figure is for Ultra Blend only (70% coffee, 30% chicory).\n"
             "Do the math on your own habit — then see p3online.in"
         ),

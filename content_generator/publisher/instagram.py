@@ -656,51 +656,63 @@ def post_story(content: dict, day: int = 0) -> dict:
             image_path=image_path,
             headline=headline,
             day=day,
-            duration=6.0,
+            duration=float(__import__("os").getenv("STORY_MOTION_SECONDS","10")),
             label=f"story_video_day{day}",
             reference_text=f"{headline} {sub}",
+            sub=sub,
         )
     except Exception as ve:
         logger.debug("[instagram] story video build skipped/failed: %s", ve)
 
-    media_payload = {"media_type": "STORIES", "access_token": token}
+    # The motion render also writes an improved static poster (layered
+    # background + jar + CTA). It is the fallback when video publishing fails.
+    if video_path:
+        poster = os.path.splitext(video_path)[0] + "_poster.jpg"
+        if os.path.exists(poster) and audit_rendered_images([poster]).get("ok"):
+            image_path = poster
+
+    def _attempt(payload: dict) -> dict:
+        from content_generator.publisher.meta_graph import (
+            ContainerNotReady, MetaRequestError, graph_request, wait_for_container,
+        )
+        try:
+            data = graph_request("POST", f"{_GRAPH_API}/{acct_id}/media", payload, timeout=30)
+            container_id = data.get("id", "")
+            if not container_id:
+                err = (data.get("error") or {}).get("message", str(data))
+                return {"success": False, "media_id": "", "error": err}
+            if "video_url" in payload:
+                from content_generator.publisher import meta_graph
+                wait_for_container(container_id, token,
+                                   max_wait=getattr(meta_graph, "_VIDEO_POLL_S", 180))
+            else:
+                wait_for_container(container_id, token)
+            return _publish_container(container_id, acct_id, token)
+        except (ContainerNotReady, MetaRequestError) as e:
+            return {"success": False, "media_id": "", "error": str(e)}
+        except Exception as e:
+            return {"success": False, "media_id": "", "error": str(e)}
+
     if video_path and os.path.exists(video_path):
         from content_generator.publisher.video_host import upload_video
         video_url = upload_video(video_path)
         if video_url:
-            media_payload["video_url"] = video_url
-            logger.info("[instagram] Story using dynamic video with audio: %s", video_url)
+            logger.info("[instagram] Story using motion video with audio: %s", video_url)
+            res = _attempt({"media_type": "STORIES", "access_token": token, "video_url": video_url})
+            if res.get("success"):
+                res["format"] = "video"
+                logger.info("[instagram] Story published (video)")
+                return res
+            logger.warning("[instagram] video Story failed (%s) — falling back to static poster",
+                           res.get("error"))
 
-    if "video_url" not in media_payload:
-        image_url = _upload_to_public_url(image_path)
-        if not image_url:
-            return {"success": False, "media_id": "", "error": "media_upload_failed"}
-        media_payload["image_url"] = image_url
-
-    try:
-        from content_generator.publisher.meta_graph import (
-            ContainerNotReady, MetaRequestError, graph_request, wait_for_container,
-        )
-        data = graph_request(
-            "POST",
-            f"{_GRAPH_API}/{acct_id}/media",
-            media_payload,
-            timeout=30,
-        )
-        container_id = data.get("id", "")
-        if not container_id:
-            err = (data.get("error") or {}).get("message", str(data))
-            return {"success": False, "media_id": "", "error": err}
-        wait_for_container(container_id, token)
-        result = _publish_container(container_id, acct_id, token)
-        logger.info("[instagram] Story published: %s", result.get("success"))
-        return result
-    except (ContainerNotReady, MetaRequestError) as e:
-        logger.error("[instagram] Story not published: %s", e)
-        return {"success": False, "media_id": "", "error": str(e)}
-    except Exception as e:
-        logger.error("[instagram] Story post error: %s", e)
-        return {"success": False, "media_id": "", "error": str(e)}
+    image_url = _upload_to_public_url(image_path)
+    if not image_url:
+        return {"success": False, "media_id": "", "error": "media_upload_failed"}
+    res = _attempt({"media_type": "STORIES", "access_token": token, "image_url": image_url})
+    res["format"] = "image"
+    logger.info("[instagram] Story published (image): %s", res.get("success"))
+    return res
 
 
 def _publish_container(container_id: str, acct_id: str, token: str) -> dict:

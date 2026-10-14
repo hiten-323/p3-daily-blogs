@@ -13,6 +13,7 @@ can query: "Who moved to sample_sent yesterday?" → dispatch the right
 template automatically.
 """
 from __future__ import annotations
+from content_generator.core import price_truth as _PT
 
 
 def _variety_box_url() -> str:
@@ -153,7 +154,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
             "Dear {name},\n\n"
             "Sharing a quick follow-up on the category proposal sent earlier.\n\n"
             "Key highlights for {chain}:\n"
-            "  - Ultra Blend: at least 50 cups per 100g jar (about ₹6 a cup)\n"
+            f"  - Ultra Blend: at least {_PT.ultra('cups')} cups per 100g jar (about ₹{_PT.ultra('per_cup')} a cup)\n"
             "  - 40% repeat purchase rate in pilot stores (Pune, Q1 2026)\n"
             "  - Full in-store activation kit provided at no cost\n\n"
             "We're keen to move to a buyer meeting — please let me know your availability.\n\n"

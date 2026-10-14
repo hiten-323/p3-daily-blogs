@@ -1,22 +1,31 @@
 """
-Dynamic vertical Story Video generator with audio for Instagram Stories.
+Dynamic vertical Story Video generator for Instagram Stories.
 
-Turns a safe-zone compliant cinematic story frame into an engaging 9:16 vertical
-MP4 story video (6.0 seconds, three bars at 120 BPM) with gentle Ken Burns motion
-and royalty-free background audio from music_library/.
-
-This enables Instagram Stories to play with full sound and motion rather than
-being a silent, static, flat image.
+Primary path: a rich layered 9–12s motion story (gradient, parallax bokeh,
+true-colour jar cutout, kinetic text, royalty-free original bed) via
+`story_motion.render_story_motion`. Falls back to a short Ken-Burns still
+only when the motion path fails.
 """
 from __future__ import annotations
-import datetime
 import logging
 import os
 
 logger = logging.getLogger(__name__)
 
 _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
-_DEFAULT_STORY_DURATION = 6.0   # Exactly 3 bars at 120 BPM (2.0s * 3 = 6.0s) for beat synchronization
+_DEFAULT_STORY_DURATION = float(os.getenv("STORY_MOTION_SECONDS", "10"))
+
+
+def _sku_from(text: str | None, day: int) -> str:
+    t = (text or "").lower()
+    for s in ("ultra blend", "ultra_blend", "purista", "purica", "bold"):
+        if s.replace("_", " ") in t or s in t:
+            return "ultra_blend" if "ultra" in s else s.replace(" ", "_")
+    try:
+        from content_generator.rotation import PRODUCTS, pick as pick_product
+        return str(pick_product(PRODUCTS, day) or "bold")
+    except Exception:
+        return "bold"
 
 
 def build_story_video(
@@ -28,14 +37,17 @@ def build_story_video(
     frame_paths: list[str] = None,
     on_date=None,
     reference_text: str | None = None,
+    sub: str = "",
+    product: str | None = None,
 ) -> str | None:
-    """
-    Render a 6.0s dynamic vertical story video (1080x1920 MP4) with beat-synced audio.
-    Supports either a single high-impact frame or a 2-beat interactive story progression.
-    Returns the path to the MP4 file or None on failure/unavailability.
+    """Render a 9–12s vertical story video (1080x1920 MP4) with audio.
+
+    Prefers the motion story. Falls back to Ken Burns on a still if motion
+    fails. Returns the MP4 path, or None when every path fails (caller then
+    posts the improved static frame).
     """
     if os.getenv("ENABLE_STORY_VIDEO", "true").lower() != "true":
-        logger.info("[story_video] Story video disabled via ENABLE_STORY_VIDEO=false")
+        logger.info("[story_video] disabled via ENABLE_STORY_VIDEO=false")
         return None
 
     try:
@@ -44,109 +56,96 @@ def build_story_video(
         )
         selected = select_product_reel(text=reference_text if reference_text is not None else headline)
         if selected:
-            logger.info(
-                "[story_video] reusing product reel template %s; source audio is silent "
-                "and viral music stays on the audio director",
-                os.path.basename(selected["path"]),
-            )
-            return materialize_template(
-                selected["path"], day, label, on_date=on_date, hook_text=headline,
-            )
+            logger.info("[story_video] reusing founder product reel %s", os.path.basename(selected["path"]))
+            return materialize_template(selected["path"], day, label, on_date=on_date, hook_text=headline)
     except Exception as exc:
         logger.debug("[story_video] product reel lookup skipped: %s", exc)
 
+    from content_generator.core.ist_dates import today_ist
+    date_str = (on_date.isoformat() if hasattr(on_date, "isoformat")
+                else str(on_date)[:10] if on_date else today_ist().isoformat())
+    from content_generator.creative.approved_photos import _norm_sku
+    sku = _norm_sku(product) or _norm_sku(_sku_from(reference_text or headline, day)) or "bold"
+
+    try:
+        from content_generator.creative.story_motion import render_story_motion
+        result = render_story_motion(
+            sku=sku, headline=headline, sub=sub, day=day,
+            label=f"{label}_day{day}_{date_str}", seconds=duration or _DEFAULT_STORY_DURATION,
+        )
+        if result and result.get("video") and not result.get("qa"):
+            logger.info("[story_video] motion story -> %s (source jar %s)",
+                        result["video"], result.get("source_jar"))
+            return result["video"]
+        if result and result.get("qa"):
+            logger.warning("[story_video] motion QA failed: %s — falling back", result["qa"])
+    except Exception as exc:
+        logger.warning("[story_video] motion path failed: %s", exc)
+
     paths = frame_paths or ([image_path] if image_path and os.path.exists(image_path) else [])
     if not paths:
-        logger.warning("[story_video] No valid image paths provided for story video")
         return None
+    return _ken_burns(paths, headline, day, duration or 6.0, label, on_date)
 
+
+def _ken_burns(paths, headline, day, duration, label, on_date) -> str | None:
     try:
         from moviepy import ImageClip, AudioFileClip, concatenate_videoclips
     except Exception as e:
-        logger.info("[story_video] moviepy unavailable (%s) — skipping story video", e)
+        logger.info("[story_video] moviepy unavailable (%s)", e)
         return None
-
-    clip = None
-    audio = None
+    clip = audio = None
     try:
         if len(paths) == 1:
             clip = ImageClip(paths[0]).with_duration(duration)
             try:
                 clip = clip.resized(lambda t: 1.0 + 0.04 * (t / max(0.1, duration)))
-            except Exception as ze:
-                logger.debug("[story_video] zoom effect skipped: %s", ze)
+            except Exception:
+                pass
         else:
-            beat_dur = duration / len(paths)
+            beat = duration / len(paths)
             clips = []
-            for idx, p in enumerate(paths):
-                c = ImageClip(p).with_duration(beat_dur)
+            for p in paths:
+                c = ImageClip(p).with_duration(beat)
                 try:
-                    c = c.resized(lambda t, d=beat_dur: 1.0 + 0.03 * (t / max(0.1, d)))
+                    c = c.resized(lambda t, d=beat: 1.0 + 0.03 * (t / max(0.1, d)))
                 except Exception:
                     pass
                 clips.append(c)
             clip = concatenate_videoclips(clips, method="compose")
-
-        # Audio track selection: Audio Director mood-matched royalty-free track (120 BPM beat-synced)
         music_path = os.getenv("STORY_MUSIC_FILE")
         if not (music_path and os.path.exists(music_path)):
             try:
                 from content_generator.creative.audio_director import get_audio_plan
                 music_path = get_audio_plan(headline, day).get("local_track")
-            except Exception as ae:
-                logger.debug("[story_video] audio director skipped: %s", ae)
-
+            except Exception:
+                music_path = None
         if music_path and os.path.exists(music_path):
             try:
                 audio = AudioFileClip(music_path)
-                dur = min(audio.duration, duration)
-                audio = audio.subclipped(0, dur)
-                try:
-                    # Boost volume to commercial loudness (~ -14 LUFS / dB) so story audio is clear and punchy
-                    audio = audio.with_volume_scaled(1.8)
-                except Exception as ve:
-                    logger.debug("[story_video] volume scaling failed: %s", ve)
+                audio = audio.subclipped(0, min(audio.duration, duration)).with_volume_scaled(1.6)
                 clip = clip.with_audio(audio)
-            except Exception as me:
-                logger.debug("[story_video] audio attach skipped: %s", me)
-
+            except Exception:
+                pass
         os.makedirs(_OUT_DIR, exist_ok=True)
         from content_generator.core.ist_dates import today_ist
-        if on_date is None:
-            date_str = today_ist().isoformat()
-        elif hasattr(on_date, "isoformat"):
-            date_str = on_date.isoformat()
-        else:
-            date_str = str(on_date)[:10]
+        date_str = (on_date.isoformat() if hasattr(on_date, "isoformat")
+                    else str(on_date)[:10] if on_date else today_ist().isoformat())
         out_path = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}.mp4")
-
         temp_audio = os.path.join(_OUT_DIR, f"temp_{label}_{os.getpid()}_{day}.m4a")
-        clip.write_videofile(
-            out_path,
-            fps=24,
-            codec="libx264",
-            audio_codec="aac" if clip.audio else None,
-            bitrate="10000k",
-            pixel_format="yuv420p",
-            ffmpeg_params=["-crf", "18", "-movflags", "+faststart"],
-            temp_audiofile=temp_audio,
-            remove_temp=True,
-            logger=None,
-            threads=2,
-        )
-        logger.info("[story_video] Rendered %.1fs story video -> %s", clip.duration, out_path)
+        clip.write_videofile(out_path, fps=24, codec="libx264",
+                             audio_codec="aac" if clip.audio else None, bitrate="8000k",
+                             pixel_format="yuv420p",
+                             ffmpeg_params=["-crf", "18", "-movflags", "+faststart"],
+                             temp_audiofile=temp_audio, remove_temp=True, logger=None, threads=2)
         return out_path
     except Exception as e:
-        logger.warning("[story_video] video render failed: %s", e)
+        logger.warning("[story_video] Ken Burns fallback failed: %s", e)
         return None
     finally:
-        if audio is not None:
-            try:
-                audio.close()
-            except Exception:
-                pass
-        if clip is not None:
-            try:
-                clip.close()
-            except Exception:
-                pass
+        for obj in (audio, clip):
+            if obj is not None:
+                try:
+                    obj.close()
+                except Exception:
+                    pass

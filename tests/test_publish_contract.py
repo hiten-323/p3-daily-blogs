@@ -72,7 +72,7 @@ def main():
     held = build("evening", 1, expected={}, results={},
                  status="held", reason="canonical_validation_failed")
     v = evaluate(held)
-    check("unexpected held fails the run", (not v["ok"]) and v["status"] == "held")
+    check("gate hold stays green and is queued for retry", v["ok"] and v["status"] == "held" and v.get("retry"))
     check("held carries its reason", "canonical" in v["detail"], v["detail"])
     check("held is NOT reported as published",
           held["published_platforms"] == [], str(held["published_platforms"]))

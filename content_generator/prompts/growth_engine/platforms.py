@@ -1,5 +1,6 @@
 """Per-platform prompt blocks. Each one is the native job, not a shared caption."""
 from __future__ import annotations
+from content_generator.core import price_truth as _PT
 
 from content_generator.prompts.growth_engine.plans import (
     BANNED_OPENERS,
@@ -15,7 +16,7 @@ _NATIVE = {
         "one comment prompt, one follow line, one commercial line, and a small hashtag set. "
         "It must work with the sound off. Use the real jar when the SKU is in frame. "
         "Hook in the first 1.5 seconds names a specific, checkable thing (a label line, a granule test, "
-        "a brewing step, or for Ultra Blend only: about ₹6 a cup). Value is one verified fact from the catalog, shown not claimed. "
+        f"a brewing step, or for Ultra Blend only: about ₹{_PT.ultra('per_cup')} a cup). Value is one verified fact from the catalog, shown not claimed. "
         "End with: Follow @purepantryprovisions for <specific next promise> and Shop p3online.in."
     ),
     "carousel": (

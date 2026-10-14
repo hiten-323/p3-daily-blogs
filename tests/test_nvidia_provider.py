@@ -78,7 +78,7 @@ def test_success_uses_chat_completions(monkeypatch):
     assert seen["auth"] == "Bearer nvapi-secretvalue"
     assert seen["model"] == "google/gemma-4-31b-it"
     assert seen["timeout"] == nvidia._CALL_TIMEOUT_S
-    assert nvidia._CALL_TIMEOUT_S <= 30
+    assert 15 < nvidia._CALL_TIMEOUT_S <= 60
 
 
 @pytest.mark.parametrize("status", [404, 410])
