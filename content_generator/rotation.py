@@ -19,7 +19,7 @@ BLOG_TOPIC_CLUSTERS = [
     "instant coffee recipe India — 2-minute preparation and flavour variations without invented health claims",
     "instant coffee for students in India — price per cup, jar sizes, and how to read the label",
     "morning coffee routine India — a home cup with the jar that matches how you drink it",
-    "how to check an instant coffee label in India for chicory — and which Purity Beans jars are pure coffee",
+    "how to read an instant coffee label in India — bean, process, and which Purity Beans jar fits your cup",
     "coffee price comparison India — Rs 18 per cup at home vs Rs 180 at a cafe, using only those two prices",
     "work from home coffee India — a repeatable home cup, not a productivity study",
     "caffeine on the label — Ultra Blend is 70% coffee and may be called lower caffeine; the pure coffee jars may not",
@@ -32,7 +32,7 @@ BLOG_TOPIC_CLUSTERS = [
     "pure coffee jars vs Ultra Blend at 70% coffee — when a lower-caffeine description is allowed",
     "cold brew at home India — a method using a named Purity Beans jar",
     "coffee culture India — from filter kaapi to instant, without invented market statistics",
-    "chicory on Indian instant-coffee labels — how to read the panel, without a percentage we cannot source",
+    "Ultra Blend, 70% coffee and 30% chicory — the smooth milk-coffee tradition, told honestly",
 ]
 
 HOOK_ARCHETYPES = [
@@ -53,7 +53,7 @@ HOOK_ARCHETYPES = [
     ("PATTERN BREAK",  "Shatter the expected visually or verbally — novelty triggers the dopamine hit"),
     # Psychology-backed additions for pure coffee
     ("RITUAL",         "Frame the morning cup as the first identity decision of the day — ritual raises willingness to pay"),
-    ("SENSORY",        "Name the exact taste or smell difference after years of filler — private test the viewer can run tomorrow"),
+    ("SENSORY",        "Name the exact aroma or taste note of today's jar — a private test the viewer can run tomorrow"),
     ("CLEAN LABEL",    "Turn reading the ingredient panel into an act of self-respect — self-signaling drives saves"),
     ("CERTAINTY",      "Remove the quiet daily uncertainty of not knowing what is in the cup — loss aversion closer"),
     ("ACCESSIBLE",     "Café purity at everyday price and zero effort — resolves the price-sensitivity paradox"),
@@ -83,7 +83,7 @@ LINKEDIN_ANGLES = [
     ("ARABICA VS ROBUSTA BOTANY",
      "Bean botany breakdown: Arabica (high altitude, 60% more lipids, delicate acidity like Purica) vs "
      "Robusta (low altitude, double the chlorogenic acid and caffeine, thick persistent crema like Purista). "
-     "Why blending pure varieties works and why chicory is an adulterant, not a bean."),
+     "How each bean shows up in the cup."),
     ("BREWING THERMODYNAMICS",
      "Why boiling water (100°C) destroys coffee: the chemistry of tannin extraction. How water between "
      "80°C and 85°C extracts sweet aromatic compounds without scorching, yielding natural cup sweetness without sugar."),
@@ -92,16 +92,15 @@ LINKEDIN_ANGLES = [
      "aroma solubility, and why office tap water produces bitter coffee regardless of the brand."),
 
     # ── Clean-Label Awareness & Industry Transparency ──
-    ("CHICORY ROOT ECONOMICS",
-     "The economic reality of Indian coffee: why mass brands blend 30% to 49% roasted chicory root. "
-     "A historical wartime substitute that became an FMCG margin trick. The physiological difference between "
-     "pure caffeine alertness and chicory inulin digestion."),
+    ("THE 70/30 MILK COFFEE TRADITION",
+     "Why a coffee-chicory blend like Ultra Blend (70% coffee, 30% chicory) suits the South Indian milk-coffee "
+     "cup: body, roundness, and honest labelling of the ratio."),
     ("LABEL LITERACY FOR EXECUTIVES",
-     "How to read an Indian food label in 10 seconds: decoding 'Coffee-Chicory mixture' vs 'Pure Instant Coffee'. "
+     "How to read an Indian food label in 10 seconds: bean, process, net weight and storage. "
      "Why ingredient hierarchy matters and how front-of-pack claims obscure back-of-pack reality."),
-    ("THE ADULTERATION PARADOX",
-     "Why Indian consumers inspect olive oil, milk, and protein powder labels with intense scrutiny, yet "
-     "drink 40% root filler in their morning cup without checking the ingredients."),
+    ("THE LABEL-READING HABIT",
+     "Indian consumers read olive oil, milk and protein labels closely. The same 10-second habit tells you "
+     "the bean, the process and the ratio in your coffee jar."),
     ("CLEAN-LABEL MANUFACTURING",
      "What it actually takes to build a zero-compromise clean food brand in India: sourcing certified pure beans, "
      "refusing artificial flow agents, and rejecting artificial aromas."),
@@ -111,7 +110,7 @@ LINKEDIN_ANGLES = [
      "Adenosine receptor dynamics: why drinking coffee within 15 minutes of waking impairs cortisol awakening "
      "and creates the dreaded 2 PM crash. The science of delaying caffeine 60-90 minutes for sustained deep work."),
     ("CLEAN CAFFEINE VS JITTERS",
-     "The biochemical reason some coffee causes jitters and stomach acid: high-heat burnt beans and filler spikes "
+     "The biochemical reason some coffee causes jitters and stomach acid: over-hot water and over-dosing "
      "vs clean, gently processed pure coffee that fuels calm, razor-sharp focus."),
     ("THE DESK RITUAL PARADOX",
      "Transforming the autopilot pantry caffeine fix into a deliberate cognitive boundary: how sensory "
@@ -130,7 +129,7 @@ LINKEDIN_ANGLES = [
 
     # ── Founder Insights & Purity Beans Mission ──
     ("THE BOOTSTRAPPED PURITY BET",
-     "Building Pure Pantry Provisions without VC capital: why refusing cheap fillers is harder in year one "
+     "Building Pure Pantry Provisions without VC capital: why sticking to glass jars and clear labels is harder in year one "
      "but creates an unbreakable moat in year five."),
     ("COFFEE VALUE MATH",
      "The honest economics of the daily cup: Rs 18 for pure, cafe-grade coffee at home vs Rs 180-250 at commercial "
@@ -143,40 +142,40 @@ LINKEDIN_ANGLES = [
 # ── Platform-Dedicated Semantic Angle Banks (Semantic Anti-Cannibalization) ──
 FACEBOOK_ANGLES = [
     ("FAMILY KITCHEN TRUTH",
-     "Why Indian households grew up on 40% roasted chicory without realizing it was wartime root filler, "
-     "and how to spot the difference on your kitchen shelf today."),
+     "The family morning cup: how to match a Purity Beans jar to how your household drinks coffee, "
+     "strong and black, with milk, or the smooth 70/30 Ultra Blend milk coffee."),
     ("MORNING HOME MATH",
      "Rs 18 home pure coffee vs Rs 250 cafe cup: what an Indian family actually saves in a year while drinking pure Arabica."),
     ("THE FILTER KAAPI DEBATE",
      "Traditional South Indian filter coffee vs pure instant: why true coffee lovers care about what is printed under the brand name."),
     ("SUGAR COPING HABIT",
-     "Why most people need 3 spoons of sugar in instant coffee: it is not a sweet tooth, it is masking burnt filler in mass-market jars."),
+     "Why most people need 3 spoons of sugar in instant coffee: try the 85°C water and one level spoon first, then decide."),
     ("MOTHERS AND GRANDMOTHERS TEST",
-     "Checking the kitchen shelf: turning the glass jar around to see whether it says pure coffee or chicory mixture."),
+     "Checking the kitchen shelf: what the back of a Purity Beans glass jar tells you in ten seconds."),
     ("WEEKEND HOSTING RITUAL",
      "Serving guests real coffee instead of vending powder: the subtle hospitality difference people remember."),
 ]
 
 THREADS_ANGLES = [
     ("UNPOPULAR OPINION ON SUGAR",
-     "Adding two spoonfuls of sugar to instant coffee isn't preference. It's coping with 40% roasted chicory root."),
+     "Most people add sugar to fix water that was too hot. Let it cool 30 seconds first."),
     ("FRONT VS BACK OF JAR",
      "Big Coffee spends millions on the front of the jar so you don't look at the tiny print on the back."),
     ("THE 100C WATER MISTAKE",
      "Boiling water burns coffee in 5 seconds. Let it cool for 60 seconds and the bitterness disappears."),
-    ("ROASTED ROOT SCAM",
-     "Chicory was invented because Napoleon had a coffee shortage during wartime. Why are Indians still drinking it in 2026?"),
+    ("GRANULE TELLS",
+     "Crystals mean freeze dried, fine powder means spray dried. Tip some into your palm before the water goes in."),
     ("INSTANT COFFEE SNOBBERY",
      "Specialty cafes convinced you instant coffee is inherently trash. Bad instant is trash. Freeze-dried pure Arabica at -40°C is pure science."),
     ("THE INGREDIENT LIST TEST",
-     "If your coffee jar ingredient list has more than one word, you didn't buy coffee."),
+     "Turn your jar around. The bean and the process tell you how the cup will taste."),
 ]
 
 YOUTUBE_ANGLES = [
     ("WATER TEMPERATURE EXPERIMENT",
      "Brewing instant coffee at 100°C vs 85°C: visual extraction test and why boiling destroys natural sweetness."),
     ("COLD WATER DISSOLUTION TEST",
-     "Pure Coffee vs 40% Chicory mixture in cold water: watch how chicory dyes the water instantly like food coloring."),
+     "Freeze-dried Purica in cold water: watch the crystals dissolve and what that says about the process."),
     ("FREEZE DRIED VS SPRAY DRIED",
      "The geometric crystal structure of -40°C freeze-dried crystals vs burnt spray-dried dust under close-up macro lens."),
     ("CAFE ESPRESSO VS HOME RS 18 CUP",
@@ -191,11 +190,11 @@ LINKEDIN_SEO_KEYWORDS = (
 )
 
 COMMERCIAL_EMOTIONS = [
-    ("RELIEF",    "the exhale moment — finally getting real coffee after years of filler"),
-    ("PRIDE",     "choosing quality when everyone around you settles for cheap garbage"),
+    ("RELIEF",    "the exhale moment — a cup that tastes the same good way every morning"),
+    ("PRIDE",     "choosing a jar you actually understand"),
     ("AMBITION",  "fuelling your grind at 5am when the city is still asleep"),
-    ("NOSTALGIA", "the real coffee taste your grandmother made before brands added chicory"),
-    ("REBELLION", "refusing to be fooled by fake ingredients disguised as premium packaging"),
+    ("NOSTALGIA", "the smell of the morning cup in your grandmother's kitchen"),
+    ("REBELLION", "keeping it simple: one jar, one spoon, one honest label"),
     ("JOY",       "the small daily luxury that costs less than a tapri chai"),
     ("FOCUS",     "clean energy that builds without the crash — real caffeine, real work"),
     # Psychology-backed additions
@@ -216,24 +215,24 @@ PRODUCTS = [
 VIRAL_CONTENT_IDEAS = [
     "What is actually inside your instant coffee jar? (Ingredient label truth)",
     "I switched to pure coffee for 30 days. Here is what changed.",
-    "Why most Indians are unknowingly drinking chicory every morning",
+    "Arabica, Robusta or a 70/30 blend: which cup are you?",
     "The Rs 18 vs Rs 180 coffee experiment — same caffeine, same quality?",
-    "Real coffee vs adulterated coffee: a side-by-side taste test story",
+    "Purica vs Purista: a side-by-side taste test story",
     "Why freeze-dried coffee is different from regular instant coffee",
     "Agglomerated vs freeze-dried: which one should you buy?",
     "The ingredient your coffee brand never mentions on the label",
     "How to read a coffee label like an expert in 60 seconds",
     "Why premium instant coffee is not an oxymoron",
-    "The Indian coffee adulterant problem that nobody is talking about",
-    "3 signs your coffee has fillers (and how to check)",
-    "What happens when you remove chicory from your morning coffee",
+    "The 30-second water pause that changes your cup",
+    "3 things the back of a coffee jar tells you",
+    "Why South India loves a 70/30 coffee-chicory milk coffee",
     "The real reason cafe coffee tastes different from home coffee",
     "How Purity Beans is built different: no preservatives, no artificial aroma",
     "Coffee gifting guide for people who actually care about quality",
     "Morning routine with pure coffee: a real Indian working professional story",
     "Why the best coffee in India costs Rs 18, not Rs 180",
     "Cold brew with instant coffee: does it actually work?",
-    "The 80-year history of chicory in Indian coffee (and why it is still here)",
+    "The history of the coffee-chicory milk coffee in South India",
     "Corporate gifting: why premium coffee beats generic gifts every time",
     "What freeze-dried means and why it matters for your morning cup",
     "The coffee brand that prints what it does NOT add on the label",
@@ -255,24 +254,24 @@ VIRAL_CONTENT_IDEAS = [
 # ── Scroll-stopping hooks bank ────────────────────────────────────────────────
 
 VIRAL_HOOKS = [
-    "You have been drinking chicory your entire life.",
+    "Crystals or powder? Check your jar.",
     "What is actually inside your coffee jar?",
     "Real coffee lovers will understand this.",
     "Expensive cafe coffee is not the solution.",
     "That first sip that just does not taste right.",
-    "Most instant coffee is not coffee at all.",
-    "Your coffee brand is lying to you.",
+    "Instant coffee can taste like this.",
+    "Your water is too hot. Here is the fix.",
     "I stopped buying branded coffee. Here is why.",
-    "Rs 18 per cup. No chicory. No preservatives. No compromise.",
+    "Rs 18 per cup, in a lead-free glass jar.",
     "The ingredient on every label that nobody reads.",
     "If you care about what you drink, read this.",
-    "Coffee without the filler finally exists in India.",
-    "Everyone in your office is drinking adulterated coffee.",
+    "Freeze-dried Arabica, at home, in two minutes.",
+    "Your office pantry deserves a better jar.",
     "The real reason your coffee does not taste like coffee.",
     "Indian brand. Nothing hidden. Everything on the label.",
     # Reverse-qualifier hooks — exclusion triggers curiosity + pre-qualifies
     "If you already drink single-origin coffee, skip this reel.",
-    "This is not for people who enjoy chicory.",
+    "This is for people who take their morning cup seriously.",
     "Don't watch this if you're happy with your instant coffee.",
     "Real coffee is not for everyone. Scroll if that's you.",
     "If you've never read a coffee label, this will hurt.",

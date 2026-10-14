@@ -911,7 +911,7 @@ def _fssai_scrub(node):
     return node
 
 
-def _do_editorial(content: dict) -> None:
+def _do_editorial(content: dict, only: set | None = None) -> None:
     """
     Review each content piece. Regenerates up to QUALITY_MAX_REGEN times.
     Skips LLM review entirely if all providers are exhausted (circuit open).
@@ -958,9 +958,16 @@ def _do_editorial(content: dict) -> None:
     ]
 
     threshold = get_current_pass_score()
-    attempts_allowed = _max_regen() + 1
+    from content_generator.core import fallback_ladder as ladder
+    # Fallback ladder: generous retries rotating feedback -> alt angle ->
+    # evergreen format, capped (QUALITY_LADDER_MAX, hard ceiling 12). Gate unchanged.
+    attempts_allowed = max(_max_regen(), ladder.max_attempts()) + 1
+    day_no = int(content.get("day_number") or 0)
+    ladder_log = content.setdefault("fallback_ladder", {})
 
     for label, key, idx in review_targets:
+        if only is not None and label not in only:
+            continue
         if idx is not None:
             pieces = content.get(key) or []
             piece  = pieces[idx] if len(pieces) > idx else {}
@@ -1017,12 +1024,25 @@ def _do_editorial(content: dict) -> None:
                 )
 
             if attempt + 1 < attempts_allowed:
-                logger.info("[editorial] Regenerating %s (attempt %d)...", label, attempt + 2)
-                improved = _regenerate_piece(label, piece, feedback, content)
-                if not improved:
-                    logger.warning("[editorial] Regeneration failed for %s — keeping current piece", label)
-                    continue
-                merged = _apply_regeneration(label, piece, improved)
+                rung = ladder.rung_for(attempt + 1)
+                logger.info("[ladder] %s attempt %d/%d rung=%s", label, attempt + 2, attempts_allowed, rung)
+                ladder_log.setdefault(label, []).append({"attempt": attempt + 1, "rung": rung, "feedback": str(feedback)[:300]})
+                merged = None
+                if rung == "evergreen":
+                    eg = ladder.evergreen_piece(label, day_no, attempt + 1)
+                    if eg:
+                        if featured:
+                            eg.setdefault("featured_product", featured)
+                        ensure_structural_fields(eg, label)
+                        if not _schema_issues(label, eg):
+                            merged = eg
+                if merged is None:
+                    improved = _regenerate_piece(
+                        label, piece, ladder.build_feedback(rung, feedback, attempt + 1, day_no), content)
+                    if not improved:
+                        logger.warning("[editorial] Regeneration failed for %s — keeping current piece", label)
+                        continue
+                    merged = _apply_regeneration(label, piece, improved)
                 if merged is None:
                     logger.warning(
                         "[editorial] regenerated %s failed schema — keeping current piece",
@@ -1041,6 +1061,12 @@ def _do_editorial(content: dict) -> None:
                     "[editorial] %s still not publishable after %d attempts: %s",
                     label, attempts_allowed, reason,
                 )
+                ladder_log.setdefault(label, []).append({"status": "exhausted", "reason": str(reason)[:300]})
+                try:
+                    from content_generator.scheduler.watchdog import _alert
+                    _alert(f"FALLBACK LADDER EXHAUSTED — {label} held after {attempts_allowed} attempts: {str(reason)[:300]}")
+                except Exception:
+                    logger.error("[ladder] alert failed for %s", label)
                 if label == "blog_post":
                     piece["hold_reason"] = f"rewrites exhausted: {reason}"[:500]
                     piece["held"] = True

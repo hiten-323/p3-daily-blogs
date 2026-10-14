@@ -240,6 +240,10 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
 def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int, publish: Callable[[], dict]) -> dict:
     """Run one publisher with durable duplicate prevention and outcome recording."""
     ticket = begin_attempt(content, platform, slot, day_number)
+    if ticket.get("allowed"):
+        prior = already_posted_today(platform, slot, ticket.get("key", ""))
+        if prior:
+            ticket = {"allowed": False, "reason": "already_published", "record": prior, "key": ticket.get("key")}
     if not ticket.get("allowed"):
         logger_message = f"[publish-ledger] {platform} not retried: {ticket.get('reason')}"
         import logging
@@ -262,6 +266,29 @@ def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int
     result["ledger_status"] = saved.get("status", "")
     result["ledger_attempt_count"] = saved.get("attempt_count", 0)
     return result
+
+
+POSTED_STATES = ("VERIFIED_LIVE", "PUBLISHED_UNVERIFIED", "UNCERTAIN")
+
+
+def already_posted_today(platform: str, slot: str, exclude_key: str = "") -> dict | None:
+    """A post for this (date, slot, platform) under ANY content_id blocks a second one.
+
+    The ledger key includes content_id, so a regenerated pack used to look like
+    new work. Dedupe here is by date + slot + platform. UNCERTAIN counts as
+    posted: a possible duplicate is worse than a late retry.
+    """
+    try:
+        for record in records_for_today():
+            if record.get("ledger_key") == exclude_key:
+                continue
+            if (str(record.get("platform", "")).lower() == platform.lower()
+                    and record.get("slot") == slot
+                    and record.get("status") in POSTED_STATES):
+                return record
+    except Exception:
+        return None
+    return None
 
 
 def records_for_today() -> list[dict]:

@@ -13,7 +13,7 @@ Import from anywhere in the engine:
 BRAND = {
     "name":        "Purity Beans",
     "company":     "Pure Pantry Provisions",
-    "tagline":     "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is 70% coffee.",
+    "tagline":     "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "category":    "Premium Instant Coffee",
     "origin":      "India",
     "website":     "https://p3online.in",
@@ -29,11 +29,11 @@ BRAND = {
 # ── Market positioning ────────────────────────────────────────────────────────
 
 POSITIONING = {
-    "usp":              "Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee.",
+    "usp":              "Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "price_per_cup":    18,            # Rs
     "cafe_price":       180,           # Rs (average cafe latte)
     "price_ratio":      "10x cheaper than cafes",
-    "purity_claim":     "Zero chicory applies to the pure coffee jars. Ultra Blend is 70% coffee.",
+    "purity_claim":     "Bold, Purista, Purica and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "target_segments": {
         "consumer":     "urban Indians 25-45 who care about what they drink",
         "distributor":  "FMCG distributors in Tier-1 and Tier-2 cities",
@@ -49,7 +49,7 @@ POSITIONING = {
     ],
     "proof_points": [
         "Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. Prima is pure Arabica Premium Agglomerate.",
-        "Ultra Blend is 70% coffee. A lower-caffeine description is allowed only for that jar.",
+        "Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. A lower-caffeine description is allowed only for that jar.",
         "Rs 18 per cup vs Rs 180 at cafes",
     ],
 }
@@ -59,30 +59,30 @@ POSITIONING = {
 HASHTAG_SETS = {
     # Generic reel fallback
     "reels": (
-        "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
+        "#PurityBeans #PureCoffee #InstantCoffee #GlassJarCoffee #CoffeeLover "
         "#IndianCoffee #CoffeeIndia #PremiumCoffee #CoffeeReels "
         "#CoffeeOfTheDay #MorningCoffee"
     ),
     # Morning reel (7-9am slot) — used by generator.py → reels.build()
     "reel_morning": (
         "#PurityBeans #PureCoffee #MorningCoffee #CoffeeLover #InstantCoffee "
-        "#NoChicory #IndianCoffee #CoffeeIndia #MorningRoutine #CoffeeTime"
+        "#GlassJarCoffee #IndianCoffee #CoffeeIndia #MorningRoutine #CoffeeTime"
     ),
     # Night reel (8-10pm slot) — used by generator.py → reels.build()
     "reel_night": (
         "#PurityBeans #PureCoffee #EveningCoffee #CoffeeLover #InstantCoffee "
-        "#NoChicory #IndianCoffee #NightCoffee #CoffeeReels #CoffeeLovers"
+        "#GlassJarCoffee #IndianCoffee #NightCoffee #CoffeeReels #CoffeeLovers"
     ),
     "viral_reel": (
-        "#PurityBeans #NoChicory #CoffeeTruth #InstantCoffee #CoffeeLover "
+        "#PurityBeans #GlassJarCoffee #CoffeeTruth #InstantCoffee #CoffeeLover "
         "#PureCoffee #IndianCoffee #CoffeeShorts #CoffeeReels #FoodFacts"
     ),
     "educational_reel": (
-        "#PurityBeans #CoffeeFacts #InstantCoffee #PureCoffee #NoChicory "
+        "#PurityBeans #CoffeeFacts #InstantCoffee #PureCoffee #GlassJarCoffee "
         "#CoffeeEducation #IndianCoffee #CoffeeLover #KnowYourCoffee"
     ),
     "carousel": (
-        "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
+        "#PurityBeans #PureCoffee #InstantCoffee #GlassJarCoffee #CoffeeLover "
         "#IndianCoffee #PremiumCoffee #CoffeeCarousel #SaveThis #LearnWithCoffee"
     ),
     "linkedin": (
@@ -90,14 +90,14 @@ HASHTAG_SETS = {
         "#CPGIndia #FMCGIndia #BrandBuilding #Entrepreneurship"
     ),
     "instagram": (
-        "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
+        "#PurityBeans #PureCoffee #InstantCoffee #GlassJarCoffee #CoffeeLover "
         "#IndianCoffee #CoffeeIndia #MorningBrew #CoffeeDaily"
     ),
     "story": (
-        "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover"
+        "#PurityBeans #PureCoffee #InstantCoffee #GlassJarCoffee #CoffeeLover"
     ),
     "blog": (
-        "purity beans, pure instant coffee, no chicory coffee, "
+        "purity beans, pure instant coffee, glass jar instant coffee, "
         "instant coffee india, pure arabica instant coffee"
     ),
     "b2b": (
@@ -129,7 +129,7 @@ BANNED_PHRASES = [
 ]
 
 REQUIRED_ELEMENTS = {
-    "every_post":   ["brand name mention", "zero chicory claim OR price mention"],
+    "every_post":   ["brand name mention", "one verified jar fact OR price mention"],
     "reel":         ["hook in first 3 seconds", "CTA at end"],
     "carousel":     ["save-worthy information", "slide 1 stops the scroll"],
     "linkedin":     ["business angle", "distributor/retailer relevance"],

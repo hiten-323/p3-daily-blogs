@@ -4,7 +4,7 @@ Coffee Marketing Psychology — single source of truth for Purity Beans content.
 Why this exists:
   Generic "premium coffee" language produces advertisements. People do not share
   advertisements. The content that travels is the thing someone sends a friend —
-  the revelation, the label test, the sensory difference after years of filler.
+  the revelation, the label test, the sensory notes of each jar.
 
   These frames are ranked by fit for a pure-instant brand in India. Every
   generation prompt should pick one (or a clean combination) rather than invent
@@ -42,16 +42,16 @@ PSYCHOLOGY_FRAMES = [
         },
         "creative_application": {
             "example_hooks": [
-                "You have been drinking chicory your entire life.",
-                "Most people do not know their daily coffee has filler.",
+                "Crystals or powder? Check your jar.",
+                "The back of your coffee jar tells you how it will taste.",
                 "What is actually inside your coffee jar?"
             ],
             "best_formats": ["reel", "carousel"],
-            "share_trigger": "Tag the person who still buys the big brand without reading the label."
+            "share_trigger": "Tag the person who always asks which coffee to buy."
         },
         "governance": {
-            "allowed_claims": ["pure coffee on Bold, Purista, Purica, and Prima", "zero chicory on those jars", "Ultra Blend is 70% coffee"],
-            "prohibited_claims": ["competitors are toxic", "chicory causes diseases", "fabricated percentages"]
+            "allowed_claims": ["pure coffee on Bold, Purista, Purica, and Prima", "Ultra Blend is 70% coffee"],
+            "prohibited_claims": ["competitors are toxic", "attacking chicory", "zero-chicory vs Ultra Blend comparisons", "chicory causes diseases", "fabricated percentages"]
         }
     },
     {
@@ -110,7 +110,7 @@ PSYCHOLOGY_FRAMES = [
         "name": "Sensory Contrast",
         "risk_level": "low",
         "theory": {
-            "core": "Once you taste real coffee, the filler version becomes obvious.",
+            "core": "Each jar has a taste you can name: describe it precisely.",
             "why_it_works": (
                 "Sensory memory is sticky. Describing the exact moment the taste "
                 "changes (bitterness at minute two, muddy aftertaste, missing aroma) "
@@ -120,14 +120,14 @@ PSYCHOLOGY_FRAMES = [
         "creative_application": {
             "example_hooks": [
                 "It tastes bitter after two minutes. That is not normal.",
-                "Real coffee does not leave a muddy aftertaste.",
+                "Freeze-dried Arabica smells like this the moment water hits it.",
                 "The first sip that finally tastes like coffee."
             ],
             "best_formats": ["reel", "carousel"],
             "share_trigger": "Share with the person who always says 'coffee just tastes bitter'."
         },
         "governance": {
-            "allowed_claims": ["chicory alters flavor and aroma", "pure coffee is naturally aromatic", "bitter muddy aftertaste in fillers"],
+            "allowed_claims": ["pure coffee is naturally aromatic", "freeze drying keeps more aroma than spray drying"],
             "prohibited_claims": ["pure coffee is sweet without sugar", "sensory preferences are absolute medical health signals"]
         }
     },
@@ -153,7 +153,7 @@ PSYCHOLOGY_FRAMES = [
             "share_trigger": "Forward this to the friend who buys coffee for the whole office."
         },
         "governance": {
-            "allowed_claims": ["shareable coffee facts", "reading ingredient lists", "identifying fillers"],
+            "allowed_claims": ["shareable coffee facts", "reading ingredient lists", "identifying bean and process"],
             "prohibited_claims": ["anyone drinking chicory is stupid", "unverified status shaming"]
         }
     },

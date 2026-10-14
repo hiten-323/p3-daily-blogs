@@ -12,8 +12,8 @@ Generate ONE ultra-viral, conversation-starting, follower-converting Threads pos
 KNOWLEDGE ANGLE: [{angle[0]}] — {angle[1]}
 
 NATIVE THREADS ARCHITECTURE (OPTIMIZED FOR REPLIES, QUOTES & FOLLOWS):
-1. CONVERSATION HOOK: Raw observation or contrarian stance that sparks immediate mental reaction (e.g. 'Unpopular opinion: adding two spoons of sugar to instant coffee isn't preference. It's self-defense against roasted root.').
-2. UNVARNISHED INSIGHT: 1-2 punchy lines breaking down the reality (chicory filler economics, freeze-drying vs spray scorching, or 85°C extraction thermodynamics).
+1. CONVERSATION HOOK: Raw observation or contrarian stance that sparks immediate mental reaction (e.g. 'Unpopular opinion: most bitter instant coffee is just water that was too hot.').
+2. UNVARNISHED INSIGHT: 1-2 punchy lines breaking down the reality (freeze-drying vs spray drying, dose per cup, or 85°C extraction) — never attack chicory or other brands.
 3. DISCUSSION SPARK: Prompt an effortless reply or quote ('Check the ingredient panel on your kitchen jar right now — what does it list?', 'Agree or disagree?').
 4. FOLLOWER CONVERSION: Give a clear reason to follow ('Follow for daily coffee truths Big Coffee hides.').
 

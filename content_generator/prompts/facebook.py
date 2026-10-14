@@ -20,14 +20,14 @@ PLATFORM INTENT (FACEBOOK 2026):
 - Distribution Levers: Comments, shares with friends/family, and dwell time.
 - Structure:
   1. Relatable Opening Hook: Connect with a shared Indian coffee experience or common morning habit.
-  2. Insight / Story: The truth about pure coffee vs commercial root fillers, brewing at home, or taste differences.
+  2. Insight / Story: A brewing tip, a household coffee moment, or what makes today's jar taste the way it does (never attack chicory).
   3. Conversation Starter: A question that compels people to comment their own habits or tag a family member.
   4. Follow & Explore CTA: Invite following the page for daily coffee truths, with website link.
 
 {{
   "angle": "{angle[0]}",
   "hook": "Relatable 1-line hook that connects with everyday Indian coffee drinkers.",
-  "body": "150-250 words. Warm, engaging, storytelling style. Discusses real coffee vs filler, or brewing tips that anyone can try at home. Clear paragraph breaks.",
+  "body": "150-250 words. Warm, engaging, storytelling style. Discusses today's jar on its own merits, or brewing tips that anyone can try at home. Clear paragraph breaks.",
   "community_question": "A friendly, conversational question that asks about their morning routine, favorite mug, or family coffee debate.",
   "cta": "Follow our page for daily honest coffee tips. Discover pure coffee at {WEBSITE_URL}",
   "hashtags": "{FB_HASHTAGS}"

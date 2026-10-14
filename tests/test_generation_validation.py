@@ -188,6 +188,7 @@ def test_editorial_pass_repairs_day_275_without_zero_scores(monkeypatch):
     finally:
         router.call = original_call
         router.any_provider_available = original_ok
+        os.environ.pop("QUALITY_LADDER_MAX", None)
 
     carousel = content["carousel"]
     assert carousel["editorial_score"]["overall"] == 8.6
@@ -227,12 +228,14 @@ def test_brand_failure_does_not_stamp_editorial_zero():
         }
     }
     os.environ["QUALITY_MAX_REGEN"] = "0"
+    os.environ["QUALITY_LADDER_MAX"] = "1"
     original_ok = router.any_provider_available
     router.any_provider_available = lambda: True
     try:
         _do_editorial(content)
     finally:
         router.any_provider_available = original_ok
+        os.environ.pop("QUALITY_LADDER_MAX", None)
     piece = content["linkedin_post"]
     assert piece.get("editorial_score") in (None, {})
     assert "brand" in str(piece.get("editorial_error") or "").lower()
