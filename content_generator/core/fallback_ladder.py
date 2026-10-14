@@ -133,3 +133,54 @@ def run_ladder(label, piece, evaluate, rewrite, *, day: int = 0, threshold: floa
     record = {"label": label, "status": "passed" if ok else "exhausted",
               "attempts": attempt, "cap": cap, "history": history}
     return current, record
+
+
+# ── From-scratch regeneration for banned-claim failures ──────────────────────
+import json as _json
+import re as _re
+
+# Copy-gate findings that mean the draft itself carries a banned claim. Feeding
+# such a draft back as "ORIGINAL PIECE" made the model copy the claim again
+# (day 286: reel_1/reel_2/carousel/threads kept the banned per-cup price (_RS18) on every rewrite).
+_BANNED_CLAIM = _re.compile(
+    r"product truth|wrong price|never claim|banned|forbidden|not allowed|fssai|100%|"
+    r"rs\.? ?18|₹ ?18|anti-chicory|unverified (?:price|claim)",  # _RS18 detector
+    _re.IGNORECASE,
+)
+
+_SCRATCH_KEEP = ("featured_product", "objective", "primary_cta", "success_metric", "day_number",
+                 "content_type", "format", "platform")
+
+
+def is_banned_claim_failure(feedback: str) -> bool:
+    """True when the copy gate (the "brand:" part) rejected the piece for a banned claim.
+    Editorial-score feedback alone never triggers a from-scratch rebuild."""
+    text = str(feedback or "")
+    if "brand:" not in text:
+        return False
+    return bool(_BANNED_CLAIM.search(text.split("brand:", 1)[1]))
+
+
+def scratch_base(piece: dict) -> dict:
+    """Only non-copy metadata survives; every text field of the bad draft is dropped."""
+    return {k: piece[k] for k in _SCRATCH_KEEP if isinstance(piece, dict) and k in piece}
+
+
+def scratch_prompt(label: str, piece: dict, feedback: str, threshold: float, brand: str) -> str:
+    """Prompt for a brand-new piece. The rejected copy is NOT included, only its shape."""
+    keys = sorted(k for k in (piece or {}) if k not in ("editorial_score", "editorial_error"))
+    featured = (piece or {}).get("featured_product") or "the featured Purity Beans jar"
+    reasons = _re.sub(r"\s+", " ", str(feedback or ""))[:600]
+    return (
+        f"{brand}\n\n"
+        f"TASK: Write a BRAND-NEW {label} from scratch for {featured}. It must pass schema and an "
+        f"editorial score of {threshold}.\n"
+        f"The previous draft was discarded because it contained a banned claim: {reasons}\n"
+        "Do not reuse any sentence, number, or price from that draft. Use only catalog prices and facts "
+        "from the brand rules above; if a per-cup figure is not in the catalog facts, leave it out.\n"
+        f"Return ONE JSON object with these keys: {_json.dumps(keys)}.\n"
+        "Reel frames: at least 5 objects, each with on_screen and spoken. Captions at least 50 characters. "
+        "Keep STOP, CURIOSITY, VALUE, TRUST, FOLLOW, BUY. End with 'Follow @purepantryprovisions' and "
+        "'Shop p3online.in'. Do not include an editorial_score.\n"
+        "Return ONLY the JSON object."
+    )

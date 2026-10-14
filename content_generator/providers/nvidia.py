@@ -43,7 +43,40 @@ _DEFAULT_MODEL = _DEFAULT_MODELS[0]
 _BACKOFF_S = (2, 5, 12)
 # Successful super replies in run 341 finished in under 20s. Empty replies in
 # run 344 sat for 23–50s and still returned nothing. 15s fails dead endpoints fast.
-_CALL_TIMEOUT_S = int(os.getenv("NVIDIA_CALL_TIMEOUT_S", "45"))  # 15s timed out on almost every call (day 286); the editorial soft deadline caps the total
+# Day 286 runs 38592410181/38602719185: 45s read timeouts on nearly every call,
+# times 2-3 models, ate the whole job. NVIDIA is now behind Gemini, the read
+# timeout stays 45s (15s timed out everything), one call has a total budget across models, and a model
+# that keeps timing out / returning empty is skipped for a cooldown.
+_CALL_TIMEOUT_S = int(os.getenv("NVIDIA_CALL_TIMEOUT_S", "45"))
+_CALL_BUDGET_S = float(os.getenv("NVIDIA_CALL_BUDGET_S", "45"))
+_SICK_AFTER = int(os.getenv("NVIDIA_SICK_AFTER", "2"))
+_SICK_COOLDOWN_S = float(os.getenv("NVIDIA_SICK_COOLDOWN_S", "900"))
+_MODEL_HEALTH: dict[str, dict] = {}
+
+
+def _reset_model_health() -> None:
+    _MODEL_HEALTH.clear()
+
+
+def _model_sick(model: str) -> bool:
+    h = _MODEL_HEALTH.get(model)
+    if not h or h["fails"] < _SICK_AFTER:
+        return False
+    if time.time() >= h["until"]:
+        _MODEL_HEALTH.pop(model, None)
+        return False
+    return True
+
+
+def _note_model(model: str, ok: bool) -> None:
+    if ok:
+        _MODEL_HEALTH.pop(model, None)
+        return
+    h = _MODEL_HEALTH.setdefault(model, {"fails": 0, "until": 0.0})
+    h["fails"] += 1
+    if h["fails"] >= _SICK_AFTER:
+        h["until"] = time.time() + _SICK_COOLDOWN_S
+        logger.warning("NVIDIA %s marked unhealthy for %ds (timeouts/empty replies)", model, int(_SICK_COOLDOWN_S))  # 15s timed out on almost every call (day 286); the editorial soft deadline caps the total
 _RETRY_STATUS = {429, 500, 502, 503, 504}
 _UNAVAILABLE = {404, 410}
 _AUTH_STATUS = {401, 403}
@@ -148,13 +181,25 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
     last_failure: dict = {"status_code": 0, "model": "", "error": "no NVIDIA model configured"}
 
+    started = time.time()
+    healthy = [m for m in models if not _model_sick(m)]
+    if not healthy:
+        logger.warning("NVIDIA all configured models unhealthy; failing over to the next provider")
+        return None, {"status_code": 0, "model": "", "error": "all NVIDIA models unhealthy (cooldown)"}
+    models = healthy
     for index, model in enumerate(models):
+        if index and time.time() - started > _CALL_BUDGET_S:
+            logger.warning("NVIDIA call budget %.0fs spent; failing over to the next provider", _CALL_BUDGET_S)
+            return None, last_failure
         text, usage = _call_model(prompt, max_tokens, model, headers)
         if text is not None:
+            _note_model(model, True)
             return text, usage
         last_failure = usage
         status = int(usage.get("status_code") or 0)
         error = str(usage.get("error") or "")
+        if status == 0 or "empty content" in error:
+            _note_model(model, False)
         if not _try_next_model(status, error):
             return None, last_failure
         if index + 1 < len(models):

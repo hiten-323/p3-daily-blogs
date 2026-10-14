@@ -1078,7 +1078,18 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                         ensure_structural_fields(eg, label)
                         if not _schema_issues(label, eg):
                             merged = eg
-                if merged is None:
+                fresh = label != "blog_post" and ladder.is_banned_claim_failure(feedback)
+                if merged is None and fresh:
+                    # A banned claim (e.g. the wrong per-cup price) in a saved draft: a rewrite
+                    # of that draft keeps copying it, so build a new one from scratch.
+                    logger.warning("[ladder] %s failed on a banned claim — regenerating from scratch", label)
+                    ladder_log[label][-1]["rung"] = "from_scratch"
+                    improved = _regenerate_piece(label, piece, feedback, content, from_scratch=True)
+                    if not improved:
+                        logger.warning("[editorial] Fresh generation failed for %s — keeping current piece", label)
+                        continue
+                    merged = _apply_regeneration(label, ladder.scratch_base(piece), improved)
+                elif merged is None:
                     improved = _regenerate_piece(
                         label, piece, ladder.build_feedback(rung, feedback, attempt + 1, day_no), content)
                     if not improved:
@@ -1153,7 +1164,8 @@ def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | No
     return merged
 
 
-def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict) -> dict | None:
+def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
+                      from_scratch: bool = False) -> dict | None:
     """
     Regenerate a single content piece using the original generator with feedback context.
     Returns improved piece dict, or None if regeneration fails.
@@ -1182,6 +1194,9 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict) -> 
             f"- Do not copy another platform's hook or CTA. The featured SKU controls the claims.\n\n"
             f"Return ONLY the improved JSON object."
         )
+        if from_scratch:
+            from content_generator.core.fallback_ladder import scratch_prompt
+            regen_prompt = scratch_prompt(label, piece, feedback, threshold, brand_block())
         if label == "blog_post":
             from content_generator.core.blog_writer import generate_blog_post
             improved = generate_blog_post(
@@ -1196,7 +1211,7 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict) -> 
                     logger.info("[editorial] Regeneration successful for %s", label)
                 return improved
             return None
-        result = llm_call(regen_prompt, label=f"regen_{label}", max_tokens=1500)
+        result = llm_call(regen_prompt, label=f"{'fresh' if from_scratch else 'regen'}_{label}", max_tokens=1500)
         if isinstance(result, dict) and result:
             logger.info("[editorial] Regeneration successful for %s", label)
             return result

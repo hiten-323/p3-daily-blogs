@@ -12,6 +12,7 @@ import logging
 import requests
 
 from content_generator.providers import cerebras, deepseek, gemini, groq, nvidia, openrouter
+from content_generator.providers import cloudflare, github_models, huggingface, mistral
 from content_generator.providers.llm_router import _KEY_GETTERS, _redact
 from content_generator.rotation import WEBSITE_URL
 
@@ -131,6 +132,10 @@ def probe_results() -> list[tuple[str, str]]:
         ("gemini", _gemini_chat(gemini.get_key())),
         ("cerebras", _openai_chat(cerebras._URL, cerebras.get_key(), _first_model(cerebras.MODELS))),
         ("deepseek", _openai_chat(deepseek._URL, deepseek.get_key(), _first_model(deepseek.MODELS))),
+        ("github_models", _openai_chat(github_models._URL, github_models.get_key(), _first_model(github_models.MODELS))),
+        ("mistral", _openai_chat(mistral._URL, mistral.get_key(), _first_model(mistral.MODELS))),
+        ("cloudflare", _openai_chat(cloudflare.url(), cloudflare.get_key(), _first_model(cloudflare.MODELS))),
+        ("huggingface", _openai_chat(huggingface._URL, huggingface.get_key(), _first_model(huggingface.MODELS))),
         (
             "openrouter",
             _openai_chat(

@@ -23,11 +23,16 @@ _URL = "https://openrouter.ai/api/v1/chat/completions"
 #
 # These four are instruct-tuned and advertise JSON support; nemotron-3-super
 # additionally supports strict structured_outputs.
-MODELS: list[str] = os.getenv(
-    "OPENROUTER_MODELS",
-    "nvidia/nemotron-3-super-120b-a12b:free,google/gemma-4-31b-it:free,"
-    "google/gemma-4-26b-a4b-it:free,minimax/minimax-m2.7:free",
-).split(",")
+_DEFAULT_FREE = (
+    "google/gemma-4-31b-it:free,google/gemma-4-26b-a4b-it:free,"
+    "minimax/minimax-m2.7:free,nvidia/nemotron-3-super-120b-a12b:free"
+)
+# Only ':free' models are ever called, so OpenRouter never bills. A configured
+# model without the suffix is dropped.
+MODELS: list[str] = [
+    m.strip() for m in os.getenv("OPENROUTER_MODELS", _DEFAULT_FREE).split(",")
+    if m.strip().endswith(":free")
+] or _DEFAULT_FREE.split(",")
 
 
 def get_key() -> str:
