@@ -1656,6 +1656,44 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-13T12:02:40+00:00"
+    },
+    "2026-10-14|generate|threads|pb_22cd6d0a62": {
+      "attempt_count": 1,
+      "content_date": "2026-10-14",
+      "content_id": "pb_22cd6d0a62",
+      "day_number": 286,
+      "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952576030297546 cannot be found.\",\"fbtrace_id\":\"AnliobPJ1sR1dnjW5E0qg-L\"}}",
+      "history": [
+        {
+          "at": "2026-10-14T05:33:53+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-14T05:33:56+00:00",
+          "attempt": 1,
+          "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952576030297546 cannot be found.\",\"fbtrace_id\":\"AnliobPJ1sR1dnjW5E0qg-L\"}}",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-14T05:33:53+00:00",
+      "last_result": {
+        "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952576030297546 cannot be found.\",\"fbtrace_id\":\"AnliobPJ1sR1dnjW5E0qg-L\"}}",
+        "success": false
+      },
+      "next_retry_at": "2026-10-14T05:38:56+00:00",
+      "platform": "threads",
+      "remote_id": "",
+      "slot": "generate",
+      "status": "FAILED",
+      "updated_at": "2026-10-14T05:33:56+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
     }
   },
   "version": 1
