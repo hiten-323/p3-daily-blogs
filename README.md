@@ -28,9 +28,11 @@ surface: Story, Reel frame, carousel, feed, Facebook, LinkedIn, Threads, and
 the YouTube thumbnail. The check is fail-closed. A frame must be sharp, show
 the full jar inside the safe zone, carry a mask that passed integrity (no
 ragged edge), have no studio disc or halo under the base, sit on a contact
-shadow, and not overlap the cup, laptop, or plants. The on-image CTA must use
-`@purepantryprovisions`. Unverified stat hooks (invented rupee claims, "waste",
-"every week") fail.
+shadow, and not overlap the cup, laptop, or plants. The label is the product
+photo: one uniform exposure and white-balance step, with no gradient across
+the ink. Mean CIEDE2000 of 6 or more fails, and so does a side that is lighter
+than the others. The on-image CTA must use `@purepantryprovisions`. Unverified
+stat hooks (invented rupee claims, "waste", "every week") fail.
 
 A failure is re-rendered on the next lifestyle scene and the other side of
 the prop, up to `QUALITY_MAX_REGEN` extra tries. What still fails is
