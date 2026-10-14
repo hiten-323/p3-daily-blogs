@@ -1,8 +1,8 @@
 """
 LLM router — circuit breaker, rate limiter, retry, cost tracking.
 
-Call order: NVIDIA → Groq → Gemini → Cerebras → DeepSeek → OpenRouter
-NVIDIA is primary. The others stay in their previous order as fallbacks.
+Call order: Gemini → NVIDIA → Groq → Cerebras → DeepSeek → OpenRouter
+(LLM_PROVIDER_ORDER overrides). NVIDIA fails over fast on timeouts/empty replies.
 Each provider has an independent circuit breaker: after 3 consecutive failures
 it is disabled for 15 minutes before being retried.
 A threading.Semaphore(2) limits concurrent outbound API calls to prevent
@@ -137,14 +137,31 @@ def _record_usage(label: str, provider: str, usage: dict) -> None:
         })
 
 
-_PROVIDERS = [
-    ("nvidia", nvidia.call),
-    ("groq", groq.call),
-    ("gemini", gemini.call),
-    ("cerebras", cerebras.call),
-    ("deepseek", deepseek.call),
-    ("openrouter", openrouter.call),
-]
+_ALL_PROVIDERS = {
+    "gemini": gemini.call,
+    "nvidia": nvidia.call,
+    "groq": groq.call,
+    "cerebras": cerebras.call,
+    "deepseek": deepseek.call,
+    "openrouter": openrouter.call,
+}
+# Gemini first: on day 286 it answered regen_reel_1 in 3.1s while NVIDIA timed
+# out (45s x models) or returned empty. NVIDIA stays second with fast failover.
+# Override with LLM_PROVIDER_ORDER="nvidia,gemini,..." if NVIDIA is healthy again.
+_DEFAULT_ORDER = ("gemini", "nvidia", "groq", "cerebras", "deepseek", "openrouter")
+
+
+def _provider_order() -> list:
+    import os
+    raw = os.getenv("LLM_PROVIDER_ORDER", "")
+    names = [n.strip().lower() for n in raw.split(",") if n.strip().lower() in _ALL_PROVIDERS]
+    for n in _DEFAULT_ORDER:
+        if n not in names:
+            names.append(n)
+    return [(n, _ALL_PROVIDERS[n]) for n in names]
+
+
+_PROVIDERS = _provider_order()
 
 _KEY_GETTERS = (
     ("ollama", ollama.get_key),
@@ -289,7 +306,7 @@ def call(prompt: str, label: str, max_tokens: int = 3000) -> dict:
         if name in ("nvidia", "ollama"):
             retries = 1
         elif name == "gemini":
-            retries = 3
+            retries = 2
         elif name in ("groq", "deepseek", "cerebras"):
             retries = 2
         else:

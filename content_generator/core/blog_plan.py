@@ -75,11 +75,24 @@ TOPICS: list[dict] = [
         "id": "choose-jar",
         "slug": "which-purity-beans-jar-to-buy",
         "title": "Which Purity Beans jar should you buy",
-        "primary": "purity beans jar",
+        # Was "purity beans jar": repeated in every section it read as keyword
+        # stuffing and the editor scored the blog 3.5-4.0 (day 286).
+        "primary": "instant coffee jar",
         "secondary": ["instant coffee india", "coffee label india"],
         "meta_lead": "Which Purity Beans jar fits the cup you actually brew. Strong and black, Arabica, Robusta, or the smooth 70/30 Ultra Blend milk coffee, with catalog prices in rupees.",
     },
 ]
+
+# Varied, natural openers. The primary keyword appears in the title, intro and
+# first H2 only; repeating it in every section read as SEO stuffing.
+_LEADS = (
+    "Start with the back of the jar rather than the front slogan.",
+    "The quickest way to choose is to look at how you actually take your coffee.",
+    "Most kitchens only need one jar, so it helps to know what each one does well.",
+    "Price matters, but so does what the cup tastes like at 7am.",
+    "Here is the plain version, without the marketing gloss.",
+    "Think about the cup first and the jar second.",
+)
 
 _JAR_ORDER = ("ultra_blend", "bold", "purista", "purica", "prima")
 _CITIES = (
@@ -133,7 +146,7 @@ def headings_for(topic: dict) -> list[dict]:
     rows = [
         (f"What does {primary} mean for an Indian kitchen?", "A plain definition"),
         ("How do you read the chicory line on the jar?", "Where the percent sits"),
-        (f"Which jar matches a {primary} question?", "Catalog facts only"),
+        ("Which jar suits the way you drink coffee?", "Catalog facts only"),
         ("What does each jar cost in rupees?", "Smallest size on the catalog"),
         ("How do people brew instant coffee in Indian cities?", "Milk coffee and filter habits"),
         ("How do you choose a jar without a slogan?", "A label-first rule"),
@@ -176,9 +189,8 @@ def jar_sentence(slug: str) -> str:
 
 def section_prose(topic: dict, index: int, *, target: int = 145) -> str:
     """Catalog-grounded section of about `target` words. No invented claims."""
-    primary = topic["primary"]
     parts = [
-        f"For {primary}, start with the back of the jar rather than the front slogan.",
+        _LEADS[index % len(_LEADS)],
         _CITIES[index % len(_CITIES)],
         jar_sentence(_JAR_ORDER[index % len(_JAR_ORDER)]),
         jar_sentence(_JAR_ORDER[(index + 2) % len(_JAR_ORDER)]),
@@ -199,7 +211,7 @@ def section_prose(topic: dict, index: int, *, target: int = 145) -> str:
 
 def h3_prose(topic: dict) -> str:
     return (
-        f"A {topic['primary']} search still ends at the label. "
+        "Whatever brought you here, the label settles it. "
         "Ultra Blend is 70% coffee and 30% chicory. "
         "The other single jars on this page are 0% chicory."
     )
@@ -279,7 +291,7 @@ def faqs_for(topic: dict) -> list[dict]:
             "answer": "Purica is freeze-dried pure Arabica with 0% chicory.",
         },
         {
-            "question": f"Where are {topic['primary']} jars sold?",
+            "question": "Where can I buy Purity Beans jars?",
             "answer": "The product pages are on p3online.in. Prices in this article are the catalog prices in rupees.",
         },
     ]
@@ -306,7 +318,7 @@ def introduction_for(topic: dict) -> str:
 
 def conclusion_for(topic: dict) -> str:
     return (
-        f"Purity Beans is the brand on the jar. For {topic['primary']}, read the chicory line first. "
+        "Pick the jar that matches your cup, and read the chicory line first. "
         "Ultra Blend is 70% coffee and 30% chicory, and only that jar may be called lower caffeine. "
         "Prima, the Premium Agglomerate, is pure Arabica. "
         "Then open the catalog at https://p3online.in"

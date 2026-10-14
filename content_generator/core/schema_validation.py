@@ -1,7 +1,7 @@
 """
 Schema validation using Pydantic. Defines expected structure for content assets.
 """
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import List, Optional
 
 class EditorialScore(BaseModel):
@@ -170,6 +170,18 @@ class YoutubeShortSchema(BaseModel):
     primary_cta: Optional[str] = None
     success_metric: Optional[str] = None
     target: Optional[int] = None
+    audience: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _coerce_target(cls, data):
+        """Models often write the target AUDIENCE into `target` (run 38602719185:
+        'Urban Indian coffee drinkers ...'). Keep a numeric target as int; move
+        prose into `audience` instead of failing the whole Short."""
+        if isinstance(data, dict) and "target" in data:
+            data = dict(data)
+            data["target"] = coerce_target(data.get("target"), data)
+        return data
 
     @model_validator(mode="after")
     def validate_youtube_short(self) -> 'YoutubeShortSchema':
@@ -193,3 +205,19 @@ class YoutubeShortSchema(BaseModel):
 def validate_or_fail(schema, payload):
     """Validate payload against Pydantic schema. Raises ValidationError on failure."""
     return schema.model_validate(payload)
+
+
+def coerce_target(value, data: dict | None = None):
+    """Return an int target or None. Non-numeric prose is moved to data['audience']."""
+    if value is None or isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float):
+        return int(value)
+    text = str(value).strip().replace(",", "")
+    if text.isdigit():
+        return int(text)
+    if data is not None and text and not data.get("audience"):
+        data["audience"] = str(value).strip()
+    return None

@@ -1,5 +1,6 @@
 """Groq API provider."""
 import os
+import re
 import logging
 import requests as _http
 
@@ -33,6 +34,61 @@ def _estimated_tokens(prompt: str, max_tokens: int) -> int:
     return max(1, len(prompt) // 4) + max(0, int(max_tokens))
 
 
+_PRIORITY = re.compile(
+    r"never|must|only|do not|don't|banned|forbid|fssai|chicory|₹|rs\b|price|%|pure|"
+    r"ultra blend|bold|prima|purica|purista|json|return|follow|p3online",
+    re.IGNORECASE,
+)
+
+
+def compact_prompt(prompt: str, budget_tokens: int) -> str | None:
+    """Fit a long prompt under Groq's TPM limit by chunking it into paragraphs.
+
+    The USER REQUEST tail is always kept whole. From everything before it,
+    rule/claim/price paragraphs are kept first, then the rest, in original
+    order, until the budget is used. The downstream claim and editorial gates
+    still check the output, so nothing is relaxed.
+    """
+    budget_chars = max(0, int(budget_tokens)) * 4
+    text = str(prompt or "")
+    marker = "USER REQUEST:"
+    head, tail = (text.rsplit(marker, 1) if marker in text else ("", text))
+    tail = (marker + tail) if head else tail
+    if len(tail) > budget_chars:
+        # The request itself is too long: chunk it the same way, keeping its last paragraph.
+        paras = [p for p in tail.split("\n\n") if p.strip()]
+        if not paras:
+            return None
+        last = paras[-1]
+        rest = _pick(paras[:-1], budget_chars - len(last) - 2)
+        out = "\n\n".join(rest + [last])
+        return out if len(out) <= budget_chars else None
+    paras = [p for p in head.split("\n\n") if p.strip()]
+    keep = _pick(paras, budget_chars - len(tail) - 2)
+    return "\n\n".join(keep + [tail])
+
+
+def _pick(paras: list[str], budget: int) -> list[str]:
+    order = sorted(range(len(paras)), key=lambda i: (0 if _PRIORITY.search(paras[i]) else 1, i))
+    chosen, used = set(), 0
+    for i in order:
+        size = len(paras[i]) + 2
+        if used + size <= budget:
+            chosen.add(i)
+            used += size
+        elif _PRIORITY.search(paras[i]) and budget - used > 200:
+            # Split a long rule paragraph into lines and keep what fits.
+            lines, part = paras[i].split("\n"), []
+            for line in lines:
+                if used + len(line) + 1 <= budget and _PRIORITY.search(line):
+                    part.append(line)
+                    used += len(line) + 1
+            if part:
+                paras[i] = "\n".join(part)
+                chosen.add(i)
+    return [paras[i] for i in sorted(chosen)]
+
+
 def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
     """
     Tries each model in MODELS in order.
@@ -45,6 +101,12 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
         return None, {}
 
     estimate = _estimated_tokens(prompt, max_tokens)
+    if estimate > _TOKEN_LIMIT:
+        compact = compact_prompt(prompt, _TOKEN_LIMIT - int(max_tokens))
+        if compact and _estimated_tokens(compact, max_tokens) <= _TOKEN_LIMIT:
+            logger.info("Groq prompt chunked from ~%d to ~%d tokens", estimate,
+                        _estimated_tokens(compact, max_tokens))
+            prompt, estimate = compact, _estimated_tokens(compact, max_tokens)
     if estimate > _TOKEN_LIMIT:
         logger.warning(
             "Groq skipped — request is about %d tokens, over the %d token limit",

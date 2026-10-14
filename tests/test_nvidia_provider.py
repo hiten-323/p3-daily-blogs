@@ -1,4 +1,4 @@
-"""NVIDIA NIM is the primary LLM. Fallbacks stay in the previous order."""
+"""NVIDIA NIM provider: Gemini first, NVIDIA second with fast failover."""
 from __future__ import annotations
 
 import logging
@@ -35,10 +35,15 @@ def _clean_router():
     router.reset_cascade_log()
 
 
-def test_provider_order_starts_with_nvidia():
+def test_provider_order_starts_with_gemini_then_nvidia():
     names = [name for name, _fn in router._PROVIDERS]
-    assert names[0] == "nvidia"
-    assert names[1:] == ["groq", "gemini", "cerebras", "deepseek", "openrouter"]
+    assert names == ["gemini", "nvidia", "groq", "cerebras", "deepseek", "openrouter"]
+
+
+def test_provider_order_env_override(monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER_ORDER", "nvidia, gemini")
+    names = [name for name, _fn in router._provider_order()]
+    assert names[:2] == ["nvidia", "gemini"] and len(names) == 6
 
 
 def test_empty_model_env_keeps_the_default(monkeypatch):
