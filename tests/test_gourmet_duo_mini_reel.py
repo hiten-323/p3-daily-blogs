@@ -211,5 +211,7 @@ def test_daily_render_reuses_the_template_without_posting_or_consuming_it(tmp_pa
     )
     assert story is not None
     assert story.endswith("story_video_day4_2026-10-12.mp4")
-    assert build_story_video(headline="READ THE LABEL", day=4, reference_text="Read the jar.") is None
+    other = build_story_video(headline="READ THE LABEL", day=4, reference_text="Read the jar.")
+    # Non-mini days get their own motion story (or nothing) — never the mini file.
+    assert other is None or Path(other).stat().st_size != before
     assert template_record()["audio_embedded"] is False

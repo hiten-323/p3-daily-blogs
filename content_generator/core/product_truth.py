@@ -401,6 +401,22 @@ def repair_content(content: dict) -> dict:
     return repaired
 
 
+def _ultra_cup_phrase() -> str:
+    from content_generator.core.price_truth import cup_phrase
+    return cup_phrase("ultra_blend", 100) or "priced as listed on p3online.in"
+
+
+def _price_findings(sentence: str) -> list[str]:
+    try:
+        from content_generator.core.price_truth import price_findings
+    except Exception:  # snapshot missing: fail closed on any figure
+        return ["price snapshot unavailable"] if _AMOUNT_ANY.search(sentence) else []
+    return price_findings(sentence)
+
+
+_AMOUNT_ANY = re.compile(r"(?:₹|\brs\.?|\binr)\s*\d", re.I)
+
+
 def product_truth_findings(text: str, featured: str | None = None) -> list[dict]:
     """Unsupported or contradicted product claims in `text`."""
     if not text or not str(text).strip():
@@ -422,10 +438,13 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
                 break
         if _RS18.search(s):
             findings.append(_finding(
-                s, "Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is about ₹6 a cup (100g = ₹309, at least 50 cups)"))
+                s, "Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is " + _ultra_cup_phrase()))
         elif _PER_CUP_FIGURE.search(s) and not re.search(r"ultra\s*blend", s, re.I):
             findings.append(_finding(
                 s, "Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure"))
+        if not _RS18.search(s):
+            for issue in _price_findings(s):
+                findings.append(_finding(s, "Shopify price truth: " + issue))
         if _HUNDRED_PERCENT.search(s):
             findings.append(_finding(
                 s, "FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'"))

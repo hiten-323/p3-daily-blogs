@@ -1,4 +1,5 @@
 """4-part Instagram Story sequence prompt."""
+from content_generator.core import price_truth as _PT
 from content_generator.prompts.brand import brand_block
 from content_generator.rotation import WEBSITE_URL, get_todays_viral_idea
 
@@ -36,7 +37,7 @@ Do not reuse the reels' hooks or angles.
   "story_3": {{
     "type": "clean_truth",
     "headline": "THE INGREDIENT TRUTH",
-    "fact": "Verifiable coffee truth: e.g. freeze-dried vs spray-dried, or on Ultra Blend days only: at least 50 cups per 100g jar. ZERO fabrication: NEVER invent fake customer counts, fake DMs, or synthetic handles.",
+    f"fact": "Verifiable coffee truth: e.g. freeze-dried vs spray-dried, or on Ultra Blend days only: at least {_PT.ultra('cups')} cups per 100g jar. ZERO fabrication: NEVER invent fake customer counts, fake DMs, or synthetic handles.",
     "sticker_prompt": "Interactive quiz or emoji slider sticker for audience engagement"
   }},
   "story_4": {{

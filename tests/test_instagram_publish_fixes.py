@@ -341,7 +341,7 @@ def main():
     legit = build("evening", 1, {}, {}, status="skipped", reason="already published today")
     check("already published today stays green", evaluate(legit)["ok"])
     gate = build("evening", 1, {}, {}, status="held", reason="canonical_validation_failed")
-    check("empty gate hold fails the run", not evaluate(gate)["ok"])
+    check("gate hold is green and queued for retry-unposted", evaluate(gate)["ok"] and evaluate(gate).get("retry"))
 
     # 7. Alerting when webhook or SMTP is configured, and quiet when it is not
     print("\nFailure alerts follow the configured channel:")

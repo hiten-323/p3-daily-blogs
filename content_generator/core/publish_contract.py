@@ -68,6 +68,21 @@ LEGIT_HOLDS = (
 )
 
 
+# Quality-gate holds: nothing passed the 8.0 gate yet. The bar is not lowered;
+# the slot stays green (with a warning) because retry-unposted.yml regenerates
+# and publishes the missing piece every 30 minutes. Failing the run here only
+# blocked later steps (state push) without getting anything posted.
+GATE_HOLDS = (
+    "canonical_validation_failed",
+)
+
+
+def hold_is_gate_retry(reason: str) -> bool:
+    """True when a hold is the quality gate blocking; retry-unposted picks it up."""
+    text = (reason or "").strip().lower()
+    return any(token in text for token in GATE_HOLDS)
+
+
 def hold_is_expected(reason: str) -> bool:
     """True when a hold/skip is an intentional non-publish, not a silent failure."""
     text = (reason or "").strip().lower()
@@ -115,6 +130,10 @@ def evaluate(contract: dict) -> dict:
     if contract.get("_skipped") or contract.get("skipped") or contract.get("status") in ("skipped", "held"):
         status = contract.get("status") if contract.get("status") in ("skipped", "held") else "skipped"
         reason = contract.get("reason") or status
+        if hold_is_gate_retry(reason):
+            return {"status": status, "ok": True, "missing": [], "retry": True,
+                    "warnings": [f"{reason}: queued for retry-unposted (gate unchanged)"],
+                    "detail": reason}
         ok = hold_is_expected(reason)
         return {"status": status, "ok": ok, "missing": [], "detail": reason}
 

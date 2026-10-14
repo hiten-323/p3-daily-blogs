@@ -1,4 +1,5 @@
 """Reel prompt builder — full publish-ready Instagram Reel asset."""
+from content_generator.core import price_truth as _PT
 from content_generator.prompts.brand import brand_block
 from content_generator.rotation import WEBSITE_URL, get_todays_viral_idea, get_todays_hook
 
@@ -56,7 +57,7 @@ The best hooks cannot save a topic nobody cares about.
 PSYCHOLOGY REQUIREMENT:
 Pick ONE primary frame from the PSYCHOLOGY FRAMES list above.
 Put its id in "psychology_frame". The frame must drive the hook, the spoken arc, and the share/save triggers.
-Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is 70% coffee and 30% chicory. Never apply the pure coffee line to Ultra Blend. Per-cup price: only for Ultra Blend, about ₹6 a cup (at least 50 cups per 100g jar). Give no per-cup figure for other jars.
+Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is 70% coffee and 30% chicory. Never apply the pure coffee line to Ultra Blend. Per-cup price: only for Ultra Blend, {_PT.cup_phrase()}. Give no per-cup figure for other jars.
 {featured_rule}
 
 ABSOLUTE RULES:

@@ -182,7 +182,7 @@ def test_rs18_per_cup_hard_fails(text):
 
 
 def test_ultra_blend_per_cup_allowed_only_on_ultra():
-    assert not [f for f in _ptf("Ultra Blend is about ₹6 a cup, at least 50 cups per 100g jar.") if "cup" in str(f)]
+    assert not [f for f in _ptf("Ultra Blend is about ₹5 a cup, at least 66 cups per 100g jar.") if "cup" in str(f)]
     assert any("Per-cup" in str(f) for f in _ptf("Purica is about ₹6 a cup."))
 
 

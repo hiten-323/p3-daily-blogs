@@ -25,3 +25,8 @@ Examples:
 
 3-6 tracks is plenty to start. No tracks = reels post silent (still valid).
 Files here are gitignored by default if large — commit small ones so CI can use them.
+
+## Licences
+See [LICENSES.md](LICENSES.md). Every track in this folder is an original
+in-repo synthesis under CC0; third-party music is not accepted without a
+licence row in that file.

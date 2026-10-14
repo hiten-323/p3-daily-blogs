@@ -16,6 +16,7 @@ is QUALITY_LADDER_MAX (default 8, hard ceiling 12) so it can never loop
 forever; exhaustion returns status "exhausted" so the caller holds and alerts.
 """
 from __future__ import annotations
+from content_generator.core import price_truth as _PT
 
 import os
 
@@ -27,7 +28,7 @@ ALT_ANGLES = (
     "a brew tip the viewer can try tomorrow (water ~85°C, one level spoon, 30-second pause)",
     "what today's jar label says: bean, process, lead-free glass jar, net weight",
     "a granule test: freeze-dried crystals vs spray-dried powder (Purica is freeze-dried)",
-    "on Ultra Blend days only: at least 50 cups per 100g jar, about ₹6 a cup",
+    f"on Ultra Blend days only: at least {_PT.ultra('cups')} cups per 100g jar, about ₹{_PT.ultra('per_cup')} a cup",
     "matching a Purity Beans jar to how you drink coffee (black and strong, milk, the smooth 70/30 Ultra Blend)",
 )
 

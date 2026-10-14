@@ -35,6 +35,16 @@ logger = logging.getLogger(__name__)
 
 # ── Full pipeline ─────────────────────────────────────────────────────────────
 
+
+def _refresh_shopify_prices() -> None:
+    """Pull live Shopify prices before any content is written. Soft-fails."""
+    try:
+        from content_generator.core.price_truth import refresh
+        refresh()
+    except Exception as exc:
+        logger.warning("[prices] refresh skipped: %s", exc)
+
+
 def run_full_pipeline(day_number: int = None) -> dict:
     """
     Execute the complete autonomous content pipeline end-to-end.
@@ -155,11 +165,28 @@ def _run_generate_slot(day_number: int = None) -> dict:
 
     # ── 3. Brand injection + editorial review ────────────────────────────────
     _inject_brand_into_content(content, day=dn)
-    run_with_hard_timeout(
-        "editorial_review",
-        lambda: rm.run(fn=lambda: _do_editorial(content), label="editorial_review", max_retries=1),
-        timeout_s=1800,
-    )
+    _refresh_shopify_prices()
+
+    # Soft deadline inside the review loop stops new attempts before the hard
+    # timeout, so pieces that already PASSED are kept and saved. Previously the
+    # hard timeout raised and the run exited, discarding passing drafts (day 286:
+    # an 8.4 Threads post was lost). Unpassed pieces stay unapproved (held) and
+    # retry-unposted.yml picks them up; the 8.0 gate is unchanged.
+    import time as _time
+    _editorial_budget = int(os.getenv("EDITORIAL_TIMEOUT_S", "1800"))
+    _EDITORIAL_DEADLINE["at"] = _time.monotonic() + max(60, _editorial_budget - 240)
+    try:
+        run_with_hard_timeout(
+            "editorial_review",
+            lambda: rm.run(fn=lambda: _do_editorial(content), label="editorial_review", max_retries=1),
+            timeout_s=_editorial_budget,
+        )
+    except TimeoutError as exc:
+        _EDITORIAL_DEADLINE["at"] = 0.0  # tell the abandoned worker to stop now
+        logger.error("[editorial] %s — keeping pieces that already passed; the rest stay held "
+                     "for retry-unposted", exc)
+    finally:
+        _EDITORIAL_DEADLINE["at"] = None
 
     # ── 4. Business objectives ────────────────────────────────────────────────
     with timed_step("objective_assignment", timeout_s=10):
@@ -911,6 +938,17 @@ def _fssai_scrub(node):
     return node
 
 
+# Set by run_daily: monotonic time after which _do_editorial stops starting new
+# attempts (None = no deadline; 0.0 = stop immediately).
+_EDITORIAL_DEADLINE: dict = {"at": None}
+
+
+def _editorial_deadline_passed() -> bool:
+    import time as _time
+    at = _EDITORIAL_DEADLINE.get("at")
+    return at is not None and _time.monotonic() >= at
+
+
 def _do_editorial(content: dict, only: set | None = None) -> None:
     """
     Review each content piece. Regenerates up to QUALITY_MAX_REGEN times.
@@ -980,6 +1018,10 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
             piece["featured_product"] = featured
 
         for attempt in range(attempts_allowed):
+            if _editorial_deadline_passed():
+                piece.setdefault("editorial_error", "editorial time budget reached before this piece passed")
+                logger.warning("[editorial] time budget reached — %s left unapproved (held for retry)", label)
+                break
             _drop_unmeasured_score(piece)
             ensure_structural_fields(piece, label)
             schema_issues = _schema_issues(label, piece)
@@ -1334,10 +1376,12 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
                 image_path=story_frame,
                 headline=story_copy["headline"],
                 day=day_number,
-                duration=6.0,
+                duration=float(os.getenv("STORY_MOTION_SECONDS","10")),
                 label=f"story_video_day{day_number}",
                 on_date=story_day,
                 reference_text=f"{story_copy['headline']} {story_copy['sub']}",
+                sub=story_copy["sub"],
+                product=story_product,
             )
             if results["story_video"]:
                 logger.info("[images] Story video rendered: %s", results["story_video"])

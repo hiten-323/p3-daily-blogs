@@ -2,6 +2,7 @@
 Rotation banks and day-number helpers.
 All mutable state lives here so every prompt module imports from one place.
 """
+from content_generator.core import price_truth as _PT
 import os
 import datetime
 
@@ -20,7 +21,7 @@ BLOG_TOPIC_CLUSTERS = [
     "instant coffee for students in India — price per cup, jar sizes, and how to read the label",
     "morning coffee routine India — a home cup with the jar that matches how you drink it",
     "how to read an instant coffee label in India — bean, process, and which Purity Beans jar fits your cup",
-    "coffee cost at home India — Ultra Blend makes at least 50 cups per 100g jar (about ₹6 a cup); no per-cup figure for other jars",
+    f"coffee cost at home India — Ultra Blend makes at least {_PT.ultra('cups')} cups per 100g jar (about ₹{_PT.ultra('per_cup')} a cup); no per-cup figure for other jars",
     "work from home coffee India — a repeatable home cup, not a productivity study",
     "caffeine on the label — Ultra Blend is 70% coffee and may be called lower caffeine; the pure coffee jars may not",
     "instant coffee jars in India — Bold, Purista, Purica, Prima, and Ultra Blend, each described only as labeled",
@@ -132,7 +133,7 @@ LINKEDIN_ANGLES = [
      "Building Pure Pantry Provisions without VC capital: why sticking to glass jars and clear labels is harder in year one "
      "but creates an unbreakable moat in year five."),
     ("COFFEE VALUE MATH",
-     "The honest economics of the daily cup: Ultra Blend at about ₹6 a cup (100g = ₹309, at least 50 cups) vs a cafe cup at commercial "
+     f"The honest economics of the daily cup: Ultra Blend at {_PT.cup_phrase()} vs a cafe cup at commercial "
      "chains. Calculating the 5-year compounding cost of routine coffee spending."),
     ("THE INDIAN COFFEE REVIVAL",
      "From the legendary Bababudan hills of Chikmagalur and Coorg: why India's shade-grown beans are celebrated "
@@ -145,7 +146,7 @@ FACEBOOK_ANGLES = [
      "The family morning cup: how to match a Purity Beans jar to how your household drinks coffee, "
      "strong and black, with milk, or the smooth 70/30 Ultra Blend milk coffee."),
     ("MORNING HOME MATH",
-     "Ultra Blend at about ₹6 a cup: what a milk-coffee family spends in a year, from one verified jar price."),
+     f"Ultra Blend at about ₹{_PT.ultra('per_cup')} a cup: what a milk-coffee family spends in a year, from one verified jar price."),
     ("THE FILTER KAAPI DEBATE",
      "Traditional South Indian filter coffee vs pure instant: why true coffee lovers care about what is printed under the brand name."),
     ("SUGAR COPING HABIT",
@@ -216,7 +217,7 @@ VIRAL_CONTENT_IDEAS = [
     "What is actually inside your instant coffee jar? (Ingredient label truth)",
     "I switched to pure coffee for 30 days. Here is what changed.",
     "Arabica, Robusta or a 70/30 blend: which cup are you?",
-    "One 100g jar of Ultra Blend, at least 50 cups: the home milk-coffee math",
+    f"One 100g jar of Ultra Blend, at least {_PT.ultra('cups')} cups: the home milk-coffee math",
     "Purica vs Purista: a side-by-side taste test story",
     "Why freeze-dried coffee is different from regular instant coffee",
     "Agglomerated vs freeze-dried: which one should you buy?",

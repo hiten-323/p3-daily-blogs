@@ -38,13 +38,13 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "status": "ACTIVE",
         "in_stock": True,
         "variants": [
-            {"sku": "PB-BLD-50", "weight": "50g", "cups": "25–50 cups", "price": 239},
-            {"sku": "PB-BLD-100", "weight": "100g", "cups": "50–100 cups", "price": 369},
+            {"sku": "PB-BLD-50", "weight": "50g", "price": 239},
+            {"sku": "PB-BLD-100", "weight": "100g", "price": 369},
         ],
         "best_for": ["strong black coffee drinkers", "morning energy boost", "moka pot / filter coffee lovers"],
         "hero_image": "https://cdn.shopify.com/s/files/1/0712/6315/8459/files/pb13.webp?v=1788008381",
         "highlights": [
-            "pure Robusta coffee with zero chicory",
+            "pure coffee with zero chicory",
             "Agglomerated instant coffee in a glass jar",
             "No fillers, preservatives, or artificial additives",
             "Dissolves instantly in hot water or milk",
@@ -65,8 +65,8 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "status": "ACTIVE",
         "in_stock": True,
         "variants": [
-            {"sku": "PB-PST-50", "weight": "50g", "cups": "25–50 cups", "price": 319},
-            {"sku": "PB-PST-100", "weight": "100g", "cups": "50–100 cups", "price": 509},
+            {"sku": "PB-PST-50", "weight": "50g", "price": 319},
+            {"sku": "PB-PST-100", "weight": "100g", "price": 509},
         ],
         "best_for": ["connoisseurs", "gourmet coffee drinkers", "afternoon pick-me-up"],
         "hero_image": "https://cdn.shopify.com/s/files/1/0712/6315/8459/files/pb22.webp?v=1788008465",
@@ -92,8 +92,8 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "status": "ACTIVE",
         "in_stock": True,
         "variants": [
-            {"sku": "PB-PCA-50", "weight": "50g", "cups": "25–50 cups", "price": 329},
-            {"sku": "PB-PCA-100", "weight": "100g", "cups": "50–100 cups", "price": 559},
+            {"sku": "PB-PCA-50", "weight": "50g", "price": 329},
+            {"sku": "PB-PCA-100", "weight": "100g", "price": 559},
         ],
         "best_for": ["café coffee lovers", "black coffee drinkers", "premium gifting", "desserts"],
         "hero_image": "https://cdn.shopify.com/s/files/1/0712/6315/8459/files/pb41.webp?v=1774250933",
@@ -115,14 +115,15 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "chicory": "30% chicory",
         "pure_coffee": False,
         "coffee_percent": 70,
+        "serving_g": "1–1.5g per cup (confirmed by founder); per-cup math uses 1.5g",
         "chicory_percent": 30,
         "flavor_profile": "Smooth everyday cup; a lower-caffeine description is allowed",
         "packaging": "Certified Lead-free Food Grade Glass Jar",
         "status": "ACTIVE",
         "in_stock": True,
         "variants": [
-            {"sku": "PB-ULT-50", "weight": "50g", "cups": "25–50 cups", "price": 209},
-            {"sku": "PB-ULT-100", "weight": "100g", "cups": "50–100 cups", "price": 309},
+            {"sku": "PB-ULT-50", "weight": "50g", "price": 209},
+            {"sku": "PB-ULT-100", "weight": "100g", "price": 309},
         ],
         "best_for": ["first-time buyers", "everyday milk coffee", "switchers from commercial chicory brands"],
         "hero_image": "https://cdn.shopify.com/s/files/1/0712/6315/8459/files/ultra-blend-family.png?v=1788084338",
@@ -143,12 +144,12 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "process": "Combination (Freeze-Dried Granules & Agglomerated)",
         "chicory": "Three pure coffee jars plus one Ultra Blend jar (70% coffee, 30% chicory)",
         "pure_coffee": False,
-        "flavor_profile": "The complete tasting flight — up to 200 cups total",
+        "flavor_profile": "The complete tasting flight",
         "packaging": "4 × 50g Certified Lead-free Food Grade Glass Jars in gift box",
         "status": "ACTIVE",
         "in_stock": True,
         "variants": [
-            {"sku": "PB-VARIETY-4x50", "weight": "4 × 50g", "cups": "Up to 200 cups", "price": 877},
+            {"sku": "PB-VARIETY-4x50", "weight": "4 × 50g", "price": 877},
         ],
         "savings": "Save ₹219 (20% off vs ₹1,096 buying separately)",
         "best_for": ["discovering your favorite cup", "coffee tasting flight", "gifting"],
@@ -174,7 +175,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "status": "ACTIVE",
         "in_stock": True,
         "variants": [
-            {"sku": "PB-GOURMET-DUO-100", "weight": "2 × 100g", "cups": "100–200 cups", "price": 908},
+            {"sku": "PB-GOURMET-DUO-100", "weight": "2 × 100g", "price": 908},
         ],
         "savings": "Save ₹160 (15% off vs ₹1,068 separate)",
         "best_for": ["coffee purists", "premium gifting", "Arabica vs Robusta side-by-side"],
@@ -200,7 +201,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "status": "ACTIVE",
         "in_stock": True,
         "variants": [
-            {"sku": "PB-GOURMET-DUO-50", "weight": "2 × 50g", "cups": "50–100 cups", "price": 570},
+            {"sku": "PB-GOURMET-DUO-50", "weight": "2 × 50g", "price": 570},
         ],
         "savings": "Save ₹78 (12% off vs ₹648 separate)",
         "best_for": ["trying both gourmet granules", "entry-level gourmet tasting"],
@@ -240,6 +241,26 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
 }
 
 
+def _apply_shopify_prices(products: dict[str, dict[str, Any]]) -> None:
+    """Overwrite variant prices with the Shopify snapshot (config/shopify_prices.json)."""
+    try:
+        from content_generator.core.price_truth import load, _grams
+        live = load()
+    except Exception as exc:
+        logger.warning("[catalog] Shopify price snapshot unavailable: %s", exc)
+        return
+    for slug, p in products.items():
+        rows = (live.get(slug) or {}).get("variants") or []
+        for v in p.get("variants", []):
+            g = _grams(v.get("weight", "").replace("gms", "g"))
+            match = [r for r in rows if abs(r["grams"] - g) < 0.5] or (rows if len(rows) == 1 else [])
+            if match:
+                v["price"] = int(round(match[0]["price"]))
+
+
+_apply_shopify_prices(SHOPIFY_PRODUCTS)
+
+
 def get_product(slug: str) -> dict[str, Any] | None:
     """Lookup a product by its slug (e.g. 'bold', 'purista', 'ultra_blend')."""
     return SHOPIFY_PRODUCTS.get(slug.lower().strip())
@@ -271,6 +292,11 @@ def catalog_page_urls() -> set[str]:
 def get_bundles() -> list[dict[str, Any]]:
     """Return bundle and multi-pack options."""
     return [p for p in SHOPIFY_PRODUCTS.values() if "box" in p["slug"] or "duo" in p["slug"]]
+
+
+def _cup_line() -> str:
+    from content_generator.core.price_truth import cup_phrase
+    return cup_phrase("ultra_blend", 100) or "omit per-cup figures"
 
 
 def format_catalog_for_prompt() -> str:
@@ -310,7 +336,9 @@ def format_catalog_for_prompt() -> str:
         "7. Samples are only for businesses (cafes, offices, retailers, distributors). "
         "Consumer-facing content must not offer a sample. Point customers to the 50g Variety Box: "
         + product_page_url(SHOPIFY_PRODUCTS["variety_box"]) + "\n"
-        "8. The listed prices are correct. Prima is out of stock — do not tell people to buy it.\n"
+        "8. The listed prices are live Shopify prices; never state any other ₹ figure. Per-cup cost exists ONLY for "
+        "Ultra Blend: " + _cup_line() + ". Give no per-cup or cup-count figure for any other jar. "
+        " Prima is out of stock — do not tell people to buy it.\n"
         "9. Gourmet Duo Mini (Purista 50g + Purica 50g) and Gourmet Duo (100g + 100g) are pure coffee "
         "and zero chicory. Do not describe either duo as 30% chicory, lower caffeine, only Arabica, or only Robusta. "
         "Do not describe Ultra Blend as zero chicory, no chicory, or pure coffee."
