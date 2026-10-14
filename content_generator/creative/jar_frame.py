@@ -170,12 +170,12 @@ def fit_jar_down(jar, max_w: int, max_h: int):
 
 
 def _sharpen_jar(jar):
-    """Mild unsharp mask on the colour. The alpha and the label are not blurred."""
+    """A light unsharp on the colour. Stronger halos read as bright and faded patches."""
     from PIL import Image, ImageFilter
 
     red, green, blue, alpha = jar.convert("RGBA").split()
     sharp = Image.merge("RGB", (red, green, blue)).filter(
-        ImageFilter.UnsharpMask(radius=1.3, percent=85, threshold=2)
+        ImageFilter.UnsharpMask(radius=1.2, percent=32, threshold=3)
     )
     red, green, blue = sharp.split()
     return Image.merge("RGBA", (red, green, blue, alpha))
@@ -305,6 +305,10 @@ def audit_product_image(path: str) -> dict:
         from content_generator.creative.lifestyle_scene import realism_issues
         from content_generator.creative.visual_gate import copy_and_mask_issues
         extra = realism_issues(image, geometry.get("jar_bbox"), geometry.get("scene_id"), contact_shadow=bool(geometry.get("contact_shadow", False)))
+        from content_generator.creative.label_color import label_fidelity_issues
+        extra.extend(label_fidelity_issues(
+            image, geometry.get("jar_bbox"), geometry.get("source_asset"), geometry.get("scene_id"),
+        ))
         extra.extend(copy_and_mask_issues(geometry))
         result["issues"].extend(extra)
         result["ok"] = not result["issues"]

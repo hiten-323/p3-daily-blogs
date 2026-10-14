@@ -249,11 +249,27 @@ def test_jar_against_the_frame_edge_fails():
     assert "jar_at_frame_edge" in issues
 
 
-def test_studio_bright_jar_fails_scene_light():
-    image = Image.new("RGB", (1080, 1920), (78, 58, 40))
-    ImageDraw.Draw(image).rectangle((280, 980, 520, 1400), fill=(198, 150, 230))
-    issues = naturalism_issues(image, (280, 980, 520, 1400), scene_by_id("cafe_table"))
-    assert "light_mismatch" in issues or "white_balance_mismatch" in issues
+def test_a_faded_side_fails_the_label_check():
+    from content_generator.creative.label_color import label_color_issues
+    reference = Image.new("RGB", (160, 120), (168, 48, 196))
+    rendered = reference.copy()
+    ImageDraw.Draw(rendered).rectangle((0, 0, 80, 120), fill=(110, 90, 130))
+    issues = label_color_issues(rendered, reference)
+    assert "label_uneven" in issues or "label_color_drift" in issues
+
+
+def test_grade_is_uniform_and_keeps_chroma():
+    jar = Image.new("RGBA", (180, 300), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(jar)
+    draw.rectangle((10, 8, 170, 292), fill=(168, 48, 196, 255))
+    plate = Image.new("RGB", (800, 1200), (110, 78, 52))
+    graded = grade_to_scene(jar, plate, (260, 700, 480, 1080), "left")
+    left = graded.getpixel((40, 150))[:3]
+    right = graded.getpixel((140, 150))[:3]
+    assert left == right
+    before = max(168, 48, 196) - min(168, 48, 196)
+    after = max(left) - min(left)
+    assert after >= before * 0.90
 
 
 def test_grade_does_not_rotate_label_hue():

@@ -1,7 +1,7 @@
-"""Seat a real jar in a photograph: scale, perspective, and the scene's light.
+"""Seat a real jar in a photograph: scale, perspective, and one even colour shift.
 
-The label is not redrawn. Brand hue stays put. Exposure, saturation, and a
-directional shade move the glass toward the table.
+The label is the product photo. Exposure and white balance move as one
+uniform step. Nothing paints a gradient across the brand ink.
 """
 from __future__ import annotations
 
@@ -10,8 +10,10 @@ import numpy as np
 # The jar is the foreground hero. It sits closer than the mug, so it reads larger.
 JAR_CM = 8.8
 EDGE_X = 0.08
-_LUM_TOL = 36.0
-_CAST_TOL = 24.0
+# One global step. Not a per-pixel grade.
+_EXPOSURE_CAP = 0.08
+_KELVIN_CAP = 300.0
+_CHROMA_KEEP = 0.90
 # Laplacian on the label crop. The whole-jar score stays in jar_frame.
 LABEL_LAPLACIAN_MIN = 180.0
 _HERO = {"story": (0.35, 0.50), "feed": (0.30, 0.45), "landscape": (0.40, 0.64)}
@@ -115,7 +117,8 @@ def _chroma(rgb: np.ndarray) -> np.ndarray:
 
 
 def grade_to_scene(jar, plate, rect, light: str = "left"):
-    """Match the glass to the table. High-chroma label hue is not rotated."""
+    """One exposure and one white-balance step for the whole jar. The label is not repainted."""
+    del light
     from PIL import Image
 
     image = jar.convert("RGBA")
@@ -125,93 +128,83 @@ def grade_to_scene(jar, plate, rect, light: str = "left"):
     opaque = alpha > 16
     if int(opaque.sum()) < 32 or plate is None:
         return image
-    height, width = rgb.shape[:2]
-    rgb = _flatten_columns(rgb, opaque)
     surround = _surround(plate, rect)
     if surround is None:
-        out = np.concatenate([np.clip(rgb, 0, 255), alpha[..., None]], axis=2).astype(np.uint8)
-        return Image.fromarray(out, "RGBA")
-    target = float(_lum(surround).mean())
-    body = opaque.copy()
-    body[: int(height * 0.16), :] = False
-    body[int(height * 0.90) :, :] = False
-    sample = _lum(rgb)[body] if int(body.sum()) > 30 else _lum(rgb)[opaque]
-    bright = sample[sample > 70] if np.any(sample > 70) else sample
-    gain = float(np.clip(target / max(float(np.median(bright)), 1.0), 0.55, 1.22))
-    # Dark glass stays dark glass. Only the lit label and metal take the exposure.
-    protect = np.clip((_lum(rgb) - 36.0) / 80.0, 0.0, 1.0)
-    rgb = rgb * (1.0 + (gain - 1.0) * protect[..., None])
-    _rolloff_cap(rgb, opaque, target)
-    # Pull neon chroma in. Scaling around luminance keeps the hue angle.
-    chroma = _chroma(rgb)
-    sat = np.where(chroma >= 46.0, 0.64, 0.94).astype(np.float32)
-    lum = _lum(rgb)[..., None]
-    rgb = lum + (rgb - lum) * sat[..., None]
-    clear = _clear_mask(rgb, opaque)
-    _warm_clear(rgb, clear, surround)
-    xs = np.linspace(0.0, 1.0, width, dtype=np.float32)
-    shade = (1.06 - 0.14 * xs) if light != "right" else (0.92 + 0.14 * xs)
-    rgb = rgb * shade[None, :, None]
-    streak = np.exp(-((xs - (0.16 if light != "right" else 0.84)) ** 2) / 0.0035)
-    rgb = rgb + streak[None, :, None] * clear[..., None] * 9.0
-    ys = np.linspace(0.0, 1.0, height, dtype=np.float32)
-    ao = 1.0 - 0.22 * np.clip((ys - 0.84) / 0.16, 0.0, 1.0)
-    rgb = np.clip(rgb * ao[:, None, None], 0, 255)
-    out = np.concatenate([rgb, alpha[..., None]], axis=2).astype(np.uint8)
+        return image
+    original = rgb.copy()
+    gain = _exposure_gain(original, opaque, surround)
+    balance = _wb_gain(original, opaque, surround)
+    rgb = np.clip(original * (gain * balance).reshape(1, 1, 3), 0, 255)
+    rgb = _keep_chroma(original, rgb, opaque)
+    _reflect_base(rgb, opaque, surround)
+    out = np.concatenate([np.clip(rgb, 0, 255), alpha[..., None]], axis=2).astype(np.uint8)
     return Image.fromarray(out, "RGBA")
 
 
-def _flatten_columns(rgb: np.ndarray, opaque: np.ndarray) -> np.ndarray:
-    """Take out the packshot's left-to-right studio exposure. Hue stays."""
-    height, width = rgb.shape[:2]
-    lum = _lum(rgb)
-    col = np.full(width, np.nan, dtype=np.float32)
-    for x in range(width):
-        mask = opaque[:, x]
-        if int(mask.sum()) > 12:
-            col[x] = float(np.median(lum[:, x][mask]))
-    if not np.isfinite(col).any():
+def _exposure_gain(rgb: np.ndarray, opaque: np.ndarray, surround: np.ndarray) -> float:
+    jar_l = float(np.median(_lum(rgb)[opaque]))
+    table_l = float(_lum(surround).mean())
+    if jar_l < 1.0:
+        return 1.0
+    return float(np.clip(table_l / jar_l, 1.0 - _EXPOSURE_CAP, 1.0 + _EXPOSURE_CAP))
+
+
+def _wb_gain(rgb: np.ndarray, opaque: np.ndarray, surround: np.ndarray) -> np.ndarray:
+    """Nudge the whole jar toward the table, capped at one 300K daylight step."""
+    jar = rgb[opaque].mean(axis=0)
+    table = surround.reshape(-1, 3).mean(axis=0)
+    raw = (table / max(float(table.mean()), 1.0)) / np.maximum(jar / max(float(jar.mean()), 1.0), 1e-3)
+    warm = _unit_gain(_kelvin_rgb(6500.0 - _KELVIN_CAP) / _kelvin_rgb(6500.0))
+    cool = _unit_gain(_kelvin_rgb(6500.0 + _KELVIN_CAP) / _kelvin_rgb(6500.0))
+    return _unit_gain(np.clip(raw, np.minimum(warm, cool), np.maximum(warm, cool)))
+
+
+def _unit_gain(mult: np.ndarray) -> np.ndarray:
+    mult = np.asarray(mult, dtype=np.float32)
+    luma = float(mult[0] * 0.2126 + mult[1] * 0.7152 + mult[2] * 0.0722)
+    return mult / max(luma, 1e-3)
+
+
+def _keep_chroma(original: np.ndarray, rgb: np.ndarray, opaque: np.ndarray) -> np.ndarray:
+    """A uniform ceiling. High-chroma ink cannot lose more than 10%."""
+    src = _chroma(original)
+    ink = opaque & (src >= 28.0)
+    if int(ink.sum()) < 20:
         return rgb
-    filled = col.copy()
-    good = np.isfinite(filled)
-    filled[~good] = np.interp(np.flatnonzero(~good), np.flatnonzero(good), filled[good])
-    kernel = max(9, width // 14)
-    smooth = np.convolve(filled, np.ones(kernel, dtype=np.float32) / kernel, mode="same")
-    base = float(np.median(smooth))
-    factor = np.clip(base / np.maximum(smooth, 1.0), 0.55, 1.35)
-    protect = np.clip((_lum(rgb) - 36.0) / 80.0, 0.0, 1.0)
-    applied = 1.0 + (factor[None, :] - 1.0) * protect
-    return rgb * applied[..., None]
+    ratio = float(np.median(_chroma(rgb)[ink]) / max(float(np.median(src[ink])), 1.0))
+    if ratio >= _CHROMA_KEEP:
+        return rgb
+    restore = _CHROMA_KEEP / max(ratio, 1e-3)
+    lum = _lum(rgb)[..., None]
+    return lum + (rgb - lum) * restore
 
 
-def _clear_mask(rgb: np.ndarray, opaque: np.ndarray) -> np.ndarray:
-    """Glass and metal. Skips brand ink and white label type."""
-    lum = _lum(rgb)
-    return opaque & (_chroma(rgb) < 34.0) & (lum > 42.0) & (lum < 176.0)
-
-
-def _rolloff_cap(rgb: np.ndarray, opaque: np.ndarray, target: float) -> None:
-    """Pull the packshot's specular cap down into the scene. The label is left alone."""
+def _reflect_base(rgb: np.ndarray, opaque: np.ndarray, surround: np.ndarray) -> None:
+    """A little of the table colour on the clear glass foot. The label is above this band."""
     height = rgb.shape[0]
-    cap = np.zeros(opaque.shape, dtype=bool)
-    cap[: max(4, int(height * 0.16)), :] = True
-    lum = _lum(rgb)
-    ceiling = max(28.0, target * 1.08)
-    hot = cap & opaque & (lum > ceiling)
-    if not np.any(hot):
+    foot = np.zeros(opaque.shape, dtype=bool)
+    foot[int(height * 0.93):, :] = True
+    glass = foot & opaque & (_chroma(rgb) < 36.0)
+    if int(glass.sum()) < 12:
         return
-    scale = np.ones(lum.shape, dtype=np.float32)
-    scale[hot] = ceiling / np.maximum(lum[hot], 1.0)
-    rgb *= (1.0 + (scale - 1.0) * 0.92)[..., None]
+    table = surround.reshape(-1, 3).mean(axis=0)
+    rgb[glass] = np.clip(rgb[glass] * 0.90 + table * 0.10, 0, 255)
 
 
-def _warm_clear(rgb: np.ndarray, clear: np.ndarray, surround: np.ndarray) -> None:
-    if int(clear.sum()) < 40:
-        return
-    src = rgb[clear].mean(axis=0)
-    dst = surround.mean(axis=(0, 1))
-    delta = (dst - dst.mean()) - (src - src.mean())
-    rgb[clear] = np.clip(rgb[clear] + delta, 0, 255)
+def _kelvin_rgb(kelvin: float) -> np.ndarray:
+    temp = max(10.0, float(kelvin) / 100.0)
+    if temp <= 66.0:
+        red, green = 255.0, 99.4708025861 * np.log(temp) - 161.1195681661
+    else:
+        red = 329.698727446 * (temp - 60.0) ** -0.1332047592
+        green = 288.1221695283 * (temp - 60.0) ** -0.0755148492
+    if temp >= 66.0:
+        blue = 255.0
+    elif temp <= 19.0:
+        blue = 0.0
+    else:
+        blue = 138.5177312231 * np.log(temp - 10.0) - 305.0447927307
+    return np.clip(np.array([red, green, blue], dtype=np.float32), 1.0, 255.0)
 
 
 def _surround(plate, rect):
@@ -299,41 +292,9 @@ def naturalism_issues(image, jar_bbox, scene) -> list[str]:
     label = _label_sharpness(image, (x0, y0, x1, y1))
     if label < LABEL_LAPLACIAN_MIN:
         issues.append("label_soft")
-    glass = _glass(image, (x0, y0, x1, y1))
-    table = _surround(image, (x0, y0, x1, y1))
-    if glass is not None and table is not None:
-        table_lum = float(_lum(table).mean())
-        if abs(float(_lum(glass).mean()) - table_lum) > _LUM_TOL:
-            issues.append("light_mismatch")
-        jar_cast = float(glass[..., 0].mean() - glass[..., 2].mean())
-        tab_cast = float(table[..., 0].mean() - table[..., 2].mean())
-        if abs(jar_cast - tab_cast) > _CAST_TOL:
-            issues.append("white_balance_mismatch")
     if not _shadow_agrees(image, (x0, y0, x1, y1), scene.get("light", "left")):
         issues.append("shadow_direction")
     return issues
-
-
-def _glass(image, box):
-    """Clear glass and metal inside the jar. Brand ink is not the white balance."""
-    rgb = _rgb(image)
-    height, width = rgb.shape[:2]
-    x0, y0, x1, y1 = [int(v) for v in box]
-    x0, y0 = max(0, x0), max(0, y0)
-    x1, y1 = min(width, x1), min(height, y1)
-    if x1 - x0 < 8 or y1 - y0 < 8:
-        return None
-    crop = rgb[y0:y1, x0:x1]
-    rows, cols = crop.shape[:2]
-    cap = crop[: max(6, int(rows * 0.10)), int(cols * 0.12): max(int(cols * 0.12) + 6, int(cols * 0.88))]
-    if cap.size < 30:
-        return None
-    lit = _lum(cap)
-    # Lit metal only. The side columns are brand ink and stay out of the check.
-    picked = cap[lit >= float(np.percentile(lit, 60))]
-    if picked.shape[0] < 20:
-        picked = cap.reshape(-1, 3)
-    return picked.reshape(-1, 1, 3)
 
 
 def _blur_axis(arr: np.ndarray, sigma: float, axis: int) -> np.ndarray:
