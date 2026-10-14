@@ -1,15 +1,16 @@
 """Product facts the content gates are allowed to state.
 
 Owner guardrails for Purity Beans copy:
-- Prima / Premium Agglomerate is 100% Arabica and agglomerated, not freeze-dried.
+- Prima / Premium Agglomerate is pure Arabica and agglomerated, not freeze-dried.
 - Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed for that jar.
 - Never call Ultra Blend no-chicory, zero-chicory, or 0% chicory.
 - When Ultra Blend or any other chicory blend is featured or named as the solution,
   do not attack chicory or roasted root (filler, muddy, poison, "never drink roasted root",
   "hidden chicory fillers", "chicory fillers").
   Honest 70/30 disclosure, smooth milk coffee, and lower caffeine are allowed.
-- Gourmet Duo and Gourmet Duo Mini are 100% coffee and zero chicory. Do not apply Ultra Blend's chicory rules to either duo, and do not call either duo only Arabica or only Robusta.
-- Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica.
+- Gourmet Duo and Gourmet Duo Mini are pure coffee and zero chicory. Do not apply Ultra Blend's chicory rules to either duo, and do not call either duo only Arabica or only Robusta.
+- Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica.
+- FSSAI: never write '100%' / '100 percent' in marketing copy (hard fail). Use 'pure'.
 - Do not invent other product claims, and do not apply a pure-jar claim to Ultra Blend.
 """
 from __future__ import annotations
@@ -25,17 +26,20 @@ _NEGATION = re.compile(
 _ULTRA = re.compile(r"ultra[\s-]?blend", re.I)
 _PRIMA = re.compile(r"\b(?:prima|premium agglomerate)\b", re.I)
 _ARABICA_JARS = re.compile(r"\b(?:purica|prima|premium agglomerate)\b", re.I)
-_ROBUSTA_JARS = re.compile(r"\b(?:bold|purista)\b", re.I)
+_ROBUSTA_JARS = re.compile(r"\bpurista\b", re.I)
+_HUNDRED_PERCENT = re.compile(r"\b100\s*(?:%|percent|per\s*cent)", re.I)  # FSSAI hard fail
+_OTHER_SKU = re.compile(r"\b(?:purica|purista|prima|premium agglomerate|ultra[\s-]?blend|gourmet duo|variety)\b", re.I)
+_BEAN_VARIETY = re.compile(r"\b(?:robusta|arabica)\b", re.I)
 _OTHER_THAN_ULTRA = re.compile(
     r"\b(?:bold|purista|purica|prima|premium agglomerate|gourmet duo(?: mini)?)\b",
     re.I,
 )
 _DUO_SINGLE_BEAN = re.compile(
-    r"\bgourmet\s+duo(?:\s+mini)?\s+is\s+(?:a\s+)?100\s*(?:%|percent)\s*(?:pure\s+)?(arabica|robusta)\b",
+    r"\bgourmet\s+duo(?:\s+mini)?\s+is\s+(?:a\s+)?(?:100\s*(?:%|percent)\s*(?:pure\s+)?|pure\s+)(arabica|robusta)\b",
     re.I,
 )
 _PURE_CLAIM = re.compile(
-    r"100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee|"
+    r"100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee|\bpure\s+coffee\b|"
     r"zero[\s-]+chicory|(?<!\d)0\s*%\s*chicory|\bno[\s-]+chicory\b|\bwithout chicory\b|"
     r"\bchicory[-\s]?free\b|"
     r"\b(?:does not|doesn't|doesnt)\s+contain\s+chicory\b|"
@@ -63,8 +67,8 @@ _PERCENT = re.compile(
     r"\b(\d+)\s*(?:%|percent)\s*(coffee|arabica|robusta|chicory)\b",
     re.I,
 )
-_ROBUSTA_100 = re.compile(r"\b100\s*(?:%|percent)\s*(?:pure\s+)?robusta\b", re.I)
-_ARABICA_100 = re.compile(r"\b100\s*(?:%|percent)\s*(?:pure\s+)?arabica\b", re.I)
+_ROBUSTA_100 = re.compile(r"\b(?:100\s*(?:%|percent)\s*(?:pure\s+)?|pure\s+)robusta\b", re.I)
+_ARABICA_100 = re.compile(r"\b(?:100\s*(?:%|percent)\s*(?:pure\s+)?|pure\s+)arabica\b", re.I)
 # Filler / concealment attacks. Honest ratio copy ("30% chicory") does not match:
 # the filler form requires the word filler, and the hidden form requires "hidden chicory".
 _HIDDEN_CHICORY = r"\bhidden[\s-]+chicory(?:[\s-]+roots?)?(?:[\s-]+fillers?)?\b"
@@ -186,7 +190,7 @@ def _claim_text(text: str) -> str:
 def _locally_negated(text: str, start: int) -> bool:
     """True when a negation governs this match, not an earlier clause.
 
-    "is not 100% coffee" is negated. "is not a compromise and it is 100%
+    "is not pure coffee" is negated. "is not a compromise and it is 100%
     coffee" is a new claim after "and", so the earlier "not" does not cover it.
     """
     prefix = text[max(0, start - 80):start]
@@ -307,8 +311,25 @@ def asset_product_truth_findings(piece: dict, featured: str | None = None) -> li
     return product_truth_findings(piece_copy_text(piece), featured=scope)
 
 
+def fssai_rewrite(text: str) -> str:
+    """FSSAI: '100%' is not allowed in marketing copy. '100% coffee' -> 'pure coffee'."""
+    if not isinstance(text, str) or not text:
+        return text
+    t = re.sub(r"\b100\s*(?:%|percent|per\s*cent)\s+pure\b", "pure", text, flags=re.I)
+    t = re.sub(r"\b100\s*(?:%|percent|per\s*cent)\s*(?=[A-Za-z])", "pure ", t, flags=re.I)
+    t = re.sub(r"\b100\s*(?:%|percent|per\s*cent)", "fully", t, flags=re.I)
+    t = re.sub(r"\bpure\s+pure\b", "pure", t, flags=re.I)
+    t = re.sub(r"\bpure\s+(PURE|Pure)\b", r"\1", t)
+    return t
+
+
 def repair_text(text: str, *, chicory_scope: bool) -> str:
-    """Replace anti-chicory attacks with honest 70/30 wording. No other edits."""
+    """Replace anti-chicory attacks with honest 70/30 wording, then apply the
+    FSSAI '100%' rewrite."""
+    return fssai_rewrite(_repair_chicory(text, chicory_scope=chicory_scope))
+
+
+def _repair_chicory(text: str, *, chicory_scope: bool) -> str:
     if not chicory_scope or not isinstance(text, str) or not text:
         return text
     updated = text
@@ -334,7 +355,7 @@ def repair_text(text: str, *, chicory_scope: bool) -> str:
             flags=re.I,
         )
         span = re.sub(
-            r"100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee",
+            r"100\s*%\s*(?:pure\s+)?coffee|100\s*percent\s+(?:pure\s+)?coffee|\bpure\s+coffee\b",
             "70% coffee",
             span,
             flags=re.I,
@@ -388,6 +409,18 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
         s = sentence.strip()
         if not s:
             continue
+        for bm in re.finditer(r"\bBold\b", s):
+            rest = s[bm.end():]
+            other = _OTHER_SKU.search(rest)
+            scope = rest[:other.start()] if other else rest
+            bean = _BEAN_VARIETY.search(scope)
+            if bean and not _locally_negated(scope, bean.start()):
+                findings.append(_finding(
+                    s, "Bold is pure coffee; never name a bean variety (Robusta/Arabica) for Bold"))
+                break
+        if _HUNDRED_PERCENT.search(s):
+            findings.append(_finding(
+                s, "FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'"))
         if _BRAND_IS_FREEZE_ARABICA.search(s):
             findings.append(_finding(
                 s,
@@ -419,21 +452,21 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
                 if _PRIMA.search(segment) and freeze and not _locally_negated(segment, freeze.start()):
                     findings.append(_finding(
                         segment,
-                        "Prima / Premium Agglomerate is agglomerated 100% Arabica, not freeze-dried",
+                        "Prima / Premium Agglomerate is agglomerated pure Arabica, not freeze-dried",
                     ))
                 robusta = _ROBUSTA_100.search(segment)
                 if (_ARABICA_JARS.search(segment) and not _ROBUSTA_JARS.search(segment)
                         and robusta and not _locally_negated(segment, robusta.start())):
-                    findings.append(_finding(segment, "Purica and Prima are 100% Arabica, not Robusta"))
+                    findings.append(_finding(segment, "Purica and Prima are pure Arabica, not Robusta"))
                 arabica = _ARABICA_100.search(segment)
                 if (_ROBUSTA_JARS.search(segment) and not _ARABICA_JARS.search(segment)
                         and arabica and not _locally_negated(segment, arabica.start())):
-                    findings.append(_finding(segment, "Bold and Purista are 100% Robusta, not Arabica"))
+                    findings.append(_finding(segment, "Purista is pure Robusta, not Arabica"))
                 duo_bean = _DUO_SINGLE_BEAN.search(segment)
                 if duo_bean and not _locally_negated(segment, duo_bean.start()):
                     findings.append(_finding(
                         segment,
-                        "Gourmet Duo is Purista (100% Robusta) and Purica (100% Arabica); "
+                        "Gourmet Duo is Purista (pure Robusta) and Purica (pure Arabica); "
                         "do not call the bundle only " + duo_bean.group(1),
                     ))
                 for match in _PERCENT.finditer(segment):
@@ -454,7 +487,7 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
                     if (_ULTRA.search(segment) and kind in {"arabica", "robusta"} and number == 100):
                         findings.append(_finding(
                             segment,
-                            "Ultra Blend is 70% coffee and 30% chicory, not a 100% Arabica or 100% Robusta jar",
+                            "Ultra Blend is 70% coffee and 30% chicory, not a pure Arabica or pure Robusta jar",
                         ))
                     if (kind == "chicory" and number not in (0, 30)
                             and not _ULTRA.search(segment)):
@@ -470,7 +503,7 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
                             "only Ultra Blend is 30% chicory",
                         ))
                     if _PRIMA.search(segment) and kind == "arabica" and number != 100:
-                        findings.append(_finding(segment, "Prima / Premium Agglomerate is 100% Arabica"))
+                        findings.append(_finding(segment, "Prima / Premium Agglomerate is pure Arabica"))
         if chicory_in_scope(s, featured) and _ANTI_CHICORY.search(s):
             findings.append(_finding(s, _ANTI_CHICORY_REASON))
     if chicory_in_scope(source, featured):

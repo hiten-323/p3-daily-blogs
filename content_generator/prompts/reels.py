@@ -56,7 +56,7 @@ The best hooks cannot save a topic nobody cares about.
 PSYCHOLOGY REQUIREMENT:
 Pick ONE primary frame from the PSYCHOLOGY FRAMES list above.
 Put its id in "psychology_frame". The frame must drive the hook, the spoken arc, and the share/save triggers.
-Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Never apply the 100% coffee line to Ultra Blend. Rs 18 is the home-cup price.
+Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Never apply the pure coffee line to Ultra Blend. Rs 18 is the home-cup price.
 {featured_rule}
 
 ABSOLUTE RULES:
@@ -88,13 +88,13 @@ ABSOLUTE RULES:
     {{"on_screen": "THE PROBLEM", "spoken": "What most Indians drink without knowing — specific, not statistical"}},
     {{"on_screen": "THE TWIST", "spoken": "The thing they did not expect — contrarian, relatable"}},
     {{"on_screen": "THE LABEL", "spoken": "{villain_spoken}"}},
-    {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee."}},
+    {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is 70% coffee."}},
     {{"on_screen": "FOLLOW @PURITYBEANS", "spoken": "{follow_spoken}"}}
   ],
   "loop_note": "One sentence: how the last frame connects back to frame 1 for infinite loop",
   "alt_hook": "A/B option — 4 words, completely different archetype",
-  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee. Available at {WEBSITE_URL}\\n\\nFollow @puritybeans for daily honest coffee craft. Shop pure: {WEBSITE_URL}",
-  "cta": "Follow @puritybeans for daily pure coffee craft. Explore 100% pure jars at {WEBSITE_URL}",
+  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee. Available at {WEBSITE_URL}\\n\\nFollow @puritybeans for daily honest coffee craft. Shop pure: {WEBSITE_URL}",
+  "cta": "Follow @puritybeans for daily pure coffee craft. Explore pure jars at {WEBSITE_URL}",
   "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
   "save_trigger": "Save this before your next grocery run so you never buy the wrong coffee again.",
   "share_trigger": "Share with someone who starts every morning with coffee — they deserve to know.",

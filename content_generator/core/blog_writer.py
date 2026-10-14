@@ -101,7 +101,7 @@ def _section_prompt(topic: dict, spec: dict, catalog: str) -> str:
         f"H2: {spec['heading']}\n"
         f"Write {SECTION_MIN_WORDS} to 170 words. Mention Purity Beans. "
         "Ultra Blend is 70% coffee and 30% chicory. Never call Ultra Blend zero chicory or no chicory. "
-        "Prima / Premium Agglomerate is 100% Arabica and is not freeze-dried. "
+        "Prima / Premium Agglomerate is pure Arabica and is not freeze-dried. "
         "Use only catalog prices. No India's first, India's only, 100x purer, organic, lab certified, or single-origin."
     )
 

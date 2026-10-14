@@ -38,7 +38,7 @@ def _fallback_beats(reel: dict) -> list[dict]:
         ]
     if kind == "pure":
         return [
-            {"on": hook or "ONE INGREDIENT", "sub": "100% coffee. Zero chicory."},
+            {"on": hook or "ONE INGREDIENT", "sub": "pure coffee. Zero chicory."},
             {"on": "READ THE LABEL", "sub": "Coffee. Nothing else."},
             {"on": "PURITY BEANS", "sub": "Shop at p3online.in"},
         ]

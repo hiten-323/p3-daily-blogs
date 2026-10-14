@@ -72,7 +72,7 @@ def test_non_mini_day_receives_style_cues_without_publishing_the_mini_file(tmp_p
 
     source = ROOT / TEMPLATE_PATH
     before = source.stat().st_size
-    caption = "Purista is 100% Robusta."
+    caption = "Purista is pure Robusta."
     reel = {"product": "Purista", "hook_text": "READ THE LABEL", "caption": caption}
     content = {
         "featured_product": "Purista",
@@ -95,7 +95,7 @@ def test_non_mini_day_receives_style_cues_without_publishing_the_mini_file(tmp_p
     assert "jar-forward" in cue_text or "jar forward" in cue_text
     assert "two moods" in cue_text
     assert "zero chicory" not in cue_text
-    assert "100% coffee" not in cue_text
+    assert "pure coffee" not in cue_text
     assert reel["caption"] == caption
     assert "reference_reel_path" not in reel
     assert reel.get("product_slug") != "gourmet_duo_mini"
@@ -120,7 +120,7 @@ def test_non_mini_day_receives_style_cues_without_publishing_the_mini_file(tmp_p
 
     hooked = build_reel_hook_prompt(
         product="Ultra Blend",
-        text="Gourmet Duo Mini is 100% coffee. Ultra Blend is 70% coffee and 30% chicory.",
+        text="Gourmet Duo Mini is pure coffee. Ultra Blend is 70% coffee and 30% chicory.",
         style_for="Ultra Blend",
         day=2,
     )
@@ -177,14 +177,14 @@ def test_ultra_blend_zero_chicory_still_fails_and_is_not_stamped_by_inspiration(
     assert "zero chicory" not in lowered
     assert "zero-chicory" not in lowered
     assert "no chicory" not in lowered
-    assert "100% coffee" not in lowered
+    assert "pure coffee" not in lowered
     assert "70% coffee" in block
     assert "30% chicory" in block
 
     findings = product_truth_findings("Ultra Blend is zero-chicory.")
     assert findings
     assert any("70% coffee" in item["reason"] and "30% chicory" in item["reason"] for item in findings)
-    flagged = verify_claims("Ultra Blend is 100% coffee with no chicory.")
+    flagged = verify_claims("Ultra Blend is pure coffee with no chicory.")
     assert any(item["type"] == "product_truth" for item in flagged)
     assert product_truth_findings("Ultra Blend is 70% coffee and 30% chicory.") == []
 

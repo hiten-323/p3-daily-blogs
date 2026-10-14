@@ -43,11 +43,11 @@ _DEFAULT_CTAS: dict[tuple[str, str], list[str]] = {
     ("COMMUNITY",               "consumer"):     [
         "Which one would you pick? Comment below",
         "Have you checked the back of your coffee jar? Tell us below",
-        "Drop a coffee emoji if you only drink 100% pure beans",
+        "Drop a coffee emoji if you only drink pure beans",
     ],
     ("CONVERSION",              "consumer"):     [
         "Buy at p3online.in — Rs 18 per cup, free delivery",
-        "Order 100% pure coffee at p3online.in",
+        "Order pure coffee at p3online.in",
         "Try Purity Beans → p3online.in",
     ],
     ("Consumer Purchase",       "consumer"):     [

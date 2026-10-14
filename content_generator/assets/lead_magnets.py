@@ -21,7 +21,7 @@ LEAD_MAGNETS = [
             "Check the label, not a kitchen experiment:\n"
             "1. Read the ingredient list. Chicory is named when it is in the jar.\n"
             "2. 'Coffee-chicory mix' means chicory is in that jar.\n"
-            "3. Purity Beans — Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. "
+            "3. Purity Beans — Bold, Purista, Purica, and Prima are pure coffee with zero chicory. "
             "Ultra Blend is 70% coffee.\n"
             "See the jars: p3online.in"
         ),
@@ -33,9 +33,9 @@ LEAD_MAGNETS = [
             "Pure Coffee Buyer's Guide (India):\n"
             "- 'Coffee-chicory mix' = it has chicory, however small the print.\n"
             "- Look for chicory on the ingredient list. If it is named, it is in the jar.\n"
-            "- '100% coffee' has to name the jar. Purity Beans Bold, Purista, Purica, and Prima are 100% coffee.\n"
-            "- Purica is freeze-dried 100% Arabica. Prima is Premium Agglomerate 100% Arabica, not freeze-dried.\n"
-            "- Bold and Purista are 100% Robusta. Ultra Blend is 70% coffee.\n"
+            "- 'pure coffee' has to name the jar. Purity Beans Bold, Purista, Purica, and Prima are pure coffee.\n"
+            "- Purica is freeze-dried pure Arabica. Prima is Premium Agglomerate pure Arabica, not freeze-dried.\n"
+            "- Purista is pure Robusta. Bold is pure coffee. Ultra Blend is 70% coffee.\n"
             "- Price is not proof of what is in the jar. The label is.\n"
             "Purity Beans prints the jar facts at p3online.in"
         ),
@@ -69,10 +69,10 @@ LEAD_MAGNETS = [
         "promise": "which Purity Beans variant matches how YOU drink coffee",
         "deliverable": (
             "Find your match:\n"
-            "- 100% Robusta, freeze-dried granules -> PURISTA\n"
-            "- 100% Robusta, agglomerated -> BOLD\n"
-            "- Freeze-dried 100% Arabica -> PURICA\n"
-            "- Premium Agglomerate, 100% Arabica -> PRIMA\n"
+            "- pure Robusta, freeze-dried granules -> PURISTA\n"
+            "- pure coffee, agglomerated -> BOLD\n"
+            "- Freeze-dried pure Arabica -> PURICA\n"
+            "- Premium Agglomerate, pure Arabica -> PRIMA\n"
             "- 70% coffee, the jar a lower-caffeine description fits -> ULTRA BLEND\n"
             "Tell me how you drink it and I'll confirm. Shop: p3online.in"
         ),
@@ -107,7 +107,7 @@ LEAD_MAGNETS = [
             "7-day swap (so the taste change never jolts you):\n"
             "Day 1-2: your usual, but half a spoon less.\n"
             "Day 3-4: half your usual + half Purity Beans in the same cup.\n"
-            "Day 5-6: mostly a 100% coffee Purity Beans jar (not Ultra Blend).\n"
+            "Day 5-6: mostly a pure coffee Purity Beans jar (not Ultra Blend).\n"
             "Day 7: a full cup of that jar. Ultra Blend is 70% coffee, so do not call it zero chicory.\n"
             "Start the swap: p3online.in"
         ),

@@ -27,9 +27,9 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "id": "gid://shopify/Product/8358285115579",
         "slug": "bold",
         "title": "PURITY BEANS Bold Pure Instant Coffee | Strong & Full-Bodied | No Chicory | Certified Lead free Food Grade Glass Jar",
-        "short_name": "Bold Pure Robusta",
+        "short_name": "Bold Pure Coffee",
         "handle": "purity-beans-bold-instant-coffee",
-        "bean_type": "100% Robusta",
+        "bean_type": "pure coffee (bean variety not stated — never call Bold Robusta or Arabica)",
         "process": "Agglomerated instant coffee",
         "chicory": "0% chicory",
         "pure_coffee": True,
@@ -44,7 +44,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "best_for": ["strong black coffee drinkers", "morning energy boost", "moka pot / filter coffee lovers"],
         "hero_image": "https://cdn.shopify.com/s/files/1/0712/6315/8459/files/pb13.webp?v=1788008381",
         "highlights": [
-            "100% Robusta coffee with zero chicory",
+            "pure Robusta coffee with zero chicory",
             "Agglomerated instant coffee in a glass jar",
             "No fillers, preservatives, or artificial additives",
             "Dissolves instantly in hot water or milk",
@@ -56,7 +56,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "title": "PURITY BEANS Purista Freeze Dried Robusta Instant Coffee Granules | 1 Ingredient Coffee | No Chicory | Certified Lead free Food Grade Glass Jar",
         "short_name": "Purista Gourmet Robusta Granules",
         "handle": "purity-beans-purista-gourmet-instant-coffee-granules",
-        "bean_type": "100% Gourmet Robusta",
+        "bean_type": "Pure Gourmet Robusta",
         "process": "Freeze-dried granules",
         "chicory": "0% chicory",
         "pure_coffee": True,
@@ -83,7 +83,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "title": "PURITY BEANS Purica Freeze Dried Arabica Instant Coffee Granules | 1 Ingredient Coffee | No Chicory | Certified Lead free Food Grade Glass Jar",
         "short_name": "Purica Gourmet Arabica Granules",
         "handle": "purity-beans-purica-gourmet-instant-coffee-granules",
-        "bean_type": "100% Arabica",
+        "bean_type": "pure Arabica",
         "process": "Freeze-dried granules",
         "chicory": "0% chicory",
         "pure_coffee": True,
@@ -98,7 +98,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "best_for": ["café coffee lovers", "black coffee drinkers", "premium gifting", "desserts"],
         "hero_image": "https://cdn.shopify.com/s/files/1/0712/6315/8459/files/pb41.webp?v=1774250933",
         "highlights": [
-            "100% Arabica beans",
+            "pure Arabica beans",
             "Zero chicory, zero bitterness, no roasted-chicory aftertaste",
             "Naturally smooth with subtle cocoa and caramel notes",
             "Dissolves instantly in hot water or cold milk",
@@ -130,7 +130,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
             "70% coffee and 30% chicory",
             "Not a zero-chicory or no-chicory jar",
             "A lower-caffeine description is allowed for this jar only",
-            "Do not call it 100% coffee, zero chicory, or no chicory",
+            "Do not call it pure coffee, zero chicory, or no chicory",
         ],
     },
     "variety_box": {
@@ -141,7 +141,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "handle": "variety-box",
         "bean_type": "All 4 Signature Blends (Ultra Blend, Bold, Purista, Purica)",
         "process": "Combination (Freeze-Dried Granules & Agglomerated)",
-        "chicory": "Three 100% coffee jars plus one Ultra Blend jar (70% coffee, 30% chicory)",
+        "chicory": "Three pure coffee jars plus one Ultra Blend jar (70% coffee, 30% chicory)",
         "pure_coffee": False,
         "flavor_profile": "The complete tasting flight — up to 200 cups total",
         "packaging": "4 × 50g Certified Lead-free Food Grade Glass Jars in gift box",
@@ -165,7 +165,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "title": "PURITY BEANS Gourmet Duo | Purista 100g + Purica 100g | Freeze Dried Instant Coffee | No Chicory | Certified Lead free Food Grade Glass Jars",
         "short_name": "Gourmet Duo Full Size (100g Purista + 100g Purica)",
         "handle": "gourmet-duo",
-        "bean_type": "100% Freeze-Dried Gourmet Robusta + 100% Arabica",
+        "bean_type": "Freeze-Dried Gourmet Robusta + pure Arabica",
         "process": "Freeze-Dried Granules",
         "chicory": "0% chicory",
         "pure_coffee": True,
@@ -191,7 +191,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "title": "PURITY BEANS Gourmet Duo Mini | Purista 50g + Purica 50g | Freeze Dried Instant Coffee | No Chicory | Certified Lead free Food Grade Glass Jars",
         "short_name": "Gourmet Duo Mini (50g Purista + 50g Purica)",
         "handle": "gourmet-duo-mini",
-        "bean_type": "100% Freeze-Dried Gourmet Robusta + 100% Arabica",
+        "bean_type": "Freeze-Dried Gourmet Robusta + pure Arabica",
         "process": "Freeze-Dried Granules",
         "chicory": "0% chicory",
         "pure_coffee": True,
@@ -217,7 +217,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "title": "PURITY BEANS Premium Agglomerate Instant Coffee | No Chicory | Certified Lead Free Food Grade Glass Jar",
         "short_name": "Prima Premium Arabica",
         "handle": "purity-beans-prima-premium-instant-coffee",
-        "bean_type": "100% Arabica",
+        "bean_type": "pure Arabica",
         "process": "Premium Agglomerate",
         "chicory": "0% chicory",
         "pure_coffee": True,
@@ -232,7 +232,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "best_for": ["mindful morning routine", "everyday cafe style"],
         "hero_image": "https://cdn.shopify.com/s/files/1/0712/6315/8459/files/pb51_f23bfc18-0c9d-48fa-aa34-78f8b69b7ffb.webp?v=1774252343",
         "highlights": [
-            "100% Arabica, Premium Agglomerate, zero chicory",
+            "pure Arabica, Premium Agglomerate, zero chicory",
             "Not freeze-dried",
             "Currently out of stock (waitlist active)",
         ],
@@ -251,7 +251,7 @@ def get_all_products() -> list[dict[str, Any]]:
 
 
 def get_pure_coffee_products() -> list[dict[str, Any]]:
-    """Return jars that are 100% coffee. Ultra Blend and the variety box are not."""
+    """Return jars that are pure coffee. Ultra Blend and the variety box are not."""
     return [p for p in SHOPIFY_PRODUCTS.values() if p.get("pure_coffee") is True]
 
 
@@ -300,19 +300,19 @@ def format_catalog_for_prompt() -> str:
     lines.append(
         "MANDATORY PRODUCT TRUTH RULES:\n"
         "1. Never invent prices, percentages, certificates, sourcing stories, or health outcomes.\n"
-        "2. Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica. "
-        "All three are 100% coffee and zero chicory.\n"
-        "3. Prima / Premium Agglomerate is 100% Arabica. It is agglomerated, not freeze-dried.\n"
+        "2. Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. "
+        "All three are pure coffee and zero chicory.\n"
+        "3. Prima / Premium Agglomerate is pure Arabica. It is agglomerated, not freeze-dried.\n"
         "4. Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed for Ultra Blend only. "
-        "Never call Ultra Blend 100% coffee, zero chicory, no chicory, no-chicory, zero-chicory, chicory-free, or 0% chicory.\n"
-        "5. Variety Box is three 100% coffee jars plus Ultra Blend. Do not call the box zero chicory.\n"
+        "Never call Ultra Blend pure coffee, zero chicory, no chicory, no-chicory, zero-chicory, chicory-free, or 0% chicory.\n"
+        "5. Variety Box is three pure coffee jars plus Ultra Blend. Do not call the box zero chicory.\n"
         "6. \"India's Cleanest Instant Coffee\" is approved. Never use it alongside a zero-chicory or no-chicory claim about Ultra Blend.\n"
         "7. Samples are only for businesses (cafes, offices, retailers, distributors). "
         "Consumer-facing content must not offer a sample. Point customers to the 50g Variety Box: "
         + product_page_url(SHOPIFY_PRODUCTS["variety_box"]) + "\n"
         "8. The listed prices are correct. Prima is out of stock — do not tell people to buy it.\n"
-        "9. Gourmet Duo Mini (Purista 50g + Purica 50g) and Gourmet Duo (100g + 100g) are 100% coffee "
+        "9. Gourmet Duo Mini (Purista 50g + Purica 50g) and Gourmet Duo (100g + 100g) are pure coffee "
         "and zero chicory. Do not describe either duo as 30% chicory, lower caffeine, only Arabica, or only Robusta. "
-        "Do not describe Ultra Blend as zero chicory, no chicory, or 100% coffee."
+        "Do not describe Ultra Blend as zero chicory, no chicory, or pure coffee."
     )
     return "\n".join(lines)

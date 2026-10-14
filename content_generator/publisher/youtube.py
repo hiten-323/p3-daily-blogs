@@ -295,7 +295,7 @@ def _extract_title(content: dict) -> str:
         hook = str(reels[0].get("hook") or reels[0].get("hook_text") or "").strip()
         if hook:
             return hook[:100]
-    return "Purity Beans — 100% Pure Instant Coffee | No Chicory #Shorts"
+    return "Purity Beans — Pure Instant Coffee | No Chicory #Shorts"
 
 
 def _extract_description(content: dict) -> str:
@@ -308,7 +308,7 @@ def _extract_description(content: dict) -> str:
         scenes = yt.get("scenes") or []
         if isinstance(scenes, list) and scenes:
             spoken_lines = [s.get("spoken") for s in scenes if isinstance(s, dict) and s.get("spoken")]
-            cta = str(yt.get("cta") or "Subscribe for pure coffee truths. Explore 100% pure jars at https://p3online.in")
+            cta = str(yt.get("cta") or "Subscribe for pure coffee truths. Explore pure jars at https://p3online.in")
             parts = [
                 str(yt.get("hook") or ""),
                 "\n".join(spoken_lines),
@@ -330,7 +330,7 @@ def _extract_description(content: dict) -> str:
             "Shop: https://p3online.in",
         ]
         return "\n".join(p for p in parts if p)[:5000]
-    return "Purity Beans — 100% pure instant coffee. Zero chicory. Shop at https://p3online.in"
+    return "Purity Beans — pure instant coffee. Zero chicory. Shop at https://p3online.in"
 
 
 def _build_tags(content: dict) -> list[str]:

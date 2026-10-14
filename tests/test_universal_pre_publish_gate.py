@@ -65,7 +65,7 @@ def test_ultra_blend_zero_chicory_fails_product_truth(monkeypatch):
     _passing_native_gates(monkeypatch)
     piece = {
         "hook": "Why this jar is different",
-        "body": "Ultra Blend is zero chicory and 100% coffee.",
+        "body": "Ultra Blend is zero chicory and pure coffee.",
         "editorial_score": {"overall": 9.0},
     }
     result = authorize_publish({"facebook_post": piece}, "facebook")
@@ -93,7 +93,7 @@ def test_bold_zero_chicory_is_not_a_product_truth_failure(monkeypatch):
     _passing_native_gates(monkeypatch)
     piece = {
         "hook": "Why the label matters",
-        "body": "Bold is 100% coffee with zero chicory.",
+        "body": "Bold is pure coffee with zero chicory.",
         "cta": "Send this to someone who reads the jar.",
         "editorial_score": {"overall": 9.0},
     }

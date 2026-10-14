@@ -28,6 +28,7 @@ VALID_RENDER_SOURCES = {
     "real_jar",
     "gemini_real_jar",
     "cinematic_real_jar",
+    "approved_photo",   # official photo used as-is (crop/resize/overlay only)
 }
 
 _MEMORY_REGISTRY: dict[str, dict] = {}

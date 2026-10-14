@@ -151,9 +151,9 @@ def test_youtube_holds_without_video_file(monkeypatch):
 
     valid_short = {
         "title": "Why 100°C Water Destroys Coffee",
-        "description": "Brew at 85°C. Bold, Purista, Purica, and Prima are 100% coffee with zero chicory by Purity Beans. Explore p3online.in.",
+        "description": "Brew at 85°C. Bold, Purista, Purica, and Prima are pure coffee with zero chicory by Purity Beans. Explore p3online.in.",
         "hook": "100°C water is scalding your coffee beans.",
-        "script": "Never pour boiling water directly on coffee. Let it cool 60s to 85°C. Purity Beans makes 100% pure coffee with zero chicory. Rs 18 per cup at p3online.in.",
+        "script": "Never pour boiling water directly on coffee. Let it cool 60s to 85°C. Purity Beans makes pure coffee with zero chicory. Rs 18 per cup at p3online.in.",
         "cta": "Subscribe for daily coffee truths.",
     }
     res = youtube.post_content({"yt_short": valid_short}, day=1)
@@ -176,7 +176,7 @@ def test_creative_viral_readiness_evaluation():
 
     viral_value_piece = {
         "hook": "Why 100°C water destroys your instant coffee in 5 seconds",
-        "caption": "Boiling water extracts bitter tannins. Let water cool to 85°C. Bold and Purista are 100% Robusta with zero chicory. Send this to someone who drinks instant coffee.",
+        "caption": "Boiling water extracts bitter tannins. Let water cool to 85°C. Purista is pure Robusta. Bold is pure coffee. Both have zero chicory. Send this to someone who drinks instant coffee.",
         "cta": "Follow @puritybeans so you never drink roasted root again.",
         "frames": [
             {"on_screen": "100°C KILLS THE CUP", "spoken": "Never pour boiling water directly on coffee."},

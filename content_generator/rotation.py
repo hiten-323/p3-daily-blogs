@@ -19,17 +19,17 @@ BLOG_TOPIC_CLUSTERS = [
     "instant coffee recipe India — 2-minute preparation and flavour variations without invented health claims",
     "instant coffee for students in India — price per cup, jar sizes, and how to read the label",
     "morning coffee routine India — a home cup with the jar that matches how you drink it",
-    "how to check an instant coffee label in India for chicory — and which Purity Beans jars are 100% coffee",
+    "how to check an instant coffee label in India for chicory — and which Purity Beans jars are pure coffee",
     "coffee price comparison India — Rs 18 per cup at home vs Rs 180 at a cafe, using only those two prices",
     "work from home coffee India — a repeatable home cup, not a productivity study",
-    "caffeine on the label — Ultra Blend is 70% coffee and may be called lower caffeine; the 100% coffee jars may not",
+    "caffeine on the label — Ultra Blend is 70% coffee and may be called lower caffeine; the pure coffee jars may not",
     "instant coffee jars in India — Bold, Purista, Purica, Prima, and Ultra Blend, each described only as labeled",
     "which Purity Beans jar to take before a workout — name the jar, no jitter or fat-loss claims",
     "how Purity Beans labels its jars — Bold, Purista, Purica, Prima, and Ultra Blend",
-    "arabica vs robusta instant coffee in India — Purica and Prima are 100% Arabica; Bold and Purista are 100% Robusta",
+    "arabica vs robusta instant coffee in India — Purica and Prima are pure Arabica; Purista is pure Robusta. Bold is pure coffee",
     "coffee gifting India — variety box and duo jars, with the Ultra Blend jar called out as 70% coffee",
     "glass jar instant coffee in India — what is printed on a Purity Beans jar",
-    "100% coffee jars vs Ultra Blend at 70% coffee — when a lower-caffeine description is allowed",
+    "pure coffee jars vs Ultra Blend at 70% coffee — when a lower-caffeine description is allowed",
     "cold brew at home India — a method using a named Purity Beans jar",
     "coffee culture India — from filter kaapi to instant, without invented market statistics",
     "chicory on Indian instant-coffee labels — how to read the panel, without a percentage we cannot source",
@@ -82,7 +82,7 @@ LINKEDIN_ANGLES = [
      "flavour replenishment."),
     ("ARABICA VS ROBUSTA BOTANY",
      "Bean botany breakdown: Arabica (high altitude, 60% more lipids, delicate acidity like Purica) vs "
-     "Robusta (low altitude, double the chlorogenic acid and caffeine, thick persistent crema like Bold & Purista). "
+     "Robusta (low altitude, double the chlorogenic acid and caffeine, thick persistent crema like Purista). "
      "Why blending pure varieties works and why chicory is an adulterant, not a bean."),
     ("BREWING THERMODYNAMICS",
      "Why boiling water (100°C) destroys coffee: the chemistry of tannin extraction. How water between "
@@ -112,7 +112,7 @@ LINKEDIN_ANGLES = [
      "and creates the dreaded 2 PM crash. The science of delaying caffeine 60-90 minutes for sustained deep work."),
     ("CLEAN CAFFEINE VS JITTERS",
      "The biochemical reason some coffee causes jitters and stomach acid: high-heat burnt beans and filler spikes "
-     "vs clean, gently processed 100% coffee that fuels calm, razor-sharp focus."),
+     "vs clean, gently processed pure coffee that fuels calm, razor-sharp focus."),
     ("THE DESK RITUAL PARADOX",
      "Transforming the autopilot pantry caffeine fix into a deliberate cognitive boundary: how sensory "
      "micro-rituals prime the brain for high-output flow state."),
@@ -146,7 +146,7 @@ FACEBOOK_ANGLES = [
      "Why Indian households grew up on 40% roasted chicory without realizing it was wartime root filler, "
      "and how to spot the difference on your kitchen shelf today."),
     ("MORNING HOME MATH",
-     "Rs 18 home pure coffee vs Rs 250 cafe cup: what an Indian family actually saves in a year while drinking 100% Arabica."),
+     "Rs 18 home pure coffee vs Rs 250 cafe cup: what an Indian family actually saves in a year while drinking pure Arabica."),
     ("THE FILTER KAAPI DEBATE",
      "Traditional South Indian filter coffee vs pure instant: why true coffee lovers care about what is printed under the brand name."),
     ("SUGAR COPING HABIT",
@@ -167,7 +167,7 @@ THREADS_ANGLES = [
     ("ROASTED ROOT SCAM",
      "Chicory was invented because Napoleon had a coffee shortage during wartime. Why are Indians still drinking it in 2026?"),
     ("INSTANT COFFEE SNOBBERY",
-     "Specialty cafes convinced you instant coffee is inherently trash. Bad instant is trash. Freeze-dried 100% Arabica at -40°C is pure science."),
+     "Specialty cafes convinced you instant coffee is inherently trash. Bad instant is trash. Freeze-dried pure Arabica at -40°C is pure science."),
     ("THE INGREDIENT LIST TEST",
      "If your coffee jar ingredient list has more than one word, you didn't buy coffee."),
 ]
@@ -176,7 +176,7 @@ YOUTUBE_ANGLES = [
     ("WATER TEMPERATURE EXPERIMENT",
      "Brewing instant coffee at 100°C vs 85°C: visual extraction test and why boiling destroys natural sweetness."),
     ("COLD WATER DISSOLUTION TEST",
-     "100% Pure Coffee vs 40% Chicory mixture in cold water: watch how chicory dyes the water instantly like food coloring."),
+     "Pure Coffee vs 40% Chicory mixture in cold water: watch how chicory dyes the water instantly like food coloring."),
     ("FREEZE DRIED VS SPRAY DRIED",
      "The geometric crystal structure of -40°C freeze-dried crystals vs burnt spray-dried dust under close-up macro lens."),
     ("CAFE ESPRESSO VS HOME RS 18 CUP",

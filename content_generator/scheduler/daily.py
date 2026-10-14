@@ -453,11 +453,11 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
 # without a fact fails brand validation and gets the whole asset rejected.
 # Framing still varies, and only 2 of 6 mention chicory (no daily sermon).
 _BRAND_TAGLINES = (
-    "Bold, Purista, Purica, and Prima are 100% coffee.",
+    "Bold, Purista, Purica, and Prima are pure coffee.",
     "Purity Beans — Ultra Blend is 70% coffee.",
-    "Purity Beans — 100% Arabica in Purica and Prima.",
-    "Try Purity Beans — zero chicory on the 100% coffee jars.",
-    "Purity Beans — Bold and Purista are 100% Robusta.",
+    "Purity Beans — pure Arabica in Purica and Prima.",
+    "Try Purity Beans — zero chicory on the pure coffee jars.",
+    "Purity Beans — Purista is pure Robusta. Bold is pure coffee.",
     "Purity Beans — read the label: 70% coffee in Ultra Blend.",
 )
 
@@ -533,7 +533,7 @@ def sentence_has_unsupported_statistic(sentence: str) -> bool:
     """True when a numeric claim is not a verified jar, price, or zero-chicory fact.
 
     One allowed percentage used to whitelist the rest of the sentence, so
-    "100% coffee and 40% chicory" survived. Each percentage is checked.
+    "pure coffee and 40% chicory" survived. Each percentage is checked.
     """
     if not sentence or not _STAT_PATTERNS.search(sentence):
         return False
@@ -596,7 +596,7 @@ def _strip_unsupported_stats(text: str) -> str:
     false claim about competitor products, which is both a policy violation
     and a real regulatory risk for a food brand. Now any numeric/statistical
     claim is stripped unless it is one of our own verifiable facts
-    (100% coffee, zero chicory, price per cup).
+    (pure coffee, zero chicory, price per cup).
     """
     if not text:
         return text
@@ -881,6 +881,24 @@ def _drop_unmeasured_score(piece: dict) -> None:
         piece.pop("editorial_score", None)
 
 
+def _fssai_scrub(node):
+    """FSSAI: rewrite any '100%' claim in generated copy to 'pure' before gates."""
+    from content_generator.core.product_truth import fssai_rewrite
+    if isinstance(node, dict):
+        for k, v in node.items():
+            if isinstance(v, str):
+                node[k] = fssai_rewrite(v)
+            else:
+                _fssai_scrub(v)
+    elif isinstance(node, list):
+        for i, v in enumerate(node):
+            if isinstance(v, str):
+                node[i] = fssai_rewrite(v)
+            else:
+                _fssai_scrub(v)
+    return node
+
+
 def _do_editorial(content: dict) -> None:
     """
     Review each content piece. Regenerates up to QUALITY_MAX_REGEN times.
@@ -890,6 +908,7 @@ def _do_editorial(content: dict) -> None:
     an editorial score of 0. A scoring parse failure is retried inside
     review_content and then surfaced on the piece.
     """
+    _fssai_scrub(content)
     from content_generator.agents.editorial import EditorialScoreError, review_content
     from content_generator.core.editorial_engine import normalize_editorial_result, get_current_pass_score
     from content_generator.core.piece_integrity import ensure_structural_fields
@@ -1292,7 +1311,7 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
         headline = (ig_post.get("hook_line")
                     or ig_post.get("hook")
                     or (ig_post.get("caption", "").split("\n")[0][:60] if ig_post.get("caption") else "")
-                    or "100% PURE COFFEE")
+                    or "PURE COFFEE")
         body = (ig_post.get("caption", "").split("\n")[-1][:120]
                 if ig_post.get("caption") and "\n" in ig_post.get("caption") else "")
         try:
@@ -1323,7 +1342,7 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     # Facebook post image — composed from real jar photo
     fb_post = content.get("facebook_post") or {}
     if fb_post and isinstance(fb_post, dict):
-        fb_hook = fb_post.get("hook") or "100% COFFEE. ZERO CHICORY."
+        fb_hook = fb_post.get("hook") or "PURE COFFEE. ZERO CHICORY."
         fb_img = compose_post_image(
             headline=str(fb_hook)[:60],
             body="",

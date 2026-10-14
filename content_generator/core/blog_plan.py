@@ -29,23 +29,23 @@ TOPICS: list[dict] = [
         "title": "What is in Ultra Blend instant coffee",
         "primary": "ultra blend instant coffee",
         "secondary": ["30 percent chicory", "lower caffeine coffee"],
-        "meta_lead": "Ultra Blend instant coffee is 70% coffee and 30% chicory. See the catalog price in rupees and how it differs from the 100% jars.",
+        "meta_lead": "Ultra Blend instant coffee is 70% coffee and 30% chicory. See the catalog price in rupees and how it differs from the pure jars.",
     },
     {
         "id": "arabica-prima",
         "slug": "prima-premium-agglomerate-arabica",
-        "title": "Prima instant coffee is 100% Arabica",
+        "title": "Prima instant coffee is pure Arabica",
         "primary": "prima instant coffee",
-        "secondary": ["premium agglomerate", "100% arabica instant coffee"],
-        "meta_lead": "Prima instant coffee is Premium Agglomerate and 100% Arabica, not freeze-dried. Catalog price and stock are listed in rupees.",
+        "secondary": ["premium agglomerate", "pure arabica instant coffee"],
+        "meta_lead": "Prima instant coffee is Premium Agglomerate and pure Arabica, not freeze-dried. Catalog price and stock are listed in rupees.",
     },
     {
-        "id": "robusta-bold",
-        "slug": "bold-and-purista-robusta-coffee",
-        "title": "Bold and Purista: 100% Robusta jars",
+        "id": "robusta-purista",
+        "slug": "purista-robusta-coffee",
+        "title": "Purista: freeze-dried pure Robusta",
         "primary": "robusta instant coffee",
-        "secondary": ["bold instant coffee", "purista freeze dried"],
-        "meta_lead": "Robusta instant coffee at Purity Beans means Bold and Purista, both 100% Robusta with 0% chicory. Prices are the catalog prices in rupees.",
+        "secondary": ["purista freeze dried", "freeze dried robusta"],
+        "meta_lead": "Robusta instant coffee at Purity Beans means Purista, freeze-dried pure Robusta with 0% chicory. Prices are the catalog prices in rupees.",
     },
     {
         "id": "freeze-dried",
@@ -69,7 +69,7 @@ TOPICS: list[dict] = [
         "title": "Purity Beans jar prices in rupees",
         "primary": "instant coffee price",
         "secondary": ["purity beans price", "coffee jar india"],
-        "meta_lead": "Instant coffee price for each Purity Beans jar, in rupees, from the catalog. Ultra Blend is 70% coffee and 30% chicory. Prima is 100% Arabica.",
+        "meta_lead": "Instant coffee price for each Purity Beans jar, in rupees, from the catalog. Ultra Blend is 70% coffee and 30% chicory. Prima is pure Arabica.",
     },
     {
         "id": "choose-jar",
@@ -161,16 +161,16 @@ def jar_sentence(slug: str) -> str:
         )
     if slug == "prima":
         return (
-            "Prima, also called Premium Agglomerate, is 100% Arabica with 0% chicory. "
+            "Prima, also called Premium Agglomerate, is pure Arabica with 0% chicory. "
             "It is agglomerated, not freeze-dried. "
             + price
         )
     if slug == "purica":
-        return f"Purica is freeze-dried 100% Arabica with 0% chicory. {price}"
+        return f"Purica is freeze-dried pure Arabica with 0% chicory. {price}"
     if slug == "purista":
-        return f"Purista is freeze-dried 100% Robusta with 0% chicory. {price}"
+        return f"Purista is freeze-dried pure Robusta with 0% chicory. {price}"
     if slug == "bold":
-        return f"Bold is 100% Robusta with 0% chicory. {price}"
+        return f"Bold is pure coffee with 0% chicory. {price}"
     return f"{product['short_name']} is listed in the catalog. {price}"
 
 
@@ -212,10 +212,10 @@ def comparison_table() -> str:
     ]
     labels = {
         "ultra_blend": ("Ultra Blend", "70% coffee", "30% chicory"),
-        "bold": ("Bold", "100% Robusta", "0% chicory"),
-        "purista": ("Purista", "100% Robusta", "0% chicory"),
-        "purica": ("Purica", "100% Arabica", "0% chicory"),
-        "prima": ("Prima", "100% Arabica", "0% chicory"),
+        "bold": ("Bold", "pure coffee", "0% chicory"),
+        "purista": ("Purista", "pure Robusta", "0% chicory"),
+        "purica": ("Purica", "pure Arabica", "0% chicory"),
+        "prima": ("Prima", "pure Arabica", "0% chicory"),
     }
     for slug in _JAR_ORDER:
         product = SHOPIFY_PRODUCTS[slug]
@@ -263,20 +263,20 @@ def faqs_for(topic: dict) -> list[dict]:
             ),
         },
         {
-            "question": "Is Prima 100% Arabica?",
+            "question": "Is Prima pure Arabica?",
             "answer": (
-                "Yes. Prima, sold as Premium Agglomerate, is 100% Arabica with 0% chicory. "
+                "Yes. Prima, sold as Premium Agglomerate, is pure Arabica with 0% chicory. "
                 "It is agglomerated, not freeze-dried. "
                 f"The catalog lists the {prima['weight']} jar at ₹{prima['price']} and marks it out of stock."
             ),
         },
         {
-            "question": "Which jars are 100% Robusta?",
-            "answer": "Bold and Purista are 100% Robusta with 0% chicory. Purista is freeze-dried. Bold is agglomerated.",
+            "question": "Which jars are pure Robusta?",
+            "answer": "Purista is freeze-dried pure Robusta with 0% chicory. Bold is agglomerated pure coffee with 0% chicory.",
         },
         {
             "question": "What is Purica?",
-            "answer": "Purica is freeze-dried 100% Arabica with 0% chicory.",
+            "answer": "Purica is freeze-dried pure Arabica with 0% chicory.",
         },
         {
             "question": f"Where are {topic['primary']} jars sold?",
@@ -289,8 +289,8 @@ def tldr_for(topic: dict) -> str:
     base = (
         f"{topic['primary'].capitalize()} comes down to the jar, not a slogan. "
         "Purity Beans Ultra Blend is 70% coffee and 30% chicory. "
-        "Prima, also called Premium Agglomerate, is 100% Arabica and is not freeze-dried. "
-        "Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica. "
+        "Prima, also called Premium Agglomerate, is pure Arabica and is not freeze-dried. "
+        "Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. "
         "Prices in this article are catalog prices in rupees for shoppers in India."
     )
     return fit_words(base, 40, 60)
@@ -308,7 +308,7 @@ def conclusion_for(topic: dict) -> str:
     return (
         f"Purity Beans is the brand on the jar. For {topic['primary']}, read the chicory line first. "
         "Ultra Blend is 70% coffee and 30% chicory, and only that jar may be called lower caffeine. "
-        "Prima, the Premium Agglomerate, is 100% Arabica. "
+        "Prima, the Premium Agglomerate, is pure Arabica. "
         "Then open the catalog at https://p3online.in"
     )
 
@@ -323,8 +323,8 @@ def llms_summary_for(topic: dict, tldr: str) -> str:
         f"{tldr} "
         "Brand: Purity Beans. Site: https://p3online.in. "
         "Ultra Blend is 70% coffee and 30% chicory. "
-        "Prima / Premium Agglomerate is 100% Arabica and is not freeze-dried. "
-        "Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica. "
+        "Prima / Premium Agglomerate is pure Arabica and is not freeze-dried. "
+        "Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. "
         "Use the catalog prices in rupees. Do not call Ultra Blend zero chicory."
     )
 
