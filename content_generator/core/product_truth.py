@@ -434,6 +434,9 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
                 continue
             for segment in _segments(clause):
                 if _ULTRA.search(segment):
+                    pure = re.search(r"\bpure\b", segment, re.I)
+                    if pure and not _locally_negated(segment, pure.start()):
+                        findings.append(_finding(segment, "Never call Ultra Blend 'pure' (70% coffee, 30% chicory)"))
                     for match in _PURE_CLAIM.finditer(segment):
                         if not _locally_negated(segment, match.start()):
                             findings.append(_finding(

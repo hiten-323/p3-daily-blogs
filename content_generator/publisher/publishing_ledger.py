@@ -219,6 +219,7 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
                 record.update({"status": "PUBLISHED_UNVERIFIED", "next_retry_at": None, "error": verification.get("detail", "remote object exists but is not public")})
             else:
                 record.update({"status": "PUBLISHED_UNVERIFIED", "next_retry_at": _iso(_now() + dt.timedelta(hours=1)), "error": verification.get("detail", "read-back verification unavailable")})
+        record["published"] = record.get("status") == "VERIFIED_LIVE"
         history = list(record.get("history") or [])
         history.append({
             "event": "attempt_finished",

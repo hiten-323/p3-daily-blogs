@@ -77,9 +77,12 @@ def _generate_blog(day_number: int, topic: str, context: str) -> dict:
     """Sectioned blog. Never returns {} when generation was attempted."""
     try:
         from content_generator.core.blog_writer import generate_blog_post
+        from content_generator.prompts.growth_engine import prompt_block
+        from content_generator.rotation import PRODUCTS, pick
+        sku = str(pick(PRODUCTS, day_number))
         piece = generate_blog_post(
             day_number,
-            context_suffix=(context or "") + (f"\n\nANGLE: {topic}" if topic else ""),
+            context_suffix=(context or "") + (f"\n\nANGLE: {topic}" if topic else "") + "\n\n" + prompt_block("blog_post", sku, day_number),
             write_files=False,
         )
     except Exception as exc:
@@ -255,6 +258,12 @@ def generate_daily_content(
 
     # Context suffix injected into every prompt
     ctx = _build_context_suffix(research_context or {})
+    from content_generator.prompts.growth_engine import generation_preface
+    from content_generator.core.growth_engine import learning_block
+    ctx += "\n\n" + generation_preface(str(product), day_number)
+    verified_learning = learning_block()
+    if verified_learning:
+        ctx += "\n\n" + verified_learning
 
     # Continuous learning — inject what worked / failed from past posts
     try:
@@ -346,8 +355,14 @@ def generate_daily_content(
     # high-quota provider (valid Gemini key) is carrying the load.
     _workers = max(1, int(os.getenv("GEN_MAX_WORKERS", "2")))
     with ThreadPoolExecutor(max_workers=_workers) as pool:
+        from content_generator.prompts.growth_engine import prompt_block
         futures = {
-            pool.submit(llm_call, fn(*args) + ctx, label, tokens): label
+            pool.submit(
+                llm_call,
+                fn(*args) + "\n\n" + prompt_block(label, str(product), day_number) + ctx,
+                label,
+                tokens,
+            ): label
             for label, (fn, args, tokens) in phase1_tasks.items()
         }
         for future in as_completed(futures):
@@ -398,8 +413,9 @@ def generate_daily_content(
             vp_prompt += "\n\n" + style
     except Exception as e:
         logger.debug("[pipeline] reel style reference unavailable: %s", e)
+    from content_generator.prompts.growth_engine import generation_preface as _growth_preface
     vp = llm_call(
-        vp_prompt,
+        vp_prompt + "\n\n" + _growth_preface(str(product), day_number),
         label="video_prompts",
         max_tokens=3500,
     )

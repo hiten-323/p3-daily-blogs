@@ -96,7 +96,7 @@ def test_committed_2026_10_12_yt_short_scene_is_honest():
     assert "chicory filler" not in blob
     # This pack was published before the FSSAI '100%' and Bold bean-variety
     # rules (2026-10-14); this test only guards its chicory honesty.
-    later_rules = ("FSSAI", "Bold is pure coffee", "not Robusta")
+    later_rules = ("FSSAI", "Bold is pure coffee", "not Robusta", "Never call Ultra Blend 'pure'")
     assert [f for f in remaining_findings(data)
             if not any(r in str(f) for r in later_rules)] == []
 

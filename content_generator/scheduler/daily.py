@@ -170,6 +170,17 @@ def _run_generate_slot(day_number: int = None) -> dict:
         if step.success and step.value:
             content = step.value
 
+    with timed_step("growth_engine", timeout_s=900, fatal=False):
+        try:
+            from content_generator.core.growth_engine import enforce_portfolio
+            content["growth_portfolio"] = enforce_portfolio(
+                content,
+                regenerate=lambda label, piece, feedback: _regenerate_piece(label, piece, feedback, content),
+            )
+        except Exception as exc:
+            logger.exception("[growth] portfolio gate failed")
+            content["growth_portfolio"] = {"passes": False, "error": type(exc).__name__}
+
     # ── 5. Semantic memory ────────────────────────────────────────────────────
     with timed_step("memory_store", timeout_s=30):
         rm.run(fn=lambda: _do_memory(content, dn), label="memory_store", max_retries=1)
@@ -192,6 +203,7 @@ def _run_generate_slot(day_number: int = None) -> dict:
         step = rm.run(fn=lambda: _do_generate_images(content, dn), label="image_generation", max_retries=1)
         if step.success and isinstance(step.value, dict):
             image_results = step.value
+
 
     with timed_step("creative_post_audit", timeout_s=120, fatal=False):
         try:
@@ -1097,7 +1109,9 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict) -> 
             f"- Blog: introduction, body of at least 800 words, and conclusion. Do not rename them to intro or body_html.\n"
             f"- Return the FULL object. Do not drop caption, hashtags, triggers, "
             f"frames, slides, script, audio, loop_note, or editorial subscores.\n"
-            f"- Do not include an editorial_score. Scoring happens after you return.\n\n"
+            f"- Do not include an editorial_score. Scoring happens after you return.\n"
+            f"- Keep STOP, CURIOSITY, VALUE, TRUST, FOLLOW, BUY. Do not use a banned generic opener.\n"
+            f"- Do not copy another platform's hook or CTA. The featured SKU controls the claims.\n\n"
             f"Return ONLY the improved JSON object."
         )
         if label == "blog_post":
