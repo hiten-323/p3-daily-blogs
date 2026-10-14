@@ -1689,6 +1689,47 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-13T12:02:40+00:00"
     },
+    "2026-10-14|generate|linkedin|pb_22cd6d0a62": {
+      "attempt_count": 1,
+      "content_date": "2026-10-14",
+      "content_id": "pb_22cd6d0a62",
+      "day_number": 286,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-14T10:32:01+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-14T10:32:03+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7516083390354264065",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7516083390354264065/",
+          "verification_method": "linkedin_public_url"
+        }
+      ],
+      "last_attempt_at": "2026-10-14T10:32:01+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-14T10:32:03+00:00",
+      "next_retry_at": null,
+      "platform": "linkedin",
+      "published": true,
+      "remote_id": "urn:li:share:7516083390354264065",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-14T10:32:02+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7516083390354264065/",
+      "verification_detail": "public feed URL confirmed (200)",
+      "verification_method": "linkedin_public_url",
+      "verified_at": "2026-10-14T10:32:03+00:00"
+    },
     "2026-10-14|generate|threads|pb_22cd6d0a62": {
       "attempt_count": 2,
       "content_date": "2026-10-14",
