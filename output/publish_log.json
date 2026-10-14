@@ -1168,5 +1168,70 @@
       ],
       "timestamp": "2026-10-14T06:15:32"
     }
+  },
+  {
+    "date": "2026-10-14",
+    "day_number": 285,
+    "results": {
+      "linkedin": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "linkedin_post",
+        "gate": "held",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "yt_short",
+        "gate": "held",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "threads": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "retry_limit_reached",
+        "ledger_status": "FAILED",
+        "post_id": "",
+        "media_id": "",
+        "video_id": "",
+        "permalink": "",
+        "url": "",
+        "duration_ms": 0
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "blog_post",
+        "gate": "rejected",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "summary": "Held for slot: Instagram, Facebook | Skipped: Linkedin, Youtube, Threads, Blog",
+      "published_platforms": [],
+      "timestamp": "2026-10-14T12:08:38"
+    }
   }
 ]
