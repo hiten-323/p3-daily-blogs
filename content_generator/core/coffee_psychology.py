@@ -165,13 +165,13 @@ PSYCHOLOGY_FRAMES = [
             "core": "Café quality without café price or café effort.",
             "why_it_works": (
                 "Resolves the price-sensitivity paradox. Urban Indians will pay for "
-                "quality when friction is removed. Instant + pure + Rs 18/cup is the "
+                "quality when friction is removed. Instant, in a glass jar, two minutes, is the "
                 "sweet spot — premium feeling, everyday accessible."
             )
         },
         "creative_application": {
             "example_hooks": [
-                "Rs 18. Same purity the café charges Rs 180 for.",
+                "Ultra Blend: at least 50 cups from one 100g jar.",
                 "Real coffee does not require a machine or a weekend.",
                 "Premium is not the price. Premium is what is missing from the jar."
             ],
@@ -179,7 +179,7 @@ PSYCHOLOGY_FRAMES = [
             "share_trigger": "Send this to anyone who thinks pure coffee has to be expensive."
         },
         "governance": {
-            "allowed_claims": ["Rs 18 per cup serving cost", "cafe coffee often costs Rs 180+", "Purica is freeze-dried pure Arabica"],
+            "allowed_claims": ["Ultra Blend only: about ₹6 a cup (100g = ₹309, at least 50 cups)", "cafe coffee often costs Rs 180+", "Purica is freeze-dried pure Arabica"],
             "prohibited_claims": ["cafe coffee is unhealthy", "unverified price calculations"]
         }
     },

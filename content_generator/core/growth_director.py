@@ -254,7 +254,7 @@ def get_strategy_brief(day: int) -> str:
         )
     else:
         chicory_line = (
-            "Praise today's jar on its own merits (bean, process, taste, glass jar, Rs 18 cup). "
+            "Praise today's jar on its own merits (bean, process, taste, glass jar). "
             "Do not attack chicory and do not compare zero-chicory jars with Ultra Blend."
         )
 

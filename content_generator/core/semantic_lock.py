@@ -20,7 +20,7 @@ TOPIC_CLUSTERS: dict[str, list[str]] = {
     "processing_science": ["freeze-dried", "freeze dried", "spray-dried", "spray dried", "-40", "sublimation"],
     "botany_varietal": ["arabica", "robusta", "altitude", "crema", "lipid"],
     "jar_storage": ["storage", "airtight", "fridge", "freezer", "oxidation", "moisture"],
-    "cup_economics": ["rs 18", "cafe cup", "economics", "home math", "rs 250"],
+    "cup_economics": ["₹6 a cup", "50 cups", "cafe cup", "economics", "home math", "rs 250"],
     "label_reading": ["ingredient list", "back of the jar", "label literacy", "fine print"],
     "family_ritual": ["household", "family", "grandmothers", "mother", "guest"],
 }

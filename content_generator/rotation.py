@@ -20,7 +20,7 @@ BLOG_TOPIC_CLUSTERS = [
     "instant coffee for students in India — price per cup, jar sizes, and how to read the label",
     "morning coffee routine India — a home cup with the jar that matches how you drink it",
     "how to read an instant coffee label in India — bean, process, and which Purity Beans jar fits your cup",
-    "coffee price comparison India — Rs 18 per cup at home vs Rs 180 at a cafe, using only those two prices",
+    "coffee cost at home India — Ultra Blend makes at least 50 cups per 100g jar (about ₹6 a cup); no per-cup figure for other jars",
     "work from home coffee India — a repeatable home cup, not a productivity study",
     "caffeine on the label — Ultra Blend is 70% coffee and may be called lower caffeine; the pure coffee jars may not",
     "instant coffee jars in India — Bold, Purista, Purica, Prima, and Ultra Blend, each described only as labeled",
@@ -132,7 +132,7 @@ LINKEDIN_ANGLES = [
      "Building Pure Pantry Provisions without VC capital: why sticking to glass jars and clear labels is harder in year one "
      "but creates an unbreakable moat in year five."),
     ("COFFEE VALUE MATH",
-     "The honest economics of the daily cup: Rs 18 for pure, cafe-grade coffee at home vs Rs 180-250 at commercial "
+     "The honest economics of the daily cup: Ultra Blend at about ₹6 a cup (100g = ₹309, at least 50 cups) vs a cafe cup at commercial "
      "chains. Calculating the 5-year compounding cost of routine coffee spending."),
     ("THE INDIAN COFFEE REVIVAL",
      "From the legendary Bababudan hills of Chikmagalur and Coorg: why India's shade-grown beans are celebrated "
@@ -145,7 +145,7 @@ FACEBOOK_ANGLES = [
      "The family morning cup: how to match a Purity Beans jar to how your household drinks coffee, "
      "strong and black, with milk, or the smooth 70/30 Ultra Blend milk coffee."),
     ("MORNING HOME MATH",
-     "Rs 18 home pure coffee vs Rs 250 cafe cup: what an Indian family actually saves in a year while drinking pure Arabica."),
+     "Ultra Blend at about ₹6 a cup: what a milk-coffee family spends in a year, from one verified jar price."),
     ("THE FILTER KAAPI DEBATE",
      "Traditional South Indian filter coffee vs pure instant: why true coffee lovers care about what is printed under the brand name."),
     ("SUGAR COPING HABIT",
@@ -178,8 +178,8 @@ YOUTUBE_ANGLES = [
      "Freeze-dried Purica in cold water: watch the crystals dissolve and what that says about the process."),
     ("FREEZE DRIED VS SPRAY DRIED",
      "The geometric crystal structure of -40°C freeze-dried crystals vs burnt spray-dried dust under close-up macro lens."),
-    ("CAFE ESPRESSO VS HOME RS 18 CUP",
-     "Blind taste comparison: Rs 250 commercial chain cup vs Rs 18 pure Arabica home brew."),
+    ("CAFE CUP VS HOME CUP",
+     "Blind taste comparison: a cafe cup vs a Purica home brew (no per-cup price claims)."),
 ]
 
 LINKEDIN_SEO_KEYWORDS = (
@@ -216,7 +216,7 @@ VIRAL_CONTENT_IDEAS = [
     "What is actually inside your instant coffee jar? (Ingredient label truth)",
     "I switched to pure coffee for 30 days. Here is what changed.",
     "Arabica, Robusta or a 70/30 blend: which cup are you?",
-    "The Rs 18 vs Rs 180 coffee experiment — same caffeine, same quality?",
+    "One 100g jar of Ultra Blend, at least 50 cups: the home milk-coffee math",
     "Purica vs Purista: a side-by-side taste test story",
     "Why freeze-dried coffee is different from regular instant coffee",
     "Agglomerated vs freeze-dried: which one should you buy?",
@@ -230,13 +230,13 @@ VIRAL_CONTENT_IDEAS = [
     "How Purity Beans is built different: no preservatives, no artificial aroma",
     "Coffee gifting guide for people who actually care about quality",
     "Morning routine with pure coffee: a real Indian working professional story",
-    "Why the best coffee in India costs Rs 18, not Rs 180",
+    "Why a good home cup does not need a machine",
     "Cold brew with instant coffee: does it actually work?",
     "The history of the coffee-chicory milk coffee in South India",
     "Corporate gifting: why premium coffee beats generic gifts every time",
     "What freeze-dried means and why it matters for your morning cup",
     "The coffee brand that prints what it does NOT add on the label",
-    "Student life + real coffee: why Purity Beans makes sense at Rs 18",
+    "Student life + real coffee: a two-minute Purity Beans cup",
     "Hotel and hospitality buyers: why gourmet instant coffee is the upgrade guests notice",
     "The difference between coffee you drink and coffee you experience",
     "Why Indian consumers are finally reading ingredient labels on coffee",
@@ -262,7 +262,7 @@ VIRAL_HOOKS = [
     "Instant coffee can taste like this.",
     "Your water is too hot. Here is the fix.",
     "I stopped buying branded coffee. Here is why.",
-    "Rs 18 per cup, in a lead-free glass jar.",
+    "Two minutes, one spoon, a lead-free glass jar.",
     "The ingredient on every label that nobody reads.",
     "If you care about what you drink, read this.",
     "Freeze-dried Arabica, at home, in two minutes.",

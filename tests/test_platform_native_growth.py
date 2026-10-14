@@ -134,7 +134,7 @@ def test_semantic_premise_lock_detects_topic_collapse():
         "reel_1": {"hook": "Why 100°C boiling water scorches natural coffee tannins."},
         "threads_post": {"text": "Big Coffee spends millions so you never turn the jar around to read the back."},
         "linkedin_post": {"body": "The thermodynamics of -40°C sublimation in freeze-dried vs spray-dried coffee."},
-        "facebook_post": {"caption": "Rs 18 home Arabica cup vs Rs 250 cafe cup: what an Indian family saves in a year."},
+        "facebook_post": {"caption": "Ultra Blend at about ₹6 a cup: what a milk-coffee family spends in a year."},
     }
     div_report = verify_portfolio_diversity(diverse)
     assert div_report["passes"]
@@ -153,7 +153,7 @@ def test_youtube_holds_without_video_file(monkeypatch):
         "title": "Why 100°C Water Destroys Coffee",
         "description": "Brew at 85°C. Bold, Purista, Purica, and Prima are pure coffee with zero chicory by Purity Beans. Explore p3online.in.",
         "hook": "100°C water is scalding your coffee beans.",
-        "script": "Never pour boiling water directly on coffee. Let it cool 60s to 85°C. Purity Beans makes pure coffee with zero chicory. Rs 18 per cup at p3online.in.",
+        "script": "Never pour boiling water directly on coffee. Let it cool 60s to 85°C. Purity Beans makes pure coffee with zero chicory. Shop p3online.in.",
         "cta": "Subscribe for daily coffee truths.",
     }
     res = youtube.post_content({"yt_short": valid_short}, day=1)

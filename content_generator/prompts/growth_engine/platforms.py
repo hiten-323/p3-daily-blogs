@@ -15,7 +15,7 @@ _NATIVE = {
         "one comment prompt, one follow line, one commercial line, and a small hashtag set. "
         "It must work with the sound off. Use the real jar when the SKU is in frame. "
         "Hook in the first 1.5 seconds names a specific, checkable thing (a label line, a granule test, "
-        "a brewing step, the Rs 18 home cup). Value is one verified fact from the catalog, shown not claimed. "
+        "a brewing step, or for Ultra Blend only: about ₹6 a cup). Value is one verified fact from the catalog, shown not claimed. "
         "End with: Follow @purepantryprovisions for <specific next promise> and Shop p3online.in."
     ),
     "carousel": (
@@ -72,7 +72,7 @@ CHICORY_POLICY = (
     "CHICORY POLICY, EVERY DAY AND EVERY SKU: Never attack chicory, roasted root, or 'filler', and never "
     "frame chicory as a trick, adulterant, scam or villain. Never compare 'zero chicory' or '0% chicory' jars "
     "against Ultra Blend, and never contrast our jars with chicory mixtures. Praise Bold, Purista, Purica and "
-    "Prima on their own merits (bean, process, taste, lead-free glass jar, Rs 18 home cup). "
+    "Prima on their own merits (bean, process, taste, lead-free glass jar). "
     "Ultra Blend gets a positive, honest story: 70% coffee and 30% chicory, a smooth, rounded milk coffee in the "
     "South Indian tradition. State the 70/30 ratio plainly and proudly."
 )

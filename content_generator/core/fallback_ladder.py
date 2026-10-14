@@ -27,7 +27,7 @@ ALT_ANGLES = (
     "a brew tip the viewer can try tomorrow (water ~85°C, one level spoon, 30-second pause)",
     "what today's jar label says: bean, process, lead-free glass jar, net weight",
     "a granule test: freeze-dried crystals vs spray-dried powder (Purica is freeze-dried)",
-    "the Rs 18 home cup, using only the catalog price",
+    "on Ultra Blend days only: at least 50 cups per 100g jar, about ₹6 a cup",
     "matching a Purity Beans jar to how you drink coffee (black and strong, milk, the smooth 70/30 Ultra Blend)",
 )
 

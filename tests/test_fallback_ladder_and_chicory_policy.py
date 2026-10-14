@@ -167,3 +167,29 @@ def test_workflow_every_30_min_and_shares_concurrency():
     y = pathlib.Path(".github/workflows/retry-unposted.yml").read_text()
     assert "*/30 * * * *" in y and "group: purity-beans-daily" in y
     assert "retry_unposted" in y
+
+
+# ── per-cup price (Hiten, 2026-10-14) ────────────────────────────────────────
+from content_generator.core.product_truth import product_truth_findings as _ptf
+
+
+@pytest.mark.parametrize("text", [
+    "Purity Beans at Rs 18 per cup.", "Just ₹18 a cup.", "Only Rs.18/cup at home.", "RS 18 PER CUP",
+    "Pure coffee for eighteen rupees a cup.",
+])
+def test_rs18_per_cup_hard_fails(text):
+    assert any("Rs 18" in f.get("rule", str(f)) or "₹18" in str(f) for f in _ptf(text)), _ptf(text)
+
+
+def test_ultra_blend_per_cup_allowed_only_on_ultra():
+    assert not [f for f in _ptf("Ultra Blend is about ₹6 a cup, at least 50 cups per 100g jar.") if "cup" in str(f)]
+    assert any("Per-cup" in str(f) for f in _ptf("Purica is about ₹6 a cup."))
+
+
+def test_no_rs18_left_in_sources():
+    bad = []
+    for path in glob.glob("content_generator/**/*.py", recursive=True) + glob.glob("config/*.py"):
+        for i, line in enumerate(pathlib.Path(path).read_text(encoding="utf-8").splitlines(), 1):
+            if re.search(r"(?:\brs\.?|₹)\s*18(?!\d)", line, re.I) and "_RS18" not in line and "never claim" not in line:
+                bad.append(f"{path}:{i}")
+    assert not bad, bad

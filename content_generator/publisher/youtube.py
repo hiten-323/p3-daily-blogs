@@ -313,7 +313,7 @@ def _extract_description(content: dict) -> str:
                 str(yt.get("hook") or ""),
                 "\n".join(spoken_lines),
                 cta,
-                "\nPurity Beans — India's purest instant coffee. Rs 18/cup. Zero chicory.",
+                "\nPurity Beans — instant coffee in lead-free glass jars.",
                 "Shop: https://p3online.in",
             ]
             return "\n".join(p for p in parts if p)[:5000]
@@ -326,7 +326,7 @@ def _extract_description(content: dict) -> str:
             str(reel.get("script") or reel.get("body") or reel.get("caption") or ""),
             str(reel.get("cta") or ""),
             "",
-            "Purity Beans — India's purest instant coffee. Rs 18/cup. Zero chicory.",
+            "Purity Beans — instant coffee in lead-free glass jars.",
             "Shop: https://p3online.in",
         ]
         return "\n".join(p for p in parts if p)[:5000]
