@@ -32,7 +32,7 @@ ABSOLUTE RULES:
 - The first line must stop a scroll in under 2 seconds. A generic how-to title fails that test.
 
 {{
-  "caption": "HOOK LINE that stops the scroll (max 12 words, no emoji).\\n\\nShort story or insight coffee lovers relate to. Introduce Purity Beans naturally. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee. Purica is freeze-dried. Prima is Premium Agglomerate.\\n\\nShop now: {WEBSITE_URL}\\n\\nThis caption must be 150-250 words. Paste-ready. Emotional storytelling with brand facts woven in naturally.",
+  "caption": "HOOK LINE that stops the scroll (max 12 words, no emoji).\\n\\nShort story or insight coffee lovers relate to. Introduce Purity Beans naturally. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Purica is freeze-dried. Prima is Premium Agglomerate.\\n\\nShop now: {WEBSITE_URL}\\n\\nThis caption must be 150-250 words. Paste-ready. Emotional storytelling with brand facts woven in naturally.",
   "cta": "Direct action with {WEBSITE_URL}",
   "comment_trigger": "Comment COFFEE if you are a real coffee lover who refuses to drink chicory.",
   "save_trigger": "Save this post before your next grocery run.",

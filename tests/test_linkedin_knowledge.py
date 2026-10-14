@@ -9,7 +9,7 @@ def test_linkedin_angles_cover_coffee_science_and_knowledge():
     assert "FREEZE-DRIED VS SPRAY-DRIED" in labels
     assert "ARABICA VS ROBUSTA BOTANY" in labels
     assert "BREWING THERMODYNAMICS" in labels
-    assert "CHICORY ROOT ECONOMICS" in labels
+    assert "THE 70/30 MILK COFFEE TRADITION" in labels
     assert "CAFFEINE CHRONOBIOLOGY" in labels
     assert "CORPORATE PANTRY ROI" in labels
 

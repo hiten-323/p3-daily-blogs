@@ -26,7 +26,7 @@ _GENERIC_HOOKS = re.compile(
 
 _SPECIFIC_DETAILS = re.compile(
     r"\b(chicory|arabica|robusta|freeze[- ]dried|spray[- ]dried|label|ingredient|"
-    r"sublimation|degrees|85°c|100°c|rs 18|price per cup|tannins|chlorogenic|inulin|"
+    r"sublimation|degrees|85°c|100°c|₹6 a cup|50 cups|price per cup|tannins|chlorogenic|inulin|"
     r"ultra blend|purica|prima|bold|purista)\b",
     re.I,
 )

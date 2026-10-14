@@ -13,7 +13,10 @@ _NATIVE = {
         "Voiceover and on-screen text complement each other. One pattern interrupt that serves the story. "
         "A payoff, a loop or a clean ending, a caption that adds a fact the frames did not already say, "
         "one comment prompt, one follow line, one commercial line, and a small hashtag set. "
-        "It must work with the sound off. Use the real jar when the SKU is in frame."
+        "It must work with the sound off. Use the real jar when the SKU is in frame. "
+        "Hook in the first 1.5 seconds names a specific, checkable thing (a label line, a granule test, "
+        "a brewing step, or for Ultra Blend only: about ₹6 a cup). Value is one verified fact from the catalog, shown not claimed. "
+        "End with: Follow @purepantryprovisions for <specific next promise> and Shop p3online.in."
     ),
     "carousel": (
         "IG carousel. Slide 1 is a specific curiosity. One idea per slide. "
@@ -32,11 +35,17 @@ _NATIVE = {
     "facebook": (
         "Facebook. A direct opener about a real situation, a practical insight, "
         "one discussion prompt, and one product or business-inquiry CTA. "
-        "Write it as its own post. Do not paste the Instagram caption."
+        "Write it as its own post. Do not paste the Instagram caption. "
+        "First line is a household moment people recognise (the morning cup, guests, the kitchen shelf). "
+        "Give one verified, practical takeaway (dose, water temperature, storage, jar choice by taste). "
+        "Close with a question to comment on, then Follow @purepantryprovisions and Shop p3online.in."
     ),
     "threads": (
         "Threads. One observation or question under the character limit. "
-        "A reason to reply. Product only when it adds. No hashtag pile and no forced link."
+        "A reason to reply. Product only when it adds. No hashtag pile and no forced link. "
+        "Open with a crisp, specific take about brewing or taste (not about other brands), "
+        "add one verified detail, end with a reply question and a light Follow @purepantryprovisions; "
+        "p3online.in only once, at the end."
     ),
     "linkedin": (
         "LinkedIn. A professional opener on a real business question, a lesson, "
@@ -59,6 +68,16 @@ _NATIVE = {
 }
 
 
+CHICORY_POLICY = (
+    "CHICORY POLICY, EVERY DAY AND EVERY SKU: Never attack chicory, roasted root, or 'filler', and never "
+    "frame chicory as a trick, adulterant, scam or villain. Never compare 'zero chicory' or '0% chicory' jars "
+    "against Ultra Blend, and never contrast our jars with chicory mixtures. Praise Bold, Purista, Purica and "
+    "Prima on their own merits (bean, process, taste, lead-free glass jar). "
+    "Ultra Blend gets a positive, honest story: 70% coffee and 30% chicory, a smooth, rounded milk coffee in the "
+    "South Indian tradition. State the 70/30 ratio plainly and proudly."
+)
+
+
 def ultra_positive_story(sku: str) -> str:
     """The blend story that must be in the prompt before any Ultra Blend asset is written."""
     from content_generator.core.product_truth import name_contains_chicory
@@ -69,7 +88,8 @@ def ultra_positive_story(sku: str) -> str:
         "ULTRA BLEND STORY, REQUIRED BEFORE YOU WRITE: "
         "Ultra Blend is 70% coffee and 30% chicory, a smooth milk coffee. "
         "Say that ratio accurately. Never call it pure, pure coffee, zero chicory, chicory-free, or no chicory. "
-        "Do not attack chicory, roasted root, or filler. Do not make this jar the problem another jar solves."
+        "Do not attack chicory, roasted root, or filler. Do not make this jar the problem another jar solves. "
+        "Tell it positively: a smooth, rounded milk coffee, 70/30, honestly labelled."
     )
 
 
@@ -86,6 +106,7 @@ def generation_preface(sku: str, day: int = 0) -> str:
         "Do not repeat today's hook or CTA on another platform. Same fact, different treatment.",
         "No invented prices, stock, reviews, awards, or health claims. Shopify catalog is the source of truth.",
         f"Featured SKU: {sku or 'unset'}. The SKU controls which claims are allowed.",
+        CHICORY_POLICY,
     ]
     if story:
         lines.append(story)

@@ -61,7 +61,7 @@ TOPICS: list[dict] = [
         "title": "Instant coffee for Indian milk coffee",
         "primary": "milk coffee",
         "secondary": ["office pantry coffee", "instant coffee india"],
-        "meta_lead": "Milk coffee drinkers in Indian cities can match a jar to the chicory line. Purity Beans lists Ultra Blend as 30% chicory and the pure jars as 0%.",
+        "meta_lead": "Milk coffee drinkers in Indian cities can match a jar to their cup. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     },
     {
         "id": "price-guide",
@@ -77,7 +77,7 @@ TOPICS: list[dict] = [
         "title": "Which Purity Beans jar should you buy",
         "primary": "purity beans jar",
         "secondary": ["instant coffee india", "coffee label india"],
-        "meta_lead": "Which Purity Beans jar fits the cup you actually brew. Compare 0% chicory jars with Ultra Blend at 30% chicory, using catalog prices in rupees.",
+        "meta_lead": "Which Purity Beans jar fits the cup you actually brew. Strong and black, Arabica, Robusta, or the smooth 70/30 Ultra Blend milk coffee, with catalog prices in rupees.",
     },
 ]
 

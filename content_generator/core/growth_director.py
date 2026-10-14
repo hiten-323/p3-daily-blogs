@@ -92,21 +92,20 @@ def get_growth_stage(followers: int = None) -> dict:
 
 
 # Primary message angle — rotates so the brand isn't a one-note chicory sermon.
-# The "zero chicory" differentiator still appears, but only EXPOSE/CONTRAST days
-# lead with betrayal; other days lead with their own value to reach the ~95% who
-# don't yet care about chicory. (Addresses the one-note-messaging risk.)
+# No angle attacks chicory or compares zero-chicory jars with Ultra Blend; every
+# day leads with the featured jar's own merits.
 MESSAGE_ANGLES = [
     ("EDUCATION",   "Lead with genuinely useful coffee knowledge (brewing, storage, "
                     "caffeine, taste). Brand is a light touch at the end, not the point."),
-    ("EXPOSE",      "Lead with the chicory/adulteration truth — the betrayal hook. "
-                    "This is the differentiator day."),
+    ("LABEL",       "Lead with what the jar's own label says — bean, process, ratio, jar. "
+                    "Praise today's jar on its merits; never attack chicory or other brands."),
     ("ASPIRATION",  "Lead with lifestyle/ritual/identity — the feeling of great coffee. "
                     "Aspirational, not accusatory."),
     ("FOUNDER",     "Lead with a founder story/lesson/decision. People follow people."),
     ("VALUE",       "Lead with practical value — money saved, a guide, a comparison. "
                     "Helpful first, brand second."),
-    ("CONTRAST",    "Lead with an honest side-by-side (pure vs filler) without naming "
-                    "competitors. Let the viewer conclude."),
+    ("CONTRAST",    "Lead with an honest side-by-side of two Purity Beans jars (e.g. Arabica vs "
+                    "Robusta, freeze-dried vs agglomerated). No chicory-vs-pure framing."),
 ]
 
 
@@ -115,7 +114,7 @@ def get_todays_message_angle(day: int) -> tuple:
 
 
 def _creator_dna_line() -> str:
-    dna = ("We are Purity Beans — pure coffee for Indians done being fooled by chicory.")
+    dna = ("We are Purity Beans — honest instant coffee in lead-free glass jars, labelled plainly.")
     try:
         from content_generator.core.founder_policy import policy
         dna = policy().domain("brand").get("creator_dna", dna)
@@ -255,8 +254,8 @@ def get_strategy_brief(day: int) -> str:
         )
     else:
         chicory_line = (
-            "The zero chicory, pure coffee fact may appear as a light touch on the pure jars "
-            "(Bold, Purista, Purica, Prima, Gourmet Duo, Gourmet Duo Mini). Do not apply it to Ultra Blend."
+            "Praise today's jar on its own merits (bean, process, taste, glass jar). "
+            "Do not attack chicory and do not compare zero-chicory jars with Ultra Blend."
         )
 
     return f"""{policy_line}GROWTH DIRECTOR — TODAY'S STRATEGY (this overrides generic instincts):
@@ -268,9 +267,8 @@ STAGE FOCUS: {stage['focus']}
 {_consistency_block()}
 
 TODAY'S MESSAGE ANGLE: [{angle[0]}] {angle[1]}
-Vary the ANGLE, never the avatar or topic lane above. Do NOT make every post a
-chicory exposé — only EXPOSE/CONTRAST days lead with betrayal; today leads as
-above. {chicory_line}
+Vary the ANGLE, never the avatar or topic lane above. No day is a chicory
+exposé; every angle stays positive and specific. {chicory_line}
 
 STRANGER TEST (every hook + caption): would this work for someone who has NEVER
 seen Purity Beans and couldn't care less? If it only lands for existing fans, rewrite.
@@ -314,10 +312,10 @@ time, cut it — shorter with full retention beats longer with drop-off.
 CROSS-PLATFORM VIRALITY & MAX FOLLOWER ENGINE:
 Views alone are vanity. A viral post that gains 0 followers is a failed post.
 Every single platform must pair high viral reach with an explicit FOLLOWER CONVERSION BRIDGE:
-1. REELS & SHORTS: Ranked by SHARES (Send to DM) and Completion/Loop Rate. Give a selfish reason to follow. On a pure-jar day: "Follow @puritybeans so you never drink roasted root again." On an Ultra Blend day: "Follow @puritybeans for Ultra Blend: 70% coffee and 30% chicory."
-2. CAROUSELS: Ranked by SAVES. Slide 1 must have an impossible-to-ignore curiosity gap; Slides 2-6 must be screenshot-worthy utility; Final Slide MUST command: "Save this guide + Follow @puritybeans for daily pure coffee truths."
+1. REELS & SHORTS: Ranked by SHARES (Send to DM) and Completion/Loop Rate. Give a selfish reason to follow. On a pure-jar day: "Follow @purepantryprovisions for one better-cup fix a day." On an Ultra Blend day: "Follow @purepantryprovisions for Ultra Blend: a smooth 70/30 milk coffee."
+2. CAROUSELS: Ranked by SAVES. Slide 1 must have an impossible-to-ignore curiosity gap; Slides 2-6 must be screenshot-worthy utility; Final Slide MUST command: "Save this guide + Follow @purepantryprovisions for daily coffee know-how. Shop p3online.in."
 3. LINKEDIN: Ranked by COMMENTS & DWELL TIME. Hook must provoke in the first 2 lines (before "see more"); end with a debate-igniting question; CTA must invite following Hiten Jain for unfiltered beverage science.
-4. THREADS: Ranked by REPLIES & QUOTES. Short, punchy truth-bombs (<480 chars); expose industry tricks; prompt quick debate; end with "Follow for daily coffee truths Big Coffee hides."
+4. THREADS: Ranked by REPLIES & QUOTES. Short, punchy truth-bombs (<480 chars); share a specific brewing or taste insight; prompt quick replies; end with "Follow @purepantryprovisions for daily coffee know-how."
 
 THE ONLY QUESTION THAT MATTERS TODAY:
 What is the fastest way to gain followers tomorrow? Generate for that."""

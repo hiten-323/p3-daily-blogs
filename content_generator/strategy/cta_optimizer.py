@@ -46,12 +46,12 @@ _DEFAULT_CTAS: dict[tuple[str, str], list[str]] = {
         "Drop a coffee emoji if you only drink pure beans",
     ],
     ("CONVERSION",              "consumer"):     [
-        "Buy at p3online.in — Rs 18 per cup, free delivery",
+        "Buy at p3online.in",
         "Order pure coffee at p3online.in",
         "Try Purity Beans → p3online.in",
     ],
     ("Consumer Purchase",       "consumer"):     [
-        "Buy at p3online.in — Rs 18 per cup, free delivery",
+        "Buy at p3online.in",
         "Order now at p3online.in",
         "Try Purity Beans → p3online.in",
     ],

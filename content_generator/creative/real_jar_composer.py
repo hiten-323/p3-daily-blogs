@@ -1277,7 +1277,7 @@ def compose_carousel_slide(
         actions = [
             ("SAVE THIS POST", "Bookmark for your next grocery or coffee run"),
             ("SHARE THE TRUTH", "Send to a friend who drinks instant coffee"),
-            ("TASTE REAL COFFEE", "Single-origin pure starting at Rs 18/cup"),
+            ("TASTE REAL COFFEE", "Pure coffee in a lead-free glass jar"),
         ]
         ay = card_y0 + 24
         for title, desc in actions:

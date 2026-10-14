@@ -49,9 +49,11 @@ def whatsapp_enabled() -> bool:
 
 def _max_retries() -> int:
     try:
-        return max(0, int(os.getenv("QUALITY_MAX_REGEN", "3")))
+        base = max(0, int(os.getenv("QUALITY_MAX_REGEN", "3")))
     except (TypeError, ValueError):
-        return 3
+        base = 3
+    from content_generator.core.fallback_ladder import max_attempts
+    return max(base, max_attempts())
 
 
 PASS_THRESHOLD = 8.0  # floor; never lowered (may only rise with the editorial score)

@@ -31,10 +31,10 @@ def build(reel_id: str, arch: tuple, time_slot: str,
         )
     else:
         follow_spoken = PURE_JAR_FOLLOW_CTA + "."
-        villain_spoken = "Name it precisely — chicory, preservatives, artificial aroma"
+        villain_spoken = "Name the everyday brewing mistake precisely — boiling water, a wet spoon, an open lid"
         featured_rule = (
-            f"FEATURED JAR TODAY: {featured}. Zero-chicory praise is allowed for this jar and for "
-            "Bold, Purista, Purica, Prima, and Gourmet Duo Mini. Never apply that praise to Ultra Blend."
+            f"FEATURED JAR TODAY: {featured}. Praise it on its own merits (bean, process, taste, glass jar). "
+            "Do not attack chicory and never compare zero-chicory jars with Ultra Blend."
         )
 
     return f"""{brand_block()}
@@ -56,7 +56,7 @@ The best hooks cannot save a topic nobody cares about.
 PSYCHOLOGY REQUIREMENT:
 Pick ONE primary frame from the PSYCHOLOGY FRAMES list above.
 Put its id in "psychology_frame". The frame must drive the hook, the spoken arc, and the share/save triggers.
-Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Never apply the pure coffee line to Ultra Blend. Rs 18 is the home-cup price.
+Jar facts support the frame — they are not the frame. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is 70% coffee and 30% chicory. Never apply the pure coffee line to Ultra Blend. Per-cup price: only for Ultra Blend, about ₹6 a cup (at least 50 cups per 100g jar). Give no per-cup figure for other jars.
 {featured_rule}
 
 ABSOLUTE RULES:
@@ -88,14 +88,14 @@ ABSOLUTE RULES:
     {{"on_screen": "THE PROBLEM", "spoken": "What most Indians drink without knowing — specific, not statistical"}},
     {{"on_screen": "THE TWIST", "spoken": "The thing they did not expect — contrarian, relatable"}},
     {{"on_screen": "THE LABEL", "spoken": "{villain_spoken}"}},
-    {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is 70% coffee."}},
+    {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee."}},
     {{"on_screen": "FOLLOW @PURITYBEANS", "spoken": "{follow_spoken}"}}
   ],
   "loop_note": "One sentence: how the last frame connects back to frame 1 for infinite loop",
   "alt_hook": "A/B option — 4 words, completely different archetype",
-  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee. Available at {WEBSITE_URL}\\n\\nFollow @puritybeans for daily honest coffee craft. Shop pure: {WEBSITE_URL}",
+  "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Available at {WEBSITE_URL}\\n\\nFollow @purepantryprovisions for daily honest coffee craft. Shop {WEBSITE_URL}",
   "cta": "Follow @puritybeans for daily pure coffee craft. Explore pure jars at {WEBSITE_URL}",
-  "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+  "comment_trigger": "Comment COFFEE and tell us how you take your morning cup.",
   "save_trigger": "Save this before your next grocery run so you never buy the wrong coffee again.",
   "share_trigger": "Share with someone who starts every morning with coffee — they deserve to know.",
   "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "agglomerated coffee", "coffee without preservatives", "pure instant coffee", "coffee lovers india", "instant coffee brand india"],

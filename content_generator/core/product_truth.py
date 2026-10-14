@@ -27,6 +27,8 @@ _ULTRA = re.compile(r"ultra[\s-]?blend", re.I)
 _PRIMA = re.compile(r"\b(?:prima|premium agglomerate)\b", re.I)
 _ARABICA_JARS = re.compile(r"\b(?:purica|prima|premium agglomerate)\b", re.I)
 _ROBUSTA_JARS = re.compile(r"\bpurista\b", re.I)
+_RS18 = re.compile(r"(?:\brs\.?|₹|\binr)\s*18(?![\d,.]?\d)|\beighteen\s+rupees", re.I)  # wrong per-cup price, hard fail
+_PER_CUP_FIGURE = re.compile(r"(?:\brs\.?|₹|\binr)\s*\d+(?:[–-]\d+)?\s*(?:/|a|per)\s*cup|\b\d+\s+cups\s+(?:per|from|in)\b", re.I)
 _HUNDRED_PERCENT = re.compile(r"\b100\s*(?:%|percent|per\s*cent)", re.I)  # FSSAI hard fail
 _OTHER_SKU = re.compile(r"\b(?:purica|purista|prima|premium agglomerate|ultra[\s-]?blend|gourmet duo|variety)\b", re.I)
 _BEAN_VARIETY = re.compile(r"\b(?:robusta|arabica)\b", re.I)
@@ -418,6 +420,12 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
                 findings.append(_finding(
                     s, "Bold is pure coffee; never name a bean variety (Robusta/Arabica) for Bold"))
                 break
+        if _RS18.search(s):
+            findings.append(_finding(
+                s, "Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is about ₹6 a cup (100g = ₹309, at least 50 cups)"))
+        elif _PER_CUP_FIGURE.search(s) and not re.search(r"ultra\s*blend", s, re.I):
+            findings.append(_finding(
+                s, "Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure"))
         if _HUNDRED_PERCENT.search(s):
             findings.append(_finding(
                 s, "FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'"))

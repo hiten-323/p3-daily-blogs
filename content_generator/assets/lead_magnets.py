@@ -49,7 +49,7 @@ LEAD_MAGNETS = [
             "2. Add 2 tsp hot (not boiling) water + 1 tsp sugar if you like it sweet.\n"
             "3. Whisk/spoon-beat 40 seconds until pale and creamy.\n"
             "4. Add hot milk or water. The beaten paste floats up as a foam layer.\n"
-            "Cafe texture, Rs 18 a cup. Get the coffee: p3online.in"
+            "Cafe texture at home. Get the coffee: p3online.in"
         ),
     },
     {
@@ -83,8 +83,8 @@ LEAD_MAGNETS = [
         "deliverable": (
             "Your coffee math:\n"
             "- Cafe cup ~Rs 180 x 300 days = ~Rs 54,000/year\n"
-            "- Purity Beans at home ~Rs 18 a cup = ~Rs 5,400/year\n"
-            "- Those two prices are the comparison. Do not assume every jar has the same caffeine: Ultra Blend is 70% coffee.\n"
+            "- Purity Beans Ultra Blend at home ~₹6 a cup (100g = ₹309, at least 50 cups) = ~₹1,800/year\n"
+            "- The per-cup figure is for Ultra Blend only (70% coffee, 30% chicory).\n"
             "Do the math on your own habit — then see p3online.in"
         ),
     },

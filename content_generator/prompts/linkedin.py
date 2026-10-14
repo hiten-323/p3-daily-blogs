@@ -31,11 +31,11 @@ KNOWLEDGE & AWARENESS PILLARS TO EMPHASIZE:
    - Bean botany: pure Arabica (high altitude, higher lipid content, subtle fruit/caramel notes like Purica) vs pure Robusta (bold body, thick crema, double caffeine like Purista).
    - Extraction thermodynamics: Why boiling 100°C water scorches tannins, and why 80°C–85°C releases natural sweetness without added sugar.
 2. Clean-Label Transparency:
-   - The chicory reality: Exposing why commercial brands blend 30%–49% roasted root filler, and why pure coffee provides clean focus without gut irritation.
-   - Reading Indian food labels: Decoding "Coffee-Chicory mixture" vs "Pure Instant Coffee".
+   - Label literacy: what bean, process and ratio on a jar tell a buyer, and why Ultra Blend's honest 70/30 milk-coffee blend and the pure jars each have a place.
+   - Reading Indian food labels: bean, process, ratio and net weight in ten seconds.
 3. Executive Chronobiology & Performance:
    - Adenosine receptor science: Why delaying caffeine 60–90 minutes after waking eliminates the 2 PM crash.
-   - Clean energy: Real caffeine vs sugar/filler adrenaline spikes.
+   - Brewing for focus: water temperature, dose and timing for a consistent desk cup.
 4. Corporate & Workplace Culture:
    - Elevating office pantry standards from cheap vending syrup to artisan pure coffee; executive gifting with clean glass jars.
 
@@ -56,7 +56,7 @@ ABSOLUTE MANDATORY RULES:
   "angle": "{angle[0]}",
   "hook": "Compelling 1-line hook (min 20 chars). No emojis. Challenges mainstream assumptions or highlights a surprising coffee fact.",
   "body": "300+ words. Pedagogical, insightful, beautifully formatted with clean paragraph breaks and bullet points. Deep dive into the science, economics, or brewing facts. Real, grounded, professional Indian tone.",
-  "brand_bridge": "1-2 sentences seamlessly connecting the science to Purity Beans (Pure Pantry Provisions) — our commitment to pure coffee, zero chicory, and uncompromised ingredient integrity.",
+  "brand_bridge": "1-2 sentences seamlessly connecting the science to Purity Beans (Pure Pantry Provisions) — our commitment to honest labels, lead-free glass jars, and uncompromised ingredient integrity.",
   "closing_question": "A thoughtful, debate-worthy question that invites founders, executives, and professionals to share their own coffee routines or pantry standards.",
   "cta": "Clear call to action: invite readers to follow Hiten Jain for weekly deep-dives into food science and coffee industry transparency, and explore pure coffee at {WEBSITE_URL}.",
   "hashtags": "{HASHTAG_SET}",

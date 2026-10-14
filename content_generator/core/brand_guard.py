@@ -464,7 +464,7 @@ Working professionals, students, home-brewers, health-aware buyers.
 
 **Their core frustrations:**
 - Feeling cheated by brands adding chicory without clear labeling
-- Paying Rs 180 at a cafe for coffee they could make at Rs 18
+- Paying a cafe price for coffee they could make at home
 - Not knowing what "instant coffee" actually contains
 - Generic, corporate, fake-sounding brand content
 
