@@ -115,7 +115,7 @@ def get_todays_message_angle(day: int) -> tuple:
 
 
 def _creator_dna_line() -> str:
-    dna = ("We are Purity Beans — 100% pure coffee for Indians done being fooled by chicory.")
+    dna = ("We are Purity Beans — pure coffee for Indians done being fooled by chicory.")
     try:
         from content_generator.core.founder_policy import policy
         dna = policy().domain("brand").get("creator_dna", dna)
@@ -255,7 +255,7 @@ def get_strategy_brief(day: int) -> str:
         )
     else:
         chicory_line = (
-            "The zero chicory, 100% coffee fact may appear as a light touch on the pure jars "
+            "The zero chicory, pure coffee fact may appear as a light touch on the pure jars "
             "(Bold, Purista, Purica, Prima, Gourmet Duo, Gourmet Duo Mini). Do not apply it to Ultra Blend."
         )
 

@@ -13,7 +13,7 @@ Import from anywhere in the engine:
 BRAND = {
     "name":        "Purity Beans",
     "company":     "Pure Pantry Provisions",
-    "tagline":     "Read the jar. Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee.",
+    "tagline":     "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is 70% coffee.",
     "category":    "Premium Instant Coffee",
     "origin":      "India",
     "website":     "https://p3online.in",
@@ -29,11 +29,11 @@ BRAND = {
 # ── Market positioning ────────────────────────────────────────────────────────
 
 POSITIONING = {
-    "usp":              "Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee.",
+    "usp":              "Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee.",
     "price_per_cup":    18,            # Rs
     "cafe_price":       180,           # Rs (average cafe latte)
     "price_ratio":      "10x cheaper than cafes",
-    "purity_claim":     "Zero chicory applies to the 100% coffee jars. Ultra Blend is 70% coffee.",
+    "purity_claim":     "Zero chicory applies to the pure coffee jars. Ultra Blend is 70% coffee.",
     "target_segments": {
         "consumer":     "urban Indians 25-45 who care about what they drink",
         "distributor":  "FMCG distributors in Tier-1 and Tier-2 cities",
@@ -48,7 +48,7 @@ POSITIONING = {
         "No transparency about coffee purity on labels",
     ],
     "proof_points": [
-        "Bold and Purista are 100% Robusta. Purica is freeze-dried 100% Arabica. Prima is 100% Arabica Premium Agglomerate.",
+        "Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. Prima is pure Arabica Premium Agglomerate.",
         "Ultra Blend is 70% coffee. A lower-caffeine description is allowed only for that jar.",
         "Rs 18 per cup vs Rs 180 at cafes",
     ],
@@ -98,7 +98,7 @@ HASHTAG_SETS = {
     ),
     "blog": (
         "purity beans, pure instant coffee, no chicory coffee, "
-        "instant coffee india, 100% arabica instant coffee"
+        "instant coffee india, pure arabica instant coffee"
     ),
     "b2b": (
         "#PurityBeans #DistributorOpportunity #FMCGIndia #CPGIndia "

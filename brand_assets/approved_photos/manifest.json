@@ -1,0 +1,767 @@
+{
+ "version": 1,
+ "source": "Official photos supplied by Hiten Jain, 2026-10-14",
+ "rules": {
+  "approved_card": "founder-made finished card; used as-is (resize only) on its aspect",
+  "lifestyle": "use as-is; crop/resize only; jar_bbox must stay fully in frame; overlay only in text_zone (never over baked copy)",
+  "text_bboxes": "baked-in copy; crop must keep all of it; overlays never touch it",
+  "cutout": "only on clean plain brand-colour / soft paper cards with a subtle floor shadow; never composited into scenes or with props",
+  "real_photo": "drop real (non-AI) photos in <sku>/real/ - they take priority over cutouts automatically; optional <name>.json sidecar with jar_bbox",
+  "tone": "global-only correction (whole image), no local grading",
+  "infographic": "use as-is; no extra overlay (baked copy)",
+  "blocked": "never used"
+ },
+ "handle": "@purepantryprovisions",
+ "cta": "Follow @purepantryprovisions + shop p3online.in",
+ "items": [
+  {
+   "file": "bold/bold_100g_approved_card_story.png",
+   "sku": "bold",
+   "size": "100g",
+   "type": "approved_card",
+   "width": 941,
+   "height": 1672,
+   "jar_bbox": [
+    0.25,
+    0.215,
+    0.75,
+    0.94
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "ig_story",
+    "reel_thumb"
+   ],
+   "blocked": false,
+   "text_bboxes": [
+    [
+     0.1,
+     0.03,
+     0.9,
+     0.19
+    ],
+    [
+     0.15,
+     0.94,
+     0.85,
+     0.985
+    ]
+   ],
+   "use_as_is": true,
+   "aspect": "9:16",
+   "source": "Hiten Jain, 2026-10-14"
+  },
+  {
+   "file": "bold/bold_100g_cutout_wide_hires.png",
+   "sku": "bold",
+   "size": "100g",
+   "type": "cutout",
+   "width": 1198,
+   "height": 1313,
+   "jar_bbox": [
+    0.179,
+    0.002,
+    0.846,
+    0.999
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "studio_card",
+    "ig_post",
+    "ig_story",
+    "carousel_cover",
+    "carousel_middle",
+    "carousel_cta",
+    "fb",
+    "threads",
+    "linkedin",
+    "reel_thumb",
+    "yt_thumb",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": [],
+   "primary": true,
+   "source": "Hiten Jain hi-res render on white, 2026-10-14 (label: NET WEIGHT : 100 GM)"
+  },
+  {
+   "file": "bold/bold_100g_cutout_hires.png",
+   "alpha_file": "bold/bold_100g_cutout_hires_alpha.png",
+   "sku": "bold",
+   "size": "100g",
+   "type": "cutout",
+   "width": 737,
+   "height": 1280,
+   "jar_bbox": [
+    0.175,
+    0.032,
+    0.817,
+    0.936
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "studio_card",
+    "ig_post",
+    "ig_story",
+    "carousel_cover",
+    "carousel_middle",
+    "carousel_cta",
+    "fb",
+    "threads",
+    "linkedin",
+    "reel_thumb",
+    "yt_thumb",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": [],
+   "primary": false,
+   "source": "extracted from bold_100g_approved_card_story.png (cream bg normalised to white; alpha version has no halo)"
+  },
+  {
+   "file": "bold/bold_100g_cutout_front.png",
+   "sku": "bold",
+   "size": "100g",
+   "type": "cutout",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.36,
+    0.34,
+    0.643,
+    0.987
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [],
+   "blocked_reason": "Superseded: soft label. Use bold_100g_cutout_hires (from Hiten approved card)."
+  },
+  {
+   "file": "bold/bold_100g_infographic_hot_cold.png",
+   "sku": "bold",
+   "size": "100g",
+   "type": "infographic",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.38,
+    0.47,
+    0.63,
+    0.99
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0,
+     0,
+     1,
+     1
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "bold/bold_100g_lifestyle_cafe_barista.png",
+   "sku": "bold",
+   "size": "100g",
+   "type": "lifestyle",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.29,
+    0.38,
+    0.51,
+    0.88
+   ],
+   "baked_copy": true,
+   "text_zone": "top",
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0.48,
+     0.32,
+     1.0,
+     0.53
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "bold/bold_100g_infographic_badges_kitchen.png",
+   "sku": "bold",
+   "size": "100g",
+   "type": "infographic",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.26,
+    0.3,
+    0.46,
+    0.88
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0,
+     0,
+     1,
+     1
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "bold/bold_50g_cutout_front.png",
+   "sku": "bold",
+   "size": "50g",
+   "type": "cutout",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.275,
+    0.374,
+    0.666,
+    0.971
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [],
+   "blocked_reason": "Superseded: soft, oversaturated label. Use bold_100g_cutout_wide_hires."
+  },
+  {
+   "file": "bold/bold_50g_infographic_badges_window.png",
+   "sku": "bold",
+   "size": "50g",
+   "type": "infographic",
+   "width": 864,
+   "height": 1184,
+   "jar_bbox": [
+    0.36,
+    0.36,
+    0.64,
+    0.66
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0,
+     0,
+     1,
+     1
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "purica/purica_100g_lifestyle_sip_pure.png",
+   "sku": "purica",
+   "size": "100g",
+   "type": "lifestyle",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.35,
+    0.27,
+    0.66,
+    0.9
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0.02,
+     0.04,
+     0.42,
+     0.33
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "purica/purica_50g_cutout_front.png",
+   "sku": "purica",
+   "size": "50g",
+   "type": "cutout",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.269,
+    0.362,
+    0.655,
+    0.977
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "studio_card",
+    "ig_post",
+    "ig_story",
+    "carousel_cover",
+    "carousel_middle",
+    "carousel_cta",
+    "fb",
+    "threads",
+    "linkedin",
+    "reel_thumb",
+    "yt_thumb",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": []
+  },
+  {
+   "file": "purica/purica_50g_infographic_true_coffee_lovers.png",
+   "sku": "purica",
+   "size": "50g",
+   "type": "infographic",
+   "width": 1254,
+   "height": 1254,
+   "jar_bbox": [
+    0.36,
+    0.34,
+    0.66,
+    0.92
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0,
+     0,
+     1,
+     1
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "purica/purica_50g_back_back.png",
+   "sku": "purica",
+   "size": "50g",
+   "type": "back",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.307,
+    0.394,
+    0.67,
+    0.987
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "carousel_detail",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": []
+  },
+  {
+   "file": "purica/purica_100g_infographic_why_purica_wide.png",
+   "sku": "purica",
+   "size": "100g",
+   "type": "infographic",
+   "width": 1774,
+   "height": 887,
+   "jar_bbox": [
+    0.62,
+    0.12,
+    0.8,
+    0.8
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0,
+     0,
+     1,
+     1
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "purica/purica_100g_cutout_front.png",
+   "sku": "purica",
+   "size": "100g",
+   "type": "cutout",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.34,
+    0.304,
+    0.657,
+    0.985
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "studio_card",
+    "ig_post",
+    "ig_story",
+    "carousel_cover",
+    "carousel_middle",
+    "carousel_cta",
+    "fb",
+    "threads",
+    "linkedin",
+    "reel_thumb",
+    "yt_thumb",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": []
+  },
+  {
+   "file": "purista/purista_100g_infographic_hot_cold.png",
+   "sku": "purista",
+   "size": "100g",
+   "type": "infographic",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.36,
+    0.47,
+    0.62,
+    0.99
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0,
+     0,
+     1,
+     1
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "purista/purista_50g_cutout_front.png",
+   "sku": "purista",
+   "size": "50g",
+   "type": "cutout",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.299,
+    0.199,
+    0.747,
+    0.939
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "studio_card",
+    "ig_post",
+    "ig_story",
+    "carousel_cover",
+    "carousel_middle",
+    "carousel_cta",
+    "fb",
+    "threads",
+    "linkedin",
+    "reel_thumb",
+    "yt_thumb",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": []
+  },
+  {
+   "file": "purista/purista_100g_infographic_real_coffee_lovers.png",
+   "sku": "purista",
+   "size": "100g",
+   "type": "infographic",
+   "width": 1254,
+   "height": 1254,
+   "jar_bbox": [
+    0.43,
+    0.22,
+    0.78,
+    0.8
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0,
+     0,
+     1,
+     1
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "purista/purista_50g_back_back.png",
+   "sku": "purista",
+   "size": "50g",
+   "type": "back",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.277,
+    0.236,
+    0.711,
+    0.955
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "carousel_detail",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": []
+  },
+  {
+   "file": "purista/purista_50g_infographic_purista_wide.png",
+   "sku": "purista",
+   "size": "50g",
+   "type": "infographic",
+   "width": 1536,
+   "height": 1024,
+   "jar_bbox": [
+    0.45,
+    0.1,
+    0.75,
+    0.85
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0,
+     0,
+     1,
+     1
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "purista/purista_100g_cutout_front.png",
+   "sku": "purista",
+   "size": "100g",
+   "type": "cutout",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.357,
+    0.257,
+    0.63,
+    0.943
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "studio_card",
+    "ig_post",
+    "ig_story",
+    "carousel_cover",
+    "carousel_middle",
+    "carousel_cta",
+    "fb",
+    "threads",
+    "linkedin",
+    "reel_thumb",
+    "yt_thumb",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": []
+  },
+  {
+   "file": "ultra_blend/ultra_blend_100g_lifestyle_awaken_valley.png",
+   "sku": "ultra_blend",
+   "size": "100g",
+   "type": "lifestyle",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.08,
+    0.4,
+    0.34,
+    0.97
+   ],
+   "baked_copy": true,
+   "text_zone": "top",
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0.36,
+     0.31,
+     0.97,
+     0.6
+    ]
+   ],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "ultra_blend/ultra_blend_50g_cutout_front.png",
+   "sku": "ultra_blend",
+   "size": "50g",
+   "type": "cutout",
+   "width": 1254,
+   "height": 1254,
+   "jar_bbox": [
+    0.198,
+    0.028,
+    0.803,
+    0.986
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "studio_card",
+    "ig_post",
+    "ig_story",
+    "carousel_cover",
+    "carousel_middle",
+    "carousel_cta",
+    "fb",
+    "threads",
+    "linkedin",
+    "reel_thumb",
+    "yt_thumb",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": []
+  },
+  {
+   "file": "ultra_blend/ultra_blend_100g_infographic_true_coffee_lovers.png",
+   "sku": "ultra_blend",
+   "size": "100g",
+   "type": "infographic",
+   "width": 1254,
+   "height": 1254,
+   "jar_bbox": [
+    0.36,
+    0.3,
+    0.64,
+    0.95
+   ],
+   "baked_copy": true,
+   "text_zone": null,
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [
+    [
+     0,
+     0,
+     1,
+     1
+    ]
+   ],
+   "blocked_reason": "Copy says 'Purica isn't just instant coffee' and 'Agglomerated' on an Ultra Blend (70/30 chicory) creative - wrong SKU copy."
+  },
+  {
+   "file": "ultra_blend/ultra_blend_50g_back_back.png",
+   "sku": "ultra_blend",
+   "size": "50g",
+   "type": "back",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.279,
+    0.325,
+    0.713,
+    0.993
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "carousel_detail",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": []
+  },
+  {
+   "file": "ultra_blend/ultra_blend_50g_lifestyle_roastery_hero.png",
+   "sku": "ultra_blend",
+   "size": "50g",
+   "type": "lifestyle",
+   "width": 1254,
+   "height": 1254,
+   "jar_bbox": [
+    0.2,
+    0.05,
+    0.78,
+    0.99
+   ],
+   "baked_copy": false,
+   "text_zone": "right",
+   "allowed_surfaces": [],
+   "blocked": true,
+   "text_bboxes": [],
+   "blocked_reason": "AI render, not realistic (rejected by Hiten 2026-10-14)."
+  },
+  {
+   "file": "ultra_blend/ultra_blend_100g_cutout_front.png",
+   "sku": "ultra_blend",
+   "size": "100g",
+   "type": "cutout",
+   "width": 1500,
+   "height": 1500,
+   "jar_bbox": [
+    0.339,
+    0.336,
+    0.659,
+    0.987
+   ],
+   "baked_copy": false,
+   "text_zone": null,
+   "allowed_surfaces": [
+    "studio_card",
+    "ig_post",
+    "ig_story",
+    "carousel_cover",
+    "carousel_middle",
+    "carousel_cta",
+    "fb",
+    "threads",
+    "linkedin",
+    "reel_thumb",
+    "yt_thumb",
+    "blog"
+   ],
+   "blocked": false,
+   "text_bboxes": []
+  }
+ ]
+}

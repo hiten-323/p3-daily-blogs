@@ -499,7 +499,7 @@ def _pillow_placeholder(prompt: str, width: int, height: int, label: str) -> str
         from content_generator.creative.real_jar_composer import compose_post_image
         composed = compose_post_image(
             headline="PURITY BEANS",
-            body="100% Pure Coffee. Zero Chicory.",
+            body="Pure Coffee. Zero Chicory.",
             width=width,
             height=height,
             label=label,
@@ -532,7 +532,7 @@ def _pillow_placeholder(prompt: str, width: int, height: int, label: str) -> str
 
     cx = width // 2
     draw.text((cx, height // 3),   "PURITY BEANS",    font=font_large, fill=(200, 150, 46), anchor="mm")
-    draw.text((cx, height // 2),   "100% Pure Coffee", font=font_small, fill=(245, 238, 216), anchor="mm")
+    draw.text((cx, height // 2),   "Pure Coffee", font=font_small, fill=(245, 238, 216), anchor="mm")
 
     # Truncated prompt
     short = (prompt[:60] + "...") if len(prompt) > 60 else prompt

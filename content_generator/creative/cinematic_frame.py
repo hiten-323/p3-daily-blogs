@@ -26,7 +26,7 @@ _PURE_JARS = ("bold", "purista", "purica", "prima", "premium agglomerate")
 def _product_class(product) -> str:
     """ultra, pure, or unknown. Unknown must stay claim-neutral.
 
-    Gourmet Duo and Gourmet Duo Mini are 100% coffee. A label that names
+    Gourmet Duo and Gourmet Duo Mini are pure coffee. A label that names
     one of those duos together with Ultra Blend stays neutral so neither
     jar inherits the other's chicory line.
     """
@@ -49,7 +49,7 @@ def onscreen_chrome(format_type: str, product=None) -> tuple[str, str]:
 
     Shorts stay short enough that the PART counter on the right does not
     collide with a centered badge. Zero-chicory copy is reserved for jars
-    that are actually 100% coffee.
+    that are actually pure coffee.
     """
     kind = _product_class(product)
     fmt = str(format_type or "reel").strip().lower()
@@ -58,21 +58,21 @@ def onscreen_chrome(format_type: str, product=None) -> tuple[str, str]:
         if kind == "ultra":
             cta = "ULTRA BLEND  •  70% COFFEE  30% CHICORY"
         elif kind == "pure":
-            cta = "100% COFFEE  •  ZERO CHICORY"
+            cta = "PURE COFFEE  •  ZERO CHICORY"
         else:
             cta = "INDIA'S CLEANEST INSTANT COFFEE"
     elif fmt == "story":
         if kind == "ultra":
             badge, cta = "STORY  •  ULTRA BLEND", "70% COFFEE  •  30% CHICORY"
         elif kind == "pure":
-            badge, cta = "STORY  •  ONE INGREDIENT", "100% COFFEE  •  TAP THE LINK"
+            badge, cta = "STORY  •  ONE INGREDIENT", "PURE COFFEE  •  TAP THE LINK"
         else:
             badge, cta = "STORY  •  READ THE LABEL", "INDIA'S CLEANEST INSTANT COFFEE"
     else:
         if kind == "ultra":
             badge, cta = "REEL  •  ULTRA BLEND", "70% COFFEE  •  30% CHICORY"
         elif kind == "pure":
-            badge, cta = "REEL  •  PURITY BEANS", "100% COFFEE  •  SAVE THIS"
+            badge, cta = "REEL  •  PURITY BEANS", "PURE COFFEE  •  SAVE THIS"
         else:
             badge, cta = "REEL  •  PURITY BEANS", "SAVE THIS  •  LINK IN BIO"
     return badge, cta

@@ -41,7 +41,7 @@ def _scenes_from_short(yt_short: dict) -> list[dict]:
         if kind == "ultra":
             third_on, third_sub = "ULTRA BLEND", "70% coffee. 30% chicory."
         elif kind == "pure":
-            third_on, third_sub = (product or "100% COFFEE").upper(), "100% coffee. Zero chicory."
+            third_on, third_sub = (product or "PURE COFFEE").upper(), "pure coffee. Zero chicory."
         else:
             third_on, third_sub = "READ THE LABEL", "Check the blend before you brew."
         scenes = [

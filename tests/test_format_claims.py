@@ -68,7 +68,7 @@ def test_gourmet_duo_mini_chrome_is_zero_chicory_and_ultra_is_not():
     assert _product_class("Gourmet Duo Mini vs Ultra Blend") == "unknown"
 
     badge, cta = onscreen_chrome("reel", "Gourmet Duo Mini")
-    assert "ZERO CHICORY" in cta or "100% COFFEE" in cta
+    assert "ZERO CHICORY" in cta or "PURE COFFEE" in cta
     assert "30%" not in cta
     ultra_badge, ultra_cta = onscreen_chrome("reel", "Ultra Blend")
     assert "30%" in ultra_cta

@@ -123,7 +123,7 @@ BRAND_FACTS = {
     "website": "https://p3online.in",
     "positioning": "India's Cleanest Instant Coffee",
     "core_claims": [
-        "100% Coffee",
+        "Pure Coffee",
         "Zero Chicory",
         "No Fillers",
         "No Hidden Ingredients"
@@ -157,7 +157,7 @@ REQUIRED_DAILY_ASSETS = [
 PRODUCT_CATALOG = {
     "bold": {
         "name":     "Purity Beans Bold",
-        "tagline":  "100% Agglomerated Coffee — Full Strength",
+        "tagline":  "Agglomerated Pure Coffee — Full Strength",
         "skus":     ["bold_50g", "bold_100g"],
         "best_for": ["strong coffee drinkers", "filter coffee lovers", "home brewers"],
     },
@@ -175,13 +175,13 @@ PRODUCT_CATALOG = {
     },
     "purista": {
         "name":     "Purity Beans Purista",
-        "tagline":  "Freeze-dried 100% Robusta",
+        "tagline":  "Freeze-dried pure Robusta",
         "skus":     ["purista_50g", "purista_100g"],
         "best_for": ["premium buyers", "corporate gifting", "connoisseurs"],
     },
     "prima": {
         "name":     "Purity Beans Prima",
-        "tagline":  "Premium Agglomerate — 100% Arabica, not freeze-dried",
+        "tagline":  "Premium Agglomerate — pure Arabica, not freeze-dried",
         "skus":     ["prima_50g", "prima_100g"],
         "best_for": ["everyday arabica", "cafe-style cups"],
     },
@@ -220,7 +220,7 @@ FORBIDDEN_TERMS = [
 ]
 
 REQUIRED_BRAND_MESSAGES = [
-    "100% Coffee",
+    "Pure Coffee",
     "Zero Chicory",
     "Pure Ingredients"
 ]
@@ -283,7 +283,7 @@ Brand Name: Purity Beans
 Company: Pure Pantry Provisions
 Website: https://p3online.in
 Positioning: "India's Cleanest Instant Coffee" is approved. Use it. Never place it next to a zero-chicory or no-chicory claim about Ultra Blend.
-Core Promise: Bold, Purista, Purica, and Prima are 100% coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Never call Ultra Blend no-chicory or zero-chicory.
+Core Promise: Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. Never call Ultra Blend no-chicory or zero-chicory.
 Brand Personality: Premium, Honest, Modern, Indian, Trustworthy, Scientific, Transparent
 Tone: Confident, Simple, Educational, Never exaggerated, Never misleading
 Language: ENGLISH ONLY. Never generate Hindi, Punjabi, Hinglish, Urdu, or mixed-language content. All captions, scripts, subtitles, overlays, hooks, and CTAs must be English.
@@ -293,7 +293,7 @@ Language: ENGLISH ONLY. Never generate Hindi, Punjabi, Hinglish, Urdu, or mixed-
 ## MANDATORY PRODUCT RULES
 
 Every content asset must reinforce at least one of:
-- 100% Coffee
+- Pure Coffee
 - Zero Chicory
 - Pure Ingredients
 - Better Taste
@@ -410,11 +410,11 @@ WEBSITE_PATTERNS = [
 ]
 
 BRAND_FACT_ALIASES = {
-    "100% Coffee": [
-        "100% coffee",
+    "Pure Coffee": [
+        "pure coffee",
         "100 percent coffee",
-        "100% arabica",
-        "100% robusta",
+        "pure arabica",
+        "pure robusta",
         "pure coffee",
         "only coffee"
     ],

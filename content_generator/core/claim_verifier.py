@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 # from its own product and label. Kept deliberately short — everything outside
 # this set needs backing.
 VERIFIED_FACTS = (
-    "100% coffee", "100 percent coffee", "zero chicory", "0% chicory",
+    "pure coffee", "100 percent coffee", "zero chicory", "0% chicory",
     "no chicory", "without chicory", "nothing added", "no additives",
     "no added sugar", "no preservatives", "freeze dried", "freeze-dried",
     "premium instant coffee", "arabica", "robusta", "p3online.in",

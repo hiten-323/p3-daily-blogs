@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_ultra_blend_cannot_inherit_pure_jar_claims():
     from content_generator.core.claim_verifier import verify_claims
 
-    flagged = verify_claims("Ultra Blend is 100% coffee with zero chicory.")
+    flagged = verify_claims("Ultra Blend is pure coffee with zero chicory.")
     assert any(item["type"] == "product_truth" for item in flagged)
     assert any("30% chicory" in item["reason"] for item in flagged)
 
@@ -122,8 +122,8 @@ def test_mini_and_purista_zero_chicory_praise_passes():
     from content_generator.core.claim_verifier import verify_claims
     from content_generator.core.product_truth import product_truth_findings
 
-    purista = "Purista is 100% coffee with zero chicory."
-    mini = "Gourmet Duo Mini is 100% coffee with no chicory."
+    purista = "Purista is pure coffee with zero chicory."
+    mini = "Gourmet Duo Mini is pure coffee with no chicory."
     assert product_truth_findings(purista) == []
     assert product_truth_findings(mini) == []
     assert verify_claims(purista) == []
@@ -270,9 +270,9 @@ def test_repair_clears_hook_lists_and_comparison_tables():
     table = (
         "<table><tr><td>Ultra Blend</td><td>70% coffee</td><td>30% chicory</td>"
         "<td>Agglomerated instant blend</td></tr>"
-        "<tr><td>Prima</td><td>100% Arabica</td><td>0% chicory</td>"
+        "<tr><td>Prima</td><td>pure Arabica</td><td>0% chicory</td>"
         "<td>Premium Agglomerate</td></tr>"
-        "<tr><td>Purica</td><td>100% Arabica</td><td>0% chicory</td>"
+        "<tr><td>Purica</td><td>pure Arabica</td><td>0% chicory</td>"
         "<td>Freeze-dried granules</td></tr></table>"
     )
     assert product_truth_findings(table, featured="Ultra Blend") == []
@@ -318,10 +318,10 @@ def test_ultra_blend_is_thirty_percent_chicory():
     assert product_truth_findings("Bold is 30% chicory.")
     assert SHOPIFY_PRODUCTS["ultra_blend"]["chicory_percent"] == 30
     assert SHOPIFY_PRODUCTS["ultra_blend"]["coffee_percent"] == 70
-    assert SHOPIFY_PRODUCTS["prima"]["bean_type"] == "100% Arabica"
+    assert SHOPIFY_PRODUCTS["prima"]["bean_type"] == "pure Arabica"
     prompt = format_catalog_for_prompt()
     assert "30% chicory" in prompt
-    assert "100% Arabica" in prompt
+    assert "pure Arabica" in prompt
 
 
 def test_low_caffeine_is_only_for_ultra_blend():
@@ -334,24 +334,24 @@ def test_low_caffeine_is_only_for_ultra_blend():
 def test_negation_does_not_hide_a_later_pure_claim():
     from content_generator.core.product_truth import product_truth_findings
 
-    assert product_truth_findings("Ultra Blend is not 100% coffee.") == []
+    assert product_truth_findings("Ultra Blend is not pure coffee.") == []
     assert product_truth_findings("Ultra Blend is not chicory-free.") == []
     assert product_truth_findings(
-        "Ultra Blend is not a compromise and it is 100% coffee with zero chicory."
+        "Ultra Blend is not a compromise and it is pure coffee with zero chicory."
     )
     assert product_truth_findings("Ultra Blend doesn't contain chicory.")
     assert product_truth_findings(
-        "Ultra Blend is 70% coffee, Bold is 100% coffee with zero chicory."
+        "Ultra Blend is 70% coffee, Bold is pure coffee with zero chicory."
     ) == []
 
 
 def test_prima_is_agglomerated_arabica():
     from content_generator.core.product_truth import product_truth_findings
 
-    assert product_truth_findings("Prima is freeze-dried 100% Robusta.")
-    assert product_truth_findings("Premium Agglomerate is 100% Arabica.") == []
+    assert product_truth_findings("Prima is freeze-dried pure Robusta.")
+    assert product_truth_findings("Premium Agglomerate is pure Arabica.") == []
     assert product_truth_findings(
-        "Ultra Blend is 70% coffee, while Bold is 100% coffee with zero chicory."
+        "Ultra Blend is 70% coffee, while Bold is pure coffee with zero chicory."
     ) == []
 
 
@@ -363,9 +363,9 @@ def test_true_jar_percentages_are_kept_and_mixed_stats_are_not():
     both = "Ultra Blend is 70% coffee and 30% chicory."
     assert strip(both) == both
     assert strip("Bold is 30% chicory.").strip() == ""
-    arabica = "Prima is 100% Arabica."
+    arabica = "Prima is pure Arabica."
     assert strip(arabica) == arabica
-    assert strip("We sell 100% coffee and 40% chicory.").strip() == ""
+    assert strip("We sell pure coffee and 40% chicory.").strip() == ""
 
 
 def test_pure_coffee_catalog_excludes_ultra_and_the_variety_box():
@@ -415,7 +415,7 @@ def test_blog_links_lose_glued_punctuation_and_duplicates_are_caught(tmp_path):
             "title": "A specific title about reading the coffee label",
             "meta_description": "P" * 140,
             "slug": "already-used",
-            "body": "Purica is freeze-dried 100% Arabica.",
+            "body": "Purica is freeze-dried pure Arabica.",
         },
         on_date="2026-10-04",
         output_dir=str(tmp_path),
@@ -427,7 +427,7 @@ def test_shopify_article_body_uses_plain_text_body():
     from content_generator.publisher.shopify_blog import _article_body
 
     html_out = _article_body({
-        "body": "Shop at https://p3online.in.\n\nBold is 100% Robusta.",
+        "body": "Shop at https://p3online.in.\n\nBold is pure coffee.",
         "introduction": "Read the jar.",
     })
     assert "<p>Shop at https://p3online.in</p>" in html_out
@@ -441,7 +441,7 @@ def test_shopify_article_body_uses_plain_text_body():
 def test_blog_requires_slug_and_meta_when_it_has_copy():
     from content_generator.core.blog_quality import assess
 
-    issues = assess({"title": "How to read an instant coffee label", "body": "Purica is 100% Arabica."})
+    issues = assess({"title": "How to read an instant coffee label", "body": "Purica is pure Arabica."})
     assert any("slug" in item for item in issues)
     assert any("meta" in item for item in issues)
 

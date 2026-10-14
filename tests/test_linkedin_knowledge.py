@@ -33,7 +33,7 @@ def test_extract_post_text_includes_all_structured_elements():
         "body": "Coffee extraction is basic thermodynamics. Water at 100°C scorches delicate chlorogenic acids and draws out astringent bitter tannins. When you brew at 80°C to 85°C, natural bean sweetness surfaces without sugar.",
         "brand_bridge": "That is why Purity Beans freeze-dries pure Arabica and Robusta beans at -40°C — so the cup you drink at your desk retains volatile aromatics intact.",
         "closing_question": "What temperature do you typically brew your coffee at work?",
-        "cta": f"Upgrade your daily desk ritual with 100% pure coffee at {WEBSITE_URL}",
+        "cta": f"Upgrade your daily desk ritual with pure coffee at {WEBSITE_URL}",
         "hashtags": "#CoffeeKnowledge #FoodScience #PurityBeans",
     }
     extracted = _extract_post_text({"linkedin_post": piece})

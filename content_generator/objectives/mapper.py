@@ -50,7 +50,7 @@ _KPI: dict[str, dict] = {
         "target":         250,
     },
     "Consumer Purchase": {
-        "primary_cta":    "Buy pure 100% Arabica at p3online.in — Rs 18 per cup",
+        "primary_cta":    "Buy pure Arabica at p3online.in — Rs 18 per cup",
         "success_metric": "link_clicks",
         "target":         500,
     },
@@ -108,7 +108,7 @@ _FUNNEL_MAP = {
     },
     "CONVERSION": {
         "objective":      "Consumer Purchase",
-        "primary_cta":    "Buy pure 100% Arabica at p3online.in — Rs 18 per cup",
+        "primary_cta":    "Buy pure Arabica at p3online.in — Rs 18 per cup",
         "success_metric": "link_clicks",
         "target":         50,
     },

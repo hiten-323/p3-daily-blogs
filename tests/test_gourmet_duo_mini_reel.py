@@ -67,8 +67,8 @@ def test_pipeline_selects_the_template_for_the_mini_sku_only():
     assert select_product_reel(product="Gourmet Duo") is None
     assert select_product_reel(product="Purista") is None
     assert select_product_reel(text="Purista 50g granules") is None
-    assert select_product_reel(product="Ultra Blend", text="Gourmet Duo Mini is 100% coffee") is None
-    assert select_product_reel(text="Ultra Blend is zero-chicory. Gourmet Duo Mini is 100% coffee.") is None
+    assert select_product_reel(product="Ultra Blend", text="Gourmet Duo Mini is pure coffee") is None
+    assert select_product_reel(text="Ultra Blend is zero-chicory. Gourmet Duo Mini is pure coffee.") is None
 
     hero = os.path.abspath(_HERO_DIR)
     asset = os.path.abspath(mini["path"])
@@ -82,10 +82,10 @@ def test_pipeline_selects_the_template_for_the_mini_sku_only():
     content = {
         "reels": [{
             "hook_text": "TWO JARS",
-            "caption": "Gourmet Duo Mini is Purista 50g and Purica 50g. 100% coffee, no chicory.",
+            "caption": "Gourmet Duo Mini is Purista 50g and Purica 50g. Pure coffee, no chicory.",
         }],
         "growth_reel": {"caption": "Ultra Blend is 70% coffee and 30% chicory."},
-        "stories": {"story_1": {"headline": "GOURMET DUO MINI", "subtext": "100% coffee, no chicory."}},
+        "stories": {"story_1": {"headline": "GOURMET DUO MINI", "subtext": "pure coffee, no chicory."}},
     }
     attach_product_reels(content)
     assert content["reels"][0]["reference_reel_template_id"] == TEMPLATE_ID
@@ -136,7 +136,7 @@ def test_claims_allow_zero_chicory_on_the_duo_and_reject_it_on_ultra_blend():
     from content_generator.creative.product_reel_templates import allowed_claim_text
 
     text = allowed_claim_text()
-    assert "100% coffee" in text
+    assert "pure coffee" in text
     assert "no chicory" in text
     assert "lead-free" in text.lower()
     assert "food grade" in text.lower()
@@ -147,13 +147,13 @@ def test_claims_allow_zero_chicory_on_the_duo_and_reject_it_on_ultra_blend():
     assert "Ultra Blend" not in text
     assert verify_claims(text) == []
     assert product_truth_findings("Gourmet Duo Mini is zero-chicory.") == []
-    assert product_truth_findings("Gourmet Duo Mini is 100% coffee with no chicory.") == []
+    assert product_truth_findings("Gourmet Duo Mini is pure coffee with no chicory.") == []
     assert product_truth_findings("Gourmet Duo Mini is lower caffeine.")
-    assert product_truth_findings("Gourmet Duo Mini is 100% Arabica.")
+    assert product_truth_findings("Gourmet Duo Mini is pure Arabica.")
     assert product_truth_findings("Gourmet Duo Mini is 30% chicory.")
-    assert product_truth_findings("Purica is 100% Arabica.") == []
+    assert product_truth_findings("Purica is pure Arabica.") == []
 
-    flagged = verify_claims("Ultra Blend is 100% coffee with no chicory.")
+    flagged = verify_claims("Ultra Blend is pure coffee with no chicory.")
     assert any(item["type"] == "product_truth" for item in flagged)
     assert product_truth_findings("Ultra Blend is zero-chicory.")
     assert product_truth_findings("Ultra Blend is 70% coffee and 30% chicory.") == []
@@ -207,7 +207,7 @@ def test_daily_render_reuses_the_template_without_posting_or_consuming_it(tmp_pa
         day=4,
         label="story_video",
         on_date=date(2026, 10, 12),
-        reference_text="Gourmet Duo Mini. 100% coffee, no chicory.",
+        reference_text="Gourmet Duo Mini. Pure coffee, no chicory.",
     )
     assert story is not None
     assert story.endswith("story_video_day4_2026-10-12.mp4")

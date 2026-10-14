@@ -172,7 +172,7 @@ def _wrap_html(plain_text: str, subject: str) -> str:
     <tr>
       <td style="padding: 20px 30px; border-bottom: 3px solid #C8962E;">
         <h2 style="color: #C8962E; margin: 0; font-size: 20px;">PURITY BEANS</h2>
-        <p style="color: #F5EED8; font-size: 12px; margin: 4px 0 0 0;">100% Pure Instant Coffee</p>
+        <p style="color: #F5EED8; font-size: 12px; margin: 4px 0 0 0;">Pure Instant Coffee</p>
       </td>
     </tr>
     <tr>

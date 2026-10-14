@@ -36,7 +36,7 @@ Do not reuse the reels' hooks or angles.
   "story_3": {{
     "type": "clean_truth",
     "headline": "THE INGREDIENT TRUTH",
-    "fact": "Verifiable coffee truth: e.g. Rs 18/cup home calculation vs Rs 250 cafe cup, or 100% Arabica vs chicory root filler. ZERO fabrication: NEVER invent fake customer counts, fake DMs, or synthetic handles.",
+    "fact": "Verifiable coffee truth: e.g. Rs 18/cup home calculation vs Rs 250 cafe cup, or pure Arabica vs chicory root filler. ZERO fabrication: NEVER invent fake customer counts, fake DMs, or synthetic handles.",
     "sticker_prompt": "Interactive quiz or emoji slider sticker for audience engagement"
   }},
   "story_4": {{

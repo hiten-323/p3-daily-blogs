@@ -50,7 +50,7 @@ PSYCHOLOGY_FRAMES = [
             "share_trigger": "Tag the person who still buys the big brand without reading the label."
         },
         "governance": {
-            "allowed_claims": ["100% coffee on Bold, Purista, Purica, and Prima", "zero chicory on those jars", "Ultra Blend is 70% coffee"],
+            "allowed_claims": ["pure coffee on Bold, Purista, Purica, and Prima", "zero chicory on those jars", "Ultra Blend is 70% coffee"],
             "prohibited_claims": ["competitors are toxic", "chicory causes diseases", "fabricated percentages"]
         }
     },
@@ -75,7 +75,7 @@ PSYCHOLOGY_FRAMES = [
             "share_trigger": "Save this before your next grocery run."
         },
         "governance": {
-            "allowed_claims": ["Purity Beans ingredients: 100% coffee", "read the back ingredient panel"],
+            "allowed_claims": ["Purity Beans ingredients: pure coffee", "read the back ingredient panel"],
             "prohibited_claims": ["other food products are poisoned", "unverified FSSAI violations"]
         }
     },
@@ -101,7 +101,7 @@ PSYCHOLOGY_FRAMES = [
             "share_trigger": "Send this to someone who still starts the day on autopilot."
         },
         "governance": {
-            "allowed_claims": ["pure coffee ritual", "100% coffee ingredients", "premium morning routine"],
+            "allowed_claims": ["pure coffee ritual", "pure coffee ingredients", "premium morning routine"],
             "prohibited_claims": ["instant coffee cures drowsiness forever", "medical sleep cures"]
         }
     },
@@ -179,7 +179,7 @@ PSYCHOLOGY_FRAMES = [
             "share_trigger": "Send this to anyone who thinks pure coffee has to be expensive."
         },
         "governance": {
-            "allowed_claims": ["Rs 18 per cup serving cost", "cafe coffee often costs Rs 180+", "Purica is freeze-dried 100% Arabica"],
+            "allowed_claims": ["Rs 18 per cup serving cost", "cafe coffee often costs Rs 180+", "Purica is freeze-dried pure Arabica"],
             "prohibited_claims": ["cafe coffee is unhealthy", "unverified price calculations"]
         }
     },
@@ -198,13 +198,13 @@ PSYCHOLOGY_FRAMES = [
             "example_hooks": [
                 "The only claim that matters: nothing is hiding in this jar.",
                 "You should not need a chemistry degree to trust your coffee.",
-                "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee. Written so you can verify it."
+                "Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is 70% coffee. Written so you can verify it."
             ],
             "best_formats": ["carousel", "reel"],
             "share_trigger": "Save this if you are tired of guessing what is in your cup."
         },
         "governance": {
-            "allowed_claims": ["clear labeling", "100% coffee on Bold, Purista, Purica, and Prima", "Ultra Blend is 70% coffee"],
+            "allowed_claims": ["clear labeling", "pure coffee on Bold, Purista, Purica, and Prima", "Ultra Blend is 70% coffee"],
             "prohibited_claims": ["non-labeled foods cause cancer", "other coffee brands are illegal or toxic"]
         }
     }

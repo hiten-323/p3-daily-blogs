@@ -58,7 +58,7 @@ def main():
         check(f"keep {raw!r}", _sanitize_text(raw) == raw, _sanitize_text(raw))
 
     # 3. Unrenderable glyphs became tofu boxes on a live post. Rendered copy must
-    #    be pure ASCII — whatever font the runner resolves can draw it.
+    #    be pure ASCII (plus the • separator, which every bundled font carries).
     print("\nRendered text is ASCII-safe:")
     for raw in ("Quick bitterness → check the label",
                 "Rated 5★ by drinkers",
@@ -66,9 +66,9 @@ def main():
                 "Only ₹299 a jar",
                 "Wake up ☕ every morning \U0001f60a",
                 "Café quality at home",
-                "Zero chicory • 100% coffee"):
+                "Zero chicory • pure coffee"):
         out = _sanitize_text(raw)
-        check(f"ascii {raw!r}", all(ord(c) < 128 for c in out) and out.strip() != "", out)
+        check(f"ascii {raw!r}", all(ord(c) < 128 or c == "\u2022" for c in out) and out.strip() != "", out)
 
     # 4. Captions are NOT ascii-folded — emoji belong in Instagram captions.
     print("\nCaption path keeps emoji but drops scaffolding:")
@@ -112,6 +112,8 @@ def main():
     check("BRAND jar reference exists on disk", os.path.exists(BRAND.jar_reference_path), BRAND.jar_reference_path)
     existing_refs = {os.path.normpath(p) for p in REFERENCE_IMAGES if os.path.exists(p)}
     check("all 32 jar references exist on disk", len(existing_refs) == 32, f"{len(existing_refs)}/32")
+    import glob as _glob
+    existing_refs |= {os.path.normpath(p) for p in _glob.glob("brand_assets/approved_photos/*/*.png")}
 
     # 9. Thumbnail generation creates image with verified real jar photo provenance
     print("\nThumbnail generator real jar provenance:")

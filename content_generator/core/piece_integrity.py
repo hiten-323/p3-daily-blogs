@@ -203,13 +203,13 @@ def _compose_caption(piece: dict, label: str, seed: str) -> str:
     if "purity beans" not in low:
         text += " Purity Beans."
     if not any(token in low for token in (
-        "100% coffee", "100 percent coffee", "zero chicory", "no chicory", "pure coffee",
-        "100% arabica", "100% robusta", "70% coffee", "70 percent coffee",
+        "pure coffee", "100 percent coffee", "zero chicory", "no chicory", "pure coffee",
+        "pure arabica", "pure robusta", "70% coffee", "70 percent coffee",
     )):
         if "ultra" in low:
             text += " Ultra Blend is 70% coffee."
         else:
-            text += " Bold, Purista, Purica, and Prima are 100% coffee with zero chicory."
+            text += " Bold, Purista, Purica, and Prima are pure coffee with zero chicory."
     if "p3online.in" not in low:
         text += " Visit p3online.in."
     return text.strip()

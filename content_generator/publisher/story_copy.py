@@ -15,14 +15,14 @@ This module resolves a headline + reply line from today's approved copy
 from __future__ import annotations
 
 STORY_COPY_BANK: list[tuple[str, str]] = [
-    ("READ THE BACK", "Commercial jars often hide root fillers. Demand 100% pure bean."),
-    ("ONE INGREDIENT", "100% Pure Coffee. Zero fillers, zero compromise."),
+    ("READ THE BACK", "Commercial jars often hide root fillers. Demand pure bean."),
+    ("ONE INGREDIENT", "Pure Coffee. Zero fillers, zero compromise."),
     ("TURN THE JAR", "The real truth is on the back panel. Check yours tonight."),
-    ("STOP DRINKING ROOT", "Real coffee lovers drink 100% pure beans. Taste the difference."),
+    ("STOP DRINKING ROOT", "Real coffee lovers drink pure beans. Taste the difference."),
     ("FRONT IS MARKETING", "Flip your jar around. Is it pure coffee or cheap root filler?"),
     ("CLEAN MORNING ENERGY", "No heavy crash. Pure Arabica & Robusta craft in every cup."),
-    ("YOUR KITCHEN TEST", "Does your coffee leave muddy residue? Demand 100% pure."),
-    ("BREW PURE", "Join real coffee lovers switching to 100% pure coffee."),
+    ("YOUR KITCHEN TEST", "Does your coffee leave muddy residue? Demand pure coffee."),
+    ("BREW PURE", "Join real coffee lovers switching to pure coffee."),
 ]
 
 # The pair that printed identically for weeks. Tests ban it as a default.

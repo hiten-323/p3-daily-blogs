@@ -149,7 +149,7 @@ def template_record() -> dict | None:
         "pure_coffee": True,
         "chicory": product.get("chicory") or "",
         "allowed_claims": [
-            "100% coffee",
+            "pure coffee",
             "no chicory",
             "certified food-grade lead-free glass jars",
         ],
@@ -167,7 +167,7 @@ def allowed_claim_text(record: dict | None = None) -> str:
         return ""
     packaging = record.get("packaging") or "certified food-grade lead-free glass jars"
     return (
-        f"Gourmet Duo Mini is Purista 50g and Purica 50g, 100% coffee, no chicory, "
+        f"Gourmet Duo Mini is Purista 50g and Purica 50g, pure coffee, no chicory, "
         f"in {packaging}. ₹{record['price_inr']} (was ₹{record['compare_at_inr']}). "
         f"Shop at {record['store']}"
     )

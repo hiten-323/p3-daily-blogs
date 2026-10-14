@@ -224,7 +224,7 @@ def _extract_caption(content: dict, day: int = 0) -> str:
     """
     piece = _caption_piece(content)
     if not piece:
-        return _assemble_caption("Pure instant coffee. Zero chicory. 100% coffee.", {}, day)
+        return _assemble_caption("Pure instant coffee. Zero chicory. Pure coffee.", {}, day)
 
     body = str(
         piece.get("caption") or piece.get("body") or piece.get("hook")
@@ -487,7 +487,7 @@ def post_reel_video(video_url: str, caption: str) -> dict:
     try:
         params = {"media_type": "REELS", "video_url": video_url,
                   "caption": caption, "share_to_feed": "true",
-                  "audio_name": "Purity Beans • 100% Pure Coffee",
+                  "audio_name": "Purity Beans • Pure Coffee",
                   "access_token": token}
         # product tags on reels (if IG Shopping configured)
         try:
@@ -540,7 +540,7 @@ def _post_reel_direct_binary(video_path: str, caption: str) -> dict:
             "upload_type": "resumable",
             "caption": caption,
             "share_to_feed": "true",
-            "audio_name": "Purity Beans • 100% Pure Coffee",
+            "audio_name": "Purity Beans • Pure Coffee",
             "access_token": token,
         }
         init_data = meta_graph.graph_request(

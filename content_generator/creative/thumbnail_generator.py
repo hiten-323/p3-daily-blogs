@@ -22,7 +22,7 @@ def _cover_claim(product: str) -> str:
     if kind == "ultra":
         return "70% COFFEE. 30% CHICORY."
     if kind == "pure":
-        return "100% COFFEE. ZERO CHICORY."
+        return "PURE COFFEE. ZERO CHICORY."
     return "INDIA'S CLEANEST INSTANT COFFEE."
 
 

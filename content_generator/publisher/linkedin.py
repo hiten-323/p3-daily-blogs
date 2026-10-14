@@ -345,7 +345,7 @@ def _create_post(text: str, image_urn: str | None) -> dict:
     if image_urn:
         payload["content"] = {
             "media": {
-                "altText": "Purity Beans — 100% Pure Instant Coffee",
+                "altText": "Purity Beans — Pure Instant Coffee",
                 "id":      image_urn,
             }
         }

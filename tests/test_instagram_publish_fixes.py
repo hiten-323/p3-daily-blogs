@@ -45,7 +45,7 @@ def _reel():
         "caption": (
             "The front of a coffee pack is marketing. The back is the recipe. "
             "Check the ingredient list: chicory is a root, not a bean, and it changes the cup. "
-            "Purity Beans is 100% coffee, zero chicory. Read the label, then visit p3online.in."
+            "Purity Beans is pure coffee, zero chicory. Read the label, then visit p3online.in."
         ),
         "cta": "Read the label at p3online.in",
         "comment_trigger": "What does the label on your jar actually say?",
@@ -79,7 +79,7 @@ def _carousel():
              "body": "The difference is taste. A root makes the cup muddy. Coffee does not.",
              "visual": "Two cups side by side"},
             {"slide": 6, "heading": "Do it tonight",
-             "body": "Turn the jar around and read the list. Purity Beans is 100% coffee, zero chicory. p3online.in",
+             "body": "Turn the jar around and read the list. Purity Beans is pure coffee, zero chicory. p3online.in",
              "visual": "Hand turning a jar on a kitchen counter"},
         ],
         "cta": "Read the label at p3online.in",

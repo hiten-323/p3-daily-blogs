@@ -29,6 +29,6 @@ PLATFORM INTENT (FACEBOOK 2026):
   "hook": "Relatable 1-line hook that connects with everyday Indian coffee drinkers.",
   "body": "150-250 words. Warm, engaging, storytelling style. Discusses real coffee vs filler, or brewing tips that anyone can try at home. Clear paragraph breaks.",
   "community_question": "A friendly, conversational question that asks about their morning routine, favorite mug, or family coffee debate.",
-  "cta": "Follow our page for daily honest coffee tips. Discover 100% pure coffee at {WEBSITE_URL}",
+  "cta": "Follow our page for daily honest coffee tips. Discover pure coffee at {WEBSITE_URL}",
   "hashtags": "{FB_HASHTAGS}"
 }}"""

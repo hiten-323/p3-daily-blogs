@@ -56,7 +56,7 @@ def main():
     print("\nrequire_claim_verification enforces:")
     dirty = {"caption": "Most big brands add up to 50 percent chicory root filler.",
              "hook": "Read the label"}
-    clean = {"caption": "Purity Beans is 100% coffee, zero chicory. Shop at p3online.in",
+    clean = {"caption": "Purity Beans is pure coffee, zero chicory. Shop at p3online.in",
              "hook": "Read the label before you buy"}
     ok_dirty, errs = validate_asset("carousel", dirty,
                                     {"require_claim_verification": True})
@@ -91,7 +91,7 @@ def main():
 
     # 6. ...and does not flag legitimate brand copy.
     print("\nVerified brand facts are not flagged:")
-    for text in ("Purity Beans is 100% coffee, zero chicory.",
+    for text in ("Purity Beans is pure coffee, zero chicory.",
                  "Read the label before you buy your next jar.",
                  "Freeze dried for a richer aroma.",
                  "Shop now at p3online.in"):
@@ -107,7 +107,7 @@ def main():
                  "Competitors cut their blends with nearly half chicory.",
                  "Other brands hide chicory in their blends."):
         check(f"stripped: {text[:44]!r}", strip(text).strip() == "", repr(strip(text)))
-    for text in ("Purity Beans is 100% coffee, zero chicory.",
+    for text in ("Purity Beans is pure coffee, zero chicory.",
                  "Purity Beans - 100 percent coffee, nothing added."):
         check(f"kept: {text[:44]!r}", strip(text).strip() == text.strip(), repr(strip(text)))
 

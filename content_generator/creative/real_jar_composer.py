@@ -367,7 +367,8 @@ _SCAFFOLD_STRICT = re.compile(
 # ASCII equivalents, then drop anything still non-ASCII. On-screen brand copy is
 # English, so this is total coverage regardless of which font the runner resolves.
 _GLYPH_MAP = {
-    "•": "-", "·": "-", "‧": "-", "▪": "-", "●": "-", "‣": "-",
+    "·": "•", "‧": "•",  # keep • separators (fonts carry U+2022)
+    "▪": "-", "●": "-", "‣": "-",
     "–": "-", "—": "-", "―": "-", "‑": "-", "−": "-",
     "'": "'", "'": "'", "‚": ",", """: '"', """: '"', "„": '"',
     "…": "...", "→": "->", "←": "<-", "⇒": "=>", "↑": "^", "↓": "v",
@@ -396,7 +397,7 @@ def _sanitize_text(text: str) -> str:
         t = t.replace(bad, good)
     # Decompose accents (é -> e + mark) so the base letter survives the drop.
     t = unicodedata.normalize("NFKD", t)
-    t = "".join(ch for ch in t if ord(ch) < 128)
+    t = "".join(ch for ch in t if ord(ch) < 128 or ch == "•")
     return re.sub(r"\s{2,}", " ", t).strip()
 
 
@@ -429,8 +430,8 @@ def _claim_pill(product, headline: str) -> str:
         return "ULTRA BLEND  |  70% COFFEE  30% CHICORY"
     if kind == "pure":
         if "label" in hl or "ingredient" in hl:
-            return "LABEL TRUTH  |  100% COFFEE"
-        return "100% COFFEE  |  ZERO CHICORY"
+            return "LABEL TRUTH  |  PURE COFFEE"
+        return "PURE COFFEE  |  ZERO CHICORY"
     if "label" in hl or "ingredient" in hl:
         return "LABEL TRUTH  |  READ THE JAR"
     if "instant" in hl:
@@ -457,6 +458,14 @@ def compose_post_image(
     except ImportError:
         logger.warning("[real_jar] Pillow not installed")
         return None
+
+    # Official approved photos first (as-is, crop/resize only) — 2026-10-14.
+    from content_generator.creative import approved_photos as _ap
+    if _ap.enabled():
+        _surf = "reel_thumb" if height > width * 1.5 else "ig_post"
+        _p = _ap.render(_surf, width, height, headline, body, day, idx, product, label)
+        if _p:
+            return _p
 
     # Any on-screen copy means we need a substrate with no copy of its own.
     needs_clean_substrate = bool(str(headline or "").strip() or str(body or "").strip())
@@ -689,7 +698,7 @@ def compose_post_image(
     f_font = _font("footer", max(16, width // 44))
     fy = height - int(height * 0.040)
     draw.line([(int(width * 0.08), fy - 16), (int(width * 0.92), fy - 16)], fill=theme["accent"], width=1)
-    footer_text = _sanitize_text("PURITY BEANS  |  100% PURE COFFEE  |  p3online.in")
+    footer_text = _sanitize_text("PURITY BEANS  |  PURE COFFEE  |  p3online.in")
     draw.text((width // 2, fy), footer_text, font=f_font, fill=theme["accent"], anchor="mm")
 
     # Save
@@ -764,6 +773,18 @@ def compose_carousel_slide(
     except ImportError:
         logger.warning("[real_jar] Pillow not installed")
         return None
+
+    from content_generator.creative import approved_photos as _ap
+    if _ap.enabled():
+        _last = idx == max(1, total_slides) - 1
+        if idx == 0 or _last:
+            _p = _ap.render("carousel_cta" if _last and idx else "carousel_cover", width, height,
+                            heading, body, day, idx, None, label)
+        else:
+            _p = _ap.render("carousel_middle", width, height, heading, body, day, idx,
+                            None, label, prefer="studio")
+        if _p:
+            return _p
 
     resample_filter = getattr(Image, "Resampling", Image).LANCZOS
     theme = _THEMES[day % len(_THEMES)]
@@ -870,12 +891,12 @@ def compose_carousel_slide(
                   fill=theme.get("pill_text", theme["accent"]), anchor="mm")
 
         # Top Bar: Category Pill on Left
-        pill_text = "THE CHICORY AUDIT  |  100% PURE"
+        pill_text = "THE CHICORY AUDIT  |  PURE COFFEE"
         hl_lower = (heading or "").lower()
         if "instant" in hl_lower:
             pill_text = "INSTANT COFFEE AUDIT"
         elif "label" in hl_lower or "ingredient" in hl_lower:
-            pill_text = "LABEL TRUTH  |  100% COFFEE"
+            pill_text = "LABEL TRUTH  |  PURE COFFEE"
         pw = int(draw.textlength(pill_text, font=cnt_font))
         px = 56
         pill_box2 = Image.new("RGBA", (width, height), (0, 0, 0, 0))
@@ -928,7 +949,7 @@ def compose_carousel_slide(
         f_font = _font("footer", 15)
         fy = height - 36
         draw.line([(60, fy - 14), (width - 60, fy - 14)], fill=theme["accent"], width=1)
-        draw.text((width // 2, fy), "PURITY BEANS  |  100% PURE COFFEE  |  p3online.in",
+        draw.text((width // 2, fy), "PURITY BEANS  |  PURE COFFEE  |  p3online.in",
                   font=f_font, fill=theme["accent"], anchor="mm")
 
     # ── MIDDLE SLIDES: EDITORIAL VALUE CARDS ──────────────────────────────────
@@ -1061,14 +1082,14 @@ def compose_carousel_slide(
         if "freeze" in content_full:
             box_header = "THE PURITY AROMA DIFFERENCE"
         elif "standard" in content_full or "100%" in content_full:
-            box_header = "WHY 100% ARABICA & ROBUSTA WINS"
+            box_header = "WHY PURE ARABICA & ROBUSTA WINS"
         draw.text((card_x0 + 64, box1_y0 + 22), box_header, font=q_font, fill=theme.get("pill_text", theme["accent"]))
 
         exp_font = _font("body", 21)
         if "chicory" in content_full or "filler" in content_full:
             exp_text = "Chicory root is not coffee. When brands add chicory, you miss out on genuine coffee antioxidants and natural bean sweetness, drinking burnt root filler instead."
         elif "blend" in content_full:
-            exp_text = "Always look for '100% Pure Coffee' on the ingredients panel. Real single-origin coffee never requires roasted chicory to fake its body or color."
+            exp_text = "Always look for 'Pure Coffee' on the ingredients panel. Real single-origin coffee never requires roasted chicory to fake its body or color."
         elif "freeze" in content_full:
             exp_text = "Freeze-drying operates under gentle vacuum freezing, locking in delicate natural coffee oils that commercial high-heat spray drying completely destroys."
         else:
@@ -1096,7 +1117,7 @@ def compose_carousel_slide(
 
             chk_font = _font("body", 19)
             steps = [
-                ("1.", "Inspect the Back Panel: The ingredients must read '100% Coffee' only."),
+                ("1.", "Inspect the Back Panel: The ingredients must read 'Pure Coffee' only."),
                 ("2.", "Spot the Word 'Blend': Often used to disguise 30% to 49% chicory filler."),
                 ("3.", "Choose Purity Beans: Bold, Purista, and Purica never contain added root filler."),
             ]
@@ -1115,7 +1136,7 @@ def compose_carousel_slide(
         canvas = Image.alpha_composite(canvas.convert("RGBA"), banner_box).convert("RGB")
         draw = ImageDraw.Draw(canvas)
         callout_font = _font("footer", 16)
-        c_text = "THE PURITY STANDARD: 100% PURE COFFEE  |  ZERO FILLERS  |  p3online.in"
+        c_text = "THE PURITY STANDARD: PURE COFFEE  |  ZERO FILLERS  |  p3online.in"
         draw.text((card_x0 + card_w // 2, banner_y0 + banner_h // 2), c_text, font=callout_font,
                   fill=theme.get("pill_text", theme["accent"]), anchor="mm")
 
@@ -1233,7 +1254,7 @@ def compose_carousel_slide(
         h_font = _font("title", 40)
         hy = 120
         max_w = width - 120
-        outro_heading = heading if heading else "DRINK 100% REAL COFFEE. NEVER SETTLE."
+        outro_heading = heading if heading else "DRINK PURE, REAL COFFEE. NEVER SETTLE."
         for line in _wrap(draw, outro_heading.upper(), h_font, max_w)[:2]:
             draw.text((60, hy), line, font=h_font, fill=theme["text_primary"], anchor="la")
             hy += int(h_font.size * 1.20)
@@ -1256,7 +1277,7 @@ def compose_carousel_slide(
         actions = [
             ("SAVE THIS POST", "Bookmark for your next grocery or coffee run"),
             ("SHARE THE TRUTH", "Send to a friend who drinks instant coffee"),
-            ("TASTE REAL COFFEE", "Single-origin 100% pure starting at Rs 18/cup"),
+            ("TASTE REAL COFFEE", "Single-origin pure starting at Rs 18/cup"),
         ]
         ay = card_y0 + 24
         for title, desc in actions:
@@ -1290,7 +1311,7 @@ def compose_carousel_slide(
         f_font = _font("footer", 15)
         fy = height - 36
         draw.line([(60, fy - 14), (width - 60, fy - 14)], fill=theme["accent"], width=1)
-        draw.text((width // 2, fy), "PURITY BEANS  |  100% PURE COFFEE  |  p3online.in",
+        draw.text((width // 2, fy), "PURITY BEANS  |  PURE COFFEE  |  p3online.in",
                   font=f_font, fill=theme["accent"], anchor="mm")
 
     # Save

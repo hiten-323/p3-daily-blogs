@@ -31,7 +31,7 @@ def test_threads_missing_native_copy_does_not_fallback_to_linkedin():
     content = {
         "linkedin_post": {
             "hook": "Why pouring 100°C water destroys your morning coffee.",
-            "cta": "Explore 100% pure coffee at https://p3online.in"
+            "cta": "Explore pure coffee at https://p3online.in"
         }
     }
     extracted = threads._extract_thread_text(content)

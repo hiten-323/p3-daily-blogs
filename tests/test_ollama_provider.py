@@ -37,7 +37,7 @@ def test_ollama_call_success(monkeypatch):
     monkeypatch.setattr(ollama, "is_available", lambda: True)
 
     good_body = {
-        "choices": [{"message": {"content": '{"hook": "Pure Coffee", "body": "100% Arabica"}'}}],
+        "choices": [{"message": {"content": '{"hook": "Pure Coffee", "body": "pure Arabica"}'}}],
         "usage": {"prompt_tokens": 12, "completion_tokens": 8},
     }
 
@@ -47,7 +47,7 @@ def test_ollama_call_success(monkeypatch):
     monkeypatch.setattr(ollama._http, "post", fake_post)
 
     text, usage = ollama.call("Write a post.", 100)
-    assert text == '{"hook": "Pure Coffee", "body": "100% Arabica"}'
+    assert text == '{"hook": "Pure Coffee", "body": "pure Arabica"}'
     assert usage["prompt_tokens"] == 12
     assert usage["completion_tokens"] == 8
 
