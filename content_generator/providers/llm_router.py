@@ -1,8 +1,9 @@
 """
 LLM router — circuit breaker, rate limiter, retry, cost tracking.
 
-Call order: Gemini → NVIDIA → Groq → Cerebras → DeepSeek → OpenRouter
-(LLM_PROVIDER_ORDER overrides). NVIDIA fails over fast on timeouts/empty replies.
+Call order: Gemini → Groq → Cerebras → OpenRouter(:free) → GitHub Models →
+Mistral → Cloudflare Workers AI → Hugging Face → DeepSeek → NVIDIA (last).
+LLM_PROVIDER_ORDER overrides. Missing keys are skipped; failover is quick.
 Each provider has an independent circuit breaker: after 3 consecutive failures
 it is disabled for 15 minutes before being retried.
 A threading.Semaphore(2) limits concurrent outbound API calls to prevent
@@ -14,6 +15,7 @@ from threading import Semaphore, Lock
 from dataclasses import dataclass, field
 
 from content_generator.providers import gemini, groq, openrouter, deepseek, cerebras, nvidia, ollama
+from content_generator.providers import github_models, mistral, cloudflare, huggingface
 from content_generator.parsers.json_parser import extract
 
 logger = logging.getLogger(__name__)
@@ -73,6 +75,10 @@ _STATES = {
     "nvidia": _ProviderState("nvidia"),
     "gemini": _ProviderState("gemini"),
     "deepseek": _ProviderState("deepseek"),
+    "github_models": _ProviderState("github_models"),
+    "mistral": _ProviderState("mistral"),
+    "cloudflare": _ProviderState("cloudflare"),
+    "huggingface": _ProviderState("huggingface"),
     "cerebras": _ProviderState("cerebras"),
     "groq": _ProviderState("groq"),
     "openrouter": _ProviderState("openrouter"),
@@ -143,12 +149,20 @@ _ALL_PROVIDERS = {
     "groq": groq.call,
     "cerebras": cerebras.call,
     "deepseek": deepseek.call,
+    "github_models": github_models.call,
+    "mistral": mistral.call,
+    "cloudflare": cloudflare.call,
+    "huggingface": huggingface.call,
     "openrouter": openrouter.call,
 }
-# Gemini first: on day 286 it answered regen_reel_1 in 3.1s while NVIDIA timed
-# out (45s x models) or returned empty. NVIDIA stays second with fast failover.
-# Override with LLM_PROVIDER_ORDER="nvidia,gemini,..." if NVIDIA is healthy again.
-_DEFAULT_ORDER = ("gemini", "nvidia", "groq", "cerebras", "deepseek", "openrouter")
+# Free providers first (Hiten: any free provider is fine), Gemini leading; it
+# answered in ~3s on day 286 while NVIDIA timed out or returned empty. NVIDIA is
+# last. Providers without a key return (None, {}) and are skipped instantly.
+# LLM_PROVIDER_ORDER="a,b,..." overrides; unnamed providers keep this order after it.
+_DEFAULT_ORDER = (
+    "gemini", "groq", "cerebras", "openrouter", "github_models",
+    "mistral", "cloudflare", "huggingface", "deepseek", "nvidia",
+)
 
 
 def _provider_order() -> list:
@@ -170,6 +184,10 @@ _KEY_GETTERS = (
     ("gemini", gemini.get_key),
     ("cerebras", cerebras.get_key),
     ("deepseek", deepseek.get_key),
+    ("github_models", github_models.get_key),
+    ("mistral", mistral.get_key),
+    ("cloudflare", cloudflare.get_key),
+    ("huggingface", huggingface.get_key),
     ("openrouter", openrouter.get_key),
 )
 
@@ -307,10 +325,10 @@ def call(prompt: str, label: str, max_tokens: int = 3000) -> dict:
             retries = 1
         elif name == "gemini":
             retries = 2
-        elif name in ("groq", "deepseek", "cerebras"):
+        elif name in ("groq", "deepseek", "cerebras", "openrouter"):
             retries = 2
         else:
-            retries = 4
+            retries = 1  # free-tier OpenAI-compatible providers: fail over fast
         raw = _try_provider(name, fn, full_prompt, max_tokens, label, retries)
         if not raw:
             continue

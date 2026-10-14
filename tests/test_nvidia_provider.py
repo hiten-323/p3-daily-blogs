@@ -1,4 +1,4 @@
-"""NVIDIA NIM provider: Gemini first, NVIDIA second with fast failover."""
+"""NVIDIA NIM provider: free providers first, NVIDIA last, fast failover."""
 from __future__ import annotations
 
 import logging
@@ -35,15 +35,16 @@ def _clean_router():
     router.reset_cascade_log()
 
 
-def test_provider_order_starts_with_gemini_then_nvidia():
+def test_provider_order_free_first_nvidia_last():
     names = [name for name, _fn in router._PROVIDERS]
-    assert names == ["gemini", "nvidia", "groq", "cerebras", "deepseek", "openrouter"]
+    assert names == ["gemini", "groq", "cerebras", "openrouter", "github_models",
+                     "mistral", "cloudflare", "huggingface", "deepseek", "nvidia"]
 
 
 def test_provider_order_env_override(monkeypatch):
     monkeypatch.setenv("LLM_PROVIDER_ORDER", "nvidia, gemini")
     names = [name for name, _fn in router._provider_order()]
-    assert names[:2] == ["nvidia", "gemini"] and len(names) == 6
+    assert names[:2] == ["nvidia", "gemini"] and len(names) == 10
 
 
 def test_empty_model_env_keeps_the_default(monkeypatch):
@@ -179,6 +180,8 @@ def test_429_is_retried_then_reported(monkeypatch):
 
 
 def test_429_falls_back_to_groq(_clean_router, monkeypatch):
+    # NVIDIA is last in production; pin it ahead of Groq to test its failover.
+    monkeypatch.setattr(router, "_PROVIDERS", [("nvidia", nvidia.call), ("groq", groq.call)])
     monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
     monkeypatch.setenv("GROQ_API_KEY", "gsk_testkeyvalue")
     monkeypatch.setattr(nvidia.time, "sleep", lambda _seconds: None)
@@ -280,6 +283,8 @@ def test_empty_content_tries_the_next_model(monkeypatch, caplog, content):
 
 
 def test_empty_content_on_every_model_falls_back_to_groq(_clean_router, monkeypatch):
+    # NVIDIA is last in production; pin it ahead of Groq to test its failover.
+    monkeypatch.setattr(router, "_PROVIDERS", [("nvidia", nvidia.call), ("groq", groq.call)])
     monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
     monkeypatch.setenv("NVIDIA_MODEL", "empty/one,empty/two")
     monkeypatch.setenv("GROQ_API_KEY", "gsk_testkeyvalue")

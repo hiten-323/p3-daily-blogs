@@ -124,6 +124,11 @@ _LLM_PROBE_ENV = {
     "OPENROUTER_API_KEY": "${{ secrets.OPENROUTER_API_TOKEN }}",
     "DEEPSEEK_API_KEY": "${{ secrets.DEEPSEEK_API_KEY }}",
     "CEREBRAS_API_KEY": "${{ secrets.CEREBRAS_API_KEY }}",
+    "GITHUB_MODELS_TOKEN": "${{ secrets.GITHUB_TOKEN }}",
+    "MISTRAL_API_KEY": "${{ secrets.MISTRAL_API_KEY }}",
+    "CLOUDFLARE_API_TOKEN": "${{ secrets.CLOUDFLARE_API_TOKEN }}",
+    "CLOUDFLARE_ACCOUNT_ID": "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}",
+    "HF_TOKEN": "${{ secrets.HF_TOKEN }}",
 }
 
 

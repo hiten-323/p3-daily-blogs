@@ -81,3 +81,40 @@ def test_nvidia_skips_sick_model_and_fails_fast(monkeypatch):
     text, usage = nvidia.call("p", 10)
     assert text is None and calls == [] and "unhealthy" in usage["error"]
     nvidia._reset_model_health()
+
+
+def test_new_free_providers_skip_without_keys(monkeypatch):
+    from content_generator.providers import cloudflare, github_models, huggingface, mistral
+    for var in ("GITHUB_MODELS_TOKEN", "MISTRAL_API_KEY", "CLOUDFLARE_API_TOKEN",
+                "CLOUDFLARE_ACCOUNT_ID", "HF_TOKEN"):
+        monkeypatch.delenv(var, raising=False)
+    for mod in (cloudflare, github_models, huggingface, mistral):
+        assert mod.call("p", 10) == (None, {})
+    monkeypatch.setenv("CLOUDFLARE_API_TOKEN", "t")  # account id still missing
+    assert cloudflare.get_key() == ""
+
+
+def test_free_provider_fails_over_on_empty(monkeypatch):
+    from content_generator.providers import mistral, openai_compat
+
+    class R:
+        status_code = 200
+        text = ""
+        def __init__(self, c): self.c = c
+        def json(self): return {"choices": [{"message": {"content": self.c}}]}
+
+    seen = []
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen.append(json["model"])
+        return R("" if len(seen) == 1 else '{"ok": 1}')
+
+    monkeypatch.setattr(openai_compat._http, "post", post)
+    monkeypatch.setenv("MISTRAL_API_KEY", "k")
+    text, usage = mistral.call("p", 10)
+    assert text == '{"ok": 1}' and len(seen) == 2
+
+
+def test_openrouter_only_free_models():
+    from content_generator.providers import openrouter
+    assert openrouter.MODELS and all(m.endswith(":free") for m in openrouter.MODELS)

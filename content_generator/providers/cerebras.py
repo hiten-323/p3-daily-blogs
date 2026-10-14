@@ -23,7 +23,7 @@ def get_key() -> str:
 
 def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
     import time
-    BACKOFF = [5, 15, 30, 60]
+    BACKOFF = [2, 5]  # quick failover; the router moves on to the next free provider
     key = get_key()
     if not key:
         return None, {}
@@ -32,7 +32,7 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
     last_failure: dict = {}
 
     for model in (m.strip() for m in MODELS if m.strip()):
-        for attempt in range(4):
+        for attempt in range(2):
             try:
                 resp = _http.post(
                     _URL,
@@ -43,12 +43,12 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
                         "temperature": 0.92,
                         "max_tokens": max_tokens,
                     },
-                    timeout=120,
+                    timeout=45,
                 )
             except Exception as e:
-                logger.error("Cerebras %s request exception (attempt %d/4): %s", model, attempt + 1, e)
+                logger.error("Cerebras %s request exception (attempt %d/2): %s", model, attempt + 1, e)
                 last_failure = {"status_code": 0, "model": model, "error": str(e)}
-                if attempt < 3:
+                if attempt < 1:
                     time.sleep(BACKOFF[attempt])
                     continue
                 break
@@ -79,8 +79,8 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
             last_failure = {"status_code": resp.status_code, "model": model,
                             "error": resp.text}
             if resp.status_code == 429:
-                logger.warning("Cerebras %s rate limited (429) — attempt %d/4 — sleeping", model, attempt + 1)
-                if attempt < 3:
+                logger.warning("Cerebras %s rate limited (429) — attempt %d/2 — sleeping", model, attempt + 1)
+                if attempt < 1:
                     time.sleep(BACKOFF[attempt])
                     continue
                 # Quota may be model-specific; try the next configured model.
