@@ -3058,5 +3058,23 @@
     "rate_limit": {},
     "exception_type": "",
     "exception_msg": ""
+  },
+  {
+    "ts": "2026-10-14T17:40:09",
+    "day_number": 285,
+    "platform": "threads",
+    "content_id": "pb_6519eaa6ec",
+    "generation_id": "gen_2026-10-13_9ffa0235",
+    "publisher_version": "2.3.0",
+    "status": "failure",
+    "duration_ms": 0,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "other",
+    "error": "retry_limit_reached",
+    "response": "{\"success\": false, \"attempted\": false, \"skipped\": true, \"ledger_status\": \"FAILED\", \"post_id\": \"\", \"media_id\": \"\", \"video_id\": \"\", \"permalink\": \"\", \"url\": \"\"}",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
   }
 ]
