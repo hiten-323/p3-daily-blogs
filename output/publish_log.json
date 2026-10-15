@@ -1298,5 +1298,73 @@
       "published_platforms": [],
       "timestamp": "2026-10-14T17:40:09"
     }
+  },
+  {
+    "date": "2026-10-15",
+    "day_number": 287,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "urn:li:share:7516353264431427585",
+        "media_id": "urn:li:share:7516353264431427585",
+        "video_id": "urn:li:share:7516353264431427585",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7516353264431427585/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7516353264431427585/",
+        "duration_ms": 0
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "yt_short",
+        "gate": "held",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "threads": {
+        "success": true,
+        "attempted": true,
+        "skipped": false,
+        "post_id": "18150129436508888",
+        "url": "https://www.threads.com/@hiten_jain323/post/DegIMxRFkmP",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 2,
+        "duration_ms": 6628
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "blog_post",
+        "gate": "rejected",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "summary": "Published: Linkedin, Threads | Held for slot: Instagram, Facebook | Skipped: Youtube, Blog",
+      "published_platforms": [
+        "linkedin",
+        "threads"
+      ],
+      "timestamp": "2026-10-15T04:43:58"
+    }
   }
 ]
