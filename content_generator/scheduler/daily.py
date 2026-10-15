@@ -1054,12 +1054,26 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                 score = float(review.get("overall"))
                 verdict = review.get("verdict", "")
                 if verdict == "PASS":
+                    from content_generator.core import viral_gate
+                    if viral_gate.enabled():
+                        vg = viral_gate.evaluate(label, piece)
+                        piece["viral_potential"] = vg
+                        if not vg.get("passed"):
+                            verdict = "VIRAL_REJECT"
+                            feedback = viral_gate.feedback_for(label, vg, attempt) if vg.get("overall") is not None \
+                                else str(vg.get("error") or "viral scoring failed")
+                            logger.warning("[viral] %s REJECT — viral %s < %.1f | attempt %d/%d",
+                                           label, vg.get("overall"), viral_gate.PASS_MARK, attempt + 1, attempts_allowed)
+                        else:
+                            logger.info("[viral] %s PASS — viral %.1f", label, vg["overall"])
+                if verdict == "PASS":
                     if label == "blog_post" and not str(piece.get("hold_reason") or "").startswith("provider_failure"):
                         piece.pop("hold_reason", None)
                         piece.pop("held", None)
                     logger.info("[editorial] %s PASS — score %.1f (threshold %.1f)", label, score, threshold)
                     break
-                feedback = str(review.get("feedback") or "")
+                if verdict != "VIRAL_REJECT":
+                    feedback = str(review.get("feedback") or "")
                 logger.warning(
                     "[editorial] %s REJECT — score %.1f | feedback: %s | attempt %d/%d",
                     label, score, feedback, attempt + 1, attempts_allowed,

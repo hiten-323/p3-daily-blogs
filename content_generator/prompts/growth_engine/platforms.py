@@ -134,4 +134,10 @@ def prompt_block(label: str, sku: str = "", day: int = 0, *, variant: int = 0) -
         f"Follow promise: {plan['follow_promise']}",
         "Write only this platform. Do not reuse another asset's hook or CTA.",
         ultra_positive_story(sku),
+        _viral_hooks(label),
     ]).strip()
+
+
+def _viral_hooks(label: str) -> str:
+    from content_generator.core.viral_gate import hook_block
+    return hook_block(label)
