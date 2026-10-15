@@ -3076,5 +3076,41 @@
     "rate_limit": {},
     "exception_type": "",
     "exception_msg": ""
+  },
+  {
+    "ts": "2026-10-15T04:24:27",
+    "day_number": 287,
+    "platform": "linkedin",
+    "content_id": "pb_85536a4c18",
+    "generation_id": "gen_2026-10-15_84070522",
+    "publisher_version": "2.3.0",
+    "status": "success",
+    "duration_ms": 2921,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "none",
+    "error": "",
+    "response": "{\"success\": true, \"post_id\": \"urn:li:share:7516353264431427585\", \"url\": \"https://www.linkedin.com/feed/update/urn:li:share:7516353264431427585/\", \"ledger_status\": \"VERIFIED_LIVE\", \"ledger_attempt_count\": 1}",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
+  },
+  {
+    "ts": "2026-10-15T04:24:30",
+    "day_number": 287,
+    "platform": "threads",
+    "content_id": "pb_85536a4c18",
+    "generation_id": "gen_2026-10-15_84070522",
+    "publisher_version": "2.3.0",
+    "status": "failure",
+    "duration_ms": 3315,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "auth",
+    "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952720246297546 cannot be found.\",\"fbtrace_id\":\"AtvNLRMC97qZ5j4rfRJGlDQ\"}}",
+    "response": "{\"success\": false, \"attempted\": true, \"skipped\": false, \"post_id\": \"\", \"url\": \"\", \"ledger_status\": \"FAILED\", \"ledger_attempt_count\": 1}",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
   }
 ]

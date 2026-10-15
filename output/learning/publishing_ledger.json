@@ -1905,6 +1905,86 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-14T10:35:37+00:00"
+    },
+    "2026-10-15|generate|linkedin|pb_85536a4c18": {
+      "attempt_count": 1,
+      "content_date": "2026-10-15",
+      "content_id": "pb_85536a4c18",
+      "day_number": 287,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-15T04:24:24+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-15T04:24:27+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7516353264431427585",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7516353264431427585/",
+          "verification_method": "linkedin_public_url"
+        }
+      ],
+      "last_attempt_at": "2026-10-15T04:24:24+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-15T04:24:27+00:00",
+      "next_retry_at": null,
+      "platform": "linkedin",
+      "published": true,
+      "remote_id": "urn:li:share:7516353264431427585",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-15T04:24:26+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7516353264431427585/",
+      "verification_detail": "public feed URL confirmed (200)",
+      "verification_method": "linkedin_public_url",
+      "verified_at": "2026-10-15T04:24:27+00:00"
+    },
+    "2026-10-15|generate|threads|pb_85536a4c18": {
+      "attempt_count": 1,
+      "content_date": "2026-10-15",
+      "content_id": "pb_85536a4c18",
+      "day_number": 287,
+      "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952720246297546 cannot be found.\",\"fbtrace_id\":\"AtvNLRMC97qZ5j4rfRJGlDQ\"}}",
+      "history": [
+        {
+          "at": "2026-10-15T04:24:27+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-15T04:24:30+00:00",
+          "attempt": 1,
+          "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952720246297546 cannot be found.\",\"fbtrace_id\":\"AtvNLRMC97qZ5j4rfRJGlDQ\"}}",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-15T04:24:27+00:00",
+      "last_result": {
+        "error": "HTTP 400: {\"error\":{\"message\":\"The requested resource does not exist\",\"type\":\"OAuthException\",\"code\":24,\"error_subcode\":4279009,\"is_transient\":false,\"error_user_title\":\"Media Not Found\",\"error_user_msg\":\"The media with id 17952720246297546 cannot be found.\",\"fbtrace_id\":\"AtvNLRMC97qZ5j4rfRJGlDQ\"}}",
+        "success": false
+      },
+      "next_retry_at": "2026-10-15T04:29:30+00:00",
+      "platform": "threads",
+      "published": false,
+      "remote_id": "",
+      "slot": "generate",
+      "status": "FAILED",
+      "updated_at": "2026-10-15T04:24:30+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
     }
   },
   "version": 1
