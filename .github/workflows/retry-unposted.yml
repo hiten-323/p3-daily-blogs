@@ -1,9 +1,9 @@
-# Schedule re-registration touch: 2026-10-14
+# Schedule re-registration touch: 2026-10-15 (off-peak minutes; GitHub drops many :00/:30 schedule events)
 name: Retry unposted (self-resuming)
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '7,37 * * * *'
   workflow_dispatch:
 
 concurrency:
@@ -12,6 +12,7 @@ concurrency:
 
 permissions:
   contents: write
+  actions: write
   models: read
 
 jobs:
@@ -108,4 +109,39 @@ jobs:
           if ! git diff --staged --quiet; then
             git commit -m "chore: retry-unposted ledger + regenerated pieces [skip ci]"
             git push
+          fi
+
+      - name: Self-resume if today still has unposted pieces (cron backstop)
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          HOUR_IST=$(TZ=Asia/Kolkata date +%H)
+          if [ "$HOUR_IST" -lt 7 ] || [ "$HOUR_IST" -ge 23 ]; then echo "Outside 07-23 IST; not chaining."; exit 0; fi
+          PENDING=$(python - <<'PY'
+          import json, datetime, zoneinfo
+          today = datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Kolkata")).date().isoformat()
+          try:
+              data = json.load(open("output/learning/publishing_ledger.json"))
+          except Exception:
+              print(0); raise SystemExit
+          n = 0
+          def walk(o):
+              global n
+              if isinstance(o, dict):
+                  for k, v in o.items():
+                      if isinstance(k, str) and k.startswith(today + "|") and isinstance(v, dict):
+                          if v.get("status") != "VERIFIED_LIVE":
+                              n += 1
+                      else:
+                          walk(v)
+          walk(data)
+          print(n)
+          PY
+          )
+          echo "Unposted ledger entries for today: ${PENDING:-0}"
+          if [ "${PENDING:-0}" -gt 0 ]; then
+            sleep 240
+            gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || echo "::warning::self-dispatch failed"
           fi
