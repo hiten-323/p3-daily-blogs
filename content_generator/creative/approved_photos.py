@@ -543,6 +543,21 @@ def _render_impl(surface: str, width: int, height: int, headline: str = "", body
             cut = [i for i in cut if i.get("primary")]
         if not cut:
             return None
+        if os.getenv("PREMIUM_CARDS", "1") != "0" and sku:
+            from content_generator.creative import premium_cards, visual_gate
+            recent = visual_gate.recent_layouts()
+            final = surface in ("ig_story", "reel_thumb") or "cta" in str(label).lower() or "final" in str(label).lower()
+            meta = premium_cards.render_until_pass(
+                sku, headline or SKU_COPY.get(sku, ("", ""))[0], _strip_shop(body) or SKU_COPY.get(sku, ("", ""))[1],
+                width=width, height=height, seed=day * 3 + idx, recent_layouts=recent,
+                cta=(f"FOLLOW {HANDLE.upper()}" if final else None),
+                out_path=os.path.join(premium_cards._OUT, f"{label}_premium.jpg"))
+            if meta.get("held"):
+                logger.error("[visual-gate] %s held after re-renders: %s", label,
+                             (meta.get("visual_gate") or {}).get("reasons"))
+                return None  # never post a failing piece; the retry loop regenerates
+            visual_gate.remember_layout(meta.get("layout"), label)
+            return meta["path"]
         return render_studio_card(cut[(day * 3 + idx) % len(cut)], width, height, headline, body, label, day)
     except Exception as e:  # never break the pipeline; caller falls back
         logger.warning("[approved_photos] render failed (%s): %s", label, e)
