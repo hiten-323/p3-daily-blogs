@@ -34,6 +34,10 @@ TARGETS = {
     "threads":   ("generate", ("threads",), ("threads_post",), 6),
     "blog":      ("generate", ("blog",), ("blog_post",), 6),
 }
+# Morning and evening posts are MANDATORY every day: a missing one is always
+# regenerated from scratch (fresh angle / template / provider), never left idle.
+MANDATORY_SLOTS = ("morning", "evening")
+MANDATORY_BUDGET_S = int(os.getenv("MANDATORY_REGEN_BUDGET_S", "2400"))
 _RATE = re.compile(r"429|rate.?limit|too many|throttl|quota", re.I)
 BASE_BACKOFF_MIN = 30
 MAX_BACKOFF_MIN = 240
@@ -55,6 +59,37 @@ def unposted_targets(records: list[dict], now_hour: int) -> list[str]:
         if not done:
             out.append(name)
     return out
+
+
+def is_mandatory(target: str) -> bool:
+    return TARGETS[target][0] in MANDATORY_SLOTS
+
+
+def prioritise(todo: list[str]) -> list[str]:
+    """Mandatory morning/evening targets first, in TARGETS order."""
+    return [t for t in todo if is_mandatory(t)] + [t for t in todo if not is_mandatory(t)]
+
+
+def mark_fresh(content: dict, labels) -> list[str]:
+    """Flag saved drafts for from-scratch regeneration on a new angle.
+
+    The ladder treats needs_regen as 'build a brand-new piece' (no copying the
+    held draft). The round counter rotates angle/template/provider seeds.
+    """
+    marked = []
+    rounds = content.setdefault("mandatory_regen_rounds", {})
+    for label in labels:
+        key, idx = ("reels", int(label.split("_")[1]) - 1) if re.fullmatch(r"reel_\d+", label) else (label, None)
+        val = content.get(key)
+        piece = val[idx] if isinstance(val, list) and idx is not None and idx < len(val) else (
+            val if isinstance(val, dict) else None)
+        rounds[label] = int(rounds.get(label) or 0) + 1
+        if isinstance(piece, dict):
+            piece["needs_regen"] = True
+            piece["regen_round"] = rounds[label]
+            piece.pop("editorial_review", None)
+            marked.append(label)
+    return marked
 
 
 def backoff_ok(records: list[dict], target: str, now: dt.datetime) -> bool:
@@ -96,7 +131,9 @@ def main() -> int:
         return 0
 
     records = records_for_today()
-    todo = [t for t in unposted_targets(records, ist_hour) if backoff_ok(records, t, now)]
+    missing = unposted_targets(records, ist_hour)
+    # A missing mandatory slot is never parked in backoff.
+    todo = prioritise([t for t in missing if is_mandatory(t) or backoff_ok(records, t, now)])
     if not todo:
         log.info("Nothing unposted (or all in backoff) for %s.", date)
         return 0
@@ -109,9 +146,25 @@ def main() -> int:
         labels = TARGETS[t][2]
         if not any(l in approved for l in labels):
             need.extend(labels[:1] if t != "ig_reel" else labels[:2])
+    from content_generator.scheduler.daily import _do_editorial
+    from content_generator.pipeline.generator import save_content
+    import time as _time
+    mandatory_need = [l for t in todo if is_mandatory(t) and not any(x in approved for x in TARGETS[t][2])
+                      for l in (TARGETS[t][2][:2] if t == "ig_reel" else TARGETS[t][2][:1])]
+    deadline = _time.monotonic() + MANDATORY_BUDGET_S
+    rounds = 0
+    while mandatory_need and _time.monotonic() < deadline:
+        rounds += 1
+        log.warning("MANDATORY slot regen round %d (from scratch): %s", rounds, mandatory_need)
+        mark_fresh(content, mandatory_need)
+        _do_editorial(content, only=set(mandatory_need))
+        save_content(content)
+        approved = _approved(content)
+        mandatory_need = [l for l in mandatory_need
+                          if not any(x in approved for t in todo if l in TARGETS[t][2] for x in TARGETS[t][2])]
+    need = [l for l in need if l not in approved and not any(
+        l in TARGETS[t][2] and is_mandatory(t) for t in todo)]
     if need:
-        from content_generator.scheduler.daily import _do_editorial
-        from content_generator.pipeline.generator import save_content
         _do_editorial(content, only=set(need))
         save_content(content)
         approved = _approved(content)

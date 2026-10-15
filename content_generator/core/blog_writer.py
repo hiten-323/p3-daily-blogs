@@ -7,6 +7,8 @@ later run resumes at the section that failed.
 """
 from __future__ import annotations
 
+import re
+
 import json
 import logging
 import os
@@ -90,6 +92,48 @@ def expand_section(spec: dict, llm_call, prompt: str, *, min_words: int = SECTIO
             spec.get("id"), word_count(best), min_words,
         )
     return best, calls, failure
+
+
+_DISCLOSURE_RE = re.compile(r"[^.!?]*\b(?:70\s*%\s*coffee|30\s*%\s*chicory|70\s*/\s*30)\b[^.!?]*[.!?]", re.I)
+
+
+def _norm(t: str) -> str:
+    return " ".join(re.sub(r"[^a-z0-9 ]", " ", str(t or "").lower()).split())
+
+
+def dedupe_sections(sections: list[dict]) -> list[dict]:
+    """No repeated H2/H3 headings, no repeated H3 body, and the Ultra Blend
+    70/30 disclosure stated once in the article, not in every section."""
+    seen_h, seen_h3, seen_body = set(), set(), set()
+    disclosed = False
+    out = []
+    for sec in sections:
+        sec = dict(sec)
+        h = _norm(sec.get("heading"))
+        if not h or h in seen_h:
+            continue
+        seen_h.add(h)
+        for key in ("body", "h3_body"):
+            text = str(sec.get(key) or "")
+            def _keep_first(m):
+                nonlocal disclosed
+                if disclosed:
+                    return ""
+                disclosed = True
+                return m.group(0)
+            sec[key] = re.sub(r"\s{2,}", " ", _DISCLOSURE_RE.sub(_keep_first, text)).strip()
+        h3 = _norm(sec.get("h3"))
+        if h3 and h3 in seen_h3:
+            sec["h3"], sec["h3_body"] = "", ""
+        elif h3:
+            seen_h3.add(h3)
+        hb = _norm(sec.get("h3_body"))
+        if hb and hb in seen_body:
+            sec["h3"], sec["h3_body"] = "", ""
+        elif hb:
+            seen_body.add(hb)
+        out.append(sec)
+    return out
 
 
 def _section_prompt(topic: dict, spec: dict, catalog: str) -> str:
@@ -181,40 +225,11 @@ def load_partial_draft(output_dir: str, on_date: str) -> dict | None:
 
 
 def call_section_with_fallback(prompt: str, label: str, max_tokens: int = 900) -> dict:
-    """Try each provider for one section. Back off, then the next provider."""
-    from content_generator.core.brand_guard import build_system_prompt
-    from content_generator.providers.llm_router import _PROVIDERS, _try_provider, extract
-    from content_generator.providers import ollama
-
-    full = f"SYSTEM RULES:\n{build_system_prompt()}\n\nUSER REQUEST:\n{prompt}"
-    last = "no provider answered"
-    providers = list(_PROVIDERS)
-    if ollama.is_available():
-        providers = [("ollama", ollama.call)] + [p for p in providers if p[0] != "ollama"]
-
-    for index, (name, fn) in enumerate(providers):
-        retries = 1 if name in ("nvidia", "ollama") else 2
-        raw = _try_provider(name, fn, full, max_tokens, label, retries)
-        data = None
-        if raw:
-            try:
-                data = extract(raw)
-            except Exception as exc:
-                last = str(exc)
-                data = None
-            if data:
-                return data
-            last = f"{name} answered but the section did not parse"
-        else:
-            last = f"{name} failed"
-        if index < len(_PROVIDERS) - 1:
-            wait = _SECTION_BACKOFF[min(index, len(_SECTION_BACKOFF) - 1)]
-            logger.warning(
-                "[blog] %s failed on %s; backing off %ss then next provider",
-                label, name, wait,
-            )
-            time.sleep(wait)
-    raise RuntimeError(f"All LLM providers failed for {label}: {last}")
+    """One section through the per-platform router (PR #45): the blog route,
+    quota-aware rotation, and NVIDIA only as the last resort."""
+    from content_generator.providers.llm_router import call as llm_call
+    label = label if str(label).startswith("blog") else f"blog_{label}"
+    return llm_call(prompt, label=label, max_tokens=max_tokens)
 
 
 def _default_llm(prompt: str, label: str = "", max_tokens: int = 900) -> dict:
@@ -335,6 +350,7 @@ def generate_blog_post(
             "h3_body": row["h3_body"],
         })
 
+    sections = dedupe_sections(sections)
     intro = introduction_for(topic)
     conclusion = conclusion_for(topic)
     table = comparison_table()

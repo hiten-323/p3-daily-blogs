@@ -398,7 +398,8 @@ def _sanitize_text(text: str) -> str:
     # Decompose accents (é -> e + mark) so the base letter survives the drop.
     t = unicodedata.normalize("NFKD", t)
     t = "".join(ch for ch in t if ord(ch) < 128 or ch == "•")
-    return re.sub(r"\s{2,}", " ", t).strip()
+    from content_generator.creative import render_claims as _rc
+    return _rc.guard(re.sub(r"\s{2,}", " ", t).strip())
 
 
 def _wrap(draw, text: str, font, max_w: int) -> list[str]:
@@ -417,6 +418,16 @@ def _wrap(draw, text: str, font, max_w: int) -> list[str]:
     return lines[:4]
 
 
+def _rc_footer():
+    from content_generator.creative import render_claims as _rc
+    return _rc.footer_for()
+
+
+def _rc_strip():
+    from content_generator.creative import render_claims as _rc
+    return _rc.strip_for()
+
+
 def _claim_pill(product, headline: str) -> str:
     """Badge copy that matches the jar. Unknown products stay on the slogan."""
     from content_generator.creative.cinematic_frame import _product_class
@@ -431,7 +442,7 @@ def _claim_pill(product, headline: str) -> str:
     if kind == "pure":
         if "label" in hl or "ingredient" in hl:
             return "LABEL TRUTH  |  PURE COFFEE"
-        return "PURE COFFEE  |  ZERO CHICORY"
+        return "PURE COFFEE  •  ZERO CHICORY"
     if "label" in hl or "ingredient" in hl:
         return "LABEL TRUTH  |  READ THE JAR"
     if "instant" in hl:
@@ -439,7 +450,7 @@ def _claim_pill(product, headline: str) -> str:
     return "INDIA'S CLEANEST INSTANT COFFEE"
 
 
-def compose_post_image(
+def _compose_post_image_impl(
     headline: str,
     body: str = "",
     day: int = 0,
@@ -698,7 +709,7 @@ def compose_post_image(
     f_font = _font("footer", max(16, width // 44))
     fy = height - int(height * 0.040)
     draw.line([(int(width * 0.08), fy - 16), (int(width * 0.92), fy - 16)], fill=theme["accent"], width=1)
-    footer_text = _sanitize_text("PURITY BEANS  |  PURE COFFEE  |  p3online.in")
+    footer_text = _sanitize_text(_rc_footer())
     draw.text((width // 2, fy), footer_text, font=f_font, fill=theme["accent"], anchor="mm")
 
     # Save
@@ -751,7 +762,7 @@ def _draw_vector_arrow(draw, x: int, y: int, size: int = 12, fill=(212, 163, 64)
     draw.polygon([(x, y - size // 2), (x + size, y), (x, y + size // 2)], fill=fill)
 
 
-def compose_carousel_slide(
+def _compose_carousel_slide_impl(
     heading: str,
     body: str,
     day: int,
@@ -891,12 +902,12 @@ def compose_carousel_slide(
                   fill=theme.get("pill_text", theme["accent"]), anchor="mm")
 
         # Top Bar: Category Pill on Left
-        pill_text = "THE CHICORY AUDIT  |  PURE COFFEE"
+        pill_text = _sanitize_text(_rc_strip().upper())
         hl_lower = (heading or "").lower()
         if "instant" in hl_lower:
             pill_text = "INSTANT COFFEE AUDIT"
         elif "label" in hl_lower or "ingredient" in hl_lower:
-            pill_text = "LABEL TRUTH  |  PURE COFFEE"
+            pill_text = _sanitize_text("LABEL TRUTH  |  " + _rc_strip().upper())
         pw = int(draw.textlength(pill_text, font=cnt_font))
         px = 56
         pill_box2 = Image.new("RGBA", (width, height), (0, 0, 0, 0))
@@ -949,7 +960,7 @@ def compose_carousel_slide(
         f_font = _font("footer", 15)
         fy = height - 36
         draw.line([(60, fy - 14), (width - 60, fy - 14)], fill=theme["accent"], width=1)
-        draw.text((width // 2, fy), "PURITY BEANS  |  PURE COFFEE  |  p3online.in",
+        draw.text((width // 2, fy), _sanitize_text(_rc_footer()),
                   font=f_font, fill=theme["accent"], anchor="mm")
 
     # ── MIDDLE SLIDES: EDITORIAL VALUE CARDS ──────────────────────────────────
@@ -1081,19 +1092,19 @@ def compose_carousel_slide(
         box_header = "WHAT THIS MEANS FOR YOUR CUP"
         if "freeze" in content_full:
             box_header = "THE PURITY AROMA DIFFERENCE"
-        elif "standard" in content_full or "100%" in content_full:
+        elif "standard" in content_full:
             box_header = "WHY PURE ARABICA & ROBUSTA WINS"
         draw.text((card_x0 + 64, box1_y0 + 22), box_header, font=q_font, fill=theme.get("pill_text", theme["accent"]))
 
         exp_font = _font("body", 21)
         if "chicory" in content_full or "filler" in content_full:
-            exp_text = "Chicory root is not coffee. When brands add chicory, you miss out on genuine coffee antioxidants and natural bean sweetness, drinking burnt root filler instead."
+            exp_text = "Read the ingredients panel. It tells you exactly what is in the jar, so you can pick the cup you actually want."
         elif "blend" in content_full:
-            exp_text = "Always look for 'Pure Coffee' on the ingredients panel. Real single-origin coffee never requires roasted chicory to fake its body or color."
+            exp_text = "A blend lists its ratio on the label. Ultra Blend is 70% coffee and 30% chicory: smooth, mellow and made for milk coffee."
         elif "freeze" in content_full:
             exp_text = "Freeze-drying operates under gentle vacuum freezing, locking in delicate natural coffee oils that commercial high-heat spray drying completely destroys."
         else:
-            exp_text = "Pure coffee delivers clean, sustained alertness without jittery filler crashes or artificial bitter aftertastes. Taste the honest bean difference."
+            exp_text = "Know your jar, know your cup. Every Purity Beans label shows exactly what goes into it."
 
         ey = box1_y0 + 62
         for eline in _wrap_lines(draw, exp_text, exp_font, card_w - 120, max_lines=4):
@@ -1117,9 +1128,9 @@ def compose_carousel_slide(
 
             chk_font = _font("body", 19)
             steps = [
-                ("1.", "Inspect the Back Panel: The ingredients must read 'Pure Coffee' only."),
-                ("2.", "Spot the Word 'Blend': Often used to disguise 30% to 49% chicory filler."),
-                ("3.", "Choose Purity Beans: Bold, Purista, and Purica never contain added root filler."),
+                ("1.", "Read the back panel: the ingredients list tells the real story."),
+                ("2.", "Check the ratio: a blend states its coffee and chicory split on the pack."),
+                ("3.", "Pick your cup: Bold, Purista and Purica are pure coffee; Ultra Blend is a 70/30 blend."),
             ]
             cy = box2_y0 + 48
             for num, stext in steps:
@@ -1136,7 +1147,7 @@ def compose_carousel_slide(
         canvas = Image.alpha_composite(canvas.convert("RGBA"), banner_box).convert("RGB")
         draw = ImageDraw.Draw(canvas)
         callout_font = _font("footer", 16)
-        c_text = "THE PURITY STANDARD: PURE COFFEE  |  ZERO FILLERS  |  p3online.in"
+        c_text = _sanitize_text("PURITY BEANS  |  " + _rc_strip().upper() + "  |  p3online.in")
         draw.text((card_x0 + card_w // 2, banner_y0 + banner_h // 2), c_text, font=callout_font,
                   fill=theme.get("pill_text", theme["accent"]), anchor="mm")
 
@@ -1311,7 +1322,7 @@ def compose_carousel_slide(
         f_font = _font("footer", 15)
         fy = height - 36
         draw.line([(60, fy - 14), (width - 60, fy - 14)], fill=theme["accent"], width=1)
-        draw.text((width // 2, fy), "PURITY BEANS  |  PURE COFFEE  |  p3online.in",
+        draw.text((width // 2, fy), _sanitize_text(_rc_footer()),
                   font=f_font, fill=theme["accent"], anchor="mm")
 
     # Save
@@ -1373,3 +1384,33 @@ def compose_reel_thumbnail(reel: dict, day: int, label: str = "reel_1") -> str |
         headline=headline, body="", day=day, idx=7, product=reel.get("product"),
         width=1080, height=1920, label=f"{label}_thumb_day{day}",
     )
+
+
+def compose_post_image(*args, **kwargs):
+    """Renders with the on-image claim guard scoped to this frame's SKU."""
+    from content_generator.creative import render_claims as _rc
+    product = kwargs.get("product") if "product" in kwargs else (args[6] if len(args) > 6 else None)
+    tok = _rc.set_sku(product)
+    try:
+        return _compose_post_image_impl(*args, **kwargs)
+    finally:
+        _rc.reset_sku(tok)
+
+
+def compose_carousel_slide(*args, product=None, **kwargs):
+    """Carousel slide; SKU comes from the caller or the cover jar for this day."""
+    from content_generator.creative import render_claims as _rc
+    if product is None:
+        day = kwargs.get("day", args[2] if len(args) > 2 else 0)
+        idx = kwargs.get("idx", args[3] if len(args) > 3 else 0)
+        try:
+            product = _get_studio_front_jar(day, idx) or ""
+            import os as _os
+            product = _os.path.basename(product)
+        except Exception:
+            product = None
+    tok = _rc.set_sku(product)
+    try:
+        return _compose_carousel_slide_impl(*args, **kwargs)
+    finally:
+        _rc.reset_sku(tok)

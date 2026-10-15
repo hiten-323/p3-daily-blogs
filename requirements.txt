@@ -46,3 +46,7 @@ langdetect>=1.0.9               # Language detection
 
 PyYAML>=6.0                     # Founder Policy Engine (founder_policies.yaml)
 pytest>=8.0
+
+# Video QA: imageio v3 "ffmpeg" plugin needs the bundled binary
+imageio>=2.31.0
+imageio-ffmpeg>=0.5.1

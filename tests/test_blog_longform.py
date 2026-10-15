@@ -155,12 +155,11 @@ def test_partial_draft_is_saved_and_a_later_run_resumes(tmp_path):
     assert not draft_path.exists()
 
 
-def test_failing_section_backs_off_then_uses_the_next_provider(monkeypatch):
+def test_failing_section_uses_the_router_cascade(monkeypatch):
+    """Sections go through llm_router.call (per-platform rotation, NVIDIA last)."""
     from content_generator.core import blog_writer
     from content_generator.providers import llm_router as router
-
-    sleeps = []
-    monkeypatch.setattr(blog_writer.time, "sleep", lambda seconds: sleeps.append(seconds))
+    from content_generator.providers import provider_budget
     calls = []
 
     def fail(_prompt, _max_tokens):
@@ -172,13 +171,12 @@ def test_failing_section_backs_off_then_uses_the_next_provider(monkeypatch):
         return '{"body": "Purity Beans keeps this section on catalog facts."}', {"model": "groq"}
 
     monkeypatch.setattr(router, "_PROVIDERS", [("nvidia", fail), ("groq", ok)])
+    monkeypatch.setattr(provider_budget, "order_for", lambda label, base: list(base))
     for state in router._STATES.values():
         state.record_success()
-
     data = blog_writer.call_section_with_fallback("Write the section.", "blog_section_s2")
     assert "Purity Beans" in data["body"]
-    assert calls == ["nvidia", "groq"]
-    assert sleeps == [2]
+    assert calls[-1] == "groq"
 
 
 def test_provider_failure_keeps_the_draft_and_logs_the_hold(tmp_path, caplog):
