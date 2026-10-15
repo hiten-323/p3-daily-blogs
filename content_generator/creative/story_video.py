@@ -67,6 +67,25 @@ def build_story_video(
     from content_generator.creative.approved_photos import _norm_sku
     sku = _norm_sku(product) or _norm_sku(_sku_from(reference_text or headline, day)) or "bold"
 
+    if os.getenv("PREMIUM_CARDS", "1") != "0":
+        try:
+            from content_generator.creative import premium_cards, visual_gate
+            recent = visual_gate.recent_layouts()
+            for attempt in range(4):
+                layout = [l for l in premium_cards.LAYOUTS if l != "split_left"][(day + attempt) % 3]
+                out = os.path.join(premium_cards._OUT, f"{label}_day{day}_{date_str}_premium.mp4")
+                meta = premium_cards.render_story_video(sku, headline, sub, out, seed=day + attempt,
+                                                        seconds=duration or _DEFAULT_STORY_DURATION, layout=layout)
+                verdict = visual_gate.evaluate_video(out, meta, recent)
+                if verdict["passed"]:
+                    visual_gate.remember_layout(layout, label)
+                    return out
+                logger.warning("[visual-gate] story try %d failed: %s", attempt + 1, verdict["reasons"][:4])
+            logger.error("[visual-gate] premium story held after re-renders; not posting a failing story")
+            return None
+        except Exception as exc:
+            logger.warning("[story_video] premium story path failed: %s", exc)
+
     try:
         from content_generator.creative.story_motion import render_story_motion
         result = render_story_motion(
