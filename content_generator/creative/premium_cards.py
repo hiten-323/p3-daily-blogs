@@ -322,7 +322,8 @@ def render_until_pass(sku, headline, sub="", *, width=1080, height=1350, cta=Non
     last = None
     for i in range(max_tries):
         layout = order[(seed + i) % len(order)]
-        meta = render(sku, headline, sub, width=width, height=height, layout=layout, palette_idx=seed + i,
+        meta = render(sku, headline, sub, width=width, height=height, layout=layout, palette_idx=seed + i + i // len(order),  # decorrelate palette from layout so retries cover every combo
+                     
                       cta=cta, seed=seed + i, out_path=out_path)
         verdict = gate(meta, recent_layouts=recent_layouts)
         meta["visual_gate"] = verdict
