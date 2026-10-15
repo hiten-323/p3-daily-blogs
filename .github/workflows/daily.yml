@@ -192,7 +192,7 @@ jobs:
           SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
           SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
           SHOPIFY_BLOG_ID: ${{ secrets.SHOPIFY_BLOG_ID }}
-          SHOPIFY_BLOG_ENABLED: "true"
+          BLOG_ENABLED: "false"
           # Extended content is founder-policy controlled, never a workflow override.
           # Source: founder_policies.yaml -> content.enable_extended_content.
           WEBSITE_URL: https://p3online.in
