@@ -251,7 +251,13 @@ def _assemble_caption(body: str, piece: dict, day: int = 0) -> str:
         if extra and extra.lower() not in body.lower():
             parts.append(extra)
 
-    audio_rec = (piece.get("audio") or {}).get("recommendation")
+    audio = piece.get("audio")
+    if isinstance(audio, dict):
+        audio_rec = audio.get("recommendation")
+    elif isinstance(audio, str):
+        audio_rec = audio.strip() or None
+    else:
+        audio_rec = None
     if audio_rec and "🎵" not in body and "audio" not in body.lower():
         parts.append(f"🎵 Audio: {audio_rec}")
 
@@ -366,7 +372,8 @@ def _post_single_image(image_path: str, caption: str) -> dict:
         )
         container_id = container_data.get("id", "")
         if not container_id:
-            err = container_data.get("error", {}).get("message", str(container_data))
+            _e = container_data.get("error")
+            err = _e.get("message", str(container_data)) if isinstance(_e, dict) else str(_e or container_data)
             return {"success": False, "media_id": "", "permalink": "", "error": err}
 
         # 3. Wait until FINISHED. ERROR and timeout must not publish.
@@ -782,7 +789,8 @@ def _upload_to_public_url(image_path: str) -> str | None:
                     data={"key": imgbb_key, "image": encoded},
                     timeout=30,
                 )
-                url = resp.json().get("data", {}).get("url", "")
+                _d = resp.json().get("data")
+                url = _d.get("url", "") if isinstance(_d, dict) else ""
                 if url:
                     logger.debug("[instagram] Image hosted at: %s", url)
                     return url
