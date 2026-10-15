@@ -67,6 +67,19 @@ def build_story_video(
     from content_generator.creative.approved_photos import _norm_sku
     sku = _norm_sku(product) or _norm_sku(_sku_from(reference_text or headline, day)) or "bold"
 
+    if os.getenv("CINEMATIC_VIDEO", "1") != "0":
+        try:
+            from content_generator.creative import cinematic_motion
+            out = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}_cinematic.mp4")
+            meta = cinematic_motion.render_cinematic_until_pass(
+                sku, [{"on": headline, "sub": sub}], out,
+                seconds=duration or _DEFAULT_STORY_DURATION, seed=day)
+            if meta:
+                return out
+            logger.warning("[story_video] cinematic story held by visual gate; trying premium card story")
+        except Exception as exc:
+            logger.warning("[story_video] cinematic path failed: %s", exc)
+
     if os.getenv("PREMIUM_CARDS", "1") != "0":
         try:
             from content_generator.creative import premium_cards, visual_gate

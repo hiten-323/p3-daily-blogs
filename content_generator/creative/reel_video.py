@@ -63,6 +63,28 @@ def _beats_from_reel(reel: dict) -> list[dict]:
     return beats[:_MAX_BEATS]
 
 
+def _cinematic(beats, product, day, label, on_date, seconds):
+    """Procedural cinematic motion (cinematic_motion), gated by visual_gate. None -> legacy path."""
+    if os.getenv("CINEMATIC_VIDEO", "1") == "0":
+        return None
+    try:
+        from content_generator.creative.approved_photos import _norm_sku
+        from content_generator.creative import cinematic_motion
+        sku = _norm_sku(product)
+        if not sku:
+            return None
+        from content_generator.core.ist_dates import today_ist
+        ds = on_date.isoformat() if hasattr(on_date, "isoformat") else str(on_date or today_ist().isoformat())[:10]
+        out = os.path.join(os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative")),
+                           f"{label}_day{day}_{ds}_cinematic.mp4")
+        meta = cinematic_motion.render_cinematic_until_pass(
+            sku, [{"on": b.get("on", ""), "sub": b.get("sub", "")} for b in beats], out, seconds=seconds, seed=day)
+        return out if meta else None
+    except Exception as exc:
+        logger.warning("[cinematic] path failed (%s); using legacy frames", exc)
+        return None
+
+
 def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=None) -> str | None:
     """
     Render a vertical motion reel. Returns mp4 path or None (caller falls back
@@ -101,6 +123,9 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
             logger.info("[reel_video] style cues only (%s); reference file stays in the bank", cue_ids)
     except Exception as exc:
         logger.debug("[reel_video] product reel lookup skipped: %s", exc)
+    _cin = _cinematic(_beats_from_reel(reel), reel.get("product"), day, label, on_date, 12.0)
+    if _cin:
+        return _cin
     try:
         from moviepy import ImageClip, concatenate_videoclips
     except Exception as e:

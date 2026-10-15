@@ -54,6 +54,28 @@ def _scenes_from_short(yt_short: dict) -> list[dict]:
     return scenes[:_MAX_SCENES]
 
 
+def _cinematic(beats, product, day, label, on_date, seconds):
+    """Procedural cinematic motion (cinematic_motion), gated by visual_gate. None -> legacy path."""
+    if os.getenv("CINEMATIC_VIDEO", "1") == "0":
+        return None
+    try:
+        from content_generator.creative.approved_photos import _norm_sku
+        from content_generator.creative import cinematic_motion
+        sku = _norm_sku(product)
+        if not sku:
+            return None
+        from content_generator.core.ist_dates import today_ist
+        ds = on_date.isoformat() if hasattr(on_date, "isoformat") else str(on_date or today_ist().isoformat())[:10]
+        out = os.path.join(os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative")),
+                           f"{label}_day{day}_{ds}_cinematic.mp4")
+        meta = cinematic_motion.render_cinematic_until_pass(
+            sku, [{"on": b.get("on", ""), "sub": b.get("sub", "")} for b in beats], out, seconds=seconds, seed=day)
+        return out if meta else None
+    except Exception as exc:
+        logger.warning("[cinematic] path failed (%s); using legacy frames", exc)
+        return None
+
+
 def build_short_video(yt_short: dict, day: int, label: str = "short_video", on_date=None) -> str | None:
     """
     Render a dedicated vertical YouTube Short video (1080x1920 MP4) with beat-synced audio.
@@ -62,6 +84,9 @@ def build_short_video(yt_short: dict, day: int, label: str = "short_video", on_d
     if os.getenv("ENABLE_SHORT_VIDEO", "true").lower() != "true":
         return None
 
+    _cin = _cinematic(_scenes_from_short(yt_short), yt_short.get("product"), day, label, on_date, 12.0)
+    if _cin:
+        return _cin
     try:
         from moviepy import ImageClip, concatenate_videoclips
     except Exception as e:

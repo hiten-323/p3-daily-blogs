@@ -8,3 +8,12 @@ def _reset_nvidia_model_health():
     nvidia._reset_model_health()
     yield
     nvidia._reset_model_health()
+
+
+import pytest as _pytest_cinematic
+
+
+@_pytest_cinematic.fixture(autouse=True)
+def _legacy_video_path_in_tests(monkeypatch):
+    """Legacy reel/short/story tests assert the frame-based path; cinematic has its own tests."""
+    monkeypatch.setenv("CINEMATIC_VIDEO", "0")
