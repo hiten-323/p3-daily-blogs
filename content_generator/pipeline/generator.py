@@ -563,6 +563,8 @@ def save_content(content_data: dict, output_dir: str = "output") -> str:
     if not isinstance(content_data, dict):
         raise TypeError("content_data must be a dict")
     os.makedirs(output_dir, exist_ok=True)
+    from content_generator.core.draft_purge import purge_banned_drafts
+    purge_banned_drafts(content_data)  # a banned-claim draft is never persisted
     # Filename and the date field are the same IST day. Legacy long-form
     # dates already in the dict are normalized so later slots can match them.
     date_str = content_date_iso(content_data.get("date")) or today_ist().isoformat()

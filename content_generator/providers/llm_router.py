@@ -9,6 +9,7 @@ it is disabled for 15 minutes before being retried.
 A threading.Semaphore(2) limits concurrent outbound API calls to prevent
 burst rate-limiting when the pipeline runs tasks in parallel.
 """
+import re
 import time
 import logging
 from threading import Semaphore, Lock
@@ -26,8 +27,14 @@ _API_SEMAPHORE = Semaphore(2)
 _RETRY_STATUSES = {429, 500, 502, 503, 504}
 _CIRCUIT_COOLDOWN_S = 900
 _CIRCUIT_TRIP_AT = 3
-_QUOTA_COOLDOWN_S = 3600
+# A 429 is often per-minute (Groq RPM/TPM). An hour-long trip after two 429s
+# left every provider "circuit_open" on day 286, so short cooldown unless the
+# error says the daily quota is gone. Rotation to other providers comes from
+# provider_budget (any 429 moves that provider behind ones with headroom).
+_QUOTA_COOLDOWN_S = 120
+_DAILY_QUOTA_COOLDOWN_S = 3600
 _QUOTA_TRIP_AT = 2
+_DAILY_QUOTA = re.compile(r"per day|daily|RPD|TPD|quota exceeded for metric.*per_day", re.I)
 
 
 # ── Circuit breaker ───────────────────────────────────────────────────────────
@@ -55,11 +62,12 @@ class _ProviderState:
             self._fail_count = 0
             self._healthy = True
 
-    def record_failure(self, quota_error: bool = False) -> None:
+    def record_failure(self, quota_error: bool = False, daily: bool = False) -> None:
         with self._lock:
             self._fail_count += 1
             trip_at = _QUOTA_TRIP_AT if quota_error else _CIRCUIT_TRIP_AT
-            cooldown = _QUOTA_COOLDOWN_S if quota_error else _CIRCUIT_COOLDOWN_S
+            cooldown = ((_DAILY_QUOTA_COOLDOWN_S if daily else _QUOTA_COOLDOWN_S)
+                        if quota_error else _CIRCUIT_COOLDOWN_S)
             if self._fail_count >= trip_at:
                 self._healthy = False
                 self._cooldown_until = time.time() + cooldown
@@ -235,12 +243,22 @@ def _try_provider(
         )
         return None
 
+    from content_generator.providers import provider_budget
     for attempt in range(retries):
         wait = 15 * (2 ** attempt)
         t0 = time.time()
         with _API_SEMAPHORE:
             text, usage = call_fn(prompt, max_tokens)
         elapsed = time.time() - t0
+        if text is None and not usage:
+            # No key configured: skip instantly, never count it as a failure.
+            _record_attempt(
+                label=label, provider=name, model="", status=0, attempts=attempt + 1,
+                latency_s=round(elapsed, 1), category="no_api_key_or_transport", detail="",
+            )
+            return None
+        provider_budget.record(name, ok=text is not None, status=int(usage.get("status_code") or 0),
+                               usage=usage, label=label)
 
         if text is not None:
             state.record_success()
@@ -282,7 +300,7 @@ def _try_provider(
         )
 
         if status == 429:
-            state.record_failure(quota_error=True)
+            state.record_failure(quota_error=True, daily=bool(_DAILY_QUOTA.search(detail)))
             return None
 
         if status in _RETRY_STATUSES:
@@ -315,10 +333,38 @@ def call(prompt: str, label: str, max_tokens: int = 3000) -> dict:
     system_rules = build_system_prompt()
     full_prompt = f"SYSTEM RULES:\n{system_rules}\n\nUSER REQUEST:\n{prompt}"
 
-    active_providers = list(_PROVIDERS)
+    from content_generator.providers import provider_budget
+    base = [n for n, _ in _PROVIDERS]
+    routed = provider_budget.order_for(label, base)
+    fns = dict(_PROVIDERS)
+    active_providers = [(n, fns[n]) for n in routed]
+    logger.info("[llm-route] %s start=%s order=%s", label, routed[0] if routed else "-", ",".join(routed))
     if ollama.is_available() and _STATES["ollama"].is_available():
         active_providers = [("ollama", ollama.call)] + [p for p in active_providers if p[0] != "ollama"]
 
+    data = _run_cascade(active_providers, full_prompt, max_tokens, label)
+    if data is None:
+        # Last chance: circuits tripped earlier in this run (e.g. Groq RPM 429s)
+        # must not make a keyed provider unreachable for the rest of the run.
+        keyed = {n for n, g in _KEY_GETTERS if g()}
+        reopen = [(n, f) for n, f in active_providers if n in keyed and not _STATES[n].is_available()]
+        if reopen:
+            logger.warning("[llm] %s: all providers failed; one last pass ignoring open circuits: %s",
+                           label, ",".join(n for n, _ in reopen))
+            for n, _ in reopen:
+                _STATES[n].record_success()  # half-open: allow one try
+            data = _run_cascade(reopen, full_prompt, max_tokens, label)
+    if data is not None:
+        return data
+
+    _log_cascade_verdict(label)
+    raise RuntimeError(
+        f"All LLM providers failed for '{label}'. "
+        "Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
+    )
+
+
+def _run_cascade(active_providers, full_prompt: str, max_tokens: int, label: str) -> dict | None:
     for name, fn in active_providers:
         # NVIDIA and Ollama back off or fail fast; others retry
         if name in ("nvidia", "ollama"):
@@ -362,13 +408,9 @@ def call(prompt: str, label: str, max_tokens: int = 3000) -> dict:
             continue
 
         logger.info("[pipeline] %s done via %s (%d keys)", label, name, len(data))
+        logger.info("[llm-route] %s PRODUCED_BY=%s", label, name)
         return data
-
-    _log_cascade_verdict(label)
-    raise RuntimeError(
-        f"All LLM providers failed for '{label}'. "
-        "Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
-    )
+    return None
 
 
 def _log_cascade_verdict(label: str) -> None:

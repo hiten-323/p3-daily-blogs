@@ -3,6 +3,7 @@ import os
 import re
 import logging
 import requests as _http
+from content_generator.providers.provider_budget import rate_headers
 
 logger = logging.getLogger(__name__)
 
@@ -152,10 +153,11 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
                 "prompt_tokens": u.get("prompt_tokens"),
                 "completion_tokens": u.get("completion_tokens"),
                 "model": model,
+                "ratelimit": rate_headers(resp),
             }
 
         last_failure = {"status_code": resp.status_code, "model": model,
-                        "error": resp.text}
+                        "error": resp.text, "ratelimit": rate_headers(resp)}
         logger.warning("Groq %s %s: %s", model, resp.status_code, resp.text[:200])
         if resp.status_code in (401, 403):
             return None, last_failure
