@@ -45,7 +45,7 @@ _ROTATION: dict[str, list[ObjectiveType]] = {
 # KPI targets and CTA copy per objective
 _KPI: dict[str, dict] = {
     "Follower Growth": {
-        "primary_cta":    "Follow @puritybeans so you never drink roasted root again",
+        "primary_cta":    "Follow @purepantryprovisions for one buying check you can save",
         "success_metric": "follows",
         "target":         250,
     },
@@ -84,7 +84,7 @@ _KPI: dict[str, dict] = {
 _FUNNEL_MAP = {
     "FOLLOW": {
         "objective":      "Follower Growth",
-        "primary_cta":    "Follow @puritybeans so you never drink roasted root again",
+        "primary_cta":    "Follow @purepantryprovisions for one buying check you can save",
         "success_metric": "follows",
         "target":         250,
     },

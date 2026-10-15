@@ -162,18 +162,35 @@ def _parse(text):
 _UA = {"User-Agent": "PurityBeans/1.0"}
 
 
+def _get_json(url, headers=None):
+    req = urllib.request.Request(url, headers={**_UA, **(headers or {})})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(r.read())
+
+
+def _gemini_models(key):
+    """Configured models first, then whatever flash models the key can actually call."""
+    models = [m for m in [os.getenv("GEMINI_VISION_MODEL", ""), os.getenv("GEMINI_MODEL", ""),
+                          "gemini-3.5-flash-lite"] if m]
+    try:
+        listed = _get_json(f"https://generativelanguage.googleapis.com/v1beta/models?key={key}&pageSize=200")
+        for m in listed.get("models") or []:
+            name = str(m.get("name", "")).split("/")[-1]
+            if "flash" in name and "generateContent" in (m.get("supportedGenerationMethods") or []) \
+                    and not any(x in name for x in ("tts", "image", "live", "audio", "embedding")):
+                models.append(name)
+    except Exception:
+        pass
+    return list(dict.fromkeys(models))[:6]
+
+
 def _gemini(b64):
     key = os.getenv("GEMINI_API_KEY", "").strip()
     if not key:
         return None
-    # gemini-2.0-flash was shut down (HTTP 404). Try the configured model, then
-    # current free-tier models.
-    models = [m for m in [os.getenv("GEMINI_VISION_MODEL", ""), os.getenv("GEMINI_MODEL", ""),
-                          "gemini-3.5-flash-lite", "gemini-2.5-flash"] if m]
-    body = {"contents": [{"parts": [{"text": _PROMPT}, {"inline_data": {"mime_type": "image/jpeg", "data": b64}}]}],
-            "generationConfig": {"responseMimeType": "application/json"}}
-    last = None
-    for model in dict.fromkeys(models):
+    body = {"contents": [{"parts": [{"text": _PROMPT}, {"inline_data": {"mime_type": "image/jpeg", "data": b64}}]}]}
+    errs = []
+    for model in _gemini_models(key):
         req = urllib.request.Request(
             f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}",
             data=json.dumps(body).encode(), headers={"Content-Type": "application/json", **_UA})
@@ -182,23 +199,41 @@ def _gemini(b64):
                 out = json.loads(r.read())
             return _parse(out["candidates"][0]["content"]["parts"][0]["text"])
         except Exception as exc:
-            last = exc
-    raise last
+            errs.append(f"{model}:{str(exc)[:40]}")
+    raise RuntimeError("; ".join(errs) or "no gemini model")
+
+
+def _groq_models(key):
+    models = [m for m in [os.getenv("GROQ_VISION_MODEL", ""), "meta-llama/llama-4-scout-17b-16e-instruct"] if m]
+    try:
+        listed = _get_json("https://api.groq.com/openai/v1/models", {"Authorization": f"Bearer {key}"})
+        for m in listed.get("data") or []:
+            mid = str(m.get("id", ""))
+            if any(x in mid.lower() for x in ("vision", "llama-4", "scout", "maverick", "-vl")):
+                models.append(mid)
+    except Exception:
+        pass
+    return list(dict.fromkeys(models))[:4]
 
 
 def _groq(b64):
     key = os.getenv("GROQ_API_KEY", "").strip()
     if not key:
         return None
-    model = os.getenv("GROQ_VISION_MODEL", "meta-llama/llama-4-scout-17b-16e-instruct")
-    body = {"model": model, "temperature": 0.2, "messages": [{"role": "user", "content": [
-        {"type": "text", "text": _PROMPT},
-        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}}]}]}
-    req = urllib.request.Request("https://api.groq.com/openai/v1/chat/completions", data=json.dumps(body).encode(),
-                                 headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}", **_UA})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        out = json.loads(r.read())
-    return _parse(out["choices"][0]["message"]["content"])
+    errs = []
+    for model in _groq_models(key):
+        body = {"model": model, "temperature": 0.2, "messages": [{"role": "user", "content": [
+            {"type": "text", "text": _PROMPT},
+            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}}]}]}
+        req = urllib.request.Request("https://api.groq.com/openai/v1/chat/completions", data=json.dumps(body).encode(),
+                                     headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}", **_UA})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                out = json.loads(r.read())
+            return _parse(out["choices"][0]["message"]["content"])
+        except Exception as exc:
+            errs.append(f"{model}:{str(exc)[:40]}")
+    raise RuntimeError("; ".join(errs) or "no groq model")
 
 
 def _github_models(b64):

@@ -90,12 +90,12 @@ ABSOLUTE RULES:
     {{"on_screen": "THE TWIST", "spoken": "The thing they did not expect — contrarian, relatable"}},
     {{"on_screen": "THE LABEL", "spoken": "{villain_spoken}"}},
     {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee."}},
-    {{"on_screen": "FOLLOW @PURITYBEANS", "spoken": "{follow_spoken}"}}
+    {{"on_screen": "FOLLOW @PUREPANTRYPROVISIONS", "spoken": "{follow_spoken}"}}
   ],
   "loop_note": "One sentence: how the last frame connects back to frame 1 for infinite loop",
   "alt_hook": "A/B option — 4 words, completely different archetype",
   "caption": "HOOK LINE (stops scroll, max 12 words).\\n\\nShort story or insight that coffee lovers relate to. Introduce Purity Beans naturally — not as an ad. Explain why real coffee drinkers should care. Mention: Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Available at {WEBSITE_URL}\\n\\nFollow @purepantryprovisions for daily honest coffee craft. Shop {WEBSITE_URL}",
-  "cta": "Follow @puritybeans for daily pure coffee craft. Explore pure jars at {WEBSITE_URL}",
+  "cta": "Follow @purepantryprovisions for daily pure coffee craft. Explore pure jars at {WEBSITE_URL}",
   "comment_trigger": "Comment COFFEE and tell us how you take your morning cup.",
   "save_trigger": "Save this before your next grocery run so you never buy the wrong coffee again.",
   "share_trigger": "Share with someone who starts every morning with coffee — they deserve to know.",
