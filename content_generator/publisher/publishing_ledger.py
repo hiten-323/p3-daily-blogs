@@ -71,7 +71,10 @@ def _identity(content: dict, platform: str, slot: str, day_number: int) -> tuple
 def _due(record: dict, now: dt.datetime) -> bool:
     value = record.get("next_retry_at")
     if not value:
-        return False
+        # A FAILED record with no scheduled retry time (e.g. a pre-publish
+        # gate hold) must stay retryable; otherwise it is stuck in
+        # "retry_backoff" forever and the piece is never regenerated.
+        return True
     try:
         return dt.datetime.fromisoformat(value.replace("Z", "+00:00")) <= now
     except (ValueError, TypeError):

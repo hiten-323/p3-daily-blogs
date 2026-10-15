@@ -159,19 +159,31 @@ def _parse(text):
     return float(data.get("score")), [str(x) for x in data.get("issues") or []]
 
 
+_UA = {"User-Agent": "PurityBeans/1.0"}
+
+
 def _gemini(b64):
     key = os.getenv("GEMINI_API_KEY", "").strip()
     if not key:
         return None
-    model = os.getenv("GEMINI_VISION_MODEL", "gemini-2.0-flash")
+    # gemini-2.0-flash was shut down (HTTP 404). Try the configured model, then
+    # current free-tier models.
+    models = [m for m in [os.getenv("GEMINI_VISION_MODEL", ""), os.getenv("GEMINI_MODEL", ""),
+                          "gemini-3.5-flash-lite", "gemini-2.5-flash"] if m]
     body = {"contents": [{"parts": [{"text": _PROMPT}, {"inline_data": {"mime_type": "image/jpeg", "data": b64}}]}],
-            "generationConfig": {"temperature": 0.2, "responseMimeType": "application/json"}}
-    req = urllib.request.Request(
-        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}",
-        data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        out = json.loads(r.read())
-    return _parse(out["candidates"][0]["content"]["parts"][0]["text"])
+            "generationConfig": {"responseMimeType": "application/json"}}
+    last = None
+    for model in dict.fromkeys(models):
+        req = urllib.request.Request(
+            f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}",
+            data=json.dumps(body).encode(), headers={"Content-Type": "application/json", **_UA})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                out = json.loads(r.read())
+            return _parse(out["candidates"][0]["content"]["parts"][0]["text"])
+        except Exception as exc:
+            last = exc
+    raise last
 
 
 def _groq(b64):
@@ -183,13 +195,29 @@ def _groq(b64):
         {"type": "text", "text": _PROMPT},
         {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}}]}]}
     req = urllib.request.Request("https://api.groq.com/openai/v1/chat/completions", data=json.dumps(body).encode(),
-                                 headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
+                                 headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}", **_UA})
     with urllib.request.urlopen(req, timeout=60) as r:
         out = json.loads(r.read())
     return _parse(out["choices"][0]["message"]["content"])
 
 
-VISION_PROVIDERS = [("gemini", _gemini), ("groq", _groq)]
+def _github_models(b64):
+    """Free GitHub Models vision fallback (gpt-4.1-mini accepts images)."""
+    key = os.getenv("GITHUB_MODELS_TOKEN", "").strip()
+    if not key:
+        return None
+    model = os.getenv("GITHUB_VISION_MODEL", "openai/gpt-4.1-mini")
+    body = {"model": model, "temperature": 0.2, "messages": [{"role": "user", "content": [
+        {"type": "text", "text": _PROMPT},
+        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}}]}]}
+    req = urllib.request.Request("https://models.github.ai/inference/chat/completions", data=json.dumps(body).encode(),
+                                 headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}", **_UA})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        out = json.loads(r.read())
+    return _parse(out["choices"][0]["message"]["content"])
+
+
+VISION_PROVIDERS = [("gemini", _gemini), ("groq", _groq), ("github_models", _github_models)]
 
 
 def aesthetic_score(path) -> dict:
