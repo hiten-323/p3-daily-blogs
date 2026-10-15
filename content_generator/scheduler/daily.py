@@ -1067,13 +1067,33 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                         else:
                             logger.info("[viral] %s PASS — viral %.1f", label, vg["overall"])
                 if verdict == "PASS":
+                    # Run the downstream publish gates NOW so the loop regenerates against the
+                    # specific reason instead of "passing" here and being dropped at publish time.
+                    gate_reason = _growth_gate_reason(content, label, piece)
+                    if gate_reason:
+                        from content_generator.core import rejection_briefs
+                        verdict = "GATE_REJECT"
+                        feedback, scratch = rejection_briefs.brief(label, gate_reason, attempt, day_no)
+                        if scratch and label != "blog_post":
+                            piece["needs_regen"] = True
+                        piece["gate_rejection"] = gate_reason[:300]
+                        logger.warning("[editorial] %s PASSED score but REJECTED by %s | attempt %d/%d — targeted regen",
+                                       label, gate_reason[:200], attempt + 1, attempts_allowed)
+                    else:
+                        piece.pop("gate_rejection", None)
+                if verdict == "PASS":
                     if label == "blog_post" and not str(piece.get("hold_reason") or "").startswith("provider_failure"):
                         piece.pop("hold_reason", None)
                         piece.pop("held", None)
                     logger.info("[editorial] %s PASS — score %.1f (threshold %.1f)", label, score, threshold)
                     break
-                if verdict != "VIRAL_REJECT":
+                if verdict not in ("VIRAL_REJECT", "GATE_REJECT"):
                     feedback = str(review.get("feedback") or "")
+                    from content_generator.core import rejection_briefs
+                    if rejection_briefs.category(label, feedback):
+                        feedback, scratch = rejection_briefs.brief(label, feedback, attempt, day_no)
+                        if scratch and label != "blog_post":
+                            piece["needs_regen"] = True
                 logger.warning(
                     "[editorial] %s REJECT — score %.1f | feedback: %s | attempt %d/%d",
                     label, score, feedback, attempt + 1, attempts_allowed,
@@ -1149,6 +1169,32 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                     piece["hold_reason"] = f"rewrites exhausted: {reason}"[:500]
                     piece["held"] = True
                     logger.error("[blog] HELD blog_post: %s", piece["hold_reason"])
+
+
+
+def _growth_gate_reason(content: dict, label: str, piece: dict) -> str:
+    """The specific downstream gate that would still drop this asset ('' if none)."""
+    try:
+        from content_generator.core import rejection_briefs
+        if label == "blog_post":
+            hits = rejection_briefs.stock_mentions(piece)
+            return f"blog mentions stock status / inventory: {', '.join(hits)}" if hits else ""
+        from content_generator.core.editorial_engine import asset_gate_reason, portfolio_sales_rejection
+        reason = asset_gate_reason(content, label, piece) or portfolio_sales_rejection(content, label)
+        if reason:
+            return reason
+        # Same growth-engine review the pre-publish gate runs (a REGENERATE there
+        # used to park the piece forever because nothing regenerated it).
+        from content_generator.core.growth_engine import review_asset
+        from content_generator.prompts.growth_engine.plans import LABEL_PLATFORM
+        if label in LABEL_PLATFORM:
+            g = review_asset(LABEL_PLATFORM[label], piece, content, label=label)
+            if g.get("decision") != "PASS":
+                return f"growth engine {str(g.get('decision')).lower()}: {str(g.get('feedback') or '')[:240]}"
+        return ""
+    except Exception as e:  # never let a checker crash the loop; the publish gate still runs
+        logger.warning("[editorial] growth gate pre-check failed for %s: %s", label, e)
+        return ""
 
 
 def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | None:

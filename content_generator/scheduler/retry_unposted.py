@@ -111,9 +111,52 @@ def backoff_ok(records: list[dict], target: str, now: dt.datetime) -> bool:
     return now >= ts + dt.timedelta(minutes=wait)
 
 
+TARGET_GATE_PLATFORM = {"ig_feed": "instagram", "facebook": "facebook", "linkedin": "linkedin",
+                        "youtube": "youtube", "threads": "threads", "blog": "shopify"}
+
+
 def _approved(content: dict) -> dict:
+    """Editorial-approved assets that ALSO clear the pre-publish gate.
+
+    An asset can be editorially approved and still be held at publish time
+    (e.g. growth_engine_regenerate). Counting it as approved meant the ladder
+    never regenerated it, so the hold was permanent.
+    """
     from content_generator.core.editorial_engine import approved_assets
-    return approved_assets(content)
+    approved = dict(approved_assets(content))
+    try:
+        from content_generator.publisher.prepublish_gate import _PLATFORM_KEYS, authorize_publish
+        for platform in set(TARGET_GATE_PLATFORM.values()):
+            keys = [k for k in _PLATFORM_KEYS.get(platform, ()) if k in approved]
+            if not keys:
+                continue
+            res = authorize_publish(content, platform)
+            if not res.get("allowed"):
+                bad = res.get("asset_key") or keys[0]
+                log.warning("[retry] %s approved but held by pre-publish gate (%s) — will regenerate",
+                            bad, res.get("reason"))
+                approved.pop(bad, None)
+    except Exception as e:
+        log.warning("[retry] pre-publish gate check failed (%s) — relying on editorial approval", e)
+    return approved
+
+
+def ensure_ig_images(content: dict) -> bool:
+    """Render today's carousel / feed images (new templates) if none exist on disk."""
+    try:
+        from content_generator.publisher.instagram import _find_carousel_images
+        if _find_carousel_images(content):
+            return True
+    except Exception:
+        pass
+    try:
+        from content_generator.scheduler.daily import _do_generate_images
+        res = _do_generate_images(content, int(content.get("day_number") or 0))
+        log.info("[retry] rendered IG images: %s", {k: (len(v) if isinstance(v, list) else bool(v)) for k, v in (res or {}).items()})
+        return bool((res or {}).get("carousel") or (res or {}).get("instagram_post"))
+    except Exception as e:
+        log.error("[retry] IG image render failed: %s", e)
+        return False
 
 
 def main() -> int:
@@ -132,6 +175,13 @@ def main() -> int:
 
     records = records_for_today()
     missing = unposted_targets(records, ist_hour)
+    # Mandatory evening reel: regenerate from 10:00 IST so a passing reel is
+    # ready at 22:00 (publishing still waits for the evening slot hour).
+    if ist_hour >= 10 and "ig_reel" not in missing and unposted_targets(records, 23).count("ig_reel"):
+        missing.append("ig_reel")
+        prewarm_reel = True
+    else:
+        prewarm_reel = False
     # A missing mandatory slot is never parked in backoff.
     todo = prioritise([t for t in missing if is_mandatory(t) or backoff_ok(records, t, now)])
     if not todo:
@@ -171,7 +221,10 @@ def main() -> int:
 
     # 2. Publish through the normal paths; the ledger dedupes by date+slot+platform.
     failures = []
-    slots = {TARGETS[t][0] for t in todo if any(l in approved for l in TARGETS[t][2])}
+    slots = {TARGETS[t][0] for t in todo if any(l in approved for l in TARGETS[t][2])
+             and not (t == "ig_reel" and prewarm_reel)}
+    if "ig_feed" in todo and "morning" in slots:
+        ensure_ig_images(content)
     os.environ.setdefault("ENABLE_TIMED_SLOTS", "true")
     if "generate" in slots:
         os.environ["FORCE_SLOT"] = "generate"

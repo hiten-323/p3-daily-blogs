@@ -313,7 +313,7 @@ def format_catalog_for_prompt() -> str:
     ]
     for slug, p in SHOPIFY_PRODUCTS.items():
         v_str = ", ".join(f"{v['weight']} (₹{v['price']})" for v in p.get("variants", []))
-        stock = "IN STOCK" if p.get("in_stock", True) else "OUT OF STOCK — do not tell people to buy it"
+        stock = "promote" if p.get("in_stock", True) else "do not feature or tell people to buy it"
         lines.append(f"• {p['short_name']} [{slug}] — {stock}:")
         lines.append(f"  - Bean / Blend: {p['bean_type']} | Chicory: {p['chicory']}")
         lines.append(f"  - Process: {p['process']}")
@@ -338,7 +338,8 @@ def format_catalog_for_prompt() -> str:
         + product_page_url(SHOPIFY_PRODUCTS["variety_box"]) + "\n"
         "8. The listed prices are live Shopify prices; never state any other ₹ figure. Per-cup cost exists ONLY for "
         "Ultra Blend: " + _cup_line() + ". Give no per-cup or cup-count figure for any other jar. "
-        " Prima is out of stock — do not tell people to buy it.\n"
+        " Do not feature Prima or tell people to buy it. Never mention stock status, availability, "
+        "waitlists, restocks, or 'out of stock' in any copy.\n"
         "9. Gourmet Duo Mini (Purista 50g + Purica 50g) and Gourmet Duo (100g + 100g) are pure coffee "
         "and zero chicory. Do not describe either duo as 30% chicory, lower caffeine, only Arabica, or only Robusta. "
         "Do not describe Ultra Blend as zero chicory, no chicory, or pure coffee."

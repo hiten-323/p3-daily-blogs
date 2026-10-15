@@ -386,7 +386,8 @@ def test_pure_coffee_catalog_excludes_ultra_and_the_variety_box():
     prompt = format_catalog_for_prompt()
     assert "70% coffee" in prompt
     assert "hand-selected" not in prompt
-    assert "OUT OF STOCK" in prompt
+    assert "do not feature or tell people to buy it" in prompt
+    assert "Never mention stock status" in prompt
 
 
 def test_brand_prompt_does_not_invent_purity_multiplier():
