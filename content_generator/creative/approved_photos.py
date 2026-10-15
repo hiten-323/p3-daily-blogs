@@ -551,12 +551,15 @@ def _render_impl(surface: str, width: int, height: int, headline: str = "", body
                 sku, headline or SKU_COPY.get(sku, ("", ""))[0], _strip_shop(body) or SKU_COPY.get(sku, ("", ""))[1],
                 width=width, height=height, seed=day * 3 + idx, recent_layouts=recent,
                 cta=(f"FOLLOW {HANDLE.upper()}" if final else None),
-                out_path=os.path.join(premium_cards._OUT, f"{label}_premium.jpg"))
+                out_path=os.path.join(_OUT_DIR, f"{label}_premium.jpg"))
             if meta.get("held"):
                 logger.error("[visual-gate] %s held after re-renders: %s", label,
                              (meta.get("visual_gate") or {}).get("reasons"))
                 return None  # never post a failing piece; the retry loop regenerates
             visual_gate.remember_layout(meta.get("layout"), label)
+            from content_generator.creative.jar_provenance import record_jar_provenance
+            record_jar_provenance(meta["path"], render_source="approved_photo",
+                                  jar_asset_id=os.path.join(premium_cards._DIR, premium_cards.CUTOUTS[sku]))
             return meta["path"]
         return render_studio_card(cut[(day * 3 + idx) % len(cut)], width, height, headline, body, label, day)
     except Exception as e:  # never break the pipeline; caller falls back

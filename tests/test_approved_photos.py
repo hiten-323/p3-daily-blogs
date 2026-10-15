@@ -5,6 +5,15 @@ from content_generator.creative import approved_photos as ap
 M = json.load(open("brand_assets/approved_photos/manifest.json"))
 
 
+
+@pytest.fixture(autouse=True)
+def _offline_visual_gate(monkeypatch, tmp_path):
+    # CI has no vision API key; keep every deterministic visual check but skip the
+    # remote vision score here (production still requires it, see test_premium_visuals).
+    monkeypatch.setenv("VISUAL_VISION_REQUIRED", "0")
+    from content_generator.creative import visual_gate
+    monkeypatch.setattr(visual_gate, "_LAYOUT_LOG", str(tmp_path / "visual_layouts.json"))
+
 def test_manifest_schema_and_files():
     assert len(M["items"]) == 27
     for it in M["items"]:
