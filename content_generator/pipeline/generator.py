@@ -376,8 +376,13 @@ def generate_daily_content(
     # The blog is sectioned (outline, then one expansion per heading). A provider
     # failure keeps the draft and records why it was held. It must not cancel
     # the other assets, and it must not be replaced with an empty object.
-    if _extended:
+    # Default off: the separate Blogs bot owns the Shopify blog.
+    from content_generator.core.blog_flags import blog_enabled, blog_disabled_reason
+    if _extended and blog_enabled():
         phase1_results["blog_post"] = _generate_blog(day_number, topic, ctx)
+    elif _extended:
+        logger.info("[pipeline] Skipping blog_post generation — %s", blog_disabled_reason())
+        phase1_results["blog_post"] = {}
 
     # A malformed model response must not smuggle another platform's assets
     # into the Threads field. Retry the native prompt, then hold if still invalid.

@@ -9,7 +9,7 @@ So instead of publishing everything at 06:00 IST, the day is split:
 
   SLOT       UTC cron    IST     WHAT HAPPENS
   generate   30 0 * * *  06:00   Full pipeline: insights, revenue, generate,
-                                 editorial, images, LinkedIn/blog/YouTube.
+                                 editorial, images, LinkedIn/YouTube (blog off by default).
                                  Instagram + Facebook HELD for their windows.
   morning    30 4 * * *  10:00   IG carousel + FB mirror (owner-chosen time)
   evening    30 16 * * * 22:00   IG reel-style post + FB mirror

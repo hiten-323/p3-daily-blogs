@@ -80,7 +80,9 @@ def _build_report(content: dict, pipeline_result: dict) -> str:
     reels      = len(content.get("reels", []))
     has_car    = bool(content.get("carousel"))
     has_li     = bool(content.get("linkedin_post"))
-    has_blog   = bool(content.get("blog_post"))
+    from content_generator.core.blog_flags import blog_enabled as _blog_on
+    blog_piece = content.get("blog_post")
+    has_blog   = _blog_on() and bool(blog_piece) and not (isinstance(blog_piece, dict) and blog_piece.get("disabled"))
     has_story  = bool(content.get("story_sequence") or content.get("instagram_stories"))
     has_yt     = bool(content.get("yt_short"))
 

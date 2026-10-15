@@ -144,6 +144,8 @@ PROHIBITED_VISUALS = [
 
 MIN_REQUIRED_ASSETS = 2
 
+# blog_post stays listed for opt-in (BLOG_ENABLED=true) but is skipped by
+# editorial_engine / generation / retry when the flag is off (default).
 REQUIRED_DAILY_ASSETS = [
     "reel_1",
     "reel_2",
