@@ -11,257 +11,78 @@
   "featured_product": "Purica",
   "reels": [
     {
-      "featured_product": "purica",
-      "id": "reel_purica_arabica_01",
-      "psychology_frame": "ritual",
-      "hook_archetype": "Curiosity Gap",
-      "hook": "Most people think freeze-dried coffee is just marketing. Here is what is actually inside the jar.",
-      "hook_spoken": "Most people think freeze-dried coffee is just marketing. Here is what is actually inside the jar.",
-      "hook_text": "Is freeze-dried coffee just marketing?",
-      "hook_text_overlay": "What happens when you look closely at pure Arabica granules?",
-      "hook_ab": [
-        "You are probably making your morning Arabica completely wrong.",
-        "Why freeze-dried Arabica dissolves differently in your cup.",
-        "Look at this jar before you buy your next coffee."
-      ],
-      "hook_options": [
-        "Most people think freeze-dried coffee is just marketing. Here is what is actually inside the jar.",
-        "You are probably making your morning Arabica completely wrong.",
-        "Why freeze-dried Arabica dissolves differently in your cup."
-      ],
-      "alt_hook": "Why freeze-dried Arabica dissolves differently in your cup.",
-      "audio": "Ambient kitchen sounds, gentle kettle hiss, spoon clinking against a real glass jar, soft acoustic guitar picking.",
-      "music_vibe": "Warm, earthy, morning lofi acoustic, minimal beat.",
-      "visual_direction": "Vertical 9:16 format, shot on iPhone 15 Pro, natural morning daylight coming from a side window creating soft shadows on a rustic wooden countertop, realistic skin texture and slight reflection on the Purity Beans glass jar label.",
-      "ai_image_hook_prompt": "Vertical 9:16, close-up macro shot of the exact Purity Beans Purica Gourmet Arabica Granules glass jar sitting on a worn wooden kitchen counter, natural morning window light, realistic fingerprints and dust motes in the light beam, visible glass texture, no CGI, shot on 85mm f/1.8.",
-      "ai_video_motion_prompt": "Subtle handheld camera sway, warm morning steam rising slowly from an out-of-focus mug in the foreground, light refractions moving across the glass label of the Purity Beans jar, 24fps film feel.",
+      "type": "reel",
+      "hook": "You have been drinking coffee without knowing what is actually inside your jar.",
+      "hook_text": "You have been drinking coffee without knowing what is actually inside your jar.",
+      "hook_spoken": "Look at the back of your instant coffee jar right now. Does it list anything other than coffee?",
+      "hook_text_overlay": "READ THE BACK PANEL",
       "frames": [
         {
-          "step": "STOP",
-          "on_screen": "Look at these granules.",
-          "spoken": "Take a close look at these granules. This is Purica Gourmet Arabica Granules from Purity Beans."
+          "on_screen": "READ THE BACK PANEL",
+          "spoken": "Look at the back of your instant coffee jar right now. Does it list anything other than coffee?"
         },
         {
-          "step": "CURIOSITY",
-          "on_screen": "Read the back jar panel.",
-          "spoken": "When you read the ingredient panel, you find pure Arabica and nothing else. No hidden fillers."
+          "on_screen": "PURE COFFEE VS BLENDS",
+          "spoken": "Many popular jars dilute their coffee with roasted chicory root to cut costs without telling you clearly."
         },
         {
-          "step": "VALUE",
-          "on_screen": "Freeze-dried aroma locked in.",
-          "spoken": "The freeze-drying process locks in natural caramel and chocolatey notes instead of burning them off during spray drying."
+          "on_screen": "ZERO CHICORY",
+          "spoken": "Purity Beans Purica is freeze-dried pure Arabica and Purista is pure Robusta. Zero chicory, nothing hidden."
         },
         {
-          "step": "TRUST",
-          "on_screen": "Pure Arabica, zero chicory.",
-          "spoken": "It is pure coffee through and through, crafted for coffee lovers who want clean flavor without the guesswork."
+          "on_screen": "ARABICA VS ROBUSTA",
+          "spoken": "Arabica brings smooth, aromatic caramel notes, while Robusta delivers a deep, bold, honest kick."
         },
         {
-          "step": "FOLLOW",
-          "on_screen": "Discover your morning ritual.",
-          "spoken": "Follow @purepantryprovisions for a more transparent coffee routine."
-        },
-        {
-          "step": "BUY",
-          "on_screen": "Shop now at p3online.in",
-          "spoken": "Get your 50g jar for 329 rupees or the 100g jar for 559 rupees at p3online.in."
+          "on_screen": "CHECK YOUR JAR TODAY",
+          "spoken": "Stop settling for undisclosed fillers. Read your label and upgrade your morning cup at p3online.in."
         }
       ],
-      "caption": "When you choose Purity Beans Purica Gourmet Arabica Granules, you get pure Arabica with zero chicory. Freeze-dried to lock in natural caramel and chocolatey notes, it is a smooth, aromatic addition to your morning ritual. Priced at ₹329 for 50g and ₹559 for 100g, with free shipping on orders above ₹399. Read the jar, know your brew, and order today at https://p3online.in. Follow @purepantryprovisions.",
-      "cta": "Shop Purica Arabica at https://p3online.in",
-      "comment_trigger": "Comment ARABICA if you prefer a smooth, aromatic black coffee in the morning.",
-      "save_trigger": "Save this reel before your next coffee restock.",
-      "share_trigger": "Share this with a friend who appreciates pure Arabica coffee.",
-      "whatsapp_forward": "Hey! Found this pure Arabica freeze-dried coffee from Purity Beans. Check it out here: https://p3online.in",
-      "seo_keywords": [
-        "freeze dried coffee",
-        "pure Arabica granules",
-        "gourmet instant coffee India",
-        "coffee without preservatives",
-        "Purity Beans Purica"
-      ],
-      "thumbnail_options": [
-        "Macro shot of Purity Beans Purica jar next to a wooden spoon of freeze-dried granules.",
-        "Close-up of the ingredient label on the glass jar under warm kitchen light.",
-        "A hot mug of black coffee with the Purity Beans glass jar in soft focus background."
-      ],
-      "loop_note": "End the video with the jar resting back on the counter so the opening frame matches the final frame for a seamless loop.",
-      "chosen_hook": "Is freeze-dried coffee just marketing?",
-      "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
+      "body": "Purity Beans Purica is freeze-dried pure Arabica and Purista is pure Robusta. Knowing your bean changes your entire morning brew with zero chicory added.",
+      "caption": "You have been drinking coffee without knowing what is actually inside your jar.\n\nLook at the ingredient panel on your current coffee. Many commercial brands mix in roasted chicory root to bulk up the container. Purity Beans keeps it transparent.\n\nPurity Beans Purica is freeze-dried pure Arabica, offering smooth, aromatic notes. Purity Beans Purista is pure Robusta, delivering a bold, deep kick. Both jars contain pure coffee with zero chicory.\n\nRead your label today. Shop pure coffee at https://p3online.in",
+      "cta": "Explore our pure coffee range at https://p3online.in",
+      "comment_trigger": "Comment LABEL to tell us if you check your ingredients.",
+      "save_trigger": "Save this reel before your next grocery run.",
+      "share_trigger": "Send this to someone who needs to check their coffee label.",
+      "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia #FreezeDriedCoffee",
+      "audio": "Subtle ambient coffee grinder sound followed by a clear, confident voiceover with zero background music.",
+      "loop_ending": "Ends seamlessly back on the exact jar close-up, creating an infinite visual loop.",
+      "angle": "EDUCATE",
+      "source": "growth_reel",
+      "featured_product": "Purica",
+      "chosen_hook": "You have been drinking coffee without knowing what is actually inside your jar.",
       "editorial_score": {
-        "shareability": 7.5,
-        "saveability": 8.0,
-        "emotion_pull": 7.2,
-        "hook_strength": 8.2,
-        "brand_clarity": 9.0,
-        "overall": 8.0,
+        "shareability": 8.5,
+        "saveability": 9.0,
+        "emotion_pull": 8.5,
+        "hook_strength": 9.0,
+        "brand_clarity": 9.5,
+        "overall": 8.9,
         "verdict": "PASS",
-        "feedback": "The script establishes strong credibility by focusing on transparent ingredients and freeze-drying technology for Purica (pure Arabica, zero chicory). To maximize shareability, punch up the contrast between marketing jargon and actual transparent labeling in the opening frame.",
-        "retention_audit": "Line 1 (Hook): Strong curiosity gap that stops the scroll. Frames 1-3 maintain steady engagement through visual cues ('Read the back jar panel'). Frames 4-6 deliver clear value and a frictionless transaction path (pricing + p3online.in)."
+        "feedback": "The asset successfully bridges consumer curiosity with transparent ingredient education. The hook creates an immediate sense of discovery by challenging what is inside the jar. The transition between identifying hidden fillers and highlighting Purity Beans' zero-chicory Purica and Purista variants is seamless and compliant with all brand safety rules.",
+        "retention_audit": "0-2s (Hook): 'You have been drinking coffee without knowing what is actually inside your jar.' — High engagement trigger; immediately forces the viewer to inspect their current setup. 2-5s: 'Look at the back of your instant coffee jar right now...' — Strong pattern interrupt with actionable instruction. 5-10s: Clear distinction between pure coffee and undisclosed chicory fillers maintains high watch time. 10-15s: Exact product placement of Purica and Purista combined with the direct link at p3online.in delivers a clean, frictionless conversion path."
       },
-      "funnel_objective": "DISCOVERY",
-      "objective": "Engagement Growth",
-      "primary_cta": "Send this to someone who drinks instant coffee",
-      "success_metric": "shares",
-      "target": 500,
-      "growth_plan": {
-        "primary_objective": "reach new relevant coffee drinkers",
-        "secondary_objective": "earn qualified followers",
-        "audience": "people who buy instant coffee and have never turned the jar around",
-        "angle": "visual discovery of one label fact",
-        "follow_promise": "Follow for the next thing the label is hiding.",
-        "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
-        "platform": "reel",
-        "sku": "Purica",
-        "day": 287
-      },
-      "growth_review": {
-        "platform": "reel",
-        "label": "reel_1",
-        "decision": "PASS",
-        "overall": 8.67,
-        "threshold": 8.0,
-        "dimensions": [
-          {
-            "name": "platform_fit",
-            "score": 9.0,
-            "evidence": "Hook and body are both present.",
-            "hard_fail": false
-          },
-          {
-            "name": "hook",
-            "score": 9.0,
-            "evidence": "The hook names a specific subject.",
-            "hard_fail": false
-          },
-          {
-            "name": "retention",
-            "score": 8.0,
-            "evidence": "The body contains a concrete coffee fact.",
-            "hard_fail": false
-          },
-          {
-            "name": "payoff",
-            "score": 8.0,
-            "evidence": "The body continues the hook.",
-            "hard_fail": false
-          },
-          {
-            "name": "shareability",
-            "score": 9.0,
-            "evidence": "There is a reason to pass this on.",
-            "hard_fail": false
-          },
-          {
-            "name": "saveability",
-            "score": 8.0,
-            "evidence": "A checkable fact is worth saving.",
-            "hard_fail": false
-          },
-          {
-            "name": "follow_conversion",
-            "score": 8.0,
-            "evidence": "The follow reason is specific.",
-            "hard_fail": false
-          },
-          {
-            "name": "purchase_relevance",
-            "score": 8.0,
-            "evidence": "The featured jar or a verified next step is named.",
-            "hard_fail": false
-          },
-          {
-            "name": "brand_truth",
-            "score": 10.0,
-            "evidence": "No product-truth finding.",
-            "hard_fail": false
-          },
-          {
-            "name": "visual_integrity",
-            "score": 8.0,
-            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
-            "hard_fail": false
-          },
-          {
-            "name": "claim_verification",
-            "score": 10.0,
-            "evidence": "No prohibited health or medical claim.",
-            "hard_fail": false
-          },
-          {
-            "name": "originality",
-            "score": 9.0,
-            "evidence": "Hook and CTA are not copied from another asset today.",
-            "hard_fail": false
-          },
-          {
-            "name": "mobile_readability",
-            "score": 9.0,
-            "evidence": "The hook is short enough to read on a phone.",
-            "hard_fail": false
-          },
-          {
-            "name": "cta_clarity",
-            "score": 9.0,
-            "evidence": "One CTA field is present.",
-            "hard_fail": false
-          },
-          {
-            "name": "schema",
-            "score": 8.0,
-            "evidence": "No schema or length failure for this format.",
-            "hard_fail": false
-          }
-        ],
-        "hard_fails": [],
-        "attempts": 1,
-        "retry_limit": 8,
-        "feedback": "",
-        "plan": {
-          "primary_objective": "reach new relevant coffee drinkers",
-          "secondary_objective": "earn qualified followers",
-          "audience": "people who buy instant coffee and have never turned the jar around",
-          "angle": "visual discovery of one label fact",
-          "follow_promise": "Follow for the next thing the label is hiding.",
-          "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
-          "platform": "reel",
-          "sku": "Purica",
-          "day": 287
+      "viral_potential": {
+        "scores": {
+          "hook": 8.0,
+          "curiosity_gap": 8.0,
+          "relatability": 7.0,
+          "shareability": 8.0,
+          "comment_trigger": 7.0,
+          "format_fit": 8.0,
+          "follow_cta": 7.0
         },
-        "published": false
-      },
-      "reel_inspiration": {
-        "inspiration_id": "gourmet_duo_mini_style",
-        "mode": "style_cues",
-        "source_template_id": "gourmet_duo_mini_reel",
-        "source_filename": "gourmet_duo_mini.mp4",
-        "publish_source_video": false,
-        "copied": {
-          "pixels": false,
-          "audio": false,
-          "sku": false
-        },
-        "featured_product": "",
-        "featured_slug": "",
-        "cues": [
-          {
-            "id": "pacing",
-            "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
-          },
-          {
-            "id": "framing",
-            "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
-          },
-          {
-            "id": "storytelling",
-            "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
-          },
-          {
-            "id": "aesthetic",
-            "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
-          }
+        "overall": 7.5,
+        "weakest": [
+          "relatability",
+          "comment_trigger",
+          "follow_cta"
         ],
-        "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
+        "feedback": "The hook immediately creates an investigative curiosity gap by calling out ingredient transparency. To push past an 8, anchor the relatability directly into the Indian kitchen routine (e.g., opening the pantry cabinet at 7 AM). Make the comment trigger more punchy by asking a specific binary question (e.g., 'Comment ARABICA or ROBUSTA') rather than asking them to type 'LABEL'. Keep the framing strictly compliant with zero medical or exaggerated claims.",
+        "better_hook": "Check your kitchen cabinet right now—do you actually know what is inside your instant coffee jar?",
+        "passed": false,
+        "honesty": [],
+        "pass_mark": 8.0
       },
       "viral_readiness_score": 94.0
     },
@@ -836,7 +657,7 @@
     "growth_review": {
       "platform": "carousel",
       "label": "carousel",
-      "decision": "PASS",
+      "decision": "REGENERATE",
       "overall": 8.67,
       "threshold": 8.0,
       "dimensions": [
@@ -931,10 +752,12 @@
           "hard_fail": false
         }
       ],
-      "hard_fails": [],
+      "hard_fails": [
+        "wrong_handle:@puritybeans (use @purepantryprovisions)"
+      ],
       "attempts": 2,
       "retry_limit": 8,
-      "feedback": "",
+      "feedback": "wrong_handle:@puritybeans (use @purepantryprovisions)",
       "plan": {
         "primary_objective": "drive product-page visits/purchases",
         "secondary_objective": "earn qualified followers",
@@ -1009,7 +832,7 @@
     "growth_review": {
       "platform": "linkedin",
       "label": "linkedin_post",
-      "decision": "PASS",
+      "decision": "REGENERATE",
       "overall": 8.67,
       "threshold": 8.0,
       "dimensions": [
@@ -1104,10 +927,12 @@
           "hard_fail": false
         }
       ],
-      "hard_fails": [],
+      "hard_fails": [
+        "wrong_handle:@puritybeans (use @purepantryprovisions)"
+      ],
       "attempts": 2,
       "retry_limit": 8,
-      "feedback": "",
+      "feedback": "wrong_handle:@puritybeans (use @purepantryprovisions)",
       "plan": {
         "primary_objective": "B2B inquiries (retailer, cafe, office, wholesale, distributor)",
         "secondary_objective": "earn qualified followers",
@@ -1140,7 +965,7 @@
     "topic_id": "choose-jar",
     "tldr": "Instant coffee jar comes down to the jar, not a slogan. Purity Beans Ultra Blend is 70% coffee and 30% chicory. Prima, also called Premium Agglomerate, is pure Arabica and is not freeze-dried. Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. Prices in this article are catalog prices in rupees for shoppers in India.",
     "introduction": "If you are searching for instant coffee jar, start with the back of the jar. In Mumbai and Bengaluru the usual cup is milk coffee, so the chicory line changes the taste. Purity Beans lists Ultra Blend as 70% coffee and 30% chicory, and the prices below are in ₹ on p3online.in.",
-    "body": "## What does instant coffee jar mean for an Indian kitchen?\n\nStart with the back of the jar rather than the front slogan. In Mumbai the weekday cup is usually milk coffee from an office pantry. Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed only for Ultra Blend. The 50g jar is ₹209 and it is in stock. Purista is freeze-dried pure Robusta with 0% chicory. The 50g jar is ₹319 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Mumbai the weekday cup is usually milk coffee from an office pantry. In Delhi many people stir the granules into hot milk before the commute. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. In Chennai a short cup with hot milk is a normal brew.\n\n### A plain definition\n\nWhatever brought you here, the label settles it. The other single jars on this page are 0% chicory.\n\n## How do you read the chicory line on the jar?\n\nThe quickest way to choose is to look at how you actually take your coffee. In Delhi many people stir the granules into hot milk before the commute. Bold is pure coffee with 0% chicory. The 50g jar is ₹239 and it is in stock. Purica is freeze-dried pure Arabica with 0% chicory. The 50g jar is ₹329 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Delhi many people stir the granules into hot milk before the commute. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. In Chennai a short cup with hot milk is a normal brew. In Hyderabad a strong mug at the desk is a usual weekday habit.\n\n## Which jar suits the way you drink coffee?\n\nMost kitchens only need one jar, so it helps to know what each one does well. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. Purista is freeze-dried pure Robusta with 0% chicory. The 50g jar is ₹319 and it is in stock. Prima, also called Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The 50g jar is ₹269 and it is out of stock on the catalog, so this page does not tell you to buy it. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. In Chennai a short cup with hot milk is a normal brew.\n\n## What does each jar cost in rupees?\n\nPrice matters, but so does what the cup tastes like at 7am. In Chennai a short cup with hot milk is a normal brew. Purica is freeze-dried pure Arabica with 0% chicory. The 50g jar is ₹329 and it is in stock. A lower-caffeine description is allowed only for Ultra Blend. The 50g jar is ₹209 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Chennai a short cup with hot milk is a normal brew. In Hyderabad a strong mug at the desk is a usual weekday habit. In Pune students often use hot water and a splash of milk. In Kolkata a milky evening cup is as ordinary as the morning one. In Mumbai the weekday cup is usually milk coffee from an office pantry.\n\n## How do people brew instant coffee in Indian cities?\n\nHere is the plain version, without the marketing gloss. In Hyderabad a strong mug at the desk is a usual weekday habit. Prima, also called Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The 50g jar is ₹269 and it is out of stock on the catalog, so this page does not tell you to buy it. Bold is pure coffee with 0% chicory. The 50g jar is ₹239 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Hyderabad a strong mug at the desk is a usual weekday habit. In Pune students often use hot water and a splash of milk. In Kolkata a milky evening cup is as ordinary as the morning one. In Mumbai the weekday cup is usually milk coffee from an office pantry.\n\n## How do you choose a jar without a slogan?\n\nMost mornings, we grab the first canister off the shelf without wondering what actually lives inside. If you have ever felt that quiet sting of disappointment when your morning cup tastes thin or muddy, the fix usually isn't changing your brew time—it is looking closely at the label. For those who want a straight, bold black coffee with zero chicory, a jar of Bold at ₹239 or Purista at ₹319 cuts right through the noise. Still unsure where to start? The Variety Box brings all four signature profiles together for ₹877, giving you space to test what actually fits your palate before committing to a full-size pantry staple. Real quality doesn't need loud marketing; it just needs an honest cup. Shop now at https://p3online.in\n\n| Jar | Beans | Chicory | Process | Smallest jar | Stock |\n| --- | --- | --- | --- | --- | --- |\n| Ultra Blend | 70% coffee | 30% chicory | Agglomerated instant blend | ₹209 for 50g | In stock |\n| Bold | pure coffee | 0% chicory | Agglomerated instant coffee | ₹239 for 50g | In stock |\n| Purista | pure Robusta | 0% chicory | Freeze-dried granules | ₹319 for 50g | In stock |\n| Purica | pure Arabica | 0% chicory | Freeze-dried granules | ₹329 for 50g | In stock |\n| Prima | pure Arabica | 0% chicory | Premium Agglomerate | ₹269 for 50g | Out of stock |\n\nCatalog pages for shoppers in India: [Ultra Blend (70% coffee, 30% chicory)](https://p3online.in/products/purity-beans-ultra-blend-instant-coffee) (₹209), [Bold Pure Coffee](https://p3online.in/products/purity-beans-bold-instant-coffee) (₹239), [Purica Gourmet Arabica Granules](https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules) (₹329).",
+    "body": "## What does instant coffee jar mean for an Indian kitchen?\n\nMost of us grew up thinking that the bitter, dark powder in our cupboards was just 'strong coffee,' but the truth is often a hidden mix of chicory and fillers. When you look for a real instant coffee jar, you aren't just buying convenience; you're choosing whether you want actual coffee beans or a root-based substitute. For those who love that classic, creamy milk coffee without the heavy bitterness, Purity Beans Ultra Blend is a great transition at ₹209 for 50g, as it contains 70% coffee and 30% chicory. But if you're a purist, you should move toward zero-chicory options. Try the Bold blend (₹239 for 50g) for a morning kick, or go gourmet with Purica's Arabica granules (₹329 for 50g) for a smoother, chocolatey finish. Pro tip: store your jar away from the stove's steam to keep the aroma locked in.\n\n### A plain definition\n\nWhatever brought you here, the label settles it. The other single jars on this page are 0% chicory.\n\n## How do you read the chicory line on the jar?\n\nMost people think they are drinking coffee, but they are actually drinking a clever mix of root powders and fillers. If you check the back of your current instant coffee jar, you will likely find chicory hiding in the fine print. It is a cheap way for brands to bulk up the volume without losing that dark color. At Purity Beans, we believe you should actually know what is in your cup. But for the purists who refuse to compromise, our Bold, Purista, and Purica lines contain zero chicory. For instance, if you love the refined, chocolatey notes of pure Arabica, the Purica granules are a revelation at ₹329 for 50g. Stop guessing and start reading the labels.\n\n## Which jar suits the way you drink coffee?\n\nMost of us have spent years drinking what we thought was coffee, only to realize it was mostly chicory and fillers. If you are happy with that muted, woody taste, this isn't for you. But for those who want the real thing, Purity Beans offers a clear choice. If you need a heavy morning kick, Bold is your best bet at ₹239 for 50g. For a smoother, cafe-style experience, go for Purica (₹329 for 50g). Pro tip: if you can't decide, the Variety Box at ₹877 lets you taste every single blend. Stop guessing what's in your instant coffee jar and start choosing your flavor profile with actual transparency.\n\nPrice matters, but so does what the cup tastes like at 7am. In Chennai a short cup with hot milk is a normal brew. Purica is freeze-dried pure Arabica with 0% chicory. The 50g jar is ₹329 and it is in stock. Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed only for Ultra Blend. The 50g jar is ₹209 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Chennai a short cup with hot milk is a normal brew. In Hyderabad a strong mug at the desk is a usual weekday habit. In Pune students often use hot water and a splash of milk. In Kolkata a milky evening cup is as ordinary as the morning one. In Mumbai the weekday cup is usually milk coffee from an office pantry.\n\n## What does each jar cost in rupees?\n\nMost people don't actually know what they are paying for when they grab a random instant coffee jar from the supermarket; they're often just paying for fillers. At Purity Beans, we believe you should know exactly what hits your palate. If you want that aggressive morning kick, Bold is your best bet at ₹239 for 50g or ₹369 for 100g. For those who crave a smoother, cafe-style aromatic experience, Purica (pure Arabica) is ₹329 for 50g and ₹559 for 100g, while the rich, gourmet Robusta notes of Purista cost ₹319 for 50g and ₹509 for 100g. Pro tip: if you can't decide, the Variety Box is the smartest move at ₹877 for four 50g jars.\n\n## How do people brew instant coffee in Indian cities?\n\nMost of us grew up thinking that bitter, burnt taste in our morning mug was just 'how coffee tastes.' The truth is, you've likely been drinking a mix of wood-root and fillers without even knowing it. In cities like Mumbai or Bangalore, the ritual is usually a hurried stir of powder into hot milk, but the experience is often generic. If you want to actually taste the bean, try adding your coffee to a tablespoon of warm water first to bloom the aroma before adding milk. Purity Beans is changing this by being honest about what goes into the jar. But for those who refuse to compromise, our pure coffee options like Purica at ₹329 for 50g offer a completely different, cleaner experience.\n\n## How do you choose a jar without a slogan?\n\nMost people don't actually drink coffee; they drink a clever mix of fillers and chicory while calling it a 'premium blend.' If you're happy with that woody, diluted taste, you can stop reading here. But for those who want the real thing, choosing a Purity Beans jar comes down to your morning mood. If you need a heavy, honest kick to wake up, Bold (₹239 for 50g) is your best bet. For a smoother, café-style experience with chocolatey notes, go for Purica (₹329 for 50g). A quick tip: if you can't decide, just grab the Variety Box (₹877) and let your taste buds do the filtering. It's the only way to truly find your perfect match.\n\n| Jar | Beans | Chicory | Process | Smallest jar | Stock |\n| --- | --- | --- | --- | --- | --- |\n| Ultra Blend | 70% coffee | 30% chicory | Agglomerated instant blend | ₹209 for 50g | In stock |\n| Bold | pure coffee | 0% chicory | Agglomerated instant coffee | ₹239 for 50g | In stock |\n| Purista | pure Robusta | 0% chicory | Freeze-dried granules | ₹319 for 50g | In stock |\n| Purica | pure Arabica | 0% chicory | Freeze-dried granules | ₹329 for 50g | In stock |\n| Prima | pure Arabica | 0% chicory | Premium Agglomerate | ₹269 for 50g | Out of stock |\n\nCatalog pages for shoppers in India: [Ultra Blend (70% coffee, 30% chicory)](https://p3online.in/products/purity-beans-ultra-blend-instant-coffee) (₹209), [Bold Pure Coffee](https://p3online.in/products/purity-beans-bold-instant-coffee) (₹239), [Purica Gourmet Arabica Granules](https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules) (₹329).",
     "conclusion": "Pick the jar that matches your cup, and read the chicory line first. Ultra Blend is 70% coffee and 30% chicory, and only that jar may be called lower caffeine. Prima, the Premium Agglomerate, is pure Arabica. Then open the catalog at https://p3online.in",
     "faq": [
       {
@@ -1183,32 +1008,32 @@
       {
         "heading": "What does instant coffee jar mean for an Indian kitchen?",
         "level": "h2",
-        "body": "Start with the back of the jar rather than the front slogan. In Mumbai the weekday cup is usually milk coffee from an office pantry. Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed only for Ultra Blend. The 50g jar is ₹209 and it is in stock. Purista is freeze-dried pure Robusta with 0% chicory. The 50g jar is ₹319 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Mumbai the weekday cup is usually milk coffee from an office pantry. In Delhi many people stir the granules into hot milk before the commute. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. In Chennai a short cup with hot milk is a normal brew."
+        "body": "Most of us grew up thinking that the bitter, dark powder in our cupboards was just 'strong coffee,' but the truth is often a hidden mix of chicory and fillers. When you look for a real instant coffee jar, you aren't just buying convenience; you're choosing whether you want actual coffee beans or a root-based substitute. For those who love that classic, creamy milk coffee without the heavy bitterness, Purity Beans Ultra Blend is a great transition at ₹209 for 50g, as it contains 70% coffee and 30% chicory. But if you're a purist, you should move toward zero-chicory options. Try the Bold blend (₹239 for 50g) for a morning kick, or go gourmet with Purica's Arabica granules (₹329 for 50g) for a smoother, chocolatey finish. Pro tip: store your jar away from the stove's steam to keep the aroma locked in."
       },
       {
         "heading": "How do you read the chicory line on the jar?",
         "level": "h2",
-        "body": "The quickest way to choose is to look at how you actually take your coffee. In Delhi many people stir the granules into hot milk before the commute. Bold is pure coffee with 0% chicory. The 50g jar is ₹239 and it is in stock. Purica is freeze-dried pure Arabica with 0% chicory. The 50g jar is ₹329 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Delhi many people stir the granules into hot milk before the commute. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. In Chennai a short cup with hot milk is a normal brew. In Hyderabad a strong mug at the desk is a usual weekday habit."
+        "body": "Most people think they are drinking coffee, but they are actually drinking a clever mix of root powders and fillers. If you check the back of your current instant coffee jar, you will likely find chicory hiding in the fine print. It is a cheap way for brands to bulk up the volume without losing that dark color. At Purity Beans, we believe you should actually know what is in your cup. But for the purists who refuse to compromise, our Bold, Purista, and Purica lines contain zero chicory. For instance, if you love the refined, chocolatey notes of pure Arabica, the Purica granules are a revelation at ₹329 for 50g. Stop guessing and start reading the labels."
       },
       {
         "heading": "Which jar suits the way you drink coffee?",
         "level": "h2",
-        "body": "Most kitchens only need one jar, so it helps to know what each one does well. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. Purista is freeze-dried pure Robusta with 0% chicory. The 50g jar is ₹319 and it is in stock. Prima, also called Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The 50g jar is ₹269 and it is out of stock on the catalog, so this page does not tell you to buy it. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. In Chennai a short cup with hot milk is a normal brew."
+        "body": "Most of us have spent years drinking what we thought was coffee, only to realize it was mostly chicory and fillers. If you are happy with that muted, woody taste, this isn't for you. But for those who want the real thing, Purity Beans offers a clear choice. If you need a heavy morning kick, Bold is your best bet at ₹239 for 50g. For a smoother, cafe-style experience, go for Purica (₹329 for 50g). Pro tip: if you can't decide, the Variety Box at ₹877 lets you taste every single blend. Stop guessing what's in your instant coffee jar and start choosing your flavor profile with actual transparency.\n\nPrice matters, but so does what the cup tastes like at 7am. In Chennai a short cup with hot milk is a normal brew. Purica is freeze-dried pure Arabica with 0% chicory. The 50g jar is ₹329 and it is in stock. Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed only for Ultra Blend. The 50g jar is ₹209 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Chennai a short cup with hot milk is a normal brew. In Hyderabad a strong mug at the desk is a usual weekday habit. In Pune students often use hot water and a splash of milk. In Kolkata a milky evening cup is as ordinary as the morning one. In Mumbai the weekday cup is usually milk coffee from an office pantry."
       },
       {
         "heading": "What does each jar cost in rupees?",
         "level": "h2",
-        "body": "Price matters, but so does what the cup tastes like at 7am. In Chennai a short cup with hot milk is a normal brew. Purica is freeze-dried pure Arabica with 0% chicory. The 50g jar is ₹329 and it is in stock. A lower-caffeine description is allowed only for Ultra Blend. The 50g jar is ₹209 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Chennai a short cup with hot milk is a normal brew. In Hyderabad a strong mug at the desk is a usual weekday habit. In Pune students often use hot water and a splash of milk. In Kolkata a milky evening cup is as ordinary as the morning one. In Mumbai the weekday cup is usually milk coffee from an office pantry."
+        "body": "Most people don't actually know what they are paying for when they grab a random instant coffee jar from the supermarket; they're often just paying for fillers. At Purity Beans, we believe you should know exactly what hits your palate. If you want that aggressive morning kick, Bold is your best bet at ₹239 for 50g or ₹369 for 100g. For those who crave a smoother, cafe-style aromatic experience, Purica (pure Arabica) is ₹329 for 50g and ₹559 for 100g, while the rich, gourmet Robusta notes of Purista cost ₹319 for 50g and ₹509 for 100g. Pro tip: if you can't decide, the Variety Box is the smartest move at ₹877 for four 50g jars."
       },
       {
         "heading": "How do people brew instant coffee in Indian cities?",
         "level": "h2",
-        "body": "Here is the plain version, without the marketing gloss. In Hyderabad a strong mug at the desk is a usual weekday habit. Prima, also called Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The 50g jar is ₹269 and it is out of stock on the catalog, so this page does not tell you to buy it. Bold is pure coffee with 0% chicory. The 50g jar is ₹239 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Hyderabad a strong mug at the desk is a usual weekday habit. In Pune students often use hot water and a splash of milk. In Kolkata a milky evening cup is as ordinary as the morning one. In Mumbai the weekday cup is usually milk coffee from an office pantry."
+        "body": "Most of us grew up thinking that bitter, burnt taste in our morning mug was just 'how coffee tastes.' The truth is, you've likely been drinking a mix of wood-root and fillers without even knowing it. In cities like Mumbai or Bangalore, the ritual is usually a hurried stir of powder into hot milk, but the experience is often generic. If you want to actually taste the bean, try adding your coffee to a tablespoon of warm water first to bloom the aroma before adding milk. Purity Beans is changing this by being honest about what goes into the jar. But for those who refuse to compromise, our pure coffee options like Purica at ₹329 for 50g offer a completely different, cleaner experience."
       },
       {
         "heading": "How do you choose a jar without a slogan?",
         "level": "h2",
-        "body": "Most mornings, we grab the first canister off the shelf without wondering what actually lives inside. If you have ever felt that quiet sting of disappointment when your morning cup tastes thin or muddy, the fix usually isn't changing your brew time—it is looking closely at the label. For those who want a straight, bold black coffee with zero chicory, a jar of Bold at ₹239 or Purista at ₹319 cuts right through the noise. Still unsure where to start? The Variety Box brings all four signature profiles together for ₹877, giving you space to test what actually fits your palate before committing to a full-size pantry staple. Real quality doesn't need loud marketing; it just needs an honest cup. Shop now at https://p3online.in."
+        "body": "Most people don't actually drink coffee; they drink a clever mix of fillers and chicory while calling it a 'premium blend.' If you're happy with that woody, diluted taste, you can stop reading here. But for those who want the real thing, choosing a Purity Beans jar comes down to your morning mood. If you need a heavy, honest kick to wake up, Bold (₹239 for 50g) is your best bet. For a smoother, café-style experience with chocolatey notes, go for Purica (₹329 for 50g). A quick tip: if you can't decide, just grab the Variety Box (₹877) and let your taste buds do the filtering. It's the only way to truly find your perfect match."
       }
     ],
     "generation_notes": [
@@ -1442,22 +1267,22 @@
         }
       ]
     },
-    "body_html": "<p><strong>TL;DR.</strong> Instant coffee jar comes down to the jar, not a slogan. Purity Beans Ultra Blend is 70% coffee and 30% chicory. Prima, also called Premium Agglomerate, is pure Arabica and is not freeze-dried. Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. Prices in this article are catalog prices in rupees for shoppers in India.</p>\n<p><em>By Purity Beans. Last updated 2026-10-15 (IST).</em></p>\n<p>If you are searching for instant coffee jar, start with the back of the jar. In Mumbai and Bengaluru the usual cup is milk coffee, so the chicory line changes the taste. Purity Beans lists Ultra Blend as 70% coffee and 30% chicory, and the prices below are in ₹ on p3online.in.</p>\n<h2>What does instant coffee jar mean for an Indian kitchen?</h2>\n<p>Start with the back of the jar rather than the front slogan. In Mumbai the weekday cup is usually milk coffee from an office pantry. Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed only for Ultra Blend. The 50g jar is ₹209 and it is in stock. Purista is freeze-dried pure Robusta with 0% chicory. The 50g jar is ₹319 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Mumbai the weekday cup is usually milk coffee from an office pantry. In Delhi many people stir the granules into hot milk before the commute. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. In Chennai a short cup with hot milk is a normal brew.</p>\n<h3>A plain definition</h3>\n<p>Whatever brought you here, the label settles it. The other single jars on this page are 0% chicory.</p>\n<h2>How do you read the chicory line on the jar?</h2>\n<p>The quickest way to choose is to look at how you actually take your coffee. In Delhi many people stir the granules into hot milk before the commute. Bold is pure coffee with 0% chicory. The 50g jar is ₹239 and it is in stock. Purica is freeze-dried pure Arabica with 0% chicory. The 50g jar is ₹329 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Delhi many people stir the granules into hot milk before the commute. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. In Chennai a short cup with hot milk is a normal brew. In Hyderabad a strong mug at the desk is a usual weekday habit.</p>\n<h2>Which jar suits the way you drink coffee?</h2>\n<p>Most kitchens only need one jar, so it helps to know what each one does well. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. Purista is freeze-dried pure Robusta with 0% chicory. The 50g jar is ₹319 and it is in stock. Prima, also called Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The 50g jar is ₹269 and it is out of stock on the catalog, so this page does not tell you to buy it. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Bengaluru a filter coffee at home is common, and an instant jar covers the mornings when the filter stays in the cupboard. In Chennai a short cup with hot milk is a normal brew.</p>\n<h2>What does each jar cost in rupees?</h2>\n<p>Price matters, but so does what the cup tastes like at 7am. In Chennai a short cup with hot milk is a normal brew. Purica is freeze-dried pure Arabica with 0% chicory. The 50g jar is ₹329 and it is in stock. A lower-caffeine description is allowed only for Ultra Blend. The 50g jar is ₹209 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Chennai a short cup with hot milk is a normal brew. In Hyderabad a strong mug at the desk is a usual weekday habit. In Pune students often use hot water and a splash of milk. In Kolkata a milky evening cup is as ordinary as the morning one. In Mumbai the weekday cup is usually milk coffee from an office pantry.</p>\n<h2>How do people brew instant coffee in Indian cities?</h2>\n<p>Here is the plain version, without the marketing gloss. In Hyderabad a strong mug at the desk is a usual weekday habit. Prima, also called Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The 50g jar is ₹269 and it is out of stock on the catalog, so this page does not tell you to buy it. Bold is pure coffee with 0% chicory. The 50g jar is ₹239 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Hyderabad a strong mug at the desk is a usual weekday habit. In Pune students often use hot water and a splash of milk. In Kolkata a milky evening cup is as ordinary as the morning one. In Mumbai the weekday cup is usually milk coffee from an office pantry.</p>\n<h2>How do you choose a jar without a slogan?</h2>\n<p>Most mornings, we grab the first canister off the shelf without wondering what actually lives inside. If you have ever felt that quiet sting of disappointment when your morning cup tastes thin or muddy, the fix usually isn&#x27;t changing your brew time—it is looking closely at the label. For those who want a straight, bold black coffee with zero chicory, a jar of Bold at ₹239 or Purista at ₹319 cuts right through the noise. Still unsure where to start? The Variety Box brings all four signature profiles together for ₹877, giving you space to test what actually fits your palate before committing to a full-size pantry staple. Real quality doesn&#x27;t need loud marketing; it just needs an honest cup. Shop now at https://p3online.in</p>\n<table><thead><tr><th>Jar</th><th>Beans</th><th>Chicory</th><th>Process</th><th>Smallest jar</th><th>Stock</th></tr></thead><tbody><tr><td>Ultra Blend</td><td>70% coffee</td><td>30% chicory</td><td>Agglomerated instant blend</td><td>₹209 for 50g</td><td>In stock</td></tr><tr><td>Bold</td><td>pure coffee</td><td>0% chicory</td><td>Agglomerated instant coffee</td><td>₹239 for 50g</td><td>In stock</td></tr><tr><td>Purista</td><td>pure Robusta</td><td>0% chicory</td><td>Freeze-dried granules</td><td>₹319 for 50g</td><td>In stock</td></tr><tr><td>Purica</td><td>pure Arabica</td><td>0% chicory</td><td>Freeze-dried granules</td><td>₹329 for 50g</td><td>In stock</td></tr><tr><td>Prima</td><td>pure Arabica</td><td>0% chicory</td><td>Premium Agglomerate</td><td>₹269 for 50g</td><td>Out of stock</td></tr></tbody></table>\n<p>Catalog pages for shoppers in India: <a href=\"https://p3online.in/products/purity-beans-ultra-blend-instant-coffee\">Ultra Blend (70% coffee, 30% chicory)</a> (₹209), <a href=\"https://p3online.in/products/purity-beans-bold-instant-coffee\">Bold Pure Coffee</a> (₹239), <a href=\"https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules\">Purica Gourmet Arabica Granules</a> (₹329).</p>\n<h2>Frequently asked questions</h2>\n<h3>What is Ultra Blend?</h3>\n<p>Ultra Blend is 70% coffee and 30% chicory. It is not a zero-chicory jar. A lower-caffeine description is allowed only for this jar. The 50g jar is ₹209.</p>\n<h3>Is Prima pure Arabica?</h3>\n<p>Yes. Prima, sold as Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The catalog lists the 50g jar at ₹269 and marks it out of stock.</p>\n<h3>Which jars are pure Robusta?</h3>\n<p>Purista is freeze-dried pure Robusta with 0% chicory. Bold is agglomerated pure coffee with 0% chicory.</p>\n<h3>What is Purica?</h3>\n<p>Purica is freeze-dried pure Arabica with 0% chicory.</p>\n<h3>Where can I buy Purity Beans jars?</h3>\n<p>The product pages are on p3online.in. Prices in this article are the catalog prices in rupees.</p>\n<p>Pick the jar that matches your cup, and read the chicory line first. Ultra Blend is 70% coffee and 30% chicory, and only that jar may be called lower caffeine. Prima, the Premium Agglomerate, is pure Arabica. Then open the catalog at https://p3online.in</p>\n<script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@graph\": [{\"@type\": \"Article\", \"headline\": \"Which Purity Beans jar should you buy\", \"description\": \"Which Purity Beans jar fits the cup you actually brew. Strong and black, Arabica, Robusta, or the smooth 70/30 Ultra Blend milk coffee, with catalog prices in\", \"inLanguage\": \"en-IN\", \"dateModified\": \"2026-10-15\", \"datePublished\": \"2026-10-15\", \"author\": {\"@type\": \"Organization\", \"name\": \"Purity Beans\", \"url\": \"https://p3online.in\"}, \"publisher\": {\"@type\": \"Organization\", \"name\": \"Purity Beans\", \"url\": \"https://p3online.in\"}, \"mainEntityOfPage\": \"https://p3online.in/blogs/news/which-purity-beans-jar-to-buy\"}, {\"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"What is Ultra Blend?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Ultra Blend is 70% coffee and 30% chicory. It is not a zero-chicory jar. A lower-caffeine description is allowed only for this jar. The 50g jar is ₹209.\"}}, {\"@type\": \"Question\", \"name\": \"Is Prima pure Arabica?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Yes. Prima, sold as Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The catalog lists the 50g jar at ₹269 and marks it out of stock.\"}}, {\"@type\": \"Question\", \"name\": \"Which jars are pure Robusta?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Purista is freeze-dried pure Robusta with 0% chicory. Bold is agglomerated pure coffee with 0% chicory.\"}}, {\"@type\": \"Question\", \"name\": \"What is Purica?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Purica is freeze-dried pure Arabica with 0% chicory.\"}}, {\"@type\": \"Question\", \"name\": \"Where can I buy Purity Beans jars?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"The product pages are on p3online.in. Prices in this article are the catalog prices in rupees.\"}}]}, {\"@type\": \"BreadcrumbList\", \"itemListElement\": [{\"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"https://p3online.in\"}, {\"@type\": \"ListItem\", \"position\": 2, \"name\": \"Blog\", \"item\": \"https://p3online.in/blogs/news\"}, {\"@type\": \"ListItem\", \"position\": 3, \"name\": \"Which Purity Beans jar should you buy\", \"item\": \"https://p3online.in/blogs/news/which-purity-beans-jar-to-buy\"}]}, {\"@type\": \"Product\", \"name\": \"Bold Pure Coffee\", \"url\": \"https://p3online.in/products/purity-beans-bold-instant-coffee\", \"sku\": \"PB-BLD-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"239\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-bold-instant-coffee\"}}, {\"@type\": \"Product\", \"name\": \"Purista Gourmet Robusta Granules\", \"url\": \"https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules\", \"sku\": \"PB-PST-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"319\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules\"}}, {\"@type\": \"Product\", \"name\": \"Purica Gourmet Arabica Granules\", \"url\": \"https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules\", \"sku\": \"PB-PCA-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"329\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules\"}}, {\"@type\": \"Product\", \"name\": \"Ultra Blend (70% coffee, 30% chicory)\", \"url\": \"https://p3online.in/products/purity-beans-ultra-blend-instant-coffee\", \"sku\": \"PB-ULT-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"209\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-ultra-blend-instant-coffee\"}}, {\"@type\": \"Product\", \"name\": \"Variety Box (4 × 50g Jars)\", \"url\": \"https://p3online.in/products/variety-box\", \"sku\": \"PB-VARIETY-4x50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"877\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/variety-box\"}}, {\"@type\": \"Product\", \"name\": \"Gourmet Duo Full Size (100g Purista + 100g Purica)\", \"url\": \"https://p3online.in/products/gourmet-duo\", \"sku\": \"PB-GOURMET-DUO-100\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"908\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/gourmet-duo\"}}, {\"@type\": \"Product\", \"name\": \"Gourmet Duo Mini (50g Purista + 50g Purica)\", \"url\": \"https://p3online.in/products/gourmet-duo-mini\", \"sku\": \"PB-GOURMET-DUO-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"570\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/gourmet-duo-mini\"}}, {\"@type\": \"Product\", \"name\": \"Prima Premium Arabica\", \"url\": \"https://p3online.in/products/purity-beans-prima-premium-instant-coffee\", \"sku\": \"PB-PRM-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"269\", \"availability\": \"https://schema.org/OutOfStock\", \"url\": \"https://p3online.in/products/purity-beans-prima-premium-instant-coffee\"}}]}</script>",
+    "body_html": "<p><strong>TL;DR.</strong> Instant coffee jar comes down to the jar, not a slogan. Purity Beans Ultra Blend is 70% coffee and 30% chicory. Prima, also called Premium Agglomerate, is pure Arabica and is not freeze-dried. Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. Prices in this article are catalog prices in rupees for shoppers in India.</p>\n<p><em>By Purity Beans. Last updated 2026-10-15 (IST).</em></p>\n<p>If you are searching for instant coffee jar, start with the back of the jar. In Mumbai and Bengaluru the usual cup is milk coffee, so the chicory line changes the taste. Purity Beans lists Ultra Blend as 70% coffee and 30% chicory, and the prices below are in ₹ on p3online.in.</p>\n<h2>What does instant coffee jar mean for an Indian kitchen?</h2>\n<p>Most of us grew up thinking that the bitter, dark powder in our cupboards was just &#x27;strong coffee,&#x27; but the truth is often a hidden mix of chicory and fillers. When you look for a real instant coffee jar, you aren&#x27;t just buying convenience; you&#x27;re choosing whether you want actual coffee beans or a root-based substitute. For those who love that classic, creamy milk coffee without the heavy bitterness, Purity Beans Ultra Blend is a great transition at ₹209 for 50g, as it contains 70% coffee and 30% chicory. But if you&#x27;re a purist, you should move toward zero-chicory options. Try the Bold blend (₹239 for 50g) for a morning kick, or go gourmet with Purica&#x27;s Arabica granules (₹329 for 50g) for a smoother, chocolatey finish. Pro tip: store your jar away from the stove&#x27;s steam to keep the aroma locked in.</p>\n<h3>A plain definition</h3>\n<p>Whatever brought you here, the label settles it. The other single jars on this page are 0% chicory.</p>\n<h2>How do you read the chicory line on the jar?</h2>\n<p>Most people think they are drinking coffee, but they are actually drinking a clever mix of root powders and fillers. If you check the back of your current instant coffee jar, you will likely find chicory hiding in the fine print. It is a cheap way for brands to bulk up the volume without losing that dark color. At Purity Beans, we believe you should actually know what is in your cup. But for the purists who refuse to compromise, our Bold, Purista, and Purica lines contain zero chicory. For instance, if you love the refined, chocolatey notes of pure Arabica, the Purica granules are a revelation at ₹329 for 50g. Stop guessing and start reading the labels.</p>\n<h2>Which jar suits the way you drink coffee?</h2>\n<p>Most of us have spent years drinking what we thought was coffee, only to realize it was mostly chicory and fillers. If you are happy with that muted, woody taste, this isn&#x27;t for you. But for those who want the real thing, Purity Beans offers a clear choice. If you need a heavy morning kick, Bold is your best bet at ₹239 for 50g. For a smoother, cafe-style experience, go for Purica (₹329 for 50g). Pro tip: if you can&#x27;t decide, the Variety Box at ₹877 lets you taste every single blend. Stop guessing what&#x27;s in your instant coffee jar and start choosing your flavor profile with actual transparency.</p>\n<p>Price matters, but so does what the cup tastes like at 7am. In Chennai a short cup with hot milk is a normal brew. Purica is freeze-dried pure Arabica with 0% chicory. The 50g jar is ₹329 and it is in stock. Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed only for Ultra Blend. The 50g jar is ₹209 and it is in stock. Purity Beans prints the blend on the jar, and the only prices on this page are the catalog prices in rupees at p3online.in. In Chennai a short cup with hot milk is a normal brew. In Hyderabad a strong mug at the desk is a usual weekday habit. In Pune students often use hot water and a splash of milk. In Kolkata a milky evening cup is as ordinary as the morning one. In Mumbai the weekday cup is usually milk coffee from an office pantry.</p>\n<h2>What does each jar cost in rupees?</h2>\n<p>Most people don&#x27;t actually know what they are paying for when they grab a random instant coffee jar from the supermarket; they&#x27;re often just paying for fillers. At Purity Beans, we believe you should know exactly what hits your palate. If you want that aggressive morning kick, Bold is your best bet at ₹239 for 50g or ₹369 for 100g. For those who crave a smoother, cafe-style aromatic experience, Purica (pure Arabica) is ₹329 for 50g and ₹559 for 100g, while the rich, gourmet Robusta notes of Purista cost ₹319 for 50g and ₹509 for 100g. Pro tip: if you can&#x27;t decide, the Variety Box is the smartest move at ₹877 for four 50g jars.</p>\n<h2>How do people brew instant coffee in Indian cities?</h2>\n<p>Most of us grew up thinking that bitter, burnt taste in our morning mug was just &#x27;how coffee tastes.&#x27; The truth is, you&#x27;ve likely been drinking a mix of wood-root and fillers without even knowing it. In cities like Mumbai or Bangalore, the ritual is usually a hurried stir of powder into hot milk, but the experience is often generic. If you want to actually taste the bean, try adding your coffee to a tablespoon of warm water first to bloom the aroma before adding milk. Purity Beans is changing this by being honest about what goes into the jar. But for those who refuse to compromise, our pure coffee options like Purica at ₹329 for 50g offer a completely different, cleaner experience.</p>\n<h2>How do you choose a jar without a slogan?</h2>\n<p>Most people don&#x27;t actually drink coffee; they drink a clever mix of fillers and chicory while calling it a &#x27;premium blend.&#x27; If you&#x27;re happy with that woody, diluted taste, you can stop reading here. But for those who want the real thing, choosing a Purity Beans jar comes down to your morning mood. If you need a heavy, honest kick to wake up, Bold (₹239 for 50g) is your best bet. For a smoother, café-style experience with chocolatey notes, go for Purica (₹329 for 50g). A quick tip: if you can&#x27;t decide, just grab the Variety Box (₹877) and let your taste buds do the filtering. It&#x27;s the only way to truly find your perfect match.</p>\n<table><thead><tr><th>Jar</th><th>Beans</th><th>Chicory</th><th>Process</th><th>Smallest jar</th><th>Stock</th></tr></thead><tbody><tr><td>Ultra Blend</td><td>70% coffee</td><td>30% chicory</td><td>Agglomerated instant blend</td><td>₹209 for 50g</td><td>In stock</td></tr><tr><td>Bold</td><td>pure coffee</td><td>0% chicory</td><td>Agglomerated instant coffee</td><td>₹239 for 50g</td><td>In stock</td></tr><tr><td>Purista</td><td>pure Robusta</td><td>0% chicory</td><td>Freeze-dried granules</td><td>₹319 for 50g</td><td>In stock</td></tr><tr><td>Purica</td><td>pure Arabica</td><td>0% chicory</td><td>Freeze-dried granules</td><td>₹329 for 50g</td><td>In stock</td></tr><tr><td>Prima</td><td>pure Arabica</td><td>0% chicory</td><td>Premium Agglomerate</td><td>₹269 for 50g</td><td>Out of stock</td></tr></tbody></table>\n<p>Catalog pages for shoppers in India: <a href=\"https://p3online.in/products/purity-beans-ultra-blend-instant-coffee\">Ultra Blend (70% coffee, 30% chicory)</a> (₹209), <a href=\"https://p3online.in/products/purity-beans-bold-instant-coffee\">Bold Pure Coffee</a> (₹239), <a href=\"https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules\">Purica Gourmet Arabica Granules</a> (₹329).</p>\n<h2>Frequently asked questions</h2>\n<h3>What is Ultra Blend?</h3>\n<p>Ultra Blend is 70% coffee and 30% chicory. It is not a zero-chicory jar. A lower-caffeine description is allowed only for this jar. The 50g jar is ₹209.</p>\n<h3>Is Prima pure Arabica?</h3>\n<p>Yes. Prima, sold as Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The catalog lists the 50g jar at ₹269 and marks it out of stock.</p>\n<h3>Which jars are pure Robusta?</h3>\n<p>Purista is freeze-dried pure Robusta with 0% chicory. Bold is agglomerated pure coffee with 0% chicory.</p>\n<h3>What is Purica?</h3>\n<p>Purica is freeze-dried pure Arabica with 0% chicory.</p>\n<h3>Where can I buy Purity Beans jars?</h3>\n<p>The product pages are on p3online.in. Prices in this article are the catalog prices in rupees.</p>\n<p>Pick the jar that matches your cup, and read the chicory line first. Ultra Blend is 70% coffee and 30% chicory, and only that jar may be called lower caffeine. Prima, the Premium Agglomerate, is pure Arabica. Then open the catalog at https://p3online.in</p>\n<script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@graph\": [{\"@type\": \"Article\", \"headline\": \"Which Purity Beans jar should you buy\", \"description\": \"Which Purity Beans jar fits the cup you actually brew. Strong and black, Arabica, Robusta, or the smooth 70/30 Ultra Blend milk coffee, with catalog prices in\", \"inLanguage\": \"en-IN\", \"dateModified\": \"2026-10-15\", \"datePublished\": \"2026-10-15\", \"author\": {\"@type\": \"Organization\", \"name\": \"Purity Beans\", \"url\": \"https://p3online.in\"}, \"publisher\": {\"@type\": \"Organization\", \"name\": \"Purity Beans\", \"url\": \"https://p3online.in\"}, \"mainEntityOfPage\": \"https://p3online.in/blogs/news/which-purity-beans-jar-to-buy\"}, {\"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"What is Ultra Blend?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Ultra Blend is 70% coffee and 30% chicory. It is not a zero-chicory jar. A lower-caffeine description is allowed only for this jar. The 50g jar is ₹209.\"}}, {\"@type\": \"Question\", \"name\": \"Is Prima pure Arabica?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Yes. Prima, sold as Premium Agglomerate, is pure Arabica with 0% chicory. It is agglomerated, not freeze-dried. The catalog lists the 50g jar at ₹269 and marks it out of stock.\"}}, {\"@type\": \"Question\", \"name\": \"Which jars are pure Robusta?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Purista is freeze-dried pure Robusta with 0% chicory. Bold is agglomerated pure coffee with 0% chicory.\"}}, {\"@type\": \"Question\", \"name\": \"What is Purica?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Purica is freeze-dried pure Arabica with 0% chicory.\"}}, {\"@type\": \"Question\", \"name\": \"Where can I buy Purity Beans jars?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"The product pages are on p3online.in. Prices in this article are the catalog prices in rupees.\"}}]}, {\"@type\": \"BreadcrumbList\", \"itemListElement\": [{\"@type\": \"ListItem\", \"position\": 1, \"name\": \"Home\", \"item\": \"https://p3online.in\"}, {\"@type\": \"ListItem\", \"position\": 2, \"name\": \"Blog\", \"item\": \"https://p3online.in/blogs/news\"}, {\"@type\": \"ListItem\", \"position\": 3, \"name\": \"Which Purity Beans jar should you buy\", \"item\": \"https://p3online.in/blogs/news/which-purity-beans-jar-to-buy\"}]}, {\"@type\": \"Product\", \"name\": \"Bold Pure Coffee\", \"url\": \"https://p3online.in/products/purity-beans-bold-instant-coffee\", \"sku\": \"PB-BLD-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"239\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-bold-instant-coffee\"}}, {\"@type\": \"Product\", \"name\": \"Purista Gourmet Robusta Granules\", \"url\": \"https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules\", \"sku\": \"PB-PST-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"319\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules\"}}, {\"@type\": \"Product\", \"name\": \"Purica Gourmet Arabica Granules\", \"url\": \"https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules\", \"sku\": \"PB-PCA-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"329\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules\"}}, {\"@type\": \"Product\", \"name\": \"Ultra Blend (70% coffee, 30% chicory)\", \"url\": \"https://p3online.in/products/purity-beans-ultra-blend-instant-coffee\", \"sku\": \"PB-ULT-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"209\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/purity-beans-ultra-blend-instant-coffee\"}}, {\"@type\": \"Product\", \"name\": \"Variety Box (4 × 50g Jars)\", \"url\": \"https://p3online.in/products/variety-box\", \"sku\": \"PB-VARIETY-4x50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"877\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/variety-box\"}}, {\"@type\": \"Product\", \"name\": \"Gourmet Duo Full Size (100g Purista + 100g Purica)\", \"url\": \"https://p3online.in/products/gourmet-duo\", \"sku\": \"PB-GOURMET-DUO-100\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"908\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/gourmet-duo\"}}, {\"@type\": \"Product\", \"name\": \"Gourmet Duo Mini (50g Purista + 50g Purica)\", \"url\": \"https://p3online.in/products/gourmet-duo-mini\", \"sku\": \"PB-GOURMET-DUO-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"570\", \"availability\": \"https://schema.org/InStock\", \"url\": \"https://p3online.in/products/gourmet-duo-mini\"}}, {\"@type\": \"Product\", \"name\": \"Prima Premium Arabica\", \"url\": \"https://p3online.in/products/purity-beans-prima-premium-instant-coffee\", \"sku\": \"PB-PRM-50\", \"brand\": {\"@type\": \"Brand\", \"name\": \"Purity Beans\"}, \"offers\": {\"@type\": \"Offer\", \"priceCurrency\": \"INR\", \"price\": \"269\", \"availability\": \"https://schema.org/OutOfStock\", \"url\": \"https://p3online.in/products/purity-beans-prima-premium-instant-coffee\"}}]}</script>",
     "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
     "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
     "save_trigger": "Save this before your next grocery run — real coffee matters.",
     "share_trigger": "Share with someone who starts every morning with coffee.",
     "featured_product": "Purica",
     "editorial_score": {
-      "shareability": 6.5,
-      "saveability": 7.0,
-      "emotion_pull": 6.0,
-      "hook_strength": 6.5,
+      "shareability": 4.2,
+      "saveability": 5.8,
+      "emotion_pull": 4.5,
+      "hook_strength": 3.0,
       "brand_clarity": 8.5,
-      "overall": 6.9,
+      "overall": 5.2,
       "verdict": "REJECT",
-      "feedback": "The content contains useful pricing and variant details, but the introduction and opening hooks read too much like an SEO landing page rather than a scroll-stopping social or blog asset. The hook 'If you are searching for instant coffee jar, start with the back of the jar' is weak and fails to create a strong curiosity gap or emotional trigger within 2 seconds. Furthermore, the body paragraphs suffer from repetitive phrasing regarding checking back labels and testing the Variety Box. To improve retention, tighten the opening hook with an identity challenge or betrayal angle, remove the repetitive filler sentences, and sharpen the contrast between pure coffee variants and the Ultra Blend 70/30 option without attacking chicory.",
-      "retention_audit": "Intro: 'If you are searching for instant coffee jar, start with the back of the jar.' -> Weak, dry SEO opener. Will cause readers to bounce immediately. Body paragraph 1: Good inclusion of pricing (₹239, ₹319, ₹329, ₹209), but repetitive 'start by turning the glass around' phrases throughout subsequent sections create fatigue and drag down the reading pace."
+      "feedback": "The content reads like a product catalog rather than a high-retention piece of copy. The hook is generic and fails to create a curiosity gap or a betrayal trigger. The structure is repetitive—the same point about 'thinking it was coffee but it was chicory' is made three times across three sections, causing massive attention drops. To fix: Use one strong Betrayal Hook at the start, remove the repetitive 'most of us' paragraphs, and transform the 'Which jar' section into a decision matrix (e.g., 'If you want X, buy Y') to increase saveability.",
+      "retention_audit": "Intro: 'If you are searching for instant coffee jar' - DROP. Too generic, sounds like an SEO bot, not a human. | Body Para 1: 'Most of us grew up thinking...' - SLOW. Too long-winded before getting to the product. | 'A plain definition' section - DROP. Completely breaks flow and provides zero value. | Body Para 2: 'Most people think they are drinking coffee...' - DROP. This is a repeat of the first paragraph; viewer will swipe away here. | Body Para 3: 'Most of us have spent years...' - DROP. Third time repeating the same sentiment. Total retention collapse. | Final Para: 'Price matters, but so does...' - DISJOINTED. Shifts from a guide to a list of inventory/stock status, killing the emotional momentum."
     },
     "funnel_objective": "AUTHORITY",
     "objective": "Brand Awareness",
@@ -1590,9 +1415,8 @@
       },
       "published": false
     },
-    "hold_reason": "rewrites exhausted: brand: [\"held: provider_failure during s0: All LLM providers failed for 'blog_section_s0'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets.\"]",
-    "held": true,
-    "editorial_error": "brand: [\"held: provider_failure during s0: All LLM providers failed for 'blog_section_s0'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets.\"]"
+    "hold_reason": "rewrites exhausted: BLOG TOO DRY / INVENTORY-LIKE (The content reads like a product catalog rather than a high-retention piece of copy. The hook is generic and fails to create a curiosity gap or a betrayal trigger. The structure is repetitive—the same). Rewrite from scratch with a story angle: open with one real-feeling morning-coffee scene and build to what makes a cleaner cup. Write for a reader, not a catalogue: no product-list sections, no spec-sheet tone. NEVER mention stock status, availab",
+    "held": true
   },
   "stories": {
     "story_1": {
@@ -1908,129 +1732,102 @@
   "yt_short": {
     "product": "Purica",
     "tagline": "The pure Arabica truth in your cup",
-    "emotion_arc": "CERTAINTY",
-    "hook": "Stop buying instant coffee until you check what bean is actually in your jar.",
+    "emotion_arc": "SENSORY",
+    "hook": "Your morning coffee isn't actually coffee—it's just burnt powder.",
     "scenes": [
       {
         "scene": 1,
-        "type": "problem",
-        "duration_s": 3,
-        "on_screen": "Unknown bean = unknown cup",
-        "spoken": "You're paying for coffee. But the jar refuses to tell you which bean.",
-        "visual_direction": "Shot on iPhone 15, vertical 9:16, extreme close-up of a generic dark glass jar label — ingredient list blurred, bean origin nowhere to be found. Warm kitchen bulb overhead, shallow depth of field, natural hand enters frame tapping the label frustrated."
+        "type": "stop",
+        "duration_s": 2,
+        "on_screen": "The Kitchen Mistake",
+        "spoken": "The coffee mistake almost every Indian kitchen makes.",
+        "visual_direction": "Shot on iPhone 15, vertical 9:16. Extreme macro close-up of dull, clumping brown instant powder on a worn metal spoon. Lighting is cold, slightly overexposed window light. Natural grain, subject slightly off-center. No logos."
       },
       {
         "scene": 2,
-        "type": "agitation",
-        "duration_s": 3,
-        "on_screen": "Blind trust costs you",
-        "spoken": "Most brands hide it because the answer is chicory, not coffee.",
-        "visual_direction": "85mm f/1.8 equivalent, quick cut: same hand flicks the generic jar aside. It lands with a dull thud on worn wooden counter. Dust motes dance in a slash of morning window light. No slow turn — immediate rejection."
+        "type": "curiosity",
+        "duration_s": 4,
+        "on_screen": "Where did the aroma go?",
+        "spoken": "You smell the powder, but the aroma is gone. That's because extreme heat destroys the natural oils before it even reaches your jar.",
+        "visual_direction": "85mm f/1.8, handheld. Close-up of a person's hand with visible skin pores and natural nails holding a generic mug. Steam rising and dispersing realistically. Background is a lived-in kitchen with a water ring on the granite counter and a stray charging cable."
       },
       {
         "scene": 3,
-        "type": "product_reveal",
-        "duration_s": 8,
-        "on_screen": "READ THE JAR — Purity Beans Purica",
-        "spoken": "Purity Beans puts it in writing. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Purica: freeze-dried pure Arabica.",
-        "visual_direction": "Handheld, steady. Exact Purity Beans Purica glass jar centered on the same worn counter, amber side-light catching the label emboss and gold foil. A single fingertip traces 'FREEZE-DRIED PURE ARABICA' on the label. Steam rises lazy from a ceramic mug just out of focus. Fingerprint smudge visible on the jar neck — real texture."
+        "type": "value",
+        "duration_s": 5,
+        "on_screen": "The Freeze-Dried Difference",
+        "spoken": "Purity Beans Purica changes this. We use freeze-drying to lock in those natural caramel and chocolate notes of pure Arabica.",
+        "visual_direction": "Slow handheld push-in. The exact Purity Beans Purica glass jar on a dark marble surface. Warm amber side-lighting catching the printed paper texture of the label. A single realistic fingerprint smudge on the glass. Shallow depth of field."
       },
       {
         "scene": 4,
-        "type": "benefit",
-        "duration_s": 4,
-        "on_screen": "Aroma locked. Bitterness gone.",
-        "spoken": "Freeze-drying locks the Arabica aroma you lose in spray-dried powder. Natural caramel and chocolate notes. Zero chicory.",
-        "visual_direction": "Macro close-up: golden-brown freeze-dried granules spill slow from the jar into a spoon. Morning sun backlights each granule — crystalline, porous, real. Relaxed hand holds spoon, visible skin pores, slight oil sheen. No rush."
+        "type": "trust",
+        "duration_s": 5,
+        "on_screen": "Pure Arabica. Zero Chicory.",
+        "spoken": "No fillers. Just pure coffee crystals that actually smell like a premium café.",
+        "visual_direction": "Macro shot. Golden-brown Purica granules falling in slow motion from a spoon. Backlit by soft morning sun, showing distinct crystalline edges. Real fabric wrinkles on the sleeve of the person holding the spoon."
       },
       {
         "scene": 5,
-        "type": "cta",
+        "type": "follow",
+        "duration_s": 3,
+        "on_screen": "Read the jar. Follow @purepantryprovisions",
+        "spoken": "Stop guessing what's in your cup. Follow us to learn how to read your coffee jar.",
+        "visual_direction": "Handheld pan from the Purica jar to a glass mug with a thick, natural crema. A used spoon and a crumpled napkin are visible on the side for UGC authenticity."
+      },
+      {
+        "scene": 6,
+        "type": "buy",
         "duration_s": 4,
-        "on_screen": "SUBSCRIBE. BUY PURE. https://p3online.in",
-        "spoken": "Subscribe for daily pure coffee craft. Purica 50g at three twenty-nine, 100g at five fifty-nine. Shop at https://p3online.in — Purity Beans.",
-        "visual_direction": "Static lock-off. Purica jar beside the ceramic mug, ambient room light. Fingerprint smudges, water ring on counter, charging cable peeking from frame edge. Text overlay holds 2+ seconds. No floaty drift."
+        "on_screen": "Purica: 50g ₹329 | 100g ₹559\nhttps://p3online.in",
+        "spoken": "Experience real Arabica. Visit p3online.in",
+        "visual_direction": "Static lock-off shot. The Purica jar prominently displayed with a correct contact shadow on the marble surface. Text overlay 'https://p3online.in' held for 3 seconds. Cut to black for loop."
       }
     ],
-    "cta": "Subscribe for daily pure coffee craft. Purica 50g ₹329 | 100g ₹559. Shop at https://p3online.in — Purity Beans",
-    "title": "Stop buying instant coffee until you check what bean is actually in your jar.",
+    "cta": "Get Purity Beans Purica: 50g ₹329 | 100g ₹559. Shop at https://p3online.in",
+    "title": "The coffee mistake almost every Indian kitchen makes",
     "description": "Purity Beans. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Purica is freeze-dried pure Arabica with natural caramel and chocolate notes. Zero chicory. Shop now: https://p3online.in #PurityBeans #PureCoffee #InstantCoffee #CoffeeIndia",
     "tags": [
       "purity beans",
       "premium instant coffee",
       "freeze dried coffee",
-      "agglomerated coffee",
-      "coffee without preservatives",
-      "pure instant coffee india"
+      "pure instant coffee india",
+      "arabica coffee"
     ],
-    "audio_direction": "Lo-fi acoustic guitar background bed at low tempo. Warm, calm, conversational Indian voiceover tone (male, mid-30s). Subtle kitchen clink sound design cue on scene 3.",
-    "edit_pacing": "Fast 1.5s cut timing on scenes 1 and 2, holding for 3 seconds on the Purica product reveal in scene 3, smooth crossfade to finish.",
+    "audio_direction": "Starts with an abrupt, dry sound of a spoon scraping a glass jar. Transitions into a warm, organic lo-fi beat with subtle coffee shop ambient noise (distant clinking, low chatter). Voiceover is a natural, conversational Indian English accent—confident and honest, not announcer-like.",
+    "edit_pacing": "Fast, rhythmic cuts for the first 6 seconds to build tension. Transitions into slow, cinematic, high-frame-rate glides (60fps slowed to 24fps) once the Purity Beans jar appears to create a feeling of relief and luxury.",
     "reel_inspiration": {
       "inspiration_id": "gourmet_duo_mini_style",
       "mode": "style_cues",
       "source_template_id": "gourmet_duo_mini_reel",
       "source_filename": "gourmet_duo_mini.mp4",
       "publish_source_video": false,
-      "copied": {
-        "pixels": false,
-        "audio": false,
-        "sku": false
-      },
-      "featured_product": "Purica",
-      "featured_slug": "purica",
-      "cues": [
-        {
-          "id": "pacing",
-          "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
-        },
-        {
-          "id": "framing",
-          "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
-        },
-        {
-          "id": "storytelling",
-          "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
-        },
-        {
-          "id": "aesthetic",
-          "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
-        }
-      ],
-      "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
+      "copied": ""
     },
     "audio": {
       "audio_category": "coffee_aesthetic",
-      "mood": "lofi",
-      "local_track": "music_library/lofi_cafe.wav",
-      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
-      "trend_status": "not_live_verified",
-      "audio_name": null,
-      "audio_id": null,
-      "audio_source": null,
-      "audio_attached": false,
-      "audio_publish_mode": "licensed_embedded",
-      "audio_required": true,
-      "manual_instruction": "Check the Instagram"
+      "mood": "warm_organic",
+      "local_track": "music"
     },
-    "hook_text": "Most instant coffee jars hide the exact bean you are paying for.",
-    "chosen_hook": "Most instant coffee jars hide the exact bean you are paying for.",
-    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
-    "comment_trigger": "Comment COFFEE below if you refuse to drink coffee without knowing the bean.",
-    "save_trigger": "Save this before your next grocery run — real coffee matters.",
-    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "hook_text": "The coffee mistake almost every Indian kitchen makes.",
+    "chosen_hook": "The coffee mistake almost every Indian kitchen makes.",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #PurityBeansCoffee #BrewPure #MorningCoffee",
+    "comment_trigger": "Comment PURE if you're tired of mystery ingredients in your coffee.",
+    "save_trigger": "Save this for your next grocery run so you remember to read the label.",
+    "share_trigger": "Share this with the coffee lover in your life who deserves a better brew.",
     "featured_product": "Purica",
     "asset_type": "yt_short",
-    "psychology_frame": "certainty",
+    "psychology_frame": "sensory",
     "editorial_score": {
-      "shareability": 8.5,
+      "shareability": 7.5,
       "saveability": 8.0,
-      "emotion_pull": 8.5,
+      "emotion_pull": 7.0,
       "hook_strength": 9.0,
-      "brand_clarity": 9.5,
-      "overall": 8.7,
+      "brand_clarity": 9.0,
+      "overall": 8.1,
       "verdict": "PASS",
-      "feedback": "The content adheres strictly to brand compliance: it correctly distinguishes pure coffee variants (Bold, Purista, Purica, Prima) from the honest 70/30 disclosure of Ultra Blend without demonizing chicory. The hook relies on a strong curiosity gap ('Stop buying instant coffee until you check what bean is actually in your jar') and stops the scroll effectively. Pacing and scene transitions are well-structured, maintaining attention through the product reveal and clear pricing/CTA with mandatory website URL (https://p3online.in).",
-      "retention_audit": "Scene 1: Strong visual and spoken curiosity hook; viewer stays to see what's hidden. Scene 2: Pacing maintains momentum with a quick physical cut, preventing drop-off. Scene 3 (Product Reveal): Holds attention for 8 seconds, anchoring the exact reference jar and transparent formulation rules clearly without dragging. Scene 4: Macro sensory details keep visual retention high. Scene 5: Clean, static lock-off with the mandatory link and pricing holds successfully for the required 2+ seconds."
+      "feedback": "The hook is high-voltage and creates immediate betrayal/curiosity. The transition from 'burnt powder' to 'freeze-drying' is a strong value bridge. To improve, the spoken line in Scene 2 is slightly too technical/long; tightening the phrasing on 'extreme heat destroys natural oils' would prevent a mid-roll drop-off. The UGC realism in visuals is excellent and prevents the 'corporate ad' feel.",
+      "retention_audit": "Scene 1: Strong. Scene 2: Potential drop-off at 'extreme heat destroys the natural oils'—too many syllables, slows the momentum. Rewrite to: 'Extreme heat kills the aroma before it hits the jar.' Scene 3: Smooth transition. Scene 4: Strong visual payoff. Scene 5: Slight dip—'Follow us to learn how to read your coffee jar' is a bit generic. Change to: 'Stop being lied to by your labels. Follow us.' Scene 6: Clean exit."
     },
     "funnel_objective": "DISCOVERY",
     "objective": "Engagement Growth",
@@ -2040,13 +1837,7 @@
     "growth_plan": {
       "primary_objective": "reach new relevant coffee drinkers",
       "secondary_objective": "earn qualified followers",
-      "audience": "viewers who will watch one complete answer with the sound off",
-      "angle": "a standalone payoff that ends without needing another post",
-      "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
-      "rationale": "A Short has to pay off on its own, then ask for the next one.",
-      "platform": "yt_short",
-      "sku": "Purica",
-      "day": 287
+      "audience": "Urban Indian professionals who drink instant coffee but crave café quality."
     },
     "growth_review": {
       "platform": "yt_short",
@@ -2167,206 +1958,149 @@
     "viral_potential": {
       "scores": {
         "hook": 8.0,
-        "curiosity_gap": 8.0,
+        "curiosity_gap": 7.0,
         "relatability": 9.0,
+        "shareability": 7.0,
+        "comment_trigger": 6.0,
+        "format_fit": 8.0,
+        "follow_cta": 7.0
+      },
+      "overall": 7.4,
+      "weakest": [
+        "comment_trigger",
+        "shareability"
+      ],
+      "feedback": "The visual realism is elite and fits UGC standards perfectly. However, the script transitions too quickly from a 'mistake' to a 'product pitch', which kills the viral momentum. The comment trigger 'Comment PURE' is too brand-centric; it feels like an ad, not a conversation. To increase shareability, the 'mistake' needs to be a more shocking revelation about the process rather than just 'burnt powder'. The ending is too promotional; for YT Shorts, the transition from the product back to the hook needs to be seamless to encourage loops.",
+      "better_hook": "Stop blaming your water—your instant coffee is actually burnt powder.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "caption": "Most coffee drinkers never check how their instant coffee is made. Purity Beans Purica is freeze-dried pure Arabica, locking in natural aroma and flavor without shortcuts. Pure coffee, zero chicory. Discover the difference at https://p3online.in #PurityBeans #FreezeDriedCoffee #PureCoffee #InstantCoffeeIndia #CoffeeLovers",
+    "loop_note": "The final frame cuts sharply to the 'mistake' powder of scene 1, creating a seamless cycle of problem and solution."
+  },
+  "growth_reel": {
+    "type": "reel",
+    "hook": "You've been lied to about the 'strength' of your coffee.",
+    "hook_text": "You've been lied to about the 'strength' of your coffee.",
+    "hook_spoken": "You've been lied to about the 'strength' of your coffee.",
+    "hook_text_overlay": "THE COFFEE LIE",
+    "frames": [
+      {
+        "on_screen": "THE COFFEE LIE",
+        "spoken": "You've been lied to about the 'strength' of your coffee."
+      },
+      {
+        "on_screen": "STRENGTH ≠ BITTERNESS",
+        "spoken": "Most people think 'strong' just means 'bitter.' But that's usually just low-grade beans or fillers."
+      },
+      {
+        "on_screen": "THE SILK vs. THE KICK",
+        "spoken": "Arabica is the silk. It's aromatic, smooth, and hits you with caramel notes. That's a different kind of power."
+      },
+      {
+        "on_screen": "THE RAW POWER",
+        "spoken": "Robusta is the kick. It's bold, heavy, and gives you that deep, honest energy hit your morning actually needs."
+      },
+      {
+        "on_screen": "STOP GUESSING",
+        "spoken": "If your jar doesn't name the bean, you're just drinking a mystery blend. It's time to read the label."
+      },
+      {
+        "on_screen": "PURITY BEANS: TOTAL TRUTH",
+        "spoken": "Purity Beans removes the guesswork. Purica is freeze-dried pure Arabica. Purista is pure Robusta. Bold is pure coffee."
+      }
+    ],
+    "body": "Stop settling for mystery blends that hide behind the word 'strong.' True coffee lovers know the difference between the aromatic silk of Arabica and the bold energy of Robusta. Purity Beans brings total transparency to your cup. Purica for the connoisseur, Purista for the powerhouse, and Bold for the pure coffee purist. No fillers, just the truth.",
+    "caption": "Stop confusing bitterness with strength. Most 'strong' coffees are just mystery blends. Real strength comes from the bean. Whether you want the smooth, aromatic profile of freeze-dried pure Arabica in Purity Beans Purica or the deep, bold kick of pure Robusta in Purity Beans Purista, we give you the truth. Bold is pure coffee. Read your jar. Know your bean.\n\nShop the range: https://p3online.in",
+    "cta": "Stop the mystery. Get your pure blend at https://p3online.in",
+    "comment_trigger": "Are you Team Silk (Arabica) or Team Kick (Robusta)? Comment below.",
+    "save_trigger": "Save this for your next grocery run so you know how to read a coffee label.",
+    "share_trigger": "Share this with a friend who thinks all instant coffee tastes the same.",
+    "hashtags": "#PurityBeans #PureCoffee #ArabicaVsRobusta #ReadTheLabel #CoffeeIndia #GourmetCoffee",
+    "audio": "Deep cinematic bass thumps on every text overlay, transitioning into a high-tempo rhythmic percussion beat. Ambient sounds of a coffee jar opening and a spoon stirring.",
+    "loop_ending": "The final frame ends with 'Total Truth' which cuts instantly back to 'The Coffee Lie'.",
+    "angle": "MYTH-BUSTING",
+    "source": "growth_reel_optimized",
+    "featured_product": "Purica",
+    "chosen_hook": "You've been lied to about the 'strength' of your coffee.",
+    "editorial_score": {
+      "shareability": 6.5,
+      "saveability": 8.0,
+      "emotion_pull": 5.5,
+      "hook_strength": 8.5,
+      "brand_clarity": 9.0,
+      "overall": 7.5,
+      "verdict": "REJECT",
+      "feedback": "The content suffers from 'The Textbook Trap.' It starts as a high-tension betrayal hook but quickly pivots into a botany lesson. The transition from 'The Coffee Lie' to 'Arabica is the silk' kills the urgency. To fix: stop defining the beans and start describing the *experience*. Instead of 'Arabica is aromatic,' use 'That smooth, cafe-style aroma that actually wakes you up.' Move the brand reveal to a 'truth' reveal rather than a product list to avoid the 'sales wall'.",
+      "retention_audit": "0-2s: Strong stop. 2-6s: Momentum dips; 'strength != bitterness' is too logical, not emotional enough. 6-12s: High drop risk; 'Arabica is the silk' and 'Robusta is the kick' feels like a brochure. Viewer switches from 'I'm being lied to' to 'I'm being taught.' 12-15s: 'Stop guessing' is a good pivot but arrives too late. 15-20s: Listing three products (Purica, Purista, Bold) creates a cognitive overload that triggers a swipe-away."
+    },
+    "viral_potential": {
+      "scores": {
+        "hook": 9.0,
+        "curiosity_gap": 8.5,
+        "relatability": 8.0,
         "shareability": 8.0,
-        "comment_trigger": 9.0,
+        "comment_trigger": 8.5,
         "format_fit": 9.0,
-        "follow_cta": 8.0
+        "follow_cta": 7.5
       },
       "overall": 8.4,
       "weakest": [
-        "shareability",
         "follow_cta"
       ],
-      "feedback": "The hook effectively establishes the problem and format constraints are well met. To improve shareability and follow conversion, make the CTA punchier and ensure the curiosity loop resolves with an actionable takeaway for the viewer.",
-      "better_hook": "Your morning instant coffee jar is hiding something important from you.",
+      "feedback": "The shift from 'science' to 'sensory' removes the sales wall. The hook is now a direct accusation of a common lie, which is a high-retention pattern. The product transition is integrated as the 'solution' to the mystery, not as a pitch.",
       "passed": true,
       "honesty": [],
       "pass_mark": 8.0
-    }
+    },
+    "visual_prompt": "Vertical 9:16. Hyperrealistic. A human anchor in a dimly lit, modern Indian kitchen. The frame starts with an extreme macro shot of freeze-dried coffee granules reflecting amber light. Rapid cuts between a hand pointing specifically at the ingredient label of a Purity Beans Purica jar and a Purity Beans Purista jar. Lighting is cinematic with deep shadows and warm gold accents on the glass. Shot on iPhone 15, handheld subtle sway, shallow depth of field. Visible skin pores on the hand, real fabric texture on a linen sleeve, slight steam fogging a glass in the background."
   },
-  "growth_reel": {
-    "id": "growth_reel",
-    "track": "growth",
-    "viral_idea": "A side‑by‑side look at two Purity Beans instant coffee textures—agglomerated Bold and freeze‑dried Purista—to reveal how the drying method changes flavor, aroma and caffeine punch.",
-    "psychology_used": [
-      "curiosity gap",
-      "revelation"
-    ],
-    "hook_options": [
-      "Stop buying instant coffee until you know how it was actually dried.",
-      "Your morning coffee routine is missing one critical detail about how it was processed.",
-      "Most people drop coffee powder into hot milk without realizing why it clumps."
-    ],
-    "chosen_hook": "Stop buying instant coffee until you know how it was actually dried.",
-    "title_options": [
-      "Freeze‑Dried vs Agglomerated Coffee Explained",
-      "The Hidden Truth About Instant Coffee Textures",
-      "Why Your Coffee Crystals Look Different"
-    ],
-    "script": [
-      {
-        "time": "0-2s",
-        "beat": "STOP",
-        "on_screen": "HOW COFFEE IS DRIED",
-        "voiceover": "Stop buying instant coffee until you know how it was actually dried.",
-        "visual": "Shot on iPhone 15, macro view of coarse amber Bold crystals beside fine white Purista granules on a dark slate. Single overhead lamp creates soft shadows, surface dust visible, hand‑held slight sway."
-      },
-      {
-        "time": "2-6s",
-        "beat": "CURIOSITY",
-        "on_screen": "THE TEXTURE CLUE",
-        "voiceover": "Look closely – one set is agglomerated, the other freeze‑dried. The process decides what lands in your cup.",
-        "visual": "85mm f/1.8 handheld slide across the two piles, natural window daylight mixing with warm desk lamp, faint fingerprint on the slate, shallow depth of field."
-      },
-      {
-        "time": "6-12s",
-        "beat": "VALUE",
-        "on_screen": "AGGLOMERATED = QUICK BURN",
-        "voiceover": "Agglomerated Bold is formed by high‑heat drying, which drives off delicate aromatic oils, leaving a strong, bitter edge.",
-        "visual": ""
-      }
-    ],
-    "ai_image_prompts": [
-      "Macro close-up photograph of coarse freeze-dried coffee crystals on dark slate, natural window daylight from the left casting long soft shadows, visible slate surface texture and slight dust specs, shot on iPhone 15, 85mm portrait lens equivalent, shallow depth of field, natural color grading, no text, no branding.",
-      "Overhead cinematic kitchen counter scene, half covered in fine dark coffee powder and half in coarse amber crystals, a used silver spoon with coffee residue resting nearby, water ring on polished wood, mixed warm lamp and cool daylight, natural grain, highly detailed skin texture on a hand adjusting the frame slightly off-center.",
-      "Close-up of hot water pouring into a clear glass mug, steam rising and catching a single warm light source, condensation droplets on the glass, lived-in kitchen background with out-of-focus clutter, shot on iPhone 15, cinematic film look, natural color temperature, zero digital render artifacts."
-    ],
-    "ai_video_prompts": [
-      "Subtle handheld 24fps motion shot, macro perspective moving slowly across coarse coffee crystals, natural ambient light shifting slightly as clouds pass a window, real physical texture catching light organically, no digital floating elements.",
-      "Slow locked-off shot of hot water pouring over coffee crystals in a glass mug, steam rising naturally and dissipating into the air, liquid swirling with realistic weight and physics, micro-blinks visible on a person's face blurred in the background.",
-      "Gentle rack focus from a blurry background kitchen setting onto a neat pile of coffee crystals on a wooden counter surface."
-    ],
-    "audio": {
-      "audio_category": "product_showcase",
-      "mood": "premium",
-      "local_track": "music_library/premium_jazz.wav",
-      "recommendation": "Luxury Brand Modern Beats (Search: 'Luxury Aesthetic' or 'Modern Neo Soul')",
-      "trend_status": "not_live_verified",
-      "audio_name": null,
-      "audio_id": null,
-      "audio_source": null,
-      "audio_attached": false,
-      "audio_publish_mode": "licensed_embedded",
-      "audio_required": true,
-      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Luxury Brand Modern Beats"
-    },
-    "sound_suggestion": "Warm acoustic guitar fingerpicking with organic room reverb, voice-forward mix, zero lyric clash.",
-    "loop_note": "The final frame's texture matches the crystal pile in the opening frame, allowing the reel to loop seamlessly.",
-    "text_overlay_style": "Minimalist clean sans-serif typography in white with subtle soft drop shadow, placed in the top 75% safe zone, snapping in sync with voiceover beats every 2 seconds.",
-    "caption": "Most people grab instant coffee off the supermarket shelf without ever looking at how the granules are formed. There is a massive difference between a fine powder created by high-heat spray drying and coarse crystals formed through vacuum freeze-drying. Heat destroys delicate aromatic oils, while gentle freezing locks them in. Understanding this completely changes how you brew your morning cup at home. Did you know how your coffee was dried before buying it? Comment your thoughts below.",
-    "cta_options": [
-      "Follow for daily coffee insights.",
-      "Save this guide for your next grocery run.",
-      "Comment your favorite brewing method below."
-    ],
-    "comment_trigger": "Do you check how your instant coffee is dried, or do you just grab whatever is on the shelf? Comment below.",
-    "save_trigger": "Save this breakdown so you know what to look for on your next grocery run.",
-    "share_trigger": "Share this with someone who drinks instant coffee every single morning.",
-    "hashtags": "#coffee #coffeelover #instantcoffee #coffeetok #coffeeshop #coffeegram #coffeetime #brewguide #coffeeaddict #morningroutine #baristalife #specialtycoffee #coffeeculture #coffeeholic #dailycoffee #mumbai #delhi #bangalore #pune #hyderabad #cleanliving #foodscience #homebrew #coffeetips #mindfulliving",
-    "seo_keywords": [
-      "freeze dried coffee vs spray dried",
-      "how to choose instant coffee",
-      "instant coffee drying process",
-      "pure coffee granules",
-      "understanding coffee labels",
-      "better morning coffee routine"
-    ],
-    "emotion_created": "curiosity",
-    "posting_time": "08:00 AM IST",
-    "why_this_can_go_viral": "Taps into everyday consumer curiosity by explaining a hidden manufacturing detail that directly impacts taste, driving high save and share rates.",
-    "predicted_weak_point": "Viewers accustomed to fast-paced meme videos might scroll if the initial macro shot doesn't hold attention within the first 2 seconds.",
-    "story_version": "Cut a 15-second vertical snippet showing the crystal texture close-up with an interactive poll sticker: 'Freeze-dried or Powder?'",
-    "shorts_version": "Title: 'The Hidden Difference Between Coffee Crystals and Powder' with a tighter 30-second cut optimized for search discovery.",
-    "hook_text": "Most people buy instant coffee completely blind to how it's dried.",
-    "hook": "Most people buy instant coffee completely blind to how it's dried.",
-    "frames": [
-      {
-        "on_screen": "HOW COFFEE IS DRIED",
-        "spoken": "Most people buy instant coffee completely blind to how it's dried."
-      },
-      {
-        "on_screen": "THE CRYSTAL SECRET",
-        "spoken": "Look closely at the texture. One is subjected to high heat. The other is flash-frozen."
-      },
-      {
-        "on_screen": "HEAT DESTROYS FLAVOR",
-        "spoken": "When coffee is aggressively heated into a powder, delicate aromatic oils evaporate away before it ever reaches your mug."
-      },
-      {
-        "on_screen": "FREEZE-DRIED RETENTION",
-        "spoken": "Freeze-drying locks the bean's natural volatile compounds in place by removing water through sublimation under freezing vacuum."
-      },
-      {
-        "on_screen": "TASTE THE DIFFERENCE",
-        "spoken": "That means when hot water hits coarse crystals, you get the actual complexity of the bean, not just burnt bitterness."
-      },
-      {
-        "on_screen": "CHECK YOUR LABELS",
-        "spoken": "Next time you pick up a jar, look past the brand name and check how the granules were formed."
-      },
-      {
-        "on_screen": "FOLLOW FOR MORE",
-        "spoken": "Follow for more daily insights into what is actually in your cup."
-      }
-    ],
-    "alt_hook": "10-12. Open Loop: The manufacturing secret behind crystal versus powder coffee.",
-    "hook_ab": [
-      {
-        "hook": "Most people buy instant coffee completely blind to how it's dried.",
-        "score": 61.0
-      },
-      {
-        "hook": "10-12. Open Loop: The manufacturing secret behind crystal versus powder coffee.",
-        "score": 56.0
-      },
-      {
-        "hook": "4-6. Counterintuitive Claim: Expensive coffee equipment won't fix a bad drying process.",
-        "score": 50.0
-      },
-      {
-        "hook": "1-3. Tension: Your morning coffee routine is missing one critical detail about how it was dried.",
-        "score": 49.0
-      },
-      {
-        "hook": "1-3. Tension: Stop stirring your instant coffee until you know the difference between these two jars.",
-        "score": 49.0
-      }
-    ],
+  "threads_post": {
+    "angle": "THE INGREDIENT LIST TEST",
+    "text": "Unpopular opinion: the bitterness in most instant coffee isn't the bean, it's boiling water scorching the granules. Drop the temp to 85°C and watch the flavor open up. Check your kitchen jar ingredient panel right now — what does it list? Agree or disagree? Follow @purepantryprovisions for daily coffee truths.",
     "featured_product": "Purica",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #FreezeDriedCoffee #CoffeeLoversIndia #CleanCoffee #GourmetCoffee #CoffeeTips #CoffeeCulture #MadeInIndia #NoChicory #CoffeeCommunity",
+    "comment_trigger": "Comment TEMP if you want our exact brewing temperature guide.",
+    "save_trigger": "Save this before your next morning brew.",
+    "share_trigger": "Share with someone who loves a smooth black coffee.",
     "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 9.0,
-      "emotion_pull": 8.0,
-      "hook_strength": 9.0,
-      "brand_clarity": 7.5,
-      "overall": 8.4,
+      "shareability": 8.0,
+      "saveability": 8.5,
+      "emotion_pull": 7.5,
+      "hook_strength": 8.5,
+      "brand_clarity": 9.0,
+      "overall": 8.3,
       "verdict": "PASS",
-      "feedback": "The growth-track script adheres strictly to non-promotional guidelines while delivering high-value educational content about freeze-drying vs powder processing. Purity Beans is intentionally unbranded in this growth asset to build authority and curiosity. The stopwatch audit shows strong pacing with transitions every 6-10 seconds, maintaining high viewer retention through macro visuals and practical coffee science.",
-      "retention_audit": "0-2s: Strong scroll-stopping visual of contrasting textures paired with a direct instruction hook. 2-6s: Excellent visual movement sliding across crystals, preventing drop-off. 6-15s: Human element and lived-in environment details maintain realism and keep eyes on the screen. 15-25s: Steam and hot water action shot re-energizes attention before cognitive fatigue sets in. 25-35s: Explains the 'why' behind the texture, rewarding the viewer's continued watch time. 35-45s: Practical takeaway gives immediate utility, driving high save intent. 45-55s: Clean soft CTA with zero promotional friction."
+      "feedback": "The revised copy successfully bridges the gap between the brewing technique tip (85°C water temperature) and the Purity Beans Purica brand identity. By anchoring the brewing advice directly to pure freeze-dried coffee with zero chicory, it eliminates cognitive friction and creates a seamless flow. The handle reference has been corrected to the brand, and the engagement triggers align tightly with the core narrative. Ready for publishing.",
+      "retention_audit": "Line 1 ('Unpopular opinion: the harsh bitterness in your morning cup isn't the bean's fault — it's boiling water scorching the granules.') — Excellent pattern interrupt that stops the scroll immediately. Line 2 ('When you brew freeze-dried pure Arabica like Purity Beans Purica, drop your water temperature to 85°C and watch the delicate caramel and chocolatey notes actually open up.') — High utility and retention value; keeps the reader hooked for the solution. Line 3 ('Read the jar: Purity Beans Purica is pure coffee with zero chicory.') — Directly reinforces product transparency without jarring topic shifts. Line 4 ('Taste the difference at https://p3online.in. Comment TEMP if you want our exact brewing temperature guide.') — Clean, direct call-to-action with strong lead capture mechanism."
     },
-    "funnel_objective": "FOLLOW",
-    "objective": "Follower Growth",
-    "primary_cta": "Follow @puritybeans so you never drink roasted root again",
-    "success_metric": "follows",
-    "target": 250,
+    "asset_type": "threads_post",
+    "psychology_frame": "accessible_premium",
+    "headline": "Why Your Morning Coffee Tastes Bitter (And How to Fix It)",
+    "caption": "Unpopular opinion: the harsh bitterness in your morning cup isn't the bean's fault — it's boiling water scorching the granules. When you brew freeze-dried pure Arabica like Purity Beans Purica, drop your water temperature to 85°C and watch the delicate caramel and chocolatey notes actually open up. Read the jar: Purity Beans Purica is pure coffee with zero chicory. Taste the difference at https://p3online.in. Comment TEMP if you want our exact brewing temperature guide.",
+    "cta": "Explore our pure coffee range at https://p3online.in",
+    "funnel_objective": "COMMUNITY",
+    "objective": "Engagement Growth",
+    "primary_cta": "Which one would you choose? Comment below",
+    "success_metric": "comments",
+    "target": 150,
     "growth_plan": {
-      "primary_objective": "reach new relevant coffee drinkers",
-      "secondary_objective": "earn qualified followers",
-      "audience": "people who buy instant coffee and have never turned the jar around",
-      "angle": "visual discovery of one label fact",
-      "follow_promise": "Follow for the next thing the label is hiding.",
-      "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
-      "platform": "reel",
+      "primary_objective": "earn qualified followers",
+      "secondary_objective": "reach new relevant coffee drinkers",
+      "audience": "people who will reply to one precise coffee question",
+      "angle": "one honest question, not a caption pasted short",
+      "follow_promise": "Follow for one honest coffee question a day.",
+      "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
+      "platform": "threads",
       "sku": "Purica",
       "day": 287
     },
     "growth_review": {
-      "platform": "reel",
-      "label": "growth_reel",
-      "decision": "BLOCKED",
-      "overall": 8.53,
+      "platform": "threads",
+      "label": "threads_post",
+      "decision": "REGENERATE",
+      "overall": 8.07,
       "threshold": 8.0,
       "dimensions": [
         {
@@ -2413,8 +2147,8 @@
         },
         {
           "name": "purchase_relevance",
-          "score": 6.0,
-          "evidence": "No product next step. Allowed when the objective is reach, scored as incomplete for a shop ask.",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
           "hard_fail": false
         },
         {
@@ -2437,9 +2171,9 @@
         },
         {
           "name": "originality",
-          "score": 9.0,
-          "evidence": "Hook and CTA are not copied from another asset today.",
-          "hard_fail": false
+          "score": 0.0,
+          "evidence": "This hook or CTA repeats another platform today.",
+          "hard_fail": true
         },
         {
           "name": "mobile_readability",
@@ -2461,71 +2195,56 @@
         }
       ],
       "hard_fails": [
-        "wrong_handle:@puritybeans (use @purepantryprovisions)"
+        "duplicate_cta:reel_1"
       ],
-      "attempts": 9,
+      "attempts": 1,
       "retry_limit": 8,
-      "feedback": "wrong_handle:@puritybeans (use @purepantryprovisions)",
+      "feedback": "duplicate_cta:reel_1",
       "plan": {
-        "primary_objective": "reach new relevant coffee drinkers",
-        "secondary_objective": "earn qualified followers",
-        "audience": "people who buy instant coffee and have never turned the jar around",
-        "angle": "visual discovery of one label fact",
-        "follow_promise": "Follow for the next thing the label is hiding.",
-        "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
-        "platform": "reel",
+        "primary_objective": "earn qualified followers",
+        "secondary_objective": "reach new relevant coffee drinkers",
+        "audience": "people who will reply to one precise coffee question",
+        "angle": "one honest question, not a caption pasted short",
+        "follow_promise": "Follow for one honest coffee question a day.",
+        "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
+        "platform": "threads",
         "sku": "Purica",
         "day": 287
       },
       "published": false
     },
-    "_growth_attempts": 9,
-    "psychology_frame": "revelation",
-    "viral_readiness_score": 96.0
+    "viral_readiness_score": 80.0
   },
-  "threads_post": {
-    "angle": "THE INGREDIENT LIST TEST",
-    "text": "Unpopular opinion: the bitterness in most instant coffee isn't the bean, it's boiling water scorching the granules. Drop the temp to 85°C and watch the flavor open up. Check your kitchen jar ingredient panel right now — what does it list? Agree or disagree? Follow @purepantryprovisions for daily coffee truths.",
-    "featured_product": "Purica",
-    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #FreezeDriedCoffee #CoffeeLoversIndia #CleanCoffee #GourmetCoffee #CoffeeTips #CoffeeCulture #MadeInIndia #NoChicory #CoffeeCommunity",
-    "comment_trigger": "Comment TEMP if you want our exact brewing temperature guide.",
-    "save_trigger": "Save this before your next morning brew.",
-    "share_trigger": "Share with someone who loves a smooth black coffee.",
-    "editorial_score": {
-      "shareability": 8.0,
-      "saveability": 8.5,
-      "emotion_pull": 7.5,
-      "hook_strength": 8.5,
-      "brand_clarity": 9.0,
-      "overall": 8.3,
-      "verdict": "PASS",
-      "feedback": "The revised copy successfully bridges the gap between the brewing technique tip (85°C water temperature) and the Purity Beans Purica brand identity. By anchoring the brewing advice directly to pure freeze-dried coffee with zero chicory, it eliminates cognitive friction and creates a seamless flow. The handle reference has been corrected to the brand, and the engagement triggers align tightly with the core narrative. Ready for publishing.",
-      "retention_audit": "Line 1 ('Unpopular opinion: the harsh bitterness in your morning cup isn't the bean's fault — it's boiling water scorching the granules.') — Excellent pattern interrupt that stops the scroll immediately. Line 2 ('When you brew freeze-dried pure Arabica like Purity Beans Purica, drop your water temperature to 85°C and watch the delicate caramel and chocolatey notes actually open up.') — High utility and retention value; keeps the reader hooked for the solution. Line 3 ('Read the jar: Purity Beans Purica is pure coffee with zero chicory.') — Directly reinforces product transparency without jarring topic shifts. Line 4 ('Taste the difference at https://p3online.in. Comment TEMP if you want our exact brewing temperature guide.') — Clean, direct call-to-action with strong lead capture mechanism."
-    },
-    "asset_type": "threads_post",
-    "psychology_frame": "accessible_premium",
-    "headline": "Why Your Morning Coffee Tastes Bitter (And How to Fix It)",
-    "caption": "Unpopular opinion: the harsh bitterness in your morning cup isn't the bean's fault — it's boiling water scorching the granules. When you brew freeze-dried pure Arabica like Purity Beans Purica, drop your water temperature to 85°C and watch the delicate caramel and chocolatey notes actually open up. Read the jar: Purity Beans Purica is pure coffee with zero chicory. Taste the difference at https://p3online.in. Comment TEMP if you want our exact brewing temperature guide.",
-    "cta": "Explore our pure coffee range at https://p3online.in",
-    "funnel_objective": "COMMUNITY",
-    "objective": "Engagement Growth",
-    "primary_cta": "Which one would you choose? Comment below",
-    "success_metric": "comments",
-    "target": 150,
+  "facebook_post": {
+    "featured_product": "Purica Gourmet Arabica Granules",
+    "objective": "Drive traffic and sales for Purica Gourmet Arabica Granules",
+    "primary_cta": "Shop now: https://p3online.in",
+    "success_metric": "Website clicks, product page visits, and direct purchases.",
+    "platform": "facebook",
+    "_growth_attempts": 1,
+    "asset_type": "facebook_post",
+    "audio": "Soft ambient kitchen sounds, gentle kettle hiss, quiet morning atmosphere.",
+    "caption": "Most coffee lovers never check the ingredient panel before dropping money on a jar. Purity Beans Purica Gourmet Arabica Granules contains pure Arabica with zero chicory, freeze-dried to lock in natural aroma and smooth notes. At ₹329 for 50g or ₹559 for 100g, you get café-quality pure coffee right at home without paying café prices. Read the jar. Choose real coffee. Shop now: https://p3online.in",
+    "chosen_hook": "Betrayal Hook",
+    "comment_trigger": "Comment ARABICA if you check the back of your coffee jar before buying.",
+    "content": "Step 1: Turn the coffee jar around and look at the ingredient panel.\n\nStep 2: Check if there are hidden fillers or mixed roasted roots.\n\nStep 3: Switch to Purity Beans Purica Gourmet Arabica Granules for pure Arabica with zero chicory.\n\nFreeze-dried granules preserve the natural aroma, smooth caramel notes, and balanced cup profile without complex cafe equipment.\n\nAvailable now in 50g (₹329) and 100g (₹559) jars.\n\nOrders above ₹399 qualify for free shipping automatically.\n\nRead the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\nShop now: https://p3online.in",
+    "editorial_verdict": "PASS",
+    "featured_sku": "purica",
+    "funnel_objective": "Conversion & Trust",
     "growth_plan": {
-      "primary_objective": "earn qualified followers",
-      "secondary_objective": "reach new relevant coffee drinkers",
-      "audience": "people who will reply to one precise coffee question",
-      "angle": "one honest question, not a caption pasted short",
-      "follow_promise": "Follow for one honest coffee question a day.",
-      "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
-      "platform": "threads",
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "drive product-page visits/purchases",
+      "audience": "households who talk about the morning cup with someone else",
+      "angle": "a situation the reader has already had this week",
+      "follow_promise": "Follow for the coffee conversation without the pitch.",
+      "rationale": "Facebook is shared in a conversation, so the opener is a situation.",
+      "platform": "facebook",
       "sku": "Purica",
       "day": 287
     },
     "growth_review": {
-      "platform": "threads",
-      "label": "threads_post",
+      "platform": "facebook",
+      "label": "facebook_post",
       "decision": "PASS",
       "overall": 8.67,
       "threshold": 8.0,
@@ -2626,38 +2345,18 @@
       "retry_limit": 8,
       "feedback": "",
       "plan": {
-        "primary_objective": "earn qualified followers",
-        "secondary_objective": "reach new relevant coffee drinkers",
-        "audience": "people who will reply to one precise coffee question",
-        "angle": "one honest question, not a caption pasted short",
-        "follow_promise": "Follow for one honest coffee question a day.",
-        "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
-        "platform": "threads",
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "drive product-page visits/purchases",
+        "audience": "households who talk about the morning cup with someone else",
+        "angle": "a situation the reader has already had this week",
+        "follow_promise": "Follow for the coffee conversation without the pitch.",
+        "rationale": "Facebook is shared in a conversation, so the opener is a situation.",
+        "platform": "facebook",
         "sku": "Purica",
         "day": 287
       },
       "published": false
     },
-    "viral_readiness_score": 80.0
-  },
-  "facebook_post": {
-    "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "Drive traffic and sales for Purica Gourmet Arabica Granules",
-    "primary_cta": "Shop now: https://p3online.in",
-    "success_metric": "Website clicks, product page visits, and direct purchases.",
-    "platform": "facebook",
-    "_growth_attempts": 1,
-    "asset_type": "facebook_post",
-    "audio": "Soft ambient kitchen sounds, gentle kettle hiss, quiet morning atmosphere.",
-    "caption": "Most coffee lovers never check the ingredient panel before dropping money on a jar. Purity Beans Purica Gourmet Arabica Granules contains pure Arabica with zero chicory, freeze-dried to lock in natural aroma and smooth notes. At ₹329 for 50g or ₹559 for 100g, you get café-quality pure coffee right at home without paying café prices. Read the jar. Choose real coffee. Shop now: https://p3online.in",
-    "chosen_hook": "Betrayal Hook",
-    "comment_trigger": "Comment ARABICA if you check the back of your coffee jar before buying.",
-    "content": "Step 1: Turn the coffee jar around and look at the ingredient panel.\n\nStep 2: Check if there are hidden fillers or mixed roasted roots.\n\nStep 3: Switch to Purity Beans Purica Gourmet Arabica Granules for pure Arabica with zero chicory.\n\nFreeze-dried granules preserve the natural aroma, smooth caramel notes, and balanced cup profile without complex cafe equipment.\n\nAvailable now in 50g (₹329) and 100g (₹559) jars.\n\nOrders above ₹399 qualify for free shipping automatically.\n\nRead the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\nShop now: https://p3online.in",
-    "editorial_verdict": "PASS",
-    "featured_sku": "purica",
-    "funnel_objective": "Conversion & Trust",
-    "growth_plan": "Highlight ingredient transparency and gourmet freeze-dried arabica value to drive direct website traffic and purchases.",
-    "growth_review": "Integrated pricing naturally into a label-reading narrative, increasing reader retention and shareability on Facebook.",
     "hashtags": "#PurityBeans #Purica #PureArabica #FreezeDriedCoffee #CleanCoffee #InstantCoffeeIndia",
     "hook": "What is actually hiding inside your daily instant coffee jar?",
     "hook_text": "What is actually hiding inside your daily instant coffee jar?",
@@ -3184,6 +2883,50 @@
         "attempt": 4,
         "rung": "from_scratch",
         "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The content feels like a generic product‑info reel rather than a scroll‑stopping story. The hook uses a broad curiosity phrase that could apply to any freeze‑dry coffee, so viewers may not feel a reason to keep watching. The first 2 seconds are not a strong pattern interrupt – it reads like a normal"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned DISCOVERY objective is primarily promotional/commercial copy — selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a brew tip (exact water temperature, ratio or technique for a better instant cup)"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned DISCOVERY objective is primarily promotional/commercial copy — selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a myth-buster (one common coffee myth, debunked with a verifiable fact). Every fr"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned DISCOVERY objective is primarily promotional/commercial copy — selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a ritual (a calm, relatable daily coffee moment the viewer will recognise). Every"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned DISCOVERY objective is primarily promotional/commercial copy — selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: freeze-dried vs agglomerated instant coffee (how each is made and why it changes "
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned DISCOVERY objective is primarily promotional/commercial copy — selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a brew tip (exact water temperature, ratio or technique for a better instant cup)"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The hook is too academic and calm, lacking the emotional edge or counter-intuitive shock value required to stop a fast-scrolling thumb. To fix this, restructure the opening to challenge a common misconception (e.g., 'Stop buying coffee without checking this one word on the label'). Ensure the spoken"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The asset provides clear educational value on Arabica versus Robusta, but the hook lacks immediate emotional friction or high-stakes curiosity. To push the score past 8, the opening must directly confront a consumer belief or purchasing mistake rather than starting with a generic statement. Tighten "
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.5 < 8.0 (weakest: relatability, comment_trigger, follow_cta). The hook immediately creates an investigative curiosity gap by calling out ingredient transparency. To push past an 8, anchor the relatability directly into the Indian kitchen routine (e.g., opening the pantry cabinet at 7 "
       }
     ],
     "reel_2": [
@@ -3675,6 +3418,50 @@
       {
         "status": "exhausted",
         "reason": "brand: [\"held: provider_failure during s0: All LLM providers failed for 'blog_section_s0'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets.\"]"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "brand: ['held: rewrites exhausted: brand: [\"held: provider_failure during s0: All LLM providers failed for \\'blog_section_s0\\'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets.\"]']"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The content reads like a generic SEO keyword-stuffing exercise rather than a high-conversion guide. The phrase 'instant coffee jar' is repeated unnaturally, which signals 'bot-written' to a human reader, causing immediate trust loss. It lacks an emotional hook or a 'betrayal/revelation' angle. To fi"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The content reads like an SEO keyword-stuffing exercise rather than a high-conversion guide. The repeated use of the phrase 'instant coffee jar' as a noun is unnatural and creates immediate friction for the reader. The hook is passive; it describes a process rather than triggering an emotion or a be"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The content reads like a generic SEO keyword-stuffed blog post rather than high-conversion copy. The hook 'If you are searching for instant coffee jar' is a death sentence; it is a search query, not a scroll-stopper. There is massive repetition—the 'drinking chicory for years' paragraph is repeated "
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "BLOG TOO DRY / INVENTORY-LIKE (The content reads like a dry product manual rather than a high-conversion sales page. The hook is a generic search-engine phrase ('If you are searching for instant coffee jar') which is an immediate s). Rewrite from scratch with a story angle: open with one real-feelin"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "BLOG TOO DRY / INVENTORY-LIKE (The content reads like an SEO-stuffed manual rather than a high-conversion guide. The primary attention drop happens immediately because the hook 'If you are searching for instant coffee jar' is gener). Rewrite from scratch with a practical guide angle: a step-by-step "
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The content reads like a generic SEO keyword-stuffing exercise rather than high-conversion copy. The repeated use of the phrase 'instant coffee jar' is unnatural and creates immediate cognitive friction, causing the reader to perceive it as a bot-written article. The hook is non-existent; it starts "
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The content reads like a generic SEO blog post rather than an authority-driven guide. The hook is non-existent; starting with 'If you are searching for...' is a classic invisibility pattern. It lacks a strong POV or a 'Betrayal' angle to trigger an emotional response. To fix: Start with a contrarian"
+      },
+      {
+        "status": "exhausted",
+        "reason": "BLOG TOO DRY / INVENTORY-LIKE (The content reads like a product catalog rather than a high-retention piece of copy. The hook is generic and fails to create a curiosity gap or a betrayal trigger. The structure is repetitive—the same). Rewrite from scratch with a story angle: open with one real-feelin"
       }
     ],
     "growth_reel": [
@@ -3682,6 +3469,50 @@
         "attempt": 1,
         "rung": "feedback",
         "feedback": "The script provides good educational value on freeze-dried vs powdered coffee, but it fails the brand clarity metric entirely because it's a growth-track asset without product placement. Furthermore, the hook 'Most people buy instant coffee completely blind to how it's dried' is slightly academic an"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The script cuts off prematurely in the middle of the value section, leaving the second variant (freeze-dried Purista) unexplained. Additionally, because this is a growth-track asset, brand clarity is intentionally low, but the abrupt end severely hurts retention and completion rate. Complete the scr"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (The script cuts off abruptly in the middle of the value section (at 12s), making it incomplete. Furthermore, since this is designated as a growth track asset, brand clarity and product mentions must remain strictly non-promotional, yet the script names specific product lines ("
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "The script cuts off prematurely in the middle of the value section, lacking a complete arc and a soft CTA. To improve retention, complete the script beats all the way to the payoff and final call-to-action, ensuring the distinction between Bold and Purista is clearly explained without any drop-offs."
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "The script cuts off prematurely in the middle of the value section, leaving key narrative loops unclosed. Additionally, because this is a growth-track asset, brand clarity is intentionally low, but the value proposition regarding drying methods needs a sharper contrast to maintain high retention thr"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "The growth track script cuts off abruptly in the middle of the value section, leaving the second variant (freeze-dried Purista) unexplored and missing the mandatory soft CTA. Additionally, brand clarity is intentionally low due to growth track rules, but the content must be fully complete and polish"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The growth reel script abruptly cuts off midway through the value section, leaving the content incomplete. Furthermore, since this is a growth track asset, brand clarity is intentionally low, but the incomplete script prevents it from passing the retention and structural requirements. Expand the scr"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.5 < 8.0 (weakest: hook, relatability, follow_cta). The opening statement is too academic and resembles a textbook definition rather than a thumb-stopping pattern interrupt for social media. To boost retention in the first 2 seconds, frame it as a common misconception people get wrong "
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The educational value is high, but the transition from 'Coffee Science' to 'Brand Pitch' is too abrupt, creating a 'sales wall' that triggers a swipe-away. The hook is strong, but the middle section becomes a textbook definition which kills the momentum. To fix: replace the species definitions with "
+      },
+      {
+        "status": "exhausted",
+        "reason": "The content suffers from 'The Textbook Trap.' It starts as a high-tension betrayal hook but quickly pivots into a botany lesson. The transition from 'The Coffee Lie' to 'Arabica is the silk' kills the urgency. To fix: stop defining the beans and start describing the *experience*. Instead of 'Arabica"
       }
     ],
     "yt_short": [
@@ -3699,6 +3530,50 @@
         "attempt": 1,
         "rung": "feedback",
         "feedback": "The hook 'You might be drinking instant coffee without knowing what bean you bought.' is too mild and conversational; it fails to stop a rapid thumb-scroll within 2 seconds. It lacks a sharp curiosity gap or contrarian tension. To improve, replace the passive opening with an aggressive identity or b"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "viral: score 6.8 < 8.0 (weakest: follow_cta, relatability). The visual realism is elite, but the script reads like a commercial rather than a Short. The 'Problem' phase is a bit generic. The follow CTA is weak—'Subscribe for daily pure coffee craft' is vague. It needs a specific value proposition (e"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The content is too 'corporate-safe' and lacks a psychological trigger. The hook is a descriptive statement, not a scroll-stopper; it doesn't create a curiosity gap or a betrayal trigger. The middle section becomes a product catalog (listing 4 other variants) which kills momentum and causes viewers t"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The hook and first two scenes are high-performance, but the momentum crashes in Scene 4 and 5. Transitioning from a 'Betrayal' hook into a 'Product Feature' list (Freeze-dried, caramel notes) feels like a corporate ad, causing a massive attention drop. To fix: Replace the 'Freeze-dried' explanation "
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook and first two scenes are high-tension and effective, but the energy crashes in Scene 4. The transition from 'secret/lying' to 'hitting your palate' is too soft and corporate. To fix: replace the passive 'start knowing' with a strong identity statement or a direct challenge to the viewer's c"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.1 < 8.0 (weakest: follow_cta, relatability). The hook is too long for a YT Short; it reads like a caption, not a pattern-interrupt. The relatability is low because it focuses on 'corporate secrets' rather than the actual Indian coffee experience (the morning rush or the office break)."
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The content is technically correct and visually high-quality, but it lacks the aggressive psychology needed for virality. It transitions too quickly from a 'betrayal' hook to a 'product feature' explanation. The shift from Scene 2 (Problem) to Scene 3 (Solution) is too abrupt; the viewer isn't suffi"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 7.1 < 8.0 (weakest: relatability, format_fit). The visual realism is top-tier, but the 'SENSORY' arc feels too clinical for YT Shorts. It lacks the visceral 'Indian morning' chaos that triggers relatability. The pacing is a bit slow for Shorts; 6-7 second scenes are too long—cut them to"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 7.57 < 8.0 (weakest: comment_trigger, relatability). The visual realism is elite, but the emotional bridge to the Indian consumer is slightly too 'clinical'. The comment trigger 'Comment GRANULE' is too technical and low-incentive; it doesn't trigger an identity statement or a high-inte"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.4 < 8.0 (weakest: comment_trigger, shareability). The visual realism is elite and fits UGC standards perfectly. However, the script transitions too quickly from a 'mistake' to a 'product pitch', which kills the viral momentum. The comment trigger 'Comment PURE' is too brand-centric; i"
       }
     ]
   },
@@ -5789,6 +5664,8 @@
     "asset_count": 34
   },
   "mandatory_regen_rounds": {
-    "facebook_post": 29
+    "facebook_post": 29,
+    "growth_reel": 1,
+    "reel_1": 1
   }
 }
