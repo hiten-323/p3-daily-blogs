@@ -2,6 +2,7 @@
 import os
 import logging
 import requests as _http
+from content_generator.providers.provider_budget import rate_headers
 
 logger = logging.getLogger(__name__)
 
@@ -37,13 +38,14 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
             timeout=120,
         )
     except Exception as e:
-        logger.error("Gemini request exception: %s", e)
-        return None, {}
+        logger.error("Gemini request exception: %s", type(e).__name__)
+        # Transport error, not "no key": report it so the router counts it correctly.
+        return None, {"status_code": 0, "model": _MODEL, "error": type(e).__name__}
 
     if resp.status_code != 200:
         logger.warning("Gemini %s model=%s: %s", resp.status_code, _MODEL, resp.text[:200])
         return None, {"status_code": resp.status_code, "model": _MODEL,
-                      "error": resp.text}
+                      "error": resp.text, "ratelimit": rate_headers(resp)}
 
     try:
         data = resp.json()
@@ -64,6 +66,7 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
         "prompt_tokens": meta.get("promptTokenCount"),
         "completion_tokens": meta.get("candidatesTokenCount"),
         "model": _MODEL,
+        "ratelimit": rate_headers(resp),
     }
 
     if not text:

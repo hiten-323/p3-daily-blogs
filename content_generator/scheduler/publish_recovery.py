@@ -26,6 +26,8 @@ def _load_content(date_iso: str) -> tuple[dict | None, str]:
     fresh, why = content_matches_today(content, today=datetime.date.fromisoformat(date_iso))
     if not fresh:
         return None, why
+    from content_generator.core.draft_purge import purge_banned_drafts
+    purge_banned_drafts(content)
     return content, ""
 
 

@@ -1078,7 +1078,8 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                         ensure_structural_fields(eg, label)
                         if not _schema_issues(label, eg):
                             merged = eg
-                fresh = label != "blog_post" and ladder.is_banned_claim_failure(feedback)
+                fresh = label != "blog_post" and (ladder.is_banned_claim_failure(feedback)
+                                                  or bool(piece.get("needs_regen")))
                 if merged is None and fresh:
                     # A banned claim (e.g. the wrong per-cup price) in a saved draft: a rewrite
                     # of that draft keeps copying it, so build a new one from scratch.
@@ -1086,7 +1087,17 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                     ladder_log[label][-1]["rung"] = "from_scratch"
                     improved = _regenerate_piece(label, piece, feedback, content, from_scratch=True)
                     if not improved:
-                        logger.warning("[editorial] Fresh generation failed for %s — keeping current piece", label)
+                        # Never keep a banned draft: drop its copy so no later
+                        # retry or publish path can reuse it.
+                        from content_generator.core.draft_purge import purged_piece
+                        logger.warning("[editorial] Fresh generation failed for %s — discarding banned draft", label)
+                        if not piece.get("needs_regen"):
+                            dropped = purged_piece(piece, [str(feedback)[:200]])
+                            if idx is not None:
+                                content[key][idx] = dropped
+                            else:
+                                content[key] = dropped
+                            piece = dropped
                         continue
                     merged = _apply_regeneration(label, ladder.scratch_base(piece), improved)
                 elif merged is None:

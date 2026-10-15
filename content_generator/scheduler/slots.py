@@ -70,7 +70,10 @@ def _load_slot_content(on_date: datetime.date) -> dict | None:
         return None
     try:
         with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            content = json.load(f)
+        from content_generator.core.draft_purge import purge_banned_drafts
+        purge_banned_drafts(content)
+        return content
     except Exception as e:
         logger.error("[slots] Could not read content file: %s", e)
         return None

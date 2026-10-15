@@ -1,0 +1,26 @@
+{
+  "_doc": "Starting LLM provider per platform/format so no single free quota runs out. 'auto' = provider with the most headroom today. The full failover chain in llm_router stays as fallback.",
+  "routes": {
+    "ig_reel": "groq",
+    "stories": "gemini",
+    "ig_post": "cerebras",
+    "linkedin": "github_models",
+    "threads": "openrouter",
+    "facebook": ["mistral", "gemini"],
+    "yt_short": "auto",
+    "blog": "auto",
+    "default": "auto"
+  },
+  "rotate_at_fraction": 0.8,
+  "daily_free_quota": {
+    "_doc": "Conservative known free-tier daily request limits; unknown = no % gate (429s still rotate).",
+    "gemini": {"requests": 1000},
+    "groq": {"requests": 1000, "tokens": 200000},
+    "cerebras": {"requests": 14400, "tokens": 1000000},
+    "openrouter": {"requests": 50},
+    "github_models": {"requests": 150},
+    "mistral": {"requests": 2000},
+    "cloudflare": {"requests": 1000},
+    "huggingface": {"requests": 300}
+  }
+}

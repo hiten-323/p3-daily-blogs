@@ -9,6 +9,7 @@ import logging
 import os
 
 import requests as _http
+from content_generator.providers.provider_budget import rate_headers
 
 logger = logging.getLogger(__name__)
 
@@ -47,8 +48,10 @@ def chat(name: str, url: str, key: str, models: list[str], prompt: str, max_toke
                 continue
             u = body.get("usage") or {}
             return text, {"prompt_tokens": u.get("prompt_tokens"),
-                          "completion_tokens": u.get("completion_tokens"), "model": model}
-        last = {"status_code": resp.status_code, "model": model, "error": str(resp.text)[:300]}
+                          "completion_tokens": u.get("completion_tokens"), "model": model,
+                          "ratelimit": rate_headers(resp)}
+        last = {"status_code": resp.status_code, "model": model, "error": str(resp.text)[:300],
+                "ratelimit": rate_headers(resp)}
         logger.warning("%s %s HTTP %s", name, model, resp.status_code)
         if resp.status_code in (401, 403):
             return None, last

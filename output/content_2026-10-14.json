@@ -64,267 +64,51 @@
       }
     },
     {
-      "id": "reel_2",
-      "psychology_frame": "revelation",
-      "hook_archetype": "BETRAYAL",
-      "hook_text": "YOUR COFFEE BRAND IS HIDING WHAT IS INSIDE",
-      "hook_options": [
-        "Your coffee brand is hiding what is really inside.",
-        "Most instant coffee is not what you think it is.",
-        "Why your morning cup leaves a muddy bitter taste.",
-        "The bitter truth about commercial coffee blends.",
-        "Stop letting commercial brands fool your morning taste buds.",
-        "What big coffee companies refuse to put on the front label.",
-        "You have been paying cafe prices for diluted filler.",
-        "The hidden ingredient sitting in your kitchen cabinet.",
-        "Why real coffee lovers are throwing away their old jars.",
-        "The shocking difference between pure coffee and cheap fillers."
-      ],
-      "hook_spoken": "Your coffee brand is hiding what is really inside your cup.",
-      "hook_text_overlay": "YOUR COFFEE BRAND IS HIDING",
-      "frames": [
-        {
-          "on_screen": "THE BITTER TRUTH",
-          "spoken": "Your coffee brand is hiding what is really inside your daily cup."
-        },
-        {
-          "on_screen": "CHECK THE BACK PANEL",
-          "spoken": "Turn your jar around right now and read the ingredient panel carefully."
-        },
-        {
-          "on_screen": "ZERO CHICORY",
-          "spoken": "Purity Beans Purista delivers pure gourmet Robusta granules with zero chicory added."
-        },
-        {
-          "on_screen": "RS 18 PER CUP",
-          "spoken": "Enjoy a bold, honest brew at home for just eighteen rupees instead of one hundred eighty at a cafe."
-        },
-        {
-          "on_screen": "PURITY BEANS PURISTA",
-          "spoken": "Read the jar and choose absolute transparency with Purity Beans."
-        },
-        {
-          "on_screen": "VISIT P3ONLINE.IN",
-          "spoken": "Explore our pure coffee collection and shop now at https://p3online.in"
-        }
-      ],
-      "loop_note": "The final frame loops back to turning the jar around for an infinite review of ingredient transparency.",
-      "alt_hook": "Most instant coffee is not what you think it is.",
-      "caption": "Your coffee brand is hiding what is really inside your daily cup. Turn your jar around right now and read the ingredient panel carefully.\n\nCommercial coffee shelves often feature various blends, so it pays to inspect your ingredient labels to understand exactly what goes into your morning brew. You deserve absolute honesty without paying Rs 180 at a commercial cafe.\n\nAt Purity Beans, transparency is our foundation. Bold, Purista, Purica, and Prima are pure coffee with zero chicory. For those who prefer a traditional milk coffee blend, Ultra Blend is precisely crafted with 70% coffee and 30% chicory. Purista offers pure gourmet Robusta granules with locked-in aroma and rich crema right at home for just Rs 18 per cup.\n\nRead the jar. Know what you drink. Explore pure jars at https://p3online.in\n\nShop pure: https://p3online.in",
-      "cta": "Shop pure coffee now at https://p3online.in — Purity Beans",
-      "comment_trigger": "Comment COFFEE below to share your thoughts on ingredient transparency.",
-      "save_trigger": "Save this before your next grocery run so you never get fooled again.",
-      "share_trigger": "Share with someone who starts every morning with coffee — they deserve to know the truth.",
-      "seo_keywords": [
-        "premium instant coffee",
-        "gourmet instant coffee",
-        "freeze dried coffee",
-        "agglomerated coffee",
-        "coffee without preservatives",
-        "pure instant coffee",
-        "coffee lovers india",
-        "instant coffee brand india"
-      ],
-      "hashtags": "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime #PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity #IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands #CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife #PurityBeans #PurityBeansCoffee #PurityBeansExperience #BrewPure #PureCoffeeExperience",
-      "visual_direction": "Vertical 9:16 format. Shot on iPhone 15, handheld feel with slight natural motion blur. Dark marble kitchen counter background with soft warm amber overhead light and cool daylight falloff from a side window. The authentic Purity Beans Purista glass jar sits slightly off-center with sharp contact shadows and realistic condensation droplets. Shallow depth of field with a lived-in background featuring a used ceramic spoon and water ring.",
-      "music_vibe": "Lo-fi acoustic rhythm, 85 BPM, warm vinyl crackle, subtle and non-intrusive instrumental background.",
-      "whatsapp_forward": "Hey! Check the back of your coffee jar today. Purity Beans Purista is pure gourmet Robusta with zero chicory for just Rs 18 a cup. Check it out at https://p3online.in",
-      "ai_image_hook_prompt": "Vertical 9:16 format, shot on iPhone 15, 85mm f/1.8 portrait lens, shallow depth of field. A realistic human hand holding a sleek glass Purity Beans jar on a dark marble kitchen counter. Visible skin pores and slight oil sheen on hand fingers, natural asymmetry. Warm amber lamp light from above mixing with cool daylight from a side window, correct shadow direction. The authentic Purity Beans Purista label catches light like printed paper. Environment details include a used steel spoon, water ring on marble, minor fingerprint smudges on glass, and a single condensation droplet. Natural grain, lived-in background with believable kitchen clutter. No 3D render, no CGI, no text overlays.",
-      "ai_video_motion_prompt": "Subtle handheld sway at 24fps film feel. The human hand holding the Purity Beans jar shifts slightly with natural weight. Chest movement and micro blinks visible on person. Background steam rises softly from an out-of-focus mug with natural physics. The Purity Beans glass jar stays steady and prominent. Lighting remains stable with soft natural falloff.",
-      "thumbnail_options": [
-        {
-          "concept": "Extreme close-up macro shot of fingers pointing directly at the zero chicory label on the Purity Beans glass jar."
-        }
-      ],
-      "reel_inspiration": {
-        "inspiration_id": "gourmet_du"
-      },
-      "hook": "YOUR COFFEE IS LYING",
-      "chosen_hook": "YOUR COFFEE IS LYING",
-      "hook_ab": [
-        {
-          "hook": "YOUR COFFEE IS LYING",
-          "score": 79.0
-        },
-        {
-          "hook": "Your morning cup deserves better than hidden fillers.",
-          "score": 79.0
-        },
-        {
-          "hook": "Why premium pure coffee is actually cheaper.",
-          "score": 72.0
-        },
-        {
-          "hook": "Stop paying cafe prices for chicory blends.",
-          "score": 71.0
-        },
-        {
-          "hook": "Turn the jar around before you buy it.",
-          "score": 70.0
-        }
-      ],
-      "audio": {
-        "audio_category": "coffee_aesthetic",
-        "mood": "lofi",
-        "local_track": "music_library/lofi_cafe.wav",
-        "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
-        "trend_status": "not_live_verified",
-        "audio_name": null,
-        "audio_id": null,
-        "audio_source": null,
-        "audio_attached": false,
-        "audio_publish_mode": "licensed_embedded",
-        "audio_required": true,
-        "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
-        "rights_check_required": true,
-        "confidence": 0.5,
-        "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
-      },
       "featured_product": "Purista",
-      "editorial_score": {
-        "shareability": 5.5,
-        "saveability": 7.0,
-        "emotion_pull": 4.0,
-        "hook_strength": 6.0,
-        "brand_clarity": 9.0,
-        "overall": 6.3,
-        "verdict": "REJECT",
-        "feedback": "The content is too 'corporate-safe' and lacks the high-stakes psychological tension required for virality. It feels like a tutorial rather than a revelation. To fix: Replace the 'insider access' approach with a 'Betrayal' or 'Direct Accusation' hook. Instead of asking them to 'look at the label,' tell them 'Your coffee brand is lying to you' to create an immediate emotional gap. The transition from label-checking to product-pitching is too abrupt, killing the narrative tension.",
-        "retention_audit": "Frame 1: 'Look at the back panel' is a request, not a command; viewers may ignore the request and swipe. Frame 2: 'See what is actually inside' is too vague; needs a specific fear or curiosity trigger. Frame 3: Sudden jump to product pitch ('Purity Beans Purista gives you...') creates a 'commercial wall' where viewers realize they are being sold to and drop off. Frame 4: The price comparison is the strongest point but comes too late in the sequence."
-      },
-      "editorial_error": "brand: ['product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory']",
-      "funnel_objective": "AUTHORITY",
       "objective": "Brand Awareness",
       "primary_cta": "Save this guide before your next grocery run",
       "success_metric": "saves",
-      "target": 300,
-      "growth_plan": {
-        "primary_objective": "reach new relevant coffee drinkers",
-        "secondary_objective": "earn qualified followers",
-        "audience": "people who buy instant coffee and have never turned the jar around",
-        "angle": "visual discovery of one label fact — variant 2, different hook",
-        "follow_promise": "Follow for the next thing the label is hiding (part 2).",
-        "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
-        "platform": "reel",
-        "sku": "Purista",
-        "day": 286
-      },
-      "growth_review": {
-        "platform": "reel",
-        "label": "reel_2",
-        "decision": "PASS",
-        "overall": 8.67,
-        "threshold": 8.0,
-        "dimensions": [
-          {
-            "name": "platform_fit",
-            "score": 9.0,
-            "evidence": "Hook and body are both present.",
-            "hard_fail": false
-          },
-          {
-            "name": "hook",
-            "score": 9.0,
-            "evidence": "The hook names a specific subject.",
-            "hard_fail": false
-          },
-          {
-            "name": "retention",
-            "score": 8.0,
-            "evidence": "The body contains a concrete coffee fact.",
-            "hard_fail": false
-          },
-          {
-            "name": "payoff",
-            "score": 8.0,
-            "evidence": "The body continues the hook.",
-            "hard_fail": false
-          },
-          {
-            "name": "shareability",
-            "score": 9.0,
-            "evidence": "There is a reason to pass this on.",
-            "hard_fail": false
-          },
-          {
-            "name": "saveability",
-            "score": 8.0,
-            "evidence": "A checkable fact is worth saving.",
-            "hard_fail": false
-          },
-          {
-            "name": "follow_conversion",
-            "score": 8.0,
-            "evidence": "The follow reason is specific.",
-            "hard_fail": false
-          },
-          {
-            "name": "purchase_relevance",
-            "score": 8.0,
-            "evidence": "The featured jar or a verified next step is named.",
-            "hard_fail": false
-          },
-          {
-            "name": "brand_truth",
-            "score": 10.0,
-            "evidence": "No product-truth finding.",
-            "hard_fail": false
-          },
-          {
-            "name": "visual_integrity",
-            "score": 8.0,
-            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
-            "hard_fail": false
-          },
-          {
-            "name": "claim_verification",
-            "score": 10.0,
-            "evidence": "No prohibited health or medical claim.",
-            "hard_fail": false
-          },
-          {
-            "name": "originality",
-            "score": 9.0,
-            "evidence": "Hook and CTA are not copied from another asset today.",
-            "hard_fail": false
-          },
-          {
-            "name": "mobile_readability",
-            "score": 9.0,
-            "evidence": "The hook is short enough to read on a phone.",
-            "hard_fail": false
-          },
-          {
-            "name": "cta_clarity",
-            "score": 9.0,
-            "evidence": "One CTA field is present.",
-            "hard_fail": false
-          },
-          {
-            "name": "schema",
-            "score": 8.0,
-            "evidence": "No schema or length failure for this format.",
-            "hard_fail": false
-          }
-        ],
-        "hard_fails": [],
-        "attempts": 3,
-        "retry_limit": 3,
-        "feedback": "",
-        "plan": {
-          "primary_objective": "reach new relevant coffee drinkers",
-          "secondary_objective": "earn qualified followers",
-          "audience": "people who buy instant coffee and have never turned the jar around",
-          "angle": "visual discovery of one label fact — variant 2, different hook",
-          "follow_promise": "Follow for the next thing the label is hiding (part 2).",
-          "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
-          "platform": "reel",
-          "sku": "Purista",
-          "day": 286
-        },
-        "published": false
-      },
-      "_growth_attempts": 3
+      "id": "reel_2",
+      "_shape": [
+        "ai_image_hook_prompt",
+        "ai_video_motion_prompt",
+        "alt_hook",
+        "audio",
+        "caption",
+        "chosen_hook",
+        "comment_trigger",
+        "cta",
+        "featured_product",
+        "frames",
+        "funnel_objective",
+        "growth_plan",
+        "hashtags",
+        "hook",
+        "hook_ab",
+        "hook_archetype",
+        "hook_options",
+        "hook_spoken",
+        "hook_text",
+        "hook_text_overlay",
+        "id",
+        "loop_note",
+        "music_vibe",
+        "objective",
+        "primary_cta",
+        "psychology_frame",
+        "reel_inspiration",
+        "save_trigger",
+        "seo_keywords",
+        "share_trigger",
+        "success_metric",
+        "target",
+        "thumbnail_options",
+        "visual_direction",
+        "whatsapp_forward"
+      ],
+      "needs_regen": true,
+      "held": true,
+      "hold_reason": "purged banned-claim draft: Wrong price: [banned price] / [banned price] a cup; Wrong price: never claim [banned price] / [banned price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)"
     }
   ],
   "instagram_post": {
@@ -619,224 +403,36 @@
     "viral_readiness_score": 91.0
   },
   "carousel": {
-    "id": "carousel_1",
-    "psychology_frame": "clean_label",
-    "save_mechanic": "LABEL TEST",
-    "title": "How to tell if instant coffee is pure coffee",
-    "slides": [
-      {
-        "slide": 1,
-        "heading": "Is your instant coffee pure?",
-        "body": "Most people never check the ingredient panel on their daily jar. Here is how to test your coffee in 10 seconds.",
-        "visual": "Dark marble surface, a glass jar of Purity Beans Purista sitting under warm amber spotlight, shallow depth of field."
-      },
-      {
-        "slide": 2,
-        "heading": "Turn It Around",
-        "body": "Ignore the front label claims. Corporate marketing lives on the front. The regulatory truth lives on the back ingredient list.",
-        "visual": "Close-up of a human hand turning a glass coffee jar around to reveal the back label."
-      },
-      {
-        "slide": 3,
-        "heading": "Read the Fine Print",
-        "body": "Look for explicit declarations. Pure coffee jars will state their exact bean type or pure coffee. If you see chicory, roasted root, or proprietary blends without ratios, you are paying for filler.",
-        "visual": "Macro close-up shot of printed ingredient text on a product label under sharp clean lighting."
-      },
-      {
-        "slide": 4,
-        "heading": "The Purity Beans Standard",
-        "body": "Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is formulated at 70% coffee and 30% chicory. Transparency is not a feature; it is the baseline.",
-        "visual": "Line-up of authentic Purity Beans glass jars showing clean labels and distinct bean varieties."
-      },
-      {
-        "slide": 5,
-        "heading": "The Cost Reality",
-        "body": "Commercial cafes charge Rs 180+ for a cup you can brew at home for Rs 18 using pure instant coffee. Stop paying markup for water and ambiance.",
-        "visual": "A ceramic mug with rich dark coffee crema next to a pristine glass jar on a wooden desk."
-      },
-      {
-        "slide": 6,
-        "heading": "COMMENT STORE",
-        "body": "Comment STORE and I'll send you how to store instant coffee so it never goes flat. Purity Beans. Shop: https://p3online.in",
-        "visual": "Clean final slide with bold text, minimalist branding, and website url https://p3online.in"
-      }
-    ],
-    "caption": "How to tell if instant coffee is pure coffee without guessing. Most grocery store shoppers buy their morning jar based entirely on the front label photography, ignoring the back panel where the real story is told. When you start reading ingredient panels, you realize how common fillers are in commercial blends. Transparency means knowing exactly what goes into your morning cup. At Purity Beans, we keep it simple: Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory. No hidden additives, no corporate jargon. At roughly Rs 18 per serving compared to Rs 180 at cafes, you get premium taste without the markup. Save this carousel for your next grocery run and share it with someone who needs to check their coffee label today. Explore our collection at https://p3online.in. Save this post & Follow @purepantryprovisions for daily coffee truths. Shop now: https://p3online.in",
-    "cta": "Save this post + Follow @purepantryprovisions. Explore pure coffee at https://p3online.in — Purity Beans",
-    "comment_trigger": "Comment STORE and I'll send you how to store instant coffee so it never goes flat.",
-    "save_trigger": "Save this carousel — it will change how you buy coffee forever.",
-    "share_trigger": "Share with someone who deserves to know what is really in their coffee.",
-    "seo_keywords": [
-      "premium instant coffee",
-      "gourmet instant coffee",
-      "freeze dried coffee",
-      "agglomerated coffee",
-      "coffee without preservatives",
-      "pure instant coffee india",
-      "instant coffee brand india"
-    ],
-    "hashtags": "#Coffee #CoffeeLover #InstantCoffee #MorningCoffee #CoffeeTime #PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity #IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands #CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife #PurityBeans #PurityBeansCoffee #PurityBeansExperience #BrewPure #PureCoffeeExperience",
-    "audio": {
-      "audio_category": "educational",
-      "mood": "ambient",
-      "local_track": "music_library/ambient_lounge.wav",
-      "recommendation": "Minimalist Smart Ambient (Search: 'Deep Focus Ambient' or 'Subtle Brainwave')",
-      "trend_status": "not_live_verified",
-      "audio_name": null,
-      "audio_id": null,
-      "audio_source": null,
-      "audio_attached": false,
-      "audio_publish_mode": "licensed_embedded",
-      "audio_required": true,
-      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Minimalist Smart Ambient (Search: 'Deep Focus Ambient' or 'Subtle Brainwave'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
-      "rights_check_required": true,
-      "confidence": 0.5,
-      "reason": "Content classified as 'educational' -> ambient mood. No performance history yet — exploring."
-    },
     "featured_product": "Purista",
-    "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 9.0,
-      "emotion_pull": 8.0,
-      "hook_strength": 8.5,
-      "brand_clarity": 9.0,
-      "overall": 8.6,
-      "verdict": "PASS",
-      "feedback": "The carousel executes a clean educational arc that provides immediate utility, driving high saveability through actionable ingredient-checking steps. Brand clarity is strong, accurately distinguishing the pure variants (Bold, Purista, Purica, Prima) from Ultra Blend (70/30) without violating any brand rules. To maximize shareability, consider sharpening Slide 5's economic contrast to hit home harder for urban professionals.",
-      "retention_audit": "Slide 1: Strong, direct question that targets consumer curiosity. Slide 2: Good momentum shift ('Turn It Around'); zero drop-off risk. Slide 3: Detailed enough to retain interest for analytical readers. Slide 4: Correctly handles product portfolio transparency, maintaining authority. Slide 5: Relatable Rs 18 vs Rs 180 cafe comparison anchors the value proposition effectively. Slide 6: Clear comment trigger ('STORE') and website CTA provide a solid, friction-free exit loop."
-    },
-    "funnel_objective": "AUTHORITY",
     "objective": "Brand Awareness",
     "primary_cta": "Save this guide before your next grocery run",
     "success_metric": "saves",
-    "target": 300,
-    "growth_plan": {
-      "primary_objective": "drive product-page visits/purchases",
-      "secondary_objective": "earn qualified followers",
-      "audience": "buyers comparing jars in a grocery aisle or a comment section",
-      "angle": "a saveable framework for one buying decision",
-      "follow_promise": "Follow for one buying check you can save.",
-      "rationale": "A carousel is the reference someone screenshots.",
-      "platform": "carousel",
-      "sku": "Purista",
-      "day": 286
-    },
-    "growth_review": {
-      "platform": "carousel",
-      "label": "carousel",
-      "decision": "PASS",
-      "overall": 8.67,
-      "threshold": 8.0,
-      "dimensions": [
-        {
-          "name": "platform_fit",
-          "score": 9.0,
-          "evidence": "Hook and body are both present.",
-          "hard_fail": false
-        },
-        {
-          "name": "hook",
-          "score": 9.0,
-          "evidence": "The hook names a specific subject.",
-          "hard_fail": false
-        },
-        {
-          "name": "retention",
-          "score": 8.0,
-          "evidence": "The body contains a concrete coffee fact.",
-          "hard_fail": false
-        },
-        {
-          "name": "payoff",
-          "score": 8.0,
-          "evidence": "The body continues the hook.",
-          "hard_fail": false
-        },
-        {
-          "name": "shareability",
-          "score": 9.0,
-          "evidence": "There is a reason to pass this on.",
-          "hard_fail": false
-        },
-        {
-          "name": "saveability",
-          "score": 8.0,
-          "evidence": "A checkable fact is worth saving.",
-          "hard_fail": false
-        },
-        {
-          "name": "follow_conversion",
-          "score": 8.0,
-          "evidence": "The follow reason is specific.",
-          "hard_fail": false
-        },
-        {
-          "name": "purchase_relevance",
-          "score": 8.0,
-          "evidence": "The featured jar or a verified next step is named.",
-          "hard_fail": false
-        },
-        {
-          "name": "brand_truth",
-          "score": 10.0,
-          "evidence": "No product-truth finding.",
-          "hard_fail": false
-        },
-        {
-          "name": "visual_integrity",
-          "score": 8.0,
-          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
-          "hard_fail": false
-        },
-        {
-          "name": "claim_verification",
-          "score": 10.0,
-          "evidence": "No prohibited health or medical claim.",
-          "hard_fail": false
-        },
-        {
-          "name": "originality",
-          "score": 9.0,
-          "evidence": "Hook and CTA are not copied from another asset today.",
-          "hard_fail": false
-        },
-        {
-          "name": "mobile_readability",
-          "score": 9.0,
-          "evidence": "The hook is short enough to read on a phone.",
-          "hard_fail": false
-        },
-        {
-          "name": "cta_clarity",
-          "score": 9.0,
-          "evidence": "One CTA field is present.",
-          "hard_fail": false
-        },
-        {
-          "name": "schema",
-          "score": 8.0,
-          "evidence": "No schema or length failure for this format.",
-          "hard_fail": false
-        }
-      ],
-      "hard_fails": [],
-      "attempts": 2,
-      "retry_limit": 3,
-      "feedback": "",
-      "plan": {
-        "primary_objective": "drive product-page visits/purchases",
-        "secondary_objective": "earn qualified followers",
-        "audience": "buyers comparing jars in a grocery aisle or a comment section",
-        "angle": "a saveable framework for one buying decision",
-        "follow_promise": "Follow for one buying check you can save.",
-        "rationale": "A carousel is the reference someone screenshots.",
-        "platform": "carousel",
-        "sku": "Purista",
-        "day": 286
-      },
-      "published": false
-    },
-    "_growth_attempts": 2
+    "id": "carousel_1",
+    "_shape": [
+      "audio",
+      "caption",
+      "comment_trigger",
+      "cta",
+      "featured_product",
+      "funnel_objective",
+      "growth_plan",
+      "hashtags",
+      "id",
+      "objective",
+      "primary_cta",
+      "psychology_frame",
+      "save_mechanic",
+      "save_trigger",
+      "seo_keywords",
+      "share_trigger",
+      "slides",
+      "success_metric",
+      "target",
+      "title"
+    ],
+    "needs_regen": true,
+    "held": true,
+    "hold_reason": "purged banned-claim draft: Wrong price: [banned price] / [banned price] a cup; Wrong price: never claim [banned price] / [banned price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)"
   },
   "linkedin_post": {
     "angle": "THE BOOTSTRAPPED PURITY BET",
@@ -1468,315 +1064,24 @@
     "editorial_error": "brand: ['held: provider_failure during s0: All LLM providers failed for blog_section_s0: nvidia failed']"
   },
   "stories": {
-    "story_1": {
-      "type": "poll",
-      "headline": "REAL TALK",
-      "subtext": "Does your coffee actually taste like coffee?",
-      "poll_question": "Does your instant coffee taste slightly 'woody'?",
-      "option_a": "Yes, always",
-      "option_b": "No, it's pure",
-      "reel_inspiration": {
-        "inspiration_id": "gourmet_duo_mini_style",
-        "mode": "style_cues",
-        "source_template_id": "gourmet_duo_mini_reel",
-        "source_filename": "gourmet_duo_mini.mp4",
-        "publish_source_video": false,
-        "copied": {
-          "pixels": false,
-          "audio": false,
-          "sku": false
-        },
-        "featured_product": "Purista",
-        "featured_slug": "purista",
-        "cues": [
-          {
-            "id": "pacing",
-            "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
-          },
-          {
-            "id": "framing",
-            "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
-          },
-          {
-            "id": "storytelling",
-            "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
-          },
-          {
-            "id": "aesthetic",
-            "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
-          }
-        ],
-        "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
-      }
-    },
-    "story_2": {
-      "type": "bts",
-      "badge": "BEHIND THE SCENES",
-      "headline": "The 'Freeze-Dried' Secret",
-      "body": "Most instant coffee is spray-dried at high heat, killing the aroma. Purista uses freeze-drying, where coffee is frozen at -40°C to lock in the gourmet Robusta oils.",
-      "screenshot_hook": "Freeze-drying preserves the aroma that heat destroys.",
-      "reel_inspiration": {
-        "inspiration_id": "gourmet_duo_mini_style",
-        "mode": "style_cues",
-        "source_template_id": "gourmet_duo_mini_reel",
-        "source_filename": "gourmet_duo_mini.mp4",
-        "publish_source_video": false,
-        "copied": {
-          "pixels": false,
-          "audio": false,
-          "sku": false
-        },
-        "featured_product": "Purista",
-        "featured_slug": "purista",
-        "cues": [
-          {
-            "id": "pacing",
-            "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
-          },
-          {
-            "id": "framing",
-            "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
-          },
-          {
-            "id": "storytelling",
-            "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
-          },
-          {
-            "id": "aesthetic",
-            "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
-          }
-        ],
-        "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
-      }
-    },
-    "story_3": {
-      "type": "clean_truth",
-      "headline": "THE INGREDIENT TRUTH",
-      "fact": "Read the label: Purista by Purity Beans is pure Gourmet Robusta with zero chicory. No fillers, just the honest kick of pure coffee.",
-      "sticker_prompt": "Slide to see how much you love pure coffee! ☕️",
-      "reel_inspiration": {
-        "inspiration_id": "gourmet_duo_mini_style",
-        "mode": "style_cues",
-        "source_template_id": "gourmet_duo_mini_reel",
-        "source_filename": "gourmet_duo_mini.mp4",
-        "publish_source_video": false,
-        "copied": {
-          "pixels": false,
-          "audio": false,
-          "sku": false
-        },
-        "featured_product": "Purista",
-        "featured_slug": "purista",
-        "cues": [
-          {
-            "id": "pacing",
-            "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
-          },
-          {
-            "id": "framing",
-            "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
-          },
-          {
-            "id": "storytelling",
-            "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
-          },
-          {
-            "id": "aesthetic",
-            "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
-          }
-        ],
-        "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
-      }
-    },
-    "story_4": {
-      "type": "cta",
-      "headline": "Ready to ditch the fillers?",
-      "reply_keyword": "PURISTA",
-      "offer": "Reply PURISTA and I'll send you the direct link to our Gourmet Robusta.",
-      "question_sticker": "What's your go-to coffee time?",
-      "link": "https://p3online.in",
-      "reel_inspiration": {
-        "inspiration_id": "gourmet_duo_mini_style",
-        "mode": "style_cues",
-        "source_template_id": "gourmet_duo_mini_reel",
-        "source_filename": "gourmet_duo_mini.mp4",
-        "publish_source_video": false,
-        "copied": {
-          "pixels": false,
-          "audio": false,
-          "sku": false
-        },
-        "featured_product": "Purista",
-        "featured_slug": "purista",
-        "cues": [
-          {
-            "id": "pacing",
-            "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
-          },
-          {
-            "id": "framing",
-            "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
-          },
-          {
-            "id": "storytelling",
-            "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
-          },
-          {
-            "id": "aesthetic",
-            "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
-          }
-        ],
-        "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
-      }
-    },
-    "audio": {
-      "audio_category": "coffee_aesthetic",
-      "mood": "lofi",
-      "local_track": "music_library/lofi_cafe.wav",
-      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
-      "trend_status": "not_live_verified",
-      "audio_name": null,
-      "audio_id": null,
-      "audio_source": null,
-      "audio_attached": false,
-      "audio_publish_mode": "licensed_embedded",
-      "audio_required": true,
-      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
-      "rights_check_required": true,
-      "confidence": 0.5,
-      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
-    },
-    "funnel_objective": "CONVERSION",
     "objective": "Consumer Purchase",
-    "primary_cta": "Buy pure Arabica at p3online.in — Rs 18 per cup",
     "success_metric": "link_clicks",
-    "target": 50,
-    "growth_plan": {
-      "primary_objective": "drive product-page visits/purchases",
-      "secondary_objective": "earn qualified followers",
-      "audience": "people already watching who will answer one real question",
-      "angle": "a connected sequence from a hook to one next step",
-      "follow_promise": "Follow for a short answer and the honest next step.",
-      "rationale": "Stories are a sequence, not four unrelated posters.",
-      "platform": "stories",
-      "sku": "Purista",
-      "day": 286
-    },
-    "growth_review": {
-      "platform": "stories",
-      "label": "stories",
-      "decision": "PASS",
-      "overall": 8.33,
-      "threshold": 8.0,
-      "dimensions": [
-        {
-          "name": "platform_fit",
-          "score": 9.0,
-          "evidence": "Hook and body are both present.",
-          "hard_fail": false
-        },
-        {
-          "name": "hook",
-          "score": 4.0,
-          "evidence": "The hook is too thin to stop a scroll.",
-          "hard_fail": false
-        },
-        {
-          "name": "retention",
-          "score": 8.0,
-          "evidence": "The body contains a concrete coffee fact.",
-          "hard_fail": false
-        },
-        {
-          "name": "payoff",
-          "score": 8.0,
-          "evidence": "The body continues the hook.",
-          "hard_fail": false
-        },
-        {
-          "name": "shareability",
-          "score": 9.0,
-          "evidence": "There is a reason to pass this on.",
-          "hard_fail": false
-        },
-        {
-          "name": "saveability",
-          "score": 8.0,
-          "evidence": "A checkable fact is worth saving.",
-          "hard_fail": false
-        },
-        {
-          "name": "follow_conversion",
-          "score": 8.0,
-          "evidence": "The follow reason is specific.",
-          "hard_fail": false
-        },
-        {
-          "name": "purchase_relevance",
-          "score": 8.0,
-          "evidence": "The featured jar or a verified next step is named.",
-          "hard_fail": false
-        },
-        {
-          "name": "brand_truth",
-          "score": 10.0,
-          "evidence": "No product-truth finding.",
-          "hard_fail": false
-        },
-        {
-          "name": "visual_integrity",
-          "score": 8.0,
-          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
-          "hard_fail": false
-        },
-        {
-          "name": "claim_verification",
-          "score": 10.0,
-          "evidence": "No prohibited health or medical claim.",
-          "hard_fail": false
-        },
-        {
-          "name": "originality",
-          "score": 9.0,
-          "evidence": "Hook and CTA are not copied from another asset today.",
-          "hard_fail": false
-        },
-        {
-          "name": "mobile_readability",
-          "score": 9.0,
-          "evidence": "The hook is short enough to read on a phone.",
-          "hard_fail": false
-        },
-        {
-          "name": "cta_clarity",
-          "score": 9.0,
-          "evidence": "One CTA field is present.",
-          "hard_fail": false
-        },
-        {
-          "name": "schema",
-          "score": 8.0,
-          "evidence": "No schema or length failure for this format.",
-          "hard_fail": false
-        }
-      ],
-      "hard_fails": [],
-      "attempts": 1,
-      "retry_limit": 3,
-      "feedback": "hook 4.0: The hook is too thin to stop a scroll.",
-      "plan": {
-        "primary_objective": "drive product-page visits/purchases",
-        "secondary_objective": "earn qualified followers",
-        "audience": "people already watching who will answer one real question",
-        "angle": "a connected sequence from a hook to one next step",
-        "follow_promise": "Follow for a short answer and the honest next step.",
-        "rationale": "Stories are a sequence, not four unrelated posters.",
-        "platform": "stories",
-        "sku": "Purista",
-        "day": 286
-      },
-      "published": false
-    }
+    "_shape": [
+      "audio",
+      "funnel_objective",
+      "growth_plan",
+      "objective",
+      "primary_cta",
+      "story_1",
+      "story_2",
+      "story_3",
+      "story_4",
+      "success_metric",
+      "target"
+    ],
+    "needs_regen": true,
+    "held": true,
+    "hold_reason": "purged banned-claim draft: Wrong price: [banned price] / [banned price] a cup; Wrong price: never claim [banned price] / [banned price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)"
   },
   "yt_short": {
     "product": "Purista",
@@ -2360,166 +1665,32 @@
     "editorial_error": "scoring_failed: scoring failed for growth_reel: All LLM providers failed for 'editorial_growth_reel'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
   },
   "threads_post": {
-    "angle": "THE CAFE PRICE PARADOX",
-    "text": "Cafes charge ₹180 so you sit in a velvet chair, not for the bean.\n\nMost supermarket instant coffee relies on chicory fillers.\n\nPurity Beans Purista is freeze-dried pure coffee, zero chicory, for ₹18/cup.\n\nFlip your jar over today.\n\nShop pure: https://p3online.in",
     "featured_product": "Purista",
-    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeIndia #GourmetCoffee #CoffeeCulture #SupportIndianBrands #BrewPure #CleanLabel",
-    "comment_trigger": "Comment COFFEE if you're done paying ₹180 for a cup you can brew at home for ₹18.",
-    "save_trigger": "Save this as a reminder to check the ingredient label on your next grocery run.",
-    "share_trigger": "Share this with a friend who spends way too much at trendy cafes.",
-    "editorial_score": {
-      "shareability": 7.0,
-      "saveability": 4.0,
-      "emotion_pull": 6.0,
-      "hook_strength": 8.5,
-      "brand_clarity": 7.0,
-      "overall": 6.5,
-      "verdict": "REJECT",
-      "feedback": "The hook is an elite pattern interrupt, but the middle section drops the energy by shifting from 'betrayal/snobbery' to a standard product pitch. To fix: bridge the gap by positioning Purity Beans not just as a cheaper alternative, but as the 'secret' that makes cafe-quality coffee possible at home. The saveability is critically low because there is no utility—it's a statement, not a resource. Add a 'check your label' tip to make it save-worthy.",
-      "retention_audit": "Line 1: High retention (strong attack). Line 2: Stable (logical validation). Line 3: Attention drop (shifts to sales pitch too quickly; loses the 'us vs them' narrative). Line 4: Slight recovery (identity challenge). Line 5: Flat (standard CTA)."
-    },
-    "asset_type": "threads_post",
-    "psychology_frame": "accessible_premium",
-    "retention_audit": "Line 1: Strong pattern interrupt attacking cafe pricing. Line 2: Logical validation of the 'hidden cost'. Line 3: Bridges the gap by exposing the 'supermarket filler' secret. Line 4: Introduces Purity Beans as the high-status secret/solution. Line 5: High-utility 'Quick Tip' creating immediate save-value. Line 6: Identity challenge to drive comments. Line 7: Direct CTA.",
-    "editorial_review": {
-      "character_count": 842,
-      "brand_presence": "Confirmed",
-      "website_presence": "Confirmed",
-      "product_truth": "Confirmed"
-    },
-    "editorial_error": "brand: ['Threads native text exceeds 480 characters', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
-    "funnel_objective": "FOLLOW",
     "objective": "Follower Growth",
     "primary_cta": "Follow @purepantryprovisions for daily honest coffee facts",
     "success_metric": "follows",
-    "target": 250,
-    "growth_plan": {
-      "primary_objective": "earn qualified followers",
-      "secondary_objective": "reach new relevant coffee drinkers",
-      "audience": "people who will reply to one precise coffee question",
-      "angle": "one honest question, not a caption pasted short",
-      "follow_promise": "Follow for one honest coffee question a day.",
-      "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
-      "platform": "threads",
-      "sku": "Purista",
-      "day": 286
-    },
-    "growth_review": {
-      "platform": "threads",
-      "label": "threads_post",
-      "decision": "PASS",
-      "overall": 8.67,
-      "threshold": 8.0,
-      "dimensions": [
-        {
-          "name": "platform_fit",
-          "score": 9.0,
-          "evidence": "Hook and body are both present.",
-          "hard_fail": false
-        },
-        {
-          "name": "hook",
-          "score": 9.0,
-          "evidence": "The hook names a specific subject.",
-          "hard_fail": false
-        },
-        {
-          "name": "retention",
-          "score": 8.0,
-          "evidence": "The body contains a concrete coffee fact.",
-          "hard_fail": false
-        },
-        {
-          "name": "payoff",
-          "score": 8.0,
-          "evidence": "The body continues the hook.",
-          "hard_fail": false
-        },
-        {
-          "name": "shareability",
-          "score": 9.0,
-          "evidence": "There is a reason to pass this on.",
-          "hard_fail": false
-        },
-        {
-          "name": "saveability",
-          "score": 8.0,
-          "evidence": "A checkable fact is worth saving.",
-          "hard_fail": false
-        },
-        {
-          "name": "follow_conversion",
-          "score": 8.0,
-          "evidence": "The follow reason is specific.",
-          "hard_fail": false
-        },
-        {
-          "name": "purchase_relevance",
-          "score": 8.0,
-          "evidence": "The featured jar or a verified next step is named.",
-          "hard_fail": false
-        },
-        {
-          "name": "brand_truth",
-          "score": 10.0,
-          "evidence": "No product-truth finding.",
-          "hard_fail": false
-        },
-        {
-          "name": "visual_integrity",
-          "score": 8.0,
-          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
-          "hard_fail": false
-        },
-        {
-          "name": "claim_verification",
-          "score": 10.0,
-          "evidence": "No prohibited health or medical claim.",
-          "hard_fail": false
-        },
-        {
-          "name": "originality",
-          "score": 9.0,
-          "evidence": "Hook and CTA are not copied from another asset today.",
-          "hard_fail": false
-        },
-        {
-          "name": "mobile_readability",
-          "score": 9.0,
-          "evidence": "The hook is short enough to read on a phone.",
-          "hard_fail": false
-        },
-        {
-          "name": "cta_clarity",
-          "score": 9.0,
-          "evidence": "One CTA field is present.",
-          "hard_fail": false
-        },
-        {
-          "name": "schema",
-          "score": 8.0,
-          "evidence": "No schema or length failure for this format.",
-          "hard_fail": false
-        }
-      ],
-      "hard_fails": [],
-      "attempts": 2,
-      "retry_limit": 3,
-      "feedback": "",
-      "plan": {
-        "primary_objective": "earn qualified followers",
-        "secondary_objective": "reach new relevant coffee drinkers",
-        "audience": "people who will reply to one precise coffee question",
-        "angle": "one honest question, not a caption pasted short",
-        "follow_promise": "Follow for one honest coffee question a day.",
-        "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
-        "platform": "threads",
-        "sku": "Purista",
-        "day": 286
-      },
-      "published": false
-    },
-    "_growth_attempts": 2
+    "_shape": [
+      "angle",
+      "asset_type",
+      "comment_trigger",
+      "editorial_review",
+      "featured_product",
+      "funnel_objective",
+      "growth_plan",
+      "hashtags",
+      "objective",
+      "primary_cta",
+      "psychology_frame",
+      "retention_audit",
+      "save_trigger",
+      "share_trigger",
+      "success_metric",
+      "target",
+      "text"
+    ],
+    "needs_regen": true,
+    "held": true,
+    "hold_reason": "purged banned-claim draft: Wrong price: [banned price] / [banned price] a cup; Wrong price: never claim [banned price] / [banned price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)"
   },
   "facebook_post": {
     "angle": "THE CHICORY BETRAYAL",
@@ -2696,64 +1867,6 @@
       ],
       "thumbnail_frame": "Frame 2 (Ingredient panel close-up) — triggers curiosity gap and stops the scroll immediately before play.",
       "loop_edit_note": "Cut precisely on the final frame's last millisecond, matching audio transient of the guitar pluck in frame 1."
-    },
-    "reel_2": {
-      "aspect_ratio": "9:16",
-      "total_duration_s": 30,
-      "color_grade": "Cooler, moodier — night palette: deep blue-blacks, warm amber accent, lower brightness",
-      "audio_direction": "Late-night ambient synth drone with a deep heartbeat sub-bass. Tempo 70 BPM. Minimalist and suspenseful.",
-      "frames": [
-        {
-          "frame_id": "reel_2_frame_1",
-          "duration_s": 4,
-          "on_screen_text": "READ THE BACK PANEL",
-          "ai_video_prompt": "Camera: Handheld 35mm lens, low-light setting. Subject: An Indian man sitting at a dark wooden desk lit only by a laptop screen glow, turning the exact Purity Beans jar in his hands. Lighting: Cool blue screen light on his face, warm amber lamp in the background corner. Motion: Slow, deliberate tilt of the jar toward the camera. Atmosphere: Late-night work session, intimate, shadowy. Style: Cinematic neo-noir realism. End frame: Jar label facing lens.",
-          "human_shot_list": "Location: Home office at night. Lens: 35mm f/1.8. Aperture: f/2.0. Lighting: Monitor glow and 2700K desk lamp. Talent: 30-year-old Indian male, focused expression. Duration: 4 seconds. Cut point: Jar angle alignment.",
-          "transition_to_next": "Fast jump cut into extreme close-up"
-        },
-        {
-          "frame_id": "reel_2_frame_2",
-          "duration_s": 5,
-          "on_screen_text": "CHECK THE FINE PRINT",
-          "ai_video_prompt": "Camera: Macro 85mm lens, shallow depth of field. Subject: Extreme close-up of the fine print on the back label of the exact Purity Beans jar. Fingerprint smudge visible on the glass. Lighting: Single directional amber ray cutting across the dark label texture. Motion: Slow vertical pan down the lines of text. Atmosphere: Investigative, high tension. Style: Documentary macro cinematography. End frame: Focus locking on ingredients list.",
-          "human_shot_list": "Location: Studio dark table. Lens: 85mm macro. Aperture: f/2.8. Lighting: Single overhead spotlight with amber gel. Talent: None. Duration: 5 seconds. Cut point: End of text pan.",
-          "transition_to_next": "Match cut on movement"
-        },
-        {
-          "frame_id": "reel_2_frame_3",
-          "duration_s": 5,
-          "on_screen_text": "PURE ROBUSTA",
-          "ai_video_prompt": "Camera: 50mm lens, handheld drift. Subject: The exact Purity Beans Purista jar standing on a dark granite kitchen counter at night, amber overhead pendant light casting a sharp reflection on the gold lid. Lighting: High contrast, deep shadows, single warm source. Motion: Subtle push-in. Atmosphere: Quiet midnight hour, premium feel. Style: Editorial product film. End frame: Jar perfectly framed in lower third.",
-          "human_shot_list": "Location: Modern kitchen at night. Lens: 50mm. Aperture: f/1.8. Lighting: Single pendant light overhead. Talent: None. Duration: 5 seconds. Cut point: Push-in completion.",
-          "transition_to_next": "Whip pan right"
-        },
-        {
-          "frame_id": "reel_2_frame_4",
-          "duration_s": 6,
-          "on_screen_text": "RS 18 PER CUP",
-          "ai_video_prompt": "Camera: iPhone 15 vertical framing, slightly tilted. Subject: Hot water being poured from a sleek black kettle into a ceramic mug containing a spoonful of coffee granules, steam billowing upward into the amber light beam. Lighting: Warm backlighting illuminating the steam against a dark kitchen background. Motion: Realistic liquid pour physics, steam swirling and dissipating. Atmosphere: Cozy, comforting midnight brew. Style: Authentic UGC creator shot. End frame: Water filling the mug.",
-          "human_shot_list": "Location: Kitchen counter at night. Lens: iPhone 15 main lens. Aperture: f/1.6. Lighting: Countertop under-cabinet warm LED strip. Talent: Hand holding kettle. Duration: 6 seconds. Cut point: Kettle tilt back.",
-          "transition_to_next": "Direct cut to product shot"
-        },
-        {
-          "frame_id": "reel_2_frame_5",
-          "duration_s": 5,
-          "on_screen_text": "PURITY BEANS PURISTA",
-          "ai_video_prompt": "Camera: 85mm lens, eye-level portrait. Subject: An Indian woman taking a slow, appreciative sip from the ceramic mug, eyes closed, the exact Purity Beans jar resting on the counter beside her in sharp focus. Lighting: Warm key light from the left, deep shadow on the right wall. Motion: Natural micro-movements, breathing chest rise. Atmosphere: Calm, restorative midnight moment. Style: Cinematic lifestyle film. End frame: Eyes opening with a calm smile.",
-          "human_shot_list": "Location: Apartment kitchen island. Lens: 85mm. Aperture: f/2.0. Lighting: Side window ambient plus warm floor lamp. Talent: 28-year-old Indian female. Duration: 5 seconds. Cut point: Smile formation.",
-          "transition_to_next": "Smooth cross dissolve to final slate"
-        },
-        {
-          "frame_id": "reel_2_frame_6",
-          "duration_s": 5,
-          "on_screen_text": "FOLLOW @PURITYBEANS",
-          "ai_video_prompt": "Camera: Static locked-off macro lens. Subject: The exact Purity Beans jar on a dark slate surface, gold branding catching a final pulse of warm amber light as the room dims. Lighting: Diminishing spotlight. Motion: Static with subtle light fade. Atmosphere: Mysterious, premium, conclusive. Style: High-end commercial outro. End frame: Complete darkness except for gold typography.",
-          "human_shot_list": "Location: Studio set. Lens: 100mm macro. Aperture: f/4.0. Lighting: Dimmable studio strobe. Talent: None. Duration: 5 seconds. Cut point: Final fade to black.",
-          "transition_to_next": "Seamless loop cut to frame 1"
-        }
-      ],
-      "thumbnail_frame": "Frame 1 (Late-night desk jar turn under screen glow) — high contrast and intrigue stop the scroll instantly.",
-      "loop_edit_note": "Cut on the final light fade and align the bass sub-drop with frame 1 entry."
     },
     "yt_short": {
       "aspect_ratio": "9:16",
@@ -5658,32 +4771,32 @@
       {
         "attempt": 1,
         "rung": "from_scratch",
-        "feedback": "brand: ['product truth: Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
+        "feedback": "brand: ['product truth: Wrong price: never claim [purged price] / [purged price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
       },
       {
         "attempt": 2,
         "rung": "from_scratch",
-        "feedback": "brand: ['product truth: Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
+        "feedback": "brand: ['product truth: Wrong price: never claim [purged price] / [purged price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
       },
       {
         "attempt": 3,
         "rung": "from_scratch",
-        "feedback": "brand: ['product truth: Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
+        "feedback": "brand: ['product truth: Wrong price: never claim [purged price] / [purged price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
       },
       {
         "attempt": 4,
         "rung": "from_scratch",
-        "feedback": "brand: ['product truth: Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
+        "feedback": "brand: ['product truth: Wrong price: never claim [purged price] / [purged price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
       },
       {
         "attempt": 5,
         "rung": "from_scratch",
-        "feedback": "brand: ['product truth: Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
+        "feedback": "brand: ['product truth: Wrong price: never claim [purged price] / [purged price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
       },
       {
         "attempt": 6,
         "rung": "evergreen",
-        "feedback": "brand: ['product truth: Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
+        "feedback": "brand: ['product truth: Wrong price: never claim [purged price] / [purged price] a cup. Ultra Blend is about ₹5 a cup (100g = ₹309, makes at least 66 cups)', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chi"
       }
     ],
     "growth_reel": [

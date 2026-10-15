@@ -168,7 +168,9 @@ def scratch_base(piece: dict) -> dict:
 
 def scratch_prompt(label: str, piece: dict, feedback: str, threshold: float, brand: str) -> str:
     """Prompt for a brand-new piece. The rejected copy is NOT included, only its shape."""
-    keys = sorted(k for k in (piece or {}) if k not in ("editorial_score", "editorial_error"))
+    keys = (piece or {}).get("_shape") or sorted(
+        k for k in (piece or {}) if k not in ("editorial_score", "editorial_error", "needs_regen",
+                                              "held", "hold_reason", "_shape"))
     featured = (piece or {}).get("featured_product") or "the featured Purity Beans jar"
     reasons = _re.sub(r"\s+", " ", str(feedback or ""))[:600]
     return (
