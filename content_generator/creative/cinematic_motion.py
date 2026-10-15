@@ -220,6 +220,17 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         jar_alpha = np.zeros((H, W), np.float32)
         jar_alpha[jb[1]:jb[3], jb[0]:jb[2]] = np.asarray(jar.getchannel("A"), np.float32)[:jb[3] - jb[1], :jb[2] - jb[0]] / 255.0
         jyy, jxx = np.mgrid[0:H, 0:W].astype(np.float32)
+        # soft dark scrim behind the text block so the sub-line stays legible over bright bokeh
+        sy0, sy1 = text_top - int(H * 0.03), min(jb[1] - int(H * 0.01), text_end + int(H * 0.02))
+        prof = np.zeros(H, np.float32)
+        ramp = int(H * 0.04)
+        prof[sy0:sy1] = 1.0
+        prof[max(0, sy0 - ramp):sy0] = np.linspace(0, 1, sy0 - max(0, sy0 - ramp))
+        prof[sy1:sy1 + ramp] = np.linspace(1, 0, len(prof[sy1:sy1 + ramp]))
+        xs_ = np.abs(np.arange(W, dtype=np.float32) - W / 2) / (W / 2)
+        scrim_a = (prof[:, None] * (1 - 0.45 * xs_ ** 2)[None, :] * 150).astype("uint8")
+        scrim = Image.new("RGBA", (W, H), tuple(int(c) for c in pal["deep"]) + (0,))
+        scrim.putalpha(Image.fromarray(scrim_a))
         n = int(seconds * FPS)
         cta_at = seconds * 0.70
         beat_len = cta_at / len(plans)
@@ -245,6 +256,7 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                     arr = np.asarray(fr, np.float32)
                     arr[..., :3] += (band * 0.16 * 255)[..., None] * (1 - arr[..., :3] / 255)
                     fr = Image.fromarray(np.clip(arr, 0, 255).astype("uint8"))
+            fr.alpha_composite(scrim)
             # 9. kinetic text
             bi = min(len(plans) - 1, int(min(t, cta_at - 1e-3) / beat_len))
             pl = plans[bi]
@@ -273,6 +285,10 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                 ImageDraw.Draw(sl).line((W / 2 - 60, y, W / 2 + 60, y), fill=tuple(pal["accent"]) + (int(255 * sa),), width=5)
                 y += int(H * 0.018)
                 for ln in pl["sub_lines"]:
+                    hl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+                    ImageDraw.Draw(hl).text((W / 2, y + 2), ln, font=bf, fill=(0, 0, 0, int(230 * sa)), anchor="ma",
+                                            stroke_width=4, stroke_fill=(0, 0, 0, int(200 * sa)))
+                    sl.alpha_composite(hl.filter(ImageFilter.GaussianBlur(4)))
                     pc._text(sl, (W / 2, y), ln, bf, tuple(pal["accent"]) + (int(255 * sa),), anchor="ma")
                     y += int(bf.size * 1.25)
                 fr.alpha_composite(sl)
@@ -314,15 +330,37 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         rc.reset_sku(tok)
 
 
-def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, max_tries=4, gate=None) -> dict | None:
-    """Render, run the unchanged visual gate on the video, re-render with a new layout/palette on failure."""
+_PROCESS_START = __import__("time").monotonic()
+
+
+def _budget_left() -> float:
+    """Seconds left in this process's total cinematic budget (CINEMATIC_TOTAL_BUDGET_S, default 1500)."""
+    import time
+    return float(os.getenv("CINEMATIC_TOTAL_BUDGET_S", "1500")) - (time.monotonic() - _PROCESS_START)
+
+
+def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, max_tries=None, gate=None) -> dict | None:
+    """Render, run the unchanged visual gate, re-render with a new layout/palette on failure.
+
+    Bounded: at most CINEMATIC_MAX_TRIES attempts (default 2, hard cap 3), and no attempt starts unless
+    the remaining process budget covers one more render (CINEMATIC_EST_RENDER_S, default 300). On
+    exhaustion returns None so the caller falls back to the fast legacy renderer.
+    """
+    import time
     from content_generator.creative import visual_gate
+    max_tries = min(3, max(1, int(max_tries or os.getenv("CINEMATIC_MAX_TRIES", "2"))))
+    est = float(os.getenv("CINEMATIC_EST_RENDER_S", "300"))
     recent = visual_gate.recent_layouts()
     gate = gate or (lambda p, meta: visual_gate.evaluate_video(p, meta, recent))
     for i in range(max_tries):
+        if _budget_left() < est:
+            logger.warning("[cinematic] time budget low (%.0fs left); falling back to legacy renderer", _budget_left())
+            return None
+        t0 = time.monotonic()
         layout = LAYOUTS[(seed + i) % len(LAYOUTS)]
         meta = render_cinematic_video(sku, beats, out_path, seconds=seconds, seed=seed + i, layout=layout,
                                       palette_idx=seed + i + i // len(LAYOUTS))
+        est = max(est, time.monotonic() - t0)
         verdict = gate(out_path, meta)
         meta["visual_gate"] = verdict
         if verdict.get("passed"):

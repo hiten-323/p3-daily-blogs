@@ -34,3 +34,23 @@ def test_render_short_clip(tmp_path, monkeypatch):
     assert jb[0] >= 0 and jb[1] >= 0 and jb[2] <= cm.W and jb[3] <= cm.H
     for box in meta["text_boxes"]:
         assert box[3] <= jb[1] or box[1] >= jb[3]   # text never over the jar
+
+
+def test_budget_exhausted_falls_back_without_rendering(monkeypatch, tmp_path):
+    monkeypatch.setenv("CINEMATIC_TOTAL_BUDGET_S", "0")
+    called = []
+    monkeypatch.setattr(cm, "render_cinematic_video", lambda *a, **k: called.append(1))
+    assert cm.render_cinematic_until_pass("bold", "x", str(tmp_path / "a.mp4")) is None
+    assert not called
+
+
+def test_tries_capped(monkeypatch, tmp_path):
+    monkeypatch.setenv("CINEMATIC_MAX_TRIES", "50")
+    monkeypatch.setenv("CINEMATIC_TOTAL_BUDGET_S", "99999")
+    monkeypatch.setenv("CINEMATIC_EST_RENDER_S", "0")
+    calls = []
+    monkeypatch.setattr(cm, "render_cinematic_video", lambda *a, **k: calls.append(1) or {})
+    monkeypatch.setattr("content_generator.creative.visual_gate.recent_layouts", lambda *a: [])
+    assert cm.render_cinematic_until_pass("bold", "x", str(tmp_path / "a.mp4"),
+                                          gate=lambda p, m: {"passed": False}) is None
+    assert len(calls) == 3
