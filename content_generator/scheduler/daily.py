@@ -967,8 +967,9 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
     providers_ok = llm_router.any_provider_available()
     if not providers_ok:
         logger.warning("[editorial] All providers exhausted — skipping LLM review, accepting content as-is")
+        from content_generator.core.blog_flags import blog_enabled as _blog_on
         blog = content.get("blog_post")
-        if isinstance(blog, dict) and blog:
+        if _blog_on() and isinstance(blog, dict) and blog:
             reason = str(blog.get("hold_reason") or "").strip() or (
                 "editorial review skipped because every AI provider was unavailable"
             )
@@ -982,6 +983,7 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
     if featured and not content.get("featured_product"):
         content["featured_product"] = featured
 
+    from content_generator.core.blog_flags import blog_enabled
     review_targets = [
         ("reel_1",         "reels",         0),
         ("reel_2",         "reels",         1),
@@ -990,10 +992,12 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
         ("linkedin_post",  "linkedin_post",  None),
         ("facebook_post",  "facebook_post",  None),
         ("threads_post",   "threads_post",   None),
-        ("blog_post",      "blog_post",      None),
         ("growth_reel",    "growth_reel",    None),
         ("yt_short",       "yt_short",       None),
     ]
+    # Blog regen only when explicitly enabled; Blogs bot owns Shopify blog.
+    if blog_enabled():
+        review_targets.insert(-2, ("blog_post", "blog_post", None))
 
     threshold = get_current_pass_score()
     from content_generator.core import fallback_ladder as ladder

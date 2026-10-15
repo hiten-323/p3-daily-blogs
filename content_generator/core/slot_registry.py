@@ -33,7 +33,7 @@ SLOTS: list[dict] = [
         "ist":       "06:00",
         "expects":   ["linkedin"],
         "purpose":   "Full pipeline: insights, revenue, generate, editorial, "
-                     "images, LinkedIn/blog/YouTube. Instagram + Facebook HELD.",
+                     "images, LinkedIn/YouTube (blog off by default). Instagram + Facebook HELD.",
     },
     {
         "id":        "morning",

@@ -76,12 +76,12 @@ def _enable(monkeypatch, tmp_path, slot=None):
     monkeypatch.setattr(shopify_blog, "_hero_image_b64", lambda: None)
 
 
-def test_workflow_enables_shopify_blog_on_the_pipeline():
+def test_workflow_keeps_blog_disabled_by_default():
     text = (ROOT / ".github" / "workflows" / "daily.yml").read_text(encoding="utf-8")
-    assert 'SHOPIFY_BLOG_ENABLED: "true"' in text
+    assert 'BLOG_ENABLED: "false"' in text
+    assert 'SHOPIFY_BLOG_ENABLED: "true"' not in text
     assert "SHOPIFY_STORE_DOMAIN:" in text
     assert "SHOPIFY_ADMIN_TOKEN:" in text
-    assert "SHOPIFY_BLOG_ID:" in text
 
 
 def test_publish_logs_the_article_url(monkeypatch, tmp_path, caplog):
@@ -210,6 +210,7 @@ def test_second_publish_the_same_day_is_not_attempted(monkeypatch, tmp_path):
 
 def test_dispatcher_does_not_fail_the_run_for_a_blog_skip(monkeypatch, tmp_path):
     _isolate(monkeypatch, tmp_path, slot="generate")
+    monkeypatch.setenv("BLOG_ENABLED", "true")  # exercise held-draft skip, not master-off
     monkeypatch.setenv("ENABLE_TIMED_SLOTS", "true")
     monkeypatch.setattr(dispatcher, "_PUBLISH_LOG", str(tmp_path / "publish_log.json"))
     monkeypatch.setattr(

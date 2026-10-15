@@ -1,6 +1,6 @@
 """SEO, link, duplicate, and product-truth checks for a blog asset.
 
-The Shopify publisher stays off unless SHOPIFY_BLOG_ENABLED=true. These checks
+The Shopify publisher stays off unless BLOG_ENABLED=true (default false; Blogs bot owns the blog). These checks
 still run before a post can be treated as valid, so a bad article is not
 saved as if it were ready to publish.
 """

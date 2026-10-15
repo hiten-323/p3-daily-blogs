@@ -1,9 +1,11 @@
-"""Single-source-of-truth safety guard for the GitHub engine blog path."""
+"""Single-source-of-truth safety guard for this pipeline's blog path."""
 from __future__ import annotations
-import os
 
 
 def assert_blog_disabled() -> None:
-    """Raise unless the GitHub engine blog publisher was explicitly enabled."""
-    if os.getenv("SHOPIFY_BLOG_ENABLED", "false").strip().lower() != "true":
-        raise RuntimeError("GitHub blog publishing is disabled; Cowork is the production blog publisher")
+    """Raise unless the blog path was explicitly enabled (BLOG_ENABLED=true)."""
+    from content_generator.core.blog_flags import blog_enabled
+    if not blog_enabled():
+        raise RuntimeError(
+            "GitHub blog publishing is disabled; Blogs bot owns the Shopify blog"
+        )

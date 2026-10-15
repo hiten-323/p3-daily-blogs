@@ -118,10 +118,15 @@ def _rec(slot, platform, status, **kw):
     return {"slot": slot, "platform": platform, "status": status, **kw}
 
 
-def test_unposted_respects_timed_slots():
-    assert RU.unposted_targets([], 8) == ["linkedin", "youtube", "threads", "blog"]
+def test_unposted_respects_timed_slots(monkeypatch):
+    monkeypatch.delenv("BLOG_ENABLED", raising=False)
+    monkeypatch.delenv("SHOPIFY_BLOG_ENABLED", raising=False)
+    assert RU.unposted_targets([], 8) == ["linkedin", "youtube", "threads"]
+    assert "blog" not in RU.unposted_targets([], 8)
     assert "ig_reel" not in RU.unposted_targets([], 16)
     assert "ig_reel" in RU.unposted_targets([], 22)
+    monkeypatch.setenv("BLOG_ENABLED", "true")
+    assert "blog" in RU.unposted_targets([], 8)
 
 
 def test_posted_and_uncertain_are_not_retried():

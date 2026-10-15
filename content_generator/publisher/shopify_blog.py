@@ -1,11 +1,11 @@
 """
 Shopify Blog publisher.
 
-Publishing is off unless SHOPIFY_BLOG_ENABLED=true. The daily workflow turns it
-on for the generate slot only. A post is written only when it is editor-approved
-and passes every blog gate. Duplicate handles and titles are not attempted,
-because Cowork may already have published the same article. Shopify errors and
-missing secrets are warnings, not run failures.
+Publishing is off unless BLOG_ENABLED=true (legacy alias: SHOPIFY_BLOG_ENABLED).
+Default is false — the separate Blogs bot owns the Shopify blog. A post is
+written only when the flag is on, the piece is editor-approved, and it passes
+every blog gate. Duplicate handles and titles are not attempted. Shopify errors
+and missing secrets are warnings, not run failures.
 """
 from __future__ import annotations
 import base64
@@ -23,7 +23,8 @@ _TIMEOUT = 40
 
 
 def blog_enabled() -> bool:
-    return os.getenv("SHOPIFY_BLOG_ENABLED", "false").strip().lower() == "true"
+    from content_generator.core.blog_flags import blog_enabled as _enabled
+    return _enabled()
 
 
 def is_configured() -> bool:
@@ -193,7 +194,7 @@ def _find_existing(blog_id: str, handle: str, title: str) -> tuple[str | None, d
 def post_content(content: dict, day: int = 0) -> dict:
     """Publish one approved post per IST day, from the generate slot only."""
     if not blog_enabled():
-        logger.info("[shopify_blog] Disabled by SHOPIFY_BLOG_ENABLED (default=false); no Shopify write")
+        logger.info("[shopify_blog] Disabled by BLOG_ENABLED (default=false); Blogs bot owns Shopify blog")
         return {"success": False, "error": "blog_disabled"}
 
     slot = os.getenv("FORCE_SLOT", "").strip()

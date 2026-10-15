@@ -213,11 +213,15 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
         results["threads"] = _attempt("threads", lambda: threads_post(content, day=day_number))
 
     # ── Blog (Shopify article — once per day, generate slot only) ──────────────
-    # Same canonical gate as LinkedIn and YouTube. A piece that is not approved
-    # is not an attempt. Shopify errors are also skips, inside the publisher.
+    # Off by default: the separate Blogs bot owns the Shopify blog.
+    # Same canonical gate as LinkedIn and YouTube when BLOG_ENABLED=true.
+    from content_generator.core.blog_flags import blog_enabled, blog_disabled_reason
     blog_slot = _os.getenv("FORCE_SLOT", "").strip()
     blog_state = editorial_disposition(content, "blog_post", approved)
-    if blog_slot and blog_slot != "generate":
+    if not blog_enabled():
+        logger.info("[publisher] Skipping blog_post — %s", blog_disabled_reason())
+        results["blog"] = {"success": False, "attempted": False, "skipped": True, "error": "blog_disabled"}
+    elif blog_slot and blog_slot != "generate":
         logger.info("[publisher] Skipping blog_post — outside generate slot (%s); not attempted", blog_slot)
         results["blog"] = not_attempted_result("blog_post", "wrong_slot")
     elif blog_state != "approved":

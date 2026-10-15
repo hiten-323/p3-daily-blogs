@@ -344,8 +344,9 @@ def get_valid_assets(content: dict) -> list[str]:
         except Exception as e:
             logger.warning("[editorial] threads_post validation failed: %s", e)
 
-    # 6. blog_post
-    if "blog_post" in REQUIRED_DAILY_ASSETS:
+    # 6. blog_post (off by default — Blogs bot owns Shopify blog)
+    from content_generator.core.blog_flags import blog_enabled as _blog_on
+    if "blog_post" in REQUIRED_DAILY_ASSETS and _blog_on():
         try:
             blog = content.get("blog_post") or {}
             if isinstance(blog, dict) and blog:

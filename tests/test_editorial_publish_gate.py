@@ -270,6 +270,7 @@ def test_stock_external_posts_need_an_editor_score(monkeypatch, quiet_publish):
 
     _block_network(monkeypatch)
     monkeypatch.setenv("FORCE_SLOT", "generate")
+    monkeypatch.setenv("BLOG_ENABLED", "true")  # stock blog must be rejected, not master-disabled
 
     def boom(*_args, **_kwargs):
         raise AssertionError("shopify blog posted a stock piece")

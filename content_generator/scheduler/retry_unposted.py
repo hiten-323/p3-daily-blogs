@@ -8,7 +8,8 @@ Runs every 30 minutes (.github/workflows/retry-unposted.yml). Each run:
   3. publishes only what then passes, via the normal slot/dispatcher paths,
   4. backs off exponentially on rate limits / repeated failures.
 There is no overall cap: it keeps going every 30 min until everything is
-posted or the IST day ends. Tomorrow's pack then takes over (carry-over), and
+posted or the IST day ends. The Shopify blog is excluded unless
+BLOG_ENABLED=true (owned by the separate Blogs bot). Tomorrow's pack then takes over (carry-over), and
 the same loop covers it. Timed slots are respected: the morning targets wait
 for 10:00 IST and the evening reel for 22:00 IST.
 """
@@ -48,10 +49,18 @@ def _posted_states():
     return POSTED_STATES
 
 
+def active_targets() -> dict:
+    """TARGETS with blog removed when BLOG_ENABLED is off (Blogs bot owns it)."""
+    from content_generator.core.blog_flags import blog_enabled
+    if blog_enabled():
+        return dict(TARGETS)
+    return {k: v for k, v in TARGETS.items() if k != "blog"}
+
+
 def unposted_targets(records: list[dict], now_hour: int) -> list[str]:
     states = _posted_states()
     out = []
-    for name, (slot, platforms, _labels, hour) in TARGETS.items():
+    for name, (slot, platforms, _labels, hour) in active_targets().items():
         if now_hour < hour:
             continue
         done = any(r.get("slot") == slot and str(r.get("platform", "")).lower() in platforms
