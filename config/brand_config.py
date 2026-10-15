@@ -17,7 +17,7 @@ BRAND = {
     "category":    "Premium Instant Coffee",
     "origin":      "India",
     "website":     "https://p3online.in",
-    "instagram":   "@puritybeans",
+    "instagram":   "@purepantryprovisions",
     "tone":        "premium but human, honest not corporate, Indian in DNA",
     "colors": {
         "background": "#0D0905",   # espresso dark

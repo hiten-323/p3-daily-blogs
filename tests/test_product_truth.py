@@ -164,7 +164,9 @@ def test_ultra_blend_day_follow_cta_discloses_the_blend():
     assert pick(PRODUCTS, 286) == "Purista"
     pure = assign_objective("reel_1", 286)
     assert pure["funnel_objective"] == "FOLLOW"
-    assert "roasted root" in pure["primary_cta"].lower()
+    # No anti-chicory wording on any day (Hiten's rule), and the live handle.
+    assert "roasted root" not in pure["primary_cta"].lower()
+    assert "@purepantryprovisions" in pure["primary_cta"]
 
 
 def test_repair_rewrites_2026_10_12_attacks_without_publishing():

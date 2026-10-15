@@ -5,6 +5,7 @@ import datetime
 import json
 import logging
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -28,7 +29,27 @@ def _load_content(date_iso: str) -> tuple[dict | None, str]:
         return None, why
     from content_generator.core.draft_purge import purge_banned_drafts
     purge_banned_drafts(content)
+    normalize_handle(content)
     return content, ""
+
+
+_OLD_HANDLE = re.compile(r"@puritybeans\b", re.I)
+_ROOT_CTA = re.compile(r"so you never drink (?:roasted root|fake coffee) again", re.I)
+
+
+def normalize_handle(obj):
+    """Rewrite the retired @puritybeans handle (and its anti-chicory CTA tail)
+    in already-saved drafts, so the growth gate's wrong_handle hard fail can clear."""
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            obj[k] = normalize_handle(v)
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj):
+            obj[i] = normalize_handle(v)
+    elif isinstance(obj, str):
+        out = _ROOT_CTA.sub("for one buying check you can save", obj)
+        return _OLD_HANDLE.sub(lambda m: "@PUREPANTRYPROVISIONS" if m.group(0).isupper() else "@purepantryprovisions", out)
+    return obj
 
 
 def main() -> int:

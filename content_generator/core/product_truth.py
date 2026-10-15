@@ -105,8 +105,8 @@ _ULTRA_FALSE_PURITY = re.compile(
     rf"ultra[\s-]?blend[^,.!?\n]{{0,140}}?(?:{_FALSE_PURITY_TOKEN})",
     re.I,
 )
-HONEST_FOLLOW_CTA = "Follow @puritybeans for Ultra Blend: 70% coffee and 30% chicory."
-PURE_JAR_FOLLOW_CTA = "Follow @puritybeans so you never drink roasted root again"
+HONEST_FOLLOW_CTA = "Follow @purepantryprovisions for Ultra Blend: 70% coffee and 30% chicory."
+PURE_JAR_FOLLOW_CTA = "Follow @purepantryprovisions for one buying check you can save"
 _ANTI_CHICORY_REASON = (
     "anti-chicory attack is not allowed when Ultra Blend or another chicory blend "
     "is featured or named as the solution; disclose 70% coffee and 30% chicory"
@@ -158,7 +158,7 @@ _REPAIR_SUBS = (
      f"Call Ultra Blend {_HONEST_BLEND}"),
     (re.compile(r"without any false 30%\s*chicory claims", re.I),
      f"with an honest {_HONEST_BLEND} disclosure"),
-    (re.compile(r"Follow @puritybeans so you never drink roasted root again\.?", re.I),
+    (re.compile(r"Follow @(?:puritybeans|purepantryprovisions) so you never drink roasted root again\.?", re.I),
      HONEST_FOLLOW_CTA),
     (re.compile(r"so you never drink roasted root again", re.I),
      "for the honest 70% coffee, 30% chicory cup"),
