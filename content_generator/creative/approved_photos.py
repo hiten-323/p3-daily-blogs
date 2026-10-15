@@ -398,6 +398,8 @@ def render_studio_card(it: dict, width: int, height: int, headline: str = "", bo
     card = _CARDS["paper"] if day % 2 == 0 else _CARDS.get(it.get("sku"), _CARDS["paper"])
     img = Image.new("RGB", (width, height), card)
     sku = it.get("sku")
+    from content_generator.creative import render_claims as _rc
+    _rc.set_sku(sku)  # the card shows this jar; scoped by render()'s reset
     d_head, d_sub = SKU_COPY.get(sku, ("", ""))
     headline = _clean(headline) or d_head
     sub = _strip_shop(_clean(body)) or (d_sub if headline != d_head or True else "")
@@ -513,7 +515,7 @@ def _save(img, jar, label, src=None, texts=None, band=None):
     return path
 
 
-def render(surface: str, width: int, height: int, headline: str = "", body: str = "",
+def _render_impl(surface: str, width: int, height: int, headline: str = "", body: str = "",
            day: int = 0, idx: int = 0, product=None, label: str = "approved",
            prefer: str = "photo") -> str | None:
     """Main entry. Real photos in <sku>/real/ win; otherwise studio cutout
@@ -545,3 +547,15 @@ def render(surface: str, width: int, height: int, headline: str = "", body: str 
     except Exception as e:  # never break the pipeline; caller falls back
         logger.warning("[approved_photos] render failed (%s): %s", label, e)
         return None
+
+
+def render(surface: str, width: int, height: int, headline: str = "", body: str = "",
+           day: int = 0, idx: int = 0, product=None, label: str = "approved",
+           prefer: str = "photo") -> str | None:
+    """Claim-guarded entry: every drawn string is checked against this SKU."""
+    from content_generator.creative import render_claims as _rc
+    tok = _rc.set_sku(product or _norm_sku(f"{headline} {body}") or "")
+    try:
+        return _render_impl(surface, width, height, headline, body, day, idx, product, label, prefer)
+    finally:
+        _rc.reset_sku(tok)

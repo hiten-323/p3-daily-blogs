@@ -85,14 +85,80 @@ def create_thread_container(user_id: str, token: str, text: str, image_url: str 
     return str(container_id)
 
 
-def publish_thread_container(user_id: str, token: str, container_id: str) -> str:
-    """Step 2: Publish the media container."""
+def get_container_status(container_id: str, token: str) -> str:
+    url = (f"{THREADS_BASE_URL}/{urllib.parse.quote(container_id, safe='')}?"
+           + urllib.parse.urlencode({"fields": "status,error_message", "access_token": token}))
+    req = urllib.request.Request(url, headers={"User-Agent": "PurityBeans/1.0"})
+    with urllib.request.urlopen(req, timeout=_TIMEOUT_S) as response:
+        data = json.loads(response.read().decode("utf-8"))
+    status = str(data.get("status") or "").upper()
+    if status == "ERROR":
+        raise ValueError(f"Threads container error: {data.get('error_message') or data}")
+    return status
+
+
+def wait_for_container(container_id: str, token: str, *, timeout_s: float = 120,
+                       interval_s: float = 3, sleep=None, status_fn=None) -> str:
+    """Poll until FINISHED. Publishing before that returns 400 'Media Not Found'."""
+    import time
+    sleep = sleep or time.sleep
+    status_fn = status_fn or get_container_status
+    waited, status, errors = 0.0, "", 0
+    while waited <= timeout_s:
+        try:
+            status = status_fn(container_id, token)
+        except (urllib.error.HTTPError, urllib.error.URLError, ValueError, OSError) as exc:
+            if isinstance(exc, ValueError) and "container error" in str(exc):
+                raise
+            errors += 1
+            status = f"status unavailable ({exc})"
+            if errors >= 3:
+                # Status endpoint unreadable: let publish try; its 400 retry covers a not-ready container.
+                logger.warning("[threads] container status unreadable; publishing with retry")
+                return "UNKNOWN"
+        if status in ("FINISHED", "PUBLISHED"):
+            return status
+        if status == "EXPIRED":
+            raise ValueError("Threads container expired before publish")
+        sleep(interval_s)
+        waited += interval_s
+    raise TimeoutError(f"Threads container {container_id} not FINISHED after {timeout_s}s (last {status})")
+
+
+def publish_thread_container(user_id: str, token: str, container_id: str, *,
+                             attempts: int = 4, sleep=None, status_fn=None, post_fn=None) -> str:
+    """Step 2: wait for FINISHED, then publish; retry 'Media Not Found' 400s."""
+    import time
+    sleep = sleep or time.sleep
+    post_fn = post_fn or _post_request
+    last: Exception | None = None
+    for attempt in range(max(1, attempts)):
+        wait_for_container(container_id, token, sleep=sleep, status_fn=status_fn)
+        try:
+            return _publish_once(user_id, token, container_id, post_fn)
+        except urllib.error.HTTPError as exc:
+            body = ""
+            try:
+                body = exc.read().decode("utf-8", "replace")
+            except Exception:
+                pass
+            last = exc
+            if exc.code != 400 and exc.code < 500:
+                raise
+            logger.warning("[threads] publish attempt %d failed (%s %s); retrying",
+                           attempt + 1, exc.code, body[:120])
+            sleep(min(30, 5 * (attempt + 1)))
+    raise RuntimeError(f"Threads publish failed after {attempts} attempts: {last}")
+
+
+def _publish_once(user_id: str, token: str, container_id: str, post_fn) -> str:
+    """Publish the media container."""
     url = f"{THREADS_BASE_URL}/{urllib.parse.quote(user_id, safe='')}/threads_publish"
     params = {
         "access_token": token,
         "creation_id": container_id,
     }
-    res = _post_request(url, params)
+    res = post_fn(url, params)
     post_id = res.get("id")
     if not post_id:
         raise ValueError(f"No post ID returned: {res}")
