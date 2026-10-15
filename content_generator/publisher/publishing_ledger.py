@@ -145,7 +145,10 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
             return {"allowed": False, "reason": "stale_attempt_requires_reconciliation", "record": old, "key": key}
         attempts = int(old.get("attempt_count", 0))
         if status == "FAILED":
-            if attempts >= _MAX_ATTEMPTS:
+            # A pre-publish gate hold never reached the platform, so it cannot
+            # duplicate a post; it must not burn the publish-attempt budget.
+            gate_hold = str(old.get("error") or "").startswith("prepublish_gate:")
+            if attempts >= _MAX_ATTEMPTS and not gate_hold:
                 return {"allowed": False, "reason": "retry_limit_reached", "record": old, "key": key}
             if not _due(old, now):
                 return {"allowed": False, "reason": "retry_backoff", "record": old, "key": key}
