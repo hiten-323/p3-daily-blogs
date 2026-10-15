@@ -133,6 +133,9 @@ def test_editorial_pass_repairs_day_275_without_zero_scores(monkeypatch):
     from content_generator.core.schema_validation import InstagramSchema, validate_or_fail
     from content_generator.scheduler.daily import _do_editorial
 
+    # Opt into blog so this test still exercises blog structural repair.
+    monkeypatch.setenv("BLOG_ENABLED", "true")
+
     # Blog repair walks every provider and sleeps 2+5+12+12+12s per section.
     # The assertions below still run that path; they just must not wait on it
     # or on a live HTTP timeout.

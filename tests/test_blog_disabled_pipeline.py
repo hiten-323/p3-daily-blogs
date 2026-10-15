@@ -83,3 +83,23 @@ def test_workflows_keep_blog_disabled():
         text = (root / ".github" / "workflows" / name).read_text(encoding="utf-8")
         assert 'BLOG_ENABLED: "false"' in text
         assert 'SHOPIFY_BLOG_ENABLED: "true"' not in text
+
+
+def test_dispatcher_skips_cleanly_when_disabled(monkeypatch, tmp_path):
+    monkeypatch.delenv("BLOG_ENABLED", raising=False)
+    monkeypatch.delenv("SHOPIFY_BLOG_ENABLED", raising=False)
+    monkeypatch.setenv("FORCE_SLOT", "generate")
+    monkeypatch.setenv("ENABLE_TIMED_SLOTS", "true")
+    from content_generator.publisher import dispatcher
+    monkeypatch.setattr(dispatcher, "_PUBLISH_LOG", str(tmp_path / "publish_log.json"))
+    monkeypatch.setattr(
+        "content_generator.core.editorial_engine.approved_assets",
+        lambda content: {"blog_post": content.get("blog_post") or {}},
+    )
+    result = dispatcher.publish_all(
+        {"blog_post": {"title": "x", "body": "y" * 900, "introduction": "i" * 80, "conclusion": "c" * 40}},
+        day_number=1,
+    )
+    assert result["blog"]["attempted"] is False
+    assert result["blog"]["error"] == "blog_disabled"
+    assert result["blog"].get("skipped") is True

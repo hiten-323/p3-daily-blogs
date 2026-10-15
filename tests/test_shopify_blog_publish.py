@@ -210,6 +210,7 @@ def test_second_publish_the_same_day_is_not_attempted(monkeypatch, tmp_path):
 
 def test_dispatcher_does_not_fail_the_run_for_a_blog_skip(monkeypatch, tmp_path):
     _isolate(monkeypatch, tmp_path, slot="generate")
+    monkeypatch.setenv("BLOG_ENABLED", "true")  # exercise held-draft skip, not master-off
     monkeypatch.setenv("ENABLE_TIMED_SLOTS", "true")
     monkeypatch.setattr(dispatcher, "_PUBLISH_LOG", str(tmp_path / "publish_log.json"))
     monkeypatch.setattr(
