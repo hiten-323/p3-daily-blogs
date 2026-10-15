@@ -420,114 +420,10 @@ def _apply_growth_director_gates(content: dict, valid: list[str]) -> list[str]:
         if not piece:
             kept.append(key)
             continue
-        try:
-            from content_generator.core.content_contract import shareability
-            share = shareability(piece)
-            if not share["passes"]:
-                logger.warning(
-                    "[editorial] %s REJECTED by north-star gate (%.0f/100): %s",
-                    key, share["score"], "; ".join(share["reasons"][:3]))
-                continue
-        except Exception as e:
-            logger.warning("[editorial] shareability check error for %s (%s) — failing closed", key, e)
+        reason = asset_gate_reason(content, key, piece)
+        if reason:
+            logger.warning("[editorial] %s REJECTED by %s", key, reason)
             continue
-
-        try:
-            from content_generator.core.content_balance import check as balance_check
-            bal = balance_check(piece, key)
-            if not bal["allowed"]:
-                logger.warning("[editorial] %s REJECTED by 80/20 cap: %s", key, bal["reason"])
-                continue
-        except Exception as e:
-            logger.warning("[editorial] balance check error for %s (%s) — failing closed", key, e)
-            continue
-
-        # ADR-002 Phase 2 — payoff. A curiosity mechanism with nothing behind it
-        # is bait, and a strong hook previously passed every gate even when the
-        # viewer learned nothing.
-        try:
-            from content_generator.core.scroller_psychology import (
-                payoff_strength, check_hook_decomposition,
-            )
-            payoff = payoff_strength(piece)
-            if not payoff["passes"]:
-                logger.warning("[editorial] %s REJECTED by payoff gate: %s",
-                               key, payoff["reason"])
-                continue
-
-            # ADR-002 Phase 3 — the three hook channels must do different work.
-            # Only applies to video assets, which are the ones with a spoken
-            # channel at all.
-            if key in ("reel_1", "reel_2", "growth_reel", "yt_short"):
-                hooks = check_hook_decomposition(piece)
-                if not hooks["passes"]:
-                    logger.warning("[editorial] %s REJECTED by hook decomposition: %s",
-                                   key, hooks["reason"])
-                    continue
-        except Exception as e:
-            logger.warning("[editorial] scroller check error for %s (%s) — failing closed", key, e)
-            continue
-
-        # Pre-publish Creative Viral Readiness Gate (Level 3 Creative)
-        try:
-            from content_generator.core.viral_readiness import evaluate_viral_readiness
-            readiness = evaluate_viral_readiness(piece, platform=key)
-            piece["viral_readiness_score"] = readiness["score"]
-            if not readiness["passes"]:
-                logger.warning(
-                    "[editorial] %s REJECTED by viral readiness gate (%.1f/100): %s",
-                    key, readiness["score"], "; ".join(readiness["reasons"][:3]),
-                )
-                continue
-        except Exception as e:
-            logger.warning("[editorial] viral readiness check error for %s (%s) — failing closed", key, e)
-            continue
-
-        try:
-            from content_generator.core.product_truth import featured_product_name
-            featured = featured_product_name(content)
-            if featured and not piece.get("featured_product"):
-                piece["featured_product"] = featured
-        except Exception as e:
-            logger.warning("[editorial] featured product unavailable for %s (%s) — failing closed", key, e)
-            continue
-
-        # Funnel objective compliance — ensure creative is genuinely value-first when assigned FOLLOW/DISCOVERY
-        try:
-            from content_generator.core.content_contract import check_objective_compliance
-            compliance = check_objective_compliance(piece)
-            if not compliance.get("creative_compliant", True):
-                logger.warning(
-                    "[editorial] %s REJECTED by objective compliance: %s",
-                    key, compliance["reason"],
-                )
-                continue
-            # If creative is compliant, heal CTA if follow/share cue was missing
-            if not compliance["passes"] and compliance.get("suggested_cta"):
-                curr_cta = str(piece.get("cta") or "").strip()
-                if curr_cta:
-                    piece["cta"] = f"{compliance['suggested_cta']} {curr_cta}"
-                else:
-                    piece["cta"] = compliance["suggested_cta"]
-                logger.info("[editorial] Auto-aligned CTA for %s (%s objective)", key, piece.get("funnel_objective"))
-        except Exception as e:
-            logger.debug("[editorial] objective compliance check for %s: %s", key, e)
-
-        try:
-            from content_generator.core.product_truth import (
-                asset_product_truth_findings, featured_product_name,
-            )
-            hits = asset_product_truth_findings(piece, featured=featured_product_name(content))
-            if hits:
-                logger.warning(
-                    "[editorial] %s REJECTED by product truth: %s",
-                    key, hits[0].get("reason"),
-                )
-                continue
-        except Exception as e:
-            logger.warning("[editorial] product truth error for %s (%s) — failing closed", key, e)
-            continue
-
         kept.append(key)
 
     # ── Level 1: Portfolio-level 95% viral / 5% selling hard invariant ───────
@@ -543,6 +439,94 @@ def _apply_growth_director_gates(content: dict, valid: list[str]) -> list[str]:
                        dropped)
     return kept
 
+
+
+def asset_gate_reason(content: dict, key: str, piece: dict | None = None) -> str:
+    """Run the per-asset Growth Director gates on ONE asset.
+
+    Returns "" when the asset passes, otherwise "<gate>: <reason>". The gate
+    names are stable so the regeneration loop can respond to the specific
+    rejection (see core.rejection_briefs). Nothing here is relaxed: this is the
+    exact per-asset check _apply_growth_director_gates enforces.
+    """
+    piece = piece if piece is not None else _piece_for(content, key)
+    if not piece:
+        return ""
+    try:
+        from content_generator.core.content_contract import shareability
+        share = shareability(piece)
+        if not share["passes"]:
+            return "north-star gate (%.0f/100): %s" % (share["score"], "; ".join(share["reasons"][:3]))
+    except Exception as e:
+        return f"north-star gate: check error ({e}) — failing closed"
+    try:
+        from content_generator.core.content_balance import check as balance_check
+        bal = balance_check(piece, key)
+        if not bal["allowed"]:
+            return f"80/20 cap: {bal['reason']}"
+    except Exception as e:
+        return f"80/20 cap: check error ({e}) — failing closed"
+    try:
+        from content_generator.core.scroller_psychology import payoff_strength, check_hook_decomposition
+        payoff = payoff_strength(piece)
+        if not payoff["passes"]:
+            return f"payoff gate: {payoff['reason']}"
+        if key in ("reel_1", "reel_2", "growth_reel", "yt_short"):
+            hooks = check_hook_decomposition(piece)
+            if not hooks["passes"]:
+                return f"hook decomposition: {hooks['reason']}"
+    except Exception as e:
+        return f"payoff gate: check error ({e}) — failing closed"
+    try:
+        from content_generator.core.viral_readiness import evaluate_viral_readiness
+        readiness = evaluate_viral_readiness(piece, platform=key)
+        piece["viral_readiness_score"] = readiness["score"]
+        if not readiness["passes"]:
+            return "viral readiness gate (%.1f/100): %s" % (readiness["score"], "; ".join(readiness["reasons"][:3]))
+    except Exception as e:
+        return f"viral readiness gate: check error ({e}) — failing closed"
+    try:
+        from content_generator.core.product_truth import featured_product_name
+        featured = featured_product_name(content)
+        if featured and not piece.get("featured_product"):
+            piece["featured_product"] = featured
+    except Exception as e:
+        return f"product truth: featured product unavailable ({e}) — failing closed"
+    try:
+        from content_generator.core.content_contract import check_objective_compliance
+        compliance = check_objective_compliance(piece)
+        if not compliance.get("creative_compliant", True):
+            return f"objective compliance: {compliance['reason']}"
+        if not compliance["passes"] and compliance.get("suggested_cta"):
+            curr_cta = str(piece.get("cta") or "").strip()
+            piece["cta"] = f"{compliance['suggested_cta']} {curr_cta}" if curr_cta else compliance["suggested_cta"]
+            logger.info("[editorial] Auto-aligned CTA for %s (%s objective)", key, piece.get("funnel_objective"))
+    except Exception as e:
+        logger.debug("[editorial] objective compliance check for %s: %s", key, e)
+    try:
+        from content_generator.core.product_truth import asset_product_truth_findings, featured_product_name
+        hits = asset_product_truth_findings(piece, featured=featured_product_name(content))
+        if hits:
+            return f"product truth: {hits[0].get('reason')}"
+    except Exception as e:
+        return f"product truth: check error ({e}) — failing closed"
+    return ""
+
+
+def portfolio_sales_rejection(content: dict, key: str) -> str:
+    """'' unless this asset is sales-led and the stage portfolio cap allows none."""
+    import math
+    try:
+        from content_generator.core.content_balance import classify_asset, get_stage_product_cap
+        piece = _piece_for(content, key)
+        kind = classify_asset(piece)
+        obj = str(piece.get("funnel_objective") or piece.get("objective") or "").upper()
+        if kind == "product" or obj in ("CONVERSION", "CONSUMER PURCHASE"):
+            if math.floor(10 * get_stage_product_cap()) == 0:
+                return "portfolio gate: sales-led asset not allowed at this growth stage"
+    except Exception as e:
+        logger.debug("[editorial] portfolio check for %s: %s", key, e)
+    return ""
 
 def approved_assets(content: dict) -> dict:
     """
