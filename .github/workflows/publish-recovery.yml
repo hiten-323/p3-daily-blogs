@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: purity-beans-daily
+  group: purity-beans-retry
   cancel-in-progress: false
 
 permissions:
@@ -83,10 +83,22 @@ jobs:
           set -euo pipefail
           git config user.name "Purity Beans Engine"
           git config user.email "engine@puritybeans.auto"
+          python -m content_generator.ops.ledger_sync save
           git pull --rebase --autostash
+          python -m content_generator.ops.ledger_sync restore
           git add -f output/learning/publishing_ledger.json 2>/dev/null || true
           git add -f output/publish_log.json output/learning/publish_diagnostics.json 2>/dev/null || true
           if ! git diff --staged --quiet; then
             git commit -m "chore: persist publish recovery ledger [skip ci]"
-            git push
+            for i in 1 2 3; do
+              git push && break
+              echo "push rejected — merging ledger with remote and retrying ($i)"
+              git reset --soft HEAD~1
+              python -m content_generator.ops.ledger_sync save
+              git pull --rebase --autostash
+              python -m content_generator.ops.ledger_sync restore
+              git add -f output/learning/publishing_ledger.json
+              git commit -m "chore: persist publish recovery ledger [skip ci]"
+              [ "$i" = 3 ] && { git push || { echo "::error::Could not push ledger"; exit 1; }; }
+            done
           fi
