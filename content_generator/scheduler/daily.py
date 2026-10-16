@@ -197,7 +197,7 @@ def _run_generate_slot(day_number: int = None) -> dict:
         if step.success and step.value:
             content = step.value
 
-    with timed_step("growth_engine", timeout_s=900, fatal=False):
+    with timed_step("growth_engine", timeout_s=int(os.getenv("GROWTH_TIMEOUT_S", "1200")), fatal=False):
         try:
             from content_generator.core.growth_engine import enforce_portfolio
             content["growth_portfolio"] = enforce_portfolio(
@@ -226,7 +226,7 @@ def _run_generate_slot(day_number: int = None) -> dict:
     # ── 7b. Render + inspect actual creatives before publish ─────────────────
     # The audit sees the rendered files, not just prompts or metadata.
     image_results = {}
-    with timed_step("image_generation", timeout_s=300):
+    with timed_step("image_generation", timeout_s=int(os.getenv("IMAGE_GEN_TIMEOUT_S", "900")), fatal=False):
         step = rm.run(fn=lambda: _do_generate_images(content, dn), label="image_generation", max_retries=1)
         if step.success and isinstance(step.value, dict):
             image_results = step.value

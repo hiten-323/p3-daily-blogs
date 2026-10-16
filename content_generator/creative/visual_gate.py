@@ -156,10 +156,33 @@ def _jpeg_b64(path, max_side=768):
 def _parse(text):
     mt = re.search(r"\{.*\}", text or "", re.S)
     data = json.loads(mt.group(0)) if mt else {}
+    if data.get("score") is None:
+        raise ValueError("no score in vision reply")
     return float(data.get("score")), [str(x) for x in data.get("issues") or []]
 
 
 _UA = {"User-Agent": "PurityBeans/1.0"}
+_HTTP_TIMEOUT = float(os.getenv("VISION_HTTP_TIMEOUT_S", "45"))
+
+# Circuit breaker: a provider/model that answered 429/402/404 is skipped for the rest of the
+# process (429: until its cool-down passes) so every re-render doesn't re-pay the same failures.
+_DEAD: dict[str, float] = {}
+_LIST_CACHE: dict[str, list] = {}
+
+
+def _dead(key):
+    import time
+    until = _DEAD.get(key)
+    return until is not None and time.monotonic() < until
+
+
+def _mark(key, exc):
+    import time
+    code = getattr(exc, "code", None)
+    if code == 429:
+        _DEAD[key] = time.monotonic() + float(os.getenv("VISION_429_COOLDOWN_S", "600"))
+    elif code in (401, 402, 403, 404, 410):
+        _DEAD[key] = float("inf")
 
 
 def _get_json(url, headers=None):
@@ -168,20 +191,86 @@ def _get_json(url, headers=None):
         return json.loads(r.read())
 
 
+def _listed(cache_key, fn):
+    if cache_key not in _LIST_CACHE:
+        try:
+            _LIST_CACHE[cache_key] = list(fn())
+        except Exception:
+            _LIST_CACHE[cache_key] = []
+    return _LIST_CACHE[cache_key]
+
+
+def _msg_text(msg):
+    """Content, falling back to reasoning text (reasoning models may put the JSON there)."""
+    c = msg.get("content")
+    if isinstance(c, list):
+        c = " ".join(str(x.get("text", "")) for x in c if isinstance(x, dict))
+    return (c or "") + "\n" + str(msg.get("reasoning_content") or msg.get("reasoning") or "") if not c else c
+
+
+def _openai_vision(url, key, model, b64, extra=None):
+    body = {"model": model, "temperature": 0.2, "max_tokens": 3000, "messages": [{"role": "user", "content": [
+        {"type": "text", "text": _PROMPT},
+        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}}]}]}
+    body.update(extra or {})
+    req = urllib.request.Request(url, data=json.dumps(body).encode(),
+                                 headers={"Content-Type": "application/json", "Accept": "application/json",
+                                          "Authorization": f"Bearer {key}", **_UA})
+    with urllib.request.urlopen(req, timeout=_HTTP_TIMEOUT) as r:
+        raw = r.read().decode("utf-8", "replace")
+    try:
+        out = json.loads(raw)
+    except ValueError:
+        # Some gateways stream SSE ("data: {...}") or wrap errors in HTML/text.
+        chunks = [ln[5:].strip() for ln in raw.splitlines() if ln.startswith("data:")]
+        parts = []
+        for ch in chunks:
+            if ch == "[DONE]":
+                continue
+            try:
+                d = json.loads(ch)["choices"][0]
+                parts.append(str((d.get("delta") or d.get("message") or {}).get("content") or ""))
+            except Exception:
+                continue
+        if not parts:
+            raise ValueError(f"non-JSON response: {raw[:60]!r}")
+        return _parse("".join(parts))
+    if "choices" not in out:
+        raise ValueError(f"no choices: {str(out)[:60]}")
+    return _parse(_msg_text(out["choices"][0].get("message") or {}))
+
+
+def _try_models(prefix, models, call):
+    errs = []
+    for model in models:
+        k = f"{prefix}:{model}"
+        if _dead(k) or _dead(prefix):
+            continue
+        try:
+            return call(model)
+        except Exception as exc:
+            _mark(k, exc)
+            if getattr(exc, "code", None) in (401, 402):
+                _mark(prefix, exc)  # key-level problem: whole provider is out
+            errs.append(f"{model}:{str(exc)[:40]}")
+    if errs:
+        raise RuntimeError("; ".join(errs))
+    raise RuntimeError("no live model")
+
+
 def _gemini_models(key):
     """Configured models first, then whatever flash models the key can actually call."""
-    models = [m for m in [os.getenv("GEMINI_VISION_MODEL", ""), os.getenv("GEMINI_MODEL", ""),
-                          "gemini-3.5-flash-lite"] if m]
-    try:
+    models = [m for m in [os.getenv("GEMINI_VISION_MODEL", ""), os.getenv("GEMINI_MODEL", "")] if m]
+
+    def ls():
         listed = _get_json(f"https://generativelanguage.googleapis.com/v1beta/models?key={key}&pageSize=200")
         for m in listed.get("models") or []:
             name = str(m.get("name", "")).split("/")[-1]
             if "flash" in name and "generateContent" in (m.get("supportedGenerationMethods") or []) \
                     and not any(x in name for x in ("tts", "image", "live", "audio", "embedding")):
-                models.append(name)
-    except Exception:
-        pass
-    return list(dict.fromkeys(models))[:6]
+                yield name
+    models += _listed("gemini", ls)
+    return list(dict.fromkeys(models))[:4]
 
 
 def _gemini(b64):
@@ -189,76 +278,125 @@ def _gemini(b64):
     if not key:
         return None
     body = {"contents": [{"parts": [{"text": _PROMPT}, {"inline_data": {"mime_type": "image/jpeg", "data": b64}}]}]}
-    errs = []
-    for model in _gemini_models(key):
+
+    def call(model):
         req = urllib.request.Request(
             f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}",
             data=json.dumps(body).encode(), headers={"Content-Type": "application/json", **_UA})
-        try:
-            with urllib.request.urlopen(req, timeout=60) as r:
-                out = json.loads(r.read())
-            return _parse(out["candidates"][0]["content"]["parts"][0]["text"])
-        except Exception as exc:
-            errs.append(f"{model}:{str(exc)[:40]}")
-    raise RuntimeError("; ".join(errs) or "no gemini model")
+        with urllib.request.urlopen(req, timeout=_HTTP_TIMEOUT) as r:
+            out = json.loads(r.read())
+        return _parse(out["candidates"][0]["content"]["parts"][0]["text"])
+    try:
+        return _try_models("gemini", _gemini_models(key), call)
+    except RuntimeError as exc:
+        # quota 429 on every model = account quota: skip gemini for the cool-down
+        if "429" in str(exc):
+            _mark("gemini", type("E", (Exception,), {"code": 429})())
+        raise
+
+
+_VISION_HINTS = ("vision", "-vl", "vl-", "llama-4", "scout", "maverick", "gemma-3", "gemma-4", "pixtral",
+                 "qwen2.5-vl", "qwen3-vl", "kimi", "phi-4-multimodal", "phi-3-vision", "nemotron")
 
 
 def _groq_models(key):
-    models = [m for m in [os.getenv("GROQ_VISION_MODEL", ""), "meta-llama/llama-4-scout-17b-16e-instruct"] if m]
-    try:
+    """Only models the key actually lists (no hardcoded ids that Groq may retire)."""
+    env = [m for m in [os.getenv("GROQ_VISION_MODEL", "")] if m]
+
+    def ls():
         listed = _get_json("https://api.groq.com/openai/v1/models", {"Authorization": f"Bearer {key}"})
         for m in listed.get("data") or []:
             mid = str(m.get("id", ""))
-            if any(x in mid.lower() for x in ("vision", "llama-4", "scout", "maverick", "-vl")):
-                models.append(mid)
-    except Exception:
-        pass
-    return list(dict.fromkeys(models))[:4]
+            if m.get("active", True) and any(x in mid.lower() for x in _VISION_HINTS) and "guard" not in mid:
+                yield mid
+    return list(dict.fromkeys(env + _listed("groq", ls)))[:3]
 
 
 def _groq(b64):
     key = os.getenv("GROQ_API_KEY", "").strip()
     if not key:
         return None
-    errs = []
-    for model in _groq_models(key):
-        body = {"model": model, "temperature": 0.2, "messages": [{"role": "user", "content": [
-            {"type": "text", "text": _PROMPT},
-            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}}]}]}
-        req = urllib.request.Request("https://api.groq.com/openai/v1/chat/completions", data=json.dumps(body).encode(),
-                                     headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}", **_UA})
-        try:
-            with urllib.request.urlopen(req, timeout=60) as r:
-                out = json.loads(r.read())
-            return _parse(out["choices"][0]["message"]["content"])
-        except Exception as exc:
-            errs.append(f"{model}:{str(exc)[:40]}")
-    raise RuntimeError("; ".join(errs) or "no groq model")
+    return _try_models("groq", _groq_models(key), lambda m: _openai_vision(
+        "https://api.groq.com/openai/v1/chat/completions", key, m, b64, {"max_tokens": 1024}))
 
 
 def _github_models(b64):
-    """Free GitHub Models vision fallback (gpt-4.1-mini accepts images)."""
-    key = os.getenv("GITHUB_MODELS_TOKEN", "").strip()
+    """Free GitHub Models vision fallback (gpt-4.1-mini / gpt-4o-mini accept images)."""
+    key = (os.getenv("GITHUB_MODELS_TOKEN", "") or os.getenv("GH_MODELS_TOKEN", "")).strip()
     if not key:
         return None
-    model = os.getenv("GITHUB_VISION_MODEL", "openai/gpt-4.1-mini")
-    body = {"model": model, "temperature": 0.2, "messages": [{"role": "user", "content": [
-        {"type": "text", "text": _PROMPT},
-        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}}]}]}
-    req = urllib.request.Request("https://models.github.ai/inference/chat/completions", data=json.dumps(body).encode(),
-                                 headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}", **_UA})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        out = json.loads(r.read())
-    return _parse(out["choices"][0]["message"]["content"])
+    models = list(dict.fromkeys([m for m in [os.getenv("GITHUB_VISION_MODEL", ""), "openai/gpt-4.1-mini",
+                                             "openai/gpt-4o-mini"] if m]))
+    return _try_models("github_models", models, lambda m: _openai_vision(
+        "https://models.github.ai/inference/chat/completions", key, m, b64, {"max_tokens": 1024}))
 
 
-VISION_PROVIDERS = [("gemini", _gemini), ("groq", _groq), ("github_models", _github_models)]
+def _openrouter_models(key):
+    env = [m for m in [os.getenv("OPENROUTER_VISION_MODEL", "")] if m]
+
+    def ls():
+        listed = _get_json("https://openrouter.ai/api/v1/models", {"Authorization": f"Bearer {key}"})
+        for m in listed.get("data") or []:
+            mid = str(m.get("id", ""))
+            mods = ((m.get("architecture") or {}).get("input_modalities") or [])
+            if mid.endswith(":free") and "image" in mods:
+                yield mid
+    return list(dict.fromkeys(env + _listed("openrouter", ls)))[:4]
+
+
+def _openrouter(b64):
+    key = os.getenv("OPENROUTER_API_KEY", "").strip()
+    if not key:
+        return None
+    models = [m for m in _openrouter_models(key) if m.endswith(":free")]  # never a paid slug
+    return _try_models("openrouter", models, lambda m: _openai_vision(
+        "https://openrouter.ai/api/v1/chat/completions", key, m, b64))
+
+
+def _nvidia_models(key):
+    """Discover NVIDIA vision models; prefer the newest Nemotron VL (e.g. nemotron-3.5-super-vl)."""
+    env = [m for m in [os.getenv("NVIDIA_VISION_MODEL", "")] if m]
+
+    def ls():
+        listed = _get_json("https://integrate.api.nvidia.com/v1/models", {"Authorization": f"Bearer {key}"})
+        ids = [str(m.get("id", "")) for m in listed.get("data") or []]
+        ids = [i for i in ids if "embed" not in i and "retriever" not in i]
+        nemo = sorted([i for i in ids if "nemotron" in i and "vl" in i.lower()], reverse=True)
+        other = [i for i in ids if i not in nemo and any(x in i.lower() for x in ("vision", "-vl", "vl-"))]
+        return nemo + other
+    return list(dict.fromkeys(env + _listed("nvidia", ls)))[:3]
+
+
+def _nvidia(b64):
+    key = os.getenv("NVIDIA_API_KEY", "").strip()
+    if not key:
+        return None
+    return _try_models("nvidia", _nvidia_models(key), lambda m: _openai_vision(
+        "https://integrate.api.nvidia.com/v1/chat/completions", key, m, b64))
+
+
+# Free providers first; NVIDIA last (house rule).
+VISION_PROVIDERS = [("gemini", _gemini), ("groq", _groq), ("github_models", _github_models),
+                    ("openrouter", _openrouter), ("nvidia", _nvidia)]
+
+_OUTAGE = {"n": 0}
+
+
+def vision_outage() -> bool:
+    """True once every scorer has failed VISION_OUTAGE_AFTER times in a row (default 2) this process.
+    Callers stop re-rendering then and hold the piece instead of burning the run budget."""
+    return _OUTAGE["n"] >= int(os.getenv("VISION_OUTAGE_AFTER", "2"))
 
 
 def aesthetic_score(path) -> dict:
+    if vision_outage():
+        return {"provider": None, "score": None, "issues": [], "errors": ["vision_outage:all_providers_down"]}
     b64 = _jpeg_b64(path)
     errors = []
     for name, fn in VISION_PROVIDERS:
+        if _dead(name):
+            errors.append(f"{name}:circuit_open")
+            continue
         try:
             res = fn(b64)
         except Exception as exc:  # rate limit / network: next provider
@@ -267,8 +405,15 @@ def aesthetic_score(path) -> dict:
         if res is None:
             continue
         score, issues = res
+        _OUTAGE["n"] = 0
         return {"provider": name, "score": score, "issues": issues}
+    _OUTAGE["n"] += 1
     return {"provider": None, "score": None, "issues": [], "errors": errors}
+
+
+def is_vision_hold(verdict: dict) -> bool:
+    return any(str(r).startswith("vision_score_unavailable") for r in (verdict or {}).get("reasons") or []) \
+        or any(is_vision_hold(f) for f in (verdict or {}).get("frames") or [])
 
 
 def evaluate(meta: dict, recent_layouts=(), *, vision=None) -> dict:

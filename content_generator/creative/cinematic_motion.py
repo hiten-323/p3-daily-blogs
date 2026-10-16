@@ -367,4 +367,7 @@ def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, m
             visual_gate.remember_layout(layout, os.path.basename(out_path))
             return meta
         logger.warning("[cinematic] %s try %d failed visual gate: %s", sku, i + 1, (verdict.get("reasons") or [])[:4])
+        if visual_gate.is_vision_hold(verdict):
+            logger.error("[cinematic] no vision scorer available — holding (fail fast, no re-render)")
+            return None
     return None
