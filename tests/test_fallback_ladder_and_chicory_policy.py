@@ -170,7 +170,7 @@ def test_ledger_dedupes_across_content_ids(monkeypatch):
 @pytest.mark.skipif(not pathlib.Path(".github/workflows/retry-unposted.yml").exists(), reason="workflow file added separately (needs workflow scope)")
 def test_workflow_every_30_min_and_shares_concurrency():
     y = pathlib.Path(".github/workflows/retry-unposted.yml").read_text()
-    assert "7,37 * * * *" in y and "group: purity-beans-daily" in y
+    assert "7,37 * * * *" in y and "group: purity-beans-retry" in y
     assert "retry_unposted" in y
 
 
