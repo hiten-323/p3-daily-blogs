@@ -127,6 +127,11 @@ def post_content(content: dict, day: int = 0) -> dict:
         return {"success": False, "post_id": "", "url": "", "error": "not_configured"}
 
     post_text = _extract_post_text(content)
+    try:
+        from content_generator.publisher.product_links import with_product_link
+        post_text = with_product_link(post_text, content, "linkedin", day=day, limit=3000)
+    except Exception as e:
+        logger.debug("[linkedin] product link skipped: %s", e)
     if not post_text:
         logger.warning("[linkedin] No linkedin_post in content — skipping")
         return {"success": False, "post_id": "", "url": "", "error": "no_content"}

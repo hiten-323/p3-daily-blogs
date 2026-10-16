@@ -96,6 +96,11 @@ def post_content(content: dict, day: int = 0) -> dict:
     # Build metadata
     title       = _extract_title(content)
     description = _extract_description(content)
+    try:
+        from content_generator.publisher.product_links import with_product_link
+        description = with_product_link(description, content, "youtube", day=day, limit=5000)
+    except Exception as e:
+        logger.debug("[youtube] product link skipped: %s", e)
     tags        = _build_tags(content)
 
     from content_generator.core.product_truth import product_truth_findings

@@ -245,6 +245,11 @@ def _extract_caption(content: dict, day: int = 0) -> str:
 def _assemble_caption(body: str, piece: dict, day: int = 0) -> str:
     """Triggers + capped hashtags. Inline tags in the body are stripped first."""
     body = _strip_hashtags(body)
+    try:
+        from content_generator.publisher.product_links import with_product_link
+        body = with_product_link(body, piece if isinstance(piece, dict) else {}, "instagram", day=day)
+    except Exception as e:  # a link line must never block a post
+        logger.debug("[instagram] product link skipped: %s", e)
     parts = [body]
     for key in ("comment_trigger", "save_trigger"):
         extra = _strip_hashtags(str(piece.get(key) or ""))
@@ -606,6 +611,11 @@ def post_story(content: dict, day: int = 0) -> dict:
     copy = resolve_story_copy(content, day=day)
     headline = copy["headline"]
     sub = copy["sub"]
+    try:
+        from content_generator.publisher.product_links import story_link_line
+        sub = story_link_line(sub)
+    except Exception as e:
+        logger.debug("[instagram] story link line skipped: %s", e)
     logger.info("[instagram] story copy source=%s headline=%r", copy.get("source"), headline)
 
     product = None
