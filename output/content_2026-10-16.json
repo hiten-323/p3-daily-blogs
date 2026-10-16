@@ -1857,7 +1857,7 @@
       {
         "attempt": 5,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 6,
@@ -1873,6 +1873,50 @@
         "attempt": 8,
         "rung": "feedback",
         "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "status": "exhausted",
+        "reason": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.57 < 8.0 (weakest: curiosity_gap, shareability). The contrarian hot-take opener works very well for Threads and cuts through the feed noise cleanly. To elevate the score further, deepen the curiosity gap by hinting directly at what industrial processing strips away before delivering t"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.86 < 8.0 (weakest: curiosity_gap, shareability). The opening hot take is strong and fits Threads well. To improve the curiosity gap and shareability, focus the hook more on a common coffee ritual misconception rather than just water temperature, making it instantly punchy for Indian c"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, shareability). The opening hot take is strong and native to Threads, but it leans slightly generic in the coffee space. Elevate the curiosity gap by directly calling out the sensory disconnect between what people smell and what they actually tast"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The content strictly adheres to all safety and compliance rules regarding Ultra Blend (properly disclosing 70/30 coffee/chicory without anti-chicory hypocrisy). To improve engagement and shareability, the hook could create a stronger lifestyle contrast or a more immediate relatable problem regarding"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The content reads like a generic product description with no provocative hook, emotional trigger, or share-worthy insight. To retain attention, open with a bold statement that challenges the reader’s assumption about milk coffee (e.g., \"Your daily milk coffee is likely hiding cheap filler – here’s t"
       },
       {
         "status": "exhausted",
@@ -3618,135 +3662,105 @@
     }
   },
   "threads_post": {
-    "featured_product": "purica",
+    "featured_product": "ultra_blend",
     "asset_type": "threads_post",
-    "type": "brand_track",
-    "psychology_frame": "[sensory]",
-    "frames": [
-      {
-        "frame_name": "sensory",
-        "logic": "Focusing on the specific aromatic profile of pure Arabica to create a clear mental taste-test for the user."
-      }
-    ],
-    "hook": "Hot take: most people never taste their coffee.",
-    "hook_text": "Hot take: most people never taste their coffee.",
-    "chosen_hook": "Hot take: most people never taste their coffee.",
-    "threads_post": "Hot take: most people never taste their coffee.\n\nIndustrial heat destroys natural aroma.\n\nPurity Beans Purica is pure Arabica freeze-dried to protect the flavor.\n\nRead the jar.\n\nShop: https://p3online.in",
-    "body": "Hot take: most people never taste their coffee, they just drink it.\n\nWhen coffee is subjected to industrial spray-drying with intense heat, the volatile aromatic compounds that give pure Arabica its character simply vanish into the air.\n\nPurity Beans Purica is pure Arabica processed through careful freeze-drying, which preserves the natural caramel and chocolatey notes right inside the glass jar.\n\nRead the jar. Purica is pure Arabica, crafted to protect the flavor.\n\nShop now: https://p3online.in",
-    "comment_trigger": "Do you notice the difference between freeze-dried granules and standard instant powder? Tell us below.",
-    "save_trigger": "Save this to remember why freeze-dried coffee retains its natural fragrance.",
-    "share_trigger": "Share this with a friend who appreciates a genuine aromatic coffee experience.",
-    "hashtags": "#PurityBeans #PureArabica #FreezeDriedCoffee #CoffeeLoversIndia #GourmetCoffee",
-    "instagram_post": {
-      "caption": "Hot take: most people never taste their coffee, they just drink it.\n\nWhen coffee is subjected to industrial spray-drying with intense heat, the volatile aromatic compounds that give pure Arabica its character simply vanish into the air.\n\nPurity Beans Purica is pure Arabica processed through careful freeze-drying, which preserves the natural caramel and chocolatey notes right inside the glass jar.\n\nRead the jar. Purica is pure Arabica, crafted to protect the flavor.\n\nShop now: https://p3online.in",
-      "visual_description": "Hyperrealistic close-up of the Purity Beans Purica jar on a dark marble surface. Warm amber side-lighting catching the texture of the freeze-dried granules spilling slightly beside the jar. Shallow depth of field, shot on an 85mm portrait lens. Visible skin pores on a hand gently touching the glass jar."
-    },
-    "reel": {
-      "script": [
+    "blog_post": {
+      "title": "Understanding Your Daily Milk Coffee: An Honest Look at Ultra Blend by Purity Beans",
+      "meta_description": "Discover the honest composition of Ultra Blend by Purity Beans, featuring a balanced 70% coffee and 30% chicory recipe designed for everyday milk coffee lovers.",
+      "introduction": "When it comes to morning milk coffee, consistency and comfort matter deeply in Indian households. Many coffee drinkers prefer a traditional blend that pairs well with warm milk, offering a familiar, smooth profile without any harsh bitterness. Ultra Blend by Purity Beans is crafted precisely for this daily ritual, providing an honest 70% coffee and 30% chicory formulation that delivers dependable flavor every single time. In a market crowded with vague packaging and hidden ingredients, taking a moment to understand what goes into your morning cup is an act of consumer clarity. Pure Pantry Provisions brings you a product where the label tells the complete story upfront, ensuring you know exactly what you are pouring into your mug every morning.",
+      "sections": [
         {
-          "stage": "STOP",
-          "on_screen": "Most people never taste their coffee",
-          "spoken": "Hot take: most people never taste their coffee, they just drink it out of pure habit."
+          "heading": "The 70/30 Balance Explained for Milk Coffee Enthusiasts",
+          "content": "Ultra Blend combines 70% high-grade coffee with 30% roasted chicory root. This deliberate ratio is designed to soften the heavy acidity of straight black coffee, allowing the brew to blend harmoniously with dairy or plant-based milks. It creates a cup that is smooth, rounded, and comforting. Unlike high-acidity single-origin brews that can curdle or taste overwhelmingly sharp when mixed with heavy dairy, a balanced 70/30 proportion integrates seamlessly. This makes it an ideal choice for traditional Indian filter coffee lovers or anyone who enjoys a generous splash of milk in their morning mug without sacrificing coffee character. By keeping the ratio transparent and honest, Purity Beans ensures you never have to guess what is in your pantry."
         },
         {
-          "stage": "CURIOSITY",
-          "on_screen": "Where does the aroma go?",
-          "spoken": "When high-heat spray-drying is used, the delicate oils that carry the true aroma simply disappear before the jar is even sealed."
+          "heading": "An Accessible Daily Ritual for Every Household",
+          "content": "For households transitioning from commercial blends, Ultra Blend offers a dependable, straightforward option. At ₹309 for a 100g glass jar on https://p3online.in, it provides an economical choice for daily consumption without compromising on the quality of ingredients. At approximately ₹5 per cup, it outperforms expensive café alternatives while fitting effortlessly into your pantry routine. The food-grade glass jar preserves aroma and freshness, ensuring that every spoonful delivers the exact same comforting taste from the first serving to the last. This accessible pricing makes it simple to maintain a high-quality morning routine without stretching your monthly grocery budget."
         },
         {
-          "stage": "VALUE",
-          "on_screen": "Purity Beans Purica: Freeze-dried Arabica",
-          "spoken": "Purity Beans Purica takes a different path with freeze-drying, locking in the natural caramel and chocolatey notes of pure Arabica."
+          "heading": "Transparency in Every Glass Jar by Purity Beans",
+          "content": "At Purity Beans, we believe in complete clarity. Ultra Blend clearly states its ingredients right on the back label. No hidden additives, no exaggerated claims—just a reliable, smooth milk coffee experience crafted by Pure Pantry Provisions. Transparency is not just a marketing buzzword; it is our operational standard. When you read the jar, you understand the exact balance of coffee and chicory. This commitment to honesty empowers you to make informed choices about your daily beverages, ensuring your pantry is stocked with products that respect your intelligence and your daily routine. Read the jar before you buy, and see the difference transparency makes."
         },
         {
-          "stage": "TRUST",
-          "on_screen": "Read the jar. Pure Arabica.",
-          "spoken": "No artificial additives, no complex jargon. Just the honest profile of gourmet Arabica granules."
+          "heading": "Why Traditional Blends Still Hold a Vital Place",
+          "content": "While pure black coffee has its dedicated followers, the art of the milk coffee has deep roots in daily household culture across India. The addition of roasted chicory root in a controlled 30% ratio introduces a distinct body and color that milk coffee drinkers have cherished for generations. Purity Beans respects this culinary heritage by refusing to disguise what is inside the jar. By presenting Ultra Blend with absolute honesty regarding its 70/30 composition, we honor the traditional milk coffee experience while elevating the quality of the ingredients used. It is a tribute to how milk coffee is actually enjoyed across the country."
         },
         {
-          "stage": "FOLLOW",
-          "on_screen": "Follow @purepantryprovisions",
-          "spoken": "Follow @purepantryprovisions to understand how your morning brew is actually made."
-        },
-        {
-          "stage": "BUY",
-          "on_screen": "Shop at p3online.in",
-          "spoken": "Taste the difference for yourself. Shop now at p3online.in."
+          "heading": "How to Brew the Perfect Cup of Ultra Blend",
+          "content": "Getting the best out of your Ultra Blend jar is simple. Start by taking one teaspoon of the agglomerated granules and placing it directly into your mug. Add a small splash of hot water or milk to dissolve the granules into a rich paste, unlocking the initial aroma. Next, pour in your hot, steamed milk of choice, stirring gently to achieve an even, creamy consistency. Adjust the milk-to-coffee ratio according to your personal strength preference. Because Ultra Blend is designed specifically for milk pairings, it maintains its comforting profile even with a larger volume of dairy. Enjoy your morning ritual knowing exactly what went into the cup."
         }
-      ]
-    },
-    "linkedin_post": "Industrial processing often alters the very thing that makes coffee special: the aroma.\n\nIn the instant coffee category, the technical divide between standard powder and gourmet granules usually comes down to one method: Freeze-drying.\n\nAt Purity Beans, we chose freeze-drying for our Purica blend to ensure the natural caramel and chocolatey notes of pure Arabica remain intact from origin to your cup.\n\nTransparency in production is a commitment to the consumer. Read the jar. Know what you drink.\n\nExplore our range: https://p3online.in",
-    "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 8.0,
-      "emotion_pull": 8.2,
-      "hook_strength": 9.0,
-      "brand_clarity": 9.5,
-      "overall": 8.6,
-      "verdict": "PASS",
-      "feedback": "The content excels by directly calling out standard industrial manufacturing practices (spray-drying high heat vs. freeze-drying) to highlight the superiority of Purity Beans Purica. The hook is instantly provocative, drawing curiosity without crossing into forbidden claims. To elevate it further, ensure the call-to-action in the reel script is fully completed, and maintain high sensory specificity in every line to keep the reader locked in.",
-      "retention_audit": "Line 1 (Hook): 'Your instant coffee lacks aroma not because of the beans, but because of what the factory did to them.' — Extremely strong pattern interrupt. Zero drop-off here; reader immediately wants to know what the factory did. Line 2 (Problem): 'Most mass-market instant coffees are spray-dried with high heat, which flashes away the delicate natural oils.' — Holds attention by explaining the technical 'why' simply and authoritatively. Line 3 (Solution/Brand): 'Purity Beans Purica is pure Arabica processed using freeze-drying...' — Clear, transparent product positioning with no false claims. Line 4 (Action): 'Read the jar. Shop now: https://p3online.in' — Seamless transition to purchase with exact required link and product focus."
-    },
-    "viral_potential": {
-      "scores": {
-        "hook": 8.0,
-        "curiosity_gap": 7.0,
-        "relatability": 8.0,
-        "shareability": 7.0,
-        "comment_trigger": 7.0,
-        "format_fit": 8.0,
-        "follow_cta": 7.0
-      },
-      "overall": 7.4,
-      "weakest": [
-        "curiosity_gap",
-        "shareability",
-        "follow_cta"
       ],
-      "feedback": "The hook is strong and challenges factory practices effectively. However, the curiosity gap could be sharper by teasing the exact processing difference right before naming it. The shareability and follow CTA can be improved by adding a direct prompt for readers to check their own kitchen labels.",
-      "better_hook": "Check your instant coffee jar right now. If it smells flat, blame the factory, not the beans.",
-      "passed": false,
-      "honesty": [],
-      "pass_mark": 8.0
+      "conclusion": "If your ideal morning routine involves a comforting cup of milk coffee with a balanced, smooth finish, Ultra Blend by Purity Beans is ready for your pantry. Visit https://p3online.in to explore our collection, read the jar, and experience an honest approach to daily coffee.",
+      "cta": "Shop Ultra Blend today at https://p3online.in"
     },
+    "body": "Most morning milk coffee drinkers never check the back label to see what creates that smooth, comforting texture. Ultra Blend by Purity Beans is crafted specifically for those who enjoy their daily milk coffee with an honest, balanced 70% coffee and 30% chicory formulation. It dissolves effortlessly in warm milk to deliver a dependable, rich cup every time without harsh bitterness. Read the jar, know your ingredients, and enjoy your daily ritual with Purity Beans from Pure Pantry Provisions. Available now at https://p3online.in for ₹309 per 100g jar.",
     "carousel": {
       "slides": [
         {
-          "heading": "Why Most Instant Coffee Tastes Flat",
-          "body": "Industrial spray-drying uses high heat that strips away natural aromas.",
-          "visual_description": "Close up of industrial coffee processing machinery."
+          "heading": "The Milk Coffee Choice",
+          "body": "Not all cups need to be black. Some days call for a smooth, comforting milk coffee.",
+          "visual_description": "Warm morning light hitting a glass jar of Ultra Blend by Purity Beans on a wooden kitchen counter."
         },
         {
-          "heading": "The Science of Freeze-Drying",
-          "body": "Freeze-drying locks in flavor by retaining volatile compounds.",
-          "visual_description": "Laboratory view of freeze-dried granules."
+          "heading": "The 70/30 Formulation",
+          "body": "Ultra Blend is carefully crafted with 70% coffee and 30% chicory for a balanced profile.",
+          "visual_description": "Close-up shot of the back label of the Purity Beans jar showing clear ingredient details."
         },
         {
-          "heading": "Pure Arabica Character",
-          "body": "Natural caramel and chocolatey notes without artificial additives.",
-          "visual_description": "Rich brown coffee granules under warm light."
+          "heading": "Designed for Dairy",
+          "body": "The balanced ratio ensures the coffee cuts through milk without heavy bitterness.",
+          "visual_description": "A stream of warm milk being poured into a ceramic mug containing freshly dissolved Ultra Blend."
         },
         {
-          "heading": "Read the Jar",
-          "body": "Purity Beans Purica gives you pure Arabica coffee with total transparency.",
-          "visual_description": "Purity Beans Purica glass jar on clean dark wood."
-        },
-        {
-          "heading": "Experience the Difference",
-          "body": "Taste real gourmet instant coffee at home.",
-          "visual_description": "Pouring hot water over freeze-dried coffee crystals."
-        },
-        {
-          "heading": "Order Today",
-          "body": "Visit https://p3online.in to secure your jar.",
-          "visual_description": "Purity Beans Purica jar with website text overlay."
+          "heading": "Everyday Value",
+          "body": "Enjoy a superior milk coffee at"
         }
       ]
     },
-    "editorial_error": "brand: ['Threads native text exceeds 480 characters']",
-    "blog_post": {
-      "title": "The Science of Coffee Aroma: Why Freeze-Drying Changes Everything"
-    }
+    "chosen_hook": "If your morning milk coffee needs that exact traditional balance, this is for you.",
+    "comment_trigger": "Comment BLEND if you love a smooth morning milk coffee.",
+    "frames": [
+      {
+        "on_screen": "The Milk Coffee Ritual",
+        "spoken": "If you enjoy your morning coffee with milk, the balance of your blend matters entirely."
+      },
+      {
+        "on_screen": "70% Coffee, 30% Chicory",
+        "spoken": "Ultra Blend by Purity Beans is crafted with a clear 70% coffee and 30% chicory formulation."
+      },
+      {
+        "on_screen": "Smooth & Balanced",
+        "spoken": "It is designed to dissolve smoothly in warm milk, giving you a comforting cup every single morning."
+      },
+      {
+        "on_screen": "Read the Jar",
+        "spoken": "No guesswork, no hidden fillers. Pure Pantry Provisions keeps the label completely honest."
+      },
+      {
+        "on_screen": "Shop p3online.in",
+        "spoken": "Discover Ultra Blend for your daily routine. Visit https://p3online.in to order your jar today."
+      }
+    ],
+    "hashtags": "#PurityBeans #UltraBlend #MilkCoffee #InstantCoffee #PurePantryProvisions #CoffeeLoversIndia",
+    "hook": "If your morning milk coffee needs that exact traditional balance, this is for you.",
+    "hook_text": "The secret to a smoother morning milk coffee.",
+    "instagram_post": {
+      "caption": "Your morning milk coffee deserves a blend that is smooth, comforting, and honest. Ultra Blend by Purity Beans features a balanced 70% coffee and 30% chicory recipe designed specifically for dairy pairings. Read the jar, know your ingredients,"
+    },
+    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "editorial_score": {
+      "shareability": 4.0,
+      "saveability": 4.0,
+      "emotion_pull": 5.0,
+      "hook_strength": 3.0,
+      "brand_clarity": 5.0,
+      "overall": 4.5,
+      "verdict": "REJECT",
+      "feedback": "The content reads like a generic product description with no provocative hook, emotional trigger, or share-worthy insight. To retain attention, open with a bold statement that challenges the reader’s assumption about milk coffee (e.g., \"Your daily milk coffee is likely hiding cheap filler – here’s the truth.\") Follow with a curiosity gap that promises a specific revelation about the 70/30 blend, then use concrete, relatable scenarios (e.g., a spoonful curdling in hot milk) to create emotion. Each section should end with a teaser that makes the reader want to know what comes next, and the copy must highlight Purity Beans as the transparent alternative that resolves the problem, not just describe it.",
+      "retention_audit": "Title: generic, no curiosity gap – likely skipped. Intro: safe, vague statements about consistency and comfort – low emotional pull, reader may swipe. Section 1 heading: explanatory but no conflict; content describes ratio without contrasting to alternatives – low saveability. Section 2 heading: focuses on price and routine; lacks a surprising fact or personal relevance – attention drop. Section 3 heading: transparency claim is weak; repeats marketing buzzword without proof – minimal emotion. Section 4 heading: invokes tradition but does not create contrast or challenge – forgettable. Section 5 heading: brew instructions are utilitarian; no hook to keep reading – high drop-off risk. Throughout, absence of a strong opinion, controversy, or identity statement makes the piece feel like any brand’s FAQ, causing readers to lose interest after the first paragraph."
+    },
+    "editorial_error": "brand: ['Threads native text exceeds 480 characters']"
   },
   "yt_short": {
     "featured_product": "Ultra Blend",
