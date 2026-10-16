@@ -48,7 +48,7 @@ _BACKOFF_S = (2, 5, 12)
 # timeout stays 45s (15s timed out everything), one call has a total budget across models, and a model
 # that keeps timing out / returning empty is skipped for a cooldown.
 _CALL_TIMEOUT_S = int(os.getenv("NVIDIA_CALL_TIMEOUT_S", "45"))
-_CALL_BUDGET_S = float(os.getenv("NVIDIA_CALL_BUDGET_S", "45"))
+_CALL_BUDGET_S = float(os.getenv("NVIDIA_CALL_BUDGET_S", "120"))
 _SICK_AFTER = int(os.getenv("NVIDIA_SICK_AFTER", "2"))
 _SICK_COOLDOWN_S = float(os.getenv("NVIDIA_SICK_COOLDOWN_S", "900"))
 _MODEL_HEALTH: dict[str, dict] = {}
@@ -87,13 +87,42 @@ def get_key() -> str:
     return os.environ.get("NVIDIA_API_KEY", "").strip()
 
 
+_PREFER = (
+    "nvidia/nemotron-3-super-120b-a12b", "google/gemma-4-31b-it", "nvidia/nemotron-3-ultra-550b-a55b",
+    "deepseek-ai/deepseek-v4.1-flash", "nvidia/nemotron-3.5-lightning-30b-a3b", "qwen/qwen3", "meta/llama-4",
+    "moonshotai/kimi-k2.6", "openai/gpt-oss-120b", "openai/gpt-oss-20b",
+)
+_SKIP = ("embed", "safety", "guard", "retriever", "reward", "coder", "-vl", "vision", "omni", "parse", "rerank")
+_DISCOVERED: list[str] | None = None
+
+
+def discover_models() -> list[str]:
+    """Live chat models on this key (GET /v1/models), in preference order. Cached per process."""
+    global _DISCOVERED
+    if _DISCOVERED is not None:
+        return _DISCOVERED
+    out: list[str] = []
+    key = get_key()
+    if key and os.getenv("LLM_MODEL_DISCOVERY", "1") != "0":
+        try:
+            resp = _http.get(f"{_BASE}/models", headers={"Authorization": f"Bearer {key}"}, timeout=15)
+            ids = [str(m.get("id", "")) for m in (resp.json().get("data") or [])] if resp.status_code == 200 else []
+            ids = [i for i in ids if not any(x in i.lower() for x in _SKIP)]
+            for pref in _PREFER:
+                out += sorted([i for i in ids if i.startswith(pref) and i not in out], reverse=True)
+        except Exception as e:  # discovery is best-effort
+            logger.warning("NVIDIA model discovery failed: %s", _redact(str(e)))
+    _DISCOVERED = out
+    return out
+
+
 def get_models() -> list[str]:
-    """Model ids in try-order. A blank NVIDIA_MODEL keeps the live defaults."""
+    """Model ids in try-order. NVIDIA_MODEL (comma list) wins; else live discovery; else defaults."""
     raw = os.environ.get("NVIDIA_MODEL", "")
-    if not raw.strip():
-        return list(_DEFAULT_MODELS)
     models = [part.strip() for part in raw.split(",") if part.strip()]
-    return models or list(_DEFAULT_MODELS)
+    if models:
+        return models
+    return (discover_models() or list(_DEFAULT_MODELS))[:6]
 
 
 def get_model() -> str:

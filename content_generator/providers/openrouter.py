@@ -25,7 +25,7 @@ _URL = "https://openrouter.ai/api/v1/chat/completions"
 # additionally supports strict structured_outputs.
 _DEFAULT_FREE = (
     "google/gemma-4-31b-it:free,google/gemma-4-26b-a4b-it:free,"
-    "minimax/minimax-m2.7:free,nvidia/nemotron-3-super-120b-a12b:free"
+    "nvidia/nemotron-3-super-120b-a12b:free"
 )
 # Only ':free' models are ever called, so OpenRouter never bills. A configured
 # model without the suffix is dropped.
@@ -33,6 +33,32 @@ MODELS: list[str] = [
     m.strip() for m in os.getenv("OPENROUTER_MODELS", _DEFAULT_FREE).split(",")
     if m.strip().endswith(":free")
 ] or _DEFAULT_FREE.split(",")
+
+
+_DISCOVERED: list[str] | None = None
+_TEXT_HINTS = ("instruct", "-it", "chat", "nemotron-3", "deepseek", "qwen3", "llama-4", "gpt-oss", "kimi", "glm")
+_TEXT_SKIP = ("safety", "guard", "coder", "embed", "vl", "vision", "audio")
+
+
+def models() -> list[str]:
+    """Pinned instruct models first, then live :free text models from /models (never paid slugs)."""
+    global _DISCOVERED
+    if _DISCOVERED is None:
+        _DISCOVERED = []
+        if get_key() and not os.getenv("OPENROUTER_MODELS") and os.getenv("LLM_MODEL_DISCOVERY", "1") != "0":
+            try:
+                r = _http.get("https://openrouter.ai/api/v1/models", timeout=15)
+                for m in (r.json().get("data") or []):
+                    mid = str(m.get("id", "")).lower()
+                    outs = (m.get("architecture") or {}).get("output_modalities") or ["text"]
+                    if mid.endswith(":free") and "text" in outs and any(h in mid for h in _TEXT_HINTS) \
+                            and not any(x in mid for x in _TEXT_SKIP):
+                        _DISCOVERED.append(str(m["id"]))
+            except Exception as e:
+                logger.warning("OpenRouter model discovery failed: %s", e)
+    live = set(_DISCOVERED)
+    pinned = [m for m in MODELS if not live or m in live]
+    return list(dict.fromkeys(pinned + _DISCOVERED))[:6]
 
 
 def get_key() -> str:
@@ -53,7 +79,7 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
     }
     last_failure: dict = {}
 
-    for model in (m.strip() for m in MODELS if m.strip()):
+    for model in (m.strip() for m in models() if m.strip()):
         try:
             resp = _http.post(
                 _URL,
