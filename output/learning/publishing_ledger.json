@@ -2480,11 +2480,11 @@
       "verified_at": null
     },
     "2026-10-16|morning|instagram_story|pb_e66abc1787": {
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-10-16",
       "content_id": "pb_e66abc1787",
       "day_number": 288,
-      "error": "claimed_by_other_run",
+      "error": "",
       "history": [
         {
           "at": "2026-10-16T08:10:06+00:00",
@@ -2500,30 +2500,41 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-16T08:09:19+00:00",
+          "attempt": 2,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "4009067805446716698",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/stories/purepantryprovisions/4009067805446716698",
+          "verification_method": "reconciled_from_run_38866385885"
         }
       ],
       "last_attempt_at": "2026-10-16T08:10:06+00:00",
       "last_result": {
-        "error": "claimed_by_other_run",
-        "success": false
+        "error": "",
+        "success": true
       },
       "next_retry_at": null,
       "platform": "instagram_story",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "4009067805446716698",
       "slot": "morning",
-      "status": "SKIPPED",
-      "updated_at": "2026-10-16T08:10:08+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-16T09:01:40+00:00",
+      "url": "https://www.instagram.com/stories/purepantryprovisions/4009067805446716698",
+      "verification_detail": "published by retry-unposted run 38866385885 (log: media id + permalink); ledger persist failed (exit 128), reconciled",
+      "verification_method": "reconciled_from_run_38866385885",
+      "verified_at": "2026-10-16T08:09:19+00:00"
     },
     "2026-10-16|morning|instagram|pb_e66abc1787": {
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-10-16",
       "content_id": "pb_e66abc1787",
       "day_number": 288,
-      "error": "claimed_by_other_run",
+      "error": "",
       "history": [
         {
           "at": "2026-10-16T08:10:02+00:00",
@@ -2539,23 +2550,34 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-16T08:09:19+00:00",
+          "attempt": 2,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18016794836748354",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DejD7HWG98n/",
+          "verification_method": "reconciled_from_run_38866385885"
         }
       ],
       "last_attempt_at": "2026-10-16T08:10:02+00:00",
       "last_result": {
-        "error": "claimed_by_other_run",
-        "success": false
+        "error": "",
+        "success": true
       },
       "next_retry_at": null,
       "platform": "instagram",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "18016794836748354",
       "slot": "morning",
-      "status": "SKIPPED",
-      "updated_at": "2026-10-16T08:10:04+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-16T09:01:40+00:00",
+      "url": "https://www.instagram.com/p/DejD7HWG98n/",
+      "verification_detail": "published by retry-unposted run 38866385885 (log: media id + permalink); ledger persist failed (exit 128), reconciled",
+      "verification_method": "reconciled_from_run_38866385885",
+      "verified_at": "2026-10-16T08:09:19+00:00"
     }
   },
   "version": 1
