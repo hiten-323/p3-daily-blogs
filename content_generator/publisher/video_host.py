@@ -19,8 +19,13 @@ _TIMEOUT = 120
 
 
 def _creds() -> tuple[str, str, str] | None:
-    url = os.getenv("CLOUDINARY_URL", "")
+    url = os.getenv("CLOUDINARY_URL", "").strip().strip('"').strip("'").strip()
+    # Cloudinary's dashboard shows "CLOUDINARY_URL=cloudinary://..."; accept a pasted prefix.
+    if url.upper().startswith("CLOUDINARY_URL="):
+        url = url.split("=", 1)[1].strip().strip('"').strip("'")
     if not url.startswith("cloudinary://"):
+        if url:
+            logger.warning("[video_host] CLOUDINARY_URL is set but not in cloudinary://key:secret@cloud form")
         return None
     try:
         rest = url[len("cloudinary://"):]

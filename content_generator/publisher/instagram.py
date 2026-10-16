@@ -559,7 +559,9 @@ def _post_reel_direct_binary(video_path: str, caption: str) -> dict:
         container_id = init_data.get("id")
         upload_uri = init_data.get("uri")
         if not container_id or not upload_uri:
-            return {"success": False, "media_id": "", "error": "resumable_init_failed"}
+            _e = init_data.get("error") if isinstance(init_data, dict) else None
+            msg = _e.get("message") if isinstance(_e, dict) else (str(_e) if _e else "")
+            return {"success": False, "media_id": "", "error": f"resumable_init_failed {msg}".strip()}
 
         headers = {
             "Authorization": f"OAuth {token}",
@@ -581,7 +583,7 @@ def _post_reel_direct_binary(video_path: str, caption: str) -> dict:
         logger.error("[instagram] Direct binary reel container failed: %s", e)
         return {"success": False, "media_id": "", "error": str(e)}
     except Exception as exc:
-        logger.debug("[instagram] Direct binary reel upload failed: %s", exc)
+        logger.warning("[instagram] Direct binary reel upload failed: %s", exc)
         return {"success": False, "media_id": "", "error": str(exc)}
 
 

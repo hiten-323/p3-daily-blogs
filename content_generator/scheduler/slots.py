@@ -394,17 +394,28 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
             else:
                 from content_generator.creative.reel_video import build_reel_video
                 video_path, is_hero = build_reel_video(reel, day, on_date=slot_date), False
+            video_url = None
             if video_path and vhost_ok():
                 video_url = upload_video(video_path)
+            elif video_path:
+                logger.warning("[slots] video host not configured (CLOUDINARY_URL unusable) — "
+                               "using Meta resumable direct upload for the reel")
+            if video_path:
+                from content_generator.publisher.publishing_ledger import publish_with_ledger
                 if video_url:
-                    from content_generator.publisher.publishing_ledger import publish_with_ledger
-                    result = publish_with_ledger("instagram_video", content, slot, day,
-                                                 lambda: post_reel_video(video_url, caption))
-                    if result.get("success"):
-                        logger.info("[slots] evening published as %s REEL VIDEO",
-                                    "HERO" if is_hero else "motion")
-                        if is_hero:
-                            _mark_hero_posted(video_path)
+                    _pub = lambda: post_reel_video(video_url, caption)
+                else:
+                    from content_generator.publisher.instagram import _post_reel_direct_binary
+                    _pub = lambda: _post_reel_direct_binary(video_path, caption)
+                result = publish_with_ledger("instagram_video", content, slot, day, _pub)
+                if result.get("success"):
+                    logger.info("[slots] evening published as %s REEL VIDEO",
+                                "HERO" if is_hero else "motion")
+                    if is_hero:
+                        _mark_hero_posted(video_path)
+                else:
+                    logger.warning("[slots] reel video not published (%s) — falling back to image",
+                                   result.get("error"))
         except Exception as e:
             logger.warning("[slots] reel video path failed (%s) — falling back to image", e)
 
