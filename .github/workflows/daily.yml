@@ -1,14 +1,14 @@
 # Purity Beans — Autonomous Daily Pipeline
-# Canonical slots: 06:00 IST generate, 10:00 IST morning, 22:00 IST evening.
+# Canonical slots: 06:13 IST generate, 09:53 IST morning, 21:53 IST evening (off round minutes).
 # Git is authoritative persistent state. Actions cache is intentionally not used for output state.
 
 name: P3 daily content
 
 on:
   schedule:
-    - cron: '30 0 * * *'
-    - cron: '30 4 * * *'
-    - cron: '30 16 * * *'
+    - cron: '43 0 * * *'
+    - cron: '23 4 * * *'
+    - cron: '23 16 * * *'
   workflow_dispatch:
     inputs:
       slot:
@@ -36,7 +36,7 @@ on:
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   ENABLE_TIMED_SLOTS: "true"
-  FORCE_SLOT: ${{ github.event.schedule == '30 0 * * *' && 'generate' || (github.event.schedule == '30 4 * * *' && 'morning' || (github.event.schedule == '30 16 * * *' && 'evening' || github.event.inputs.slot || '')) }}
+  FORCE_SLOT: ${{ github.event.schedule == '43 0 * * *' && 'generate' || (github.event.schedule == '23 4 * * *' && 'morning' || (github.event.schedule == '23 16 * * *' && 'evening' || github.event.inputs.slot || '')) }}
   PIP_NO_CACHE_DIR: "1"
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
 

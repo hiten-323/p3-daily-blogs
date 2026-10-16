@@ -30,20 +30,20 @@ _IST_OFFSET_MIN = 330
 SLOTS: list[dict] = [
     {
         "id":        "generate",
-        "ist":       "06:00",
+        "ist":       "06:13",
         "expects":   ["linkedin"],
         "purpose":   "Full pipeline: insights, revenue, generate, editorial, "
                      "images, LinkedIn/YouTube (blog off by default). Instagram + Facebook HELD.",
     },
     {
         "id":        "morning",
-        "ist":       "10:00",
+        "ist":       "09:53",
         "expects":   ["instagram", "facebook"],
         "purpose":   "IG carousel + FB mirror (owner-chosen time).",
     },
     {
         "id":        "evening",
-        "ist":       "22:00",
+        "ist":       "21:53",
         "expects":   ["instagram", "facebook"],
         "purpose":   "IG reel post + FB mirror (owner-chosen time).",
     },

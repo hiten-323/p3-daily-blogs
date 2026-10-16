@@ -248,4 +248,4 @@ def test_generate_workflow_rejects_unpublishable_content():
     text = (ROOT / ".github" / "workflows" / "daily.yml").read_text(encoding="utf-8")
     assert "approved_assets" in text
     assert "GENERATE saved content the morning and evening slots cannot publish" in text
-    assert "cron: '30 0 * * *'" in text
+    assert "cron: '43 0 * * *'" in text

@@ -15,9 +15,9 @@ def main() -> None:
     assert "NVIDIA_MODEL: ${{ secrets.NVIDIA_MODEL }}" in text
 
     # Canonical production windows.
-    assert "cron: '30 0 * * *'" in text
-    assert "cron: '30 4 * * *'" in text
-    assert "cron: '30 16 * * *'" in text
+    assert "cron: '43 0 * * *'" in text
+    assert "cron: '23 4 * * *'" in text
+    assert "cron: '23 16 * * *'" in text
 
     # Manual execution must select a slot instead of inferring it from wall time.
     assert "Manual slot to execute — never infer from wall-clock time" in text

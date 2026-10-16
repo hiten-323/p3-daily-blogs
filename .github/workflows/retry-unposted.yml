@@ -5,6 +5,11 @@ on:
   schedule:
     - cron: '7,37 * * * *'
   workflow_dispatch:
+    inputs:
+      date:
+        description: 'Backfill a past IST content date (YYYY-MM-DD); blank = today'
+        required: false
+        default: ''
 
 concurrency:
   group: purity-beans-daily
@@ -95,6 +100,7 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           NURTURE_FROM_EMAIL: ${{ secrets.NURTURE_FROM_EMAIL }}
           PYTHONIOENCODING: utf-8
+          RETRY_DATE: ${{ github.event.inputs.date || '' }}
         run: python -m content_generator.scheduler.retry_unposted
 
       - name: Persist publishing ledger and logs

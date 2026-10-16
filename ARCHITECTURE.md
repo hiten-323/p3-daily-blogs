@@ -5,7 +5,7 @@ Status: **FROZEN** (see docs/ADR-001.md). Structural changes require a new ADR.
 ## Daily operating loop (3 GitHub Actions runs, IST)
 
 ```
-06:00  GENERATE ─────────────────────────────────────────────────────────
+06:13  GENERATE ─────────────────────────────────────────────────────────
        0.5 insights_fetch        yesterday's IG metrics → learning engine
        0.6 revenue_attribution   Shopify orders → day-level attribution
        1   research              trends + strategy context
@@ -16,12 +16,12 @@ Status: **FROZEN** (see docs/ADR-001.md). Structural changes require a new ADR.
        4-8 images (jar-referenced), UGC tool brief, LinkedIn/blog/YouTube
            publish. Instagram HELD. Content + images committed to repo.
 
-10:00  MORNING ── loads committed content → IG carousel + FB mirror
-22:00  EVENING ── loads committed content → IG reel-style post + FB mirror
+09:53  MORNING ── loads committed content → IG carousel + FB mirror
+21:53  EVENING ── loads committed content → IG reel-style post + FB mirror
 ```
 
 The production schedule is defined once in `content_generator/core/slot_registry.py`:
-06:00, 10:00 and 22:00 IST. GitHub Actions cron entries and `FORCE_SLOT` are
+06:13, 09:53 and 21:53 IST (off round minutes; GitHub drops many :00/:30 schedule events). GitHub Actions cron entries and `FORCE_SLOT` are
 derived from that registry and protected by `tests/test_config_drift.py`.
 
 The 8.0 editorial threshold is also constitutional: `brand_guard.py` defines
