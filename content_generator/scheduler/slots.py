@@ -8,11 +8,11 @@ The engine's own platform knowledge says:
 So instead of publishing everything at 06:00 IST, the day is split:
 
   SLOT       UTC cron    IST     WHAT HAPPENS
-  generate   30 0 * * *  06:00   Full pipeline: insights, revenue, generate,
+  generate   43 0 * * *  06:13   Full pipeline: insights, revenue, generate,
                                  editorial, images, LinkedIn/YouTube (blog off by default).
                                  Instagram + Facebook HELD for their windows.
-  morning    30 4 * * *  10:00   IG carousel + FB mirror (owner-chosen time)
-  evening    30 16 * * * 22:00   IG reel-style post + FB mirror
+  morning    23 4 * * *  09:53   IG carousel + FB mirror (owner-chosen time)
+  evening    23 16 * * * 21:53   IG reel-style post + FB mirror
                                  (owner-chosen time)
 
 Content + images are committed to the repo by the generate run, so the

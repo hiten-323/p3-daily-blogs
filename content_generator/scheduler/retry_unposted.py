@@ -57,6 +57,19 @@ def active_targets() -> dict:
     return {k: v for k, v in TARGETS.items() if k != "blog"}
 
 
+def records_for_date(date: str) -> list[dict]:
+    from content_generator.publisher import publishing_ledger as pl
+    with pl._LOCK:
+        data = pl._load()
+    return [dict(r, ledger_key=k) for k, r in data["records"].items()
+            if str(r.get("content_date", "")).startswith(date)]
+
+
+def evening_backstop_wait(now_ist: dt.datetime) -> bool:
+    """True before 22:15 IST, while the scheduled evening slot should run."""
+    return now_ist.hour == 22 and now_ist.minute < 15
+
+
 def unposted_targets(records: list[dict], now_hour: int) -> list[str]:
     states = _posted_states()
     out = []
@@ -175,15 +188,34 @@ def main() -> int:
     from content_generator.scheduler.publish_recovery import _load_content
 
     now = dt.datetime.now(dt.timezone.utc)
-    ist_hour = (now + dt.timedelta(hours=5, minutes=30)).hour
+    now_ist = now + dt.timedelta(hours=5, minutes=30)
+    ist_hour = now_ist.hour
     date = today_ist().isoformat()
+    only = None
+    override = os.getenv("RETRY_DATE", "").strip()
+    if override:
+        # Manual backfill of a past day: every slot of that day is due.
+        date = dt.date.fromisoformat(override).isoformat()
+        ist_hour = 23
+    elif ist_hour < 6:
+        # Evening backstop across midnight: a dropped 21:53 cron (or a crash)
+        # must not lose yesterday's mandatory evening reel.
+        y = (dt.date.fromisoformat(date) - dt.timedelta(days=1)).isoformat()
+        if "ig_reel" in unposted_targets(records_for_date(y), 23):
+            log.warning("Evening backstop: %s has no evening post; publishing it now.", y)
+            date, ist_hour, only = y, 23, {"ig_reel"}
     content, why = _load_content(date)
     if content is None:
         log.info("No pack for %s yet (%s); carry-over waits for today's generate.", date, why)
         return 0
 
-    records = records_for_today()
+    records = records_for_date(date)
     missing = unposted_targets(records, ist_hour)
+    if only is not None:
+        missing = [t for t in missing if t in only]
+    if not override and only is None and evening_backstop_wait(now_ist):
+        # The scheduled evening slot owns 21:53-22:15; backstop only after.
+        missing = [t for t in missing if t != "ig_reel"]
     # Mandatory evening reel: regenerate from 10:00 IST so a passing reel is
     # ready at 22:00 (publishing still waits for the evening slot hour).
     if ist_hour >= 10 and "ig_reel" not in missing and unposted_targets(records, 23).count("ig_reel"):

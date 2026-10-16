@@ -22,28 +22,28 @@ def test_editorial_threshold_is_constitutional() -> None:
     assert get_current_pass_score() == 8.0
 
 
-def test_registry_is_0600_1000_2200_ist() -> None:
+def test_registry_is_0613_0953_2153_ist() -> None:
     from content_generator.core.slot_registry import SLOTS
 
     assert [(s["id"], s["ist"]) for s in SLOTS] == [
-        ("generate", "06:00"),
-        ("morning", "10:00"),
-        ("evening", "22:00"),
+        ("generate", "06:13"),
+        ("morning", "09:53"),
+        ("evening", "21:53"),
     ]
 
 
 def test_readme_documents_live_schedule() -> None:
     readme = open("README.md", encoding="utf-8").read()
-    assert "10:00 IST  MORNING" in readme
-    assert "22:00 IST  EVENING" in readme
+    assert "09:53 IST  MORNING" in readme
+    assert "21:53 IST  EVENING" in readme
     assert "08:00 IST  MORNING" not in readme
     assert "20:00 IST  EVENING" not in readme
 
 
 def test_architecture_documents_live_schedule_and_threshold() -> None:
     architecture = open("ARCHITECTURE.md", encoding="utf-8").read()
-    assert "10:00  MORNING" in architecture
-    assert "22:00  EVENING" in architecture
+    assert "09:53  MORNING" in architecture
+    assert "21:53  EVENING" in architecture
     assert "editorial gate (8.0)" in architecture
     assert "08:00  MORNING" not in architecture
     assert "20:00  EVENING" not in architecture

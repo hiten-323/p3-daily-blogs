@@ -11,10 +11,10 @@ unattended, on GitHub Actions.
 ## The daily loop
 
 ```
-06:00 IST  GENERATE   insights + Shopify revenue → learn → generate content
+06:13 IST  GENERATE   insights + Shopify revenue → learn → generate content
                       → editorial gate (8.0) → images → LinkedIn/blog/YouTube publish
-10:00 IST  MORNING    Instagram carousel  (owner-chosen morning window)
-22:00 IST  EVENING    Instagram reel post (owner-chosen evening window)
+09:53 IST  MORNING    Instagram carousel  (owner-chosen morning window)
+21:53 IST  EVENING    Instagram reel post (owner-chosen evening window)
 ```
 
 The publishing times above are the canonical production schedule. They are
