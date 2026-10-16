@@ -146,6 +146,15 @@ def post_content(content: dict, day: int = 0,
     token = resolve_page_access_token(page_id, raw_token)
     message = message_override or _build_message(content)
     link    = os.getenv("WEBSITE_URL", "https://p3online.in")
+    if not message_override:
+        try:
+            from content_generator.publisher.product_links import featured_slug, tracked_url, with_product_link
+            message = with_product_link(message, content, "facebook", day=day, limit=63206)
+            _slug = featured_slug(content, day)
+            if _slug:
+                link = tracked_url(_slug, "facebook")
+        except Exception as e:
+            logger.debug("[facebook] product link skipped: %s", e)
 
     # Find an image to attach
     image_path = preferred_image or _find_image(content)

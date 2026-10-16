@@ -217,6 +217,11 @@ def post_content(content: dict, day: int = 0) -> dict:
         }
 
     text = _extract_thread_text(content)
+    try:
+        from content_generator.publisher.product_links import with_product_link
+        text = with_product_link(text, content, "threads", day=day, limit=_THREADS_CHAR_LIMIT)
+    except Exception as e:
+        logger.debug("[threads] product link skipped: %s", e)
     if not text:
         logger.warning("[threads] No thread text found in content — skipping")
         return {
