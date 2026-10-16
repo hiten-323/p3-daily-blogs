@@ -1249,18 +1249,23 @@ def _from_evergreen(day_number: int) -> dict:
 
 
 def _attach_stories(payload: dict, day_number: int) -> dict:
-    """Give fallback days a stories.story_1 so post_story is not slogan-only."""
+    """Give fallback days a stories.story_1 so post_story is not slogan-only.
+
+    Also seed facebook/threads/yt stubs. Evergreen and recycled packs never
+    carried those keys, so retry could not create them.
+    """
     if not isinstance(payload, dict):
         return payload
     stories = payload.get("stories") if isinstance(payload.get("stories"), dict) else {}
     s1 = stories.get("story_1") if isinstance(stories.get("story_1"), dict) else {}
-    if s1.get("headline") or s1.get("poll_question"):
-        return payload
-    try:
-        from content_generator.publisher.story_copy import stories_block_from_content
-        payload["stories"] = stories_block_from_content(payload, day_number)
-    except Exception as e:
-        logger.debug("[fallback] stories block skipped: %s", e)
+    if not (s1.get("headline") or s1.get("poll_question")):
+        try:
+            from content_generator.publisher.story_copy import stories_block_from_content
+            payload["stories"] = stories_block_from_content(payload, day_number)
+        except Exception as e:
+            logger.debug("[fallback] stories block skipped: %s", e)
+    from content_generator.scheduler.retry_unposted import ensure_native_regen_stubs
+    ensure_native_regen_stubs(payload)
     return payload
 
 

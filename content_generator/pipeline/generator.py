@@ -570,6 +570,10 @@ def save_content(content_data: dict, output_dir: str = "output") -> str:
     os.makedirs(output_dir, exist_ok=True)
     from content_generator.core.draft_purge import purge_banned_drafts
     purge_banned_drafts(content_data)  # a banned-claim draft is never persisted
+    # Emergency/recycled packs omit facebook_post, threads_post, and yt_short.
+    # A stub (no copy) lets retry create them; it cannot pass the publish gate.
+    from content_generator.scheduler.retry_unposted import ensure_native_regen_stubs
+    ensure_native_regen_stubs(content_data)
     # Filename and the date field are the same IST day. Legacy long-form
     # dates already in the dict are normalized so later slots can match them.
     date_str = content_date_iso(content_data.get("date")) or today_ist().isoformat()

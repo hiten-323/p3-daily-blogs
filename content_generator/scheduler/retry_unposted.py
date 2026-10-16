@@ -92,25 +92,80 @@ def prioritise(todo: list[str]) -> list[str]:
     return [t for t in todo if is_mandatory(t)] + [t for t in todo if not is_mandatory(t)]
 
 
+# Native assets the pre-publish gate requires. Emergency packs omit them;
+# a stub is not publishable copy — retry fills it through the unchanged gates.
+NATIVE_REGEN_LABELS = ("facebook_post", "threads_post", "yt_short")
+
+
+def native_regen_stub(content: dict, label: str, regen_round: int | None = None) -> dict:
+    stub = {
+        "type": label,
+        "needs_regen": True,
+        "featured_product": content.get("featured_product"),
+    }
+    if regen_round is not None:
+        stub["regen_round"] = regen_round
+    return stub
+
+
+def ensure_native_regen_stubs(content: dict) -> dict:
+    """Ensure facebook_post, threads_post, and yt_short exist as regen stubs.
+
+    Does not invent copy. An existing non-empty piece is left untouched.
+    """
+    if not isinstance(content, dict):
+        return content
+    for label in NATIVE_REGEN_LABELS:
+        val = content.get(label)
+        if isinstance(val, dict) and val:
+            continue
+        content[label] = native_regen_stub(content, label)
+    return content
+
+
+def _piece_slot(content: dict, label: str):
+    """Return (key, index, piece). piece is None when the slot is missing or empty."""
+    if re.fullmatch(r"reel_\d+", label):
+        key, idx = "reels", int(label.split("_")[1]) - 1
+        val = content.get(key)
+        piece = val[idx] if isinstance(val, list) and 0 <= idx < len(val) and isinstance(val[idx], dict) else None
+        return key, idx, piece if piece else None
+    val = content.get(label)
+    return label, None, val if isinstance(val, dict) and val else None
+
+
+def _store_piece(content: dict, key: str, idx: int | None, piece: dict) -> None:
+    if idx is None:
+        content[key] = piece
+        return
+    reels = content.get(key)
+    if not isinstance(reels, list):
+        reels = []
+        content[key] = reels
+    while len(reels) <= idx:
+        reels.append({})
+    reels[idx] = piece
+
+
 def mark_fresh(content: dict, labels) -> list[str]:
     """Flag saved drafts for from-scratch regeneration on a new angle.
 
     The ladder treats needs_regen as 'build a brand-new piece' (no copying the
     held draft). The round counter rotates angle/template/provider seeds.
+    A missing slot is seeded with a stub so targeted regen can create it.
     """
     marked = []
     rounds = content.setdefault("mandatory_regen_rounds", {})
     for label in labels:
-        key, idx = ("reels", int(label.split("_")[1]) - 1) if re.fullmatch(r"reel_\d+", label) else (label, None)
-        val = content.get(key)
-        piece = val[idx] if isinstance(val, list) and idx is not None and idx < len(val) else (
-            val if isinstance(val, dict) else None)
+        key, idx, piece = _piece_slot(content, label)
         rounds[label] = int(rounds.get(label) or 0) + 1
-        if isinstance(piece, dict):
+        if not isinstance(piece, dict) or not piece:
+            _store_piece(content, key, idx, native_regen_stub(content, label, rounds[label]))
+        else:
             piece["needs_regen"] = True
             piece["regen_round"] = rounds[label]
             piece.pop("editorial_review", None)
-            marked.append(label)
+        marked.append(label)
     return marked
 
 
