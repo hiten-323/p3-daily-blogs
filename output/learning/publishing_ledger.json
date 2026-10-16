@@ -2308,13 +2308,24 @@
           "status": "VERIFIED_LIVE"
         }
       ],
+      "last_attempt_at": "2026-10-16T04:53:44+00:00",
+      "last_result": {
+        "success": true,
+        "url": "https://www.facebook.com/reel/1579818416665715/"
+      },
+      "last_verification_at": "2026-10-16T04:53:44+00:00",
+      "next_retry_at": "",
       "note": "Hiten-approved one-off trial jar reel (10:20 IST); not a daily slot",
       "platform": "facebook_reel",
+      "published": true,
       "remote_id": "1579818416665715",
       "slot": "adhoc",
       "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-16T04:53:44+00:00",
       "url": "https://www.facebook.com/reel/1579818416665715/",
-      "verification_method": "graph_readback_video_status_ready_published"
+      "verification_detail": "graph_readback_video_status_ready_published",
+      "verification_method": "graph_readback_video_status_ready_published",
+      "verified_at": "2026-10-16T04:53:44+00:00"
     },
     "2026-10-16|adhoc|instagram_reel": {
       "attempt_count": 1,
@@ -2330,13 +2341,24 @@
           "status": "VERIFIED_LIVE"
         }
       ],
+      "last_attempt_at": "2026-10-16T04:56:21+00:00",
+      "last_result": {
+        "success": true,
+        "url": "https://www.instagram.com/reel/DeiuXH6AXd8/"
+      },
+      "last_verification_at": "2026-10-16T04:56:21+00:00",
+      "next_retry_at": "",
       "note": "Hiten-approved one-off trial jar reel (10:20 IST); not a daily slot",
       "platform": "instagram_reel",
+      "published": true,
       "remote_id": "18115461794117652",
       "slot": "adhoc",
       "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-16T04:56:21+00:00",
       "url": "https://www.instagram.com/reel/DeiuXH6AXd8/",
-      "verification_method": "graph_readback_media_product_type_REELS"
+      "verification_detail": "graph_readback_media_product_type_REELS",
+      "verification_method": "graph_readback_media_product_type_REELS",
+      "verified_at": "2026-10-16T04:56:21+00:00"
     }
   },
   "version": 1
