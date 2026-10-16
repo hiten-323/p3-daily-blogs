@@ -1703,5 +1703,74 @@
       ],
       "timestamp": "2026-10-16T07:13:10"
     }
+  },
+  {
+    "date": "2026-10-16",
+    "day_number": 288,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "urn:li:share:7516770080773300224",
+        "media_id": "urn:li:share:7516770080773300224",
+        "video_id": "urn:li:share:7516770080773300224",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7516770080773300224/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7516770080773300224/",
+        "duration_ms": 0
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": true,
+        "video_id": "_HI3hM9j_xY",
+        "url": "https://www.youtube.com/shorts/_HI3hM9j_xY",
+        "error": null,
+        "ledger_status": "PUBLISHED_UNVERIFIED",
+        "ledger_attempt_count": 1,
+        "duration_ms": 4723
+      },
+      "threads": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "post_id": "",
+        "url": "",
+        "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+        "gate": {
+          "allowed": false,
+          "asset_key": "threads_post",
+          "reason": "native_asset_missing_passing_editorial_score",
+          "checks": {
+            "editorial": false
+          }
+        },
+        "ledger_status": "SKIPPED",
+        "ledger_attempt_count": 2,
+        "duration_ms": 2768
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Youtube | Held for slot: Instagram, Facebook | Skipped: Threads, Blog",
+      "published_platforms": [
+        "linkedin",
+        "youtube"
+      ],
+      "timestamp": "2026-10-16T12:38:13"
+    }
   }
 ]
