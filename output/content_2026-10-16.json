@@ -1833,6 +1833,50 @@
       {
         "status": "exhausted",
         "reason": "The copy accurately respects the 70/30 chicory disclosure rule for Ultra Blend without falling into anti-chicory traps. To maximize performance, the hook can be slightly punchier to capture attention in high-speed feed scrolling, but the logical flow from milk-coffee frustration to a clear balanced "
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": ""
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The asset correctly discloses the 70/30 chicory blend for Ultra Blend without falling into anti-chicory traps, but it lacks the sharp emotional trigger needed to drive saves and shares. The hook is decent for milk coffee drinkers but relies on a standard pain point without introducing a strong contr"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The asset handles the 70/30 Ultra Blend disclosure correctly, but the hook about blaming the milk is a bit cliché and fails to create a strong enough curiosity gap or identity trigger. To push this past an 8, replace the milk blame with a sharper contrast about how everyday milk coffee should actual"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The asset successfully maintains honest 70/30 Ultra Blend compliance and avoids anti-chicory attacks. However, the hook relies slightly on a common trope ('blame the milk') which causes a slight dip in scroll-stopping power. To clear the threshold, sharpen the hook into a more direct contrast about "
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: curiosity_gap, format_fit). The hook is strong and direct, but the transition into product pitching happens a bit too early for a Threads post. Threads reward conversational punchiness and open loops that provoke a debate rather than just reading like a mini-article."
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: curiosity_gap, shareability, follow_cta). The hook is strong and challenges factory practices effectively. However, the curiosity gap could be sharper by teasing the exact processing difference right before naming it. The shareability and follow CTA can be improved b"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "status": "exhausted",
+        "reason": "brand: ['Threads native text exceeds 480 characters']"
       }
     ],
     "yt_short": [
@@ -3574,57 +3618,134 @@
     }
   },
   "threads_post": {
-    "featured_product": "ultra_blend",
+    "featured_product": "purica",
     "asset_type": "threads_post",
-    "body": "Your daily morning milk coffee shouldn't feel like a gamble. If you love a rich, comforting cup with milk that holds its body without tasting watered down or overly bitter, Purity Beans Ultra Blend delivers. Crafted with a balanced 70% coffee and 30% chicory recipe, it gives you that familiar, comforting mug you look forward to every morning. Available now at https://p3online.in",
-    "chosen_hook": "Most instant milk coffees taste watery the second milk hits the cup.",
-    "comment_trigger": "Comment SMOOTH and I will send you the direct link to Ultra Blend.",
+    "type": "brand_track",
+    "psychology_frame": "[sensory]",
     "frames": [
       {
-        "on_screen": "Why does morning milk coffee taste watery?",
-        "spoken": "Most instant milk coffees taste completely washed out the second milk hits the cup."
-      },
-      {
-        "on_screen": "The 70/30 balance you actually want",
-        "spoken": "That is why Purity Beans crafts Ultra Blend with a precise 70% coffee and 30% chicory recipe."
-      },
-      {
-        "on_screen": "Smooth, rich everyday milk coffee",
-        "spoken": "It is designed specifically for everyday milk coffee drinkers who want a smooth, comforting mug."
-      },
-      {
-        "on_screen": "Available on p3online.in",
-        "spoken": "Explore the full details and secure your jar at https://p3online.in."
-      },
-      {
-        "on_screen": "Follow for more honest coffee insights",
-        "spoken": "Follow @purepantryprovisions for more honest coffee discoveries."
+        "frame_name": "sensory",
+        "logic": "Focusing on the specific aromatic profile of pure Arabica to create a clear mental taste-test for the user."
       }
     ],
-    "hashtags": "#PurityBeans #UltraBlend #MilkCoffee #CleanCoffee #CoffeeLoversIndia",
-    "hook": "Most instant milk coffees taste watery the second milk hits the cup.",
-    "hook_text": "Most instant milk coffees taste watery the second milk hits the cup.",
-    "instagram_post": "Your daily morning milk coffee shouldn't feel like a gamble. Purity Beans crafts Ultra Blend with a balanced 70% coffee and 30% chicory recipe designed specifically for everyday milk coffee lovers who want a smooth, comforting mug. Explore the details and order your jar at https://p3online.in. Follow @purepantryprovisions for more honest coffee insights.",
-    "psychology_frame": "accessible_premium",
-    "reel": {
-      "cta": "Shop now at https://p3online.in",
-      "hook": "Most instant milk coffees taste watery the second milk hits the cup.",
-      "script": "Most instant milk coffees taste completely washed out the second milk hits the cup. That is why Purity Beans crafts Ultra Blend with a precise 70% coffee and 30% chicory recipe. It is designed specifically for everyday milk coffee drinkers who want a smooth, comforting mug without overpaying at a cafe. Explore the full details and secure your jar at https://p3online.in. Follow @purepantryprovisions for more honest coffee insights."
+    "hook": "Hot take: most people never taste their coffee.",
+    "hook_text": "Hot take: most people never taste their coffee.",
+    "chosen_hook": "Hot take: most people never taste their coffee.",
+    "threads_post": "Hot take: most people never taste their coffee.\n\nIndustrial heat destroys natural aroma.\n\nPurity Beans Purica is pure Arabica freeze-dried to protect the flavor.\n\nRead the jar.\n\nShop: https://p3online.in",
+    "body": "Hot take: most people never taste their coffee, they just drink it.\n\nWhen coffee is subjected to industrial spray-drying with intense heat, the volatile aromatic compounds that give pure Arabica its character simply vanish into the air.\n\nPurity Beans Purica is pure Arabica processed through careful freeze-drying, which preserves the natural caramel and chocolatey notes right inside the glass jar.\n\nRead the jar. Purica is pure Arabica, crafted to protect the flavor.\n\nShop now: https://p3online.in",
+    "comment_trigger": "Do you notice the difference between freeze-dried granules and standard instant powder? Tell us below.",
+    "save_trigger": "Save this to remember why freeze-dried coffee retains its natural fragrance.",
+    "share_trigger": "Share this with a friend who appreciates a genuine aromatic coffee experience.",
+    "hashtags": "#PurityBeans #PureArabica #FreezeDriedCoffee #CoffeeLoversIndia #GourmetCoffee",
+    "instagram_post": {
+      "caption": "Hot take: most people never taste their coffee, they just drink it.\n\nWhen coffee is subjected to industrial spray-drying with intense heat, the volatile aromatic compounds that give pure Arabica its character simply vanish into the air.\n\nPurity Beans Purica is pure Arabica processed through careful freeze-drying, which preserves the natural caramel and chocolatey notes right inside the glass jar.\n\nRead the jar. Purica is pure Arabica, crafted to protect the flavor.\n\nShop now: https://p3online.in",
+      "visual_description": "Hyperrealistic close-up of the Purity Beans Purica jar on a dark marble surface. Warm amber side-lighting catching the texture of the freeze-dried granules spilling slightly beside the jar. Shallow depth of field, shot on an 85mm portrait lens. Visible skin pores on a hand gently touching the glass jar."
     },
-    "save_trigger": "Save this post before your next grocery restock.",
-    "share_trigger": "Share this with someone who drinks milk coffee every single day.",
-    "threads_post": "Most instant milk coffees taste watery the second milk hits the cup. Purity Beans Ultra Blend combines 70% coffee and 30% chicory for a smooth, comforting everyday milk coffee. Order your jar at https://p3online.in. Follow @purepantryprovisions",
-    "type": "threads_post",
+    "reel": {
+      "script": [
+        {
+          "stage": "STOP",
+          "on_screen": "Most people never taste their coffee",
+          "spoken": "Hot take: most people never taste their coffee, they just drink it out of pure habit."
+        },
+        {
+          "stage": "CURIOSITY",
+          "on_screen": "Where does the aroma go?",
+          "spoken": "When high-heat spray-drying is used, the delicate oils that carry the true aroma simply disappear before the jar is even sealed."
+        },
+        {
+          "stage": "VALUE",
+          "on_screen": "Purity Beans Purica: Freeze-dried Arabica",
+          "spoken": "Purity Beans Purica takes a different path with freeze-drying, locking in the natural caramel and chocolatey notes of pure Arabica."
+        },
+        {
+          "stage": "TRUST",
+          "on_screen": "Read the jar. Pure Arabica.",
+          "spoken": "No artificial additives, no complex jargon. Just the honest profile of gourmet Arabica granules."
+        },
+        {
+          "stage": "FOLLOW",
+          "on_screen": "Follow @purepantryprovisions",
+          "spoken": "Follow @purepantryprovisions to understand how your morning brew is actually made."
+        },
+        {
+          "stage": "BUY",
+          "on_screen": "Shop at p3online.in",
+          "spoken": "Taste the difference for yourself. Shop now at p3online.in."
+        }
+      ]
+    },
+    "linkedin_post": "Industrial processing often alters the very thing that makes coffee special: the aroma.\n\nIn the instant coffee category, the technical divide between standard powder and gourmet granules usually comes down to one method: Freeze-drying.\n\nAt Purity Beans, we chose freeze-drying for our Purica blend to ensure the natural caramel and chocolatey notes of pure Arabica remain intact from origin to your cup.\n\nTransparency in production is a commitment to the consumer. Read the jar. Know what you drink.\n\nExplore our range: https://p3online.in",
     "editorial_score": {
-      "shareability": 6.5,
-      "saveability": 6.0,
-      "emotion_pull": 7.0,
-      "hook_strength": 7.5,
-      "brand_clarity": 9.0,
-      "overall": 7.2,
-      "verdict": "REJECT",
-      "feedback": "The copy accurately respects the 70/30 chicory disclosure rule for Ultra Blend without falling into anti-chicory traps. To maximize performance, the hook can be slightly punchier to capture attention in high-speed feed scrolling, but the logical flow from milk-coffee frustration to a clear balanced solution is solid.",
-      "retention_audit": "Line 1: Hook cleanly identifies a common daily pain point for milk coffee drinkers, creating immediate relevance. Line 2-3: Clearly and honestly explains the 70/30 ratio, maintaining transparency without attacking chicory. Line 4-5: Direct CTA to p3online.in provides immediate conversion path."
+      "shareability": 8.5,
+      "saveability": 8.0,
+      "emotion_pull": 8.2,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.6,
+      "verdict": "PASS",
+      "feedback": "The content excels by directly calling out standard industrial manufacturing practices (spray-drying high heat vs. freeze-drying) to highlight the superiority of Purity Beans Purica. The hook is instantly provocative, drawing curiosity without crossing into forbidden claims. To elevate it further, ensure the call-to-action in the reel script is fully completed, and maintain high sensory specificity in every line to keep the reader locked in.",
+      "retention_audit": "Line 1 (Hook): 'Your instant coffee lacks aroma not because of the beans, but because of what the factory did to them.' — Extremely strong pattern interrupt. Zero drop-off here; reader immediately wants to know what the factory did. Line 2 (Problem): 'Most mass-market instant coffees are spray-dried with high heat, which flashes away the delicate natural oils.' — Holds attention by explaining the technical 'why' simply and authoritatively. Line 3 (Solution/Brand): 'Purity Beans Purica is pure Arabica processed using freeze-drying...' — Clear, transparent product positioning with no false claims. Line 4 (Action): 'Read the jar. Shop now: https://p3online.in' — Seamless transition to purchase with exact required link and product focus."
+    },
+    "viral_potential": {
+      "scores": {
+        "hook": 8.0,
+        "curiosity_gap": 7.0,
+        "relatability": 8.0,
+        "shareability": 7.0,
+        "comment_trigger": 7.0,
+        "format_fit": 8.0,
+        "follow_cta": 7.0
+      },
+      "overall": 7.4,
+      "weakest": [
+        "curiosity_gap",
+        "shareability",
+        "follow_cta"
+      ],
+      "feedback": "The hook is strong and challenges factory practices effectively. However, the curiosity gap could be sharper by teasing the exact processing difference right before naming it. The shareability and follow CTA can be improved by adding a direct prompt for readers to check their own kitchen labels.",
+      "better_hook": "Check your instant coffee jar right now. If it smells flat, blame the factory, not the beans.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "carousel": {
+      "slides": [
+        {
+          "heading": "Why Most Instant Coffee Tastes Flat",
+          "body": "Industrial spray-drying uses high heat that strips away natural aromas.",
+          "visual_description": "Close up of industrial coffee processing machinery."
+        },
+        {
+          "heading": "The Science of Freeze-Drying",
+          "body": "Freeze-drying locks in flavor by retaining volatile compounds.",
+          "visual_description": "Laboratory view of freeze-dried granules."
+        },
+        {
+          "heading": "Pure Arabica Character",
+          "body": "Natural caramel and chocolatey notes without artificial additives.",
+          "visual_description": "Rich brown coffee granules under warm light."
+        },
+        {
+          "heading": "Read the Jar",
+          "body": "Purity Beans Purica gives you pure Arabica coffee with total transparency.",
+          "visual_description": "Purity Beans Purica glass jar on clean dark wood."
+        },
+        {
+          "heading": "Experience the Difference",
+          "body": "Taste real gourmet instant coffee at home.",
+          "visual_description": "Pouring hot water over freeze-dried coffee crystals."
+        },
+        {
+          "heading": "Order Today",
+          "body": "Visit https://p3online.in to secure your jar.",
+          "visual_description": "Purity Beans Purica jar with website text overlay."
+        }
+      ]
+    },
+    "editorial_error": "brand: ['Threads native text exceeds 480 characters']",
+    "blog_post": {
+      "title": "The Science of Coffee Aroma: Why Freeze-Drying Changes Everything"
     }
   },
   "yt_short": {
