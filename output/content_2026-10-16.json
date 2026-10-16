@@ -3,61 +3,136 @@
   "reels": [
     {
       "type": "reel",
-      "hook": "You have been drinking chicory, not coffee.",
-      "hook_text": "You have been",
-      "hook_spoken": "The moment you break the seal is the most honest the coffee will ever smell.",
-      "hook_text_overlay": "SMELL IT FIRST",
+      "hook": "Why 30% chicory in a milk coffee is actually a deliberate design choice.",
+      "hook_text": "Why 30% chicory in a milk coffee is actually a deliberate design choice.",
+      "hook_spoken": "Here is why Purity Beans Ultra Blend uses 30% chicory on purpose.",
+      "hook_text_overlay": "30% CHICORY, ON PURPOSE",
       "frames": [
         {
-          "on_screen": "SMELL IT FIRST",
-          "spoken": "The moment you break the seal is the most honest the coffee will ever smell."
+          "on_screen": "30% CHICORY, ON PURPOSE",
+          "spoken": "Here is why Purity Beans Ultra Blend uses 30% chicory on purpose."
         },
         {
-          "on_screen": "BREAK THE SEAL",
-          "spoken": "Open it and hold it under your nose before anything else happens."
+          "on_screen": "THE MILK TEST",
+          "spoken": "Pure coffee can sometimes get lost behind heavy dairy."
         },
         {
-          "on_screen": "REMEMBER IT",
-          "spoken": "That is your reference. Everything after this is measured against it."
+          "on_screen": "THE 70/30 BALANCE",
+          "spoken": "The 70 percent coffee and 30 percent chicory ratio cuts through milk smoothly."
         },
         {
-          "on_screen": "CHECK IN A MONTH",
-          "spoken": "Smell it again in a month. If it has faded, your storage is the reason."
+          "on_screen": "READ THE LABEL",
+          "spoken": "Every proportion is printed plainly on the back of the jar."
         },
         {
-          "on_screen": "OURS",
-          "spoken": "Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee."
+          "on_screen": "FIND YOUR CUP",
+          "spoken": "For everyday milk coffee, choose Purity Beans Ultra Blend. Visit https://p3online.in"
         }
       ],
-      "body": "Purity Beans — Bold, Purista, Purica, and Prima are pure coffee with no additives. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-      "caption": "Smell the jar the moment you break the seal.\n\nThat is your reference. Smell it again in a month, and if it has faded, storage is the reason.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
-      "cta": "Smell yours tonight, then restock at p3online.in",
-      "comment_trigger": "When did you last smell your coffee jar?",
-      "save_trigger": "Save this and do it with your next jar.",
-      "share_trigger": "Send this to whoever opens the new jar in your house.",
-      "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia",
-      "audio": "Quiet kitchen ambience, no music bed - the spoken line carries it.",
-      "loop_ending": "Ends on the seal being broken, which is how it opens - the last frame reads as the first.",
+      "body": "Purity Beans Ultra Blend combines 70% coffee and 30% chicory deliberately to create a smooth, rounded cup that stands up to milk. Read the label for full transparency.",
+      "caption": "Why is Purity Beans Ultra Blend formulated with 70% coffee and 30% chicory? Because milk needs a partner that does not get drowned out.\n\nThe ratio is printed plainly on every jar. No hidden fillers, no guesswork—just a smooth everyday milk coffee designed for how you drink it.\n\nExplore our clean range at https://p3online.in and follow @purepantryprovisions for daily coffee transparency.",
+      "cta": "Shop Ultra Blend at https://p3online.in — Purity Beans",
+      "comment_trigger": "Do you take your coffee with milk or black? Comment below.",
+      "save_trigger": "Save this post for your next grocery restock.",
+      "share_trigger": "Send this to the milk-coffee drinker in your house.",
+      "hashtags": "#PurityBeans #UltraBlend #InstantCoffee #ReadTheLabel #CoffeeIndia",
+      "audio": {
+        "audio_category": "educational",
+        "mood": "ambient",
+        "local_track": "music_library/ambient_lounge.wav",
+        "recommendation": "Minimalist Smart Ambient",
+        "trend_status": "not_live_verified",
+        "audio_name": null,
+        "audio_id": null,
+        "audio_source": null,
+        "audio_attached": false,
+        "audio_publish_mode": "licensed_embedded",
+        "audio_required": true,
+        "manual_instruction": "Check Instagram audio catalogue for Minimalist Smart Ambient.",
+        "rights_check_required": true,
+        "confidence": 0.5,
+        "reason": "Educational content requires clean ambient background audio."
+      },
+      "loop_ending": "Ends on the jar rotating slightly to loop back to the opening frame.",
       "angle": "EDUCATE",
       "source": "evergreen_template",
-      "featured_product": "Ultra Blend",
-      "chosen_hook": "Smell the jar before you make the first cup.",
-      "editorial_score": {
-        "shareability": 5.0,
-        "saveability": 5.5,
-        "emotion_pull": 5.0,
-        "hook_strength": 6.0,
-        "brand_clarity": 6.5,
-        "overall": 5.6,
-        "verdict": "REJECT",
-        "feedback": "The hook is strong but mismatched between text overlay and spoken line, causing confusion in the first 2 seconds. Improve retention by aligning hook_text, hook_spoken, and on-screen text to the same betrayal message. Add a clearer, curiosity‑driven visual (e.g., showing the seal break) and tighten the body to deliver a single, surprising fact before the product explanation. Strengthen CTA with a specific benefit (e.g., 'Comment YOUR SMELL to get storage tips').",
-        "retention_audit": "Hook: 'You have been drinking chicory, not coffee.' is"
+      "chosen_hook": "Why 30% chicory in a milk coffee is actually a deliberate design choice.",
+      "ai_image_hook_prompt": "Hyperrealistic cinematic still frame for Instagram Reel hook. Concept: A Purity Beans Ultra Blend glass jar sitting on a dark wooden countertop next to a glass of fresh milk. Morning window light casting soft shadows. Camera: 85mm portrait lens, 9:16 vertical, shallow depth of field. THE PURITY BEANS JAR IS THE HERO — must match reference exactly. No redesign. No alternate label. No generic jar. Lighting: single warm amber beam on the Purity Beans jar. Style: photorealistic, editorial luxury FMCG, deep shadows, cinematic color grade. Vertical 9:16. No text or typography in the image. Photographed look, not rendered: visible glass texture, liquid condensation on the milk glass, natural grain. REFERENCE JARS (match exactly — same label, shape, cap): brand_assets/puritybeans_ultra_blend_50g_front.png, brand_assets/puritybeans_ultra_blend_50g_lifestyle.png, brand_assets/puritybeans_ultra_blend_100g_front.png, brand_assets/puritybeans_ultra_blend_100g_lifestyle.png",
+      "ai_video_motion_prompt": "Motion for: A Purity Beans Ultra Blend glass jar sitting on a dark wooden countertop next to a glass of fresh milk. Camera: subtle handheld sway, 9:16 vertical. Motion rules: Soft morning light shifts slightly across the countertop. Steam or dust motes drift gently in the background. The Purity Beans jar stays sharp and prominent at all times. Slow, intentional motion. 24fps film feel. No floaty camera moves.",
+      "reference_jar_paths": [
+        "brand_assets/puritybeans_ultra_blend_50g_front.png",
+        "brand_assets/puritybeans_ultra_blend_50g_lifestyle.png",
+        "brand_assets/puritybeans_ultra_blend_100g_front.png",
+        "brand_assets/puritybeans_ultra_blend_100g_lifestyle.png"
+      ],
+      "hook_visual_concept": "A Purity Beans Ultra Blend glass jar next to a glass of milk with morning window light.",
+      "reel_inspiration": {
+        "inspiration_id": "gourmet_duo_mini_style",
+        "mode": "style_cues",
+        "source_template_id": "gourmet_duo_mini_reel",
+        "source_filename": "gourmet_duo_mini.mp4",
+        "publish_source_video": false,
+        "copied": {
+          "pixels": false,
+          "audio": false,
+          "sku": false
+        },
+        "featured_product": "",
+        "featured_slug": "",
+        "cues": [
+          {
+            "id": "pacing",
+            "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
+          },
+          {
+            "id": "framing",
+            "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
+          },
+          {
+            "id": "storytelling",
+            "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
+          },
+          {
+            "id": "aesthetic",
+            "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
+          }
+        ],
+        "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
       },
-      "funnel_objective": "FOLLOW",
-      "objective": "Follower Growth",
-      "primary_cta": "Follow @purepantryprovisions for Ultra Blend: 70% coffee and 30% chicory.",
-      "success_metric": "follows",
-      "target": 250,
+      "featured_product": "Ultra Blend",
+      "editorial_score": {
+        "shareability": 8.5,
+        "saveability": 8.0,
+        "emotion_pull": 7.5,
+        "hook_strength": 9.0,
+        "brand_clarity": 9.5,
+        "overall": 8.5,
+        "verdict": "PASS",
+        "feedback": "The asset successfully navigates the delicate balance of defending a blended product (Ultra Blend) without resorting to anti-chicory rhetoric. The hook is counter-intuitive and immediately disrupts the typical 'chicory is bad' echo chamber, driving high curiosity and retention. The 70/30 transparency is handled correctly.",
+        "retention_audit": "0-2s (Hook): Excellent pattern interrupt; challenges a common market bias. 2-6s ('The Milk Test'): Keeps attention steady by introducing a practical culinary problem (milk drowning out coffee). 6-15s ('The 70/30 Balance'): Delivers clear value and justification without being defensive. 15-25s ('Read the Label'): Builds high trust through transparency. 25-35s (CTA): Strong, clear directional link to p3online.in with zero friction."
+      },
+      "viral_potential": {
+        "scores": {
+          "hook": 8.0,
+          "curiosity_gap": 8.0,
+          "relatability": 9.0,
+          "shareability": 8.0,
+          "comment_trigger": 8.0,
+          "format_fit": 9.0,
+          "follow_cta": 8.0
+        },
+        "overall": 8.0,
+        "weakest": [
+          "hook",
+          "curiosity_gap"
+        ],
+        "feedback": "The piece hits a strong educational note by addressing the 70/30 blend ratio honestly and directly, matching the exact composition guidelines for Ultra Blend without any false health or zero-chicory claims. Pacing instructions are tight and align well with native reel mechanics.",
+        "better_hook": "Most people think chicory in instant coffee is a mistake. Here is why we do it on purpose.",
+        "passed": true,
+        "honesty": [],
+        "pass_mark": 8.0
+      },
+      "viral_readiness_score": 94.0,
       "growth_plan": {
         "primary_objective": "reach new relevant coffee drinkers",
         "secondary_objective": "earn qualified followers",
@@ -72,6 +147,195 @@
       "growth_review": {
         "platform": "reel",
         "label": "reel_1",
+        "decision": "PASS",
+        "overall": 8.67,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 1,
+        "retry_limit": 8,
+        "feedback": "",
+        "plan": {
+          "primary_objective": "reach new relevant coffee drinkers",
+          "secondary_objective": "earn qualified followers",
+          "audience": "people who buy instant coffee and have never turned the jar around",
+          "angle": "visual discovery of one label fact",
+          "follow_promise": "Follow for the next thing the label is hiding.",
+          "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+          "platform": "reel",
+          "sku": "Ultra Blend",
+          "day": 288
+        },
+        "published": false
+      },
+      "funnel_objective": "FOLLOW",
+      "objective": "Follower Growth",
+      "primary_cta": "Follow @purepantryprovisions for Ultra Blend: 70% coffee and 30% chicory.",
+      "success_metric": "follows",
+      "target": 250
+    },
+    {
+      "type": "reel",
+      "hook": "Why your instant coffee loses its aroma in two weeks—and how to fix it with Purity Beans.",
+      "hook_text": "WHY YOUR COFFEE LOSES ITS AROMA",
+      "hook_spoken": "If your instant coffee smells flat after two weeks, you are making one silent storage mistake with your Purity Beans jar.",
+      "hook_text_overlay": "STOP AIR EXPOSURE",
+      "frames": [
+        {
+          "on_screen": "WHY YOUR COFFEE LOSES ITS AROMA",
+          "spoken": "If your instant coffee smells flat after two weeks, you are making one silent storage mistake."
+        },
+        {
+          "on_screen": "THE AIR TRAP",
+          "spoken": "Leaving your glass jar lid loose or storing it next to your stove cooks the delicate aromatic oils."
+        },
+        {
+          "on_screen": "THE GLASS SEAL",
+          "spoken": "Purity Beans uses food-grade glass jars designed to lock in every note until you break the safety seal."
+        },
+        {
+          "on_screen": "READ THE LABEL",
+          "spoken": "Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee."
+        },
+        {
+          "on_screen": "UPGRADE YOUR CUP",
+          "spoken": "Keep your Purity Beans jar sealed tight, grab your next supply at https://p3online.in, and taste the difference."
+        }
+      ],
+      "body": "Purity Beans packaging is engineered in food-grade glass to protect what matters. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Visit https://p3online.in",
+      "caption": "Why your instant coffee loses its aroma in two weeks—and how to fix it.\n\nMost people leave their Purity Beans jars unsealed or exposed to kitchen heat, destroying the natural aromatic compounds within days. Our food-grade glass packaging is built to protect every single granule.\n\nRead the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\nShop your next Purity Beans jar at https://p3online.in\n\np3online.in",
+      "cta": "Protect your morning brew with Purity Beans. Order now at https://p3online.in",
+      "comment_trigger": "Where do you store your Purity Beans jar?",
+      "save_trigger": "Save this to remember proper coffee storage.",
+      "share_trigger": "Share this with someone who leaves their Purity Beans jar open.",
+      "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia #CoffeeStorage",
+      "audio": "Subtle ambient kitchen sounds, crisp glass lid click, calm acoustic background.",
+      "loop_ending": "Ends on the lid sealing shut, looping back to the opening question about aroma loss.",
+      "angle": "EDUCATE",
+      "source": "growth_template",
+      "featured_product": "Ultra Blend",
+      "chosen_hook": "Why your instant coffee loses its aroma in two weeks—and how to fix it.",
+      "editorial_score": {
+        "shareability": 6.0,
+        "saveability": 6.5,
+        "emotion_pull": 5.5,
+        "hook_strength": 6.0,
+        "brand_clarity": 9.0,
+        "overall": 6.6,
+        "verdict": "REJECT",
+        "feedback": "The hook focuses on aroma loss over two weeks, which is a slow-burn educational premise rather than an immediate scroll-stopper. Attention drops during the label disclosure frame because it transitions from a storage tip into a legal/product compliance readout that breaks viewer pacing. To fix this, open with a higher-tension hook about ruined morning coffee, tighten the pacing between frames, and weave the Ultra Blend 70/30 distinction naturally into the narrative instead of sounding like a disclaimer.",
+        "retention_audit": "Frame 1 (0-2s): Good informational start, but lacks a high-impact curiosity gap to instantly arrest the thumb. Frame 2 (2-6s): Clear actionable storage mistake, keeps attention steady. Frame 3 (6-12s): Introduces packaging value well. Frame 4 (12-18s): Attention dip; the product range breakdown reads like a dry disclaimer and halts narrative momentum. Frame 5 (18-25s): Solid conversion push, but recovery is weakened by the prior frame's drop."
+      },
+      "funnel_objective": "AUTHORITY",
+      "objective": "Brand Awareness",
+      "primary_cta": "Save this guide before your next grocery run",
+      "success_metric": "saves",
+      "target": 300,
+      "growth_plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "people who buy instant coffee and have never turned the jar around",
+        "angle": "visual discovery of one label fact — variant 2, different hook",
+        "follow_promise": "Follow for the next thing the label is hiding (part 2).",
+        "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+        "platform": "reel",
+        "sku": "Ultra Blend",
+        "day": 288
+      },
+      "growth_review": {
+        "platform": "reel",
+        "label": "reel_2",
         "decision": "PASS",
         "overall": 8.47,
         "threshold": 8.0,
@@ -175,8 +439,8 @@
           "primary_objective": "reach new relevant coffee drinkers",
           "secondary_objective": "earn qualified followers",
           "audience": "people who buy instant coffee and have never turned the jar around",
-          "angle": "visual discovery of one label fact",
-          "follow_promise": "Follow for the next thing the label is hiding.",
+          "angle": "visual discovery of one label fact — variant 2, different hook",
+          "follow_promise": "Follow for the next thing the label is hiding (part 2).",
           "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
           "platform": "reel",
           "sku": "Ultra Blend",
@@ -184,108 +448,71 @@
         },
         "published": false
       }
-    },
-    {
-      "featured_product": "Ultra Blend",
-      "objective": "Revenue",
-      "primary_cta": "Visit https://p3online.in to buy pure coffee",
-      "success_metric": "purchases",
-      "_shape": [
-        "angle",
-        "audio",
-        "body",
-        "caption",
-        "chosen_hook",
-        "comment_trigger",
-        "cta",
-        "featured_product",
-        "frames",
-        "funnel_objective",
-        "growth_plan",
-        "hashtags",
-        "hook",
-        "hook_spoken",
-        "hook_text",
-        "hook_text_overlay",
-        "loop_ending",
-        "objective",
-        "primary_cta",
-        "save_trigger",
-        "share_trigger",
-        "source",
-        "success_metric",
-        "target",
-        "type"
-      ],
-      "needs_regen": true,
-      "held": true,
-      "hold_reason": "purged banned-claim draft: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'"
     }
   ],
   "carousel": {
     "type": "carousel",
-    "hook": "A one month test for your coffee storage",
-    "title": "A one month test for your coffee storage",
+    "hook": "Why does your coffee lose its aroma before the month is even half over?",
+    "title": "Why Your Morning Coffee Loses Its Aroma in Just 30 Days",
     "slides": [
       {
         "slide": 1,
-        "heading": "Open a fresh jar",
-        "body": "Break the seal and smell it before you make anything.",
-        "visual": "Foil seal being peeled back"
+        "heading": "That First Seal-Breaking Aroma",
+        "body": "The moment you pop a fresh jar, the aroma is intense. That is your baseline. Remember it.",
+        "visual": "Macro photograph of a real Purity Beans glass jar with foil seal being peeled back, warm amber studio lighting, shallow depth of field"
       },
       {
         "slide": 2,
-        "heading": "That smell is your baseline",
-        "body": "It is the strongest the jar will ever be. Remember it.",
-        "visual": "Jar held up to the light"
+        "heading": "The 30-Day Fade Test",
+        "body": "Smell the same jar four weeks later. If the aroma has vanished, your storage is letting air in.",
+        "visual": "A pair of human hands holding the Purity Beans jar near a sunlit kitchen window, visible skin pores and natural textures, photorealistic"
       },
       {
         "slide": 3,
-        "heading": "Store it the way you always do",
-        "body": "No changes. You are testing your own kitchen, not a theory.",
-        "visual": "Jar going into its usual place"
+        "heading": "The Three Kitchen Culprits",
+        "body": "Air, heat, and moisture destroy volatile aromatic compounds faster than anything else in your kitchen.",
+        "visual": "Close-up of a kitchen counter with lived-in details: a used ceramic spoon, a subtle water ring, and the Purity Beans jar resting beside them"
       },
       {
         "slide": 4,
-        "heading": "Smell it again in a month",
-        "body": "Same jar, same nose, four weeks later.",
-        "visual": "Hand reaching for the same jar"
+        "heading": "Why Glass Beats Plastic",
+        "body": "Food-grade glass containers protect delicate coffee aromas from moisture and oxygen ingress far better than flexible pouches.",
+        "visual": "Side-by-side macro view showing the thick walls of the Purity Beans glass jar reflecting warm kitchen light"
       },
       {
         "slide": 5,
-        "heading": "Read the result",
-        "body": "Faded means air, heat or damp got in. All three are fixable.",
-        "visual": "Lid being closed firmly"
+        "heading": "Check Your Pantry Setup",
+        "body": "Store your coffee away from the stove and direct sunlight. Keep the lid sealed tight after every single scoop.",
+        "visual": "A hand firmly twisting the cap onto the Purity Beans jar on a clean wooden countertop, soft natural falloff"
       },
       {
         "slide": 6,
-        "heading": "What ours says",
-        "body": "Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. p3online.in",
-        "visual": "Purity Beans jar, label facing camera"
+        "heading": "Clean Coffee Deserves Proper Care",
+        "body": "Purity Beans brings you Bold, Purista, Purica, and Prima as pure coffee, alongside Ultra Blend as a smooth 70% coffee, 30% chicory milk coffee. Discover your preference at https://p3online.in",
+        "visual": "The authentic Purity Beans glass jar sitting proudly on a dark marble surface, label facing the camera clearly with natural reflections"
       }
     ],
-    "caption": "Smell a fresh jar the moment you open it. That is your baseline.\n\nSmell it again in a month. Faded means air, heat or damp got in, and all three are fixable.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
-    "cta": "Run the test, then restock at p3online.in",
-    "comment_trigger": "When did you last smell your coffee jar?",
-    "save_trigger": "Save this and start with your next jar.",
-    "share_trigger": "Send this to whoever opens the new jar in your house.",
-    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia",
+    "caption": "Why does your coffee lose its aroma before the month is even half over? Most of us store our jars near heat or let air sneak past loose lids, ruining the experience before the jar is finished.\n\nTake the 30-day aroma test on your shelf today. Notice how freshness holds when stored properly in food-grade glass.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\nShop now at https://p3online.in",
+    "cta": "Run the aroma test today and restock at https://p3online.in",
+    "comment_trigger": "When did you last check the seal on your coffee jar? Comment below.",
+    "save_trigger": "Save this carousel before your next kitchen restock.",
+    "share_trigger": "Share this with someone who leaves their coffee jar lid half-open.",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #CoffeeStorage #ReadTheLabel #CoffeeIndia #GourmetCoffee",
     "source": "evergreen_template",
     "featured_product": "Ultra Blend",
-    "hook_text": "A one month test for your coffee storage",
-    "chosen_hook": "A one month test for your coffee storage",
+    "hook_text": "Why does your coffee lose its aroma before the month is even half over?",
+    "chosen_hook": "Why does your coffee lose its aroma before the month is even half over?",
     "editorial_score": {
-      "shareability": 4.2,
-      "saveability": 4.5,
-      "emotion_pull": 3.0,
-      "hook_strength": 4.0,
-      "brand_clarity": 5.5,
-      "overall": 4.4,
+      "shareability": 6.5,
+      "saveability": 8.0,
+      "emotion_pull": 6.2,
+      "hook_strength": 7.0,
+      "brand_clarity": 8.8,
+      "overall": 7.3,
       "verdict": "REJECT",
-      "feedback": "The carousel’s hook is generic and does not create urgency or a sense of betrayal; it could apply to any coffee brand. The opening line \"A one month test for your coffee storage\" fails to hook in under 2 seconds. Each slide repeats the same generic instructions (open jar, smell, store, smell again, read result) which feels like a tutorial rather than a story or revelation. The final slide only states the product facts without a compelling reason to act or a clear brand promise. The caption repeats the same information and lacks a strong call‑to‑action that ties back to the brand’s unique selling point. To pull readers forward you need a surprise, a myth‑busting angle, and a clear identity statement that positions Purity Beans as the sole solution. Replace the hook with a betrayal or curiosity gap hook, add a visual comparison (chicory vs pure), and finish with a direct, emotional CTA that invites users to test their jar and share results.",
-      "retention_audit": "Slide 1: \"Open a fresh jar\" – generic, no hook. Slide 2: \"That smell is your baseline\" – no curiosity. Slide 3: \"Store it the way you always do\" – repeats prior action. Slide 4: \"Smell it again in a month\" – still generic. Slide 5: \"Read the result\" – no visual cue, no surprise. Slide 6: \"What ours says\" – brand facts only, no emotional pull or clear call to action. Each slide fails to build tension or give a reason to swipe to the next. The hook and caption also do not use any of the proven hook patterns (betrayal, curiosity gap, identity challenge)."
+      "feedback": "The carousel provides good educational utility regarding coffee aroma storage, but Slide 1 and Slide 2 feel a bit generic. To push past the 8.0 overall threshold, the hook needs to provoke a stronger curiosity gap or speak directly to a frustrating daily habit. The transition through the middle slides is solid, but the emotional pull is flat. Tighten the hook to challenge the user's current habits more sharply.",
+      "retention_audit": "Slide 1: Hook 'That First Seal-Breaking Aroma' is descriptive rather than gripping; viewers might swipe casually. Slide 2: 'The 30-Day Fade Test' is good, but lacks an immediate call to check their own jar right now. Slide 3: Standard pantry advice; risk of drop-off if the user feels they already know this. Slides 4-6: Strong product clarity and accurate portfolio distinctions, but copy is slightly too polite."
     },
-    "editorial_error": "editorial time budget reached before this piece passed",
     "funnel_objective": "AUTHORITY",
     "objective": "Brand Awareness",
     "primary_cta": "Save this guide before your next grocery run",
@@ -306,7 +533,7 @@
       "platform": "carousel",
       "label": "carousel",
       "decision": "PASS",
-      "overall": 8.27,
+      "overall": 8.47,
       "threshold": 8.0,
       "dimensions": [
         {
@@ -335,8 +562,8 @@
         },
         {
           "name": "shareability",
-          "score": 6.0,
-          "evidence": "No explicit share or reply ask.",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
           "hard_fail": false
         },
         {
@@ -403,7 +630,7 @@
       "hard_fails": [],
       "attempts": 1,
       "retry_limit": 8,
-      "feedback": "shareability 6.0: No explicit share or reply ask.; follow_conversion 5.0: No follow promise is visible.",
+      "feedback": "follow_conversion 5.0: No follow promise is visible.",
       "plan": {
         "primary_objective": "drive product-page visits/purchases",
         "secondary_objective": "earn qualified followers",
@@ -420,69 +647,51 @@
   },
   "instagram_post": {
     "type": "instagram_post",
-    "hook": "Ultra Blend: 70% coffee, 30% chicory, on purpose.",
-    "body": "Ultra Blend is 70% coffee and 30% chicory, made for a smooth milk coffee. Purity Beans — Bold, Purista, Purica, and Prima list coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "caption": "Why is Purity Beans Ultra Blend 70% coffee and 30% chicory? The reason is milk: the blend gives a smooth, rounded milk coffee. Read the label and you will see the ratio printed plainly. That is the difference between a blend and a guess. Follow @purepantryprovisions for daily coffee know-how. p3online.in",
-    "cta": "Follow @purepantryprovisions for the how-to, p3online.in — Purity Beans",
-    "comment_trigger": "Milk coffee or black: how do you take yours?",
-    "save_trigger": "Save this so you remember what to look for.",
-    "share_trigger": "Send this to the milk-coffee lover in your house.",
-    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia",
+    "hook": "Humidity is quietly stealing the aroma from your coffee jar every single morning.",
+    "body": "The moment you crack the safety seal on a fresh glass jar of Purity Beans, that intense, rich aroma is at its absolute peak. But if your kitchen counter is humid or the lid stays unsealed for an extra second, ambient moisture quietly robs your brew of its true character.\n\nHere is a simple kitchen test: smell your jar today, then smell it again in thirty days. If that punchy opening aroma has faded into a flat, muted scent, your storage habits are leaking flavor before you finish the pack.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\nKeep your glass jar sealed tight, store it away from direct sunlight, and protect your morning ritual from kitchen humidity. Read the back panel on every jar and know exactly what goes into your cup.\n\nExplore our range and secure your next jar at https://p3online.in",
+    "caption": "Humidity is quietly stealing the aroma from your coffee jar every single morning.\n\nThe moment you crack the safety seal on a fresh glass jar of Purity Beans, that intense, rich aroma is at its absolute peak. But if your kitchen counter is humid or the lid stays unsealed for an extra second, ambient moisture quietly robs your brew of its true character.\n\nHere is a simple kitchen test: smell your jar today, then smell it again in thirty days. If that punchy opening aroma has faded into a flat, muted scent, your storage habits are leaking flavor before you finish the pack.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\nKeep your glass jar sealed tight, store it away from direct sunlight, and protect your morning ritual from kitchen humidity. Read the back panel on every jar and know exactly what goes into your cup.\n\nExplore our range and secure your next jar at https://p3online.in\n\n#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia #CoffeeLoversIndia",
+    "cta": "Test your kitchen storage today, then restock your favorite blend at https://p3online.in",
+    "comment_trigger": "Comment FRESH if you inspect your coffee jar aroma.",
+    "save_trigger": "Save this post to protect your morning coffee flavor from humidity.",
+    "share_trigger": "Share this with someone who leaves their coffee jar wide open on the counter.",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia #CoffeeLoversIndia",
     "source": "evergreen_template",
-    "hook_text": "Ultra Blend: 70% coffee, 30% chicory, on purpose.",
-    "chosen_hook": "Ultra Blend: 70% coffee, 30% chicory, on purpose.",
-    "reel_inspiration": {
-      "inspiration_id": "gourmet_duo_mini_style",
-      "mode": "style_cues",
-      "source_template_id": "gourmet_duo_mini_reel",
-      "source_filename": "gourmet_duo_mini.mp4",
-      "publish_source_video": false,
-      "copied": {
-        "pixels": false,
-        "audio": false,
-        "sku": false
-      },
-      "featured_product": "",
-      "featured_slug": "",
-      "cues": [
-        {
-          "id": "pacing",
-          "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
-        },
-        {
-          "id": "framing",
-          "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
-        },
-        {
-          "id": "storytelling",
-          "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
-        },
-        {
-          "id": "aesthetic",
-          "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
-        }
-      ],
-      "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
-    },
-    "audio": {
-      "audio_category": "educational",
-      "mood": "ambient",
-      "local_track": "music_library/ambient_lounge.wav",
-      "recommendation": "Minimalist Smart Ambient (Search: 'Deep Focus Ambient' or 'Subtle Brainwave')",
-      "trend_status": "not_live_verified",
-      "audio_name": null,
-      "audio_id": null,
-      "audio_source": null,
-      "audio_attached": false,
-      "audio_publish_mode": "licensed_embedded",
-      "audio_required": true,
-      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Minimalist Smart Ambient (Search: 'Deep Focus Ambient' or 'Subtle Brainwave'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
-      "rights_check_required": true,
-      "confidence": 0.5,
-      "reason": "Content classified as 'educational' -> ambient mood. No performance history yet — exploring."
-    },
     "featured_product": "Ultra Blend",
-    "editorial_error": "editorial time budget reached before this piece passed",
+    "hook_text": "Humidity is quietly stealing the aroma from your coffee jar every single morning.",
+    "chosen_hook": "Humidity is quietly stealing the aroma from your coffee jar every single morning.",
+    "editorial_score": {
+      "shareability": 7.0,
+      "saveability": 8.2,
+      "emotion_pull": 7.5,
+      "hook_strength": 8.0,
+      "brand_clarity": 9.2,
+      "overall": 8.0,
+      "verdict": "PASS",
+      "feedback": "The content brilliantly addresses a hidden, everyday consumer frustration (losing coffee aroma to humidity), which makes it highly saveable. The Ultra Blend disclosure is completely compliant and accurate. To optimize future iterations, ensure the transition from the humidity warning to the product distinction flows with even tighter conversational pacing.",
+      "retention_audit": "Line 1 (Hook): 'Humidity is quietly stealing the aroma from your coffee jar every single morning.' - Strong, unexpected environmental hook that stops the scroll immediately. Lines 2-4 (Body): Good sensory details ('punchy opening aroma has faded into a flat, muted scent') that keep the reader engaged. Line 5-6 (Disclosure & Care): Accurate and transparent product breakdown without breaking trust. Line 7-8 (CTA & Triggers): Clean transition to the website and clear engagement triggers."
+    },
+    "viral_potential": {
+      "scores": {
+        "hook": 8.0,
+        "curiosity_gap": 7.0,
+        "relatability": 8.0,
+        "shareability": 8.0,
+        "comment_trigger": 7.0,
+        "format_fit": 8.0,
+        "follow_cta": 7.0
+      },
+      "overall": 7.5,
+      "weakest": [
+        "curiosity_gap",
+        "comment_trigger",
+        "follow_cta"
+      ],
+      "feedback": "The opening hook is strong and taps into a real everyday Indian kitchen problem (humidity). To push the score higher, tighten the curiosity gap by hinting at the exact storage mistake right in the middle lines without giving it away instantly. Upgrade the comment trigger to ask a specific binary choice or a relatable question about kitchen storage habits rather than just typing a single word like 'FRESH'. Ensure the follow CTA clearly links the value of knowing your ingredients to following @purepantryprovisions.",
+      "better_hook": "Your kitchen humidity is destroying your coffee's flavor before you even finish the jar.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
     "funnel_objective": "COMMUNITY",
     "objective": "Engagement Growth",
     "primary_cta": "Which one would you choose? Comment below",
@@ -617,23 +826,50 @@
   },
   "linkedin_post": {
     "type": "linkedin_post",
-    "hook": "The label question comes up at every meeting",
-    "body": "Every buyer conversation reaches the ingredient panel, usually within the first few minutes. It is the fastest way to understand what a product actually is. Purity Beans — Bold, Purista, Purica, and Prima are pure coffee with no additives. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. The panel is the pitch. We are expanding our distributor network. If you distribute FMCG and want the details, message me. p3online.in",
-    "cta": "DM for the distributor pack Purity Beans — pure Arabica in Purica and Prima. Shop: https://p3online.in",
-    "hashtags": "#FMCG #Distribution #Coffee #IndianBrands #PurityBeans",
-    "source": "evergreen_distributor",
-    "hook_text": "The label question comes up at every meeting",
-    "chosen_hook": "The label question comes up at every meeting",
-    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
-    "save_trigger": "Save this before your next grocery run — real coffee matters.",
-    "share_trigger": "Share with someone who starts every morning with coffee.",
-    "featured_product": "Ultra Blend",
-    "editorial_error": "editorial time budget reached before this piece passed",
-    "funnel_objective": "AUTHORITY",
-    "objective": "Brand Awareness",
-    "primary_cta": "Save this guide before your next grocery run",
-    "success_metric": "saves",
-    "target": 300,
+    "hook": "We almost launched with the wrong label. Here's what changed it.",
+    "body": "When we were designing the packaging for Purity Beans, a veteran retail consultant gave us advice that sounds completely logical in the corporate FMCG world: 'Make the ingredient list as small as possible. Put it near the bottom fold. Nobody reads it anyway.'\n\nFor a week, we considered it. It saves space. It looks cleaner to modern minimalist standards. But it felt wrong for an Indian brand built on trust.\n\nWe realized that urban coffee drinkers are tired of squinting at fine print. When you buy morning coffee, you shouldn't need a magnifying glass to know what's in your cup. We threw out the tiny font and made our ingredient panel the centerpiece of the jar.\n\nToday, transparency is our operating principle. Bold, Purista, Purica, and Prima are pure coffee with zero additives. Ultra Blend is formulated as a smooth 70% coffee and 30% chicory milk coffee. No guessing, no hidden fillers, just honest labeling.\n\nRead the jar: https://p3online.in",
+    "cta": "Comment TRANSPARENCY below to share your thoughts on clear food labeling, and follow Purity Beans for updates on our pure coffee journey. Shop the range: https://p3online.in",
+    "hashtags": "#PurityBeans #BusinessTransparency #CoffeeLoversIndia #StartupLessons #IndianBrands",
+    "source": "evergreen_founder_story",
+    "hook_text": "We almost launched with the wrong label. Here's what changed it.",
+    "chosen_hook": "We almost launched with the wrong label. Here's what changed it.",
+    "comment_trigger": "Comment TRANSPARENCY below to share your thoughts on clear food labeling.",
+    "save_trigger": "Save this post if you believe brand honesty is the foundation of long-term business growth.",
+    "share_trigger": "Share this with a founder or professional who values transparent business practices.",
+    "featured_product": "Variety Box",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.9,
+      "verdict": "PASS",
+      "feedback": "The LinkedIn founder narrative successfully captures professional attention by addressing a universally relatable industry dilemma regarding package design and consumer transparency. The handling of the product specs (Bold, Purista, Purica, and Prima as pure; Ultra Blend as a smooth 70/30 coffee-chicory milk coffee) respects the brand guidelines cleanly without toxic anti-chicory rhetoric. The call to action effectively drives engagement and profile interaction.",
+      "retention_audit": "Line 1 ('We almost launched with the wrong label. Here's what changed it.') acts as an immediate pattern interrupt for professionals scrolling through LinkedIn. Paragraphs 2 and 3 maintain momentum by detailing a high-stakes ethical decision without dragging. Paragraph 4 seamlessly introduces the precise product line realities (pure lines vs. Ultra Blend's honest 70/30 disclosure). The closing CTA provides an intentional, friction-free engagement path."
+    },
+    "retention_audit": "Line 1 creates immediate curiosity about a high-stakes founder decision. Middle sections explain the philosophy of clear labeling without corporate jargon or rule violations. Closing offers an engaging discussion prompt while maintaining brand clarity.",
+    "viral_potential": {
+      "scores": {
+        "hook": 8.0,
+        "curiosity_gap": 8.0,
+        "relatability": 7.0,
+        "shareability": 8.0,
+        "comment_trigger": 8.0,
+        "format_fit": 9.0,
+        "follow_cta": 8.0
+      },
+      "overall": 8.0,
+      "weakest": [
+        "relatability"
+      ],
+      "feedback": "The founder story format works exceptionally well for LinkedIn, and the narrative around labeling transparency builds strong trust without violating any brand rules. To maximize relatability, connect the corporate design dilemma directly back to the consumer's frustration of squinting at tiny print on grocery store shelves.",
+      "better_hook": "A veteran retail consultant told us to hide our ingredient list at the bottom of the jar. We did the exact opposite.",
+      "passed": true,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "viral_readiness_score": 89.0,
     "growth_plan": {
       "primary_objective": "B2B inquiries (retailer, cafe, office, wholesale, distributor)",
       "secondary_objective": "earn qualified followers",
@@ -759,7 +995,12 @@
         "day": 288
       },
       "published": false
-    }
+    },
+    "funnel_objective": "AUTHORITY",
+    "objective": "Brand Awareness",
+    "primary_cta": "Save this guide before your next grocery run",
+    "success_metric": "saves",
+    "target": 300
   },
   "_source": "emergency_fallback_evergreen",
   "_recycled": true,
@@ -767,15 +1008,76 @@
     "story_1": {
       "type": "poll",
       "headline": "READ THE BACK",
-      "body": "Most instant coffee jars hide the truth in small print. Do you actually check the ingredients before buying?",
-      "visual_description": "Handheld iPhone footage. Extreme close-up of the back ingredient label of a Purity Beans Ultra Blend jar. The camera focuses on the text '70% coffee, 30% chicory'. Natural kitchen lighting with a slight window overexposure. A finger points directly to the percentage.",
-      "poll_options": [
-        "Always check",
-        "Never thought about it"
-      ],
-      "overlay_text": "The truth is in the label.",
-      "brand_mention": "Purity Beans",
-      "cta": "Check the label at https://p3online.in"
+      "subtext": "Ultra Blend gives you a smooth 70% coffee, 30% chicory milk coffee. See the label at https://p3online.in",
+      "poll_question": "Do you check the jar label before buying your daily milk coffee?",
+      "option_a": "Haven't checked",
+      "option_b": "Read the back",
+      "reel_inspiration": {
+        "inspiration_id": "gourmet_duo_mini_style",
+        "mode": "style_cues",
+        "source_template_id": "gourmet_duo_mini_reel",
+        "source_filename": "gourmet_duo_mini.mp4",
+        "publish_source_video": false,
+        "copied": {
+          "pixels": false,
+          "audio": false,
+          "sku": false
+        },
+        "featured_product": "Ultra Blend",
+        "featured_slug": "ultra-blend",
+        "cues": [
+          {
+            "id": "pacing",
+            "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
+          },
+          {
+            "id": "framing",
+            "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
+          },
+          {
+            "id": "storytelling",
+            "cue": "Two moods. A single jar shows two moods of that jar."
+          },
+          {
+            "id": "aesthetic",
+            "cue": "Warm editorial glass-jar photography. The jar is the hero."
+          }
+        ],
+        "audio_note": "Trending Lo-Fi Cafe Beats."
+      },
+      "audio": {
+        "audio_category": "coffee_aesthetic",
+        "mood": "lofi",
+        "local_track": "music_library/lofi_cafe.wav",
+        "recommendation": "Trending Lo-Fi Cafe Beats",
+        "trend_status": "not_live_verified",
+        "audio_name": null,
+        "audio_id": null,
+        "audio_source": null,
+        "audio_attached": false,
+        "audio_publish_mode": "licensed_embedded",
+        "audio_required": true,
+        "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats.",
+        "rights_check_required": true,
+        "confidence": 0.5,
+        "reason": "Content classified as coffee_aesthetic."
+      },
+      "funnel_objective": "CONVERSION",
+      "objective": "Consumer Purchase",
+      "primary_cta": "Buy Ultra Blend at https://p3online.in",
+      "success_metric": "link_clicks",
+      "target": 50,
+      "growth_plan": {
+        "primary_objective": "drive product-page visits/purchases",
+        "secondary_objective": "earn qualified followers",
+        "audience": "people already watching who will answer one real question",
+        "angle": "a connected sequence from a hook to one next step",
+        "follow_promise": "Follow for a short answer and the honest next step.",
+        "rationale": "Stories are a sequence, not four unrelated posters.",
+        "platform": "stories",
+        "sku": "Ultra Blend",
+        "day": 288
+      }
     },
     "audio": {
       "audio_category": "coffee_aesthetic",
@@ -789,14 +1091,14 @@
       "audio_attached": false,
       "audio_publish_mode": "licensed_embedded",
       "audio_required": true,
-      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it.",
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
       "rights_check_required": true,
       "confidence": 0.5,
-      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. Using lofi to create a low-friction, premium home atmosphere."
+      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
     },
     "funnel_objective": "CONVERSION",
     "objective": "Consumer Purchase",
-    "primary_cta": "Buy Purity Beans at p3online.in",
+    "primary_cta": "Buy pure Arabica at p3online.in",
     "success_metric": "link_clicks",
     "target": 50,
     "growth_plan": {
@@ -909,7 +1211,7 @@
         }
       ],
       "hard_fails": [],
-      "attempts": 8,
+      "attempts": 2,
       "retry_limit": 8,
       "feedback": "shareability 6.0: No explicit share or reply ask.",
       "plan": {
@@ -925,34 +1227,7 @@
       },
       "published": false
     },
-    "_growth_attempts": 8,
-    "story_2": {
-      "type": "revelation",
-      "headline": "THE 70/30 TRUTH",
-      "body": "Honesty is our only ingredient. Purity Beans Ultra Blend is a smooth 70% coffee and 30% chicory blend, designed for that classic milk coffee taste without the guesswork.",
-      "visual_description": "Shot on iPhone 15. A real Purity Beans Ultra Blend glass jar sitting on a wooden counter. Beside it is a glass of milk and a used spoon with a bit of coffee residue. Natural morning light creates a soft shadow. The label is clearly visible and untouched.",
-      "overlay_text": "70% Coffee | 30% Chicory",
-      "brand_mention": "Purity Beans",
-      "cta": "Shop Ultra Blend: https://p3online.in"
-    },
-    "story_3": {
-      "type": "comparison",
-      "headline": "CAFE QUALITY, HOME PRICE",
-      "body": "Why pay ₹180 at a cafe when you can get a smooth, honest cup for about ₹5? Purity Beans Ultra Blend gives you the premium experience at a fraction of the cost.",
-      "visual_description": "Split screen. Left side: A blurry, expensive cafe receipt showing ₹180. Right side: A crisp, high-resolution shot of a steaming cup of Purity Beans Ultra Blend coffee with the glass jar in the background. Depth of field is shallow, focusing on the steam.",
-      "overlay_text": "₹180 vs ₹5 per cup",
-      "brand_mention": "Purity Beans",
-      "cta": "Switch to Purity Beans: https://p3online.in"
-    },
-    "story_4": {
-      "type": "cta",
-      "headline": "CHOOSE YOUR PURITY",
-      "body": "Whether you want the smooth 70/30 Ultra Blend or our 100% pure coffee range (Bold, Purista, Purica), we have your perfect cup ready.",
-      "visual_description": "A wide handheld shot of the 50g Variety Box open on a table. All four jars (Ultra Blend, Bold, Purista, Purica) are visible. The lighting is warm and lived-in, with a laptop and a notebook in the blurred background.",
-      "overlay_text": "Find your favorite blend.",
-      "brand_mention": "Purity Beans",
-      "cta": "Get the Variety Box: https://p3online.in/products/variety-box"
-    }
+    "_growth_attempts": 2
   },
   "_asset_metadata": [
     {
@@ -992,7 +1267,7 @@
       "schema_version": "1.4.0",
       "publisher_version": "2.3.0",
       "asset_format": "3.1.0",
-      "publish_time": "2026-10-16T06:01:38",
+      "publish_time": "2026-10-16T07:42:49",
       "status": "scheduled"
     },
     {
@@ -1032,7 +1307,7 @@
       "schema_version": "1.4.0",
       "publisher_version": "2.3.0",
       "asset_format": "3.1.0",
-      "publish_time": "2026-10-16T06:01:38",
+      "publish_time": "2026-10-16T07:42:49",
       "status": "scheduled"
     },
     {
@@ -1072,7 +1347,7 @@
       "schema_version": "1.4.0",
       "publisher_version": "2.3.0",
       "asset_format": "3.1.0",
-      "publish_time": "2026-10-16T06:01:38",
+      "publish_time": "2026-10-16T07:42:49",
       "status": "scheduled"
     },
     {
@@ -1112,7 +1387,7 @@
       "schema_version": "1.4.0",
       "publisher_version": "2.3.0",
       "asset_format": "3.1.0",
-      "publish_time": "2026-10-16T06:01:38",
+      "publish_time": "2026-10-16T07:42:49",
       "status": "scheduled"
     }
   ],
@@ -1122,129 +1397,157 @@
       {
         "attempt": 1,
         "rung": "feedback",
-        "feedback": "The reel starts with a factual statement about Ultra Blend’s ratio, which does not trigger curiosity, betrayal, or identity challenge – the core hooks for this audience. The hook line is generic and could apply to any product, so it fails to stop the scroll in 2 seconds. Subsequent frames simply res"
-      },
-      {
-        "attempt": 2,
-        "rung": "feedback",
-        "feedback": "The reel starts with a factual statement that doesn’t create an instant curiosity gap or emotional trigger. Replace the hook with a betrayal or curiosity hook (e.g., “You’ve been drinking chicory in your coffee without knowing it.”). Throughout the frames, the language is repetitive and reads like a"
-      },
-      {
-        "attempt": 3,
-        "rung": "feedback",
-        "feedback": "The reel fails to meet brand"
-      },
-      {
-        "attempt": 4,
-        "rung": "alt_angle",
-        "feedback": "The hook is a plain statement that lacks curiosity, betrayal, or identity triggers, causing immediate scroll‑away. Replace the opener with a scroll‑stopping pattern (e.g., betrayal: \"You’ve been drinking chicory without knowing it\" or curiosity gap: \"What’s really in your milk‑coffee blend?\"). Stren"
-      },
-      {
-        "attempt": 5,
-        "rung": "alt_angle",
-        "feedback": "The reel’s hook is too descriptive and lacks a strong emotional trigger. It doesn’t use any of the proven hook patterns (betrayal, curiosity gap, identity challenge, etc.), so it will likely be ignored within the first 2 seconds. The messaging also blurs Purity Beans’ core promise of zero chicory by"
-      },
-      {
-        "attempt": 6,
-        "rung": "evergreen",
-        "feedback": "The reel opens with a factual statement (\"Ultra Blend: 70% coffee, 30% chicory, on purpose.\") that could belong to any brand – it lacks the emotional punch or curiosity gap needed to stop the scroll in the first 2 seconds. Shift to a proven hook pattern (e"
-      },
-      {
-        "attempt": 7,
-        "rung": "feedback",
-        "feedback": "Replace the generic smell tip with a betrayal or curiosity hook that highlights chicory deception (e.g., 'You have been drinking chicory, not coffee'). Add a visual contrast showing impure powder swirling around a pure Purity Beans jar to create scroll-stopping tension. Keep the storage tip"
-      },
-      {
-        "attempt": 8,
-        "rung": "feedback",
-        "feedback": ""
-      },
-      {
-        "status": "exhausted",
-        "reason": "The hook is strong but mismatched between text overlay and spoken line, causing confusion in the first 2 seconds. Improve retention by aligning hook_text, hook_spoken, and on-screen text to the same betrayal message. Add a clearer, curiosity‑driven visual (e.g., showing the seal break) and tighten t"
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, format_fit). The hook clearly states the 70/30 ratio, which is great for transparency, but it leans slightly academic rather than scroll-stopping. To push past an 8, frame it around why chicory is in a blend intentionally rather than just stating it. The framin"
       }
     ],
     "reel_2": [
       {
         "attempt": 1,
         "rung": "feedback",
-        "feedback": "The Reel starts with a generic hook that could apply to any instant‑coffee brand, so it doesn’t stop the scroll in the first 2 seconds. The body copy lists the product line but doesn’t tie the ‘stale‑jar’ problem directly to Purity Beans as the solution – brand clarity is weak. The visual concept (A"
+        "feedback": "viral: score 7.86 < 8.0 (weakest: curiosity_gap, follow_cta). The hook is strong and immediately challenges a common assumption, driving high relatability for Indian kitchen habits. To push the score higher, make the curiosity gap sharper in the second frame by teasing the exact kitchen mistake befo"
       },
       {
         "attempt": 2,
-        "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory)\", 'product truth: Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar']"
+        "rung": "feedback",
+        "feedback": "brand: [\"Reel caption error: ['Missing brand mention']\"]"
       },
       {
         "attempt": 3,
-        "rung": "from_scratch",
-        "feedback": "schema: 2 validation errors for ReelSchema hook_text   Field required [type=missing, input_value={'featured_product': 'Ult...y morning with coffee.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing frames   Field required [type=missing, input_value={'fe"
+        "rung": "feedback",
+        "feedback": "viral: score 7.86 < 8.0 (weakest: curiosity_gap, shareability). The hook is strong and creates an immediate pattern interrupt. To push the score higher, heighten the curiosity gap by explaining *why* aggressive stirring ruins the crema or aroma. The framing fits the platform well with rapid beats, a"
       },
       {
         "attempt": 4,
-        "rung": "from_scratch",
-        "feedback": "schema: 2 validation errors for ReelSchema hook_text   Field required [type=missing, input_value={'featured_product': 'Ult...ng motion/scene plan']\"}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing frames   Field required [type=missing, input_value={'fe"
+        "rung": "alt_angle",
+        "feedback": "The script is disciplined, clear, and respects the product rules regarding Ultra Blend vs pure lines. However, the hook 'I read the label so you don't have to' is slightly generic and relies heavily on a common internet trope. To push past 8 across all metrics, the hook needs a sharper curiosity gap"
       },
       {
         "attempt": 5,
-        "rung": "from_scratch",
-        "feedback": "schema: 2 validation errors for ReelSchema hook_text   Field required [type=missing, input_value={'featured_product': 'Ult...g motion/scene plan\\']'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing frames   Field required [type=missing, input_value={'fe"
+        "rung": "alt_angle",
+        "feedback": "brand: [\"Reel caption error: ['Missing brand mention']\"]"
       },
       {
         "attempt": 6,
         "rung": "evergreen",
-        "feedback": "schema: 2 validation errors for ReelSchema hook_text   Field required [type=missing, input_value={'featured_product': 'Ult...ng motion/scene plan']\"}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing frames   Field required [type=missing, input_value={'fe"
+        "feedback": "viral: score 5.86 < 8.0 (weakest: hook, comment_trigger). The current hook 'Ever wondered how much a single cup of your morning coffee actually costs you?' is a bit cliché and overused in finance and lifestyle content. To make it scroll-stopping for urban Indian professionals, frame it around the hi"
       },
       {
         "attempt": 7,
         "rung": "feedback",
-        "feedback": "Replace the generic smell hook with a betrayal or curiosity hook that highlights chicory filler (e.g., 'You have been drinking chicory, not coffee'). Show the Purity Beans jar as the pure solution, emphasize zero chicory, and add a clear benefit (taste, transparency). This will stop scroll, create e"
+        "feedback": "The hook 'Smell the jar before you make the first cup' is a bit too soft for an instant scroll-stopper; it lacks an immediate curiosity gap or strong contrarian pull. Attention drops at frame 4 ('CHECK IN A MONTH') because asking someone to test freshness a month later ruins the immediate payoff of "
       },
       {
         "attempt": 8,
         "rung": "feedback",
-        "feedback": "Replace the generic smell hook with a betrayal or curiosity hook that highlights chicory filler (e.g., 'You have been drinking chicory, not coffee'). Show the Purity Beans jar as the pure solution, emphasize zero chicory, and add a clear benefit (taste, transparency). Make each frame deliver new, su"
+        "feedback": "brand: [\"Reel caption error: ['Missing brand mention']\"]"
       },
       {
         "status": "exhausted",
-        "reason": "The hook is too generic and doesn’t create an emotional pull or curiosity gap. Viewers will not be compelled to stop scrolling because smelling a jar can apply to any coffee brand. Every frame repeats the same idea without new visual contrast or a clear benefit, so attention drops quickly. Rewrite t"
+        "reason": "The hook focuses on aroma loss over two weeks, which is a slow-burn educational premise rather than an immediate scroll-stopper. Attention drops during the label disclosure frame because it transitions from a storage tip into a legal/product compliance readout that breaks viewer pacing. To fix this,"
       }
     ],
     "carousel": [
       {
         "attempt": 1,
         "rung": "feedback",
-        "feedback": "The carousel fails to hook or retain viewers. The opening line “Ultra Blend, the 70/30 milk coffee” is a bland statement that could apply to any product; it offers no curiosity or emotional trigger. The slide headlines are generic and lack a clear hook or story arc. None of the slides present a prob"
+        "feedback": "viral: score 5.0 < 8.0 (weakest: hook, curiosity_gap, format_fit). Slide 1 hook reads like a label instead of a scroll-stopping premise. To increase swipe tension, frame the 70/30 ratio around why traditional milk coffee drinkers prefer it, rather than just stating it. Ensure every interior slide te"
       },
       {
         "attempt": 2,
-        "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory"
+        "rung": "feedback",
+        "feedback": "viral: score 6.8 < 8.0 (weakest: format_fit, shareability). The 'office' angle is strong, but the carousel structure fails the 'swipe tension' rule. Slides 1-5 are structured as a list, not a narrative arc. The payoff for 'Myth #3' is too weak (it's just a label check) to satisfy the hook's promise."
       },
       {
         "attempt": 3,
-        "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory"
+        "rung": "feedback",
+        "feedback": "viral: score 7.57 < 8.0 (weakest: curiosity_gap, comment_trigger, follow_cta). Slide 1's hook is solid, but the curiosity gap in the middle slides loses some momentum by leaning too heavily into product specifications rather than shocking office habits. To push the score above 8, make slide 3's surp"
       },
       {
         "attempt": 4,
         "rung": "from_scratch",
-        "feedback": "schema: 2 validation errors for CarouselSchema title   Field required [type=missing, input_value={'featured_product': 'Ult...y morning with coffee.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing slides   Field required [type=missing, input_value={'fe"
+        "feedback": "brand: [\"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory)\", 'product truth: Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar']"
       },
       {
         "attempt": 5,
         "rung": "from_scratch",
-        "feedback": "schema: 2 validation errors for CarouselSchema title   Field required [type=missing, input_value={'featured_product': 'Ult...tic.dev/2.14/v/missing\"}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing slides   Field required [type=missing, input_value={'fe"
+        "feedback": "brand: [\"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory)\", 'product truth: Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar']"
       },
       {
         "attempt": 6,
         "rung": "evergreen",
-        "feedback": "schema: 2 validation errors for CarouselSchema title   Field required [type=missing, input_value={'featured_product': 'Ult...tic.dev/2.14/v/missing'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing slides   Field required [type=missing, input_value={'fe"
+        "feedback": "brand: [\"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory)\", 'product truth: Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar']"
       },
       {
         "attempt": 7,
         "rung": "feedback",
-        "feedback": "The carousel’s hook is generic and does not create urgency or a sense of betrayal; it could apply to any coffee brand. The opening line \"A one month test for your coffee storage\" fails to hook in under 2 seconds. Each slide repeats the same generic instructions (open jar, smell, store, smell again, "
+        "feedback": "The hook 'A one month test for your coffee storage' is too dry and procedural, failing to instantly captivate or trigger a strong psychological response within the first 2 seconds. While the educational concept (smell test) is useful, it lacks an emotional hook or an eye-opening revelation to drive "
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The carousel provides solid educational utility on pantry storage and aroma preservation. The hook effectively addresses a common household annoyance. Brand integration is clean and accurately reflects product specifications (Bold/Purista/Purica/Prima as pure coffee, Ultra Blend as a smooth 70/30 co"
+      },
+      {
+        "status": "exhausted",
+        "reason": "The carousel provides good educational utility regarding coffee aroma storage, but Slide 1 and Slide 2 feel a bit generic. To push past the 8.0 overall threshold, the hook needs to provoke a stronger curiosity gap or speak directly to a frustrating daily habit. The transition through the middle slid"
+      }
+    ],
+    "instagram_post": [
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "The copy is transparent, policy-compliant regarding Ultra Blend's 70/30 ratio, and avoids anti-chicory hostility. However, the hook is slightly dry and informative rather than deeply emotional or curiosity-driven. To elevate performance, punch up the hook to challenge assumptions about milk coffee b"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The content is policy-perfect but marketing-passive. It reads like a product manual rather than a social media post. The hook is an explanation, not a trigger. To fix: move from 'Why some people choose' (passive) to 'The secret to the perfect milk coffee' or 'Why 100% coffee isn't always the answer "
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", 'product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The content correctly aligns with the Ultra Blend guidelines by explicitly stating the 70/30 coffee-to-chicory ratio without crossing into anti-chicory rhetoric. However, the hook is slightly generic ('Stop settling...') and could be sharpened to directly target milk-coffee drinkers. The body flows "
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 6.29 < 8.0 (weakest: hook, curiosity_gap, shareability). The opening line is a bit dry and declarative. To stop the scroll, lead with a contrast or a question about what is secretly hiding in standard grocery-store jars. Make the curiosity gap wider before dropping the product name. Sug"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The hook 'Smell a fresh jar the moment you break the seal' is a bit passive and misses a sharper psychological trigger or sensory shock. While the honest disclosure about Ultra Blend and pure lines is fully compliant with brand rules, the post lacks a strong enough curiosity gap or share-worthy insi"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The hook successfully addresses a universal consumer frustration (losing coffee aroma mid-jar) rather than sounding like a generic corporate ad. The compliance disclosure for Ultra Blend is handled accurately and respectfully. To push scores even higher, make the middle paragraph punchier by highlig"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.5 < 8.0 (weakest: curiosity_gap, comment_trigger, follow_cta). The opening hook is strong and taps into a real everyday Indian kitchen problem (humidity). To push the score higher, tighten the curiosity gap by hinting at the exact storage mistake right in the middle lines without givi"
+      }
+    ],
+    "linkedin_post": [
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "The hook 'The label question comes up at every meeting' is weak, corporate, and fails to stop the scroll on LinkedIn. It lacks emotional tension, curiosity, or a strong contrarian POV. To improve, lead with a punchy industry truth or a direct buyer confession about ingredient transparency. Additiona"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.8 < 8.0 (weakest: curiosity_gap, relatability). The opening line is strong and sets a clear operational rule, fitting the LinkedIn founder style well. However, the transition into retail advice dips slightly in emotional resonance for everyday consumers, though it works fine for B2B. "
       }
     ]
   },
@@ -1262,6 +1565,121 @@
       {
         "platform": "reel",
         "label": "reel_1",
+        "decision": "PASS",
+        "overall": 8.67,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 1,
+        "retry_limit": 8,
+        "feedback": "",
+        "plan": {
+          "primary_objective": "reach new relevant coffee drinkers",
+          "secondary_objective": "earn qualified followers",
+          "audience": "people who buy instant coffee and have never turned the jar around",
+          "angle": "visual discovery of one label fact",
+          "follow_promise": "Follow for the next thing the label is hiding.",
+          "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+          "platform": "reel",
+          "sku": "Ultra Blend",
+          "day": 288
+        },
+        "published": false
+      },
+      {
+        "platform": "reel",
+        "label": "reel_2",
         "decision": "PASS",
         "overall": 8.47,
         "threshold": 8.0,
@@ -1365,8 +1783,8 @@
           "primary_objective": "reach new relevant coffee drinkers",
           "secondary_objective": "earn qualified followers",
           "audience": "people who buy instant coffee and have never turned the jar around",
-          "angle": "visual discovery of one label fact",
-          "follow_promise": "Follow for the next thing the label is hiding.",
+          "angle": "visual discovery of one label fact — variant 2, different hook",
+          "follow_promise": "Follow for the next thing the label is hiding (part 2).",
           "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
           "platform": "reel",
           "sku": "Ultra Blend",
@@ -1375,10 +1793,10 @@
         "published": false
       },
       {
-        "platform": "reel",
-        "label": "reel_2",
-        "decision": "BLOCKED",
-        "overall": 8.0,
+        "platform": "carousel",
+        "label": "carousel",
+        "decision": "PASS",
+        "overall": 8.47,
         "threshold": 8.0,
         "dimensions": [
           {
@@ -1409,123 +1827,6 @@
             "name": "shareability",
             "score": 9.0,
             "evidence": "There is a reason to pass this on.",
-            "hard_fail": false
-          },
-          {
-            "name": "saveability",
-            "score": 8.0,
-            "evidence": "A checkable fact is worth saving.",
-            "hard_fail": false
-          },
-          {
-            "name": "follow_conversion",
-            "score": 8.0,
-            "evidence": "The follow reason is specific.",
-            "hard_fail": false
-          },
-          {
-            "name": "purchase_relevance",
-            "score": 8.0,
-            "evidence": "The featured jar or a verified next step is named.",
-            "hard_fail": false
-          },
-          {
-            "name": "brand_truth",
-            "score": 0.0,
-            "evidence": "Product truth failed.",
-            "hard_fail": true
-          },
-          {
-            "name": "visual_integrity",
-            "score": 8.0,
-            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
-            "hard_fail": false
-          },
-          {
-            "name": "claim_verification",
-            "score": 10.0,
-            "evidence": "No prohibited health or medical claim.",
-            "hard_fail": false
-          },
-          {
-            "name": "originality",
-            "score": 9.0,
-            "evidence": "Hook and CTA are not copied from another asset today.",
-            "hard_fail": false
-          },
-          {
-            "name": "mobile_readability",
-            "score": 9.0,
-            "evidence": "The hook is short enough to read on a phone.",
-            "hard_fail": false
-          },
-          {
-            "name": "cta_clarity",
-            "score": 9.0,
-            "evidence": "One CTA field is present.",
-            "hard_fail": false
-          },
-          {
-            "name": "schema",
-            "score": 8.0,
-            "evidence": "No schema or length failure for this format.",
-            "hard_fail": false
-          }
-        ],
-        "hard_fails": [
-          "claim_or_brand:{'claim': 'Most instant coffees in India are bulked up with chicory fillers without making it obvious.', 'type': 'product_truth', 'reason': 'anti-chicory attack is not allowed when"
-        ],
-        "attempts": 9,
-        "retry_limit": 8,
-        "feedback": "claim_or_brand:{'claim': 'Most instant coffees in India are bulked up with chicory fillers without making it obvious.', 'type': 'product_truth', 'reason': 'anti-chicory attack is not allowed when",
-        "plan": {
-          "primary_objective": "reach new relevant coffee drinkers",
-          "secondary_objective": "earn qualified followers",
-          "audience": "people who buy instant coffee and have never turned the jar around",
-          "angle": "visual discovery of one label fact — variant 2, different hook",
-          "follow_promise": "Follow for the next thing the label is hiding (part 2).",
-          "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
-          "platform": "reel",
-          "sku": "Ultra Blend",
-          "day": 288
-        },
-        "published": false
-      },
-      {
-        "platform": "carousel",
-        "label": "carousel",
-        "decision": "PASS",
-        "overall": 8.27,
-        "threshold": 8.0,
-        "dimensions": [
-          {
-            "name": "platform_fit",
-            "score": 9.0,
-            "evidence": "Hook and body are both present.",
-            "hard_fail": false
-          },
-          {
-            "name": "hook",
-            "score": 9.0,
-            "evidence": "The hook names a specific subject.",
-            "hard_fail": false
-          },
-          {
-            "name": "retention",
-            "score": 8.0,
-            "evidence": "The body contains a concrete coffee fact.",
-            "hard_fail": false
-          },
-          {
-            "name": "payoff",
-            "score": 8.0,
-            "evidence": "The body continues the hook.",
-            "hard_fail": false
-          },
-          {
-            "name": "shareability",
-            "score": 6.0,
-            "evidence": "No explicit share or reply ask.",
             "hard_fail": false
           },
           {
@@ -1592,7 +1893,7 @@
         "hard_fails": [],
         "attempts": 1,
         "retry_limit": 8,
-        "feedback": "shareability 6.0: No explicit share or reply ask.; follow_conversion 5.0: No follow promise is visible.",
+        "feedback": "follow_conversion 5.0: No follow promise is visible.",
         "plan": {
           "primary_objective": "drive product-page visits/purchases",
           "secondary_objective": "earn qualified followers",
@@ -1820,7 +2121,7 @@
           }
         ],
         "hard_fails": [],
-        "attempts": 8,
+        "attempts": 2,
         "retry_limit": 8,
         "feedback": "shareability 6.0: No explicit share or reply ask.",
         "plan": {
@@ -1953,13 +2254,681 @@
       }
     ],
     "counts": {
-      "PASS": 5,
+      "PASS": 6,
       "REGENERATE": 0,
-      "BLOCKED": 1
+      "BLOCKED": 0
     },
     "complement": "Reel discovers a label fact, the carousel saves the check, the single image is recall, Stories ask for one interaction, Facebook tells the situation, Threads asks one question, LinkedIn speaks to a buyer, the Short pays off alone, and the blog answers the search.",
     "published": false
   },
   "date": "2026-10-16",
-  "generation_id": "fallback_2026-10-16_781cfd37"
+  "generation_id": "fallback_2026-10-16_e15871d1",
+  "_creative_audit": {
+    "ts": "2026-10-16T08:00:39.405132+00:00",
+    "day_number": 288,
+    "generation_id": "fallback_2026-10-16_e15871d1",
+    "image_assets": [
+      {
+        "path": "output/creative/instagram_post_day288.jpg",
+        "platform": "instagram",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7758,
+          "contrast": 0.2868,
+          "edge_density": 0.0292,
+          "upper_activity": 0.3209,
+          "center_brightness_delta": 0.1425,
+          "lower_center_edge_ratio": 465.271,
+          "lower_center_edge_density": 0.0465,
+          "visual_hash": "93f7d2d28ef4304c"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_1_day288.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7854,
+          "contrast": 0.2793,
+          "edge_density": 0.0235,
+          "upper_activity": 0.3012,
+          "center_brightness_delta": 0.152,
+          "lower_center_edge_ratio": 465.271,
+          "lower_center_edge_density": 0.0465,
+          "visual_hash": "7d382552e3fdba09"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_2_day288.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.781,
+          "contrast": 0.2841,
+          "edge_density": 0.0238,
+          "upper_activity": 0.3142,
+          "center_brightness_delta": 0.1456,
+          "lower_center_edge_ratio": 465.271,
+          "lower_center_edge_density": 0.0465,
+          "visual_hash": "446a123575eab241"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_3_day288.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7841,
+          "contrast": 0.2808,
+          "edge_density": 0.0234,
+          "upper_activity": 0.3054,
+          "center_brightness_delta": 0.1487,
+          "lower_center_edge_ratio": 465.271,
+          "lower_center_edge_density": 0.0465,
+          "visual_hash": "cc666bcd82552161"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_4_day288.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7819,
+          "contrast": 0.2831,
+          "edge_density": 0.024,
+          "upper_activity": 0.3115,
+          "center_brightness_delta": 0.1465,
+          "lower_center_edge_ratio": 465.271,
+          "lower_center_edge_density": 0.0465,
+          "visual_hash": "d052a2442f62f337"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_5_day288.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7823,
+          "contrast": 0.2825,
+          "edge_density": 0.0239,
+          "upper_activity": 0.3099,
+          "center_brightness_delta": 0.147,
+          "lower_center_edge_ratio": 465.271,
+          "lower_center_edge_density": 0.0465,
+          "visual_hash": "37bc1a6cc5acca43"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_6_day288_2026-10-16.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1218,
+          "contrast": 0.1618,
+          "edge_density": 0.0207,
+          "upper_activity": 0.1435,
+          "center_brightness_delta": 0.014,
+          "lower_center_edge_ratio": 0.661,
+          "lower_center_edge_density": 0.0129,
+          "visual_hash": "691b94369d09382e"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_thumb_day288.jpg",
+        "platform": "instagram_reel_thumbnail",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.6818,
+          "contrast": 0.334,
+          "edge_density": 0.0288,
+          "upper_activity": 0.3673,
+          "center_brightness_delta": 0.2339,
+          "lower_center_edge_ratio": 2.693,
+          "lower_center_edge_density": 0.0527,
+          "visual_hash": "fc2443377ad3932f"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/test_reel_thumb_day1_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1732,
+          "contrast": 0.1841,
+          "edge_density": 0.0131,
+          "upper_activity": 0.1028,
+          "center_brightness_delta": 0.1011,
+          "lower_center_edge_ratio": 57.072,
+          "lower_center_edge_density": 0.0382,
+          "visual_hash": "18e0b0b07e65a9c9"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_hook_day1_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1725,
+          "contrast": 0.1828,
+          "edge_density": 0.0126,
+          "upper_activity": 0.0948,
+          "center_brightness_delta": 0.1015,
+          "lower_center_edge_ratio": 57.072,
+          "lower_center_edge_density": 0.0382,
+          "visual_hash": "74dd8834f86b4bae"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat0_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1485,
+          "contrast": 0.1219,
+          "edge_density": 0.0089,
+          "upper_activity": 0.121,
+          "center_brightness_delta": 0.0553,
+          "lower_center_edge_ratio": 21.294,
+          "lower_center_edge_density": 0.0138,
+          "visual_hash": "5574d1480dade496"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/avatar_day1_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1753,
+          "contrast": 0.1876,
+          "edge_density": 0.0142,
+          "upper_activity": 0.1218,
+          "center_brightness_delta": 0.1052,
+          "lower_center_edge_ratio": 57.072,
+          "lower_center_edge_density": 0.0382,
+          "visual_hash": "e421d0db3720b085"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_hook_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1489,
+          "contrast": 0.1244,
+          "edge_density": 0.0089,
+          "upper_activity": 0.1194,
+          "center_brightness_delta": 0.0566,
+          "lower_center_edge_ratio": 28.978,
+          "lower_center_edge_density": 0.0188,
+          "visual_hash": "5df6c5b12e5f2e85"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/story_day1_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1744,
+          "contrast": 0.185,
+          "edge_density": 0.0141,
+          "upper_activity": 0.1065,
+          "center_brightness_delta": 0.1023,
+          "lower_center_edge_ratio": 58.504,
+          "lower_center_edge_density": 0.0392,
+          "visual_hash": "98395714b12ce390"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/avatar_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1491,
+          "contrast": 0.1251,
+          "edge_density": 0.0091,
+          "upper_activity": 0.1218,
+          "center_brightness_delta": 0.0585,
+          "lower_center_edge_ratio": 28.978,
+          "lower_center_edge_density": 0.0188,
+          "visual_hash": "c90e1540ce6c4aa0"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat1_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1728,
+          "contrast": 0.182,
+          "edge_density": 0.0133,
+          "upper_activity": 0.0909,
+          "center_brightness_delta": 0.1022,
+          "lower_center_edge_ratio": 57.072,
+          "lower_center_edge_density": 0.0382,
+          "visual_hash": "014b342e8e1cfbf2"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/t_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1202,
+          "contrast": 0.1876,
+          "edge_density": 0.0231,
+          "upper_activity": 0.2202,
+          "center_brightness_delta": 0.0317,
+          "lower_center_edge_ratio": 18.341,
+          "lower_center_edge_density": 0.0239,
+          "visual_hash": "b8f1f6852cf234ab"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat2_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1636,
+          "contrast": 0.1561,
+          "edge_density": 0.0112,
+          "upper_activity": 0.1052,
+          "center_brightness_delta": 0.0837,
+          "lower_center_edge_ratio": 39.909,
+          "lower_center_edge_density": 0.0259,
+          "visual_hash": "b5de254d12493e8b"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat4_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1473,
+          "contrast": 0.1172,
+          "edge_density": 0.0088,
+          "upper_activity": 0.0957,
+          "center_brightness_delta": 0.056,
+          "lower_center_edge_ratio": 28.978,
+          "lower_center_edge_density": 0.0188,
+          "visual_hash": "0a233cb466c5fe64"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "increase foreground/background contrast",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/story_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1477,
+          "contrast": 0.1186,
+          "edge_density": 0.009,
+          "upper_activity": 0.0994,
+          "center_brightness_delta": 0.0562,
+          "lower_center_edge_ratio": 30.454,
+          "lower_center_edge_density": 0.0198,
+          "visual_hash": "8761abbed48cb119"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "increase foreground/background contrast",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat3_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1508,
+          "contrast": 0.1304,
+          "edge_density": 0.0108,
+          "upper_activity": 0.0978,
+          "center_brightness_delta": 0.0622,
+          "lower_center_edge_ratio": 42.929,
+          "lower_center_edge_density": 0.0278,
+          "visual_hash": "19d42399122d6ea1"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/ugc_day1_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1753,
+          "contrast": 0.1876,
+          "edge_density": 0.0142,
+          "upper_activity": 0.1218,
+          "center_brightness_delta": 0.1052,
+          "lower_center_edge_ratio": 57.072,
+          "lower_center_edge_density": 0.0382,
+          "visual_hash": "e421d0db3720b085"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/yt_thumb_day1_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1280,
+          "height": 720,
+          "aspect_ratio": 1.778,
+          "brightness": 0.3281,
+          "contrast": 0.2281,
+          "edge_density": 0.0214,
+          "upper_activity": 0.2027,
+          "center_brightness_delta": 0.0522,
+          "lower_center_edge_ratio": 0.864,
+          "lower_center_edge_density": 0.0106,
+          "visual_hash": "9d0aeba6a51e62f4"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/instagram_post_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1488,
+          "contrast": 0.196,
+          "edge_density": 0.0297,
+          "upper_activity": 0.2543,
+          "center_brightness_delta": 0.0605,
+          "lower_center_edge_ratio": 17.075,
+          "lower_center_edge_density": 0.0237,
+          "visual_hash": "ed4d8893bab18084"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/ugc_day288_2026-10-16.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.1491,
+          "contrast": 0.1251,
+          "edge_density": 0.0091,
+          "upper_activity": 0.1218,
+          "center_brightness_delta": 0.0585,
+          "lower_center_edge_ratio": 28.978,
+          "lower_center_edge_density": 0.0188,
+          "visual_hash": "c90e1540ce6c4aa0"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      }
+    ],
+    "video_assets": [
+      {
+        "path": "output/creative/story_video_day1_day1_2026-10-16.mp4",
+        "platform": "video",
+        "frames_sampled": 0,
+        "frame_delta": 0.0,
+        "recommendations": [
+          "video visual audit failed: frame decoder error; inspect before treating QA as passed"
+        ],
+        "error": "ValueError: `ffmpeg` is not a registered plugin name."
+      },
+      {
+        "path": "output/creative/story_video_day4_2026-10-16.mp4",
+        "platform": "video",
+        "frames_sampled": 0,
+        "frame_delta": 0.0,
+        "recommendations": [
+          "video visual audit failed: frame decoder error; inspect before treating QA as passed"
+        ],
+        "error": "ValueError: `ffmpeg` is not a registered plugin name."
+      },
+      {
+        "path": "output/creative/story_video_day288_day288_2026-10-16.mp4",
+        "platform": "video",
+        "frames_sampled": 0,
+        "frame_delta": 0.0,
+        "recommendations": [
+          "video visual audit failed: frame decoder error; inspect before treating QA as passed"
+        ],
+        "error": "ValueError: `ffmpeg` is not a registered plugin name."
+      },
+      {
+        "path": "output/creative/reel_1_video_day288_2026-10-16.mp4",
+        "platform": "video",
+        "frames_sampled": 0,
+        "frame_delta": 0.0,
+        "recommendations": [
+          "video visual audit failed: frame decoder error; inspect before treating QA as passed"
+        ],
+        "error": "ValueError: `ffmpeg` is not a registered plugin name."
+      }
+    ],
+    "copy_audit": [
+      {
+        "asset": "reel_1",
+        "hook_length": 72,
+        "recommendations": []
+      },
+      {
+        "asset": "reel_2",
+        "hook_length": 89,
+        "recommendations": [
+          "reel_2: discovery video lacks an explicit follow/subscribe conversion cue"
+        ]
+      },
+      {
+        "asset": "carousel",
+        "hook_length": 71,
+        "recommendations": [
+          "carousel: carousel lacks an explicit save/share cue for algorithmic distribution"
+        ]
+      },
+      {
+        "asset": "instagram_post",
+        "hook_length": 81,
+        "recommendations": [
+          "instagram_post: community asset lacks a question/debate trigger"
+        ]
+      },
+      {
+        "asset": "linkedin_post",
+        "hook_length": 64,
+        "recommendations": []
+      },
+      {
+        "asset": "stories",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem"
+        ]
+      }
+    ],
+    "vision_audit": {
+      "status": "failed_non_blocking",
+      "model": "gemini-2.5-flash",
+      "assets": [],
+      "recommendations": [],
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "portfolio_diversity": 0.993,
+    "recommendations": [
+      "add visible action/texture such as pour, hand, steam, granules, or environment",
+      "lower-center focal composition dominates; vary into a contextual or off-center composition",
+      "raise exposure/background separation; avoid another near-black frame",
+      "increase foreground/background contrast",
+      "video visual audit failed: frame decoder error; inspect before treating QA as passed",
+      "reel_2: discovery video lacks an explicit follow/subscribe conversion cue",
+      "carousel: carousel lacks an explicit save/share cue for algorithmic distribution",
+      "instagram_post: community asset lacks a question/debate trigger",
+      "hook is too short to communicate a clear curiosity/problem"
+    ],
+    "asset_count": 29
+  }
 }
