@@ -76,3 +76,13 @@ def test_render_until_pass_stops_on_vision_hold(monkeypatch):
         return {"passed": False, "reasons": ["vision_score_unavailable"]}
     out = premium_cards.render_until_pass("bold", "h", gate=gate, max_tries=8)
     assert out.get("held") and n["c"] == 1
+
+
+def test_sub_repeating_strip_chip_is_dropped(monkeypatch):
+    from content_generator.creative import premium_cards
+    from content_generator.creative import render_claims as rc
+    seen = []
+    orig = premium_cards._text
+    monkeypatch.setattr(premium_cards, "_text", lambda c, xy, t, *a, **k: (seen.append(t), orig(c, xy, t, *a, **k)))
+    premium_cards.render("ultra_blend", "Milk loves it", rc.ULTRA_STRIP, out_path="/tmp/_t_ub.jpg")
+    assert not any(rc.ULTRA_STRIP.lower() in str(t).lower() for t in seen)

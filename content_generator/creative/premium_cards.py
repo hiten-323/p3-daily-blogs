@@ -9,6 +9,7 @@ from __future__ import annotations
 import logging
 import math
 import os
+import re
 import random
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -279,6 +280,12 @@ def render(sku: str, headline: str, sub: str = "", *, width=1080, height=1350, l
         ImageDraw.Draw(canvas).line((ax - (60 if x_text is None else 0), y, ax + (60 if x_text is None else 120), y),
                                     fill=pal["accent"], width=5)
         y += int(H * 0.02)
+        # The strip chip already states the SKU line (e.g. "Coffee + chicory blend"); a sub that just
+        # repeats it reads as redundant copy and fails the vision gate every time.
+        _norm = lambda t: re.sub(r"[^a-z0-9]+", " ", str(t).lower()).strip()
+        if sub and _norm(rc.strip_for(sku)) and _norm(rc.strip_for(sku)) in _norm(sub) \
+                and len(_norm(sub)) <= len(_norm(rc.strip_for(sku))) + 12:
+            sub = ""
         if sub:
             maxw = (W - 2 * m) if layout != "split_left" else col_w
             for ln in _wrap(ImageDraw.Draw(canvas), sub, bf, maxw, 2):
