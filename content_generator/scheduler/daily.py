@@ -949,6 +949,81 @@ def _editorial_deadline_passed() -> bool:
     return at is not None and _time.monotonic() >= at
 
 
+def _materialize_missing_piece(content: dict, label: str, day_no: int, featured: str) -> dict | None:
+    """Create a missing targeted asset. Gates still run on whatever comes back.
+
+    Order: evergreen template (only where one exists), else a from-scratch
+    regen, else the same platform prompt the daily pipeline uses.
+    """
+    from content_generator.core import fallback_ladder as ladder
+
+    def _ready(piece: dict) -> dict:
+        if featured and not piece.get("featured_product"):
+            piece["featured_product"] = featured
+        # Keep the new piece if the next rewrite fails. A passing score clears this.
+        piece["needs_regen"] = True
+        piece.setdefault("type", label)
+        return piece
+
+    evergreen = ladder.evergreen_piece(label, day_no)
+    if isinstance(evergreen, dict) and evergreen:
+        return _ready(evergreen)
+
+    stub = {
+        "type": label,
+        "needs_regen": True,
+        "featured_product": featured or content.get("featured_product"),
+    }
+    improved = _regenerate_piece(
+        label, stub,
+        "missing native asset — write a brand-new piece from scratch",
+        content, from_scratch=True,
+    )
+    if isinstance(improved, dict) and improved:
+        merged = _apply_regeneration(label, ladder.scratch_base(stub), improved)
+        return _ready(merged or improved)
+
+    built = _build_native_with_platform_prompt(label, content, day_no, featured)
+    if isinstance(built, dict) and built:
+        return _ready(built)
+    return stub
+
+
+def _build_native_with_platform_prompt(label: str, content: dict, day_no: int,
+                                       featured: str) -> dict | None:
+    """Same phase-1 builders generator.py uses for facebook, threads, and Shorts."""
+    if label not in ("facebook_post", "threads_post", "yt_short"):
+        return None
+    try:
+        from content_generator.pipeline.generator import _optimized_pick
+        from content_generator.prompts.brand import build_avoid_block
+        from content_generator.prompts.growth_engine import prompt_block
+        from content_generator.providers.llm_router import call as llm_call
+        from content_generator.rotation import FACEBOOK_ANGLES, PRODUCTS, THREADS_ANGLES, pick
+
+        product = str(featured or content.get("featured_product") or pick(PRODUCTS, day_no))
+        avoid = build_avoid_block()
+        if label == "facebook_post":
+            from content_generator.prompts import facebook
+            prompt = facebook.build(
+                _optimized_pick(FACEBOOK_ANGLES, day_no, label="facebook_angle"), avoid, day_no)
+            tokens = 800
+        elif label == "threads_post":
+            from content_generator.prompts import threads
+            prompt = threads.build(
+                _optimized_pick(THREADS_ANGLES, day_no, label="threads_angle"), avoid, day_no)
+            tokens = 600
+        else:
+            from content_generator.prompts import yt_short
+            prompt = yt_short.build(product, day_no)
+            tokens = 1500
+        result = llm_call(prompt + "\n\n" + prompt_block(label, product, day_no), label, tokens)
+        return result if isinstance(result, dict) and result else None
+    except Exception as e:
+        logger.warning("[editorial] native builder failed for %s: %s", label, e)
+        return None
+
+
 def _do_editorial(content: dict, only: set | None = None) -> None:
     """
     Review each content piece. Regenerates up to QUALITY_MAX_REGEN times.
@@ -1017,7 +1092,25 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
             piece  = content.get(key) or {}
 
         if not isinstance(piece, dict) or not piece:
-            continue
+            # A full pass still skips holes. Targeted regen (retry `only`) must
+            # create the native asset — otherwise facebook/threads/yt stay missing
+            # forever and the 8.0 gate never gets a piece to score.
+            if only is None or label not in only or label == "blog_post":
+                continue
+            logger.warning("[editorial] %s missing — building a new piece for targeted regen", label)
+            piece = _materialize_missing_piece(content, label, day_no, featured or "")
+            if not isinstance(piece, dict) or not piece:
+                continue
+            if idx is not None:
+                slot = content.get(key)
+                if not isinstance(slot, list):
+                    slot = []
+                    content[key] = slot
+                while len(slot) <= idx:
+                    slot.append({})
+                slot[idx] = piece
+            else:
+                content[key] = piece
         if featured and not piece.get("featured_product"):
             piece["featured_product"] = featured
 
@@ -1089,6 +1182,7 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                     if label == "blog_post" and not str(piece.get("hold_reason") or "").startswith("provider_failure"):
                         piece.pop("hold_reason", None)
                         piece.pop("held", None)
+                    piece.pop("needs_regen", None)
                     logger.info("[editorial] %s PASS — score %.1f (threshold %.1f)", label, score, threshold)
                     break
                 if verdict not in ("VIRAL_REJECT", "GATE_REJECT"):
