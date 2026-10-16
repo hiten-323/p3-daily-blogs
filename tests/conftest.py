@@ -17,3 +17,4 @@ import pytest as _pytest_cinematic
 def _legacy_video_path_in_tests(monkeypatch):
     """Legacy reel/short/story tests assert the frame-based path; cinematic has its own tests."""
     monkeypatch.setenv("CINEMATIC_VIDEO", "0")
+    monkeypatch.setenv("LLM_MODEL_DISCOVERY", "0")  # no live /models calls in tests
