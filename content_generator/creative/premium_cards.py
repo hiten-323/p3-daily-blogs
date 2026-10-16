@@ -331,6 +331,9 @@ def render_until_pass(sku, headline, sub="", *, width=1080, height=1350, cta=Non
             return meta
         logger.warning("[visual-gate] %s try %d failed: %s — re-rendering", sku, i + 1, verdict.get("reasons"))
         last = meta
+        if visual_gate.is_vision_hold(verdict):
+            logger.error("[visual-gate] %s: no vision scorer available — holding now instead of re-rendering", sku)
+            break
     last = last or {}
     last["held"] = True
     return last
