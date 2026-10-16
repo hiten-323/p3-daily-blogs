@@ -41,6 +41,9 @@ env:
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
 
 concurrency:
+  # Scheduled slots only. Retries/recovery use purity-beans-retry so a retry can
+  # never replace a pending daily run; duplicate posts are prevented by the
+  # ledger plus cross-run publish claims (content_generator/publisher/publish_claim.py).
   group: purity-beans-daily
   cancel-in-progress: false
 
@@ -306,7 +309,9 @@ jobs:
           set -euo pipefail
           git config user.name "Purity Beans Engine"
           git config user.email "engine@puritybeans.auto"
+          python -m content_generator.ops.ledger_sync save
           git pull --rebase --autostash
+          python -m content_generator.ops.ledger_sync restore
           echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) run #${{ github.run_number }}" >> .last_run
           git add .last_run
           git add -f output/learning/ 2>/dev/null || true
@@ -336,8 +341,13 @@ jobs:
           git add -f output/.running* 2>/dev/null || true
           if ! git diff --staged --quiet; then git commit -m "chore: run ${{ github.run_number }} — validated content + learning data [skip ci]"; fi
           if ! git push; then
-            echo "push rejected — rebasing on the remote and retrying"
+            echo "push rejected — merging the ledger with the remote and retrying"
+            git reset --soft HEAD~1
+            python -m content_generator.ops.ledger_sync save
             git pull --rebase --autostash
+            python -m content_generator.ops.ledger_sync restore
+            git add -f output/learning/publishing_ledger.json
+            git commit -m "chore: run ${{ github.run_number }} — validated content + learning data [skip ci]"
             git push || { echo "::error::Could not push validated run state; publish slots cannot load persisted content."; exit 1; }
           fi
 

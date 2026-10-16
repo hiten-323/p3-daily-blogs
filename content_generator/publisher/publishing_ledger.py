@@ -264,10 +264,23 @@ def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int
             "permalink": (ticket.get("record") or {}).get("url", ""),
             "url": (ticket.get("record") or {}).get("url", ""),
         }
+    from content_generator.publisher import publish_claim
+    key_parts = str(ticket.get("key", "")).split("|")
+    claim_date = key_parts[0] if key_parts and key_parts[0] else str(content.get("date", ""))[:10]
+    ok, claim_ref = publish_claim.acquire(claim_date, slot, platform)
+    if not ok:
+        import logging
+        logging.getLogger(__name__).warning("[publish-ledger] %s %s not published: %s", platform, slot, claim_ref)
+        released = {"success": claim_ref == "already_published_remote", "attempted": False, "skipped": True,
+                    "error": "" if claim_ref == "already_published_remote" else claim_ref}
+        finish_attempt(ticket, dict(released, success=False))
+        return released
     try:
         result = publish() or {"success": False, "error": "publisher_returned_no_result"}
     except Exception as exc:
         result = {"success": False, "error": f"{type(exc).__name__}: {exc}"}
+    if not result.get("success") and not result.get("uncertain"):
+        publish_claim.release(claim_ref)
     saved = finish_attempt(ticket, result)
     result["ledger_status"] = saved.get("status", "")
     result["ledger_attempt_count"] = saved.get("attempt_count", 0)
