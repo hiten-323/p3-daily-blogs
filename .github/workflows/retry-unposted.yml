@@ -163,10 +163,12 @@ jobs:
           # Generate backstop: no pack by 08:00 IST and no daily run today at all
           # (GitHub dropped / delayed the 06:13 cron) -> start generate once.
           if [ "$PENDING" = "no_pack" ] && [ "$HOUR_IST" -ge 8 ]; then
-            DAILY_TODAY=$(gh run list -R "$GITHUB_REPOSITORY" --workflow daily.yml -L 30 --json createdAt \
-              --jq "[.[] | select((.createdAt | fromdateiso8601 + 19800 | strftime(\"%Y-%m-%d\")) == \"$TODAY_IST\")] | length" 2>/dev/null || echo 1)
-            if [ "${DAILY_TODAY:-1}" = "0" ]; then
-              echo "::warning::No daily run and no pack for $TODAY_IST by ${HOUR_IST}h IST; dispatching generate."
+            # A failed or completed daily run must not block recovery when the content pack is absent.
+            # Only suppress a new generate while a same-day daily run is queued or in progress.
+            DAILY_ACTIVE=$(gh run list -R "$GITHUB_REPOSITORY" --workflow daily.yml -L 30 --json createdAt,status \
+              --jq "[.[] | select((.createdAt | fromdateiso8601 + 19800 | strftime(\"%Y-%m-%d\")) == \"$TODAY_IST\") | select(.status == \"queued\" or .status == \"in_progress\")] | length" 2>/dev/null || echo 1)
+            if [ "${DAILY_ACTIVE:-1}" = "0" ]; then
+              echo "::warning::No content pack for $TODAY_IST by ${HOUR_IST}h IST and no active daily run; dispatching generate."
               gh workflow run daily.yml -R "$GITHUB_REPOSITORY" --ref main -f slot=generate -f force_run=false || { echo "::error::generate dispatch failed"; exit 1; }
             fi
           fi
