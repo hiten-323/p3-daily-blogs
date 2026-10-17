@@ -152,7 +152,10 @@ jobs:
           # dropped cron writes no rows, which used to stop the chain at 0.
           PENDING=$(python -m content_generator.scheduler.retry_unposted --pending 2>/dev/null | sed -n 's/^PENDING://p' | tail -n1)
           echo "Still due today: ${PENDING:-<nothing>}"
-          [ -z "$PENDING" ] && exit 0
+          if [ -z "$PENDING" ]; then
+            echo "::error::Pending-target probe returned no result; failing visibly so the daily monitor can alert."
+            exit 1
+          fi
           TODAY_IST=$(TZ=Asia/Kolkata date +%F)
           # Generate backstop: no pack by 08:00 IST and no daily run today at all
           # (GitHub dropped / delayed the 06:13 cron) -> start generate once.
@@ -161,8 +164,8 @@ jobs:
               --jq "[.[] | select((.createdAt | fromdateiso8601 + 19800 | strftime(\"%Y-%m-%d\")) == \"$TODAY_IST\")] | length" 2>/dev/null || echo 1)
             if [ "${DAILY_TODAY:-1}" = "0" ]; then
               echo "::warning::No daily run and no pack for $TODAY_IST by ${HOUR_IST}h IST; dispatching generate."
-              gh workflow run daily.yml -R "$GITHUB_REPOSITORY" --ref main -f slot=generate -f force_run=false || echo "::warning::generate dispatch failed"
+              gh workflow run daily.yml -R "$GITHUB_REPOSITORY" --ref main -f slot=generate -f force_run=false || { echo "::error::generate dispatch failed"; exit 1; }
             fi
           fi
           sleep 240
-          gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || echo "::warning::self-dispatch failed"
+          gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::self-dispatch failed"; exit 1; }
