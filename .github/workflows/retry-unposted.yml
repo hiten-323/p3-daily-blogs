@@ -172,3 +172,27 @@ jobs:
           fi
           sleep 240
           gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::self-dispatch failed"; exit 1; }
+      - name: Alert on recovery failure
+        if: failure()
+        env:
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          NURTURE_FROM_EMAIL: ${{ secrets.NURTURE_FROM_EMAIL }}
+        run: |
+          python - <<'PY'
+          import os
+          msg = (
+              "PURITY BEANS RECOVERY FAILED\n"
+              f"Run: {os.environ.get('GITHUB_RUN_NUMBER', '')}\n"
+              f"Logs: {os.environ.get('GITHUB_SERVER_URL', '')}/"
+              f"{os.environ.get('GITHUB_REPOSITORY', '')}/actions/runs/"
+              f"{os.environ.get('GITHUB_RUN_ID', '')}"
+          )
+          from content_generator.scheduler.watchdog import alert_failure
+          alert_failure(msg)
+          print(msg)
+          PY
