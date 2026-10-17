@@ -391,9 +391,10 @@ def _cli() -> int:
         logging.basicConfig(level=logging.ERROR)
         try:
             pending = pending_targets()
-        except Exception as exc:  # never break the chain on a probe error
+        except Exception as exc:
             logging.getLogger(__name__).error("pending probe failed: %s", exc)
-            pending = ["probe_error"]
+            print("PENDING_ERROR:" + type(exc).__name__)
+            return 1
         print("PENDING:" + ",".join(pending))
         return 0
     return main()
