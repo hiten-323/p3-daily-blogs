@@ -81,6 +81,31 @@ def _due(record: dict, now: dt.datetime) -> bool:
         return False
 
 
+def _recoverable_instagram_account_mismatch(old: dict, platform: str) -> bool:
+    """Allow one safe recovery after the configured IG ID was corrected.
+
+    Older failed records may have exhausted their retry budget while the
+    publisher was accidentally calling Meta with the Facebook Page ID. Only
+    reopen that narrow case when the current job has a distinct Instagram
+    professional-account ID, the previous error explicitly names the Page ID,
+    and no remote post ID/URL exists (so there is no possible duplicate).
+    """
+    if str(platform or "").lower() not in ("instagram", "instagram_story"):
+        return False
+    page_id = str(os.getenv("FACEBOOK_PAGE_ID", "")).strip()
+    ig_id = str(os.getenv("INSTAGRAM_ACCOUNT_ID", "")).strip()
+    error = str(old.get("error") or "").lower()
+    if not page_id or not ig_id or ig_id == page_id:
+        return False
+    if old.get("remote_id") or old.get("url"):
+        return False
+    return (
+        "unsupported post request" in error
+        and "object with id" in error
+        and page_id.lower() in error
+    )
+
+
 def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> dict:
     """Return an attempt ticket, or a skip decision that prevents duplicate posts."""
     with _LOCK:
@@ -148,7 +173,8 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
             # A pre-publish gate hold never reached the platform, so it cannot
             # duplicate a post; it must not burn the publish-attempt budget.
             gate_hold = str(old.get("error") or "").startswith("prepublish_gate:")
-            if attempts >= _MAX_ATTEMPTS and not gate_hold:
+            account_id_recovery = _recoverable_instagram_account_mismatch(old, platform)
+            if attempts >= _MAX_ATTEMPTS and not (gate_hold or account_id_recovery):
                 return {"allowed": False, "reason": "retry_limit_reached", "record": old, "key": key}
             if not _due(old, now):
                 return {"allowed": False, "reason": "retry_backoff", "record": old, "key": key}
