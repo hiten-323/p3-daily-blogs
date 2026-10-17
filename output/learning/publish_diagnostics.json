@@ -3724,5 +3724,23 @@
     "rate_limit": {},
     "exception_type": "",
     "exception_msg": ""
+  },
+  {
+    "ts": "2026-10-17T05:40:09",
+    "day_number": 289,
+    "platform": "threads",
+    "content_id": "pb_599ece0bac",
+    "generation_id": "gen_2026-10-17_4c5fb876",
+    "publisher_version": "2.3.0",
+    "status": "failure",
+    "duration_ms": 2428,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "other",
+    "error": "prepublish_gate:viral_readiness_failed",
+    "response": "{\"success\": false, \"attempted\": false, \"skipped\": true, \"post_id\": \"\", \"url\": \"\", \"gate\": {\"allowed\": false, \"asset_key\": \"threads_post\", \"reason\": \"viral_readiness_failed\", \"checks\": {\"editorial\": true, \"viral_readiness\": {\"score\": 56.0, \"passes\": false, \"dimensions\": {\"hook\": 4.0, \"novelty\": 15.0, \"retention\": 7.0, \"payoff\": 0.0, \"share_reason\": 10.0, \"follow_reason\": 4.0, \"platform_nativeness\":",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
   }
 ]
