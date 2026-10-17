@@ -2,7 +2,8 @@
 
 No retries and no /models listing. NVIDIA is probed across its configured model
 fallback list; an empty response from one model must not hide a healthy later
-model. If every candidate returns empty content, the NVIDIA check fails.
+model. The probe succeeds when any configured provider returns usable content,
+and fails when none do.
 """
 from __future__ import annotations
 
@@ -139,8 +140,6 @@ def _nvidia_chat() -> str:
             return "OK"
         failures.append(f"{model}: {status}")
         logger.warning("[llm] NVIDIA probe model failed: %s: %s", model, status)
-    # Preserve the existing explicit failure for the known empty-response case,
-    # while retaining the other model statuses in logs for diagnosis.
     if failures and all(item.endswith(": empty content") for item in failures):
         return "empty content"
     return "all NVIDIA models failed; " + "; ".join(failures)
@@ -183,9 +182,8 @@ def main() -> int:
         row = f"{name}: {status}"
         print(row)
         logger.info("[llm] probe %s", row)
-    nvidia_status = dict(rows).get("nvidia", "skipped")
-    if nvidia_status == "empty content":
-        print("::error::NVIDIA probe returned empty content")
+    if not any(status == "OK" for _, status in rows):
+        print("::error::No configured LLM provider passed the live completion probe")
         return 1
     return 0
 
