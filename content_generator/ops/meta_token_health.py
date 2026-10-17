@@ -160,6 +160,68 @@ def inspect_token(token: str, *, now: int | None = None) -> dict:
     }
 
 
+_IG_FIELDS = "instagram_business_account{id,username},connected_instagram_account{id,username}"
+
+
+def _linked_from(obj: dict) -> tuple[str, str]:
+    for key in ("instagram_business_account", "connected_instagram_account"):
+        linked = obj.get(key) or {}
+        if isinstance(linked, dict) and str(linked.get("id") or "").strip():
+            return str(linked["id"]).strip(), str(linked.get("username") or "").strip()
+    return "", ""
+
+
+def resolve_linked_instagram(page_ids, tokens, *, attempts: int = 2, pause_s: float = 3.0) -> dict:
+    """Find the Instagram professional account linked to the Facebook Page.
+
+    Oct 17: the single lookup (Page token -> /{page}?fields=instagram_business_account)
+    returned no linked account from ~12:57 IST although it worked at 09:49, so
+    publishing fell back to the raw secret (the Page ID) and IG/Story failed with
+    "Object with ID ... does not exist". Try every sanctioned route, with every
+    token we hold, and retry once, before giving up:
+      /{page}?fields=instagram_business_account,connected_instagram_account
+      /me?fields=...            (a Page token's /me is the Page)
+      /me/accounts?fields=...   (a User token lists its Pages)
+    Returns {"id", "username", "diag"}; diag holds response KEYS only, never values.
+    """
+    pages = [str(p).strip() for p in page_ids if str(p or "").strip()]
+    toks = []
+    for t in tokens:
+        t = str(t or "").strip()
+        if t and t not in toks:
+            toks.append(t)
+    diag: list[str] = []
+    q = urllib.parse.urlencode({"fields": _IG_FIELDS})
+    qa = urllib.parse.urlencode({"fields": "id," + _IG_FIELDS, "limit": "50"})
+    for attempt in range(max(1, attempts)):
+        for ti, tok in enumerate(toks):
+            urls = [(f"page{pi}", f"{META_GRAPH_BASE}/{urllib.parse.quote(pid, safe='')}?{q}")
+                    for pi, pid in enumerate(dict.fromkeys(pages))]
+            urls += [("me", f"{META_GRAPH_BASE}/me?{q}"), ("me_accounts", f"{META_GRAPH_BASE}/me/accounts?{qa}")]
+            for name, url in urls:
+                try:
+                    res = _fetch(url, _headers(tok))
+                except TokenHttpError as exc:
+                    diag.append(f"t{ti}:{name}:HTTP{exc.code}")
+                    continue
+                if name == "me_accounts":
+                    rows = [r for r in (res.get("data") or []) if isinstance(r, dict)]
+                    match = [r for r in rows if str(r.get("id") or "") in pages] or (rows if len(rows) == 1 else [])
+                    for r in match:
+                        rid, user = _linked_from(r)
+                        if rid:
+                            return {"id": rid, "username": user, "diag": diag + [f"t{ti}:{name}:ok"]}
+                    diag.append(f"t{ti}:{name}:{len(rows)}pages")
+                    continue
+                rid, user = _linked_from(res)
+                if rid:
+                    return {"id": rid, "username": user, "diag": diag + [f"t{ti}:{name}:ok"]}
+                diag.append(f"t{ti}:{name}:keys={','.join(sorted(k for k in res if k != 'id')) or 'none'}")
+        if attempt + 1 < attempts:
+            time.sleep(pause_s)
+    return {"id": "", "username": "", "diag": diag}
+
+
 def inspect_instagram(account_id: str, token: str, *, now: int | None = None) -> dict:
     """Return ok plus the fields the workflow is allowed to log."""
     problems: list[str] = []
@@ -185,23 +247,18 @@ def inspect_instagram(account_id: str, token: str, *, now: int | None = None) ->
         # publishing account. Resolve its linked Instagram professional ID
         # before allowing a publish job to proceed.
         if not username:
-            query = urllib.parse.urlencode({"fields": "instagram_business_account{id,username}"})
-            page_url = f"{META_GRAPH_BASE}/{urllib.parse.quote(account_id, safe='')}?{query}"
-            try:
-                page = _fetch(page_url, _headers(token))
-                linked = page.get("instagram_business_account") or {}
-                resolved_account_id = str(linked.get("id") or "").strip()
-                username = str(linked.get("username") or "").strip()
-                if not resolved_account_id or not username:
-                    resolved_account_id = ""
-                    problems.append(
-                        "configured ID is not an Instagram user and no linked Instagram professional account was returned; "
-                        "set INSTAGRAM_ACCOUNT_ID to the Instagram professional account ID, not the Facebook Page ID"
-                    )
-            except TokenHttpError as exc:
+            found = resolve_linked_instagram(
+                [account_id, os.environ.get("FACEBOOK_PAGE_ID", "")],
+                [token, os.environ.get("FACEBOOK_PAGE_ACCESS_TOKEN", "")],
+            )
+            resolved_account_id = found["id"]
+            username = found["username"] or ("(linked)" if resolved_account_id else "")
+            report["resolve_diag"] = found["diag"]
+            if not resolved_account_id:
                 problems.append(
-                    f"configured ID has no username and linked Instagram account lookup failed (HTTP {exc.code}); "
-                    "check INSTAGRAM_ACCOUNT_ID and Page permissions"
+                    "configured ID is not an Instagram user and no linked Instagram professional account was returned "
+                    f"(tried: {'; '.join(found['diag'])}); reconnect Instagram to the Facebook Page in Meta Business "
+                    "Suite, or set INSTAGRAM_ACCOUNT_ID to the Instagram professional account ID, not the Facebook Page ID"
                 )
     report["username"] = username
     report["resolved_account_id"] = resolved_account_id
