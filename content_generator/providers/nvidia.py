@@ -35,6 +35,7 @@ _URL = f"{_BASE}/chat/completions"
 # Gemma 4 31B IT is the instruct model already used as a content fallback,
 # so it goes first. Ultra is next. Super stays available but last.
 _DEFAULT_MODELS = (
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
     "google/gemma-4-31b-it",
     "nvidia/nemotron-3-ultra-550b-a55b",
     "nvidia/nemotron-3-super-120b-a12b",
@@ -88,8 +89,9 @@ def get_key() -> str:
 
 
 _PREFER = (
-    "nvidia/nemotron-3-super-120b-a12b", "google/gemma-4-31b-it", "nvidia/nemotron-3-ultra-550b-a55b",
-    "deepseek-ai/deepseek-v4.1-flash", "nvidia/nemotron-3.5-lightning-30b-a3b", "qwen/qwen3", "meta/llama-4",
+    "nvidia/nemotron-3.5-lightning-30b-a3b", "google/gemma-4-31b-it",
+    "nvidia/nemotron-3-ultra-550b-a55b", "nvidia/nemotron-3-super-120b-a12b",
+    "deepseek-ai/deepseek-v4.1-flash", "qwen/qwen3", "meta/llama-4",
     "moonshotai/kimi-k2.6", "openai/gpt-oss-120b", "openai/gpt-oss-20b",
 )
 _SKIP = ("embed", "safety", "guard", "retriever", "reward", "coder", "-vl", "vision", "omni", "parse", "rerank")
