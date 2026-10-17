@@ -324,25 +324,9 @@ jobs:
           echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) run #${{ github.run_number }}" >> .last_run
           git add .last_run
           git add -f output/learning/ 2>/dev/null || true
-          python - <<'PRUNE'
-          import datetime, glob, os, re
-          from zoneinfo import ZoneInfo
-          cutoff = datetime.datetime.now(ZoneInfo("Asia/Kolkata")).date() - datetime.timedelta(days=7)
-          removed = 0
-          for path in glob.glob("output/creative/*"):
-              m = re.search(r"(\d{4})-(\d{2})-(\d{2})", os.path.basename(path))
-              if not m:
-                  continue
-              try:
-                  stamped = datetime.date(*(int(g) for g in m.groups()))
-              except ValueError:
-                  continue
-              if stamped < cutoff:
-                  os.remove(path)
-                  removed += 1
-          print(f"pruned {removed} creative files older than {cutoff}")
-          PRUNE
-          git add -f output/creative/ 2>/dev/null || true
+          # Generated creative is ephemeral runtime output. Never add it to Git:
+          # 383 tracked assets had accumulated to ~350 MB and are not source files.
+          git rm -r --cached --ignore-unmatch output/creative/ >/dev/null 2>&1 || true
           ist_date=$(python -c 'import os; from content_generator.core.ist_dates import content_date_for_slot; print(content_date_for_slot(os.environ.get("FORCE_SLOT") or "generate").isoformat())')
           git add -f "output/content_${ist_date}.json" 2>/dev/null || true
           git add -f "output/blog_${ist_date}.json" "output/blog_${ist_date}.md" "output/blog_${ist_date}.html" "output/blog_${ist_date}.llms.txt" 2>/dev/null || true
