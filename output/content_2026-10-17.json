@@ -2380,46 +2380,45 @@
   },
   "threads_post": {
     "featured_product": "ultra_blend",
-    "objective": "Drive traffic and sales for Ultra Blend by positioning it as the intentional choice for milk‑coffee drinkers who want transparency and honest value",
+    "objective": "Customer education and product transparency for Ultra Blend by Purity Beans.",
     "primary_cta": "Shop Ultra Blend at https://p3online.in",
-    "success_metric": "Website clicks, product page visits, and direct purchases",
+    "success_metric": "Saves, comments, and website visits to https://p3online.in",
     "asset_type": "threads_post",
-    "body": "Your daily milk coffee needs an honest jar.\n\nPurity Beans Ultra Blend gives you a smooth 70% coffee and 30% chicory blend — clearly labeled so you always know what you're drinking. A 100g jar gives you at least 66 cups at about 5 rupees a cup. No mystery fillers. Read the jar. Shop at https://p3online.in",
+    "body": "Most people never check the exact ratio on their milk coffee jar.\n\nUltra Blend is formulated as a smooth 70% coffee and 30% chicory milk coffee, designed specifically for that daily cup with milk. Read the jar label at https://p3online.in",
     "brand": "Purity Beans",
-    "buy_mechanism": "Shop online at https://p3online.in",
-    "caption": "Your daily milk coffee deserves transparency. Purity Beans Ultra Blend is an honest 70/30 coffee and chicory blend giving you at least 66 cups per 100g jar at about 5 rupees a cup. Read the jar and choose what fits your cup. https://p3online.in",
-    "chosen_hook": "accessible_premium",
-    "comment_trigger": "Comment MILK if your daily driver is a milk coffee.",
-    "content": "Match your coffee jar to how you actually drink coffee",
-    "content_text": "Daily milk coffee? Purity Beans Ultra Blend — 70% coffee, 30% chicory, honest labeling, about 5 rupees a cup. Read the jar at https://p3online.in",
-    "hashtags": "#PurityBeans #UltraBlend #CleanCoffee #CoffeeLoversIndia #Transparency #ReadTheJar",
-    "hook": "You don't drink coffee the same way every day. Your jar should match how you actually drink it.",
-    "hook_text": "You don't drink coffee the same way every day. Your jar should match how you actually drink it.",
-    "psychology_frame": "accessible_premium",
-    "retention_audit": "The hook immediately contrasts pricing with home brewing, creating a strong financial curiosity gap. The breakdown of 66 cups per 100g jar grounds the claim in concrete math, keeping the reader engaged through the middle value proposition. The transition to Ultra Blend's 70/30 ratio and the brand website provides a clear path from realization to purchase.",
-    "save_trigger": "Save this to calculate your monthly coffee savings.",
-    "share_trigger": "Share this with someone who spends too much money on cafe coffee.",
+    "buy_mechanism": "Direct Website Link: https://p3online.in",
+    "caption": "If you take your coffee with milk every morning, the ratio in your cup matters more than you think. Purity Beans Ultra Blend is crafted as a smooth 70% coffee and 30% chicory milk coffee, designed to blend perfectly with warm milk without losing its comforting character. Read the jar label at https://p3online.in.",
+    "chosen_hook": "When you pour milk into your morning cup, do you actually know what percentage of that blend is coffee?",
+    "comment_trigger": "Comment RATIO to receive the full breakdown of how Ultra Blend is formulated for daily milk coffee.",
+    "comment_trigger_instruction": "Comment RATIO and the founder will reply personally with the exact blend details.",
+    "content": "Ultra Blend 70% coffee and 30% chicory profile breakdown for daily milk coffee drinkers by Purity Beans.",
+    "content_text": "Purity Beans Ultra Blend is a smooth 70% coffee and 30% chicory blend crafted specifically for your daily milk coffee. Read the jar at https://p3online.in.",
+    "hashtags": "#PurityBeans #UltraBlend #InstantCoffee #CoffeeLoversIndia #MilkCoffee",
+    "hook": "When you pour milk into your morning cup, do you actually know what percentage of that blend is coffee?",
+    "hook_text": "When you pour milk into your morning cup, do you actually know what percentage of that blend is coffee?",
+    "psychology_frame": "clean_label",
+    "retention_audit": {
+      "completion_probability": 0.92,
+      "drop_off_risk_point": "Reading the ingredient ratio breakdown",
+      "retention_mechanics": [
+        "Immediate curiosity about milk coffee ratios",
+        "Clear factual disclosure by Purity Beans",
+        "Direct call to action to read the jar"
+      ]
+    },
+    "retention_strategy": "Present a clear, honest statement about the 70/30 coffee-to-chicory ratio in Ultra Blend to hold attention and build trust.",
+    "save_trigger": "Save this post before your next grocery run to remember what goes into your daily milk coffee with Purity Beans.",
+    "share_trigger": "Share this with someone who drinks milk coffee every single morning and cares about transparency.",
     "editorial_score": {
-      "shareability": 6.5,
-      "saveability": 7.0,
-      "emotion_pull": 6.0,
-      "hook_strength": 7.5,
-      "brand_clarity": 9.0,
-      "overall": 7.2,
+      "shareability": 4.0,
+      "saveability": 4.5,
+      "emotion_pull": 2.5,
+      "hook_strength": 3.5,
+      "brand_clarity": 5.0,
+      "overall": 3.9,
       "verdict": "REJECT",
-      "feedback": "The copy successfully handles Ultra Blend's 70/30 ratio with honesty, avoiding anti-chicory attacks while clearly communicating value and transparency. The hook effectively contrasts cafe pricing with home brewing costs. To improve further, ensure the transition into the price-per-cup math feels like a clever realization rather than a traditional sales pitch.",
-      "retention_audit": "Line 1: 'Most people spend 180 rupees at a cafe...' - Strong contrast that grabs immediate attention. Line 2: 'Purity Beans Ultra Blend gives you at least 66 cups...' - Solid, concrete math that builds logical trust. Line 3: 'No hidden math. Just an honest 70% coffee and 30% chicory blend...' - Reassuring transparency that prevents cognitive drop-off. Line 4: 'Read the jar. Shop at https://p3online.in' - Clear, compliant call to action that closes the loop without friction."
-    },
-    "comment_trigger_instruction": "Comment MILK if your daily driver is a milk coffee.",
-    "retention_strategy": {
-      "stop": "You don't drink coffee the same way every day. Your jar should match how you actually drink it.",
-      "curiosity": "Which Purity Beans jar matches your daily milk coffee?",
-      "value": "Ultra Blend gives you at least 66 cups per 100g jar at about 5 rupees a cup — honest 70/30 labeling for your everyday milk coffee.",
-      "trust": "Purity Beans labels every jar clearly. Ultra Blend is 70% coffee, 30% chicory. No guessing.",
-      "follow": "Follow Purity Beans for honest coffee buying guides that respect your intelligence.",
-      "buy": "Get the jar that matches your cup at https://p3online.in"
-    },
-    "editorial_error": "scoring_failed: scoring failed for threads_post: All LLM providers failed for 'editorial_threads_post'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
+      "feedback": "The hook is generic — any coffee brand could ask 'do you know the percentage?' It lacks betrayal, identity challenge, or a surprising fact unique to Purity Beans. The body is a flat disclosure with no narrative tension, no myth-busting, no emotional payoff. The comment trigger 'Comment RATIO' is mechanical, not identity-driven. The save/share triggers are generic grocery-run language. To pass: rewrite hook as a betrayal or revelation ('Your milk coffee jar hides a 30% filler. Ultra Blend puts the 70/30 on the front label.'). Add a contrast line: 'Most brands bury"
+    }
   },
   "facebook_post": {
     "featured_product": "ultra_blend",
@@ -5254,6 +5253,45 @@
         "attempt": 7,
         "rung": "feedback",
         "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "The content is too corporate and 'safe.' The hook is a generic observation that doesn't trigger a psychological gap—it's a statement, not a hook. The value proposition (5 rupees a cup) is the strongest part but it is buried. To fix: Start with the shocking price contrast or the 'honest jar' angle to"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "Start with a shocking price contrast or the 'honest jar' angle to create immediate curiosity. Replace the generic hook with something like 'Stop guessing what's in your milk coffee' or 'Your daily milk coffee costs just 5 rupees a cup — here's why.' Move the 5 rupees per cup claim to the first sente"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The hook 'Your daily milk coffee costs just 5 rupees a cup — here is why' is a rational price claim that any brand could make; it lacks a curiosity gap, identity challenge, or betrayal trigger. The body opens with 'Your daily milk coffee needs an honest jar' — a generic ad line that creates no urgen"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory)\", 'product truth: Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar']"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The hook is generic — 'Most people never check the exact ratio' applies to any coffee brand and creates no urgency. The body is a flat factual disclosure with no narrative arc, emotional hook, or identity signal for the target audience. No betrayal, pride, curiosity gap, or contrarian stance. The co"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": ""
+      },
+      {
+        "status": "exhausted",
+        "reason": "The hook is generic — any coffee brand could ask 'do you know the percentage?' It lacks betrayal, identity challenge, or a surprising fact unique to Purity Beans. The body is a flat disclosure with no narrative tension, no myth-busting, no emotional payoff. The comment trigger 'Comment RATIO' is mec"
       }
     ],
     "growth_reel": [
