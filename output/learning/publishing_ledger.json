@@ -2961,11 +2961,11 @@
       "verified_at": "2026-10-17T07:25:16+00:00"
     },
     "2026-10-17|morning|instagram_story|pb_599ece0bac": {
-      "attempt_count": 3,
+      "attempt_count": 4,
       "content_date": "2026-10-17",
       "content_id": "pb_599ece0bac",
       "day_number": 289,
-      "error": "Unsupported post request. Object with ID '494003270464484' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+      "error": "",
       "history": [
         {
           "at": "2026-10-17T07:25:16+00:00",
@@ -3011,30 +3011,47 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-17T14:06:02+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-17T14:08:40+00:00",
+          "attempt": 4,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18014058641770402",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/stories/purepantryprovisions/4009973500592700883",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-10-17T07:54:03+00:00",
+      "last_attempt_at": "2026-10-17T14:06:02+00:00",
       "last_result": {
-        "error": "Unsupported post request. Object with ID '494003270464484' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
-        "success": false
+        "error": "",
+        "success": true
       },
+      "last_verification_at": "2026-10-17T14:08:40+00:00",
       "next_retry_at": null,
       "platform": "instagram_story",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "18014058641770402",
       "slot": "morning",
-      "status": "FAILED",
-      "updated_at": "2026-10-17T07:58:34+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-17T14:08:40+00:00",
+      "url": "https://www.instagram.com/stories/purepantryprovisions/4009973500592700883",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-17T14:08:40+00:00"
     },
     "2026-10-17|morning|instagram|pb_599ece0bac": {
-      "attempt_count": 3,
+      "attempt_count": 4,
       "content_date": "2026-10-17",
       "content_id": "pb_599ece0bac",
       "day_number": 289,
-      "error": "Unsupported post request. Object with ID '494003270464484' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
+      "error": "",
       "history": [
         {
           "at": "2026-10-17T07:25:04+00:00",
@@ -3080,23 +3097,40 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-17T14:05:45+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-17T14:06:02+00:00",
+          "attempt": 4,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18116828654083980",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DemSGZgDufw/",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-10-17T07:53:57+00:00",
+      "last_attempt_at": "2026-10-17T14:05:45+00:00",
       "last_result": {
-        "error": "Unsupported post request. Object with ID '494003270464484' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https://developers.facebook.com/docs/graph-api",
-        "success": false
+        "error": "",
+        "success": true
       },
+      "last_verification_at": "2026-10-17T14:06:02+00:00",
       "next_retry_at": null,
       "platform": "instagram",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "18116828654083980",
       "slot": "morning",
-      "status": "FAILED",
-      "updated_at": "2026-10-17T07:54:03+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-17T14:06:02+00:00",
+      "url": "https://www.instagram.com/p/DemSGZgDufw/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-17T14:06:02+00:00"
     }
   },
   "version": 1
