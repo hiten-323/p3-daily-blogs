@@ -333,7 +333,7 @@ jobs:
           cutoff = datetime.datetime.now(ZoneInfo("Asia/Kolkata")).date() - datetime.timedelta(days=1)
           removed = 0
           for path in glob.glob("output/creative/*"):
-              m = re.search(r"(\\d{4})-(\\d{2})-(\\d{2})", os.path.basename(path))
+              m = re.search(r"(\d{4})-(\d{2})-(\d{2})", os.path.basename(path))
               if not m:
                   continue
               try:
