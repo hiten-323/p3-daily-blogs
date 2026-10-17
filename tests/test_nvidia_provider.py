@@ -80,10 +80,10 @@ def test_success_uses_chat_completions(monkeypatch):
     monkeypatch.setattr(nvidia._http, "post", post)
     text, usage = nvidia.call("Write a caption.", 120)
     assert text == '{"ok": true}'
-    assert usage["model"] == "google/gemma-4-31b-it"
+    assert usage["model"] == "nvidia/nemotron-3.5-lightning-30b-a3b"
     assert seen["url"] == "https://integrate.api.nvidia.com/v1/chat/completions"
     assert seen["auth"] == "Bearer nvapi-secretvalue"
-    assert seen["model"] == "google/gemma-4-31b-it"
+    assert seen["model"] == "nvidia/nemotron-3.5-lightning-30b-a3b"
     assert seen["timeout"] == nvidia._CALL_TIMEOUT_S
     assert 15 < nvidia._CALL_TIMEOUT_S <= 60
 
