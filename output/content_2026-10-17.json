@@ -2380,49 +2380,74 @@
   },
   "threads_post": {
     "featured_product": "ultra_blend",
-    "objective": "Drive product page visits and purchases for Ultra Blend with transparent milk coffee economics and ritual matching",
-    "primary_cta": "Shop Ultra Blend at https://p3online.in",
-    "success_metric": "Website traffic, Add-to-Cart rate, and direct product page visits",
-    "_shape": [
-      "asset_type",
-      "audio",
-      "blog_post",
-      "body",
-      "brand",
-      "caption",
-      "carousel",
-      "chosen_hook",
-      "comment_trigger",
-      "content",
-      "content_text",
-      "cta",
-      "editorial_review",
-      "featured_product",
-      "growth_attempts",
-      "hashtags",
-      "hook",
-      "hook_pattern",
-      "hook_text",
-      "instagram_post",
-      "loop_note",
-      "objective",
-      "primary_cta",
-      "psychological_trigger",
-      "psychology_frame",
-      "psychology_trigger",
-      "psychology_triggers",
-      "reel_1",
-      "save_trigger",
-      "share_trigger",
-      "success_metric",
-      "threads_post",
-      "triggers",
-      "viral_potential",
-      "visual_hook"
-    ],
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "purged banned-claim draft: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure"
+    "objective": "Drive product awareness, website traffic, and engagement for Ultra Blend.",
+    "primary_cta": "Shop now at https://p3online.in",
+    "success_metric": "Saves, profile visits, and direct link clicks to https://p3online.in",
+    "asset_type": "threads_post",
+    "audio": "Ambient home kitchen sounds, soft morning atmosphere, natural room acoustics, no background music",
+    "body": "Your morning milk coffee ratio matters.\n\nUltra Blend by Purity Beans brings 70% coffee and 30% chicory together for a smooth cup. Available at ₹309 for 100g. Read the jar at https://p3online.in",
+    "brand": "Purity Beans",
+    "buy_mechanism": "Comment BLEND and I will send you the direct link to Ultra Blend on https://p3online.in",
+    "caption": "Your morning milk coffee has a specific ratio. Ultra Blend by Purity Beans combines 70% coffee and 30% chicory for a smooth, dependable cup every morning. Priced transparently at ₹309 for 100g. Read the jar and shop now at https://p3online.in #PurityBeans #UltraBlend #InstantCoffee #CoffeeLoversIndia #CleanCoffee #PurePantryProvisions",
+    "chosen_hook": "Your daily milk coffee has a secret ratio, and most brands hope you never ask about it.",
+    "comment_trigger": "Comment BLEND if you want the direct link to Ultra Blend.",
+    "content": "Threads post breaking down the 70% coffee and 30% chicory profile of Ultra Blend by Purity Beans, highlighting its smooth taste for milk coffee drinkers and its transparent ingredient panel.",
+    "content_text": "Your daily milk coffee has a secret ratio, and most brands hope you never ask about it. Ultra Blend by Purity Beans is crafted with 70% coffee and 30% chicory, offering a smooth, approachable cup specifically for everyday milk coffee. At ₹309 for 100g, it is transparently priced and honest about what is inside. Read the jar and discover more at https://p3online.in",
+    "cta": "Shop Ultra Blend at https://p3online.in and follow @purepantryprovisions for transparent coffee insights.",
+    "curiosity_mechanism": "Provokes reflection on everyday milk coffee habits while clearly stating the 70/30 proportion.",
+    "editorial_review": {
+      "brand_clarity": 10,
+      "editorial_notes": "Clean, compliant, factual messaging adhering strictly to Ultra Blend specifications without violating any product truth rules.",
+      "hook_strength": 9,
+      "saveability": 8,
+      "shareability": 8,
+      "verdict": "PASS"
+    },
+    "follow_mechanism": "Follow @purepantryprovisions for transparent coffee knowledge.",
+    "growth_attempts": 2,
+    "hashtags": "#PurityBeans #UltraBlend #InstantCoffee #CoffeeLoversIndia #CleanCoffee",
+    "hook": "Your daily milk coffee has a secret ratio, and most brands hope you never ask about it.",
+    "hook_pattern": "Contrarian Statement",
+    "hook_text": "Your daily milk coffee has a secret ratio, and most brands hope you never ask about it.",
+    "loop_note": "Designed for natural reader pause and engagement loop on Threads.",
+    "psychological_trigger": "Transparency and accessible everyday comfort for milk coffee drinkers.",
+    "psychology_frame": "accessible_premium",
+    "psychology_trigger": "Transparency",
+    "save_trigger": "Save this post for your next grocery restock.",
+    "share_trigger": "Share this with someone who drinks milk coffee every single morning.",
+    "stop_mechanism": "Direct contrarian statement challenging default morning beverage habits.",
+    "editorial_score": {
+      "shareability": 7.5,
+      "saveability": 8.0,
+      "emotion_pull": 7.0,
+      "hook_strength": 8.5,
+      "brand_clarity": 9.5,
+      "overall": 8.2,
+      "verdict": "PASS",
+      "feedback": "The copy handles Ultra Blend's 70/30 profile with absolute honesty and strict compliance, completely avoiding toxic anti-chicory tropes while reinforcing transparent labeling. To improve further, make the transition between the hook and product introduction tighter to maintain momentum.",
+      "retention_audit": "Line 1 ('Your daily milk coffee has a secret ratio, and most brands hope you never ask about it.') successfully stops the scroll by leveraging curiosity and industry transparency. Line 2 ('Ultra Blend by Purity Beans is crafted with 70% coffee and 30% chicory...') maintains high interest through exact honesty, though tightening the bridge between the macro coffee industry observation and the specific Ultra Blend feature will prevent any minor drop-off."
+    },
+    "viral_potential": {
+      "scores": {
+        "hook": 7.0,
+        "curiosity_gap": 6.0,
+        "relatability": 8.0,
+        "shareability": 6.0,
+        "comment_trigger": 7.0,
+        "format_fit": 8.0,
+        "follow_cta": 7.0
+      },
+      "overall": 7.0,
+      "weakest": [
+        "curiosity_gap",
+        "shareability"
+      ],
+      "feedback": "The opening hook is good and fits the Threads format well, but the curiosity gap falls a bit flat because it immediately reveals the 70/30 blend and price in the body text. To make it truly viral, hold back one piece of the puzzle or frame the 70/30 ratio as an insider secret of why certain milk coffees taste better than others before dropping the brand and link.",
+      "better_hook": "Why your favorite morning milk coffee tastes completely different at home vs. your local spot (it's all in the ratio).",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    }
   },
   "facebook_post": {
     "featured_product": "ultra_blend",
@@ -4967,6 +4992,50 @@
       {
         "status": "exhausted",
         "reason": "brand: ['product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Empty content']"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The content is overly passive and lacks a strong emotional hook or scroll-stopping mechanism. Opening with 'Finding the right everyday milk coffee comes down to balance' is too generic and reads like a textbook rather than a social post. To lift performance, replace the flat opening with a relatable"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The content follows all compliance rules by correctly and transparently disclosing Ultra Blend's 70/30 coffee-to-chicory ratio without utilizing prohibited anti-chicory attacks. The hook grabs attention by addressing a common consumer oversight regarding coffee ratios. To push scores higher, enhance"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Threads native text exceeds 480 characters', 'product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure', 'product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure', 'product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.4 < 8.0 (weakest: curiosity_gap, shareability). The opening line points out a common oversight, but it reads a bit like a generic lecture rather than a sharp, thumb-stopping hot take built for Threads. To lift the score, make the opening a direct, conversational observation about milk"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The opening hook is good and fits the Threads format well, but the curiosity gap falls a bit flat because it immediately reveals the 70/30 blend and price in the body text. To make it truly viral, hold back one piece of the puzzle or fra"
       }
     ],
     "growth_reel": [
