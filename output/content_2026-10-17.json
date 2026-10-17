@@ -2380,35 +2380,35 @@
   },
   "threads_post": {
     "featured_product": "ultra_blend",
-    "objective": "Drive product page visits and purchases for Purity Beans Ultra Blend by highlighting its purpose-built 70:30 coffee-to-chicory balance for everyday milk coffee drinkers.",
-    "primary_cta": "Shop Ultra Blend at https://p3online.in",
-    "success_metric": "Website traffic, product page visits, and saves",
+    "objective": "Increase trust and drive sales for Ultra Blend via transparency",
+    "primary_cta": "Visit https://p3online.in to shop Ultra Blend",
+    "success_metric": "Click-through rate to product page and engagement rate",
     "asset_type": "threads_post",
-    "body": "Your daily milk coffee just got honest. Purity Beans Ultra Blend is 70% coffee, 30% chicory — no secrets, just a smooth cup that costs a fraction of café prices. Read the jar. ☕\n\nFollow @purepantryprovisions\nShop https://p3online.in",
+    "body": "Most of us grew up drinking instant coffee without checking the back of the jar.\n\nNow, readers want clarity. Purity Beans believes in total transparency. That is why Ultra Blend is clearly labeled: 70% coffee and 30% chicory. It is built for those who want a smooth, creamy milk coffee. Read the label at https://p3online.in",
     "brand": "Purity Beans",
-    "buy_mechanism": "website_link",
-    "caption": "That ₹180 café milk coffee habit adds up faster than you think. Purity Beans Ultra Blend gives you a smooth 70% coffee and 30% chicory blend designed specifically for everyday milk coffee at home. Clear labeling, honest ingredients, and a proper glass jar. Read the jar. ☕\n\nShop https://p3online.in",
-    "chosen_hook": "That ₹180 café milk coffee habit adds up faster than you think.",
-    "comment_trigger": "What is your daily milk coffee ritual? Comment below.",
-    "content": "That ₹180 café milk coffee habit adds up faster than you think. Purity Beans Ultra Blend gives you a smooth 70% coffee and 30% chicory blend designed specifically for everyday milk coffee at home. Clear labeling, honest ingredients, and a proper glass jar. Read the jar. ☕\n\nShop https://p3online.in",
-    "content_text": "That ₹180 café milk coffee habit adds up faster than you think.",
-    "hook_text": "That ₹180 café milk coffee habit adds up faster than you think.",
-    "hook": "That ₹180 café milk coffee habit adds up faster than you think.",
-    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
-    "save_trigger": "Save this before your next grocery run for a better morning routine.",
-    "share_trigger": "Share with someone who spends too much on daily café coffee.",
+    "buy_mechanism": "Direct link to Shopify store",
+    "caption": "Honesty in every spoonful. Ultra Blend by Purity Beans. https://p3online.in",
+    "chosen_hook": "Most of us grew up drinking instant coffee without checking the label.",
+    "comment_trigger": "Black coffee or smooth milk coffee? Comment below.",
+    "content": "Most of us grew up drinking instant coffee without checking the label. Purity Beans believes in total transparency. Ultra Blend is clearly labeled: 70% coffee and 30% chicory. A smooth, creamy milk coffee for everyday sipping. No secrets. Read the label: https://p3online.in",
+    "content_text": "Most of us grew up drinking instant coffee without checking the label. Purity Beans believes in total transparency. Ultra Blend is clearly labeled: 70% coffee and 30% chicory. A smooth, creamy milk coffee for everyday sipping. No secrets. Read the label: https://p3online.in",
+    "hashtags": "#PurityBeans #CleanCoffee #InstantCoffeeIndia #UltraBlend #CoffeeTransparency",
+    "hook": "The Label Truth",
+    "hook_text": "Most of us grew up drinking instant coffee without checking the label.",
+    "psychology_frame": "clean_label",
+    "save_trigger": "Save this to check your coffee ingredients next shop.",
+    "share_trigger": "Share with a friend who loves smooth milk coffee.",
     "editorial_score": {
       "shareability": 6.5,
       "saveability": 7.0,
       "emotion_pull": 7.2,
-      "hook_strength": 7.5,
-      "brand_clarity": 8.5,
+      "hook_strength": 6.8,
+      "brand_clarity": 9.0,
       "overall": 7.3,
       "verdict": "REJECT",
-      "feedback": "The copy is refreshingly honest about Ultra Blend's 70:30 ratio without relying on toxic anti-chicory tropes, which aligns perfectly with brand guidelines. However, the hook 'Your daily milk coffee just got honest' is slightly generic. To push retention higher, frame the hook around the consumer's everyday milk coffee habit vs. cafe prices.",
-      "retention_audit": "Line 1 ('Your daily milk coffee just got honest.'): Good pattern interruption for milk coffee drinkers, but could create a stronger curiosity gap. Line 2 ('Purity Beans Ultra Blend is 70% coffee, 30% chicory — no secrets, just a smooth cup that costs a fraction of café prices.')Strong value proposition and honest disclosure; maintains trust. Line 3 ('Read the jar. ☕'): Good tactile call to action. Hashtag inclusion needs cleanup (remove '#NoChicory' as this post features Ultra Blend, which contains 30% chicory, complying strictly with the negative constraint)."
-    },
-    "editorial_error": "scoring_failed: scoring failed for threads_post: All LLM providers failed for 'editorial_threads_post'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
+      "feedback": "The content is honest and correctly follows the Ultra Blend 70/30 transparency rule, but the hook ('Most of us grew up drinking instant coffee without checking the label') is slightly generic and fails to create an immediate, scroll-stopping curiosity gap or strong emotional pulse. Furthermore, the technical error indicates that the Threads post exceeds the 480-character limit, which will truncate the copy or cause platform failure. Shorten the text to fit character constraints, sharpen the hook to challenge assumptions directly, and make the value proposition punchier.",
+      "retention_audit": "Line 1 ('Most of us grew up drinking instant coffee without checking the label.') is safe but lacks high-voltage stopping power; readers may skim past it thinking it's a generic wellness post. Lines 2-4 handle the 70/30 disclosure properly and build strong brand trust, but the transition into the CTA lacks a compelling psychological reason to comment or save instantly."
+    }
   },
   "facebook_post": {
     "featured_product": "ultra_blend",
@@ -5120,6 +5120,50 @@
         "attempt": 7,
         "rung": "feedback",
         "feedback": "The copy is refreshingly honest about Ultra Blend's 70:30 ratio without relying on toxic anti-chicory tropes, which aligns perfectly with brand guidelines. However, the hook 'Your daily milk coffee just got honest' is slightly generic. To push retention higher, frame the hook around the consumer's e"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "The hook is a generic cost‑comparison line that could apply to any instant coffee brand. It lacks a curiosity gap or a strong emotional pull that would compel a viewer to stop scrolling. The opening sentence also does not highlight a unique pain point or reveal a hidden truth about the product, maki"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The opening hook is a generic cost‑comparison that could apply to any instant coffee brand and fails to create a curiosity gap or identity challenge, causing viewers to scroll past within the first two seconds. To retain attention, replace the hook with a direct identity challenge or surprising fact"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The content is too safe and reads like a standard advertisement rather than a scroll-stopping social post. The hook 'costing you more than just money' is a cliché that fails to create a curiosity gap. To fix this, lead with the 'Betrayal' or 'Identity' angle—focus on the lack of transparency in cafe"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Threads native text exceeds 480 characters', 'product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Threads native text exceeds 480 characters', 'product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "status": "exhausted",
+        "reason": "The content is honest and correctly follows the Ultra Blend 70/30 transparency rule, but the hook ('Most of us grew up drinking instant coffee without checking the label') is slightly generic and fails to create an immediate, scroll-stopping curiosity gap or strong emotional pulse. Furthermore, the "
       }
     ],
     "growth_reel": [
