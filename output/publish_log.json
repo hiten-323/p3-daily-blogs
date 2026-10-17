@@ -2038,5 +2038,91 @@
       ],
       "timestamp": "2026-10-17T04:30:48"
     }
+  },
+  {
+    "date": "2026-10-17",
+    "day_number": 289,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "post_id": "urn:li:share:7517123465263624192",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7517123465263624192/",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 1,
+        "duration_ms": 4503
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": true,
+        "video_id": "quYmQ8ZVePg",
+        "url": "https://www.youtube.com/shorts/quYmQ8ZVePg",
+        "error": null,
+        "ledger_status": "PUBLISHED_UNVERIFIED",
+        "ledger_attempt_count": 1,
+        "duration_ms": 4122
+      },
+      "threads": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "post_id": "",
+        "url": "",
+        "error": "prepublish_gate:viral_readiness_failed",
+        "gate": {
+          "allowed": false,
+          "asset_key": "threads_post",
+          "reason": "viral_readiness_failed",
+          "checks": {
+            "editorial": true,
+            "viral_readiness": {
+              "score": 56.0,
+              "passes": false,
+              "dimensions": {
+                "hook": 4.0,
+                "novelty": 15.0,
+                "retention": 7.0,
+                "payoff": 0.0,
+                "share_reason": 10.0,
+                "follow_reason": 4.0,
+                "platform_nativeness": 6.0,
+                "truth_and_integrity": 10.0
+              },
+              "reasons": [
+                "weak or missing dedicated hook",
+                "high factual novelty (6 specific details)",
+                "payoff deficit: opens a curiosity loop and never closes it \u2014 the viewer learns nothing, which is the definition of bait",
+                "Threads post contains promotional link (penalized by algorithm)"
+              ],
+              "basis": "pre-publication creative viral-readiness evaluation"
+            }
+          }
+        },
+        "ledger_status": "SKIPPED",
+        "ledger_attempt_count": 2,
+        "duration_ms": 2599
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Youtube | Held for slot: Instagram, Facebook | Skipped: Threads, Blog",
+      "published_platforms": [
+        "linkedin",
+        "youtube"
+      ],
+      "timestamp": "2026-10-17T07:25:03"
+    }
   }
 ]
