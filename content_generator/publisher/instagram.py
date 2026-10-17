@@ -49,8 +49,46 @@ _FEED_MAX_RATIO = 1.91
 _GRAPH_API = META_GRAPH_BASE
 
 
+_IG_RESOLVE_TRIED = False
+
+
+def _ensure_instagram_account_id() -> bool:
+    """Never publish to the Facebook Page ID.
+
+    INSTAGRAM_ACCOUNT_ID is configured as the Page ID and the workflow preflight
+    swaps in the linked IG account. When that preflight lookup fails, soft mode
+    used to fall back to the Page ID and every IG call failed with
+    "Object with ID ... does not exist". Resolve here as well; if it still
+    cannot be resolved, report the account as unresolved instead of publishing.
+    """
+    global _IG_RESOLVE_TRIED
+    acct = os.getenv("INSTAGRAM_ACCOUNT_ID", "").strip()
+    page = os.getenv("FACEBOOK_PAGE_ID", "").strip()
+    if not acct or not page or acct != page:
+        return bool(acct)
+    if _IG_RESOLVE_TRIED:
+        return False
+    _IG_RESOLVE_TRIED = True
+    try:
+        from content_generator.ops.meta_token_health import resolve_linked_instagram
+        found = resolve_linked_instagram(
+            [page], [os.getenv("INSTAGRAM_ACCESS_TOKEN", ""), os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN", "")])
+    except Exception as exc:
+        logger.error("[instagram] linked IG account lookup crashed: %s", type(exc).__name__)
+        return False
+    if found.get("id"):
+        os.environ["INSTAGRAM_ACCOUNT_ID"] = found["id"]
+        logger.info("[instagram] Resolved linked Instagram account from the Facebook Page at publish time")
+        return True
+    logger.error("[instagram] INSTAGRAM_ACCOUNT_ID is the Facebook Page ID and no linked Instagram account "
+                 "could be resolved (%s); not publishing to the Page ID", "; ".join(found.get("diag") or []))
+    return False
+
+
 def is_configured() -> bool:
-    return bool(os.getenv("INSTAGRAM_ACCOUNT_ID")) and bool(os.getenv("INSTAGRAM_ACCESS_TOKEN"))
+    if not os.getenv("INSTAGRAM_ACCESS_TOKEN"):
+        return False
+    return _ensure_instagram_account_id()
 
 
 def _find_reel_video(day: int, on_date: str | None = None) -> str | None:

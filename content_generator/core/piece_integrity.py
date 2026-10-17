@@ -12,6 +12,7 @@ gate already knows how to read.
 from __future__ import annotations
 
 import copy
+import re
 import logging
 
 from content_generator.creative.instagram_quality_gate import (
@@ -267,6 +268,33 @@ def _alias_blog_fields(piece: dict) -> None:
     normalize_blog_piece(piece)
 
 
+_FIRST_SENTENCE = re.compile(r"^(.{20,220}?[.?!])\s+(\S.*)$", re.S)
+
+
+def _ensure_threads_hook_line(piece: dict) -> None:
+    """Put a Threads post's opening sentence on its own line.
+
+    The payoff gate reads the hook as the copy's first line. A one-paragraph
+    Threads post made the WHOLE post the hook, so the body the gate inspects
+    was empty and every rewrite failed "no payoff" however good it was
+    (Oct 17: 18 straight rejections). Only whitespace changes; the words and
+    the gate are untouched, so the body must still carry a real payoff.
+    """
+    for key in ("text", "body", "content"):
+        text = piece.get(key)
+        if isinstance(text, str) and text.strip():
+            break
+    else:
+        return
+    stripped = text.strip()
+    if "\n" in stripped:
+        return
+    m = _FIRST_SENTENCE.match(stripped)
+    if not m or len(m.group(2)) < 40:
+        return
+    piece[key] = f"{m.group(1)}\n\n{m.group(2)}"
+
+
 def ensure_structural_fields(piece: dict, label: str = "") -> dict:
     """Fill structural gaps in place. Creative copy that is already present stays."""
     if not isinstance(piece, dict):
@@ -281,6 +309,8 @@ def ensure_structural_fields(piece: dict, label: str = "") -> dict:
         _ensure_loop(piece)
     if label in _CAPTION_LABELS:
         _ensure_caption(piece, label)
+    if label == "threads_post" or str(piece.get("asset_type") or "") == "threads_post":
+        _ensure_threads_hook_line(piece)
     _ensure_engagement(piece)
     complete_editorial_score(piece)
     return piece
