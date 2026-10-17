@@ -88,11 +88,17 @@ jobs:
           print("::notice::Dependency install verified — no sentence-transformers/torch CUDA chain present.")
           PY
 
-      - name: Install rendering fonts
+      - name: Install rendering dependencies
         run: |
+          set -euo pipefail
           sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-dejavu-core fonts-liberation
+          sudo apt-get install -y -qq fonts-dejavu-core fonts-liberation ffmpeg
           fc-list | grep -ci dejavu || (echo "DejaVu missing after install" && exit 1)
+          ffmpeg -version | head -n 1
+          python - <<'PY'
+          import imageio_ffmpeg
+          print("Bundled FFmpeg:", imageio_ffmpeg.get_ffmpeg_exe())
+          PY
 
       - name: Ensure output directory
         run: mkdir -p output
