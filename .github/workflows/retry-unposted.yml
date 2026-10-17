@@ -150,12 +150,15 @@ jobs:
           if [ "$HOUR_IST" -lt 7 ] || [ "$HOUR_IST" -ge 23 ]; then echo "Outside 07-23 IST; not chaining."; exit 0; fi
           # Count what is DUE and not posted (not just non-live ledger rows): a
           # dropped cron writes no rows, which used to stop the chain at 0.
-          PENDING=$(python -m content_generator.scheduler.retry_unposted --pending 2>/dev/null | sed -n 's/^PENDING://p' | tail -n1)
-          echo "Still due today: ${PENDING:-<nothing>}"
-          if [ -z "$PENDING" ]; then
-            echo "::error::Pending-target probe returned no result; failing visibly so the daily monitor can alert."
+          PENDING_OUTPUT=$(python -m content_generator.scheduler.retry_unposted --pending 2>/dev/null) || { echo "::error::Pending-target probe failed"; exit 1; }
+          if ! printf '%s\n' "$PENDING_OUTPUT" | grep -q '^PENDING:'; then
+            echo "::error::Pending-target probe returned malformed output."
             exit 1
           fi
+          PENDING=$(printf '%s\n' "$PENDING_OUTPUT" | sed -n 's/^PENDING://p' | tail -n1)
+          echo "Still due today: ${PENDING:-<nothing>}"
+          # An explicit empty PENDING: is a valid all-clear; no output is an error.
+          [ -z "$PENDING" ] && exit 0
           TODAY_IST=$(TZ=Asia/Kolkata date +%F)
           # Generate backstop: no pack by 08:00 IST and no daily run today at all
           # (GitHub dropped / delayed the 06:13 cron) -> start generate once.
