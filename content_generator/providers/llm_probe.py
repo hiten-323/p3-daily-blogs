@@ -136,7 +136,7 @@ def _nvidia_chat() -> str:
     for model in models:
         status = _openai_chat(nvidia._URL, key, model, reject_empty=True)
         if status == "OK":
-            return f"OK ({model})"
+            return "OK"
         failures.append(f"{model}: {status}")
         logger.warning("[llm] NVIDIA probe model failed: %s: %s", model, status)
     # Preserve the existing explicit failure for the known empty-response case,
