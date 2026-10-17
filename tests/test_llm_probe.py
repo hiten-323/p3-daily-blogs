@@ -1,4 +1,4 @@
-"""Dry-run probe tests: NVIDIA should fall through to another live model."""
+"""Dry-run probe tests: fallback and aggregate health must be reliable."""
 from content_generator.providers import llm_probe
 
 
@@ -39,3 +39,36 @@ def test_nvidia_probe_reports_empty_only_when_every_model_is_empty(monkeypatch):
 def test_nvidia_probe_skips_without_key(monkeypatch):
     monkeypatch.setattr(llm_probe.nvidia, "get_key", lambda: "")
     assert llm_probe._nvidia_chat() == "skipped"
+
+
+def test_main_succeeds_when_fallback_provider_is_healthy(monkeypatch):
+    monkeypatch.setattr(llm_probe, "_KEY_GETTERS", [])
+    monkeypatch.setattr(
+        llm_probe,
+        "probe_results",
+        lambda: [("nvidia", "all NVIDIA models failed; model-a: HTTP 410"), ("groq", "OK")],
+    )
+
+    assert llm_probe.main() == 0
+
+
+def test_main_fails_when_no_provider_is_healthy(monkeypatch):
+    monkeypatch.setattr(llm_probe, "_KEY_GETTERS", [])
+    monkeypatch.setattr(
+        llm_probe,
+        "probe_results",
+        lambda: [("nvidia", "all NVIDIA models failed; model-a: HTTP 410"), ("groq", "skipped")],
+    )
+
+    assert llm_probe.main() == 1
+
+
+def test_main_fails_when_every_provider_is_skipped(monkeypatch):
+    monkeypatch.setattr(llm_probe, "_KEY_GETTERS", [])
+    monkeypatch.setattr(
+        llm_probe,
+        "probe_results",
+        lambda: [("nvidia", "skipped"), ("groq", "skipped")],
+    )
+
+    assert llm_probe.main() == 1
