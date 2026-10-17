@@ -350,10 +350,9 @@ jobs:
         # once). Kick the self-resuming retry after every generate/morning run so
         # anything not yet live (incl. a dropped morning slot) is picked up.
         if: ${{ always() && github.event.inputs.dry_run != 'true' && (env.FORCE_SLOT == 'generate' || env.FORCE_SLOT == 'morning') }}
-        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || echo "::warning::retry-unposted dispatch failed"
+        run: gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::retry-unposted dispatch failed"; exit 1; }
 
       - name: Alert on failure
         if: ${{ failure() && github.event.inputs.dry_run != 'true' }}
