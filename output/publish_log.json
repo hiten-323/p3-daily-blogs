@@ -2124,5 +2124,70 @@
       ],
       "timestamp": "2026-10-17T07:25:03"
     }
+  },
+  {
+    "date": "2026-10-17",
+    "day_number": 289,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "urn:li:share:7517123465263624192",
+        "media_id": "urn:li:share:7517123465263624192",
+        "video_id": "urn:li:share:7517123465263624192",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7517123465263624192/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7517123465263624192/",
+        "duration_ms": 1
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "readback_unavailable_no_duplicate",
+        "ledger_status": "PUBLISHED_UNVERIFIED",
+        "post_id": "quYmQ8ZVePg",
+        "media_id": "quYmQ8ZVePg",
+        "video_id": "quYmQ8ZVePg",
+        "permalink": "https://www.youtube.com/shorts/quYmQ8ZVePg",
+        "url": "https://www.youtube.com/shorts/quYmQ8ZVePg",
+        "duration_ms": 390
+      },
+      "threads": {
+        "success": true,
+        "attempted": true,
+        "skipped": false,
+        "post_id": "17891053392454674",
+        "url": "https://www.threads.com/@hiten_jain323/post/DemRdqhEbyP",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 3,
+        "duration_ms": 12119
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Threads | Held for slot: Instagram, Facebook | Skipped: Youtube, Blog",
+      "published_platforms": [
+        "linkedin",
+        "threads"
+      ],
+      "timestamp": "2026-10-17T14:00:25"
+    }
   }
 ]
