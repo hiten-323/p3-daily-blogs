@@ -83,6 +83,36 @@ def unposted_targets(records: list[dict], now_hour: int) -> list[str]:
     return out
 
 
+NO_PACK = "no_pack"
+# Chain from 07:00 IST: the 06:13 generate cron is often dropped or hours late.
+CHAIN_FROM_HOUR = 7
+
+
+def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | None = None,
+                    pack_exists: bool | None = None) -> list[str]:
+    """What is still due today; drives the workflow's self-resume chain.
+
+    The chain used to count only non-live ledger rows for today. A slot whose
+    cron GitHub dropped writes NO rows (e.g. the 09:53 morning slot on Oct 17),
+    and before generate there is no pack, so the count was 0 and the chain died
+    with nothing posted. This counts targets that are due now and not posted,
+    whether or not anything was ever attempted, plus a missing pack.
+    """
+    if now_ist is None:
+        now_ist = dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=5, minutes=30)
+    if now_ist.hour < CHAIN_FROM_HOUR:
+        return []
+    date = now_ist.date().isoformat()
+    if pack_exists is None:
+        from content_generator.scheduler.publish_recovery import _load_content
+        pack_exists = _load_content(date)[0] is not None
+    if not pack_exists:
+        return [NO_PACK]
+    if records is None:
+        records = records_for_date(date)
+    return unposted_targets(records, now_ist.hour)
+
+
 def is_mandatory(target: str) -> bool:
     return TARGETS[target][0] in MANDATORY_SLOTS
 
@@ -345,5 +375,19 @@ def main() -> int:
     return 0
 
 
+def _cli() -> int:
+    import sys
+    if "--pending" in sys.argv[1:]:
+        logging.basicConfig(level=logging.ERROR)
+        try:
+            pending = pending_targets()
+        except Exception as exc:  # never break the chain on a probe error
+            logging.getLogger(__name__).error("pending probe failed: %s", exc)
+            pending = ["probe_error"]
+        print("PENDING:" + ",".join(pending))
+        return 0
+    return main()
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(_cli())
