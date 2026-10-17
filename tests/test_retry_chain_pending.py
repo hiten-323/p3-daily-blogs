@@ -50,3 +50,11 @@ def test_instagram_reel_alias_counts_as_posted():
     # The publisher writes the platform key instagram_reel for some reel paths.
     rec = [{"slot": "evening", "platform": "instagram_reel", "status": "VERIFIED_LIVE"}]
     assert "ig_reel" not in ru.unposted_targets(rec, 23)
+
+
+def test_pending_probe_error_returns_nonzero(monkeypatch, capsys):
+    import sys
+    monkeypatch.setattr(ru, "pending_targets", lambda: (_ for _ in ()).throw(RuntimeError("probe broke")))
+    monkeypatch.setattr(sys, "argv", ["retry_unposted.py", "--pending"])
+    assert ru._cli() == 1
+    assert capsys.readouterr().out.startswith("PENDING_ERROR:RuntimeError")
