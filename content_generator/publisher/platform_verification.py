@@ -101,15 +101,31 @@ def verify_remote_post(platform: str, record: dict) -> dict:
                 params={"part": "id,status", "id": remote_id},
                 headers={"Authorization": f"Bearer {credentials.token}"}, timeout=15,
             )
-            if response.status_code != 200:
-                return {"state": "unknown", "method": "youtube_data_api", "detail": f"HTTP {response.status_code}"}
-            items = response.json().get("items", [])
-            if not items:
-                return {"state": "missing", "method": "youtube_data_api", "detail": "video ID not returned by Data API"}
-            status = (items[0].get("status") or {})
-            if status.get("privacyStatus") == "private":
-                return {"state": "exists_not_public", "method": "youtube_data_api", "detail": "video exists but is private"}
-            return {"state": "found", "method": "youtube_data_api", "detail": f"video exists; privacy={status.get('privacyStatus', 'unknown')}"}
+            if response.status_code == 200:
+                items = response.json().get("items", [])
+                if not items:
+                    return {"state": "missing", "method": "youtube_data_api", "detail": "video ID not returned by Data API"}
+                status = (items[0].get("status") or {})
+                if status.get("privacyStatus") == "private":
+                    return {"state": "exists_not_public", "method": "youtube_data_api", "detail": "video exists but is private"}
+                return {"state": "found", "method": "youtube_data_api", "detail": f"video exists; privacy={status.get('privacyStatus', 'unknown')}"}
+            if response.status_code in (401, 403):
+                # youtube.upload-only OAuth grants cannot read videos.list. Use
+                # YouTube's public oEmbed endpoint as a read-only fallback.
+                # A successful oEmbed response confirms a public/embeddable video;
+                # a negative response is UNKNOWN, not missing, because owners
+                # can disable embedding or the video may be unlisted/private.
+                public = requests.get(
+                    "https://www.youtube.com/oembed",
+                    params={"url": f"https://www.youtube.com/watch?v={quote(remote_id, safe='')}", "format": "json"},
+                    timeout=15,
+                )
+                if public.status_code == 200:
+                    payload = public.json()
+                    if payload.get("title") and payload.get("author_name"):
+                        return {"state": "found", "method": "youtube_oembed", "detail": "public video confirmed by oEmbed"}
+                return {"state": "unknown", "method": "youtube_oembed", "detail": f"Data API HTTP {response.status_code}; public read-back HTTP {public.status_code}"}
+            return {"state": "unknown", "method": "youtube_data_api", "detail": f"HTTP {response.status_code}"}
 
         if platform in ("blog", "shopify"):
             domain = os.getenv("SHOPIFY_STORE_DOMAIN", "").strip()
