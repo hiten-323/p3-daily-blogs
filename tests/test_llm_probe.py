@@ -17,7 +17,7 @@ def test_nvidia_probe_uses_fallback_after_empty_content(monkeypatch):
 
     monkeypatch.setattr(llm_probe, "_openai_chat", fake_chat)
 
-    assert llm_probe._nvidia_chat() == "OK (nvidia/nemotron-3.5-lightning-30b-a3b)"
+    assert llm_probe._nvidia_chat() == "OK"
     assert seen == [
         ("nvidia/old-model", True),
         ("nvidia/nemotron-3.5-lightning-30b-a3b", True),
