@@ -440,28 +440,57 @@ def evaluate(meta: dict, recent_layouts=(), *, vision=None) -> dict:
 
 
 def evaluate_video(path: str, meta: dict | None = None, recent_layouts=(), *, vision=None, samples=3) -> dict:
-    """Sample frames (imageio ffmpeg plugin) and gate each; all must pass."""
-    import imageio.v3 as iio
+    """Sample frames through imageio's supported FFMPEG reader and gate each.
+
+    imageio-ffmpeg provides the v2 FFMPEG reader; it is not a v3 plugin named
+    ffmpeg. Sample by frame index rather than loading the entire video into
+    memory, which is safer for longer or high-resolution renders.
+    """
     from PIL import Image
-    frames = list(iio.imiter(path, plugin="ffmpeg"))
-    if not frames:
-        return {"passed": False, "reasons": ["video_unreadable"]}
-    picks = [frames[int(i * (len(frames) - 1) / max(1, samples - 1))] for i in range(samples)]
+    try:
+        import imageio.v2 as imageio
+        reader = imageio.get_reader(path, format="FFMPEG")
+    except Exception as exc:
+        return {"passed": False, "reasons": [f"video_unreadable:{type(exc).__name__}"]}
+    try:
+        try:
+            total = int(reader.count_frames())
+        except Exception:
+            try:
+                total = int(reader.get_length())
+            except Exception:
+                total = 0
+        if total <= 0:
+            return {"passed": False, "reasons": ["video_unreadable"]}
+        count = max(1, min(int(samples or 1), total))
+        indices = sorted({round(i * (total - 1) / max(1, count - 1)) for i in range(count)})
+        try:
+            picks = [reader.get_data(idx) for idx in indices]
+        except Exception as exc:
+            return {"passed": False, "reasons": [f"video_frame_read_failed:{type(exc).__name__}"]}
+    finally:
+        try:
+            reader.close()
+        except Exception:
+            pass
+
     results = []
     tmp = path + ".gateframe.jpg"
-    for k, fr in enumerate(picks):
-        Image.fromarray(fr).save(tmp, quality=90)
-        m = dict(meta or {}, path=tmp, requires_jar=bool((meta or {}).get("jar_box")))
-        if k < samples - 1:  # entry frames: background depth only; final frame gets full + vision
-            m = {"path": tmp, "requires_jar": False}
-            r, met = heuristic_checks(Image.open(tmp), m)
-            results.append({"passed": not r, "reasons": r, "metrics": met})
-        else:
-            results.append(evaluate(m, recent_layouts, vision=vision))
     try:
-        os.remove(tmp)
-    except OSError:
-        pass
+        for k, fr in enumerate(picks):
+            Image.fromarray(fr).save(tmp, quality=90)
+            m = dict(meta or {}, path=tmp, requires_jar=bool((meta or {}).get("jar_box")))
+            if k < len(picks) - 1:  # entry frames: background depth only; final frame gets full + vision
+                m = {"path": tmp, "requires_jar": False}
+                r, met = heuristic_checks(Image.open(tmp), m)
+                results.append({"passed": not r, "reasons": r, "metrics": met})
+            else:
+                results.append(evaluate(m, recent_layouts, vision=vision))
+    finally:
+        try:
+            os.remove(tmp)
+        except OSError:
+            pass
     reasons = [x for r in results for x in r["reasons"]]
     return {"passed": all(r["passed"] for r in results), "reasons": reasons, "frames": results}
 

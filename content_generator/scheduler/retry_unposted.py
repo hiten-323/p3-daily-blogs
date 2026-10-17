@@ -29,7 +29,7 @@ TARGETS = {
     "ig_feed":   ("morning", ("instagram",), ("carousel", "instagram_post"), 10),
     "ig_story":  ("morning", ("instagram_story",), ("carousel", "instagram_post"), 10),
     "facebook":  ("morning", ("facebook",), ("facebook_post",), 10),
-    "ig_reel":   ("evening", ("instagram_video", "instagram"), ("growth_reel", "reel_1", "reel_2"), 22),
+    "ig_reel":   ("evening", ("instagram_reel", "instagram_video", "instagram"), ("growth_reel", "reel_1", "reel_2"), 22),
     "linkedin":  ("generate", ("linkedin",), ("linkedin_post",), 6),
     "youtube":   ("generate", ("youtube",), ("yt_short",), 6),
     "threads":   ("generate", ("threads",), ("threads_post",), 6),
@@ -364,14 +364,24 @@ def main() -> int:
             res = run_publish_slot(slot, force_retry=True, on_date=dt.date.fromisoformat(date))
             log.info("%s result: %s", slot, res.get("status"))
     blocked = [t for t in todo if not any(l in approved for l in TARGETS[t][2])]
-    if blocked:
-        msg = f"RETRY-UNPOSTED: still blocked after ladder for {date}: {blocked}; next try in 30 min."
+    # Prewarming the evening reel before 22:00 is expected; every other target
+    # selected for this run must now be present in the authoritative ledger.
+    checked_todo = [t for t in todo if not (t == "ig_reel" and prewarm_reel)]
+    after_records = records_for_date(date)
+    remaining = [t for t in checked_todo if t in unposted_targets(after_records, ist_hour)]
+    unresolved = sorted(set(blocked + remaining))
+    if unresolved:
+        msg = (
+            f"RETRY-UNPOSTED: {date} still has targets not published after recovery: "
+            f"{unresolved}; next attempt is scheduled by the recovery chain."
+        )
         log.error(msg)
         try:
-            from content_generator.scheduler.watchdog import _alert
-            _alert(msg)
+            from content_generator.scheduler.watchdog import alert_failure
+            alert_failure(msg)
         except Exception:
-            pass
+            log.exception("[retry] failure alert could not be delivered")
+        return 1
     return 0
 
 
@@ -381,9 +391,10 @@ def _cli() -> int:
         logging.basicConfig(level=logging.ERROR)
         try:
             pending = pending_targets()
-        except Exception as exc:  # never break the chain on a probe error
+        except Exception as exc:
             logging.getLogger(__name__).error("pending probe failed: %s", exc)
-            pending = ["probe_error"]
+            print("PENDING_ERROR:" + type(exc).__name__)
+            return 1
         print("PENDING:" + ",".join(pending))
         return 0
     return main()

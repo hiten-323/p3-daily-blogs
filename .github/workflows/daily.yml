@@ -88,11 +88,17 @@ jobs:
           print("::notice::Dependency install verified — no sentence-transformers/torch CUDA chain present.")
           PY
 
-      - name: Install rendering fonts
+      - name: Install rendering dependencies
         run: |
+          set -euo pipefail
           sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-dejavu-core fonts-liberation
+          sudo apt-get install -y -qq fonts-dejavu-core fonts-liberation ffmpeg
           fc-list | grep -ci dejavu || (echo "DejaVu missing after install" && exit 1)
+          ffmpeg -version | head -n 1
+          python - <<'PY'
+          import imageio_ffmpeg
+          print("Bundled FFmpeg:", imageio_ffmpeg.get_ffmpeg_exe())
+          PY
 
       - name: Ensure output directory
         run: mkdir -p output
@@ -318,14 +324,22 @@ jobs:
           echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) run #${{ github.run_number }}" >> .last_run
           git add .last_run
           git add -f output/learning/ 2>/dev/null || true
+          # Publish slots run on separate GitHub runners, so keep today's and
+          # yesterday's generated media available for scheduled publishing/recovery.
+          # Prune older dated files before staging to bound repository growth.
           python - <<'PRUNE'
           import datetime, glob, os, re
           from zoneinfo import ZoneInfo
-          cutoff = datetime.datetime.now(ZoneInfo("Asia/Kolkata")).date() - datetime.timedelta(days=7)
+          cutoff = datetime.datetime.now(ZoneInfo("Asia/Kolkata")).date() - datetime.timedelta(days=1)
           removed = 0
           for path in glob.glob("output/creative/*"):
               m = re.search(r"(\d{4})-(\d{2})-(\d{2})", os.path.basename(path))
               if not m:
+                  # Undated files in this runtime directory are scratch outputs;
+                  # publishers only select date-stamped assets, so do not retain them.
+                  if os.path.isfile(path):
+                      os.remove(path)
+                      removed += 1
                   continue
               try:
                   stamped = datetime.date(*(int(g) for g in m.groups()))
@@ -360,10 +374,9 @@ jobs:
         # once). Kick the self-resuming retry after every generate/morning run so
         # anything not yet live (incl. a dropped morning slot) is picked up.
         if: ${{ always() && github.event.inputs.dry_run != 'true' && (env.FORCE_SLOT == 'generate' || env.FORCE_SLOT == 'morning') }}
-        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || echo "::warning::retry-unposted dispatch failed"
+        run: gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::retry-unposted dispatch failed"; exit 1; }
 
       - name: Alert on failure
         if: ${{ failure() && github.event.inputs.dry_run != 'true' }}

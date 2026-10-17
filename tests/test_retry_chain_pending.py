@@ -41,5 +41,20 @@ def test_workflows_chain_on_due_targets_not_ledger_rows():
     assert "retry_unposted --pending" in retry
     assert "gh workflow run retry-unposted.yml" in retry
     assert "gh workflow run daily.yml" in retry and "slot=generate" in retry
+    assert "DAILY_ACTIVE" in retry and 'status == \\"in_progress\\"' in retry
     assert "actions: write" in daily
     assert "gh workflow run retry-unposted.yml" in daily
+
+
+def test_instagram_reel_alias_counts_as_posted():
+    # The publisher writes the platform key instagram_reel for some reel paths.
+    rec = [{"slot": "evening", "platform": "instagram_reel", "status": "VERIFIED_LIVE"}]
+    assert "ig_reel" not in ru.unposted_targets(rec, 23)
+
+
+def test_pending_probe_error_returns_nonzero(monkeypatch, capsys):
+    import sys
+    monkeypatch.setattr(ru, "pending_targets", lambda: (_ for _ in ()).throw(RuntimeError("probe broke")))
+    monkeypatch.setattr(sys, "argv", ["retry_unposted.py", "--pending"])
+    assert ru._cli() == 1
+    assert capsys.readouterr().out.startswith("PENDING_ERROR:RuntimeError")
