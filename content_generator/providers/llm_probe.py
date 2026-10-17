@@ -1,8 +1,8 @@
 """One real chat completion per LLM provider, for the dry-run workflow.
 
-No retries and no /models listing. NVIDIA is a chat completion, same as production.
-An HTTP 200 whose message content is empty or whitespace fails the NVIDIA check:
-that is the failure mode that burned the editorial deadline in run 341.
+No retries and no /models listing. NVIDIA is probed across its configured model
+fallback list; an empty response from one model must not hide a healthy later
+model. If every candidate returns empty content, the NVIDIA check fails.
 """
 from __future__ import annotations
 
