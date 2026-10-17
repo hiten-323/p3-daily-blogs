@@ -124,10 +124,32 @@ def _gemini_chat(key: str) -> str:
     )
 
 
+def _nvidia_chat() -> str:
+    """Probe NVIDIA's configured models in order; one broken model must not hide a healthy fallback."""
+    key = nvidia.get_key()
+    if not key:
+        return "skipped"
+    models = nvidia.get_models()
+    if not models:
+        return "no models configured"
+    failures: list[str] = []
+    for model in models:
+        status = _openai_chat(nvidia._URL, key, model, reject_empty=True)
+        if status == "OK":
+            return f"OK ({model})"
+        failures.append(f"{model}: {status}")
+        logger.warning("[llm] NVIDIA probe model failed: %s: %s", model, status)
+    # Preserve the existing explicit failure for the known empty-response case,
+    # while retaining the other model statuses in logs for diagnosis.
+    if failures and all(item.endswith(": empty content") for item in failures):
+        return "empty content"
+    return "all NVIDIA models failed; " + "; ".join(failures)
+
+
 def probe_results() -> list[tuple[str, str]]:
     """One tiny chat call per provider. Missing keys are skipped, not errors."""
     return [
-        ("nvidia", _openai_chat(nvidia._URL, nvidia.get_key(), nvidia.get_model(), reject_empty=True)),
+        ("nvidia", _nvidia_chat()),
         ("groq", _openai_chat(groq._URL, groq.get_key(), _first_model(groq.MODELS))),
         ("gemini", _gemini_chat(gemini.get_key())),
         ("cerebras", _openai_chat(cerebras._URL, cerebras.get_key(), _first_model(cerebras.MODELS))),
