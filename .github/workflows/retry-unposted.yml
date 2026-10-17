@@ -160,8 +160,8 @@ jobs:
           # An explicit empty PENDING: is a valid all-clear; no output is an error.
           [ -z "$PENDING" ] && exit 0
           TODAY_IST=$(TZ=Asia/Kolkata date +%F)
-          # Generate backstop: no pack by 08:00 IST and no daily run today at all
-          # (GitHub dropped / delayed the 06:13 cron) -> start generate once.
+          # Generate backstop: no pack by 08:00 IST and no active same-day daily run
+          # (scheduled run was dropped, failed, or completed without saving a pack) -> regenerate.
           if [ "$PENDING" = "no_pack" ] && [ "$HOUR_IST" -ge 8 ]; then
             # A failed or completed daily run must not block recovery when the content pack is absent.
             # Only suppress a new generate while a same-day daily run is queued or in progress.
