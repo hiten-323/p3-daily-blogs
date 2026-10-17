@@ -335,6 +335,11 @@ jobs:
           for path in glob.glob("output/creative/*"):
               m = re.search(r"(\d{4})-(\d{2})-(\d{2})", os.path.basename(path))
               if not m:
+                  # Undated files in this runtime directory are scratch outputs;
+                  # publishers only select date-stamped assets, so do not retain them.
+                  if os.path.isfile(path):
+                      os.remove(path)
+                      removed += 1
                   continue
               try:
                   stamped = datetime.date(*(int(g) for g in m.groups()))
