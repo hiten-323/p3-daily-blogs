@@ -50,11 +50,12 @@ def test_provider_order_env_override(monkeypatch):
 def test_empty_model_env_keeps_the_default(monkeypatch):
     monkeypatch.setenv("NVIDIA_MODEL", "   ")
     assert nvidia.get_models() == [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
         "google/gemma-4-31b-it",
         "nvidia/nemotron-3-ultra-550b-a55b",
         "nvidia/nemotron-3-super-120b-a12b",
     ]
-    assert nvidia.get_model() == "google/gemma-4-31b-it"
+    assert nvidia.get_model() == "nvidia/nemotron-3.5-lightning-30b-a3b"
     assert "meta/llama-3.3-70b-instruct" not in nvidia.get_models()
     monkeypatch.setenv("NVIDIA_MODEL", "meta/llama-3.1-70b-instruct")
     assert nvidia.get_model() == "meta/llama-3.1-70b-instruct"
