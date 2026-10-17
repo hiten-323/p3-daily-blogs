@@ -1,8 +1,9 @@
 """One real chat completion per LLM provider, for the dry-run workflow.
 
-No retries and no /models listing. NVIDIA is a chat completion, same as production.
-An HTTP 200 whose message content is empty or whitespace fails the NVIDIA check:
-that is the failure mode that burned the editorial deadline in run 341.
+No retries and no /models listing. NVIDIA is probed across its configured model
+fallback list; an empty response from one model must not hide a healthy later
+model. The probe succeeds when any configured provider returns usable content,
+and fails when none do.
 """
 from __future__ import annotations
 
@@ -124,10 +125,30 @@ def _gemini_chat(key: str) -> str:
     )
 
 
+def _nvidia_chat() -> str:
+    """Probe NVIDIA's configured models in order; one broken model must not hide a healthy fallback."""
+    key = nvidia.get_key()
+    if not key:
+        return "skipped"
+    models = nvidia.get_models()
+    if not models:
+        return "no models configured"
+    failures: list[str] = []
+    for model in models:
+        status = _openai_chat(nvidia._URL, key, model, reject_empty=True)
+        if status == "OK":
+            return "OK"
+        failures.append(f"{model}: {status}")
+        logger.warning("[llm] NVIDIA probe model failed: %s: %s", model, status)
+    if failures and all(item.endswith(": empty content") for item in failures):
+        return "empty content"
+    return "all NVIDIA models failed; " + "; ".join(failures)
+
+
 def probe_results() -> list[tuple[str, str]]:
     """One tiny chat call per provider. Missing keys are skipped, not errors."""
     return [
-        ("nvidia", _openai_chat(nvidia._URL, nvidia.get_key(), nvidia.get_model(), reject_empty=True)),
+        ("nvidia", _nvidia_chat()),
         ("groq", _openai_chat(groq._URL, groq.get_key(), _first_model(groq.MODELS))),
         ("gemini", _gemini_chat(gemini.get_key())),
         ("cerebras", _openai_chat(cerebras._URL, cerebras.get_key(), _first_model(cerebras.MODELS))),
@@ -161,9 +182,8 @@ def main() -> int:
         row = f"{name}: {status}"
         print(row)
         logger.info("[llm] probe %s", row)
-    nvidia_status = dict(rows).get("nvidia", "skipped")
-    if nvidia_status == "empty content":
-        print("::error::NVIDIA probe returned empty content")
+    if not any(status == "OK" for _, status in rows):
+        print("::error::No configured LLM provider passed the live completion probe")
         return 1
     return 0
 
