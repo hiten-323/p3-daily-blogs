@@ -34,9 +34,11 @@ def test_page_id_without_linked_instagram_account_fails_closed(monkeypatch):
     ]
 
     def fake_fetch(url, headers, timeout=15):
-        return responses.pop(0)
+        # Every fallback route (/{page}, /me, /me/accounts, retry) finds no link.
+        return responses.pop(0) if responses else ({"data": []} if "/me/accounts" in url else {"id": "page-123"})
 
     monkeypatch.setattr(health, "_fetch", fake_fetch)
+    monkeypatch.setattr(health.time, "sleep", lambda s: None)
     report = health.inspect_instagram("page-123", "test-token", now=100)
     assert report["ok"] is False
     assert any("Facebook Page ID" in problem for problem in report["problems"])
