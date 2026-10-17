@@ -41,7 +41,7 @@ jobs:
 
       - name: Run governance regression suite
         run: |
-          python -m pytest tests/ -q
+          python -m pytest tests/ -q -rx
 
       - name: Compile Python sources
         run: |
