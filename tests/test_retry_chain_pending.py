@@ -43,3 +43,9 @@ def test_workflows_chain_on_due_targets_not_ledger_rows():
     assert "gh workflow run daily.yml" in retry and "slot=generate" in retry
     assert "actions: write" in daily
     assert "gh workflow run retry-unposted.yml" in daily
+
+
+def test_instagram_reel_alias_counts_as_posted():
+    # The publisher writes the platform key instagram_reel for some reel paths.
+    rec = [{"slot": "evening", "platform": "instagram_reel", "status": "VERIFIED_LIVE"}]
+    assert "ig_reel" not in ru.unposted_targets(rec, 23)
