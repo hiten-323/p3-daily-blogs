@@ -14,9 +14,9 @@ Strict mode (token health, publish preflight) fails when instagram_basic or
 instagram_content_publish is missing, or when the token is expired. Soft mode
 (generate) reports the same facts as warnings and continues.
 
-FACEBOOK_PAGE_ACCESS_TOKEN, when set, gets the same debug call. It needs
-pages_manage_posts. A miss or an expired page token is a warning, never a
-failed job.
+FACEBOOK_PAGE_ACCESS_TOKEN is required for strict publish preflight and must
+include pages_manage_posts. Missing credentials, lookup errors, missing scope,
+or expiry fail strict mode; generate's soft mode emits warnings and continues.
 """
 from __future__ import annotations
 
