@@ -130,8 +130,7 @@ def expiry_label(info: dict) -> str:
 
 
 def token_expired(info: dict, now: int | None = None) -> bool:
-    if info.get("is_valid") is False:
-        return True
+    """Check temporal expiry only; validity is a separate explicit requirement."""
     try:
         expires = int(info.get("expires_at"))
     except (TypeError, ValueError):
@@ -155,6 +154,7 @@ def inspect_token(token: str, *, now: int | None = None) -> dict:
         "type": str(info.get("type") or "unknown").upper(),
         "expires": expiry_label(info),
         "scopes": sorted(scopes),
+        "valid": info.get("is_valid") is True,
         "expired": token_expired(info, now=now) if info else True,
         "info": info,
     }
@@ -229,6 +229,8 @@ def inspect_instagram(account_id: str, token: str, *, now: int | None = None) ->
     missing = [scope for scope in IG_SCOPES if scope not in set(report["scopes"])]
     if missing:
         problems.append("missing " + ", ".join(missing))
+    if report.get("valid") is not True:
+        problems.append("token validity not confirmed (Meta debug response must explicitly return is_valid=true)")
     if report["expired"]:
         problems.append(f"token expired (expires={report['expires']})")
     username = ""
@@ -298,6 +300,7 @@ def _finish(messages: list[tuple[str, str]], secrets: list[str], failed: bool) -
 def run_checks(now: int | None = None) -> int:
     """Print diagnostics and return the process exit code."""
     mode = _mode()
+    publish_preflight = os.environ.get("META_PUBLISH_PREFLIGHT", "").strip().lower() in {"1", "true", "yes"}
     account_id = os.environ.get("INSTAGRAM_ACCOUNT_ID", "").strip()
     token = os.environ.get("INSTAGRAM_ACCESS_TOKEN", "").strip()
     facebook = os.environ.get("FACEBOOK_PAGE_ACCESS_TOKEN", "").strip()
@@ -352,29 +355,29 @@ def run_checks(now: int | None = None) -> int:
 
     fb_page_id = os.environ.get("FACEBOOK_PAGE_ID", "").strip()
     if not fb_page_id or not facebook:
-        level = "warning" if mode == "soft" else "error"
+        level = "error" if publish_preflight else "warning"
         messages.append((
             level,
             "Facebook publishing credentials unavailable — FACEBOOK_PAGE_ID or "
             "FACEBOOK_PAGE_ACCESS_TOKEN is not configured."
         ))
-        if mode != "soft":
+        if publish_preflight:
             failed = True
     else:
         try:
             page = inspect_token(facebook, now=now)
         except TokenHttpError as exc:
             detail = _redact(exc.body, secrets)[:300]
-            messages.append((
-                "warning" if mode == "soft" else "error",
-                f"Facebook page token check failed (HTTP {exc.code}): {detail}",
-            ))
-            if mode != "soft":
+            level = "error" if publish_preflight else "warning"
+            messages.append((level, f"Facebook page token check failed (HTTP {exc.code}): {detail}"))
+            if publish_preflight:
                 failed = True
         else:
             messages.append(("notice", format_facebook(page)))
             missing = [scope for scope in FB_SCOPES if scope not in set(page["scopes"])]
             notes = []
+            if page.get("valid") is not True:
+                notes.append("token validity not confirmed (Meta debug response must explicitly return is_valid=true)")
             if missing:
                 notes.append("missing " + ", ".join(missing))
             if page["expired"]:
@@ -389,25 +392,23 @@ def run_checks(now: int | None = None) -> int:
                         env_file = os.environ.get("GITHUB_ENV", "").strip()
                         if env_file:
                             with open(env_file, "a", encoding="utf-8") as handle:
-                                handle.write(f"FACEBOOK_PAGE_ACCESS_TOKEN={resolved_tok}\n")
+                                handle.write(f"FACEBOOK_PAGE_ACCESS_TOKEN={resolved_tok}\\n")
                         messages.append(("notice", f"Resolved Page Access Token for Facebook Page ID {fb_page_id}"))
                 except Exception as exc:
                     notes.append(f"could not resolve Page token for {fb_page_id}: {type(exc).__name__}")
             if notes:
-                messages.append((
-                    "warning" if mode == "soft" else "error",
-                    "Facebook page token: " + "; ".join(notes),
-                ))
-                if mode != "soft":
+                level = "error" if publish_preflight else "warning"
+                messages.append((level, "Facebook page token: " + "; ".join(notes)))
+                if publish_preflight:
                     failed = True
 
     threads_tok = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
     threads_uid = os.environ.get("THREADS_USER_ID", "").strip()
     if not threads_tok or not threads_uid:
-        level = "warning" if mode == "soft" else "error"
         missing = "THREADS_ACCESS_TOKEN" if not threads_tok else "THREADS_USER_ID"
+        level = "error" if publish_preflight else "warning"
         messages.append((level, f"Threads publishing credentials unavailable — {missing} is not configured."))
-        if mode != "soft":
+        if publish_preflight:
             failed = True
     else:
         secrets.append(threads_tok)
@@ -417,20 +418,22 @@ def run_checks(now: int | None = None) -> int:
             th_user = str(th_res.get("username") or "")
             th_id = str(th_res.get("id") or "")
             if not th_id or th_id != threads_uid or not th_user:
-                level = "warning" if mode == "soft" else "error"
+                level = "error" if publish_preflight else "warning"
                 messages.append((level, f"Threads account identity mismatch: configured ID={threads_uid}, returned ID={th_id or '(none)'}, username={th_user or '(none)'}"))
-                if mode != "soft":
+                if publish_preflight:
                     failed = True
             else:
                 messages.append(("notice", f"Threads token valid: username={th_user} id={th_id}"))
         except TokenHttpError as exc:
             detail = _redact(exc.body, secrets)[:300]
-            messages.append(("warning" if mode == "soft" else "error", f"Threads token check (HTTP {exc.code}): {detail}"))
-            if mode != "soft":
+            level = "error" if publish_preflight else "warning"
+            messages.append((level, f"Threads token check (HTTP {exc.code}): {detail}"))
+            if publish_preflight:
                 failed = True
         except Exception as exc:
-            messages.append(("warning" if mode == "soft" else "error", f"Threads token check: {type(exc).__name__}"))
-            if mode != "soft":
+            level = "error" if publish_preflight else "warning"
+            messages.append((level, f"Threads token check: {type(exc).__name__}"))
+            if publish_preflight:
                 failed = True
 
     # LinkedIn credentials check
