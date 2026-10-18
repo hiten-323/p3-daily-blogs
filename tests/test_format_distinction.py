@@ -65,6 +65,37 @@ class TestFormatDistinction(unittest.TestCase):
                 self.assertIn("short_video", chosen)
                 self.assertNotIn("reel_1_video", chosen)
 
+    def test_format_audio_directives_and_loudness(self):
+        """Each format must have distinct audio directives, BPM, and platform loudness targets."""
+        from content_generator.creative.audio_director import get_format_audio_plan, FORMAT_AUDIO_DIRECTIVES
+
+        reel_plan = get_format_audio_plan("reel", day=0, seconds=10.0)
+        self.assertEqual(reel_plan["bpm"], 120)
+        self.assertEqual(reel_plan["bar_seconds"], 2.0)
+        self.assertIn("loudnorm=I=-14", reel_plan["loudness_filter"])
+        self.assertIn(0.0, reel_plan["downbeats"])
+        self.assertIn(2.0, reel_plan["downbeats"])
+
+        short_plan = get_format_audio_plan("short", day=0, seconds=10.0)
+        self.assertEqual(short_plan["bpm"], 120)
+        self.assertIn("loudnorm=I=-14", short_plan["loudness_filter"])
+
+        story_plan = get_format_audio_plan("story", day=0, seconds=10.0)
+        self.assertEqual(story_plan["bpm"], 84)
+        self.assertIn("loudnorm=I=-16", story_plan["loudness_filter"])
+
+    def test_cinematic_format_type_routing(self):
+        """Cinematic motion generator must accept format_type and distinguish chrome and meta."""
+        from content_generator.creative import cinematic_motion as cm
+        import inspect
+
+        # Inspect signature of render_cinematic_video and render_cinematic_until_pass
+        sig_vid = inspect.signature(cm.render_cinematic_video)
+        self.assertIn("format_type", sig_vid.parameters)
+        sig_pass = inspect.signature(cm.render_cinematic_until_pass)
+        self.assertIn("format_type", sig_pass.parameters)
+
 
 if __name__ == "__main__":
     unittest.main()
+

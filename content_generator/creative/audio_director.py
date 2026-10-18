@@ -118,3 +118,89 @@ def get_audio_plan(text: str, day: int = 0) -> dict:
         "confidence": confidence,
         "reason": reason,
     }
+
+
+# Format-level audio direction: tempo, sync downbeat grid, mood preferences, and platform loudness target
+FORMAT_AUDIO_DIRECTIVES = {
+    "reel": {
+        "moods": ["upbeat", "lofi", "premium"],
+        "target_bpm": 120,
+        "bar_seconds": 2.0,
+        "downbeat_lock": True,
+        "target_lufs": -14.0,
+        "loudness_filter": "loudnorm=I=-14:TP=-1.5:LRA=11",
+        "description": "High-energy downbeat-synced groove (120 BPM, punchy -14 LUFS commercial mastering)",
+    },
+    "short": {
+        "moods": ["cinematic", "upbeat"],
+        "target_bpm": 120,
+        "bar_seconds": 2.0,
+        "downbeat_lock": True,
+        "target_lufs": -14.0,
+        "loudness_filter": "loudnorm=I=-14:TP=-1.5:LRA=11",
+        "description": "Driving curiosity rhythm with transient kick cuts (120 BPM, loud & punchy)",
+    },
+    "story": {
+        "moods": ["calm", "ambient", "lofi"],
+        "target_bpm": 84,
+        "bar_seconds": 2.857,
+        "downbeat_lock": False,
+        "target_lufs": -16.0,
+        "loudness_filter": "loudnorm=I=-16:TP=-2.0:LRA=12",
+        "description": "Warm, atmospheric ambient acoustic/rhodes bed with gentle swelling dynamics",
+    },
+}
+
+
+def select_track_for_format(format_type: str = "reel", category: str = "coffee_aesthetic", day: int = 0) -> str | None:
+    """Select a licensed track matched to format tempo and category mood."""
+    if not os.path.isdir(_music_dir()):
+        return None
+    fmt = str(format_type or "reel").strip().lower()
+    directives = FORMAT_AUDIO_DIRECTIVES.get(fmt, FORMAT_AUDIO_DIRECTIVES["reel"])
+
+    files = []
+    for extension in ("*.mp3", "*.m4a", "*.wav", "*.aac"):
+        files.extend(_glob.glob(os.path.join(_music_dir(), extension)))
+    if not files:
+        return None
+
+    # First attempt: match category mood within format moods
+    cat_mood = AUDIO_MAP.get(category, AUDIO_MAP[_DEFAULT_CATEGORY])[0]
+    matched = [p for p in files if cat_mood in os.path.basename(p).lower()]
+
+    # Second attempt: match any format preferred mood
+    if not matched:
+        for preferred in directives["moods"]:
+            matched.extend([p for p in files if preferred in os.path.basename(p).lower()])
+            if matched:
+                break
+
+    pool = sorted(matched or files)
+    return pool[day % len(pool)]
+
+
+def get_format_audio_plan(format_type: str = "reel", category: str = "coffee_aesthetic", day: int = 0, seconds: float = 10.0) -> dict:
+    """Return format-tailored audio plan with downbeat grid and platform loudness filter."""
+    fmt = str(format_type or "reel").strip().lower()
+    directives = FORMAT_AUDIO_DIRECTIVES.get(fmt, FORMAT_AUDIO_DIRECTIVES["reel"])
+    track = select_track_for_format(fmt, category, day)
+
+    # Calculate downbeat grid (e.g. 0.0, 2.0, 4.0, 6.0, 8.0, 10.0 for 120 BPM)
+    bar_sec = directives["bar_seconds"]
+    downbeats = [round(i * bar_sec, 3) for i in range(int(seconds / bar_sec) + 1) if i * bar_sec <= seconds]
+
+    fade_start = max(0.0, seconds - 0.8)
+    af_filter = f"{directives['loudness_filter']},afade=t=in:d=0.2,afade=t=out:st={fade_start:.2f}:d=0.8"
+
+    return {
+        "format": fmt,
+        "category": category,
+        "local_track": track,
+        "bpm": directives["target_bpm"],
+        "bar_seconds": bar_sec,
+        "downbeats": downbeats,
+        "loudness_filter": af_filter,
+        "description": directives["description"],
+    }
+

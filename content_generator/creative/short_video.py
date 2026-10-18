@@ -54,7 +54,7 @@ def _scenes_from_short(yt_short: dict) -> list[dict]:
     return scenes[:_MAX_SCENES]
 
 
-def _cinematic(beats, product, day, label, on_date, seconds):
+def _cinematic(beats, product, day, label, on_date, seconds, format_type="short"):
     """Procedural cinematic motion (cinematic_motion), gated by visual_gate. None -> legacy path."""
     if os.getenv("CINEMATIC_VIDEO", "1") == "0":
         return None
@@ -69,7 +69,8 @@ def _cinematic(beats, product, day, label, on_date, seconds):
         out = os.path.join(os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative")),
                            f"{label}_day{day}_{ds}_cinematic.mp4")
         meta = cinematic_motion.render_cinematic_until_pass(
-            sku, [{"on": b.get("on", ""), "sub": b.get("sub", "")} for b in beats], out, seconds=seconds, seed=day)
+            sku, [{"on": b.get("on", ""), "sub": b.get("sub", "")} for b in beats], out,
+            seconds=seconds, seed=day, format_type=format_type)
         return out if meta else None
     except Exception as exc:
         logger.warning("[cinematic] path failed (%s); using legacy frames", exc)
@@ -84,7 +85,7 @@ def build_short_video(yt_short: dict, day: int, label: str = "short_video", on_d
     if os.getenv("ENABLE_SHORT_VIDEO", "true").lower() != "true":
         return None
 
-    _cin = _cinematic(_scenes_from_short(yt_short), yt_short.get("product"), day, label, on_date, 12.0)
+    _cin = _cinematic(_scenes_from_short(yt_short), yt_short.get("product"), day, label, on_date, 12.0, format_type="short")
     if _cin:
         return _cin
     try:

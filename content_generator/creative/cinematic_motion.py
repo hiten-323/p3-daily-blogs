@@ -170,20 +170,36 @@ def _word_layout(d, lines, font, y0, cx):
     return out, y
 
 
-def _music(seed, audio):
+def _music(seed, audio, format_type="reel", seconds=10.0):
     if audio:
-        return audio
-    tracks = sorted(glob.glob("music_library/**/*.wav", recursive=True) + glob.glob("music_library/**/*.mp3", recursive=True))
-    pref = [t for t in tracks if "cinematic" in t or "premium" in t] or tracks
-    return pref[seed % len(pref)] if pref else None
+        return audio, f"loudnorm=I=-14:TP=-1.5:LRA=11,afade=t=in:d=0.2,afade=t=out:st={max(0.0, seconds - 0.8):.2f}:d=0.8"
+    try:
+        from content_generator.creative.audio_director import get_format_audio_plan
+        plan = get_format_audio_plan(format_type=format_type, day=seed, seconds=seconds)
+        track = plan.get("local_track")
+        if track and os.path.exists(track):
+            return track, plan.get("loudness_filter")
+    except Exception as exc:
+        logger.debug("[cinematic] audio plan lookup failed: %s", exc)
+    music_dir = os.getenv("MUSIC_LIBRARY_DIR", "music_library")
+    if not os.path.isdir(music_dir):
+        return None, ""
+    tracks = sorted(glob.glob(os.path.join(music_dir, "**/*.wav"), recursive=True) + glob.glob(os.path.join(music_dir, "**/*.mp3"), recursive=True))
+    if not tracks:
+        return None, ""
+    pref = [t for t in tracks if ("cinematic" in t or "premium" in t if format_type == "short" else "upbeat" in t or "lofi" in t)] or tracks
+    chosen = pref[seed % len(pref)] if pref else None
+    return chosen, f"loudnorm=I=-14:TP=-1.5:LRA=11,afade=t=in:d=0.2,afade=t=out:st={max(0.0, seconds - 0.8):.2f}:d=0.8"
+
 
 
 def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, sub: str = "",
                            seconds: float = 10.0, seed: int = 0, layout: str | None = None,
                            palette_idx: int | None = None, audio: str | None = None,
-                           poster_path: str | None = None) -> dict:
-    """Render a 1080x1920 cinematic motion video. beats: list of {on, sub} or a single headline."""
+                           poster_path: str | None = None, format_type: str = "reel") -> dict:
+    """Render a 1080x1920 cinematic motion video with format-specific chrome and downbeat sync."""
     import imageio_ffmpeg
+    fmt = str(format_type or "reel").strip().lower()
     if isinstance(beats, str):
         beats = [{"on": beats, "sub": sub}]
     beats = [b for b in beats if (b.get("on") or "").strip()] or [{"on": "PURITY BEANS", "sub": sub}]
@@ -196,12 +212,36 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                  "cinematic_offset": (0.40, 0.20, 0.65, 0.45)}[layout]
         bd = _Backdrop(pal, seed, light, horizon)
         m = int(W * 0.07)
-        cta = f"FOLLOW {pc.HANDLE.upper()}"
+
+        # Platform-specific CTA and chrome
+        if fmt == "short":
+            cta = "SUBSCRIBE FOR COFFEE SECRETS"
+            eyebrow_badge = "YOUTUBE SHORTS  •  COFFEE SECRETS"
+            badge_border = (220, 50, 40)
+            badge_text_col = (255, 220, 100)
+            head_col = (255, 222, 0)       # High-visibility Canary Yellow
+            sub_col = (255, 255, 255)      # Crisp White
+        elif fmt == "story":
+            cta = "REPLY TO THIS STORY"
+            eyebrow_badge = "DAILY STORY  •  PURITY BEANS"
+            badge_border = tuple(int(c) for c in pal["accent"])
+            badge_text_col = (248, 242, 226)
+            head_col = (248, 242, 226)     # Warm Editorial Cream
+            sub_col = tuple(int(c) for c in pal["accent"])
+        else:
+            cta = f"FOLLOW {pc.HANDLE.upper()}"
+            eyebrow_badge = "REEL  •  PURITY BEANS"
+            badge_border = tuple(int(c) for c in pal["accent"])
+            badge_text_col = tuple(int(c) for c in pal["ink"])
+            head_col = tuple(int(c) for c in pal["ink"])
+            sub_col = tuple(int(c) for c in pal["accent"])
+
         bf = pc._font("italic", max(30, W // 26))
         base_y = int(H * horizon) + 10
-        # text plans per beat (headline zone first, jar sized to the space left)
+
+        # Text plans per beat (headline zone first, jar sized to the space left)
         scratch = ImageDraw.Draw(Image.new("RGBA", (W, H)))
-        text_top = int(H * 0.15)
+        text_top = int(H * (0.16 if fmt == "story" else 0.15))
         plans, text_end = [], text_top
         for b in beats:
             head = rc.guard(str(b.get("on") or "")).upper()
@@ -220,7 +260,8 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         jar_alpha = np.zeros((H, W), np.float32)
         jar_alpha[jb[1]:jb[3], jb[0]:jb[2]] = np.asarray(jar.getchannel("A"), np.float32)[:jb[3] - jb[1], :jb[2] - jb[0]] / 255.0
         jyy, jxx = np.mgrid[0:H, 0:W].astype(np.float32)
-        # soft dark scrim behind the text block so the sub-line stays legible over bright bokeh
+
+        # Soft dark scrim behind the text block
         sy0, sy1 = text_top - int(H * 0.03), min(jb[1] - int(H * 0.01), text_end + int(H * 0.02))
         prof = np.zeros(H, np.float32)
         ramp = int(H * 0.04)
@@ -231,11 +272,33 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         scrim_a = (prof[:, None] * (1 - 0.45 * xs_ ** 2)[None, :] * 150).astype("uint8")
         scrim = Image.new("RGBA", (W, H), tuple(int(c) for c in pal["deep"]) + (0,))
         scrim.putalpha(Image.fromarray(scrim_a))
+
         n = int(seconds * FPS)
-        cta_at = seconds * 0.70
-        beat_len = cta_at / len(plans)
+
+        # 120 BPM Downbeat synchronization (2.000s per measure)
+        num_plans = len(plans)
+        bar_dur = 2.0
+        if fmt in ("reel", "short"):
+            if num_plans <= 1:
+                cta_at = max(2.0, seconds - bar_dur * 2)
+                beat_boundaries = [0.0]
+            elif num_plans == 2:
+                cta_at = max(4.0, seconds - bar_dur * 2)
+                step = 2.0 if cta_at >= 4.0 else cta_at / 2.0
+                beat_boundaries = [0.0, step]
+            else:
+                cta_at = min(bar_dur * num_plans, max(bar_dur * (num_plans - 1), seconds - bar_dur * 1.5))
+                if cta_at >= seconds:
+                    cta_at = seconds * 0.72
+                step = cta_at / num_plans
+                beat_boundaries = [round(i * step, 3) for i in range(num_plans)]
+        else:
+            cta_at = seconds * 0.72
+            step = cta_at / max(1, num_plans)
+            beat_boundaries = [round(i * step, 3) for i in range(num_plans)]
+
         ff = imageio_ffmpeg.get_ffmpeg_exe()
-        audio = _music(seed, audio)
+        audio_file, af_filter = _music(seed, audio, format_type=fmt, seconds=seconds)
         tmpv = out_path + ".noaudio.mp4"
         os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
         proc = subprocess.Popen([ff, "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
@@ -243,11 +306,17 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                                  tmpv], stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         last_meta = None
         poster_frame = None
+
+        badge_font = pc._font("sans", 20)
+        pill_font = pc._font("sans", 18)
+        sticker_font = pc._font("sans", 22)
+
         for fi in range(n):
             t = fi / FPS
             fr = bd.frame(t, seconds)
             fr.alpha_composite(jl)
-            # 8. specular glint across the glass (subtle, additive, inside jar alpha only)
+
+            # 8. specular glint across the glass
             for c0 in (1.2, 6.0):
                 g = (t - c0) / 1.6
                 if 0 <= g <= 1:
@@ -257,44 +326,101 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                     arr[..., :3] += (band * 0.16 * 255)[..., None] * (1 - arr[..., :3] / 255)
                     fr = Image.fromarray(np.clip(arr, 0, 255).astype("uint8"))
             fr.alpha_composite(scrim)
-            # 9. kinetic text
-            bi = min(len(plans) - 1, int(min(t, cta_at - 1e-3) / beat_len))
+
+            # Determine active beat based on musical downbeat boundaries
+            bi = 0
+            for idx_b, b_start in enumerate(beat_boundaries):
+                if t >= b_start:
+                    bi = idx_b
+            bi = min(bi, num_plans - 1)
             pl = plans[bi]
-            lt = t - bi * beat_len
+            beat_start_t = beat_boundaries[bi]
+            lt = t - beat_start_t
+
             boxes = []
             tl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+            tldraw = ImageDraw.Draw(tl)
+
+            # Draw Platform Eyebrow Badge
+            badge_w = tldraw.textlength(eyebrow_badge, font=badge_font)
+            bp_w = int(badge_w + 32)
+            bp_x = (W - bp_w) // 2
+            bp_y = int(H * 0.09)
+            tldraw.rounded_rectangle([(bp_x, bp_y), (bp_x + bp_w, bp_y + 36)], radius=12,
+                                     fill=(16, 10, 6, 220), outline=badge_border, width=1)
+            tldraw.text((W // 2, bp_y + 18), eyebrow_badge, font=badge_font, fill=badge_text_col, anchor="mm")
+
+            # Draw YouTube Shorts Scene / Part Pill
+            if fmt == "short" and num_plans > 1:
+                part_label = f"PART {bi + 1} OF {num_plans}"
+                pw = tldraw.textlength(part_label, font=pill_font)
+                pp_w = int(pw + 24)
+                pp_x = W - m - pp_w
+                tldraw.rounded_rectangle([(pp_x, bp_y + 2), (pp_x + pp_w, bp_y + 34)], radius=8,
+                                         fill=(36, 10, 8, 230), outline=(220, 60, 40), width=1)
+                tldraw.text((pp_x + pp_w // 2, bp_y + 18), part_label, font=pill_font, fill=(255, 230, 200), anchor="mm")
+
+            # Word-by-word kinetic text
             for wi, (wd, x, y) in enumerate(pl["words"]):
-                a = np.clip((lt - 0.15 - wi * 0.12) / 0.25, 0, 1)
+                a = np.clip((lt - 0.10 - wi * 0.10) / 0.22, 0, 1)
                 if a <= 0:
                     continue
-                dy = int((1 - a) * 28)
+                dy = int((1 - a) * 24)
                 sh = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-                ImageDraw.Draw(sh).text((x + 3, y + 5 + dy), wd, font=pl["font"], fill=(0, 0, 0, int(190 * a)))
+                ImageDraw.Draw(sh).text((x + 3, y + 5 + dy), wd, font=pl["font"], fill=(0, 0, 0, int(210 * a)))
                 tl.alpha_composite(sh.filter(ImageFilter.GaussianBlur(5)))
-                ImageDraw.Draw(tl).text((x, y + dy), wd, font=pl["font"], fill=tuple(pal["ink"]) + (int(255 * a),))
+                tldraw.text((x, y + dy), wd, font=pl["font"], fill=head_col + (int(255 * a),))
+
             for ln_words in [pl["words"]]:
                 if ln_words:
                     xs = [w[1] for w in ln_words]
                     boxes.append((min(xs), text_top, W - min(xs), pl["y_end"]))
             fr.alpha_composite(tl)
+
             y = pl["y_end"] + int(H * 0.02)
             sub_end = y + int(H * 0.018) + len(pl["sub_lines"]) * int(bf.size * 1.25)
-            sa = np.clip((lt - 0.15 - len(pl["words"]) * 0.12) / 0.4, 0, 1)
+            sa = np.clip((lt - 0.12 - len(pl["words"]) * 0.10) / 0.35, 0, 1)
             if pl["sub_lines"] and sa > 0:
                 sl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-                ImageDraw.Draw(sl).line((W / 2 - 60, y, W / 2 + 60, y), fill=tuple(pal["accent"]) + (int(255 * sa),), width=5)
+                sldraw = ImageDraw.Draw(sl)
+                sldraw.line((W / 2 - 60, y, W / 2 + 60, y), fill=tuple(pal["accent"]) + (int(255 * sa),), width=5)
                 y += int(H * 0.018)
                 for ln in pl["sub_lines"]:
                     hl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
                     ImageDraw.Draw(hl).text((W / 2, y + 2), ln, font=bf, fill=(0, 0, 0, int(230 * sa)), anchor="ma",
                                             stroke_width=4, stroke_fill=(0, 0, 0, int(200 * sa)))
                     sl.alpha_composite(hl.filter(ImageFilter.GaussianBlur(4)))
-                    pc._text(sl, (W / 2, y), ln, bf, tuple(pal["accent"]) + (int(255 * sa),), anchor="ma")
+                    pc._text(sl, (W / 2, y), ln, bf, sub_col + (int(255 * sa),), anchor="ma")
                     y += int(bf.size * 1.25)
                 fr.alpha_composite(sl)
+
             chip_y = sub_end + int(H * 0.012)
             chip = pc.strip_chip(fr, (W / 2, chip_y), pal, sku, anchor="ma")
             boxes.append(chip)
+
+            # Simulated Instagram Native Link Sticker for Story format
+            if fmt == "story" and t >= 1.5:
+                sta = min(1.0, (t - 1.5) / 0.4)
+                sticker_text = "🔗 TAP TO SHOP · p3online.in"
+                st_w = tldraw.textlength(sticker_text, font=sticker_font)
+                st_pill_w = int(st_w + 44)
+                st_x0 = (W - st_pill_w) // 2
+                st_y0 = max(jb[3] + 16, int(H * 0.80))
+                st_layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+                stdraw = ImageDraw.Draw(st_layer)
+                # Drop shadow
+                stdraw.rounded_rectangle([(st_x0 + 2, st_y0 + 3), (st_x0 + st_pill_w + 2, st_y0 + 47)],
+                                         radius=16, fill=(0, 0, 0, int(90 * sta)))
+                # White pill
+                stdraw.rounded_rectangle([(st_x0, st_y0), (st_x0 + st_pill_w, st_y0 + 44)],
+                                         radius=16, fill=(255, 255, 255, int(240 * sta)),
+                                         outline=(210, 180, 140, int(180 * sta)), width=1)
+                stdraw.text((W // 2, st_y0 + 22), sticker_text, font=sticker_font,
+                            fill=(24, 14, 8, int(255 * sta)), anchor="mm")
+                fr.alpha_composite(st_layer)
+                boxes.append((st_x0, st_y0, st_x0 + st_pill_w, st_y0 + 44))
+
+            # Climax and End CTA
             show_cta = t >= cta_at
             if show_cta:
                 ca = min(1.0, (t - cta_at) / 0.35)
@@ -305,27 +431,30 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                 fr.alpha_composite(cl)
             else:
                 pc.brand_frame(fr, pal, cta=None)
+
             rgb = fr.convert("RGB")
             proc.stdin.write(rgb.tobytes())
             if fi == int(n * 0.92):
                 poster_frame = rgb
                 last_meta = dict(boxes=boxes, font=pl["font"])
+
         proc.stdin.close()
         proc.wait()
         if proc.returncode:
             raise RuntimeError(f"ffmpeg encode failed rc={proc.returncode}")
+
         cmd = [ff, "-y", "-i", tmpv]
-        if audio:
-            cmd += ["-i", audio, "-map", "0:v", "-map", "1:a", "-af",
-                    f"afade=t=in:d=0.6,afade=t=out:st={max(0.0, seconds - 1.2)}:d=1.2", "-c:a", "aac", "-b:a", "160k"]
+        if audio_file and os.path.exists(audio_file):
+            cmd += ["-i", audio_file, "-map", "0:v", "-map", "1:a", "-af",
+                    af_filter, "-c:a", "aac", "-b:a", "192k"]
         cmd += ["-c:v", "copy", "-t", str(seconds), "-movflags", "+faststart", out_path]
         subprocess.run(cmd, check=True, capture_output=True)
         os.remove(tmpv)
         poster_path = poster_path or out_path.rsplit(".", 1)[0] + "_poster.jpg"
         (poster_frame or rgb).save(poster_path, quality=93)
-        return {"path": out_path, "poster": poster_path, "audio": audio, "jar_box": jb, "layout": layout,
+        return {"path": out_path, "poster": poster_path, "audio": audio_file, "jar_box": jb, "layout": layout,
                 "text_boxes": (last_meta or {}).get("boxes", []), "headline_px": (last_meta or {}).get("font", bf).size,
-                "body_px": bf.size, "sku": sku, "cinematic": True}
+                "body_px": bf.size, "sku": sku, "cinematic": True, "format_type": fmt}
     finally:
         rc.reset_sku(tok)
 
@@ -339,7 +468,8 @@ def _budget_left() -> float:
     return float(os.getenv("CINEMATIC_TOTAL_BUDGET_S", "1500")) - (time.monotonic() - _PROCESS_START)
 
 
-def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, max_tries=None, gate=None) -> dict | None:
+def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, max_tries=None, gate=None,
+                                format_type="reel", audio=None) -> dict | None:
     """Render, run the unchanged visual gate, re-render with a new layout/palette on failure.
 
     Bounded: at most CINEMATIC_MAX_TRIES attempts (default 2, hard cap 3), and no attempt starts unless
@@ -359,7 +489,7 @@ def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, m
         t0 = time.monotonic()
         layout = LAYOUTS[(seed + i) % len(LAYOUTS)]
         meta = render_cinematic_video(sku, beats, out_path, seconds=seconds, seed=seed + i, layout=layout,
-                                      palette_idx=seed + i + i // len(LAYOUTS))
+                                      palette_idx=seed + i + i // len(LAYOUTS), format_type=format_type, audio=audio)
         est = max(est, time.monotonic() - t0)
         verdict = gate(out_path, meta)
         meta["visual_gate"] = verdict
@@ -371,3 +501,4 @@ def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, m
             logger.error("[cinematic] no vision scorer available — holding (fail fast, no re-render)")
             return None
     return None
+

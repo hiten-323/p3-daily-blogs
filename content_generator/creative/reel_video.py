@@ -63,7 +63,7 @@ def _beats_from_reel(reel: dict) -> list[dict]:
     return beats[:_MAX_BEATS]
 
 
-def _cinematic(beats, product, day, label, on_date, seconds):
+def _cinematic(beats, product, day, label, on_date, seconds, format_type="reel"):
     """Procedural cinematic motion (cinematic_motion), gated by visual_gate. None -> legacy path."""
     if os.getenv("CINEMATIC_VIDEO", "1") == "0":
         return None
@@ -78,7 +78,8 @@ def _cinematic(beats, product, day, label, on_date, seconds):
         out = os.path.join(os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative")),
                            f"{label}_day{day}_{ds}_cinematic.mp4")
         meta = cinematic_motion.render_cinematic_until_pass(
-            sku, [{"on": b.get("on", ""), "sub": b.get("sub", "")} for b in beats], out, seconds=seconds, seed=day)
+            sku, [{"on": b.get("on", ""), "sub": b.get("sub", "")} for b in beats], out,
+            seconds=seconds, seed=day, format_type=format_type)
         return out if meta else None
     except Exception as exc:
         logger.warning("[cinematic] path failed (%s); using legacy frames", exc)
@@ -123,7 +124,7 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
             logger.info("[reel_video] style cues only (%s); reference file stays in the bank", cue_ids)
     except Exception as exc:
         logger.debug("[reel_video] product reel lookup skipped: %s", exc)
-    _cin = _cinematic(_beats_from_reel(reel), reel.get("product"), day, label, on_date, 12.0)
+    _cin = _cinematic(_beats_from_reel(reel), reel.get("product"), day, label, on_date, 12.0, format_type="reel")
     if _cin:
         return _cin
     try:

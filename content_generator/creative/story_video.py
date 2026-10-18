@@ -73,7 +73,8 @@ def build_story_video(
             out = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}_cinematic.mp4")
             meta = cinematic_motion.render_cinematic_until_pass(
                 sku, [{"on": headline, "sub": sub}], out,
-                seconds=duration or _DEFAULT_STORY_DURATION, seed=day)
+                seconds=duration or _DEFAULT_STORY_DURATION, seed=day,
+                format_type="story")
             if meta:
                 return out
             logger.warning("[story_video] cinematic story held by visual gate; trying premium card story")
