@@ -132,6 +132,7 @@ def release(ref: str) -> None:
         if result.returncode == 0:
             _OWNED_CLAIMS.pop(ref, None)
         else:
+            _OWNED_CLAIMS.pop(ref, None)
             log.warning("[publish-claim] release skipped; remote claim changed for %s", ref)
     except Exception as exc:
         log.warning("[publish-claim] release failed for %s: %s", ref, exc)
