@@ -18,6 +18,7 @@ import datetime
 import json
 import logging
 import os
+import tempfile
 
 logger = logging.getLogger(__name__)
 
@@ -55,12 +56,28 @@ def _load_registry() -> dict[str, dict]:
 
 
 def _save_registry() -> None:
+    """Persist registry atomically so an interrupted runner cannot truncate it."""
+    tmp_path = ""
     try:
         os.makedirs(_OUT_DIR, exist_ok=True)
-        with open(_PROVENANCE_FILE, "w", encoding="utf-8") as f:
-            json.dump(_MEMORY_REGISTRY, f, indent=2)
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=_OUT_DIR,
+            prefix=".jar_provenance.", suffix=".tmp", delete=False,
+        ) as handle:
+            tmp_path = handle.name
+            json.dump(_MEMORY_REGISTRY, handle, indent=2)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_path, _PROVENANCE_FILE)
+        tmp_path = ""
     except Exception as e:
-        logger.warning("[provenance] Could not save registry: %s", e)
+        logger.warning("[provenance] Could not save registry atomically: %s", type(e).__name__)
+    finally:
+        if tmp_path:
+            try:
+                os.unlink(tmp_path)
+            except OSError:
+                pass
 
 
 def record_jar_provenance(
