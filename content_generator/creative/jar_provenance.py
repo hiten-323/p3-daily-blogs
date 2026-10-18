@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 _PROVENANCE_FILE = os.path.join(_OUT_DIR, "jar_provenance.json")
+_TRUSTED_JAR_ASSET_ROOT = os.path.abspath(os.getenv("PURITY_BRAND_ASSET_ROOT", "brand_assets"))
 
 VALID_RENDER_SOURCES = {
     "real_jar",
@@ -38,6 +39,18 @@ _MEMORY_REGISTRY: dict[str, dict] = {}
 def _norm_key(path: str) -> str:
     """Normalize path to filename key for robust lookup across relative/absolute variants."""
     return os.path.basename(path).lower()
+
+
+def _trusted_jar_asset(path: str) -> bool:
+    """Only first-party files inside the trusted brand-assets directory count as jar sources."""
+    if not path:
+        return False
+    try:
+        candidate = os.path.realpath(path)
+        root = os.path.realpath(_TRUSTED_JAR_ASSET_ROOT)
+        return os.path.isfile(candidate) and os.path.commonpath((candidate, root)) == root
+    except (OSError, ValueError):
+        return False
 
 
 def _load_registry() -> dict[str, dict]:
@@ -92,9 +105,12 @@ def record_jar_provenance(
     _load_registry()
 
     jar_asset_id = os.path.normpath(jar_asset_id) if jar_asset_id else ""
-    jar_exists = bool(jar_asset_id and os.path.exists(jar_asset_id))
+    trusted_jar = _trusted_jar_asset(jar_asset_id)
     valid_source = render_source in VALID_RENDER_SOURCES
-    is_verified = bool(jar_exists and valid_source)
+    is_verified = bool(trusted_jar and valid_source)
+    if trusted_jar:
+        # Persist a repository-relative path so a fresh runner can re-verify it.
+        jar_asset_id = os.path.relpath(os.path.realpath(jar_asset_id), os.path.abspath("."))
 
     entry = {
         "image_path": image_path.replace("\\", "/"),
@@ -172,9 +188,9 @@ def verify_jar_provenance(image_path: str) -> dict:
                 "render_source": source, "reason": "invalid_render_source"}
 
     jar_asset = entry.get("jar_asset_id")
-    if not jar_asset or not os.path.exists(jar_asset):
+    if not jar_asset or not _trusted_jar_asset(jar_asset):
         return {"verified": False, "jar_asset_id": jar_asset,
-                "render_source": source, "reason": "source_jar_missing_on_disk"}
+                "render_source": source, "reason": "source_jar_missing_or_untrusted"}
 
     return {
         "verified": True,
