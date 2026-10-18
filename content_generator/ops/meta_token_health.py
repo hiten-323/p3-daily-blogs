@@ -402,20 +402,36 @@ def run_checks(now: int | None = None) -> int:
                     failed = True
 
     threads_tok = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
-    threads_uid = os.environ.get("THREADS_USER_ID", "me").strip() or "me"
-    if threads_tok:
+    threads_uid = os.environ.get("THREADS_USER_ID", "").strip()
+    if not threads_tok or not threads_uid:
+        level = "warning" if mode == "soft" else "error"
+        missing = "THREADS_ACCESS_TOKEN" if not threads_tok else "THREADS_USER_ID"
+        messages.append((level, f"Threads publishing credentials unavailable — {missing} is not configured."))
+        if mode != "soft":
+            failed = True
+    else:
         secrets.append(threads_tok)
         try:
             th_url = f"https://graph.threads.net/v1.0/{urllib.parse.quote(threads_uid, safe='')}?fields=id,username"
             th_res = _fetch(th_url, _headers(threads_tok))
             th_user = str(th_res.get("username") or "")
             th_id = str(th_res.get("id") or "")
-            messages.append(("notice", f"Threads token valid: username={th_user} id={th_id}"))
+            if not th_id or th_id != threads_uid or not th_user:
+                level = "warning" if mode == "soft" else "error"
+                messages.append((level, f"Threads account identity mismatch: configured ID={threads_uid}, returned ID={th_id or '(none)'}, username={th_user or '(none)'}"))
+                if mode != "soft":
+                    failed = True
+            else:
+                messages.append(("notice", f"Threads token valid: username={th_user} id={th_id}"))
         except TokenHttpError as exc:
             detail = _redact(exc.body, secrets)[:300]
-            messages.append(("warning", f"Threads token check (HTTP {exc.code}): {detail}"))
+            messages.append(("warning" if mode == "soft" else "error", f"Threads token check (HTTP {exc.code}): {detail}"))
+            if mode != "soft":
+                failed = True
         except Exception as exc:
-            messages.append(("warning", f"Threads token check: {type(exc).__name__}"))
+            messages.append(("warning" if mode == "soft" else "error", f"Threads token check: {type(exc).__name__}"))
+            if mode != "soft":
+                failed = True
 
     # LinkedIn credentials check
     li_refresh = os.environ.get("LI_REFRESH_TOKEN", "").strip()
