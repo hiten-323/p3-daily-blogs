@@ -53,3 +53,32 @@ def test_video_host_only_returns_public_https_url(monkeypatch, tmp_path):
 
     monkeypatch.setattr(requests, "post", lambda *a, **k: Response())
     assert video_host.upload_video(str(video)) is None
+
+
+
+def test_invalid_cloudinary_image_api_key_is_redacted(monkeypatch, tmp_path, caplog):
+    import logging
+    import requests
+    from content_generator.publisher import instagram
+
+    image = tmp_path / "test.jpg"
+    image.write_bytes(b"image fixture")
+    monkeypatch.setenv(
+        "CLOUDINARY_URL",
+        "cloudinary://test-image-key:do-not-log-image-secret@cloud-name",
+    )
+
+    class Response:
+        status_code = 401
+
+        def json(self):
+            return {"error": {"message": "Invalid api_key test-image-key"}}
+
+    monkeypatch.setattr(requests, "post", lambda *a, **k: Response())
+    with caplog.at_level(logging.WARNING):
+        result = instagram._cloudinary_upload(str(image))
+
+    assert result is None
+    assert "HTTP 401" in caplog.text
+    assert "test-image-key" not in caplog.text
+    assert "do-not-log-image-secret" not in caplog.text
