@@ -124,6 +124,7 @@ def test_strict_meta_preflight_fails_when_facebook_publish_scope_missing(monkeyp
 
 def test_strict_meta_preflight_fails_when_facebook_token_missing(monkeypatch, capsys):
     monkeypatch.setenv("META_TOKEN_MODE", "strict")
+    monkeypatch.setenv("META_PUBLISH_PREFLIGHT", "true")
     monkeypatch.setenv("FACEBOOK_PAGE_ID", "fb-123")
     monkeypatch.delenv("FACEBOOK_PAGE_ACCESS_TOKEN", raising=False)
     monkeypatch.setenv("INSTAGRAM_ACCOUNT_ID", "ig-123")
@@ -152,6 +153,7 @@ def test_strict_meta_preflight_fails_when_facebook_token_missing(monkeypatch, ca
 
 def test_strict_meta_preflight_fails_when_threads_identity_mismatches(monkeypatch, capsys):
     monkeypatch.setenv("META_TOKEN_MODE", "strict")
+    monkeypatch.setenv("META_PUBLISH_PREFLIGHT", "true")
     monkeypatch.setenv("INSTAGRAM_ACCOUNT_ID", "ig-123")
     monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "ig-token")
     monkeypatch.setenv("FACEBOOK_PAGE_ID", "fb-123")
