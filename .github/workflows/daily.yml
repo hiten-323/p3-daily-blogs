@@ -157,6 +157,31 @@ jobs:
           META_PUBLISH_PREFLIGHT: "true"
         run: python -m content_generator.ops.meta_token_health
 
+      - name: Verify failure alert channel
+        if: ${{ success() && env.FORCE_SLOT != 'generate' && github.event.inputs.dry_run != 'true' }}
+        env:
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          NURTURE_FROM_EMAIL: ${{ secrets.NURTURE_FROM_EMAIL }}
+        run: |
+          python - <<'PY'
+          import os, sys
+          webhook = bool(os.environ.get("ALERT_WEBHOOK_URL", "").strip())
+          email = all((
+              os.environ.get("ALERT_EMAIL_TO", "").strip(),
+              os.environ.get("SMTP_PASS", "").strip(),
+              os.environ.get("SMTP_USER", "").strip(),
+              (os.environ.get("NURTURE_FROM_EMAIL") or os.environ.get("SMTP_USER") or "").strip(),
+          ))
+          if not (webhook or email):
+              print("::error::Publishing blocked: configure ALERT_WEBHOOK_URL or the SMTP alert credentials before enabling unattended publishing.")
+              sys.exit(1)
+          channels = [name for name, configured in (("webhook", webhook), ("email", email)) if configured]
+          print("::notice::Failure alert channel configuration present: " + ", ".join(channels))
+          PY
+
       - name: Run autonomous pipeline
         if: ${{ success() && github.event.inputs.dry_run != 'true' }}
         env:
