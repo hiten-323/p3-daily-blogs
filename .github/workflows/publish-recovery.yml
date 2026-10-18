@@ -146,8 +146,8 @@ jobs:
           python - <<'PY'
           import os
           msg = (
-              "PURITY BEANS PUBLISH RECOVERY FAILED\\n"
-              f"Run: {os.environ.get('GITHUB_RUN_NUMBER', '')}\\n"
+              "PURITY BEANS PUBLISH RECOVERY FAILED\n"
+              f"Run: {os.environ.get('GITHUB_RUN_NUMBER', '')}\n"
               f"Logs: {os.environ.get('GITHUB_SERVER_URL', '')}/"
               f"{os.environ.get('GITHUB_REPOSITORY', '')}/actions/runs/"
               f"{os.environ.get('GITHUB_RUN_ID', '')}"
