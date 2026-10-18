@@ -2325,5 +2325,64 @@
       ],
       "timestamp": "2026-10-17T17:14:35"
     }
+  },
+  {
+    "date": "2026-10-18",
+    "day_number": 290,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "post_id": "urn:li:share:7517481756711784448",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7517481756711784448/",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 1,
+        "duration_ms": 4417
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "not_attempted",
+        "piece": "yt_short",
+        "gate": "rejected",
+        "post_id": "",
+        "video_id": "",
+        "url": ""
+      },
+      "threads": {
+        "success": true,
+        "attempted": true,
+        "skipped": false,
+        "post_id": "18123244135852190",
+        "url": "https://www.threads.com/@hiten_jain323/post/DeoHKKgm70z",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 2,
+        "duration_ms": 13300
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Threads | Held for slot: Instagram, Facebook | Skipped: Youtube, Blog",
+      "published_platforms": [
+        "linkedin",
+        "threads"
+      ],
+      "timestamp": "2026-10-18T07:08:53"
+    }
   }
 ]
