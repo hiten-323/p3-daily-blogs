@@ -110,6 +110,7 @@ _PUBLISHING_STEPS = (
     "Clear run lock (if force_run)",
     "Meta token soft-check (generate)",
     "Verify Meta publishing access",
+    "Verify failure alert channel",
     "Run autonomous pipeline",
     "Verify slot result",
     "Persist validated state to Git",
@@ -327,3 +328,17 @@ def test_gemini_probe_rejects_http_200_without_candidate_text(monkeypatch):
     monkeypatch.setattr(llm_probe.gemini, "_BASE", "https://example.test")
     monkeypatch.setattr(llm_probe.requests, "post", lambda *a, **k: Response())
     assert llm_probe._gemini_chat("test-key") == "empty content"
+
+
+
+def test_unattended_publishing_requires_a_configured_failure_alert_channel():
+    data = _workflow_document()
+    steps = {step["name"]: step for step in data["jobs"]["run-pipeline"]["steps"]}
+    step = steps["Verify failure alert channel"]
+    assert "env.FORCE_SLOT != 'generate'" in step["if"]
+    assert "github.event.inputs.dry_run != 'true'" in step["if"]
+    assert "ALERT_WEBHOOK_URL" in step["env"]
+    assert "ALERT_EMAIL_TO" in step["env"]
+    assert "SMTP_PASS" in step["env"]
+    assert "Publishing blocked" in step["run"]
+    assert "os.environ.get(\"ALERT_WEBHOOK_URL\")" not in step["run"]
