@@ -83,7 +83,7 @@ def _openai_chat(
     model: str,
     extra_headers: dict | None = None,
     *,
-    reject_empty: bool = False,
+    reject_empty: bool = True,
 ) -> str:
     if not key or not model:
         return "skipped"
