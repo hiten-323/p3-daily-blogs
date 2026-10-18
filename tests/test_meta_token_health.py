@@ -137,3 +137,35 @@ def test_strict_meta_preflight_fails_when_facebook_token_missing(monkeypatch, ca
     assert health.run_checks(now=100) == 1
     out = capsys.readouterr().out
     assert "::error::Facebook publishing credentials unavailable" in out
+
+
+
+def test_strict_meta_preflight_fails_when_threads_identity_mismatches(monkeypatch, capsys):
+    monkeypatch.setenv("META_TOKEN_MODE", "strict")
+    monkeypatch.setenv("INSTAGRAM_ACCOUNT_ID", "ig-123")
+    monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "ig-token")
+    monkeypatch.setenv("FACEBOOK_PAGE_ID", "fb-123")
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "fb-token")
+    monkeypatch.setenv("THREADS_ACCESS_TOKEN", "threads-token")
+    monkeypatch.setenv("THREADS_USER_ID", "threads-expected")
+    monkeypatch.delenv("LI_REFRESH_TOKEN", raising=False)
+    monkeypatch.delenv("LI_CLIENT_ID", raising=False)
+    monkeypatch.delenv("LI_CLIENT_SECRET", raising=False)
+    monkeypatch.delenv("LI_API_ACCESS", raising=False)
+    monkeypatch.delenv("YOUTUBE_CLIENT_ID", raising=False)
+    monkeypatch.delenv("YOUTUBE_CLIENT_SECRET", raising=False)
+    monkeypatch.delenv("YOUTUBE_REFRESH_TOKEN", raising=False)
+
+    monkeypatch.setattr(health, "inspect_instagram", lambda *a, **k: {
+        "ok": True, "problems": [], "scopes": list(health.IG_SCOPES),
+        "type": "USER", "expires": "never", "username": "puritybeans",
+        "resolved_account_id": "",
+    })
+    monkeypatch.setattr(health, "inspect_token", lambda token, **k: {
+        "type": "PAGE", "expires": "never", "scopes": list(health.FB_SCOPES), "expired": False,
+    })
+    monkeypatch.setattr(health, "_fetch", lambda *a, **k: {"id": "threads-other", "username": "someone-else"})
+
+    assert health.run_checks(now=100) == 1
+    out = capsys.readouterr().out
+    assert "::error::Threads account identity mismatch" in out
