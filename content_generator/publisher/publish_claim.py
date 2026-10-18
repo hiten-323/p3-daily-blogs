@@ -85,7 +85,7 @@ def _claim_details(ref: str) -> tuple[float | None, str | None]:
     if not observed:
         return None, None
     msg = _git("log", "-1", "--format=%s", ref).stdout
-    m = re.search(r"publish-claim (\\d+)", msg)
+    m = re.search(r"publish-claim (\d+)", msg)
     return ((time.time() - int(m.group(1))) / 60 if m else None, observed)
 
 
