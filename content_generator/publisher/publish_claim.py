@@ -29,7 +29,7 @@ import uuid
 log = logging.getLogger(__name__)
 # Only the process that created/took over a claim may release that exact SHA.
 _OWNED_CLAIMS: dict[str, str] = {}
-_STALE_MIN = int(os.getenv("PUBLISH_CLAIM_STALE_MIN", "90"))
+_STALE_MIN = int(os.getenv("PUBLISH_CLAIM_STALE_MIN", "180"))
 _POSTED = ("VERIFIED_LIVE", "PUBLISHED_UNVERIFIED", "UNCERTAIN")
 _LEDGER = "output/learning/publishing_ledger.json"
 
