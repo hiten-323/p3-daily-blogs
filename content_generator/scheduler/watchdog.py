@@ -209,7 +209,7 @@ def _alert_webhook(message: str) -> None:
             pass
         logger.info("[watchdog] Alert sent to webhook")
     except Exception as e:
-        logger.warning("[watchdog] Webhook alert failed: %s", e)
+        logger.warning("[watchdog] Webhook alert failed: %s", type(e).__name__)
 
 
 def _smtp_config() -> dict | None:
@@ -263,7 +263,7 @@ def _alert_email(message: str) -> None:
             server.send_message(msg)
         logger.info("[watchdog] Alert emailed to %s", cfg["recipient"])
     except Exception as e:
-        logger.warning("[watchdog] Email alert failed: %s", e)
+        logger.warning("[watchdog] Email alert failed: %s", type(e).__name__)
 
 
 # ── Run log ───────────────────────────────────────────────────────────────────
