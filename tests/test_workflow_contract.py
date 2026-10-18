@@ -340,5 +340,6 @@ def test_unattended_publishing_requires_a_configured_failure_alert_channel():
     assert "ALERT_WEBHOOK_URL" in step["env"]
     assert "ALERT_EMAIL_TO" in step["env"]
     assert "SMTP_PASS" in step["env"]
+    assert "parsed_webhook.scheme == \"https\"" in step["run"]
     assert "Publishing blocked" in step["run"]
     assert "os.environ.get(\"ALERT_WEBHOOK_URL\")" not in step["run"]
