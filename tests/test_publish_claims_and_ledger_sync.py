@@ -99,3 +99,26 @@ def test_claim_recovery_uses_compare_and_swap_not_unconditional_force(clone):
     source = inspect.getsource(publish_claim.acquire)
     assert "--force-with-lease=" in source
     assert '"--force", "origin"' not in source
+
+
+
+def test_stale_claim_takeover_rejects_a_concurrent_replacement(clone, monkeypatch):
+    monkeypatch.setattr(publish_claim, "_STALE_MIN", -1)
+    ok, ref = publish_claim.acquire("2026-10-16", "evening", "instagram_video")
+    assert ok
+    original_git = publish_claim._git
+    raced = {"sha": ""}
+
+    def race_before_lease_push(*args, **kwargs):
+        if any(str(arg).startswith("--force-with-lease=") for arg in args) and not raced["sha"]:
+            replacement = publish_claim._claim_commit()
+            original_git("push", "-q", "--force", "origin", f"{replacement}:{ref}")
+            raced["sha"] = replacement
+        return original_git(*args, **kwargs)
+
+    monkeypatch.setattr(publish_claim, "_git", race_before_lease_push)
+    ok2, why = publish_claim.acquire("2026-10-16", "evening", "instagram_video")
+    assert not ok2 and why == "claimed_by_other_run"
+    assert raced["sha"]
+    assert _git(clone, "ls-remote", "origin", ref).split()[0] == raced["sha"]
+    publish_claim._OWNED_CLAIMS.pop(ref, None)
