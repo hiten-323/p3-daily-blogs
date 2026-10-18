@@ -194,7 +194,9 @@ def verify_jar_provenance(image_path: str) -> dict:
 
     return {
         "verified": True,
-        "jar_asset_id": jar_asset,
+        # Keep the registry portable across runners, but expose an absolute
+        # verified path to callers so downstream asset checks use a stable path.
+        "jar_asset_id": os.path.abspath(jar_asset),
         "render_source": source,
         "reason": None,
     }
