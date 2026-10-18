@@ -133,7 +133,7 @@ def record_jar_provenance(
     else:
         logger.warning(
             "[provenance] FAILED verification for %s (jar_exists=%s, valid_source=%s)",
-            image_path, jar_exists, valid_source
+            image_path, trusted_jar, valid_source
         )
 
     return entry
