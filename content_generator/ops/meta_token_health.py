@@ -351,15 +351,26 @@ def run_checks(now: int | None = None) -> int:
                 ))
 
     fb_page_id = os.environ.get("FACEBOOK_PAGE_ID", "").strip()
-    if facebook:
+    if not fb_page_id or not facebook:
+        level = "warning" if mode == "soft" else "error"
+        messages.append((
+            level,
+            "Facebook publishing credentials unavailable — FACEBOOK_PAGE_ID or "
+            "FACEBOOK_PAGE_ACCESS_TOKEN is not configured."
+        ))
+        if mode != "soft":
+            failed = True
+    else:
         try:
             page = inspect_token(facebook, now=now)
         except TokenHttpError as exc:
             detail = _redact(exc.body, secrets)[:300]
             messages.append((
-                "warning",
+                "warning" if mode == "soft" else "error",
                 f"Facebook page token check failed (HTTP {exc.code}): {detail}",
             ))
+            if mode != "soft":
+                failed = True
         else:
             messages.append(("notice", format_facebook(page)))
             missing = [scope for scope in FB_SCOPES if scope not in set(page["scopes"])]
@@ -384,9 +395,11 @@ def run_checks(now: int | None = None) -> int:
                     notes.append(f"could not resolve Page token for {fb_page_id}: {type(exc).__name__}")
             if notes:
                 messages.append((
-                    "warning",
+                    "warning" if mode == "soft" else "error",
                     "Facebook page token: " + "; ".join(notes),
                 ))
+                if mode != "soft":
+                    failed = True
 
     threads_tok = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
     threads_uid = os.environ.get("THREADS_USER_ID", "me").strip() or "me"
