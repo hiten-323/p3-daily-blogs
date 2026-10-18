@@ -168,11 +168,13 @@ jobs:
         run: |
           python - <<'PY'
           import os, sys
-          webhook = bool(os.environ.get("ALERT_WEBHOOK_URL", "").strip())
+          from urllib.parse import urlparse
+          webhook_url = os.environ.get("ALERT_WEBHOOK_URL", "").strip()
+          parsed_webhook = urlparse(webhook_url)
+          webhook = parsed_webhook.scheme == "https" and bool(parsed_webhook.netloc)
           email = all((
               os.environ.get("ALERT_EMAIL_TO", "").strip(),
               os.environ.get("SMTP_PASS", "").strip(),
-              os.environ.get("SMTP_USER", "").strip(),
               (os.environ.get("NURTURE_FROM_EMAIL") or os.environ.get("SMTP_USER") or "").strip(),
           ))
           if not (webhook or email):
