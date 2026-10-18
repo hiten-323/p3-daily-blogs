@@ -284,6 +284,9 @@ def test_meta_preflight_checks_instagram_publish_scopes():
     assert "content_generator.ops.meta_token_health" in hard["run"]
     assert soft["env"]["META_TOKEN_MODE"] == "soft"
     assert hard["env"]["META_TOKEN_MODE"] == "strict"
+    assert hard["env"]["META_PUBLISH_PREFLIGHT"] == "true"
+    assert "THREADS_ACCESS_TOKEN" in hard["env"]
+    assert "THREADS_USER_ID" in hard["env"]
     assert "INSTAGRAM_ACCESS_TOKEN" in soft["env"]
     assert "INSTAGRAM_ACCESS_TOKEN" in hard["env"]
     verify = steps["Verify slot result"]["run"]
