@@ -119,3 +119,90 @@ def test_provenance_does_not_collide_for_same_filename_in_different_directories(
     assert jar_provenance.verify_jar_provenance(str(img_a))["verified"] is True
     assert jar_provenance.verify_jar_provenance(str(img_b))["verified"] is False
 
+
+def test_provenance_rejects_tampered_image_content(tmp_path, monkeypatch):
+    asset_root = tmp_path / "brand_assets"
+    asset_root.mkdir()
+    jar = asset_root / "real_jar.png"
+    jar.write_bytes(b"authentic jar content")
+
+    out_dir = tmp_path / "creative"
+    out_dir.mkdir()
+    image = out_dir / "genuine_image.png"
+    image.write_bytes(b"initial authentic render")
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(jar_provenance, "_OUT_DIR", str(out_dir))
+    monkeypatch.setattr(jar_provenance, "_PROVENANCE_FILE", str(out_dir / "jar_provenance.json"))
+    monkeypatch.setattr(jar_provenance, "_TRUSTED_JAR_ASSET_ROOT", str(asset_root))
+    monkeypatch.setattr(jar_provenance, "_MEMORY_REGISTRY", {})
+
+    entry = jar_provenance.record_jar_provenance(str(image), str(jar), "approved_photo")
+    assert entry["asset_real_jar_verified"] is True
+    assert jar_provenance.verify_jar_provenance(str(image))["verified"] is True
+
+    # Tamper with the image file content on disk at the same registered path
+    image.write_bytes(b"tampered fake render content")
+    result = jar_provenance.verify_jar_provenance(str(image))
+    assert result["verified"] is False
+    assert result["reason"] == "image_content_tampered"
+
+
+def test_provenance_rejects_modified_source_jar_content(tmp_path, monkeypatch):
+    asset_root = tmp_path / "brand_assets"
+    asset_root.mkdir()
+    jar = asset_root / "real_jar.png"
+    jar.write_bytes(b"authentic jar content")
+
+    out_dir = tmp_path / "creative"
+    out_dir.mkdir()
+    image = out_dir / "rendered_image.png"
+    image.write_bytes(b"authentic render")
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(jar_provenance, "_OUT_DIR", str(out_dir))
+    monkeypatch.setattr(jar_provenance, "_PROVENANCE_FILE", str(out_dir / "jar_provenance.json"))
+    monkeypatch.setattr(jar_provenance, "_TRUSTED_JAR_ASSET_ROOT", str(asset_root))
+    monkeypatch.setattr(jar_provenance, "_MEMORY_REGISTRY", {})
+
+    entry = jar_provenance.record_jar_provenance(str(image), str(jar), "approved_photo")
+    assert entry["asset_real_jar_verified"] is True
+    assert jar_provenance.verify_jar_provenance(str(image))["verified"] is True
+
+    # Modify the source jar asset on disk
+    jar.write_bytes(b"swapped corrupted jar bytes")
+    result = jar_provenance.verify_jar_provenance(str(image))
+    assert result["verified"] is False
+    assert result["reason"] == "source_jar_content_tampered"
+
+
+def test_provenance_record_fails_closed_on_persistence_failure(tmp_path, monkeypatch):
+    asset_root = tmp_path / "brand_assets"
+    asset_root.mkdir()
+    jar = asset_root / "real_jar.png"
+    jar.write_bytes(b"authentic jar content")
+
+    out_dir = tmp_path / "creative"
+    out_dir.mkdir()
+    image = out_dir / "rendered_image.png"
+    image.write_bytes(b"authentic render")
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(jar_provenance, "_OUT_DIR", str(out_dir))
+    monkeypatch.setattr(jar_provenance, "_PROVENANCE_FILE", str(out_dir / "jar_provenance.json"))
+    monkeypatch.setattr(jar_provenance, "_TRUSTED_JAR_ASSET_ROOT", str(asset_root))
+    monkeypatch.setattr(jar_provenance, "_MEMORY_REGISTRY", {})
+
+    def fail_save():
+        return False
+
+    monkeypatch.setattr(jar_provenance, "_save_registry", fail_save)
+
+    entry = jar_provenance.record_jar_provenance(str(image), str(jar), "approved_photo")
+    assert entry["asset_real_jar_verified"] is False
+    assert entry["reason"] == "persistence_failed"
+
+    # Memory registry and subsequent verification must not report verified
+    assert jar_provenance.verify_jar_provenance(str(image))["verified"] is False
+
+

@@ -15,12 +15,29 @@ Guarantees:
 """
 from __future__ import annotations
 import datetime
+import hashlib
 import json
 import logging
 import os
 import tempfile
 
 logger = logging.getLogger(__name__)
+
+
+def _sha256(path: str) -> str | None:
+    """Compute hex SHA-256 digest of a file; returns None if file does not exist or cannot be read."""
+    if not path:
+        return None
+    try:
+        if not os.path.isfile(path):
+            return None
+        h = hashlib.sha256()
+        with open(path, "rb") as f:
+            while chunk := f.read(65536):
+                h.update(chunk)
+        return h.hexdigest()
+    except Exception:
+        return None
 
 _OUT_DIR = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 _PROVENANCE_FILE = os.path.join(_OUT_DIR, "jar_provenance.json")
@@ -157,8 +174,8 @@ def _load_registry() -> dict[str, dict]:
     return _MEMORY_REGISTRY
 
 
-def _save_registry() -> None:
-    """Persist registry atomically so an interrupted runner cannot truncate it."""
+def _save_registry() -> bool:
+    """Persist registry atomically so an interrupted runner cannot truncate it. Returns True on success, False on failure."""
     tmp_path = ""
     try:
         os.makedirs(_OUT_DIR, exist_ok=True)
@@ -172,8 +189,10 @@ def _save_registry() -> None:
             os.fsync(handle.fileno())
         os.replace(tmp_path, _PROVENANCE_FILE)
         tmp_path = ""
+        return True
     except Exception as e:
         logger.warning("[provenance] Could not save registry atomically: %s", type(e).__name__)
+        return False
     finally:
         if tmp_path:
             try:
@@ -189,14 +208,21 @@ def record_jar_provenance(
 ) -> dict:
     """
     Record verified provenance for a generated image.
-    Validates that jar_asset_id exists on disk and render_source is an approved tier.
+    Validates that jar_asset_id exists on disk, render_source is an approved tier,
+    and binds provenance to SHA-256 hashes of both image and source jar.
     """
     _load_registry()
 
     jar_asset_id = os.path.normpath(jar_asset_id) if jar_asset_id else ""
     trusted_jar = _trusted_jar_asset(jar_asset_id)
     valid_source = render_source in VALID_RENDER_SOURCES
-    is_verified = bool(trusted_jar and valid_source)
+
+    image_hash = _sha256(image_path)
+    jar_hash = _sha256(jar_asset_id) if trusted_jar else None
+
+    # An image cannot be verified without authentic file content on disk
+    is_verified = bool(trusted_jar and valid_source and image_hash and jar_hash)
+
     if trusted_jar:
         # Persist a repository-relative path so a fresh runner can re-verify it.
         jar_asset_id = os.path.relpath(os.path.realpath(jar_asset_id), os.path.abspath("."))
@@ -204,6 +230,8 @@ def record_jar_provenance(
     entry = {
         "image_path": image_path.replace("\\", "/"),
         "image_filename": os.path.basename(image_path),
+        "image_sha256": image_hash,
+        "jar_sha256": jar_hash,
         "asset_real_jar_verified": is_verified,
         "jar_asset_id": jar_asset_id.replace("\\", "/"),
         "render_source": render_source,
@@ -215,7 +243,16 @@ def record_jar_provenance(
     port_key = _portable_key(image_path)
     if port_key and port_key != can_key:
         _MEMORY_REGISTRY[port_key] = entry
-    _save_registry()
+
+    saved = _save_registry()
+    if not saved:
+        logger.warning("[provenance] Persistence failed for %s — failing closed", image_path)
+        _MEMORY_REGISTRY.pop(can_key, None)
+        if port_key:
+            _MEMORY_REGISTRY.pop(port_key, None)
+        entry["asset_real_jar_verified"] = False
+        entry["reason"] = "persistence_failed"
+        return entry
 
     if is_verified:
         logger.info(
@@ -286,6 +323,22 @@ def verify_jar_provenance(image_path: str) -> dict:
     if not jar_asset or not _trusted_jar_asset(jar_asset):
         return {"verified": False, "jar_asset_id": jar_asset,
                 "render_source": source, "reason": "source_jar_missing_or_untrusted"}
+
+    # Content-bound integrity: reject tampered image file
+    recorded_img_hash = entry.get("image_sha256")
+    if recorded_img_hash:
+        current_img_hash = _sha256(image_path)
+        if not current_img_hash or current_img_hash != recorded_img_hash:
+            return {"verified": False, "jar_asset_id": jar_asset,
+                    "render_source": source, "reason": "image_content_tampered"}
+
+    # Content-bound integrity: reject modified source jar file
+    recorded_jar_hash = entry.get("jar_sha256")
+    if recorded_jar_hash:
+        current_jar_hash = _sha256(jar_asset)
+        if not current_jar_hash or current_jar_hash != recorded_jar_hash:
+            return {"verified": False, "jar_asset_id": jar_asset,
+                    "render_source": source, "reason": "source_jar_content_tampered"}
 
     return {
         "verified": True,

@@ -37,11 +37,40 @@ jobs:
         env:
           INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
-          META_TOKEN_MODE: soft
+          META_TOKEN_MODE: strict
+          META_PUBLISH_PREFLIGHT: "true"
         run: python -m content_generator.ops.meta_token_health
+
+      - name: Verify failure alert channel
+        if: ${{ success() }}
+        env:
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          NURTURE_FROM_EMAIL: ${{ secrets.NURTURE_FROM_EMAIL }}
+        run: |
+          python - <<'PY'
+          import os, sys
+          from urllib.parse import urlparse
+          webhook_url = os.environ.get("ALERT_WEBHOOK_URL", "").strip()
+          parsed_webhook = urlparse(webhook_url)
+          webhook = parsed_webhook.scheme == "https" and bool(parsed_webhook.netloc)
+          email = all((
+              os.environ.get("ALERT_EMAIL_TO", "").strip(),
+              os.environ.get("SMTP_PASS", "").strip(),
+              (os.environ.get("NURTURE_FROM_EMAIL") or os.environ.get("SMTP_USER") or "").strip(),
+          ))
+          if not (webhook or email):
+              print("::error::Publishing blocked: configure ALERT_WEBHOOK_URL or the SMTP alert credentials before enabling unattended publishing.")
+              sys.exit(1)
+          channels = [name for name, configured in (("webhook", webhook), ("email", email)) if configured]
+          print("::notice::Failure alert channel configuration present: " + ", ".join(channels))
+          PY
 
       - name: Retry due publishing failures
         env:

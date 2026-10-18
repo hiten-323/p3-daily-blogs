@@ -343,3 +343,31 @@ def test_unattended_publishing_requires_a_configured_failure_alert_channel():
     assert "parsed_webhook.scheme == \"https\"" in step["run"]
     assert "Publishing blocked" in step["run"]
     assert "os.environ.get(\"ALERT_WEBHOOK_URL\")" not in step["run"]
+
+
+def test_recovery_workflows_enforce_strict_meta_preflight_and_alert_channel():
+    import yaml
+
+    for wf_path in (
+        ROOT / ".github" / "workflows" / "retry-unposted.yml",
+        ROOT / ".github" / "workflows" / "publish-recovery.yml",
+    ):
+        data = yaml.safe_load(wf_path.read_text(encoding="utf-8"))
+        job = data["jobs"]["recover"]
+        steps = {step["name"]: step for step in job["steps"]}
+
+        # Strict Meta preflight
+        meta_step = steps["Resolve Meta publishing account"]
+        assert meta_step["env"]["META_TOKEN_MODE"] == "strict", f"{wf_path.name} must use strict Meta mode"
+        assert meta_step["env"]["META_PUBLISH_PREFLIGHT"] == "true", f"{wf_path.name} must enable preflight"
+        assert "FACEBOOK_PAGE_ID" in meta_step["env"], f"{wf_path.name} must pass FACEBOOK_PAGE_ID"
+
+        # Failure alert channel check
+        assert "Verify failure alert channel" in steps, f"{wf_path.name} must verify failure alert channel"
+        alert_step = steps["Verify failure alert channel"]
+        assert "ALERT_WEBHOOK_URL" in alert_step["env"]
+        assert "ALERT_EMAIL_TO" in alert_step["env"]
+        assert "SMTP_PASS" in alert_step["env"]
+        assert "parsed_webhook.scheme == \"https\"" in alert_step["run"]
+        assert "Publishing blocked" in alert_step["run"]
+
