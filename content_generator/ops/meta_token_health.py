@@ -354,16 +354,14 @@ def run_checks(now: int | None = None) -> int:
                 ))
 
     fb_page_id = os.environ.get("FACEBOOK_PAGE_ID", "").strip()
-    if not fb_page_id or not facebook:
+    if not facebook:
         level = "error" if publish_preflight else "warning"
-        messages.append((
-            level,
-            "Facebook publishing credentials unavailable — FACEBOOK_PAGE_ID or "
-            "FACEBOOK_PAGE_ACCESS_TOKEN is not configured."
-        ))
+        messages.append((level, "Facebook publishing token unavailable — FACEBOOK_PAGE_ACCESS_TOKEN is not configured."))
         if publish_preflight:
             failed = True
     else:
+        # Diagnose an available token even when the Page ID is missing; this
+        # keeps soft health checks useful and reports missing scopes/expiry.
         try:
             page = inspect_token(facebook, now=now)
         except TokenHttpError as exc:
@@ -376,12 +374,14 @@ def run_checks(now: int | None = None) -> int:
             messages.append(("notice", format_facebook(page)))
             missing = [scope for scope in FB_SCOPES if scope not in set(page["scopes"])]
             notes = []
-            if page.get("valid") is not True:
-                notes.append("token validity not confirmed (Meta debug response must explicitly return is_valid=true)")
             if missing:
                 notes.append("missing " + ", ".join(missing))
+            if page.get("valid") is not True:
+                notes.append("token validity not confirmed (Meta debug response must explicitly return is_valid=true)")
             if page["expired"]:
                 notes.append(f"token expired (expires={page['expires']})")
+            if not fb_page_id:
+                notes.append("FACEBOOK_PAGE_ID is not configured")
             if page.get("type") == "USER" and fb_page_id:
                 try:
                     resolved_url = f"{META_GRAPH_BASE}/{urllib.parse.quote(fb_page_id, safe='')}?fields=access_token"
