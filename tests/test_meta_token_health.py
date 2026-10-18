@@ -90,6 +90,7 @@ def test_meta_cdn_upload_fallback(monkeypatch, tmp_path):
 
 def test_strict_meta_preflight_fails_when_facebook_publish_scope_missing(monkeypatch, capsys):
     monkeypatch.setenv("META_TOKEN_MODE", "strict")
+    monkeypatch.setenv("META_PUBLISH_PREFLIGHT", "true")
     monkeypatch.setenv("INSTAGRAM_ACCOUNT_ID", "ig-123")
     monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "ig-token")
     monkeypatch.setenv("FACEBOOK_PAGE_ID", "fb-123")
