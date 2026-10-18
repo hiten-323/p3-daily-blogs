@@ -392,7 +392,7 @@ def run_checks(now: int | None = None) -> int:
                         env_file = os.environ.get("GITHUB_ENV", "").strip()
                         if env_file:
                             with open(env_file, "a", encoding="utf-8") as handle:
-                                handle.write(f"FACEBOOK_PAGE_ACCESS_TOKEN={resolved_tok}\\n")
+                                handle.write(f"FACEBOOK_PAGE_ACCESS_TOKEN={resolved_tok}\n")
                         messages.append(("notice", f"Resolved Page Access Token for Facebook Page ID {fb_page_id}"))
                 except Exception as exc:
                     notes.append(f"could not resolve Page token for {fb_page_id}: {type(exc).__name__}")
