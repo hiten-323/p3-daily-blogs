@@ -920,7 +920,7 @@ def _cloudinary_upload(image_path: str) -> str | None:
         return None
     try:
         import requests, base64, hashlib, time as _time
-        from content_generator.publisher.video_host import _creds
+        from content_generator.publisher.video_host import _creds, is_public_https_url
 
         credentials = _creds()
         if not credentials:
@@ -948,7 +948,7 @@ def _cloudinary_upload(image_path: str) -> str | None:
             logger.warning("[instagram] Cloudinary image upload returned invalid JSON (HTTP %d)", resp.status_code)
             return None
         url = data.get("secure_url", "")
-        if url and str(url).startswith("https://"):
+        if url and is_public_https_url(str(url)):
             return str(url)
         logger.warning("[instagram] Cloudinary image upload response did not contain a public HTTPS URL")
         return None

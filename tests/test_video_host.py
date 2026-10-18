@@ -45,14 +45,37 @@ def test_video_host_only_returns_public_https_url(monkeypatch, tmp_path):
     video.write_bytes(b"video fixture")
     monkeypatch.setenv("CLOUDINARY_URL", "cloudinary://test-key:test-secret@cloud-name")
 
-    class Response:
+    for invalid_url in [
+        "http://insecure.example/video.mp4",
+        "https://localhost/video.mp4",
+        "https://127.0.0.1/video.mp4",
+        "https://10.0.0.1/video.mp4",
+        "https://192.168.1.1/video.mp4",
+        "https://172.16.0.1/video.mp4",
+        "https://169.254.169.254/video.mp4",
+        "https://[::1]/video.mp4",
+        "https://internal-service/video.mp4",
+        "https://backend.local/video.mp4",
+        "https://backend.internal/video.mp4",
+    ]:
+        class BadResponse:
+            status_code = 200
+
+            def json(self):
+                return {"secure_url": invalid_url}
+
+        monkeypatch.setattr(requests, "post", lambda *a, **k: BadResponse())
+        assert video_host.upload_video(str(video)) is None, f"Should have rejected {invalid_url}"
+
+    class GoodResponse:
         status_code = 200
 
         def json(self):
-            return {"secure_url": "http://insecure.example/video.mp4"}
+            return {"secure_url": "https://res.cloudinary.com/cloud-name/video/upload/v1/sample.mp4"}
 
-    monkeypatch.setattr(requests, "post", lambda *a, **k: Response())
-    assert video_host.upload_video(str(video)) is None
+    monkeypatch.setattr(requests, "post", lambda *a, **k: GoodResponse())
+    assert video_host.upload_video(str(video)) == "https://res.cloudinary.com/cloud-name/video/upload/v1/sample.mp4"
+
 
 
 

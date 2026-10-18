@@ -356,7 +356,7 @@ def run_checks(now: int | None = None) -> int:
     fb_page_id = os.environ.get("FACEBOOK_PAGE_ID", "").strip()
     if not facebook:
         level = "error" if publish_preflight else "warning"
-        messages.append((level, "Facebook publishing token unavailable — FACEBOOK_PAGE_ACCESS_TOKEN is not configured."))
+        messages.append((level, "Facebook publishing credentials unavailable — FACEBOOK_PAGE_ACCESS_TOKEN is not configured."))
         if publish_preflight:
             failed = True
     else:

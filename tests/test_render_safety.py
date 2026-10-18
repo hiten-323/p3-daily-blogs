@@ -114,6 +114,7 @@ def main():
     check("all 32 jar references exist on disk", len(existing_refs) == 32, f"{len(existing_refs)}/32")
     import glob as _glob
     existing_refs |= {os.path.normpath(p) for p in _glob.glob("brand_assets/approved_photos/*/*.png")}
+    existing_refs |= {os.path.abspath(p) for p in list(existing_refs)}
 
     # 9. Thumbnail generation creates image with verified real jar photo provenance
     print("\nThumbnail generator real jar provenance:")

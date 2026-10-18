@@ -8,6 +8,7 @@ Signed REST upload (no SDK dependency). Returns a public https URL, or None.
 """
 from __future__ import annotations
 import hashlib
+import ipaddress
 import logging
 import os
 import time
@@ -16,6 +17,31 @@ import urllib.request
 
 logger = logging.getLogger(__name__)
 _TIMEOUT = 120
+
+
+def is_public_https_url(url: str | None) -> bool:
+    """Validate that a URL is a publicly accessible HTTPS destination (reject loopback, private IPs, local names)."""
+    if not url or not isinstance(url, str):
+        return False
+    try:
+        parsed = urllib.parse.urlparse(url.strip())
+        if parsed.scheme.lower() != "https":
+            return False
+        hostname = (parsed.hostname or "").strip().lower()
+        if not hostname:
+            return False
+        if hostname == "localhost" or hostname.endswith((".local", ".internal", ".localhost", ".lan")):
+            return False
+        try:
+            ip = ipaddress.ip_address(hostname)
+            if ip.is_private or ip.is_loopback or ip.is_reserved or ip.is_link_local or ip.is_multicast or not ip.is_global:
+                return False
+        except ValueError:
+            if "." not in hostname:
+                return False
+        return True
+    except Exception:
+        return False
 
 
 def _creds() -> tuple[str, str, str] | None:
@@ -81,7 +107,7 @@ def upload_video(path: str) -> str | None:
             logger.warning("[video_host] Cloudinary upload returned invalid JSON (HTTP %d)", resp.status_code)
             return None
         url = data.get("secure_url") or data.get("url")
-        if url and str(url).startswith("https://"):
+        if url and is_public_https_url(str(url)):
             logger.info("[video_host] Uploaded video to configured host")
             return str(url)
         logger.warning("[video_host] Cloudinary upload response did not contain a public HTTPS URL")

@@ -75,3 +75,47 @@ def test_existing_file_outside_brand_assets_cannot_be_registered_as_a_real_jar(t
     entry = jar_provenance.record_jar_provenance(str(image), str(outside), "approved_photo")
     assert entry["asset_real_jar_verified"] is False
     assert jar_provenance.verify_jar_provenance(str(image))["verified"] is False
+
+
+def test_provenance_does_not_collide_for_same_filename_in_different_directories(tmp_path, monkeypatch):
+    asset_root = tmp_path / "brand_assets"
+    asset_root.mkdir()
+    jar = asset_root / "authentic_jar.png"
+    jar.write_bytes(b"trusted jar fixture")
+
+    out_dir = tmp_path / "creative"
+    out_dir.mkdir()
+    registry = out_dir / "jar_provenance.json"
+
+    dir_a = tmp_path / "dir_a"
+    dir_b = tmp_path / "dir_b"
+    dir_a.mkdir()
+    dir_b.mkdir()
+
+    img_a = dir_a / "product.png"
+    img_b = dir_b / "product.png"
+    img_a.write_bytes(b"content A")
+    img_b.write_bytes(b"content B")
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(jar_provenance, "_OUT_DIR", str(out_dir))
+    monkeypatch.setattr(jar_provenance, "_PROVENANCE_FILE", str(registry))
+    monkeypatch.setattr(jar_provenance, "_TRUSTED_JAR_ASSET_ROOT", str(asset_root))
+    monkeypatch.setattr(jar_provenance, "_MEMORY_REGISTRY", {})
+
+    # Register only img_a as verified
+    entry_a = jar_provenance.record_jar_provenance(str(img_a), str(jar), "approved_photo")
+    assert entry_a["asset_real_jar_verified"] is True
+
+    # img_a must verify; img_b must fail closed despite identical basename
+    res_a = jar_provenance.verify_jar_provenance(str(img_a))
+    res_b = jar_provenance.verify_jar_provenance(str(img_b))
+    assert res_a["verified"] is True
+    assert res_b["verified"] is False
+    assert res_b["reason"] in ("unregistered_image", "image_path_mismatch")
+
+    # Roundtrip test across process reload
+    jar_provenance._MEMORY_REGISTRY.clear()
+    assert jar_provenance.verify_jar_provenance(str(img_a))["verified"] is True
+    assert jar_provenance.verify_jar_provenance(str(img_b))["verified"] is False
+

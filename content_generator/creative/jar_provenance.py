@@ -36,9 +36,98 @@ VALID_RENDER_SOURCES = {
 _MEMORY_REGISTRY: dict[str, dict] = {}
 
 
+def _canonical_key(path: str) -> str:
+    """Canonical path key for collision-free lookup across relative/absolute variants."""
+    if not path:
+        return ""
+    try:
+        abs_p = os.path.normcase(os.path.realpath(os.path.abspath(path)))
+        return abs_p.replace("\\", "/")
+    except Exception:
+        return os.path.abspath(path).replace("\\", "/").lower()
+
+
+def _portable_key(path: str) -> str:
+    """Portable repo-relative key across runners and platforms."""
+    if not path:
+        return ""
+    try:
+        rel = os.path.relpath(os.path.realpath(path), os.path.abspath(".")).replace("\\", "/")
+        return os.path.normcase(rel)
+    except Exception:
+        return os.path.normcase(path.replace("\\", "/"))
+
+
 def _norm_key(path: str) -> str:
-    """Normalize path to filename key for robust lookup across relative/absolute variants."""
-    return os.path.basename(path).lower()
+    """Normalize path to a canonical, collision-free key."""
+    return _canonical_key(path)
+
+
+def _paths_match(recorded_path: str, candidate_path: str) -> bool:
+    """Check whether candidate_path corresponds to recorded_path without filename collisions."""
+    if not recorded_path or not candidate_path:
+        return False
+    try:
+        if os.path.exists(recorded_path) and os.path.exists(candidate_path):
+            if os.path.samefile(recorded_path, candidate_path):
+                return True
+    except (OSError, ValueError):
+        pass
+
+    can_rec = _canonical_key(recorded_path)
+    can_cand = _canonical_key(candidate_path)
+    if can_rec and can_cand and can_rec == can_cand:
+        return True
+
+    port_rec = _portable_key(recorded_path)
+    port_cand = _portable_key(candidate_path)
+    if port_rec and port_cand and port_rec == port_cand:
+        return True
+
+    norm_rec = os.path.normpath(recorded_path).replace("\\", "/").strip("/").lower()
+    norm_cand = os.path.normpath(candidate_path).replace("\\", "/").strip("/").lower()
+    if norm_rec == norm_cand:
+        return True
+
+    # Suffix check with directory separator prevents matching different directories
+    if "/" in norm_rec and norm_cand.endswith("/" + norm_rec):
+        return True
+    if "/" in norm_cand and norm_rec.endswith("/" + norm_cand):
+        return True
+
+    return False
+
+
+def _find_entry(reg: dict[str, dict], image_path: str) -> dict | None:
+    """Find registry entry by canonical key, portable key, or verified path match."""
+    can_key = _canonical_key(image_path)
+    if can_key in reg:
+        return reg[can_key]
+
+    port_key = _portable_key(image_path)
+    if port_key in reg:
+        return reg[port_key]
+
+    norm_p = os.path.normpath(image_path).replace("\\", "/").lower()
+    if norm_p in reg:
+        return reg[norm_p]
+
+    for k, entry in reg.items():
+        if isinstance(entry, dict):
+            rec = entry.get("image_path") or k
+            if _paths_match(rec, image_path):
+                return entry
+
+    # Fallback to legacy basename key only if the entry's recorded path actually matches
+    base = os.path.basename(image_path).lower()
+    if base in reg:
+        candidate_entry = reg[base]
+        if isinstance(candidate_entry, dict):
+            rec = candidate_entry.get("image_path")
+            if not rec or _paths_match(rec, image_path):
+                return candidate_entry
+
+    return None
 
 
 def _trusted_jar_asset(path: str) -> bool:
@@ -121,8 +210,11 @@ def record_jar_provenance(
         "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     }
 
-    key = _norm_key(image_path)
-    _MEMORY_REGISTRY[key] = entry
+    can_key = _canonical_key(image_path)
+    _MEMORY_REGISTRY[can_key] = entry
+    port_key = _portable_key(image_path)
+    if port_key and port_key != can_key:
+        _MEMORY_REGISTRY[port_key] = entry
     _save_registry()
 
     if is_verified:
@@ -172,11 +264,14 @@ def verify_jar_provenance(image_path: str) -> dict:
         return {"verified": False, "jar_asset_id": None, "render_source": None, "reason": "file_not_found"}
 
     reg = _load_registry()
-    key = _norm_key(image_path)
-    entry = reg.get(key)
+    entry = _find_entry(reg, image_path)
 
     if not entry:
         return {"verified": False, "jar_asset_id": None, "render_source": None, "reason": "unregistered_image"}
+
+    recorded_path = entry.get("image_path")
+    if recorded_path and not _paths_match(recorded_path, image_path):
+        return {"verified": False, "jar_asset_id": None, "render_source": None, "reason": "image_path_mismatch"}
 
     if not entry.get("asset_real_jar_verified"):
         return {"verified": False, "jar_asset_id": entry.get("jar_asset_id"),
