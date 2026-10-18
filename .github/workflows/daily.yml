@@ -335,8 +335,13 @@ jobs:
           for path in glob.glob("output/creative/*"):
               m = re.search(r"(\d{4})-(\d{2})-(\d{2})", os.path.basename(path))
               if not m:
-                  # Undated files in this runtime directory are scratch outputs;
-                  # publishers only select date-stamped assets, so do not retain them.
+                  # The provenance registry is durable safety state, not a scratch
+                  # asset. Deleting it makes verified images appear unregistered on
+                  # the next scheduled runner and correctly blocks publication.
+                  if os.path.basename(path) == "jar_provenance.json":
+                      continue
+                  # Other undated files are scratch outputs; publishers only select
+                  # date-stamped assets, so these can be safely pruned.
                   if os.path.isfile(path):
                       os.remove(path)
                       removed += 1
