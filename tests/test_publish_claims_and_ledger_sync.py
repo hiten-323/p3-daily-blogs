@@ -75,3 +75,58 @@ def test_workflows_use_separate_groups_and_ledger_sync():
     assert "group: purity-beans-retry" in retry
     for t in (daily, retry, (wf / "publish-recovery.yml").read_text()):
         assert "ledger_sync save" in t and "ledger_sync restore" in t
+
+
+
+def test_release_never_deletes_a_claim_replaced_by_another_runner(clone, monkeypatch):
+    ok, ref = publish_claim.acquire("2026-10-16", "evening", "instagram_video")
+    assert ok
+    original_sha = publish_claim._OWNED_CLAIMS[ref]
+
+    # Simulate another runner replacing this ref after our claim was acquired.
+    replacement = publish_claim._claim_commit()
+    _git(clone, "push", "-q", "--force", "origin", f"{replacement}:{ref}")
+    publish_claim.release(ref)
+
+    remote_sha = _git(clone, "ls-remote", "origin", ref).split()[0]
+    assert remote_sha == replacement
+    assert remote_sha != original_sha
+
+
+def test_claim_recovery_uses_compare_and_swap_not_unconditional_force(clone):
+    import inspect
+
+    source = inspect.getsource(publish_claim.acquire)
+    assert "--force-with-lease=" in source
+    assert '"--force", "origin"' not in source
+
+
+
+def test_stale_claim_takeover_rejects_a_concurrent_replacement(clone, monkeypatch):
+    monkeypatch.setattr(publish_claim, "_STALE_MIN", -1)
+    ok, ref = publish_claim.acquire("2026-10-16", "evening", "instagram_video")
+    assert ok
+    original_git = publish_claim._git
+    raced = {"sha": ""}
+
+    def race_before_lease_push(*args, **kwargs):
+        if any(str(arg).startswith("--force-with-lease=") for arg in args) and not raced["sha"]:
+            replacement = publish_claim._claim_commit()
+            original_git("push", "-q", "--force", "origin", f"{replacement}:{ref}")
+            raced["sha"] = replacement
+        return original_git(*args, **kwargs)
+
+    monkeypatch.setattr(publish_claim, "_git", race_before_lease_push)
+    ok2, why = publish_claim.acquire("2026-10-16", "evening", "instagram_video")
+    assert not ok2 and why == "claimed_by_other_run"
+    assert raced["sha"]
+    assert _git(clone, "ls-remote", "origin", ref).split()[0] == raced["sha"]
+    publish_claim._OWNED_CLAIMS.pop(ref, None)
+
+
+
+def test_stale_claim_grace_exceeds_daily_job_timeout():
+    source = (ROOT / "content_generator" / "publisher" / "publish_claim.py").read_text()
+    workflow = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
+    assert 'PUBLISH_CLAIM_STALE_MIN", "180"' in source
+    assert "timeout-minutes: 120" in workflow

@@ -156,7 +156,19 @@ def test_invalid_token_fails_even_with_scopes(monkeypatch, capsys):
     ])
     code, out = _run(capsys)
     assert code == 1
-    assert "token expired" in out
+    assert "token validity not confirmed" in out
+
+
+def test_missing_is_valid_field_fails_closed(monkeypatch, capsys):
+    payload = {"data": {"type": "USER", "expires_at": 0, "scopes": list(health.IG_SCOPES)}}
+    _install(monkeypatch, [
+        ("debug_token", payload),
+        (f"/{ACCOUNT}?", {"id": ACCOUNT, "username": "puritybeans"}),
+    ])
+    code, out = _run(capsys)
+    assert code == 1
+    assert "token validity not confirmed" in out
+    assert TOKEN not in out
 
 
 def test_graph_error_redacts_the_token(monkeypatch, capsys):

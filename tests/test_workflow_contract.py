@@ -110,6 +110,7 @@ _PUBLISHING_STEPS = (
     "Clear run lock (if force_run)",
     "Meta token soft-check (generate)",
     "Verify Meta publishing access",
+    "Verify failure alert channel",
     "Run autonomous pipeline",
     "Verify slot result",
     "Persist validated state to Git",
@@ -284,6 +285,9 @@ def test_meta_preflight_checks_instagram_publish_scopes():
     assert "content_generator.ops.meta_token_health" in hard["run"]
     assert soft["env"]["META_TOKEN_MODE"] == "soft"
     assert hard["env"]["META_TOKEN_MODE"] == "strict"
+    assert hard["env"]["META_PUBLISH_PREFLIGHT"] == "true"
+    assert "THREADS_ACCESS_TOKEN" in hard["env"]
+    assert "THREADS_USER_ID" in hard["env"]
     assert "INSTAGRAM_ACCESS_TOKEN" in soft["env"]
     assert "INSTAGRAM_ACCESS_TOKEN" in hard["env"]
     verify = steps["Verify slot result"]["run"]
@@ -292,3 +296,133 @@ def test_meta_preflight_checks_instagram_publish_scopes():
 
 if __name__ == "__main__":
     main()
+
+
+def test_daily_prune_preserves_jar_provenance_registry():
+    """Provenance is durable safety state, not an undated scratch artifact."""
+    text = WORKFLOW.read_text(encoding="utf-8")
+    assert 'os.path.basename(path) == "jar_provenance.json"' in text
+    assert "Deleting it makes verified images appear unregistered" in text
+
+
+
+def test_llm_probe_rejects_empty_http_200_for_all_openai_compatible_providers(monkeypatch):
+    from content_generator.providers import llm_probe
+
+    class Response:
+        status_code = 200
+        text = '{"choices":[{"message":{"content":"   "}}]}'
+
+    monkeypatch.setattr(llm_probe.requests, "post", lambda *a, **k: Response())
+    assert llm_probe._openai_chat("https://example.test/chat", "test-key", "test-model") == "empty content"
+
+
+def test_gemini_probe_rejects_http_200_without_candidate_text(monkeypatch):
+    from content_generator.providers import llm_probe
+
+    class Response:
+        status_code = 200
+        text = '{"candidates":[{"content":{"parts":[{"text":"   "}]}}]}'
+
+    monkeypatch.setattr(llm_probe.gemini, "_MODEL", "test-model")
+    monkeypatch.setattr(llm_probe.gemini, "_BASE", "https://example.test")
+    monkeypatch.setattr(llm_probe.requests, "post", lambda *a, **k: Response())
+    assert llm_probe._gemini_chat("test-key") == "empty content"
+
+
+
+def test_unattended_publishing_requires_a_configured_failure_alert_channel():
+    data = _workflow_document()
+    steps = {step["name"]: step for step in data["jobs"]["run-pipeline"]["steps"]}
+    step = steps["Verify failure alert channel"]
+    assert "env.FORCE_SLOT != 'generate'" in step["if"]
+    assert "github.event.inputs.dry_run != 'true'" in step["if"]
+    assert "ALERT_WEBHOOK_URL" in step["env"]
+    assert "ALERT_EMAIL_TO" in step["env"]
+    assert "SMTP_PASS" in step["env"]
+    assert "parsed_webhook.scheme == \"https\"" in step["run"]
+    assert "Publishing blocked" in step["run"]
+    assert "os.environ.get(\"ALERT_WEBHOOK_URL\")" not in step["run"]
+
+
+def test_recovery_workflows_enforce_strict_meta_preflight_and_alert_channel():
+    import yaml
+
+    for wf_path in (
+        ROOT / ".github" / "workflows" / "retry-unposted.yml",
+        ROOT / ".github" / "workflows" / "publish-recovery.yml",
+    ):
+        data = yaml.safe_load(wf_path.read_text(encoding="utf-8"))
+        job = data["jobs"]["recover"]
+        steps = {step["name"]: step for step in job["steps"]}
+
+        # Strict Meta preflight
+        meta_step = steps["Resolve Meta publishing account"]
+        assert meta_step["env"]["META_TOKEN_MODE"] == "strict", f"{wf_path.name} must use strict Meta mode"
+        assert meta_step["env"]["META_PUBLISH_PREFLIGHT"] == "true", f"{wf_path.name} must enable preflight"
+        assert "FACEBOOK_PAGE_ID" in meta_step["env"], f"{wf_path.name} must pass FACEBOOK_PAGE_ID"
+
+        # Failure alert channel check
+        assert "Verify failure alert channel" in steps, f"{wf_path.name} must verify failure alert channel"
+        alert_step = steps["Verify failure alert channel"]
+        assert "ALERT_WEBHOOK_URL" in alert_step["env"]
+        assert "ALERT_EMAIL_TO" in alert_step["env"]
+        assert "SMTP_PASS" in alert_step["env"]
+        assert "parsed_webhook.scheme == \"https\"" in alert_step["run"]
+        assert "Publishing blocked" in alert_step["run"]
+
+
+
+def test_publish_recovery_has_failure_alert_step():
+    import yaml
+
+    for wf_path in (
+        ROOT / ".github" / "workflows" / "publish-recovery.yml",
+        ROOT / ".github" / "workflows" / "retry-unposted.yml",
+    ):
+        data = yaml.safe_load(wf_path.read_text(encoding="utf-8"))
+        steps = data["jobs"]["recover"]["steps"]
+        by_name = {step["name"]: step for step in steps}
+
+        assert "Alert on recovery failure" in by_name, f"{wf_path.name} missing failure alert step"
+        alert = by_name["Alert on recovery failure"]
+        assert "failure()" in str(alert.get("if", ""))
+        assert "ALERT_WEBHOOK_URL" in alert["env"]
+        assert "SMTP_PASS" in alert["env"]
+        assert "alert_failure(msg)" in alert["run"]
+
+
+def test_alert_failure_reports_remote_delivery(monkeypatch):
+    from content_generator.scheduler import watchdog
+
+    monkeypatch.setattr(watchdog, "_alert_console", lambda _message: None)
+    monkeypatch.setattr(watchdog, "_alert_webhook", lambda _message: False)
+    monkeypatch.setattr(watchdog, "_alert_email", lambda _message: True)
+    assert watchdog.alert_failure("test alert") is True
+
+    monkeypatch.setattr(watchdog, "_alert_email", lambda _message: False)
+    assert watchdog.alert_failure("test alert") is False
+
+
+def test_recovery_alert_steps_fail_when_remote_delivery_fails():
+    import yaml
+
+    for wf_path in (
+        ROOT / ".github" / "workflows" / "publish-recovery.yml",
+        ROOT / ".github" / "workflows" / "retry-unposted.yml",
+    ):
+        data = yaml.safe_load(wf_path.read_text(encoding="utf-8"))
+        steps = {step["name"]: step for step in data["jobs"]["recover"]["steps"]}
+        run = steps["Alert on recovery failure"]["run"]
+        assert "delivered = alert_failure(msg)" in run
+        assert "if not delivered:" in run
+        assert "could not be delivered" in run
+
+
+def test_daily_failure_alert_requires_remote_delivery():
+    data = _workflow_document()
+    steps = {step["name"]: step for step in data["jobs"]["run-pipeline"]["steps"]}
+    run = steps["Alert on failure"]["run"]
+    assert "delivered = alert_failure(msg)" in run
+    assert "if not delivered:" in run
+    assert "could not be delivered" in run

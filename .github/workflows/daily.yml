@@ -151,8 +151,38 @@ jobs:
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           META_TOKEN_MODE: strict
+          META_PUBLISH_PREFLIGHT: "true"
         run: python -m content_generator.ops.meta_token_health
+
+      - name: Verify failure alert channel
+        if: ${{ success() && env.FORCE_SLOT != 'generate' && github.event.inputs.dry_run != 'true' }}
+        env:
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          NURTURE_FROM_EMAIL: ${{ secrets.NURTURE_FROM_EMAIL }}
+        run: |
+          python - <<'PY'
+          import os, sys
+          from urllib.parse import urlparse
+          webhook_url = os.environ.get("ALERT_WEBHOOK_URL", "").strip()
+          parsed_webhook = urlparse(webhook_url)
+          webhook = parsed_webhook.scheme == "https" and bool(parsed_webhook.netloc)
+          email = all((
+              os.environ.get("ALERT_EMAIL_TO", "").strip(),
+              os.environ.get("SMTP_PASS", "").strip(),
+              (os.environ.get("NURTURE_FROM_EMAIL") or os.environ.get("SMTP_USER") or "").strip(),
+          ))
+          if not (webhook or email):
+              print("::error::Publishing blocked: configure ALERT_WEBHOOK_URL or the SMTP alert credentials before enabling unattended publishing.")
+              sys.exit(1)
+          channels = [name for name, configured in (("webhook", webhook), ("email", email)) if configured]
+          print("::notice::Failure alert channel configuration present: " + ", ".join(channels))
+          PY
 
       - name: Run autonomous pipeline
         if: ${{ success() && github.event.inputs.dry_run != 'true' }}
@@ -335,8 +365,13 @@ jobs:
           for path in glob.glob("output/creative/*"):
               m = re.search(r"(\d{4})-(\d{2})-(\d{2})", os.path.basename(path))
               if not m:
-                  # Undated files in this runtime directory are scratch outputs;
-                  # publishers only select date-stamped assets, so do not retain them.
+                  # The provenance registry is durable safety state, not a scratch
+                  # asset. Deleting it makes verified images appear unregistered on
+                  # the next scheduled runner and correctly blocks publication.
+                  if os.path.basename(path) == "jar_provenance.json":
+                      continue
+                  # Other undated files are scratch outputs; publishers only select
+                  # date-stamped assets, so these can be safely pruned.
                   if os.path.isfile(path):
                       os.remove(path)
                       removed += 1
@@ -398,12 +433,10 @@ jobs:
               f"{os.environ.get('GITHUB_REPOSITORY', '')}/actions/runs/"
               f"{os.environ.get('GITHUB_RUN_ID', '')}"
           )
-          try:
-              from content_generator.scheduler.watchdog import alert_failure
-              alert_failure(msg)
-          except Exception as exc:
-              print(f"alert dispatch failed: {exc}")
-              raise
-          print(msg)
+          from content_generator.scheduler.watchdog import alert_failure
+          delivered = alert_failure(msg)
+          if not delivered:
+              raise SystemExit("Failure alert could not be delivered through any configured remote channel.")
+          print("Failure alert delivered through a configured remote channel.")
           PY
           echo "Pipeline failed — check logs at: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

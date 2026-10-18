@@ -1,8 +1,9 @@
 """One real chat completion per LLM provider, for the dry-run workflow.
 
-No retries and no /models listing. NVIDIA is a chat completion, same as production.
-An HTTP 200 whose message content is empty or whitespace fails the NVIDIA check:
-that is the failure mode that burned the editorial deadline in run 341.
+No retries and no /models listing. NVIDIA is probed across its configured model
+fallback list; an empty response from one model must not hide a healthy later
+model. The probe succeeds when any configured provider returns usable content,
+and fails when none do.
 """
 from __future__ import annotations
 
@@ -51,7 +52,7 @@ def _message_text(resp: requests.Response) -> str:
     return str(content)
 
 
-def _outcome(resp: requests.Response, key: str, *, reject_empty: bool = False) -> str:
+def _outcome(resp: requests.Response, key: str, *, reject_empty: bool = True) -> str:
     if resp.status_code == 200:
         if reject_empty and not _message_text(resp).strip():
             return "empty content"
@@ -67,7 +68,7 @@ def _post(
     payload: dict,
     key: str,
     params: dict | None = None,
-    reject_empty: bool = False,
+    reject_empty: bool = True,
 ) -> str:
     try:
         resp = requests.post(url, headers=headers, json=payload, params=params, timeout=_TIMEOUT)
@@ -82,7 +83,7 @@ def _openai_chat(
     model: str,
     extra_headers: dict | None = None,
     *,
-    reject_empty: bool = False,
+    reject_empty: bool = True,
 ) -> str:
     if not key or not model:
         return "skipped"
@@ -107,27 +108,62 @@ def _openai_chat(
 
 
 def _gemini_chat(key: str) -> str:
+    """Probe Gemini and reject HTTP-200 responses without usable candidate text."""
     if not key:
         return "skipped"
     model = (gemini._MODEL or "").strip()
     if not model:
         return "skipped"
-    return _post(
-        f"{gemini._BASE}/{model}:generateContent",
-        headers={"Content-Type": "application/json"},
-        params={"key": key},
-        payload={
-            "contents": [{"parts": [{"text": _PROMPT}]}],
-            "generationConfig": {"maxOutputTokens": _MAX_TOKENS},
-        },
-        key=key,
-    )
+    url = f"{gemini._BASE}/{model}:generateContent"
+    try:
+        resp = requests.post(
+            url,
+            headers={"Content-Type": "application/json"},
+            params={"key": key},
+            json={
+                "contents": [{"parts": [{"text": _PROMPT}]}],
+                "generationConfig": {"maxOutputTokens": _MAX_TOKENS},
+            },
+            timeout=_TIMEOUT,
+        )
+    except Exception as exc:
+        return _clip(f"{type(exc).__name__}: {exc}", key)
+    if resp.status_code != 200:
+        return _clip(f"HTTP {resp.status_code} {(resp.text or '').strip()}", key)
+    try:
+        body = json.loads(resp.text or "")
+        candidates = body.get("candidates") or []
+        parts = (candidates[0].get("content") or {}).get("parts") or []
+        content = "".join(str(part.get("text") or "") for part in parts if isinstance(part, dict))
+    except (ValueError, TypeError, IndexError, AttributeError):
+        content = ""
+    return "OK" if content.strip() else "empty content"
+
+
+def _nvidia_chat() -> str:
+    """Probe NVIDIA's configured models in order; one broken model must not hide a healthy fallback."""
+    key = nvidia.get_key()
+    if not key:
+        return "skipped"
+    models = nvidia.get_models()
+    if not models:
+        return "no models configured"
+    failures: list[str] = []
+    for model in models:
+        status = _openai_chat(nvidia._URL, key, model, reject_empty=True)
+        if status == "OK":
+            return "OK"
+        failures.append(f"{model}: {status}")
+        logger.warning("[llm] NVIDIA probe model failed: %s: %s", model, status)
+    if failures and all(item.endswith(": empty content") for item in failures):
+        return "empty content"
+    return "all NVIDIA models failed; " + "; ".join(failures)
 
 
 def probe_results() -> list[tuple[str, str]]:
     """One tiny chat call per provider. Missing keys are skipped, not errors."""
     return [
-        ("nvidia", _openai_chat(nvidia._URL, nvidia.get_key(), nvidia.get_model(), reject_empty=True)),
+        ("nvidia", _nvidia_chat()),
         ("groq", _openai_chat(groq._URL, groq.get_key(), _first_model(groq.MODELS))),
         ("gemini", _gemini_chat(gemini.get_key())),
         ("cerebras", _openai_chat(cerebras._URL, cerebras.get_key(), _first_model(cerebras.MODELS))),
@@ -161,9 +197,8 @@ def main() -> int:
         row = f"{name}: {status}"
         print(row)
         logger.info("[llm] probe %s", row)
-    nvidia_status = dict(rows).get("nvidia", "skipped")
-    if nvidia_status == "empty content":
-        print("::error::NVIDIA probe returned empty content")
+    if not any(status == "OK" for _, status in rows):
+        print("::error::No configured LLM provider passed the live completion probe")
         return 1
     return 0
 

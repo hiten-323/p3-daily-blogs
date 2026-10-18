@@ -14,9 +14,9 @@ Strict mode (token health, publish preflight) fails when instagram_basic or
 instagram_content_publish is missing, or when the token is expired. Soft mode
 (generate) reports the same facts as warnings and continues.
 
-FACEBOOK_PAGE_ACCESS_TOKEN, when set, gets the same debug call. It needs
-pages_manage_posts. A miss or an expired page token is a warning, never a
-failed job.
+FACEBOOK_PAGE_ACCESS_TOKEN is required for strict publish preflight and must
+include pages_manage_posts. Missing credentials, lookup errors, missing scope,
+or expiry fail strict mode; generate's soft mode emits warnings and continues.
 """
 from __future__ import annotations
 
@@ -130,8 +130,7 @@ def expiry_label(info: dict) -> str:
 
 
 def token_expired(info: dict, now: int | None = None) -> bool:
-    if info.get("is_valid") is False:
-        return True
+    """Check temporal expiry only; validity is a separate explicit requirement."""
     try:
         expires = int(info.get("expires_at"))
     except (TypeError, ValueError):
@@ -155,6 +154,7 @@ def inspect_token(token: str, *, now: int | None = None) -> dict:
         "type": str(info.get("type") or "unknown").upper(),
         "expires": expiry_label(info),
         "scopes": sorted(scopes),
+        "valid": info.get("is_valid") is True,
         "expired": token_expired(info, now=now) if info else True,
         "info": info,
     }
@@ -229,6 +229,8 @@ def inspect_instagram(account_id: str, token: str, *, now: int | None = None) ->
     missing = [scope for scope in IG_SCOPES if scope not in set(report["scopes"])]
     if missing:
         problems.append("missing " + ", ".join(missing))
+    if report.get("valid") is not True:
+        problems.append("token validity not confirmed (Meta debug response must explicitly return is_valid=true)")
     if report["expired"]:
         problems.append(f"token expired (expires={report['expires']})")
     username = ""
@@ -298,6 +300,7 @@ def _finish(messages: list[tuple[str, str]], secrets: list[str], failed: bool) -
 def run_checks(now: int | None = None) -> int:
     """Print diagnostics and return the process exit code."""
     mode = _mode()
+    publish_preflight = os.environ.get("META_PUBLISH_PREFLIGHT", "").strip().lower() in {"1", "true", "yes"}
     account_id = os.environ.get("INSTAGRAM_ACCOUNT_ID", "").strip()
     token = os.environ.get("INSTAGRAM_ACCESS_TOKEN", "").strip()
     facebook = os.environ.get("FACEBOOK_PAGE_ACCESS_TOKEN", "").strip()
@@ -351,23 +354,34 @@ def run_checks(now: int | None = None) -> int:
                 ))
 
     fb_page_id = os.environ.get("FACEBOOK_PAGE_ID", "").strip()
-    if facebook:
+    if not facebook:
+        level = "error" if publish_preflight else "warning"
+        messages.append((level, "Facebook publishing credentials unavailable — FACEBOOK_PAGE_ACCESS_TOKEN is not configured."))
+        if publish_preflight:
+            failed = True
+    else:
+        # Diagnose an available token even when the Page ID is missing; this
+        # keeps soft health checks useful and reports missing scopes/expiry.
         try:
             page = inspect_token(facebook, now=now)
         except TokenHttpError as exc:
             detail = _redact(exc.body, secrets)[:300]
-            messages.append((
-                "warning",
-                f"Facebook page token check failed (HTTP {exc.code}): {detail}",
-            ))
+            level = "error" if publish_preflight else "warning"
+            messages.append((level, f"Facebook page token check failed (HTTP {exc.code}): {detail}"))
+            if publish_preflight:
+                failed = True
         else:
             messages.append(("notice", format_facebook(page)))
             missing = [scope for scope in FB_SCOPES if scope not in set(page["scopes"])]
             notes = []
             if missing:
                 notes.append("missing " + ", ".join(missing))
+            if page.get("valid") is not True:
+                notes.append("token validity not confirmed (Meta debug response must explicitly return is_valid=true)")
             if page["expired"]:
                 notes.append(f"token expired (expires={page['expires']})")
+            if not fb_page_id:
+                notes.append("FACEBOOK_PAGE_ID is not configured")
             if page.get("type") == "USER" and fb_page_id:
                 try:
                     resolved_url = f"{META_GRAPH_BASE}/{urllib.parse.quote(fb_page_id, safe='')}?fields=access_token"
@@ -383,26 +397,44 @@ def run_checks(now: int | None = None) -> int:
                 except Exception as exc:
                     notes.append(f"could not resolve Page token for {fb_page_id}: {type(exc).__name__}")
             if notes:
-                messages.append((
-                    "warning",
-                    "Facebook page token: " + "; ".join(notes),
-                ))
+                level = "error" if publish_preflight else "warning"
+                messages.append((level, "Facebook page token: " + "; ".join(notes)))
+                if publish_preflight:
+                    failed = True
 
     threads_tok = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
-    threads_uid = os.environ.get("THREADS_USER_ID", "me").strip() or "me"
-    if threads_tok:
+    threads_uid = os.environ.get("THREADS_USER_ID", "").strip()
+    if not threads_tok or not threads_uid:
+        missing = "THREADS_ACCESS_TOKEN" if not threads_tok else "THREADS_USER_ID"
+        level = "error" if publish_preflight else "warning"
+        messages.append((level, f"Threads publishing credentials unavailable — {missing} is not configured."))
+        if publish_preflight:
+            failed = True
+    else:
         secrets.append(threads_tok)
         try:
             th_url = f"https://graph.threads.net/v1.0/{urllib.parse.quote(threads_uid, safe='')}?fields=id,username"
             th_res = _fetch(th_url, _headers(threads_tok))
             th_user = str(th_res.get("username") or "")
             th_id = str(th_res.get("id") or "")
-            messages.append(("notice", f"Threads token valid: username={th_user} id={th_id}"))
+            if not th_id or th_id != threads_uid or not th_user:
+                level = "error" if publish_preflight else "warning"
+                messages.append((level, f"Threads account identity mismatch: configured ID={threads_uid}, returned ID={th_id or '(none)'}, username={th_user or '(none)'}"))
+                if publish_preflight:
+                    failed = True
+            else:
+                messages.append(("notice", f"Threads token valid: username={th_user} id={th_id}"))
         except TokenHttpError as exc:
             detail = _redact(exc.body, secrets)[:300]
-            messages.append(("warning", f"Threads token check (HTTP {exc.code}): {detail}"))
+            level = "error" if publish_preflight else "warning"
+            messages.append((level, f"Threads token check (HTTP {exc.code}): {detail}"))
+            if publish_preflight:
+                failed = True
         except Exception as exc:
-            messages.append(("warning", f"Threads token check: {type(exc).__name__}"))
+            level = "error" if publish_preflight else "warning"
+            messages.append((level, f"Threads token check: {type(exc).__name__}"))
+            if publish_preflight:
+                failed = True
 
     # LinkedIn credentials check
     li_refresh = os.environ.get("LI_REFRESH_TOKEN", "").strip()

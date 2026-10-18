@@ -32,7 +32,7 @@ def test_pure_sku_keeps_honest_strip():
 def test_no_template_literal_says_100_percent():
     bad = []
     for f in CREATIVE.glob("*.py"):
-        for node in ast.walk(ast.parse(f.read_text())):
+        for node in ast.walk(ast.parse(f.read_text(encoding="utf-8"))):
             if isinstance(node, ast.Constant) and isinstance(node.value, str):
                 if re.search(r"\b100\s*%\s*(pure|coffee|arabica|robusta)", node.value, re.I):
                     bad.append((f.name, node.value[:60]))

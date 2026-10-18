@@ -27,7 +27,9 @@ import time
 import uuid
 
 log = logging.getLogger(__name__)
-_STALE_MIN = int(os.getenv("PUBLISH_CLAIM_STALE_MIN", "90"))
+# Only the process that created/took over a claim may release that exact SHA.
+_OWNED_CLAIMS: dict[str, str] = {}
+_STALE_MIN = int(os.getenv("PUBLISH_CLAIM_STALE_MIN", "180"))
 _POSTED = ("VERIFIED_LIVE", "PUBLISHED_UNVERIFIED", "UNCERTAIN")
 _LEDGER = "output/learning/publishing_ledger.json"
 
@@ -75,12 +77,16 @@ def _remote_posted(date: str, slot: str, platform: str) -> bool:
                and r.get("status") in _POSTED for r in recs.values() if isinstance(r, dict))
 
 
-def _claim_age_min(ref: str) -> float | None:
+def _claim_details(ref: str) -> tuple[float | None, str | None]:
+    """Return age and observed SHA after fetching; SHA is used for CAS takeover."""
     if _git("fetch", "-q", "origin", f"+{ref}:{ref}").returncode != 0:
-        return None
+        return None, None
+    observed = _git("rev-parse", ref).stdout.strip()
+    if not observed:
+        return None, None
     msg = _git("log", "-1", "--format=%s", ref).stdout
     m = re.search(r"publish-claim (\d+)", msg)
-    return (time.time() - int(m.group(1))) / 60 if m else None
+    return ((time.time() - int(m.group(1))) / 60 if m else None, observed)
 
 
 def acquire(date: str, slot: str, platform: str) -> tuple[bool, str]:
@@ -95,10 +101,15 @@ def acquire(date: str, slot: str, platform: str) -> tuple[bool, str]:
         if not sha:
             return False, "claim_unavailable"
         if _git("push", "-q", "origin", f"{sha}:{ref}").returncode == 0:
+            _OWNED_CLAIMS[ref] = sha
             return True, ref
-        age = _claim_age_min(ref)
-        if age is not None and age >= _STALE_MIN and not _remote_posted(date, slot, platform):
-            if _git("push", "-q", "--force", "origin", f"{sha}:{ref}").returncode == 0:
+        age, observed_sha = _claim_details(ref)
+        if age is not None and observed_sha and age >= _STALE_MIN and not _remote_posted(date, slot, platform):
+            # Compare-and-swap: takeover succeeds only if the remote ref still
+            # points at the exact stale SHA observed above. Never unconditional force-push.
+            lease = f"--force-with-lease={ref}:{observed_sha}"
+            if _git("push", "-q", lease, "origin", f"{sha}:{ref}").returncode == 0:
+                _OWNED_CLAIMS[ref] = sha
                 log.warning("[publish-claim] took over stale claim %s (%.0f min)", ref, age)
                 return True, ref
         return False, "claimed_by_other_run"
@@ -108,9 +119,20 @@ def acquire(date: str, slot: str, platform: str) -> tuple[bool, str]:
 
 
 def release(ref: str) -> None:
+    """Release only the exact claim SHA acquired by this process."""
     if not ref:
         return
+    owned_sha = _OWNED_CLAIMS.get(ref)
+    if not owned_sha:
+        log.warning("[publish-claim] refusing to release claim not owned by this process: %s", ref)
+        return
     try:
-        _git("push", "-q", "origin", f":{ref}")
+        lease = f"--force-with-lease={ref}:{owned_sha}"
+        result = _git("push", "-q", lease, "origin", f":{ref}")
+        if result.returncode == 0:
+            _OWNED_CLAIMS.pop(ref, None)
+        else:
+            _OWNED_CLAIMS.pop(ref, None)
+            log.warning("[publish-claim] release skipped; remote claim changed for %s", ref)
     except Exception as exc:
         log.warning("[publish-claim] release failed for %s: %s", ref, exc)

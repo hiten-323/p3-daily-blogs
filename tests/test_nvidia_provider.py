@@ -50,11 +50,12 @@ def test_provider_order_env_override(monkeypatch):
 def test_empty_model_env_keeps_the_default(monkeypatch):
     monkeypatch.setenv("NVIDIA_MODEL", "   ")
     assert nvidia.get_models() == [
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
         "google/gemma-4-31b-it",
         "nvidia/nemotron-3-ultra-550b-a55b",
         "nvidia/nemotron-3-super-120b-a12b",
     ]
-    assert nvidia.get_model() == "google/gemma-4-31b-it"
+    assert nvidia.get_model() == "nvidia/nemotron-3.5-lightning-30b-a3b"
     assert "meta/llama-3.3-70b-instruct" not in nvidia.get_models()
     monkeypatch.setenv("NVIDIA_MODEL", "meta/llama-3.1-70b-instruct")
     assert nvidia.get_model() == "meta/llama-3.1-70b-instruct"
@@ -79,10 +80,10 @@ def test_success_uses_chat_completions(monkeypatch):
     monkeypatch.setattr(nvidia._http, "post", post)
     text, usage = nvidia.call("Write a caption.", 120)
     assert text == '{"ok": true}'
-    assert usage["model"] == "google/gemma-4-31b-it"
+    assert usage["model"] == "nvidia/nemotron-3.5-lightning-30b-a3b"
     assert seen["url"] == "https://integrate.api.nvidia.com/v1/chat/completions"
     assert seen["auth"] == "Bearer nvapi-secretvalue"
-    assert seen["model"] == "google/gemma-4-31b-it"
+    assert seen["model"] == "nvidia/nemotron-3.5-lightning-30b-a3b"
     assert seen["timeout"] == nvidia._CALL_TIMEOUT_S
     assert 15 < nvidia._CALL_TIMEOUT_S <= 60
 

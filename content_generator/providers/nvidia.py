@@ -32,9 +32,10 @@ _URL = f"{_BASE}/chat/completions"
 # Runs 341 (2026-10-05) and 344 (2026-10-06) called nemotron-3-super first.
 # It often returned HTTP 200 with empty content (reel_1, carousel, stories,
 # yt_short, blog sections) and the calls that did answer took 12–17s.
-# Gemma 4 31B IT is the instruct model already used as a content fallback,
-# so it goes first. Ultra is next. Super stays available but last.
+# Nemotron 3.5 Lightning is NVIDIA's current text-only model with a free hosted
+# endpoint. Prefer it for generation; retain Gemma, Ultra, and Super as fallbacks.
 _DEFAULT_MODELS = (
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
     "google/gemma-4-31b-it",
     "nvidia/nemotron-3-ultra-550b-a55b",
     "nvidia/nemotron-3-super-120b-a12b",
@@ -88,8 +89,9 @@ def get_key() -> str:
 
 
 _PREFER = (
-    "nvidia/nemotron-3-super-120b-a12b", "google/gemma-4-31b-it", "nvidia/nemotron-3-ultra-550b-a55b",
-    "deepseek-ai/deepseek-v4.1-flash", "nvidia/nemotron-3.5-lightning-30b-a3b", "qwen/qwen3", "meta/llama-4",
+    "nvidia/nemotron-3.5-lightning-30b-a3b", "google/gemma-4-31b-it",
+    "nvidia/nemotron-3-ultra-550b-a55b", "nvidia/nemotron-3-super-120b-a12b",
+    "deepseek-ai/deepseek-v4.1-flash", "qwen/qwen3", "meta/llama-4",
     "moonshotai/kimi-k2.6", "openai/gpt-oss-120b", "openai/gpt-oss-20b",
 )
 _SKIP = ("embed", "safety", "guard", "retriever", "reward", "coder", "-vl", "vision", "omni", "parse", "rerank")
