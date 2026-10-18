@@ -28,3 +28,24 @@ def test_run_with_hard_timeout_propagates_callable_exception(monkeypatch):
         raise ValueError("editorial worker failed")
     with pytest.raises(ValueError, match="editorial worker failed"):
         watchdog.run_with_hard_timeout("error-test", fail, timeout_s=1)
+
+
+
+def test_webhook_failure_log_never_contains_secret_url(monkeypatch, caplog):
+    import logging
+    import urllib.error
+    import urllib.request
+    from content_generator.scheduler import watchdog
+
+    secret_url = "https://hooks.example.invalid/secret-webhook-token"
+    monkeypatch.setenv("ALERT_WEBHOOK_URL", secret_url)
+
+    def fail_request(*args, **kwargs):
+        raise urllib.error.URLError(f"failed URL {secret_url}")
+
+    monkeypatch.setattr(urllib.request, "urlopen", fail_request)
+    with caplog.at_level(logging.WARNING):
+        watchdog._alert_webhook("synthetic test failure")
+
+    assert "Webhook alert failed: URLError" in caplog.text
+    assert secret_url not in caplog.text
