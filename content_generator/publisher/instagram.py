@@ -346,15 +346,23 @@ def _find_carousel_images(content: dict) -> list[str]:
 
     from content_generator.core.ist_dates import asset_date
     today = asset_date(content)
-
     images = []
-    for pattern in patterns:
-        images.extend(sorted(_glob.glob(os.path.join(creative_dir, pattern))))
+    if content.get("carousel"):
+        patterns = [
+            "carousel_slide_*.jpg",
+            "carousel_slide_*.png",
+            "slide_*.jpg",
+            "slide_*.png",
+            "carousel_*.jpg",
+            "carousel_*.png",
+        ]
+        for pattern in patterns:
+            images.extend(sorted(_glob.glob(os.path.join(creative_dir, pattern))))
 
-    # Remove duplicates but preserve order; ONLY today's files —
-    # creative images persist 7 days in the repo for the publish slots,
-    # so without this filter we would post a mix of old days' slides.
-    images = [p for p in dict.fromkeys(images) if today in os.path.basename(p)]
+        # Remove duplicates but preserve order; ONLY today's files —
+        # creative images persist 7 days in the repo for the publish slots,
+        # so without this filter we would post a mix of old days' slides.
+        images = [p for p in dict.fromkeys(images) if today in os.path.basename(p)]
 
     # If no carousel slides found, look for feed post / instagram post images generated today
     if not images:

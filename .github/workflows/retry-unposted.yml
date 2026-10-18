@@ -148,7 +148,7 @@ jobs:
           python -m content_generator.ops.ledger_sync restore
           for f in "$PERSIST"/content_*.json "$PERSIST"/publish_log.json; do [ -f "$f" ] && cp -f "$f" output/; done
           [ -f "$PERSIST/publish_diagnostics.json" ] && cp -f "$PERSIST/publish_diagnostics.json" output/learning/ || true
-          git add -f output/learning/publishing_ledger.json output/content_*.json 2>/dev/null || true
+          git add -f output/learning/publishing_ledger.json output/content_*.json output/creative/ 2>/dev/null || true
           git add -f output/publish_log.json output/learning/publish_diagnostics.json 2>/dev/null || true
           if ! git diff --staged --quiet; then
             git commit -m "chore: retry-unposted ledger + regenerated pieces [skip ci]"
@@ -167,7 +167,7 @@ jobs:
           fi
 
       - name: Self-resume if today still has unposted pieces (cron backstop)
-        if: always()
+        if: always() && steps.meta_preflight.conclusion == 'success' && steps.alert_preflight.conclusion == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
           PYTHONIOENCODING: utf-8

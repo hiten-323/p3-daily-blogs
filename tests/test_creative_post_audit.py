@@ -274,3 +274,40 @@ def test_vision_failure_is_recorded_and_non_blocking(tmp_path, monkeypatch):
         image_results={}, creative_dir=str(tmp_path), content={},
     )
     assert row["vision_audit"]["status"] == "failed_non_blocking"
+
+
+def test_carousel_slide_allows_optional_visual():
+    from content_generator.core.schema_validation import CarouselSlide
+
+    slide = CarouselSlide(slide=1, heading="Title", body="Description")
+    assert slide.visual == ""
+    assert slide.heading == "Title"
+
+
+def test_find_carousel_images_ignores_orphan_slides_when_no_carousel_specified(tmp_path, monkeypatch):
+    from content_generator.publisher.instagram import _find_carousel_images
+
+    creative_dir = tmp_path / "creative"
+    creative_dir.mkdir(parents=True)
+    today = "2026-10-18"
+
+    # Create orphan carousel slides on disk
+    (creative_dir / f"carousel_slide_1_day290_{today}.jpg").write_bytes(b"dummy1")
+    (creative_dir / f"carousel_slide_2_day290_{today}.jpg").write_bytes(b"dummy2")
+    # Create single feed post
+    feed_img = creative_dir / f"instagram_post_day290_{today}.jpg"
+    feed_img.write_bytes(b"feed")
+
+    monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(creative_dir))
+
+    # When content has NO carousel (e.g. filtered_content with carousel rejected)
+    content_without_carousel = {"date": today, "instagram_post": {"caption": "Hello world"}}
+    found = _find_carousel_images(content_without_carousel)
+    assert found == [str(feed_img)]
+
+    # When content DOES have carousel
+    content_with_carousel = {"date": today, "carousel": {"title": "Test"}}
+    found_carousel = _find_carousel_images(content_with_carousel)
+    assert len(found_carousel) == 2
+    assert all("carousel_slide" in p for p in found_carousel)
+

@@ -426,3 +426,24 @@ def test_daily_failure_alert_requires_remote_delivery():
     assert "delivered = alert_failure(msg)" in run
     assert "if not delivered:" in run
     assert "could not be delivered" in run
+
+
+def test_retry_unposted_self_resume_requires_preflight_success():
+    import yaml
+
+    wf_path = ROOT / ".github" / "workflows" / "retry-unposted.yml"
+    data = yaml.safe_load(wf_path.read_text(encoding="utf-8"))
+    steps = {step["name"]: step for step in data["jobs"]["recover"]["steps"]}
+    self_resume = steps["Self-resume if today still has unposted pieces (cron backstop)"]
+    cond = str(self_resume.get("if", ""))
+    assert "steps.meta_preflight.conclusion == 'success'" in cond
+    assert "steps.alert_preflight.conclusion == 'success'" in cond
+
+
+def test_recovery_workflows_persist_creative_output():
+    for wf_name in ("retry-unposted.yml", "publish-recovery.yml"):
+        wf_path = ROOT / ".github" / "workflows" / wf_name
+        text = wf_path.read_text(encoding="utf-8")
+        assert "git add -f output/learning/publishing_ledger.json" in text
+        assert "output/creative/" in text
+

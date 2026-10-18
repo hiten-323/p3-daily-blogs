@@ -55,7 +55,7 @@ class CarouselSlide(BaseModel):
     slide: int
     heading: str = Field(..., min_length=1)
     body: str = Field(..., min_length=1)
-    visual: str = Field(..., min_length=1)
+    visual: Optional[str] = ""
 
 class CarouselSchema(BaseModel):
     id: Optional[str] = None
