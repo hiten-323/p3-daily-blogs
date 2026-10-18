@@ -417,3 +417,12 @@ def test_recovery_alert_steps_fail_when_remote_delivery_fails():
         assert "delivered = alert_failure(msg)" in run
         assert "if not delivered:" in run
         assert "could not be delivered" in run
+
+
+def test_daily_failure_alert_requires_remote_delivery():
+    data = _workflow_document()
+    steps = {step["name"]: step for step in data["jobs"]["run-pipeline"]["steps"]}
+    run = steps["Alert on failure"]["run"]
+    assert "delivered = alert_failure(msg)" in run
+    assert "if not delivered:" in run
+    assert "could not be delivered" in run
