@@ -431,6 +431,12 @@ def test_daily_failure_alert_requires_remote_delivery():
 def test_retry_unposted_self_resume_requires_preflight_success():
     import yaml
 
+    for wf_name in ("retry-unposted.yml", "publish-recovery.yml"):
+        wf_path = ROOT / ".github" / "workflows" / wf_name
+        data = yaml.safe_load(wf_path.read_text(encoding="utf-8"))
+        steps = {step["name"]: step for step in data["jobs"]["recover"]["steps"]}
+        assert steps["Verify failure alert channel"].get("id") == "alert_preflight"
+
     wf_path = ROOT / ".github" / "workflows" / "retry-unposted.yml"
     data = yaml.safe_load(wf_path.read_text(encoding="utf-8"))
     steps = {step["name"]: step for step in data["jobs"]["recover"]["steps"]}

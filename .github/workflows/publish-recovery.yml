@@ -46,6 +46,7 @@ jobs:
         run: python -m content_generator.ops.meta_token_health
 
       - name: Verify failure alert channel
+        id: alert_preflight
         if: ${{ success() }}
         env:
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}

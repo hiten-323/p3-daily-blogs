@@ -311,3 +311,20 @@ def test_find_carousel_images_ignores_orphan_slides_when_no_carousel_specified(t
     assert len(found_carousel) == 2
     assert all("carousel_slide" in p for p in found_carousel)
 
+
+def test_valid_video_decoding_samples_frames(tmp_path):
+    import imageio.v2 as imageio
+    import numpy as np
+    from content_generator.analytics.creative_post_audit import _video
+
+    test_mp4 = tmp_path / "valid_clip.mp4"
+    w = imageio.get_writer(str(test_mp4), fps=10, format="FFMPEG")
+    for _ in range(10):
+        w.append_data(np.full((64, 64, 3), 128, dtype=np.uint8))
+    w.close()
+
+    result = _video(str(test_mp4))
+    assert result.get("error") is None
+    assert result.get("frames_sampled", 0) > 0
+
+

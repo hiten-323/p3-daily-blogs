@@ -48,57 +48,72 @@ def _img(path):
     except Exception as e: return {"error":f"{type(e).__name__}: {e}"}
 def _sample_video_frames(path, max_frames=8, decode_limit=3600):
     """Sample frames across a clip, preferring evenly spaced timeline positions."""
-    import imageio.v3 as iio
+    import imageio.v2 as imageio
     import numpy as np
     from PIL import Image
 
-    meta={}
+    reader = None
     try:
-        meta=iio.immeta(path,plugin="ffmpeg") or {}
-    except Exception:
-        meta={}
-    fps=meta.get("fps")
-    duration=meta.get("duration")
-    total=None
-    try:
-        if fps and duration and float(fps)>0 and float(duration)>0:
-            total=max(1,int(float(fps)*float(duration)))
-    except (TypeError,ValueError):
-        total=None
+        reader = imageio.get_reader(path, format="FFMPEG")
+        meta = reader.get_meta_data() or {}
+        fps = meta.get("fps")
+        duration = meta.get("duration")
+        total = None
+        try:
+            if fps and duration and float(fps) > 0 and float(duration) > 0:
+                total = max(1, int(float(fps) * float(duration)))
+        except (TypeError, ValueError):
+            total = None
 
-    if total:
-        limit=min(total,decode_limit)
-        targets=sorted(set(int(round(i*(limit-1)/max(max_frames-1,1))) for i in range(min(max_frames,limit))))
-        frame_map={}
-        for i,frame in enumerate(iio.imiter(path,plugin="ffmpeg")):
-            if i in targets:
-                frame_map[i]=Image.fromarray(np.asarray(frame).astype("uint8")).convert("RGB")
-            if not targets or i >= targets[-1]:
+        if total:
+            limit = min(total, decode_limit)
+            targets = sorted(set(int(round(i * (limit - 1) / max(max_frames - 1, 1))) for i in range(min(max_frames, limit))))
+            target_set = set(targets)
+            max_target = targets[-1] if targets else 0
+            frame_map = {}
+            for i, frame in enumerate(reader):
+                if i in target_set:
+                    frame_map[i] = Image.fromarray(np.asarray(frame).astype("uint8")).convert("RGB")
+                if i >= max_target:
+                    break
+            frames = [frame_map[i] for i in targets if i in frame_map]
+            return {
+                "frames": frames,
+                "fps": float(fps),
+                "duration_s": float(duration),
+                "strategy": "timeline_evenly_spaced",
+                "frames_decoded_to": max_target,
+                "truncated": total > decode_limit,
+            }
+
+        candidates = []
+        decoded = 0
+        for i, frame in enumerate(reader):
+            decoded = i + 1
+            if i % 12 == 0:
+                im = Image.fromarray(np.asarray(frame).astype("uint8")).convert("RGB")
+                im.thumbnail((320, 320))
+                candidates.append((i, im.copy()))
+            if decoded >= decode_limit:
                 break
-        frames=[frame_map[i] for i in targets if i in frame_map]
-        return {"frames":frames,"fps":float(fps),"duration_s":float(duration),
-                "strategy":"timeline_evenly_spaced","frames_decoded_to":targets[-1] if targets else 0,
-                "truncated":total>decode_limit}
-
-    # Metadata may be unavailable for damaged files/codecs. Build a bounded,
-    # low-resolution reservoir over the entire readable stream instead of
-    # accidentally treating only the opening second as the whole video.
-    candidates=[]
-    decoded=0
-    for i,frame in enumerate(iio.imiter(path,plugin="ffmpeg")):
-        decoded=i+1
-        if i%12==0:
-            im=Image.fromarray(np.asarray(frame).astype("uint8")).convert("RGB")
-            im.thumbnail((320,320))
-            candidates.append((i,im.copy()))
-        if decoded>=decode_limit:
-            break
-    if not candidates:
-        return {"frames":[],"fps":None,"duration_s":None,"strategy":"no_frames","frames_decoded_to":decoded}
-    take=min(max_frames,len(candidates))
-    idxs=sorted(set(int(round(i*(len(candidates)-1)/max(take-1,1))) for i in range(take)))
-    return {"frames":[candidates[i][1] for i in idxs],"fps":None,"duration_s":None,
-            "strategy":"stream_reservoir","frames_decoded_to":decoded,"truncated":decoded>=decode_limit}
+        if not candidates:
+            return {"frames": [], "fps": None, "duration_s": None, "strategy": "no_frames", "frames_decoded_to": decoded}
+        take = min(max_frames, len(candidates))
+        idxs = sorted(set(int(round(i * (len(candidates) - 1) / max(take - 1, 1))) for i in range(take)))
+        return {
+            "frames": [candidates[i][1] for i in idxs],
+            "fps": None,
+            "duration_s": None,
+            "strategy": "stream_reservoir",
+            "frames_decoded_to": decoded,
+            "truncated": decoded >= decode_limit,
+        }
+    finally:
+        if reader is not None:
+            try:
+                reader.close()
+            except Exception:
+                pass
 
 
 def _video(path):
