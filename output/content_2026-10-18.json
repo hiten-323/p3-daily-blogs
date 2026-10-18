@@ -1542,13 +1542,12 @@
   },
   "yt_short": {
     "type": "yt_short",
-    "needs_regen": false,
     "featured_product": "Purista",
     "reel_inspiration": {
-      "inspiration_id": "gourmet_duo_mini_style",
+      "inspiration_id": "purista_brew_tip_style",
       "mode": "style_cues",
-      "source_template_id": "gourmet_duo_mini_reel",
-      "source_filename": "gourmet_duo_mini.mp4",
+      "source_template_id": "purista_brew_reel",
+      "source_filename": "purista_brew.mp4",
       "publish_source_video": false,
       "copied": {
         "pixels": false,
@@ -1560,22 +1559,22 @@
       "cues": [
         {
           "id": "pacing",
-          "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
+          "cue": "Thirty-five seconds total, with scene shifts every seven seconds."
         },
         {
           "id": "framing",
-          "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
+          "cue": "Vertical 1080x1920 with the exact Purity Beans Purista jar forward so glass and label stay readable."
         },
         {
           "id": "storytelling",
-          "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
+          "cue": "Focus on water temperature and freeze-dried pure Robusta granules."
         },
         {
           "id": "aesthetic",
-          "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
+          "cue": "Warm editorial glass-jar photography on dark marble under warm amber light."
         }
       ],
-      "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
+      "audio_note": "Trending Lo-Fi Cafe Beats"
     },
     "audio": {
       "audio_category": "coffee_aesthetic",
@@ -1592,10 +1591,9 @@
       "manual_instruction": "Check the Instagram audio catalogue for trending coffee lo-fi tracks"
     },
     "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
-    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
-    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "comment_trigger": "Comment COFFEE below if you want to know how water temperature changes your brew.",
+    "save_trigger": "Save this before your next morning brew — water temp matters. https://p3online.in",
     "share_trigger": "Share with someone who starts every morning with coffee.",
-    "editorial_error": "schema: 8 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'type': 'scene', 'scene'...Robusta. Zero chicory.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field required [type=missing, input_value={'type': 'scene', 'scene'...Robusta. Zero chicory.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s   Field | brand: ['Missing website reference']",
     "funnel_objective": "FOLLOW",
     "objective": "Follower Growth",
     "primary_cta": "Follow @purepantryprovisions for one buying check you can save. Shop: https://p3online.in",
@@ -1615,8 +1613,8 @@
     "growth_review": {
       "platform": "yt_short",
       "label": "yt_short",
-      "decision": "BLOCKED",
-      "overall": 8.13,
+      "decision": "PASS",
+      "overall": 8.67,
       "threshold": 8.0,
       "dimensions": [
         {
@@ -1634,46 +1632,182 @@
         {
           "name": "retention",
           "score": 8.0,
-          "evidence": "Four scenes with clear visual progression.",
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
           "hard_fail": false
         }
-      ]
+      ],
+      "hard_fails": [],
+      "attempts": 10,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "viewers who will watch one complete answer with the sound off",
+        "angle": "a standalone payoff that ends without needing another post",
+        "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+        "rationale": "A Short has to pay off on its own, then ask for the next one.",
+        "platform": "yt_short",
+        "sku": "Purista",
+        "day": 290
+      },
+      "published": false
     },
-    "_growth_attempts": 9,
+    "_growth_attempts": 10,
     "product": "Purista",
-    "tagline": "Freeze-dried Robusta. Zero chicory. Lock",
+    "tagline": "Freeze-dried Robusta. Zero chicory. Purity Beans.",
     "scenes": [
       {
         "type": "scene",
         "scene": 1,
-        "on_screen": "Close-up of Purity Beans Purista jar on dark marble, warm amber light catching the glass and label. Text overlay: 'Freeze-dried. Pure Robusta. Zero chicory.'",
-        "spoken": "This is Purista. Freeze-dried. Pure Gourmet Robusta. Zero chicory."
+        "duration_s": 7,
+        "visual_direction": "Close-up of Purity Beans Purista jar on dark marble, warm amber light catching the glass and label.",
+        "on_screen": "Close-up of Purity Beans Purista jar on dark marble, warm amber light catching the glass and label. Text overlay: 'Stop boiling your water.'",
+        "spoken": "Stop boiling your water for instant coffee. You are burning the delicate oils."
       },
       {
         "type": "scene",
         "scene": 2,
-        "on_screen": "Hand pours hot water into a glass mug. Coffee dissolves into a rich, dark amber liquid with a thick crema forming on top. Steam rises naturally.",
-        "spoken": "Watch the crema form. That's what freeze-drying locks in — aroma, oils, body."
+        "duration_s": 7,
+        "visual_direction": "Thermometer dipped into water showing 85°C, soft steam rising gently.",
+        "on_screen": "Thermometer dipped into water showing 85°C. Text overlay: 'Aim for 85°C — just off the boil.'",
+        "spoken": "Aim for eighty-five degrees Celsius. Just off a full boil."
       },
       {
         "type": "scene",
         "scene": 3,
-        "on_screen": "Jar rotates slowly, label facing camera. Text bullet points appear: 'Pure Robusta', 'Freeze-dried granules', '0% chicory', '₹319 / 50g', '₹509 / 100g'.",
-        "spoken": "Pure Robusta. Freeze-dried granules. Zero chicory. Purista 50g is ₹319, 100g is ₹509."
+        "duration_s": 7,
+        "visual_direction": "Spoon adding Purista freeze-dried granules into a ceramic mug.",
+        "on_screen": "Spoon adding Purista freeze-dried granules into a mug. Text overlay: 'Purista: Pure Robusta. Zero chicory.'",
+        "spoken": "Take one level spoon of Purity Beans Purista. Pure gourmet Robusta. Zero chicory."
       },
       {
         "type": "scene",
         "scene": 4,
-        "on_screen": "Person takes a sip, pauses, nods. Text: 'Bold yet smooth. Naturally rich crema.' Background: clean kitchen counter, morning light.",
-        "spoken": "Bold yet smooth. Naturally rich crema. This is what pure coffee tastes like."
+        "duration_s": 7,
+        "visual_direction": "Water poured over granules, rich crema forming immediately on top.",
+        "on_screen": "Water poured over granules. Rich crema forming. Text overlay: 'Watch the crema lock in aroma.'",
+        "spoken": "Pour the warm water and watch that natural crema form. Freeze-drying locks the aroma right in."
+      },
+      {
+        "type": "scene",
+        "scene": 5,
+        "duration_s": 7,
+        "visual_direction": "Person taking a calm sip from the mug, smiling slightly in a warm kitchen.",
+        "on_screen": "Person taking a sip. Text overlay: '50g for ₹319 | 100g for ₹509. https://p3online.in'",
+        "spoken": "Available in 50g for three hundred nineteen rupees and 100g for five hundred nine rupees at https://p3online.in."
       }
     ],
     "hook": "Turn the jar around. Most instant coffee hides chicory in the small print.",
-    "script": "This is Purista. Pure Gourmet Robusta. Freeze-dried granules. Zero chicory. Freeze-drying locks in aroma that spray-drying loses. You smell it the moment you open the jar. Watch that crema. Naturally rich. No additives. Just coffee. Bold yet smooth. Afternoon pick-me-up that doesn't bite back. Purity Beans. Read the jar. Pure coffee. https://p3online.in Follow @purepantryprovisions for the next label check.",
+    "script": "This is Purista. Pure Gourmet Robusta. Freeze-dried granules. Zero chicory. Freeze-drying locks",
     "cta": "Follow @purepantryprovisions for one label check you can save.",
     "body": "Purista by Purity Beans is pure Gourmet Robusta. Zero chicory. Freeze-dried granules that keep the aroma locked in. The label says coffee. Nothing else. ₹319 for 50g. ₹509 for 100g. Read the jar. https://p3online.in",
     "hook_text": "Turn the jar around. Most instant coffee hides chicory in the small print.",
-    "chosen_hook": "Turn the jar around. Most instant coffee hides chicory in the small print."
+    "chosen_hook": "Turn the jar around. Most instant coffee hides chicory in the small print.",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 9.0,
+      "verdict": "PASS",
+      "feedback": "The asset maintains a strong focus on pure freeze-dried Robusta and water temperature physics, avoiding any anti-chicory absolute attacks while clearly highlighting Purista. The pacing instructions are crisp, and the visual cues (dark marble, warm amber light) keep viewer attention high. Retention holds steady due to the 7-second scene shift rhythm.",
+      "retention_audit": "0-2s: Hook clearly sets the stage for a practical brew tip without generic fluff. 2-15s: Water temperature focus provides immediate educational utility, highly save-worthy. 15-30s: Purity Beans Purista jar remains front and center under warm lighting, reinforcing brand authority. 30-35s: Clear CTA and website reference land smoothly without breaking immersion."
+    },
+    "viral_potential": {
+      "scores": {
+        "hook": 8.5,
+        "curiosity_gap": 9.0,
+        "relatability": 9.2,
+        "shareability": 9.0,
+        "comment_trigger": 8.8,
+        "format_fit": 9.2,
+        "follow_cta": 9.0
+      },
+      "overall": 8.96,
+      "weakest": [
+        "hook"
+      ],
+      "feedback": "The piece hits a strong educational and transparent tone with clear product details, accurate pricing, and zero medical claims. To elevate the hook further, lean even more directly into the immediate physical action of reading the label to create an instant pattern interrupt.",
+      "better_hook": "Check your instant coffee jar right now. Does it actually say 100% coffee?",
+      "passed": true,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "viral_readiness_score": 91.0
   },
   "_asset_metadata": [
     {
@@ -2082,7 +2216,7 @@
       {
         "attempt": 2,
         "rung": "from_scratch",
-        "feedback": "brand: ['product truth: Shopify price truth: price ₹2 is not a live Shopify price', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: ['product truth: Shopify price truth: price ₹2 is not a live Shopify price', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 3,
@@ -2555,6 +2689,41 @@
       {
         "status": "exhausted",
         "reason": "schema: 8 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'type': 'scene', 'scene'...Robusta. Zero chicory.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field req"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "schema: 8 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'type': 'scene', 'scene'...Robusta. Zero chicory.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field req"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "schema: 8 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'type': 'scene', 'scene'...Robusta. Zero chicory.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field req"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "schema: 8 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'type': 'scene', 'scene'...Robusta. Zero chicory.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field req"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "schema: 8 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'type': 'scene', 'scene'...Robusta. Zero chicory.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field req"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "schema: 8 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'type': 'scene', 'scene'...Robusta. Zero chicory.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field req"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema scenes.4.spoken   Field required [type=missing, input_value={'type': 'scene', 'scene'.... https://p3online.in'\"}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema scenes.4.spoken   Field required [type=missing, input_value={'type': 'scene', 'scene'.... https://p3online.in'\"}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing"
       }
     ]
   },
