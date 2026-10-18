@@ -3241,6 +3241,45 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-17T14:06:02+00:00"
+    },
+    "2026-10-18|generate|threads|pb_0ee7cb8133": {
+      "attempt_count": 1,
+      "content_date": "2026-10-18",
+      "content_id": "pb_0ee7cb8133",
+      "day_number": 290,
+      "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+      "history": [
+        {
+          "at": "2026-10-18T05:51:59+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-18T05:52:01+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-18T05:51:59+00:00",
+      "last_result": {
+        "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+        "success": false
+      },
+      "next_retry_at": null,
+      "platform": "threads",
+      "published": false,
+      "remote_id": "",
+      "slot": "generate",
+      "status": "SKIPPED",
+      "updated_at": "2026-10-18T05:52:01+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
     }
   },
   "version": 1
