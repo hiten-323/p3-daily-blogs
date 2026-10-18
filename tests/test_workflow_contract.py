@@ -292,3 +292,10 @@ def test_meta_preflight_checks_instagram_publish_scopes():
 
 if __name__ == "__main__":
     main()
+
+
+def test_daily_prune_preserves_jar_provenance_registry():
+    """Provenance is durable safety state, not an undated scratch artifact."""
+    text = WORKFLOW.read_text(encoding="utf-8")
+    assert 'os.path.basename(path) == "jar_provenance.json"' in text
+    assert "Deleting it makes verified images appear unregistered" in text
