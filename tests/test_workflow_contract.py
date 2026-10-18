@@ -299,3 +299,28 @@ def test_daily_prune_preserves_jar_provenance_registry():
     text = WORKFLOW.read_text(encoding="utf-8")
     assert 'os.path.basename(path) == "jar_provenance.json"' in text
     assert "Deleting it makes verified images appear unregistered" in text
+
+
+
+def test_llm_probe_rejects_empty_http_200_for_all_openai_compatible_providers(monkeypatch):
+    from content_generator.providers import llm_probe
+
+    class Response:
+        status_code = 200
+        text = '{"choices":[{"message":{"content":"   "}}]}'
+
+    monkeypatch.setattr(llm_probe.requests, "post", lambda *a, **k: Response())
+    assert llm_probe._openai_chat("https://example.test/chat", "test-key", "test-model") == "empty content"
+
+
+def test_gemini_probe_rejects_http_200_without_candidate_text(monkeypatch):
+    from content_generator.providers import llm_probe
+
+    class Response:
+        status_code = 200
+        text = '{"candidates":[{"content":{"parts":[{"text":"   "}]}}]}'
+
+    monkeypatch.setattr(llm_probe.gemini, "_MODEL", "test-model")
+    monkeypatch.setattr(llm_probe.gemini, "_BASE", "https://example.test")
+    monkeypatch.setattr(llm_probe.requests, "post", lambda *a, **k: Response())
+    assert llm_probe._gemini_chat("test-key") == "empty content"
