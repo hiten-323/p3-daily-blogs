@@ -61,15 +61,24 @@ def track_published_post(
     hook_strategy: str = "",
     payoff_type: str = "",
     decision_version: str = "",
+    platform: str = "",
 ) -> None:
     if not media_id:
         return
+    if not platform:
+        prefix = asset_id.split("_")[0].lower() if asset_id else ""
+        if prefix in ("instagram", "youtube", "linkedin", "threads", "facebook", "shopify", "blog"):
+            platform = "blog" if prefix == "shopify" else prefix
+        else:
+            platform = "instagram"
+
     posts = _load_posts()
     if any(p.get("media_id") == media_id for p in posts):
         return
     posts.append({
         "media_id": media_id,
         "asset_id": asset_id,
+        "platform": platform,
         "track": track,
         "hook": hook,
         "topic": topic,
@@ -91,7 +100,93 @@ def track_published_post(
         "fetch_attempts_by_window": {},
     })
     _save_posts(posts)
-    logger.info("[insights] Tracking published post %s (%s)", media_id, asset_id)
+    logger.info("[insights] Tracking published post %s (%s, platform=%s)", media_id, asset_id, platform)
+
+
+def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> None:
+    """Register all successfully published posts from a dispatch run into published_posts.json."""
+    if not isinstance(result, dict) or not isinstance(content, dict):
+        return
+
+    # 1. Instagram
+    ig = result.get("instagram") or {}
+    if ig.get("success") and ig.get("media_id"):
+        piece = content.get("carousel") or {}
+        if not piece.get("caption"):
+            reels = content.get("reels") or [{}]
+            piece = reels[0] if reels and isinstance(reels[0], dict) else {}
+        hook = str(piece.get("hook") or piece.get("hook_text") or piece.get("title") or "")[:120]
+        topic = str(piece.get("save_mechanic") or piece.get("hook_archetype") or piece.get("objective") or "")[:120]
+        fmt = "carousel" if (content.get("carousel") or {}).get("caption") else str(piece.get("type") or "single_image")
+        track_published_post(
+            media_id=ig["media_id"],
+            asset_id=f"instagram_day{day_number}",
+            track=piece.get("track", "brand"),
+            hook=hook,
+            topic=topic,
+            format_used=fmt,
+            hashtags=str(ig.get("hashtags_used") or ""),
+            kpi_at_creation=piece.get("target_kpi_at_creation", ""),
+            policy_version=piece.get("policy_version_at_creation", ""),
+            platform="instagram",
+        )
+
+    # 2. YouTube
+    yt = result.get("youtube") or {}
+    if yt.get("success") and yt.get("video_id"):
+        yt_piece = content.get("yt_short") or {}
+        track_published_post(
+            media_id=yt["video_id"],
+            asset_id=f"youtube_day{day_number}",
+            track="discovery",
+            hook=str(yt_piece.get("title") or "")[:120],
+            topic="youtube_short",
+            format_used="yt_short",
+            hashtags=str(" ".join(yt_piece.get("tags") or [])),
+            platform="youtube",
+        )
+
+    # 3. Facebook
+    fb = result.get("facebook") or {}
+    if fb.get("success") and fb.get("post_id"):
+        fb_piece = content.get("facebook_post") or {}
+        track_published_post(
+            media_id=fb["post_id"],
+            asset_id=f"facebook_day{day_number}",
+            track="community",
+            hook=str(fb_piece.get("hook") or "")[:120],
+            topic="facebook_post",
+            format_used="post",
+            platform="facebook",
+        )
+
+    # 4. LinkedIn
+    li = result.get("linkedin") or {}
+    if li.get("success") and li.get("post_id"):
+        li_piece = content.get("linkedin_post") or {}
+        track_published_post(
+            media_id=li["post_id"],
+            asset_id=f"linkedin_day{day_number}",
+            track="authority",
+            hook=str(li_piece.get("headline") or "")[:120],
+            topic="linkedin_post",
+            format_used="thought_leadership",
+            platform="linkedin",
+        )
+
+    # 5. Threads
+    th = result.get("threads") or {}
+    if th.get("success") and th.get("post_id"):
+        th_piece = content.get("threads_post") or {}
+        track_published_post(
+            media_id=th["post_id"],
+            asset_id=f"threads_day{day_number}",
+            track="conversation",
+            hook=str(th_piece.get("hook") or "")[:120],
+            topic="threads_post",
+            format_used="discussion",
+            platform="threads",
+        )
 
 
 # ── Graph API circuit breaker ────────────────────────────────────────────────
@@ -414,6 +509,16 @@ def fetch_pending_insights() -> dict:
     for post in posts:
         if post.get("insights_recorded"):
             continue
+        # Restrict Instagram insights fetching strictly to authentic Instagram records.
+        # Non-Instagram media IDs (YouTube, LinkedIn, Threads, etc.) return HTTP 400
+        # on the Instagram Graph API and trip the account-wide circuit breaker.
+        platform = str(post.get("platform") or "").lower()
+        asset_id = str(post.get("asset_id") or "").lower()
+        if platform and platform != "instagram":
+            continue
+        if not platform and not asset_id.startswith("instagram"):
+            continue
+
         due = _next_due_window(post, now)
         if due is None:
             pending += 1

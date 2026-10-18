@@ -116,7 +116,7 @@ jobs:
           python -m content_generator.ops.ledger_sync save
           git pull --rebase --autostash
           python -m content_generator.ops.ledger_sync restore
-          git add -f output/learning/publishing_ledger.json output/creative/ 2>/dev/null || true
+          git add -f output/learning/publishing_ledger.json output/learning/published_posts.json output/creative/ 2>/dev/null || true
           git add -f output/publish_log.json output/learning/publish_diagnostics.json 2>/dev/null || true
           if ! git diff --staged --quiet; then
             git commit -m "chore: persist publish recovery ledger [skip ci]"
@@ -127,7 +127,7 @@ jobs:
               python -m content_generator.ops.ledger_sync save
               git pull --rebase --autostash
               python -m content_generator.ops.ledger_sync restore
-              git add -f output/learning/publishing_ledger.json
+              git add -f output/learning/publishing_ledger.json output/learning/published_posts.json
               git commit -m "chore: persist publish recovery ledger [skip ci]"
               [ "$i" = 3 ] && { git push || { echo "::error::Could not push ledger"; exit 1; }; }
             done

@@ -279,6 +279,13 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
     # Save to publish log
     _append_publish_log(day_number, results)
 
+    # Track successfully published posts for staged measurement and learning
+    try:
+        from content_generator.analytics.insights_fetcher import track_dispatch_results
+        track_dispatch_results(results, content, day_number=day_number)
+    except Exception as e:
+        logger.debug("[publisher] track_dispatch_results skipped: %s", e)
+
     return results
 
 

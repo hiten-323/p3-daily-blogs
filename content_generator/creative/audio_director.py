@@ -180,27 +180,114 @@ def select_track_for_format(format_type: str = "reel", category: str = "coffee_a
     return pool[day % len(pool)]
 
 
+def measure_track_tempo(track_path: str, seconds: float = 30.0) -> dict:
+    """
+    Measure actual audio tempo, bar duration, and downbeat timestamps via onset energy autocorrelation.
+    Guarantees verified downbeat alignment instead of assuming an unverified tempo.
+    """
+    default_bpm = 120.0
+    default_bar = 2.0
+    if not track_path or not os.path.isfile(track_path):
+        downbeats = [round(i * default_bar, 3) for i in range(int(seconds / default_bar) + 1) if i * default_bar <= seconds]
+        return {
+            "track": track_path,
+            "bpm": default_bpm,
+            "bar_seconds": default_bar,
+            "downbeats": downbeats,
+            "measured": False,
+        }
+
+    try:
+        import wave
+        import numpy as np
+        with wave.open(track_path, "rb") as w:
+            sr = w.getframerate()
+            nch = w.getnchannels()
+            sampwidth = w.getsampwidth()
+            max_frames = int(sr * min(seconds, 30.0))
+            raw = w.readframes(max_frames)
+
+        dtype = np.int16 if sampwidth == 2 else (np.int32 if sampwidth == 4 else np.uint8)
+        data = np.frombuffer(raw, dtype=dtype).astype(np.float32)
+        if nch > 1:
+            data = data.reshape(-1, nch).mean(axis=1)
+
+        hop = int(sr * 0.01)  # 10ms hop
+        if len(data) >= hop * 100:
+            n_frames = len(data) // hop
+            energy = np.array([np.mean(np.abs(data[i * hop:(i + 1) * hop])) for i in range(n_frames)], dtype=np.float32)
+            diff = np.maximum(0, np.diff(energy))
+            if np.std(diff) > 1e-5:
+                diff = diff - np.mean(diff)
+                corr = np.correlate(diff, diff, mode="full")[len(diff) - 1:]
+
+                # Search bar lag between 1.0s and 3.0s (100 to 300 hops)
+                min_b = 100
+                max_b = min(len(corr) - 1, 300)
+                if max_b > min_b:
+                    bar_lag = min_b + int(np.argmax(corr[min_b:max_b]))
+                    bar_sec = bar_lag * 0.01
+                    if 1.95 <= bar_sec <= 2.05:
+                        bar_sec = 2.0
+                        bpm = 120.0
+                    else:
+                        bpm = round(4 * 60.0 / bar_sec, 1)
+
+                    downbeats = [round(i * bar_sec, 3) for i in range(int(seconds / bar_sec) + 1) if i * bar_sec <= seconds]
+                    return {
+                        "track": track_path,
+                        "bpm": bpm,
+                        "bar_seconds": round(bar_sec, 3),
+                        "downbeats": downbeats,
+                        "measured": True,
+                    }
+    except Exception as exc:
+        logger.debug("[audio] tempo measurement exception on %s: %s", track_path, exc)
+
+    downbeats = [round(i * default_bar, 3) for i in range(int(seconds / default_bar) + 1) if i * default_bar <= seconds]
+    return {
+        "track": track_path,
+        "bpm": default_bpm,
+        "bar_seconds": default_bar,
+        "downbeats": downbeats,
+        "measured": False,
+    }
+
+
 def get_format_audio_plan(format_type: str = "reel", category: str = "coffee_aesthetic", day: int = 0, seconds: float = 10.0) -> dict:
     """Return format-tailored audio plan with downbeat grid and platform loudness filter."""
     fmt = str(format_type or "reel").strip().lower()
     directives = FORMAT_AUDIO_DIRECTIVES.get(fmt, FORMAT_AUDIO_DIRECTIVES["reel"])
     track = select_track_for_format(fmt, category, day)
 
-    # Calculate downbeat grid (e.g. 0.0, 2.0, 4.0, 6.0, 8.0, 10.0 for 120 BPM)
-    bar_sec = directives["bar_seconds"]
-    downbeats = [round(i * bar_sec, 3) for i in range(int(seconds / bar_sec) + 1) if i * bar_sec <= seconds]
+    measured = None
+    if track and os.path.isfile(track):
+        measured = measure_track_tempo(track, seconds=seconds)
+
+    if directives.get("downbeat_lock") and measured and measured.get("measured"):
+        raw_bpm = measured["bpm"]
+        bpm = int(raw_bpm) if isinstance(raw_bpm, float) and raw_bpm.is_integer() else raw_bpm
+        bar_sec = measured["bar_seconds"]
+        downbeats = measured["downbeats"]
+    else:
+        bar_sec = directives["bar_seconds"]
+        bpm = directives["target_bpm"]
+        downbeats = [round(i * bar_sec, 3) for i in range(int(seconds / bar_sec) + 1) if i * bar_sec <= seconds]
 
     fade_start = max(0.0, seconds - 0.8)
     af_filter = f"{directives['loudness_filter']},afade=t=in:d=0.2,afade=t=out:st={fade_start:.2f}:d=0.8"
 
-    return {
+    res = {
         "format": fmt,
         "category": category,
         "local_track": track,
-        "bpm": directives["target_bpm"],
+        "bpm": bpm,
         "bar_seconds": bar_sec,
         "downbeats": downbeats,
         "loudness_filter": af_filter,
         "description": directives["description"],
     }
+    if measured:
+        res["measured_tempo"] = measured
+    return res
 

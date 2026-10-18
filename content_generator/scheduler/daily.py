@@ -1718,77 +1718,8 @@ def _do_publish(content: dict, day_number: int) -> dict:
 
     # Track published media across platforms so insights and attribution can learn from real data
     try:
-        from content_generator.analytics.insights_fetcher import track_published_post
-
-        # 1. Instagram
-        ig = result.get("instagram") or {}
-        if ig.get("success") and ig.get("media_id"):
-            piece = filtered_content.get("carousel") or {}
-            if not piece.get("caption"):
-                reels = filtered_content.get("reels") or [{}]
-                piece = reels[0] if reels and isinstance(reels[0], dict) else {}
-            track_published_post(
-                media_id    = ig["media_id"],
-                asset_id    = f"instagram_day{day_number}",
-                track       = "brand",
-                hook        = str(piece.get("hook_text") or piece.get("title") or "")[:120],
-                topic       = str(piece.get("save_mechanic") or piece.get("hook_archetype") or "")[:120],
-                format_used = "carousel" if filtered_content.get("carousel", {}).get("caption") else "single_image",
-                hashtags    = str(ig.get("hashtags_used") or ""),
-            )
-
-        # 2. YouTube
-        yt = result.get("youtube") or {}
-        if yt.get("success") and yt.get("video_id"):
-            yt_piece = filtered_content.get("yt_short") or {}
-            track_published_post(
-                media_id    = yt["video_id"],
-                asset_id    = f"youtube_day{day_number}",
-                track       = "discovery",
-                hook        = str(yt_piece.get("title") or "")[:120],
-                topic       = "youtube_short",
-                format_used = "yt_short",
-                hashtags    = str(" ".join(yt_piece.get("tags") or [])),
-            )
-
-        # 3. Facebook
-        fb = result.get("facebook") or {}
-        if fb.get("success") and fb.get("post_id"):
-            fb_piece = filtered_content.get("facebook_post") or {}
-            track_published_post(
-                media_id    = fb["post_id"],
-                asset_id    = f"facebook_day{day_number}",
-                track       = "community",
-                hook        = str(fb_piece.get("hook") or "")[:120],
-                topic       = "facebook_post",
-                format_used = "post",
-            )
-
-        # 4. LinkedIn
-        li = result.get("linkedin") or {}
-        if li.get("success") and li.get("post_id"):
-            li_piece = filtered_content.get("linkedin_post") or {}
-            track_published_post(
-                media_id    = li["post_id"],
-                asset_id    = f"linkedin_day{day_number}",
-                track       = "authority",
-                hook        = str(li_piece.get("headline") or "")[:120],
-                topic       = "linkedin_post",
-                format_used = "thought_leadership",
-            )
-
-        # 5. Threads
-        th = result.get("threads") or {}
-        if th.get("success") and th.get("post_id"):
-            th_piece = filtered_content.get("threads_post") or {}
-            track_published_post(
-                media_id    = th["post_id"],
-                asset_id    = f"threads_day{day_number}",
-                track       = "conversation",
-                hook        = str(th_piece.get("hook") or "")[:120],
-                topic       = "threads_post",
-                format_used = "discussion",
-            )
+        from content_generator.analytics.insights_fetcher import track_dispatch_results
+        track_dispatch_results(result, filtered_content, day_number=day_number)
     except Exception as e:
         logger.warning("[publish] Could not track published posts for insights: %s", e)
 

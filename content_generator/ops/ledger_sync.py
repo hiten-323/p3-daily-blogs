@@ -22,6 +22,8 @@ from pathlib import Path
 
 LEDGER = Path("output/learning/publishing_ledger.json")
 STASH = Path(tempfile.gettempdir()) / "publishing_ledger.local.json"
+POSTS = Path("output/learning/published_posts.json")
+POSTS_STASH = Path(tempfile.gettempdir()) / "published_posts.local.json"
 _RANK = {"VERIFIED_LIVE": 5, "PUBLISHED_UNVERIFIED": 4, "UNCERTAIN": 3, "PUBLISHING": 2}
 
 
@@ -33,6 +35,16 @@ def _read(path: Path) -> dict:
     except (OSError, ValueError):
         pass
     return {"version": 1, "records": {}}
+
+
+def _read_posts(path: Path) -> list[dict]:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(data, list):
+            return [x for x in data if isinstance(x, dict)]
+    except (OSError, ValueError):
+        pass
+    return []
 
 
 def _pick(a: dict, b: dict) -> dict:
@@ -54,22 +66,88 @@ def merge(base: dict, other: dict) -> dict:
     return out
 
 
+def merge_posts(base: list[dict], other: list[dict]) -> list[dict]:
+    """Merge published_posts.json entries keyed by media_id, preserving snapshots, retry counts, and observations."""
+    out_map: dict[str, dict] = {}
+    ordered_keys: list[str] = []
+
+    def _key(p: dict) -> str:
+        return str(p.get("media_id") or p.get("asset_id") or id(p))
+
+    for p in base:
+        if isinstance(p, dict):
+            k = _key(p)
+            out_map[k] = dict(p)
+            ordered_keys.append(k)
+
+    for p in other:
+        if not isinstance(p, dict):
+            continue
+        k = _key(p)
+        if k not in out_map:
+            out_map[k] = dict(p)
+            ordered_keys.append(k)
+        else:
+            cur = out_map[k]
+            # 1. insights_recorded: True beats False
+            if p.get("insights_recorded"):
+                cur["insights_recorded"] = True
+
+            # 2. measurement_snapshots: merge and deduplicate by window
+            cur_snaps = {str(s.get("window")): s for s in (cur.get("measurement_snapshots") or []) if isinstance(s, dict)}
+            for s in (p.get("measurement_snapshots") or []):
+                if isinstance(s, dict):
+                    w = str(s.get("window"))
+                    if w not in cur_snaps or (s.get("views") is not None and cur_snaps[w].get("views") is None):
+                        cur_snaps[w] = s
+            cur["measurement_snapshots"] = list(cur_snaps.values())
+
+            # 3. fetch_attempts_by_window: preserve max retry counts
+            cur_attempts = dict(cur.get("fetch_attempts_by_window") or {})
+            for w, cnt in (p.get("fetch_attempts_by_window") or {}).items():
+                cur_attempts[w] = max(cur_attempts.get(w, 0), cnt)
+            cur["fetch_attempts_by_window"] = cur_attempts
+
+            # 4. failed_windows: union
+            cur_failed = set(cur.get("failed_windows") or []) | set(p.get("failed_windows") or [])
+            cur["failed_windows"] = sorted(cur_failed)
+
+            # 5. preserve non-empty metadata
+            for field in ("hook", "topic", "format", "hashtags", "track", "platform", "published_at",
+                          "kpi_at_creation", "policy_version", "attention_mechanism", "scroller_state",
+                          "psychology_frame", "hook_strategy", "payoff_type", "decision_version"):
+                if not cur.get(field) and p.get(field):
+                    cur[field] = p[field]
+
+    return [out_map[k] for k in ordered_keys]
+
+
 def _write(data: dict, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def _write_posts(data: list[dict], path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
 def save() -> None:
     if LEDGER.exists():
         _write(_read(LEDGER), STASH)
+    if POSTS.exists():
+        _write_posts(_read_posts(POSTS), POSTS_STASH)
     subprocess.run(["git", "checkout", "HEAD", "--", str(LEDGER)], check=False)
+    subprocess.run(["git", "checkout", "HEAD", "--", str(POSTS)], check=False)
 
 
 def restore() -> None:
-    if not STASH.exists():
-        return
-    _write(merge(_read(LEDGER), _read(STASH)), LEDGER)
+    if STASH.exists():
+        _write(merge(_read(LEDGER), _read(STASH)), LEDGER)
+    if POSTS_STASH.exists():
+        _write_posts(merge_posts(_read_posts(POSTS), _read_posts(POSTS_STASH)), POSTS)
 
 
 if __name__ == "__main__":
     {"save": save, "restore": restore}[sys.argv[1]]()
+

@@ -69,12 +69,31 @@ def measurement_health() -> dict[str, Any]:
             measured += 1
         else:
             unknown += 1
-    return {
-        "status": "ok" if measured else ("cold" if records else "empty"),
+
+    status = "ok" if measured else ("cold" if records else "empty")
+    res: dict[str, Any] = {
+        "status": status,
         "records": len(records),
         "measured_views": measured,
         "unknown_views": unknown,
     }
+
+    # Explicit permission diagnostic: surface missing instagram_manage_insights
+    # scope rather than misrepresenting it as an ordinary cold start.
+    token = os.getenv("INSTAGRAM_ACCESS_TOKEN")
+    if token:
+        try:
+            from content_generator.ops.meta_token_health import inspect_token
+            info = inspect_token(token)
+            scopes = set(info.get("scopes") or [])
+            if "instagram_manage_insights" not in scopes:
+                res["status"] = "permission_missing"
+                res["missing_permission"] = "instagram_manage_insights"
+                res["detail"] = "instagram_manage_insights scope required for media insights"
+        except Exception:
+            pass
+
+    return res
 
 
 def meta_preflight() -> dict[str, Any]:
@@ -154,7 +173,7 @@ def run() -> int:
     attribution = attribution_health()
 
     print("=== PURITY BEANS GROWTH OS HEALTH ===")
-    print(f"Measurement : {measurement['status']} | records={measurement['records']} measured_views={measurement['measured_views']}")
+    print(f"Measurement : {measurement['status']} | records={measurement['records']} measured_views={measurement['measured_views']}" + (f" | missing={measurement.get('missing_permission')}" if measurement.get("missing_permission") else ""))
     print(f"Meta access : {meta['status']}")
     print(f"Attribution : {attribution['status']} | orders={attribution['orders']}")
     print(f"Config      : {config['status']} | warnings={','.join(config['warnings']) or 'none'}")
@@ -173,7 +192,9 @@ def run() -> int:
         print("HEALTH: FAIL-CLOSED | " + ", ".join(hard_failures))
         return 1
 
-    if measurement["status"] != "ok":
+    if measurement["status"] == "permission_missing":
+        print(f"HEALTH: DEGRADED | permission missing: {measurement.get('missing_permission', 'instagram_manage_insights')} required for media insights")
+    elif measurement["status"] != "ok":
         print("HEALTH: DEGRADED | measurement is cold; advanced learning must remain conservative")
     else:
         print("HEALTH: OK | measurement is active")

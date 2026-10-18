@@ -139,8 +139,7 @@ jobs:
           set -euo pipefail
           git config user.name "Purity Beans Engine"
           git config user.email "engine@puritybeans.auto"
-          # Keep only what this step persists; discard other generated artifacts (mp4s,
-          # published_posts.json) so --autostash can't conflict and lose the ledger (exit 128).
+          # Persist publishing ledger, logs, regenerated content, and measurement tracker
           PERSIST=$(mktemp -d)
           cp -f output/content_*.json output/publish_log.json output/learning/publish_diagnostics.json "$PERSIST"/ 2>/dev/null || true
           python -m content_generator.ops.ledger_sync save
@@ -149,7 +148,7 @@ jobs:
           python -m content_generator.ops.ledger_sync restore
           for f in "$PERSIST"/content_*.json "$PERSIST"/publish_log.json; do [ -f "$f" ] && cp -f "$f" output/; done
           [ -f "$PERSIST/publish_diagnostics.json" ] && cp -f "$PERSIST/publish_diagnostics.json" output/learning/ || true
-          git add -f output/learning/publishing_ledger.json output/content_*.json output/creative/ 2>/dev/null || true
+          git add -f output/learning/publishing_ledger.json output/learning/published_posts.json output/content_*.json output/creative/ 2>/dev/null || true
           git add -f output/publish_log.json output/learning/publish_diagnostics.json 2>/dev/null || true
           if ! git diff --staged --quiet; then
             git commit -m "chore: retry-unposted ledger + regenerated pieces [skip ci]"
@@ -161,7 +160,7 @@ jobs:
               git reset -q --hard HEAD
               git pull --rebase
               python -m content_generator.ops.ledger_sync restore
-              git add -f output/learning/publishing_ledger.json
+              git add -f output/learning/publishing_ledger.json output/learning/published_posts.json
               git commit -m "chore: retry-unposted ledger + regenerated pieces [skip ci]"
               [ "$i" = 3 ] && { git push || { echo "::error::Could not push ledger"; exit 1; }; }
             done
