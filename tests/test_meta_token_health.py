@@ -94,7 +94,8 @@ def test_strict_meta_preflight_fails_when_facebook_publish_scope_missing(monkeyp
     monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "ig-token")
     monkeypatch.setenv("FACEBOOK_PAGE_ID", "fb-123")
     monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "fb-token")
-    monkeypatch.delenv("THREADS_ACCESS_TOKEN", raising=False)
+    monkeypatch.setenv("THREADS_ACCESS_TOKEN", "threads-token")
+    monkeypatch.setenv("THREADS_USER_ID", "threads-123")
     monkeypatch.delenv("LI_REFRESH_TOKEN", raising=False)
     monkeypatch.delenv("LI_CLIENT_ID", raising=False)
     monkeypatch.delenv("LI_CLIENT_SECRET", raising=False)
@@ -113,6 +114,7 @@ def test_strict_meta_preflight_fails_when_facebook_publish_scope_missing(monkeyp
     } if token == "fb-token" else {
         "type": "USER", "expires": "never", "scopes": list(health.IG_SCOPES), "expired": False,
     })
+    monkeypatch.setattr(health, "_fetch", lambda *a, **k: {"id": "threads-123", "username": "puritybeans"})
 
     assert health.run_checks(now=100) == 1
     out = capsys.readouterr().out
@@ -123,9 +125,10 @@ def test_strict_meta_preflight_fails_when_facebook_token_missing(monkeypatch, ca
     monkeypatch.setenv("META_TOKEN_MODE", "strict")
     monkeypatch.setenv("FACEBOOK_PAGE_ID", "fb-123")
     monkeypatch.delenv("FACEBOOK_PAGE_ACCESS_TOKEN", raising=False)
-    monkeypatch.setenv("INSTAGRAM_ACCOUNT_ID", "")
-    monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "")
-    monkeypatch.delenv("THREADS_ACCESS_TOKEN", raising=False)
+    monkeypatch.setenv("INSTAGRAM_ACCOUNT_ID", "ig-123")
+    monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "ig-token")
+    monkeypatch.setenv("THREADS_ACCESS_TOKEN", "threads-token")
+    monkeypatch.setenv("THREADS_USER_ID", "threads-123")
     monkeypatch.delenv("LI_REFRESH_TOKEN", raising=False)
     monkeypatch.delenv("LI_CLIENT_ID", raising=False)
     monkeypatch.delenv("LI_CLIENT_SECRET", raising=False)
@@ -134,10 +137,16 @@ def test_strict_meta_preflight_fails_when_facebook_token_missing(monkeypatch, ca
     monkeypatch.delenv("YOUTUBE_CLIENT_SECRET", raising=False)
     monkeypatch.delenv("YOUTUBE_REFRESH_TOKEN", raising=False)
 
+    monkeypatch.setattr(health, "inspect_instagram", lambda *a, **k: {
+        "ok": True, "problems": [], "scopes": list(health.IG_SCOPES),
+        "type": "USER", "expires": "never", "username": "puritybeans",
+        "resolved_account_id": "",
+    })
+    monkeypatch.setattr(health, "_fetch", lambda *a, **k: {"id": "threads-123", "username": "puritybeans"})
+
     assert health.run_checks(now=100) == 1
     out = capsys.readouterr().out
     assert "::error::Facebook publishing credentials unavailable" in out
-
 
 
 def test_strict_meta_preflight_fails_when_threads_identity_mismatches(monkeypatch, capsys):
