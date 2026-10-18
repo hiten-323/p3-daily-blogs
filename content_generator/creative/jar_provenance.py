@@ -326,19 +326,24 @@ def verify_jar_provenance(image_path: str) -> dict:
 
     # Content-bound integrity: reject tampered image file
     recorded_img_hash = entry.get("image_sha256")
-    if recorded_img_hash:
-        current_img_hash = _sha256(image_path)
-        if not current_img_hash or current_img_hash != recorded_img_hash:
-            return {"verified": False, "jar_asset_id": jar_asset,
-                    "render_source": source, "reason": "image_content_tampered"}
+    if not recorded_img_hash:
+        return {"verified": False, "jar_asset_id": jar_asset,
+                "render_source": source, "reason": "missing_image_content_hash"}
+    current_img_hash = _sha256(image_path)
+    if not current_img_hash or current_img_hash != recorded_img_hash:
+        return {"verified": False, "jar_asset_id": jar_asset,
+                "render_source": source, "reason": "image_content_tampered"}
 
-    # Content-bound integrity: reject modified source jar file
+    # Content-bound integrity: reject modified source jar file. Legacy records
+    # without a hash must not bypass the content-integrity gate.
     recorded_jar_hash = entry.get("jar_sha256")
-    if recorded_jar_hash:
-        current_jar_hash = _sha256(jar_asset)
-        if not current_jar_hash or current_jar_hash != recorded_jar_hash:
-            return {"verified": False, "jar_asset_id": jar_asset,
-                    "render_source": source, "reason": "source_jar_content_tampered"}
+    if not recorded_jar_hash:
+        return {"verified": False, "jar_asset_id": jar_asset,
+                "render_source": source, "reason": "missing_source_jar_content_hash"}
+    current_jar_hash = _sha256(jar_asset)
+    if not current_jar_hash or current_jar_hash != recorded_jar_hash:
+        return {"verified": False, "jar_asset_id": jar_asset,
+                "render_source": source, "reason": "source_jar_content_tampered"}
 
     return {
         "verified": True,
