@@ -915,23 +915,22 @@ def _upload_to_facebook_cdn(image_path: str) -> str | None:
 
 
 def _cloudinary_upload(image_path: str) -> str | None:
-    """Upload to Cloudinary if CLOUDINARY_URL is set (free 25GB/month)."""
-    cloud_url = os.getenv("CLOUDINARY_URL")
-    if not cloud_url:
+    """Upload an image to Cloudinary if configured; never log provider response bodies."""
+    if not os.getenv("CLOUDINARY_URL", "").strip():
         return None
     try:
-        import re, requests, base64, hashlib, time as _time
-        m = re.match(r"cloudinary://(\w+):(\S+)@(\S+)", cloud_url.strip())
-        if not m:
-            logger.warning("[instagram] Cloudinary URL format invalid")
+        import requests, base64, hashlib, time as _time
+        from content_generator.publisher.video_host import _creds
+
+        credentials = _creds()
+        if not credentials:
             return None
-        api_key, api_secret, cloud_name = m.groups()
-        cloud_name = cloud_name.strip("/")
+        api_key, api_secret, cloud_name = credentials
 
         with open(image_path, "rb") as f:
             encoded = base64.b64encode(f.read()).decode()
 
-        ts  = str(int(_time.time()))
+        ts = str(int(_time.time()))
         sig = hashlib.sha1(f"timestamp={ts}{api_secret}".encode()).hexdigest()
 
         resp = requests.post(
@@ -940,13 +939,21 @@ def _cloudinary_upload(image_path: str) -> str | None:
                   "timestamp": ts, "api_key": api_key, "signature": sig},
             timeout=60,
         )
-        url = resp.json().get("secure_url", "")
-        if url:
-            return url
-        logger.warning("[instagram] Cloudinary upload returned no URL: %s", resp.text[:200])
+        if resp.status_code >= 400:
+            logger.warning("[instagram] Cloudinary image upload failed (HTTP %d)", resp.status_code)
+            return None
+        try:
+            data = resp.json()
+        except Exception:
+            logger.warning("[instagram] Cloudinary image upload returned invalid JSON (HTTP %d)", resp.status_code)
+            return None
+        url = data.get("secure_url", "")
+        if url and str(url).startswith("https://"):
+            return str(url)
+        logger.warning("[instagram] Cloudinary image upload response did not contain a public HTTPS URL")
         return None
     except Exception as exc:
-        logger.warning("[instagram] Cloudinary upload error: %s", exc)
+        logger.warning("[instagram] Cloudinary image upload error: %s", type(exc).__name__)
         return None
 
 
