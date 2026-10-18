@@ -390,3 +390,30 @@ def test_publish_recovery_has_failure_alert_step():
         assert "ALERT_WEBHOOK_URL" in alert["env"]
         assert "SMTP_PASS" in alert["env"]
         assert "alert_failure(msg)" in alert["run"]
+
+
+def test_alert_failure_reports_remote_delivery(monkeypatch):
+    from content_generator.scheduler import watchdog
+
+    monkeypatch.setattr(watchdog, "_alert_console", lambda _message: None)
+    monkeypatch.setattr(watchdog, "_alert_webhook", lambda _message: False)
+    monkeypatch.setattr(watchdog, "_alert_email", lambda _message: True)
+    assert watchdog.alert_failure("test alert") is True
+
+    monkeypatch.setattr(watchdog, "_alert_email", lambda _message: False)
+    assert watchdog.alert_failure("test alert") is False
+
+
+def test_recovery_alert_steps_fail_when_remote_delivery_fails():
+    import yaml
+
+    for wf_path in (
+        ROOT / ".github" / "workflows" / "publish-recovery.yml",
+        ROOT / ".github" / "workflows" / "retry-unposted.yml",
+    ):
+        data = yaml.safe_load(wf_path.read_text(encoding="utf-8"))
+        steps = {step["name"]: step for step in data["jobs"]["recover"]["steps"]}
+        run = steps["Alert on recovery failure"]["run"]
+        assert "delivered = alert_failure(msg)" in run
+        assert "if not delivered:" in run
+        assert "could not be delivered" in run
