@@ -174,11 +174,12 @@ def timed_step_hard(label: str, timeout_s: int = None):
 
 # ── Alert dispatch ────────────────────────────────────────────────────────────
 
-def alert_failure(message: str) -> None:
-    """Dispatch a failure alert. No-op for channels that are not configured."""
+def alert_failure(message: str) -> bool:
+    """Dispatch a failure alert; return True only if a remote channel accepted it."""
     _alert_console(message)
-    _alert_webhook(message)
-    _alert_email(message)
+    webhook_sent = _alert_webhook(message)
+    email_sent = _alert_email(message)
+    return bool(webhook_sent or email_sent)
 
 
 def _alert(message: str) -> None:
@@ -190,12 +191,12 @@ def _alert_console(message: str) -> None:
     print(f"\n!!! PURITY BEANS ENGINE ALERT !!!\n{message}\n")
 
 
-def _alert_webhook(message: str) -> None:
+def _alert_webhook(message: str) -> bool:
     # Read at send time. The workflow injects ALERT_WEBHOOK_URL per step, and
     # a value captured at import is empty when the secret is added later.
     url = (os.getenv("ALERT_WEBHOOK_URL") or _WEBHOOK_URL or "").strip()
     if not url:
-        return
+        return False
     try:
         import urllib.request
         payload = json.dumps({"text": f":warning: *Purity Beans Engine Alert*\n{message}"})
@@ -208,8 +209,10 @@ def _alert_webhook(message: str) -> None:
         with urllib.request.urlopen(req, timeout=10):
             pass
         logger.info("[watchdog] Alert sent to webhook")
+        return True
     except Exception as e:
         logger.warning("[watchdog] Webhook alert failed: %s", type(e).__name__)
+        return False
 
 
 def _smtp_config() -> dict | None:
@@ -246,10 +249,10 @@ def _smtp_config() -> dict | None:
     }
 
 
-def _alert_email(message: str) -> None:
+def _alert_email(message: str) -> bool:
     cfg = _smtp_config()
     if not cfg:
-        return
+        return False
     try:
         import smtplib
         from email.mime.text import MIMEText
@@ -262,8 +265,10 @@ def _alert_email(message: str) -> None:
             server.login(cfg["user"], cfg["password"])
             server.send_message(msg)
         logger.info("[watchdog] Alert emailed to %s", cfg["recipient"])
+        return True
     except Exception as e:
         logger.warning("[watchdog] Email alert failed: %s", type(e).__name__)
+        return False
 
 
 # ── Run log ───────────────────────────────────────────────────────────────────
