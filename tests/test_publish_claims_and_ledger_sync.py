@@ -122,3 +122,11 @@ def test_stale_claim_takeover_rejects_a_concurrent_replacement(clone, monkeypatc
     assert raced["sha"]
     assert _git(clone, "ls-remote", "origin", ref).split()[0] == raced["sha"]
     publish_claim._OWNED_CLAIMS.pop(ref, None)
+
+
+
+def test_stale_claim_grace_exceeds_daily_job_timeout():
+    source = (ROOT / "content_generator" / "publisher" / "publish_claim.py").read_text()
+    workflow = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
+    assert 'PUBLISH_CLAIM_STALE_MIN", "180"' in source
+    assert "timeout-minutes: 120" in workflow
