@@ -376,14 +376,17 @@ def test_recovery_workflows_enforce_strict_meta_preflight_and_alert_channel():
 def test_publish_recovery_has_failure_alert_step():
     import yaml
 
-    path = ROOT / ".github" / "workflows" / "publish-recovery.yml"
-    data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    steps = data["jobs"]["recover"]["steps"]
-    by_name = {step["name"]: step for step in steps}
+    for wf_path in (
+        ROOT / ".github" / "workflows" / "publish-recovery.yml",
+        ROOT / ".github" / "workflows" / "retry-unposted.yml",
+    ):
+        data = yaml.safe_load(wf_path.read_text(encoding="utf-8"))
+        steps = data["jobs"]["recover"]["steps"]
+        by_name = {step["name"]: step for step in steps}
 
-    assert "Alert on recovery failure" in by_name
-    alert = by_name["Alert on recovery failure"]
-    assert "failure()" in str(alert.get("if", ""))
-    assert "ALERT_WEBHOOK_URL" in alert["env"]
-    assert "SMTP_PASS" in alert["env"]
-    assert "alert_failure(msg)" in alert["run"]
+        assert "Alert on recovery failure" in by_name, f"{wf_path.name} missing failure alert step"
+        alert = by_name["Alert on recovery failure"]
+        assert "failure()" in str(alert.get("if", ""))
+        assert "ALERT_WEBHOOK_URL" in alert["env"]
+        assert "SMTP_PASS" in alert["env"]
+        assert "alert_failure(msg)" in alert["run"]
