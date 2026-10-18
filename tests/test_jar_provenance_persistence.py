@@ -206,3 +206,36 @@ def test_provenance_record_fails_closed_on_persistence_failure(tmp_path, monkeyp
     assert jar_provenance.verify_jar_provenance(str(image))["verified"] is False
 
 
+
+
+def test_legacy_provenance_without_content_hashes_fails_closed(tmp_path, monkeypatch):
+    asset_root = tmp_path / "brand_assets"
+    asset_root.mkdir()
+    jar = asset_root / "real_jar.png"
+    jar.write_bytes(b"authentic jar content")
+
+    out_dir = tmp_path / "creative"
+    out_dir.mkdir()
+    image = out_dir / "legacy_image.png"
+    image.write_bytes(b"rendered image")
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(jar_provenance, "_OUT_DIR", str(out_dir))
+    registry = out_dir / "jar_provenance.json"
+    monkeypatch.setattr(jar_provenance, "_PROVENANCE_FILE", str(registry))
+    monkeypatch.setattr(jar_provenance, "_TRUSTED_JAR_ASSET_ROOT", str(asset_root))
+    monkeypatch.setattr(jar_provenance, "_MEMORY_REGISTRY", {})
+
+    # Simulate a previously trusted legacy entry created before content hashes existed.
+    registry.write_text(json.dumps({
+        str(image.resolve()): {
+            "image_path": str(image),
+            "asset_real_jar_verified": True,
+            "jar_asset_id": str(jar),
+            "render_source": "approved_photo"
+        }
+    }), encoding="utf-8")
+
+    result = jar_provenance.verify_jar_provenance(str(image))
+    assert result["verified"] is False
+    assert result["reason"] in ("missing_image_content_hash", "missing_source_jar_content_hash")
