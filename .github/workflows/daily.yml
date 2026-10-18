@@ -398,7 +398,7 @@ jobs:
             python -m content_generator.ops.ledger_sync save
             git pull --rebase --autostash
             python -m content_generator.ops.ledger_sync restore
-            git add -f output/learning/publishing_ledger.json
+            git add -f output/learning/publishing_ledger.json output/learning/published_posts.json
             git commit -m "chore: run ${{ github.run_number }} — validated content + learning data [skip ci]"
             git push || { echo "::error::Could not push validated run state; publish slots cannot load persisted content."; exit 1; }
           fi

@@ -451,5 +451,6 @@ def test_recovery_workflows_persist_creative_output():
         wf_path = ROOT / ".github" / "workflows" / wf_name
         text = wf_path.read_text(encoding="utf-8")
         assert "git add -f output/learning/publishing_ledger.json" in text
+        assert "output/learning/published_posts.json" in text
         assert "output/creative/" in text
 
