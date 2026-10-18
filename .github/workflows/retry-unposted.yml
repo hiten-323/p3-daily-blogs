@@ -223,6 +223,8 @@ jobs:
               f"{os.environ.get('GITHUB_RUN_ID', '')}"
           )
           from content_generator.scheduler.watchdog import alert_failure
-          alert_failure(msg)
-          print(msg)
+          delivered = alert_failure(msg)
+          if not delivered:
+              raise SystemExit("Failure alert could not be delivered through any configured remote channel.")
+          print("Failure alert delivered through a configured remote channel.")
           PY
