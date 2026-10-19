@@ -271,7 +271,16 @@ def ensure_ig_images(content: dict) -> bool:
         pass
     try:
         from content_generator.scheduler.daily import _do_generate_images
-        res = _do_generate_images(content, int(content.get("day_number") or 0))
+        from content_generator.core.ist_dates import asset_date
+        _prev = os.environ.get("CREATIVE_ASSET_DATE")
+        os.environ["CREATIVE_ASSET_DATE"] = asset_date(content)
+        try:
+            res = _do_generate_images(content, int(content.get("day_number") or 0))
+        finally:
+            if _prev is None:
+                os.environ.pop("CREATIVE_ASSET_DATE", None)
+            else:
+                os.environ["CREATIVE_ASSET_DATE"] = _prev
         log.info("[retry] rendered IG images: %s", {k: (len(v) if isinstance(v, list) else bool(v)) for k, v in (res or {}).items()})
         return bool((res or {}).get("carousel") or (res or {}).get("instagram_post"))
     except Exception as e:
