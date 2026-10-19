@@ -249,11 +249,24 @@ def _approved(content: dict) -> dict:
 
 
 def ensure_ig_images(content: dict) -> bool:
-    """Render today's carousel / feed images (new templates) if none exist on disk."""
+    """Render the day's carousel / feed images if none exist on disk, or if the
+    ones on disk fail jar provenance.
+
+    Oct 18: the provenance registry had been deleted, so day290's committed
+    slides were ``unregistered_image`` and every retry held the morning slot
+    forever — files existed, so nothing was ever re-rendered. Re-rendering goes
+    through the real-jar compositor, which records fresh provenance; the
+    publish-time verification itself is unchanged.
+    """
     try:
         from content_generator.publisher.instagram import _find_carousel_images
-        if _find_carousel_images(content):
-            return True
+        imgs = _find_carousel_images(content)
+        if imgs:
+            from content_generator.creative.jar_provenance import verify_creative_suite
+            ok, issues = verify_creative_suite(imgs)
+            if ok:
+                return True
+            log.warning("[retry] on-disk IG images fail provenance (%s) — re-rendering", "; ".join(issues)[:300])
     except Exception:
         pass
     try:

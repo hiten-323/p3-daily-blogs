@@ -193,25 +193,59 @@ def _build_message(content: dict) -> str:
 
 
 def _find_image(content: dict) -> str | None:
-    """Find the best image for Facebook post."""
+    """Best Facebook image for this content day that has VERIFIED real-jar provenance.
+
+    The old picker returned the first glob hit (reverse-sorted ``*_{date}.jpg``),
+    so the evening mirror could grab any dated render (e.g. a ugc/story frame)
+    and then fail the provenance check with ``unregistered_image`` even though
+    verified images for the day existed (Oct 17 evening). It also missed the
+    undated ``facebook_post_day{N}.jpg`` / ``instagram_post_day{N}.jpg`` names
+    the renderer actually writes. Walk every candidate in priority order and
+    return the first one that passes the unchanged provenance gate.
+    """
     import glob as _glob
 
     creative_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
     from content_generator.core.ist_dates import asset_date
     today = asset_date(content)
+    try:
+        day = int((content or {}).get("day_number") or 0)
+    except (TypeError, ValueError):
+        day = 0
 
-    patterns = [
+    patterns = []
+    if day:
+        patterns += [
+            os.path.join(creative_dir, f"facebook_post_day{day}.jpg"),
+            os.path.join(creative_dir, f"facebook_post_day{day}_{today}.jpg"),
+            os.path.join(creative_dir, f"instagram_post_day{day}.jpg"),
+            os.path.join(creative_dir, f"instagram_post_day{day}_{today}.jpg"),
+            os.path.join(creative_dir, f"carousel_slide_1_day{day}_{today}.jpg"),
+            os.path.join(creative_dir, f"carousel_slide_1_day{day}.jpg"),
+        ]
+    patterns += [
         os.path.join(creative_dir, f"facebook_post_*{today}.jpg"),
         os.path.join(creative_dir, f"instagram_post_*{today}.jpg"),
         os.path.join(creative_dir, f"carousel_slide_1_{today}.jpg"),
         os.path.join(creative_dir, f"carousel_cover_{today}.jpg"),
         os.path.join(creative_dir, f"*_{today}.jpg"),
     ]
+    from content_generator.creative.jar_provenance import verify_jar_provenance
+    seen: set[str] = set()
+    first_existing = None
     for pat in patterns:
-        files = sorted(_glob.glob(pat), reverse=True)
-        if files:
-            return files[0]
-    return None
+        for path in sorted(_glob.glob(pat), reverse=True):
+            if path in seen:
+                continue
+            seen.add(path)
+            first_existing = first_existing or path
+            if verify_jar_provenance(path).get("verified"):
+                return path
+    if first_existing:
+        logger.warning("[facebook] No provenance-verified image for %s; candidates were unverified", today)
+    # Returning the unverified candidate keeps the explicit refusal (and its
+    # reason) in _post_to_page instead of silently degrading to a link post.
+    return first_existing
 
 
 def _post_to_page(
