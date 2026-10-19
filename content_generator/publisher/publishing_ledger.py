@@ -178,6 +178,7 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
                 return {"allowed": False, "reason": "retry_limit_reached", "record": old, "key": key}
             if not _due(old, now):
                 return {"allowed": False, "reason": "retry_backoff", "record": old, "key": key}
+        prior_snapshot = json.loads(json.dumps(old)) if old else None
         record = {**identity, **old, **identity}
         record.update({
             "status": "PUBLISHING",
@@ -192,7 +193,32 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
         record["history"] = history[-100:]
         data["records"][key] = record
         _save(data)
-        return {"allowed": True, "key": key, "record": record}
+        return {"allowed": True, "key": key, "record": record, "prior": prior_snapshot}
+
+
+def abandon_attempt(ticket: dict) -> None:
+    """Undo begin_attempt when the publisher is deliberately NOT called.
+
+    The dedupe branch of publish_with_ledger used to leave the row in
+    PUBLISHING; 30 minutes later it became UNCERTAIN ("stale attempt") and,
+    since an UNCERTAIN row with no remote id can never be read back, the
+    target was blocked forever even though no platform call was ever made
+    (Oct 18 morning backfill, run 39228725174).
+    """
+    if not ticket or not ticket.get("allowed") or not ticket.get("key"):
+        return
+    with _LOCK:
+        data = _load()
+        key = ticket["key"]
+        current = data["records"].get(key) or {}
+        if current.get("status") != "PUBLISHING":
+            return
+        prior = ticket.get("prior")
+        if prior:
+            data["records"][key] = prior
+        else:
+            data["records"].pop(key, None)
+        _save(data)
 
 
 def finish_attempt(ticket: dict, result: dict) -> dict:
@@ -273,8 +299,10 @@ def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int
     """Run one publisher with durable duplicate prevention and outcome recording."""
     ticket = begin_attempt(content, platform, slot, day_number)
     if ticket.get("allowed"):
-        prior = already_posted_today(platform, slot, ticket.get("key", ""))
+        _kdate = str(ticket.get("key", "")).split("|")[0]
+        prior = already_posted_today(platform, slot, ticket.get("key", ""), on_date=_kdate or None)
         if prior:
+            abandon_attempt(ticket)
             ticket = {"allowed": False, "reason": "already_published", "record": prior, "key": ticket.get("key")}
     if not ticket.get("allowed"):
         logger_message = f"[publish-ledger] {platform} not retried: {ticket.get('reason')}"
@@ -316,15 +344,19 @@ def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int
 POSTED_STATES = ("VERIFIED_LIVE", "PUBLISHED_UNVERIFIED", "UNCERTAIN")
 
 
-def already_posted_today(platform: str, slot: str, exclude_key: str = "") -> dict | None:
+def already_posted_today(platform: str, slot: str, exclude_key: str = "", on_date: str | None = None) -> dict | None:
     """A post for this (date, slot, platform) under ANY content_id blocks a second one.
 
     The ledger key includes content_id, so a regenerated pack used to look like
     new work. Dedupe here is by date + slot + platform. UNCERTAIN counts as
     posted: a possible duplicate is worse than a late retry.
     """
+    # Dedupe against the CONTENT date being published, not the wall-clock
+    # day: a backfill of 2026-10-18 was matched against 2026-10-19's live
+    # morning posts and silently "skipped as already published".
     try:
-        for record in records_for_today():
+        records = records_for_today() if not on_date or on_date == _today_iso() else records_for_content_date(on_date)
+        for record in records:
             if record.get("ledger_key") == exclude_key:
                 continue
             if (str(record.get("platform", "")).lower() == platform.lower()
@@ -334,6 +366,12 @@ def already_posted_today(platform: str, slot: str, exclude_key: str = "") -> dic
     except Exception:
         return None
     return None
+
+
+def records_for_content_date(date_iso: str) -> list[dict]:
+    with _LOCK:
+        data = _load()
+        return [dict(r, ledger_key=k) for k, r in data["records"].items() if str(r.get("content_date", "")).startswith(str(date_iso)[:10])]
 
 
 def records_for_today() -> list[dict]:

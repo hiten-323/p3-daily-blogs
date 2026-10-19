@@ -366,7 +366,14 @@ def _find_carousel_images(content: dict) -> list[str]:
 
     # If no carousel slides found, look for feed post / instagram post images generated today
     if not images:
-        single_patterns = [
+        try:
+            _day = int(content.get("day_number") or 0)
+        except (TypeError, ValueError):
+            _day = 0
+        # The Gemini/real-jar feed image is written undated as
+        # instagram_post_day{N}.jpg; without this pattern a day whose carousel
+        # was rejected found no feed image at all ("Images discovered: []").
+        single_patterns = ([f"instagram_post_day{_day}.jpg", f"instagram_post_day{_day}.png"] if _day else []) + [
             f"instagram_post_*{today}.jpg",
             f"instagram_post_*{today}.png",
             f"feed_post_*{today}.jpg",

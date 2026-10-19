@@ -77,3 +77,36 @@ def test_retry_persist_keeps_rerendered_creatives_and_registry():
     i = text.index('mkdir -p "$PERSIST/creative"')
     assert i < text.index("git reset -q --hard HEAD && git clean -qfd output/creative")
     assert "provenance registry merged" in text
+
+
+def test_ledger_dedupe_uses_content_date_and_rolls_back(tmp_path, monkeypatch):
+    from content_generator.publisher import publishing_ledger as PL
+    calls = []
+    monkeypatch.setattr(PL, "_today_iso", lambda: "2026-10-19")
+    monkeypatch.setattr(PL, "records_for_today", lambda: [
+        {"ledger_key": "2026-10-19|morning|instagram|X", "platform": "instagram", "slot": "morning", "status": "VERIFIED_LIVE"}])
+    monkeypatch.setattr(PL, "records_for_content_date", lambda d: calls.append(d) or [])
+    # backfill of the 18th must not be matched against the 19th's live post
+    assert PL.already_posted_today("instagram", "morning", "2026-10-18|morning|instagram|Y", on_date="2026-10-18") is None
+    assert calls == ["2026-10-18"]
+    assert PL.already_posted_today("instagram", "morning", "2026-10-19|morning|instagram|Y", on_date="2026-10-19")
+
+
+def test_abandon_attempt_removes_new_publishing_row(monkeypatch):
+    from content_generator.publisher import publishing_ledger as PL
+    store = {"records": {"k": {"status": "PUBLISHING"}, "j": {"status": "PUBLISHING"}}}
+    monkeypatch.setattr(PL, "_load", lambda: store)
+    monkeypatch.setattr(PL, "_save", lambda d: None)
+    PL.abandon_attempt({"allowed": True, "key": "k", "prior": None})
+    assert "k" not in store["records"]
+    PL.abandon_attempt({"allowed": True, "key": "j", "prior": {"status": "FAILED", "error": "x"}})
+    assert store["records"]["j"]["status"] == "FAILED"
+
+
+def test_single_feed_image_found_when_undated(tmp_path, monkeypatch):
+    from content_generator.publisher import instagram
+    monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(tmp_path))
+    (tmp_path / "instagram_post_day290.jpg").write_bytes(b"x")
+    monkeypatch.setattr("content_generator.core.ist_dates.asset_date", lambda c: "2026-10-18")
+    imgs = instagram._find_carousel_images({"day_number": 290, "carousel": {}, "instagram_post": {"caption": "c"}})
+    assert imgs and imgs[0].endswith("instagram_post_day290.jpg")
