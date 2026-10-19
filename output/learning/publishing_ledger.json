@@ -3461,6 +3461,47 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-19T04:01:50+00:00"
+    },
+    "2026-10-19|generate|youtube|pb_0d1ca346d1": {
+      "attempt_count": 1,
+      "content_date": "2026-10-19",
+      "content_id": "pb_0d1ca346d1",
+      "day_number": 291,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-19T04:09:30+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-19T04:09:35+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "kOLUvoDiNeA",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.youtube.com/shorts/kOLUvoDiNeA",
+          "verification_method": "youtube_oembed"
+        }
+      ],
+      "last_attempt_at": "2026-10-19T04:09:30+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-19T04:09:35+00:00",
+      "next_retry_at": null,
+      "platform": "youtube",
+      "published": true,
+      "remote_id": "kOLUvoDiNeA",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-19T04:09:34+00:00",
+      "url": "https://www.youtube.com/shorts/kOLUvoDiNeA",
+      "verification_detail": "public video confirmed by oEmbed",
+      "verification_method": "youtube_oembed",
+      "verified_at": "2026-10-19T04:09:35+00:00"
     }
   },
   "version": 1
