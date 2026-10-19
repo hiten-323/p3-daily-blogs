@@ -86,11 +86,11 @@ def _knockout_white(img):
     return knockout_white(img)
 
 
-def _gradient_bg(width, height, exposure_boost=False, is_tall=False):
+def _gradient_bg(width, height, exposure_boost=False, is_tall=False, seed=0):
     """
     Cinematic grounded studio backdrop:
-    - If is_tall (9:16): Deep espresso studio wall (top 64%) + grounded dark oak/slate counter
-      (bottom 36%) with subtle horizon sheen.
+    - If is_tall (9:16): Deep roast mahogany espresso studio wall (top 64%) + grounded Italian
+      walnut countertop (bottom 36%) with polished horizon double sheen.
     - Otherwise: Deep espresso studio wall gradient.
     """
     from PIL import Image, ImageDraw
@@ -98,19 +98,19 @@ def _gradient_bg(width, height, exposure_boost=False, is_tall=False):
     draw = ImageDraw.Draw(bg)
 
     if exposure_boost:
-        wall_top = (30, 20, 12)
-        wall_mid = (82, 52, 26)
-        table_edge = (46, 30, 18)
-        table_bot = (22, 14, 8)
+        wall_top = (44, 26, 18)
+        wall_mid = (122, 75, 40)
+        table_edge = (72, 45, 26)
+        table_bot = (32, 20, 12)
     else:
-        wall_top = (14, 9, 5)
-        wall_mid = (46, 28, 14)
-        table_edge = (35, 22, 12)
-        table_bot = (16, 10, 5)
+        wall_top = (36, 21, 14)
+        wall_mid = (105, 64, 32)
+        table_edge = (62, 38, 22)
+        table_bot = (28, 17, 10)
 
     if is_tall:
         table_y = int(height * 0.64)
-        # Studio wall gradient
+        # Studio wall gradient with warm ambient lighting
         for y in range(table_y):
             f = y / max(1, table_y)
             c = tuple(int(wall_top[i] + (wall_mid[i] - wall_top[i]) * f) for i in range(3))
@@ -120,9 +120,10 @@ def _gradient_bg(width, height, exposure_boost=False, is_tall=False):
             f = (y - table_y) / max(1, height - table_y)
             c = tuple(int(table_edge[i] + (table_bot[i] - table_edge[i]) * f) for i in range(3))
             draw.line([(0, y), (width, y)], fill=c)
-        # Subtle horizon edge highlight sheen
-        draw.line([(0, table_y), (width, table_y)], fill=(75, 52, 28))
-        draw.line([(0, table_y + 1), (width, table_y + 1)], fill=(52, 36, 18))
+        # Polished metallic horizon edge highlight sheen (double line)
+        draw.line([(0, table_y - 1), (width, table_y - 1)], fill=(95, 60, 28))
+        draw.line([(0, table_y), (width, table_y)], fill=(215, 165, 65))
+        draw.line([(0, table_y + 1), (width, table_y + 1)], fill=(145, 98, 42))
     else:
         for y in range(height):
             f = y / height
@@ -137,14 +138,37 @@ def _gradient_bg(width, height, exposure_boost=False, is_tall=False):
     return bg
 
 
-def _radial_glow(canvas, cx, cy, size, color=(60, 42, 16)):
+def _add_studio_bokeh(canvas, width, height, seed=0):
+    """Adds soft out-of-focus golden coffee-steam bokeh lights for luxurious photographic depth."""
+    from PIL import Image, ImageDraw, ImageFilter
+    import random
+    rng = random.Random(seed)
+    bokeh_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    bdraw = ImageDraw.Draw(bokeh_layer)
+    for _ in range(16):
+        bx = rng.randint(50, width - 50)
+        by = rng.randint(220, int(height * 0.58))
+        br = rng.randint(24, 75)
+        b_alpha = rng.randint(18, 52)
+        gold_shade = rng.choice([
+            (255, 205, 90, b_alpha),
+            (240, 175, 70, b_alpha),
+            (215, 140, 50, b_alpha),
+            (255, 230, 160, b_alpha),
+        ])
+        bdraw.ellipse([(bx - br, by - br), (bx + br, by + br)], fill=gold_shade)
+    bokeh_layer = bokeh_layer.filter(ImageFilter.GaussianBlur(22))
+    return Image.alpha_composite(canvas.convert("RGBA"), bokeh_layer).convert("RGB")
+
+
+def _radial_glow(canvas, cx, cy, size, color=(165, 110, 48)):
     from PIL import Image, ImageDraw, ImageFilter
     mask = Image.new("L", (size, size), 0)
     d = ImageDraw.Draw(mask)
     for r in range(size // 2, 0, -3):
-        a = int(220 * (1 - r / (size // 2)) ** 2)
+        a = int(240 * (1 - r / (size // 2)) ** 1.7)
         d.ellipse([(size // 2 - r, size // 2 - r), (size // 2 + r, size // 2 + r)], fill=a)
-    mask = mask.filter(ImageFilter.GaussianBlur(30))
+    mask = mask.filter(ImageFilter.GaussianBlur(36))
     glow = Image.new("RGB", (size, size), color)
     canvas.paste(glow, (cx - size // 2, cy - size // 2), mask=mask)
 
@@ -242,7 +266,9 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     boost_exposure = dirs.get("boost_exposure", False)
     is_tall = height > width * 1.4
 
-    canvas = _gradient_bg(width, height, exposure_boost=boost_exposure, is_tall=is_tall)
+    canvas = _gradient_bg(width, height, exposure_boost=boost_exposure, is_tall=is_tall, seed=day + idx)
+    if is_tall:
+        canvas = _add_studio_bokeh(canvas, width, height, seed=day + idx + (scene_idx * 7))
     draw = ImageDraw.Draw(canvas)
     margin = int(width * 0.08)
     max_w = width - 2 * margin
@@ -253,23 +279,23 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
         # Pre-measure text layout FIRST to eliminate any possibility of copy colliding with jar
         # Distinct typography for YouTube Shorts vs Instagram Reels/Stories
         if format_type == "short":
-            hf_size = max(44, min(60, width // 16))
+            hf_size = max(46, min(62, width // 16))
             headline_color = (255, 230, 0)  # YouTube high-visibility Canary Yellow
             sub_color = (255, 255, 255)       # Crisp White
         elif format_type == "story":
-            hf_size = max(44, min(58, width // 17))
-            headline_color = _CREAM
-            sub_color = _GOLD
+            hf_size = max(46, min(60, width // 17))
+            headline_color = (255, 252, 245)  # Pure luminous white
+            sub_color = (255, 225, 120)       # Warm radiant gold
         else:
-            hf_size = max(42, min(56, width // 18))
-            headline_color = _CREAM
-            sub_color = _GOLD
+            hf_size = max(44, min(58, width // 18))
+            headline_color = (255, 252, 245)
+            sub_color = (255, 222, 115)
 
         hf = _font(hf_size, bold=True)
         h_lines = _wrap(draw, headline.upper(), hf, max_w)[:2]
 
-        sf_size = max(24, min(30, width // 36))
-        sf = _font(sf_size, bold=False)
+        sf_size = max(26, min(32, width // 34))
+        sf = _font(sf_size, bold=True)
         s_lines = _wrap(draw, sub, sf, max_w)[:3] if sub else []
 
         text_cursor = 345
@@ -298,10 +324,25 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
             if jy < min_jar_top:
                 jy = min_jar_top
 
-            # Warm radial glow centered behind the jar body
-            glow_color = (130, 90, 36) if boost_exposure else (65, 42, 18)
+            # Warm multi-layered radial spotlight key-light centered behind jar body
+            glow_color = (205, 145, 65) if boost_exposure else (170, 115, 50)
             glow_y = int(jy + jar.height * 0.45)
-            _radial_glow(canvas, width // 2, glow_y, int(width * 0.90), color=glow_color)
+            _radial_glow(canvas, width // 2, glow_y, int(width * 1.05), color=glow_color)
+
+            # Polished tabletop surface reflection of jar base (luxury studio shoot feel)
+            try:
+                base_h = int(jar.height * 0.22)
+                jar_base = jar.crop((0, jar.height - base_h, jar.width, jar.height))
+                jar_refl = jar_base.transpose(Image.FLIP_TOP_BOTTOM)
+                refl_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+                refl_layer.paste(jar_refl, (jx, jy + jar.height - 2), jar_refl)
+                r_ch, g_ch, b_ch, a_ch = refl_layer.split()
+                a_ch = a_ch.point(lambda p: int(p * 0.20))
+                refl_layer.putalpha(a_ch)
+                refl_layer = refl_layer.filter(ImageFilter.GaussianBlur(6))
+                canvas = Image.alpha_composite(canvas.convert("RGBA"), refl_layer).convert("RGB")
+            except Exception as re:
+                logger.debug("[cine] Table reflection skipped: %s", re)
 
             # Ground Contact Shadow + Ambient Occlusion (physics grounding)
             try:
@@ -393,21 +434,22 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
             show_cta = False  # Let hook have maximum breathing room
 
         if show_cta:
-            ff = _font(max(24, width // 38), bold=True)
+            ff = _font(max(25, width // 36), bold=True)
             resolved_cta = cta_text or chrome_cta
 
             cta_w = draw.textlength(resolved_cta, font=ff)
-            cta_pill_w = int(cta_w + 40)
+            cta_pill_w = int(cta_w + 46)
             cta_pill_x = (width - cta_pill_w) // 2
-            pill_outline = (220, 60, 40) if format_type == "short" else _GOLD
+            pill_outline = (255, 65, 45) if format_type == "short" else (255, 215, 80)
             draw.rounded_rectangle(
-                [(cta_pill_x, 1568), (cta_pill_x + cta_pill_w, 1612)],
-                radius=14,
-                fill=(18, 12, 7, 230),
+                [(cta_pill_x, 1566), (cta_pill_x + cta_pill_w, 1614)],
+                radius=16,
+                fill=(22, 14, 9, 245),
                 outline=pill_outline,
-                width=1,
+                width=2,
             )
-            draw.text((width // 2, 1590), resolved_cta, font=ff, fill=_CREAM, anchor="mm")
+            cta_fill = (255, 255, 255) if format_type == "short" else (255, 250, 238)
+            draw.text((width // 2, 1590), resolved_cta, font=ff, fill=cta_fill, anchor="mm")
 
     else:
         # Standard 1:1 or non-tall format

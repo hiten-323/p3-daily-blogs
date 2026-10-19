@@ -1035,7 +1035,12 @@ def _compose_carousel_slide_impl(
         canvas = Image.alpha_composite(canvas.convert("RGBA"), card_img).convert("RGB")
         draw = ImageDraw.Draw(canvas)
 
-        # Content Card Interior
+        # Content Card Interior: Guaranteed high-contrast typography
+        card_text_primary = (255, 252, 245)   # 100% luminous warm white
+        card_text_body = (240, 230, 215)      # Crisp high-contrast cream
+        card_accent_gold = (255, 210, 85)     # Radiant warm gold
+        card_sub_box = (36, 24, 16, 245)      # Distinct rich contrast box
+
         badge_font = _font("footer", 16)
         pill_label = "EXPERT ANALYSIS" if "blend" in content_full else "TRUTH & TRANSPARENCY"
         pl_w = int(draw.textlength(pill_label, font=badge_font))
@@ -1044,14 +1049,14 @@ def _compose_carousel_slide_impl(
         pl_box = Image.new("RGBA", (width, height), (0, 0, 0, 0))
         pldraw = ImageDraw.Draw(pl_box)
         pldraw.rounded_rectangle([(pl_x - 12, pl_y - 6), (pl_x + pl_w + 12, pl_y + badge_font.size + 6)],
-                                 radius=12, fill=(35, 24, 15, 230), outline=theme["accent"], width=1)
+                                 radius=12, fill=(35, 24, 15, 230), outline=card_accent_gold, width=1)
         canvas = Image.alpha_composite(canvas.convert("RGBA"), pl_box).convert("RGB")
         draw = ImageDraw.Draw(canvas)
         draw.text((pl_x + pl_w // 2, pl_y + badge_font.size // 2), pill_label, font=badge_font,
-                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
+                  fill=card_accent_gold, anchor="mm")
 
         # Dynamic Body Insights
-        b_font = _font("body", 26)
+        b_font = _font("body", 27)
         by_pos = pl_y + 56
         sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", body) if s.strip()]
         if not sentences:
@@ -1060,12 +1065,12 @@ def _compose_carousel_slide_impl(
         for s_idx, sent in enumerate(sentences[:2]):
             bullet_prefix = "[ • ] "
             bullet_w = int(draw.textlength(bullet_prefix, font=b_font))
-            draw.text((card_x0 + 32, by_pos), bullet_prefix, font=b_font, fill=theme["accent"], anchor="la")
+            draw.text((card_x0 + 32, by_pos), bullet_prefix, font=b_font, fill=card_accent_gold, anchor="la")
 
             wrapped_lines = _wrap_lines(draw, sent, b_font, card_w - 64 - bullet_w, max_lines=3)
             for l_idx, wline in enumerate(wrapped_lines):
                 draw.text((card_x0 + 32 + bullet_w, by_pos), wline, font=b_font,
-                          fill=theme["text_primary"] if l_idx == 0 else theme["text_body"], anchor="la")
+                          fill=card_text_primary if l_idx == 0 else card_text_body, anchor="la")
                 by_pos += int(b_font.size * 1.35)
             by_pos += 16
 
@@ -1081,12 +1086,12 @@ def _compose_carousel_slide_impl(
         box_img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
         b_draw = ImageDraw.Draw(box_img)
         b_draw.rounded_rectangle([(card_x0 + 28, box1_y0), (card_x1 - 28, box1_y1)],
-                                 radius=16, fill=(30, 20, 13, 235),
-                                 outline=theme.get("pill_border", (212, 163, 64, 180)), width=1)
+                                 radius=16, fill=card_sub_box,
+                                 outline=(225, 175, 75, 200), width=1)
         canvas = Image.alpha_composite(canvas.convert("RGBA"), box_img).convert("RGB")
         draw = ImageDraw.Draw(canvas)
 
-        draw.line([(card_x0 + 44, box1_y0 + 20), (card_x0 + 44, box1_y1 - 20)], fill=theme["accent"], width=4)
+        draw.line([(card_x0 + 44, box1_y0 + 20), (card_x0 + 44, box1_y1 - 20)], fill=card_accent_gold, width=4)
 
         q_font = _font("title", 22)
         box_header = "WHAT THIS MEANS FOR YOUR CUP"
@@ -1094,9 +1099,9 @@ def _compose_carousel_slide_impl(
             box_header = "THE PURITY AROMA DIFFERENCE"
         elif "standard" in content_full:
             box_header = "WHY PURE ARABICA & ROBUSTA WINS"
-        draw.text((card_x0 + 64, box1_y0 + 22), box_header, font=q_font, fill=theme.get("pill_text", theme["accent"]))
+        draw.text((card_x0 + 64, box1_y0 + 22), box_header, font=q_font, fill=card_accent_gold)
 
-        exp_font = _font("body", 21)
+        exp_font = _font("body", 22)
         if "chicory" in content_full or "filler" in content_full:
             exp_text = "Read the ingredients panel. It tells you exactly what is in the jar, so you can pick the cup you actually want."
         elif "blend" in content_full:
@@ -1108,7 +1113,7 @@ def _compose_carousel_slide_impl(
 
         ey = box1_y0 + 62
         for eline in _wrap_lines(draw, exp_text, exp_font, card_w - 120, max_lines=4):
-            draw.text((card_x0 + 64, ey), eline, font=exp_font, fill=theme["text_primary"])
+            draw.text((card_x0 + 64, ey), eline, font=exp_font, fill=card_text_primary)
             ey += int(exp_font.size * 1.34)
 
         # 2. Checklist Box: "3-SECOND LABEL CHECK"
@@ -1118,15 +1123,15 @@ def _compose_carousel_slide_impl(
             box2_img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
             b2_draw = ImageDraw.Draw(box2_img)
             b2_draw.rounded_rectangle([(card_x0 + 28, box2_y0), (card_x1 - 28, box2_y1)],
-                                      radius=16, fill=(26, 18, 12, 230),
-                                      outline=(212, 163, 64, 100), width=1)
+                                      radius=16, fill=(28, 19, 13, 240),
+                                      outline=(225, 175, 75, 130), width=1)
             canvas = Image.alpha_composite(canvas.convert("RGBA"), box2_img).convert("RGB")
             draw = ImageDraw.Draw(canvas)
 
             check_font = _font("title", 20)
-            draw.text((card_x0 + 44, box2_y0 + 16), "QUICK LABEL CHECKLIST", font=check_font, fill=theme["accent"])
+            draw.text((card_x0 + 44, box2_y0 + 16), "QUICK LABEL CHECKLIST", font=check_font, fill=card_accent_gold)
 
-            chk_font = _font("body", 19)
+            chk_font = _font("body", 20)
             steps = [
                 ("1.", "Read the back panel: the ingredients list tells the real story."),
                 ("2.", "Check the ratio: a blend states its coffee and chicory split on the pack."),
@@ -1134,22 +1139,22 @@ def _compose_carousel_slide_impl(
             ]
             cy = box2_y0 + 48
             for num, stext in steps:
-                draw.text((card_x0 + 44, cy), num, font=chk_font, fill=theme["accent"])
+                draw.text((card_x0 + 44, cy), num, font=chk_font, fill=card_accent_gold)
                 for sline in _wrap_lines(draw, stext, chk_font, card_w - 110, max_lines=2):
-                    draw.text((card_x0 + 72, cy), sline, font=chk_font, fill=theme["text_body"])
+                    draw.text((card_x0 + 72, cy), sline, font=chk_font, fill=card_text_primary)
                     cy += int(chk_font.size * 1.30)
                 cy += 6
 
         banner_box = Image.new("RGBA", (width, height), (0, 0, 0, 0))
         bndraw = ImageDraw.Draw(banner_box)
         bndraw.rounded_rectangle([(card_x0 + 24, banner_y0), (card_x1 - 24, banner_y0 + banner_h)],
-                                 radius=16, fill=(30, 21, 13, 240), outline=(212, 163, 64, 120), width=1)
+                                 radius=16, fill=(32, 22, 14, 245), outline=(225, 175, 75, 160), width=1)
         canvas = Image.alpha_composite(canvas.convert("RGBA"), banner_box).convert("RGB")
         draw = ImageDraw.Draw(canvas)
         callout_font = _font("footer", 16)
         c_text = _sanitize_text("PURITY BEANS  |  " + _rc_strip().upper() + "  |  p3online.in")
         draw.text((card_x0 + card_w // 2, banner_y0 + banner_h // 2), c_text, font=callout_font,
-                  fill=theme.get("pill_text", theme["accent"]), anchor="mm")
+                  fill=(255, 225, 140), anchor="mm")
 
         # Progress Bar Line
         p_track_y = height - 52
@@ -1282,9 +1287,11 @@ def _compose_carousel_slide_impl(
                                 radius=20, fill=(22, 15, 10, 235),
                                 outline=theme["accent"], width=2)
         canvas = Image.alpha_composite(canvas.convert("RGBA"), card_img).convert("RGB")
-        draw = ImageDraw.Draw(canvas)
+        card_text_primary = (255, 252, 245)
+        card_text_body = (240, 230, 215)
+        card_accent_gold = (255, 210, 85)
 
-        act_font = _font("body", 21)
+        act_font = _font("body", 22)
         actions = [
             ("SAVE THIS POST", "Bookmark for your next grocery or coffee run"),
             ("SHARE THE TRUTH", "Send to a friend who drinks instant coffee"),
@@ -1292,12 +1299,12 @@ def _compose_carousel_slide_impl(
         ]
         ay = card_y0 + 24
         for title, desc in actions:
-            draw.text((card_x0 + 20, ay), f"[ • ]  {title}", font=act_font, fill=theme.get("pill_text", theme["accent"]), anchor="la")
-            ay += 28
-            desc_font = _font("body", 17)
+            draw.text((card_x0 + 20, ay), f"[ • ]  {title}", font=act_font, fill=card_accent_gold, anchor="la")
+            ay += 30
+            desc_font = _font("body", 18)
             for dline in _wrap_lines(draw, desc, desc_font, card_w - 40, max_lines=2):
-                draw.text((card_x0 + 44, ay), dline, font=desc_font, fill=theme["text_body"], anchor="la")
-                ay += 24
+                draw.text((card_x0 + 44, ay), dline, font=desc_font, fill=card_text_body, anchor="la")
+                ay += 25
             ay += 14
 
         # Glowing CTA Button with vector arrow
