@@ -716,7 +716,9 @@ def _compose_post_image_impl(
     import io
     from content_generator.core.ist_dates import today_ist
     os.makedirs(_OUT_DIR, exist_ok=True)
-    date_str = today_ist().isoformat()
+    # A backfill renders a past content day; its files must carry that day's
+    # date or the publisher (which filters by content date) never finds them.
+    date_str = (os.getenv("CREATIVE_ASSET_DATE") or "").strip()[:10] or today_ist().isoformat()
     path = os.path.join(_OUT_DIR, f"{label}_{date_str}.jpg")
     canvas.save(path, "JPEG", quality=88)
     logger.info("[real_jar] Composed %s from real photo %s", path, os.path.basename(jar_path))
@@ -1335,7 +1337,9 @@ def _compose_carousel_slide_impl(
     # Save
     from content_generator.core.ist_dates import today_ist
     os.makedirs(_OUT_DIR, exist_ok=True)
-    date_str = today_ist().isoformat()
+    # A backfill renders a past content day; its files must carry that day's
+    # date or the publisher (which filters by content date) never finds them.
+    date_str = (os.getenv("CREATIVE_ASSET_DATE") or "").strip()[:10] or today_ist().isoformat()
     path = os.path.join(_OUT_DIR, f"{label}_{date_str}.jpg")
     canvas.save(path, "JPEG", quality=90)
     logger.info("[real_jar] Composed carousel slide %d/%d -> %s", idx + 1, total_slides, path)
