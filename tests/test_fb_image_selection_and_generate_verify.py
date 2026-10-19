@@ -49,3 +49,31 @@ def test_generate_verify_accepts_already_generated_pack_but_still_validates():
     assert "predates this run" in text  # stale-content guard still present
     i = text.index("already_generated = False")
     assert text.index("generation_id", i) > i  # pack validation still runs after
+
+
+def test_retry_rerenders_when_on_disk_images_fail_provenance(monkeypatch):
+    from content_generator.scheduler import retry_unposted
+    calls = []
+    monkeypatch.setattr("content_generator.publisher.instagram._find_carousel_images", lambda c: ["a.jpg"])
+    monkeypatch.setattr("content_generator.creative.jar_provenance.verify_creative_suite",
+                        lambda imgs: (False, ["a.jpg: unregistered_image"]))
+    monkeypatch.setattr("content_generator.scheduler.daily._do_generate_images",
+                        lambda c, d: calls.append(d) or {"carousel": ["a.jpg"]})
+    assert retry_unposted.ensure_ig_images({"day_number": 290}) is True
+    assert calls == [290]
+
+
+def test_retry_keeps_verified_images(monkeypatch):
+    from content_generator.scheduler import retry_unposted
+    monkeypatch.setattr("content_generator.publisher.instagram._find_carousel_images", lambda c: ["a.jpg"])
+    monkeypatch.setattr("content_generator.creative.jar_provenance.verify_creative_suite", lambda imgs: (True, []))
+    monkeypatch.setattr("content_generator.scheduler.daily._do_generate_images",
+                        lambda c, d: (_ for _ in ()).throw(AssertionError("must not re-render")))
+    assert retry_unposted.ensure_ig_images({"day_number": 290}) is True
+
+
+def test_retry_persist_keeps_rerendered_creatives_and_registry():
+    text = (ROOT / ".github/workflows/retry-unposted.yml").read_text(encoding="utf-8")
+    i = text.index('mkdir -p "$PERSIST/creative"')
+    assert i < text.index("git reset -q --hard HEAD && git clean -qfd output/creative")
+    assert "provenance registry merged" in text
