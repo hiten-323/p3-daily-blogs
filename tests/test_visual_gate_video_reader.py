@@ -63,6 +63,7 @@ def test_evaluate_video_uses_supported_v2_ffmpeg_reader(monkeypatch, tmp_path):
 
     video = tmp_path / "sample.mp4"
     video.write_bytes(b"fake-video")
+    monkeypatch.setattr(visual_gate, "MIN_BG_MOTION", 0.0)  # synthetic black frames
     result = visual_gate.evaluate_video(str(video), samples=3)
 
     assert captured["format"] == "FFMPEG"
