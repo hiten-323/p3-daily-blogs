@@ -2175,22 +2175,22 @@
   },
   "threads_post": {
     "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "Teach one verifiable coffee fact that changes how people read instant coffee labels — drive follows and profile visits.",
+    "objective": "Teach how coffee processing affects aroma and how to read instant coffee jar labels to drive profile visits and follows.",
     "primary_cta": "Follow @purepantryprovisions for more coffee truth",
     "success_metric": "Profile visits > 500, follows > 50, shares > 100, saves > 200 within 48 hours",
-    "angle": "Myth-buster: Freeze-dried instant coffee preserves more aroma than spray-dried — Purica proves it with pure Arabica granules.",
+    "angle": "Unpopular opinion: water temperature matters more than the brand when extracting delicate coffee notes.",
     "asset_type": "threads_post",
     "buy": {
+      "product_id": "purica",
       "cta_text": "Shop p3online.in",
-      "enabled": true,
       "link": "https://p3online.in",
-      "product_id": "purica"
+      "enabled": true
     },
-    "comment_trigger": "Comment MYTH if you thought instant coffee could never taste this clean.",
-    "curiosity": "What if the instant coffee in your jar keeps more of the bean's original aroma than most café brews?",
+    "comment_trigger": "Comment TRUTH if you check your coffee jar labels.",
+    "curiosity": "What if the reason your coffee lacks aroma is the intense heat used to dry it instead of gentle freeze-drying?",
     "follow": {
-      "cta_text": "Follow @purepantryprovisions for more coffee truth",
-      "handle": "@purepantryprovisions"
+      "handle": "@purepantryprovisions",
+      "cta_text": "Follow @purepantryprovisions for more coffee truth"
     },
     "funnel_objective": "discovery",
     "gate_rejection": "No sales language in body. Product only appears as soft end card. No prices, offers, or discount mentions.",
@@ -2199,19 +2199,51 @@
     "hashtags": "#PurityBeans #PureCoffee #Arabica #FreezeDried #CoffeeMyths #SpecialtyCoffee #CleanLabel #IndianCoffeeBrand",
     "save_trigger": "Save this thread before your next coffee purchase — you'll read the label differently.",
     "share_trigger": "Share with the friend who thinks all instant coffee is the same.",
-    "stop": "Freeze-dried instant coffee keeps more of the bean's original aroma than spray-dried. Most people don't know this.",
+    "stop": "Unpopular opinion: water temperature matters more than the brand.",
     "target": "Urban Indian coffee drinkers 22-45 who buy specialty coffee but haven't tried premium instant",
-    "text": "Freeze-dried instant coffee keeps more of the bean's original aroma than spray-dried. Most don't know this.\n\nMyth: instant coffee loses flavor.\nFact: freeze-drying locks in volatile aromatics that spray-drying destroys.\n\nPurity Beans Purica Gourmet Arabica Granules use freeze-dried pure Arabica — no chicory, no fillers. Process preserves caramel and chocolatey notes.\n\nNext time you read a label, look for 'freeze-dried' and 'pure Arabica'.\n\nFollow @purepantryprovisions for more coffee truth.\nShop https://p3online.in",
-    "trust": "Verifiable food science: freeze-drying preserves 85-95% of volatile aromatics vs 60-70% for spray-drying. Purica ingredient panel: 100% freeze-dried Arabica coffee. No additives.",
-    "value": "One actionable label-reading skill that upgrades every future coffee purchase. Zero fluff, zero sales pitch.",
-    "viral_potential": "High — myth-busting + label literacy + specialty coffee curiosity = shareable discovery content",
-    "viral_readiness_score": 8.5,
+    "text": "1/3 Unpopular opinion: water temperature matters more than the brand when extracting delicate coffee notes. Boiling water scorches the delicate compounds, leaving behind flat bitterness instead of natural aromatics.\n\n2/3 Read the back ingredient panel. True pure coffee lists nothing else. Understanding how low-temperature freeze-drying preserves pure Arabica structure changes how you taste every morning cup.\n\n3/3 Discover pure options at https://p3online.in from Purity Beans.",
+    "trust": "Verifiable food science: freeze-drying preserves volatile aromatics more effectively than high-heat spray-drying. Purica ingredient panel: pure freeze-dried Arabica coffee. No additives.",
+    "value": "An actionable guide on reading jar labels to understand how Purica preserves pure Arabica structure through low-temperature freeze-drying.",
+    "viral_potential": {
+      "scores": {
+        "hook": 8.0,
+        "curiosity_gap": 7.0,
+        "relatability": 7.0,
+        "shareability": 8.0,
+        "comment_trigger": 7.0,
+        "format_fit": 8.0,
+        "follow_cta": 8.0
+      },
+      "overall": 7.5,
+      "weakest": [
+        "curiosity_gap",
+        "relatability"
+      ],
+      "feedback": "The opening hot take is strong and stops the scroll effectively, but the thread text immediately pivots to promotional product copy ('Purity Beans Purica uses...') in post 1/3, which breaks the native educational/contrarian tone of Threads. For a growth-focused thread, the product and branding should be reserved strictly for the final post. Increase the curiosity gap by focusing entirely on the hidden processing method before revealing how to check it.",
+      "better_hook": "Hot take: 90% of instant coffee lovers are paying for roasted aroma spray instead of actual bean flavor.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "viral_readiness_score": 9.5,
     "frames": [
       {
         "on_screen": "Close-up of Purica jar on dark marble. Steam rises."
       }
     ],
-    "editorial_error": "brand: ['Threads native text exceeds 480 characters']"
+    "editorial_score": {
+      "shareability": 7.5,
+      "saveability": 8.0,
+      "emotion_pull": 7.0,
+      "hook_strength": 8.5,
+      "brand_clarity": 8.0,
+      "overall": 7.8,
+      "verdict": "REJECT",
+      "feedback": "The hook is strong and contrarian, which stops the scroll, but the transition into product placement in part 3/3 dilutes the educational value of the thread. To push the overall score above 8.0, completely separate the consumer education on water temperature and freeze-drying from the brand mention, leaving the brand and website link strictly to the final sign-off without sounding promotional in the body.",
+      "retention_audit": "Line 1/3: 'Unpopular opinion: water temperature matters more than the brand when extracting delicate coffee notes.' -> Good scroll-stopper, but minor attention drop if the reader isn't an espresso or pour-over nerd immediately connecting it to instant coffee. Line 2/3: Good educational pivot on label reading and freeze-drying. Line 3/3: Sudden shift to the website link causes a slight drop in the native thread feel; should blend more naturally as a concluding recommendation."
+    },
+    "retention_audit": "Line 1 introduces a strong contrarian premise that stops the scroll instantly. Middle section educates on processing science clearly in a compact threaded format. Ending flows naturally into the brand mention and CTA.",
+    "needs_regen": true
   },
   "facebook_post": {
     "featured_product": "purica",
@@ -3795,7 +3827,7 @@
       {
         "attempt": 5,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 6,
@@ -3815,6 +3847,50 @@
       {
         "status": "exhausted",
         "reason": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.1 < 8.0 (weakest: hook, curiosity_gap). The opening statement states a dry scientific fact rather than challenging a common consumer misconception right away. To lift scores on Threads, the hook needs a sharper pattern interrupt or contrarian angle. Make the first line a direct call-o"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.57 < 8.0 (weakest: format_fit, follow_cta). • Turn the single post into a true thread: break the information into 3‑5 numbered tweets (e.g., 1️⃣ Why most instant coffee is flat, 2️⃣ Freeze‑dry vs spray‑dry, 3️⃣ How to read the label, Use a DIFFERENT hook and angle from the last draft,"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: curiosity_gap, relatability, comment_trigger). The opening line is clear but lacks a sharp contrarian or highly specific edge to maximize the Threads algorithm. Strengthen the curiosity gap by highlighting the hidden difference in processing right away. Ensure the co"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap). The opening line ('Things nobody tells you about instant coffee, a thread:') is a bit overused on Threads. To push this higher, lead directly with a striking industry truth rather than announcing a thread. Also, ensure the thread format uses sep"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: curiosity_gap, relatability). The opening hot take is strong and stops the scroll effectively, but the thread text immediately pivots to promotional product copy ('Purity Beans Purica uses...') in post 1/3, which breaks the native educational/contrarian tone of Threa"
+      },
+      {
+        "status": "exhausted",
+        "reason": "REJECTED AS SALES-LED (The hook is strong and contrarian, which stops the scroll, but the transition into product placement in part 3/3 dilutes the educational value of the thread. To push the overall score above 8.0, completely separate the consumer education on water temperature and freeze-drying "
       }
     ],
     "growth_reel": [
