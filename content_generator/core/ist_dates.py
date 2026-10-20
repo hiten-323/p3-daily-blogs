@@ -97,6 +97,22 @@ def asset_date(content, now: datetime.datetime | None = None) -> str:
     return parsed or today_ist(now).isoformat()
 
 
+def creative_filename(label: str, ext: str = "jpg") -> str:
+    """Date-stamp a creative basename so the publish prune keeps it.
+
+    Publishers select files by the content date embedded in the name. An
+    undated ``instagram_post_dayN.jpg`` is deleted as scratch before the
+    morning runner checks out, and the feed post then fails with no_images.
+    """
+    import os
+    date_str = (os.getenv("CREATIVE_ASSET_DATE") or "").strip()[:10] or today_ist().isoformat()
+    stem = str(label or "creative").strip() or "creative"
+    if date_str and date_str not in stem:
+        stem = f"{stem}_{date_str}"
+    suffix = str(ext or "jpg").lstrip(".") or "jpg"
+    return f"{stem}.{suffix}"
+
+
 def content_matches_today(content: dict, today: datetime.date | None = None) -> tuple[bool, str]:
     """
     True when the file is today's work (or carries no date).

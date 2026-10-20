@@ -64,6 +64,26 @@ def _emit(level: str, message: str, secrets: list[str]) -> None:
     print(f"::{level}::{_redact(message, secrets)}")
 
 
+def _export_env(name: str, value: str) -> None:
+    """Mask a derived secret, then export it for later Actions steps.
+
+    GitHub only masks values registered as repository secrets. A Page token
+    exchanged at runtime, or a refreshed LinkedIn token, is a different string.
+    Writing it to GITHUB_ENV makes the next step's env dump print it. The mask
+    command has to run before that write.
+    """
+    raw = str(value or "").strip()
+    if not raw or any(ch in raw for ch in "\r\n"):
+        return
+    print(f"::add-mask::{raw}", flush=True)
+    os.environ[name] = raw
+    env_file = os.environ.get("GITHUB_ENV", "").strip()
+    if not env_file:
+        return
+    with open(env_file, "a", encoding="utf-8") as handle:
+        handle.write(f"{name}={raw}\n")
+
+
 def _alert(message: str, secrets: list[str]) -> None:
     safe = _redact(message, secrets)
     webhook = os.environ.get("ALERT_WEBHOOK_URL", "").strip()
@@ -389,10 +409,7 @@ def run_checks(now: int | None = None) -> int:
                     resolved_tok = str(page_res.get("access_token") or "").strip()
                     if resolved_tok:
                         secrets.append(resolved_tok)
-                        env_file = os.environ.get("GITHUB_ENV", "").strip()
-                        if env_file:
-                            with open(env_file, "a", encoding="utf-8") as handle:
-                                handle.write(f"FACEBOOK_PAGE_ACCESS_TOKEN={resolved_tok}\n")
+                        _export_env("FACEBOOK_PAGE_ACCESS_TOKEN", resolved_tok)
                         messages.append(("notice", f"Resolved Page Access Token for Facebook Page ID {fb_page_id}"))
                 except Exception as exc:
                     notes.append(f"could not resolve Page token for {fb_page_id}: {type(exc).__name__}")
@@ -450,10 +467,7 @@ def run_checks(now: int | None = None) -> int:
             fresh_li_tok = refresh_access_token(li_cid, li_csec, li_refresh)
             if fresh_li_tok:
                 secrets.append(fresh_li_tok)
-                env_file = os.environ.get("GITHUB_ENV", "").strip()
-                if env_file:
-                    with open(env_file, "a", encoding="utf-8") as handle:
-                        handle.write(f"LI_API_ACCESS={fresh_li_tok}\n")
+                _export_env("LI_API_ACCESS", fresh_li_tok)
                 try:
                     u_res = _fetch("https://api.linkedin.com/v2/userinfo", _headers(fresh_li_tok))
                     name = u_res.get("name", "") or u_res.get("sub", "")

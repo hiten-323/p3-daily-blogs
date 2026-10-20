@@ -81,6 +81,32 @@ def _due(record: dict, now: dt.datetime) -> bool:
         return False
 
 
+# Local misses: the platform API was never called, so they cannot duplicate a
+# post and must not burn the publish-attempt budget. Counting them (Oct 20
+# morning IG `no_images`) made retry-unposted refuse the only recovery path.
+_PREFLIGHT_MISSES = ("no_images", "no_video", "no_content")
+
+
+def _preflight_miss(record: dict) -> bool:
+    err = str((record or {}).get("error") or "").strip().lower()
+    if err.startswith("prepublish_gate:"):
+        return True
+    return err.split(":", 1)[0].strip() in _PREFLIGHT_MISSES
+
+
+def attempt_budget_exhausted(record: dict) -> bool:
+    """True when another automatic publish of this row would be a duplicate risk."""
+    if str((record or {}).get("status") or "") != "FAILED":
+        return False
+    if _preflight_miss(record):
+        return False
+    try:
+        attempts = int((record or {}).get("attempt_count") or 0)
+    except (TypeError, ValueError):
+        attempts = 0
+    return attempts >= _MAX_ATTEMPTS
+
+
 def _recoverable_instagram_account_mismatch(old: dict, platform: str) -> bool:
     """Allow one safe recovery after the configured IG ID was corrected.
 
@@ -170,11 +196,8 @@ def begin_attempt(content: dict, platform: str, slot: str, day_number: int) -> d
             return {"allowed": False, "reason": "stale_attempt_requires_reconciliation", "record": old, "key": key}
         attempts = int(old.get("attempt_count", 0))
         if status == "FAILED":
-            # A pre-publish gate hold never reached the platform, so it cannot
-            # duplicate a post; it must not burn the publish-attempt budget.
-            gate_hold = str(old.get("error") or "").startswith("prepublish_gate:")
             account_id_recovery = _recoverable_instagram_account_mismatch(old, platform)
-            if attempts >= _MAX_ATTEMPTS and not (gate_hold or account_id_recovery):
+            if attempt_budget_exhausted(old) and not account_id_recovery:
                 return {"allowed": False, "reason": "retry_limit_reached", "record": old, "key": key}
             if not _due(old, now):
                 return {"allowed": False, "reason": "retry_backoff", "record": old, "key": key}
@@ -423,7 +446,7 @@ def due_retry_groups() -> list[dict]:
             continue
         failed = (
             record.get("status") == "FAILED"
-            and int(record.get("attempt_count", 0)) < _MAX_ATTEMPTS
+            and not attempt_budget_exhausted(record)
             and _due(record, now)
         )
         unverified = record.get("status") == "PUBLISHED_UNVERIFIED" and _due(record, now)

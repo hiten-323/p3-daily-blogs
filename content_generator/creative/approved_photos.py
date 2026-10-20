@@ -504,7 +504,8 @@ def _save(img, jar, label, src=None, texts=None, band=None):
         logger.warning("[approved_photos] QA fail-closed %s: %s", label, errs)
         return None
     os.makedirs(_OUT_DIR, exist_ok=True)
-    path = os.path.join(_OUT_DIR, f"{label}.jpg")
+    from content_generator.core.ist_dates import creative_filename
+    path = os.path.join(_OUT_DIR, creative_filename(label, "jpg"))
     rgb.save(path, "JPEG", quality=92)
     if src:
         try:
@@ -544,6 +545,7 @@ def _render_impl(surface: str, width: int, height: int, headline: str = "", body
         if not cut:
             return None
         if os.getenv("PREMIUM_CARDS", "1") != "0" and sku:
+            from content_generator.core.ist_dates import creative_filename
             from content_generator.creative import premium_cards, visual_gate
             recent = visual_gate.recent_layouts()
             final = surface in ("ig_story", "reel_thumb") or "cta" in str(label).lower() or "final" in str(label).lower()
@@ -551,7 +553,7 @@ def _render_impl(surface: str, width: int, height: int, headline: str = "", body
                 sku, headline or SKU_COPY.get(sku, ("", ""))[0], _strip_shop(body) or SKU_COPY.get(sku, ("", ""))[1],
                 width=width, height=height, seed=day * 3 + idx, recent_layouts=recent,
                 cta=(f"FOLLOW {HANDLE.upper()}" if final else None),
-                out_path=os.path.join(_OUT_DIR, f"{label}_premium.jpg"))
+                out_path=os.path.join(_OUT_DIR, creative_filename(f"{label}_premium", "jpg")))
             if meta.get("held"):
                 logger.error("[visual-gate] %s held after re-renders: %s", label,
                              (meta.get("visual_gate") or {}).get("reasons"))

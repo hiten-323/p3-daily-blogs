@@ -88,6 +88,27 @@ NO_PACK = "no_pack"
 CHAIN_FROM_HOUR = 7
 
 
+def target_refuses_retry(records: list[dict], target: str) -> bool:
+    """True when every attempt for this target is past the ledger retry cap.
+
+    Pre-flight misses (nothing was sent) do not count. A target in this state
+    must drop out of the self-resume chain; otherwise retry-unposted
+    re-dispatches itself every few minutes and exits 1 without publishing.
+    """
+    from content_generator.publisher.publishing_ledger import attempt_budget_exhausted
+    slot, platforms, _labels, _hour = TARGETS[target]
+    saw_attempt = False
+    for platform in platforms:
+        rows = [r for r in records
+                if r.get("slot") == slot and str(r.get("platform") or "").lower() == platform]
+        if not rows:
+            continue
+        saw_attempt = True
+        if any(not attempt_budget_exhausted(r) for r in rows):
+            return False
+    return saw_attempt
+
+
 def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | None = None,
                     pack_exists: bool | None = None) -> list[str]:
     """What is still due today; drives the workflow's self-resume chain.
@@ -110,7 +131,7 @@ def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | No
         return [NO_PACK]
     if records is None:
         records = records_for_date(date)
-    return unposted_targets(records, now_ist.hour)
+    return [t for t in unposted_targets(records, now_ist.hour) if not target_refuses_retry(records, t)]
 
 
 def is_mandatory(target: str) -> bool:
@@ -248,6 +269,30 @@ def _approved(content: dict) -> dict:
     return approved
 
 
+def _feed_content_for_discovery(content: dict) -> dict:
+    """The pack the morning slot will actually hand to Instagram.
+
+    Discovery on the raw pack treats a rejected carousel as present, so the
+    three dated slides that survived prune look like a successful feed image
+    set. The slot then blanks that carousel and looks only for the approved
+    instagram_post file, which an undated render had already lost.
+    """
+    if not isinstance(content, dict) or not (content.get("carousel") or content.get("instagram_post")):
+        return content if isinstance(content, dict) else {}
+    try:
+        from content_generator.core.editorial_engine import approved_assets
+        approved = approved_assets(content)
+    except Exception as exc:
+        log.warning("[retry] feed discovery kept the full pack (%s)", type(exc).__name__)
+        return content
+    if not isinstance(approved, dict) or not ("carousel" in approved or "instagram_post" in approved):
+        return content
+    scoped = dict(content)
+    scoped["carousel"] = approved.get("carousel") or {}
+    scoped["instagram_post"] = approved.get("instagram_post") or {}
+    return scoped
+
+
 def ensure_ig_images(content: dict) -> bool:
     """Render the day's carousel / feed images if none exist on disk, or if the
     ones on disk fail jar provenance.
@@ -260,7 +305,7 @@ def ensure_ig_images(content: dict) -> bool:
     """
     try:
         from content_generator.publisher.instagram import _find_carousel_images
-        imgs = _find_carousel_images(content)
+        imgs = _find_carousel_images(_feed_content_for_discovery(content))
         if imgs:
             from content_generator.creative.jar_provenance import verify_creative_suite
             ok, issues = verify_creative_suite(imgs)
@@ -393,10 +438,19 @@ def main() -> int:
     remaining = [t for t in checked_todo if t in unposted_targets(after_records, ist_hour)]
     unresolved = sorted(set(blocked + remaining))
     if unresolved:
-        msg = (
-            f"RETRY-UNPOSTED: {date} still has targets not published after recovery: "
-            f"{unresolved}; next attempt is scheduled by the recovery chain."
-        )
+        refused = [t for t in unresolved if target_refuses_retry(after_records, t)]
+        retryable = [t for t in unresolved if t not in refused]
+        if refused and not retryable:
+            msg = (
+                f"RETRY-UNPOSTED: {date} will not retry {refused} "
+                f"(retry limit reached after a real publish attempt). "
+                f"Recovery chain will not re-dispatch."
+            )
+        else:
+            msg = (
+                f"RETRY-UNPOSTED: {date} still has targets not published after recovery: "
+                f"{unresolved}; next attempt is scheduled by the recovery chain."
+            )
         log.error(msg)
         try:
             from content_generator.scheduler.watchdog import alert_failure
