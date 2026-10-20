@@ -2182,7 +2182,7 @@
     "asset_type": "threads_post",
     "buy": "Experience honest coffee with Purity Beans. Shop our full range at https://p3online.in",
     "comment_trigger": "Do you prefer the sharp kick of granules or the smooth dissolve of powder? Tell us your preference below.",
-    "curiosity": "Most people keep two jars of instant coffee on their shelf and have zero idea why one looks like dust and the other looks like crystals. It is not a branding choice—it is a chemical difference in how the coffee was dried, which fundamentally changes the flavor you taste every morning.",
+    "curiosity": "Most people keep a jar of instant coffee on their shelf and have zero idea why one looks like fine dust and the other looks like distinct crystals. It is not a branding choice—it is a chemical difference in how the coffee was dried, which fundamentally changes the flavor you taste every morning.",
     "follow": "Follow @purepantryprovisions to stop guessing what is in your cup and start understanding the science of pure coffee.",
     "frames": [
       {
@@ -2190,8 +2190,8 @@
         "spoken": "Ever noticed how some instant coffees look like fine powder while others are distinct crystals? This isn't a design choice; it's the result of two completely different manufacturing paths."
       },
       {
-        "on_screen": "Agglomeration: The Art of the Smooth Dissolve.",
-        "spoken": "Agglomerated coffee, like our Purity Beans Ultra Blend, is spray-dried and then steam-fused into small clusters. This makes it dissolve instantly and smoothly, making it the ideal choice for everyday milk coffee."
+        "on_screen": "Agglomeration: Built for Milk Coffee.",
+        "spoken": "Agglomerated coffee, like our Purity Beans Ultra Blend—which features 70% coffee and 30% chicory—is steam-fused into small clusters for a smooth dissolve in everyday milk coffee."
       },
       {
         "on_screen": "Freeze-Drying: Preserving the Soul of the Bean.",
@@ -2207,7 +2207,6 @@
       }
     ],
     "funnel_objective": "Awareness to Consideration via Technical Authority",
-    "gate_rejection": "growth engine regenerate: ultra_ratio_missing",
     "growth_plan": {
       "primary_objective": "earn qualified followers",
       "secondary_objective": "reach new relevant coffee drinkers",
@@ -2222,8 +2221,8 @@
     "growth_review": {
       "platform": "threads",
       "label": "threads_post",
-      "decision": "REGENERATE",
-      "overall": 7.8,
+      "decision": "PASS",
+      "overall": 8.47,
       "threshold": 8.0,
       "dimensions": [
         {
@@ -2276,9 +2275,9 @@
         },
         {
           "name": "brand_truth",
-          "score": 0.0,
-          "evidence": "Product truth failed.",
-          "hard_fail": true
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
         },
         {
           "name": "visual_integrity",
@@ -2317,12 +2316,10 @@
           "hard_fail": false
         }
       ],
-      "hard_fails": [
-        "ultra_ratio_missing"
-      ],
+      "hard_fails": [],
       "attempts": 1,
       "retry_limit": 8,
-      "feedback": "ultra_ratio_missing",
+      "feedback": "shareability 6.0: No explicit share or reply ask.",
       "plan": {
         "primary_objective": "earn qualified followers",
         "secondary_objective": "reach new relevant coffee drinkers",
@@ -2347,35 +2344,36 @@
     "value": "Transforms a mundane observation (coffee texture) into a piece of usable knowledge, empowering the consumer to choose based on process rather than price.",
     "viral_potential": {
       "scores": {
-        "hook": 8.0,
+        "hook": 8.5,
         "curiosity_gap": 8.0,
-        "relatability": 7.0,
+        "relatability": 8.5,
         "shareability": 8.0,
-        "comment_trigger": 8.0,
+        "comment_trigger": 9.0,
         "format_fit": 9.0,
-        "follow_cta": 8.0
+        "follow_cta": 8.5
       },
-      "overall": 8.0,
+      "overall": 8.5,
       "weakest": [
-        "relatability"
+        "curiosity_gap",
+        "shareability"
       ],
-      "feedback": "The technical breakdown is strong and establishes great authority, but the opening line could connect even closer to the Indian morning coffee routine (e.g., looking into the jar while the milk boils). Ensure Ultra Blend's 70/30 coffee-chicory ratio context stays clear if referenced, though the current focus on processing is well-executed.",
-      "better_hook": "Hot take: Most kitchen shelves have two jars of coffee, and almost nobody knows why one is powder and the other is crystals.",
+      "feedback": "The piece establishes good authority on coffee processing, but the curiosity gap could be sharper by directly contrasting the physical appearance of the coffee against consumer expectations before explaining the science. Ensure the Threads post format is punchy and optimized for short paragraph breaks to drive immediate replies.",
+      "better_hook": "Most people keep instant coffee on their shelf for months without knowing why one jar looks like fine powder and the next looks like raw crystals.",
       "passed": true,
       "honesty": [],
       "pass_mark": 8.0
     },
     "viral_readiness_score": 77.0,
     "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 9.0,
-      "emotion_pull": 8.0,
+      "shareability": 8.2,
+      "saveability": 8.8,
+      "emotion_pull": 7.5,
       "hook_strength": 8.5,
-      "brand_clarity": 8.5,
-      "overall": 8.5,
+      "brand_clarity": 8.7,
+      "overall": 8.3,
       "verdict": "PASS",
-      "feedback": "The technical breakdown of agglomerated vs. freeze-dried coffee establishes strong educational authority without resorting to cheap anti-chicory scare tactics. The mention of Purity Beans Ultra Blend correctly frames it as a smooth milk coffee with honest 70/30 disclosure. To further improve retention, tighten the transition between the curiosity hook and the process explanation.",
-      "retention_audit": "Stop line: Strong contrarian hook ('Hot take: Most people never actually taste their coffee...') effectively arrests the scroll. Curiosity frame: The contrast between dust and crystals keeps the reader mentally engaged. Frame 2: Correctly identifies Ultra Blend without making false zero-chicory claims. Final frames: Clear educational payoff leading naturally to the website CTA."
+      "feedback": "The technical breakdown of agglomeration vs freeze-drying provides high educational value, making it extremely save-worthy. Mentioning Ultra Blend accurately with its 70/30 coffee-chicory ratio honors brand rules without falling into anti-chicory hypocrisy. To maximize shareability, tighten the transition between frame 1 and frame 2 so the reader doesn't feel a dip in momentum.",
+      "retention_audit": "Line 1 (Curiosity/Hook): Strong pattern interrupt regarding visual texture. Zero drop-off expected. Frames 2-4 (Technical Explanation): Delivers clear, precise science without feeling dry, successfully maintaining reader engagement through educational curiosity. Frame 5 (CTA): Clear call to read the label and visit https://p3online.in effectively converts attention into high-intent traffic."
     },
     "cta": "Save this before your next grocery run."
   },
@@ -4157,6 +4155,11 @@
       {
         "status": "exhausted",
         "reason": "growth engine regenerate: ultra_ratio_missing"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "The content provides strong educational value regarding agglomeration vs. freeze-drying, but overall score is slightly below the 8.0 strict publishing threshold. The retention drops slightly around frame 2 where the text explanation leans too technical ('steam-fused into small clusters') without imm"
       }
     ],
     "growth_reel": [
