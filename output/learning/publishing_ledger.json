@@ -4164,11 +4164,11 @@
       "verified_at": "2026-10-20T07:09:49+00:00"
     },
     "2026-10-20|morning|instagram|pb_4146c671ce": {
-      "attempt_count": 3,
+      "attempt_count": 4,
       "content_date": "2026-10-20",
       "content_id": "pb_4146c671ce",
       "day_number": 292,
-      "error": "no_images",
+      "error": "",
       "history": [
         {
           "at": "2026-10-20T06:58:12+00:00",
@@ -4214,23 +4214,40 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-20T11:44:02+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-20T11:44:15+00:00",
+          "attempt": 4,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "17995874817046742",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DetwRFhjepi/",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-10-20T08:00:50+00:00",
+      "last_attempt_at": "2026-10-20T11:44:02+00:00",
       "last_result": {
-        "error": "no_images",
-        "success": false
+        "error": "",
+        "success": true
       },
+      "last_verification_at": "2026-10-20T11:44:15+00:00",
       "next_retry_at": null,
       "platform": "instagram",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "17995874817046742",
       "slot": "morning",
-      "status": "FAILED",
-      "updated_at": "2026-10-20T08:00:53+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-20T11:44:15+00:00",
+      "url": "https://www.instagram.com/p/DetwRFhjepi/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-20T11:44:15+00:00"
     }
   },
   "version": 1
