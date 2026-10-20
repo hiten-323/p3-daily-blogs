@@ -63,6 +63,31 @@ def _beats_from_reel(reel: dict) -> list[dict]:
     return beats[:_MAX_BEATS]
 
 
+def resolve_reel_product(reel: dict):
+    """The featured SKU for a reel/short dict.
+
+    Generated reels carry the SKU under ``featured_product`` (or the growth
+    plan), not ``product``. Reading only ``product`` gave None, which skipped
+    the cinematic motion renderer and fell back to the flat Ken Burns poster
+    slideshow (Oct 20 evening reel).
+    """
+    if not isinstance(reel, dict):
+        return None
+    for key in ("product", "featured_product", "sku"):
+        v = reel.get(key)
+        if isinstance(v, str) and v.strip():
+            return v.strip()
+    for parent in ("growth_plan", "growth_review"):
+        node = reel.get(parent)
+        if isinstance(node, dict):
+            if isinstance(node.get("sku"), str) and node["sku"].strip():
+                return node["sku"].strip()
+            plan = node.get("plan")
+            if isinstance(plan, dict) and isinstance(plan.get("sku"), str) and plan["sku"].strip():
+                return plan["sku"].strip()
+    return None
+
+
 def _cinematic(beats, product, day, label, on_date, seconds, format_type="reel"):
     """Procedural cinematic motion (cinematic_motion), gated by visual_gate. None -> legacy path."""
     if os.getenv("CINEMATIC_VIDEO", "1") == "0":
@@ -124,7 +149,7 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
             logger.info("[reel_video] style cues only (%s); reference file stays in the bank", cue_ids)
     except Exception as exc:
         logger.debug("[reel_video] product reel lookup skipped: %s", exc)
-    _cin = _cinematic(_beats_from_reel(reel), reel.get("product"), day, label, on_date, 12.0, format_type="reel")
+    _cin = _cinematic(_beats_from_reel(reel), resolve_reel_product(reel), day, label, on_date, 12.0, format_type="reel")
     if _cin:
         return _cin
     try:
@@ -142,7 +167,8 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
 
     beats = _beats_from_reel(reel)
     total_beats = len(beats)
-    product = reel.get("product")
+    product = resolve_reel_product(reel)
+    logger.warning("[reel_video] cinematic motion unavailable for %s; using legacy poster frames", product)
     frame_paths = []
     for i, b in enumerate(beats):
         if _frame.__name__ == "compose_cinematic_frame":

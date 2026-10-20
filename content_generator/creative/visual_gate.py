@@ -492,7 +492,35 @@ def evaluate_video(path: str, meta: dict | None = None, recent_layouts=(), *, vi
         except OSError:
             pass
     reasons = [x for r in results for x in r["reasons"]]
-    return {"passed": all(r["passed"] for r in results), "reasons": reasons, "frames": results}
+    motion = background_motion(picks)
+    if motion is not None and motion < MIN_BG_MOTION:
+        reasons.append(f"static_background:motion={motion:.1f}")
+    return {"passed": all(r["passed"] for r in results) and not (motion is not None and motion < MIN_BG_MOTION),
+            "reasons": reasons, "frames": results, "bg_motion": motion}
+
+
+# A moving coffee backdrop (steam, light sweep, granules, push-in) changes the
+# background between the first and last sampled frame. A flat card that only
+# Ken-Burns-zooms barely does. Mean absolute luma change in the side margins
+# (outside the centred jar and headline) below this rejects the render.
+MIN_BG_MOTION = float(os.getenv("VISUAL_MIN_BG_MOTION", "12.0"))
+
+
+def background_motion(frames) -> float | None:
+    """Mean abs luma change of the side margins between first and last frame."""
+    import numpy as np
+    if not frames or len(frames) < 2:
+        return None
+    a = np.asarray(frames[0], np.float32)
+    b = np.asarray(frames[-1], np.float32)
+    if a.shape != b.shape or a.ndim < 2:
+        return None
+    w = a.shape[1]
+    m = max(1, w // 6)
+    def side(x):
+        g = x.mean(axis=2) if x.ndim == 3 else x
+        return np.concatenate([g[:, :m], g[:, -m:]], axis=1)
+    return float(np.abs(side(a) - side(b)).mean())
 
 
 _LAYOUT_LOG = os.path.join("output", "learning", "visual_layouts.json")
