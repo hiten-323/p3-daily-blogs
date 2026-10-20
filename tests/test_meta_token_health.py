@@ -151,6 +151,98 @@ def test_strict_meta_preflight_fails_when_facebook_token_missing(monkeypatch, ca
     assert "::error::Facebook publishing credentials unavailable" in out
 
 
+def _passing_preflight(monkeypatch):
+    monkeypatch.setenv("META_TOKEN_MODE", "strict")
+    monkeypatch.setenv("META_PUBLISH_PREFLIGHT", "true")
+    monkeypatch.setenv("INSTAGRAM_ACCOUNT_ID", "ig-123")
+    monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "ig-token")
+    monkeypatch.setenv("FACEBOOK_PAGE_ID", "fb-123")
+    monkeypatch.setenv("THREADS_ACCESS_TOKEN", "threads-token")
+    monkeypatch.setenv("THREADS_USER_ID", "threads-123")
+    monkeypatch.delenv("LI_REFRESH_TOKEN", raising=False)
+    monkeypatch.delenv("LI_CLIENT_ID", raising=False)
+    monkeypatch.delenv("LI_CLIENT_SECRET", raising=False)
+    monkeypatch.delenv("LI_API_ACCESS", raising=False)
+    monkeypatch.delenv("YOUTUBE_CLIENT_ID", raising=False)
+    monkeypatch.delenv("YOUTUBE_CLIENT_SECRET", raising=False)
+    monkeypatch.delenv("YOUTUBE_REFRESH_TOKEN", raising=False)
+    monkeypatch.setattr(health, "inspect_instagram", lambda *a, **k: {
+        "ok": True, "problems": [], "scopes": list(health.IG_SCOPES),
+        "type": "USER", "expires": "never", "username": "puritybeans",
+        "resolved_account_id": "",
+    })
+    monkeypatch.setattr(health, "_fetch", lambda *a, **k: {"id": "threads-123", "username": "puritybeans"})
+
+
+def test_derived_page_token_is_masked_before_github_env_export(monkeypatch, tmp_path, capsys):
+    env_file = tmp_path / "github_env"
+    env_file.write_text("", encoding="utf-8")
+    _passing_preflight(monkeypatch)
+    monkeypatch.setenv("GITHUB_ENV", str(env_file))
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "user-token")
+    derived = "derived-page-token"
+    monkeypatch.setattr(health, "inspect_token", lambda token, **k: {
+        "type": "USER", "expires": "never", "scopes": list(health.FB_SCOPES),
+        "expired": False, "valid": True,
+    })
+
+    def fetch(url, headers, timeout=15):
+        if "fields=access_token" in url:
+            return {"access_token": derived}
+        return {"id": "threads-123", "username": "puritybeans"}
+
+    monkeypatch.setattr(health, "_fetch", fetch)
+    assert health.run_checks(now=100) == 0
+    out = capsys.readouterr().out
+    exported = env_file.read_text(encoding="utf-8")
+    assert f"FACEBOOK_PAGE_ACCESS_TOKEN={derived}" in exported
+    mask = f"::add-mask::{derived}"
+    assert mask in out
+    for line in out.splitlines():
+        if derived in line:
+            assert line.strip() == mask
+
+
+def test_derived_linkedin_token_is_masked_before_github_env_export(monkeypatch, tmp_path, capsys):
+    env_file = tmp_path / "github_env"
+    env_file.write_text("", encoding="utf-8")
+    _passing_preflight(monkeypatch)
+    monkeypatch.setenv("GITHUB_ENV", str(env_file))
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "page-token")
+    monkeypatch.setenv("LI_REFRESH_TOKEN", "refresh-secret")
+    monkeypatch.setenv("LI_CLIENT_ID", "client-id")
+    monkeypatch.setenv("LI_CLIENT_SECRET", "client-secret")
+    # _export_env writes the derived value onto the process. Seed it first so
+    # the test fixture restores a blank value instead of leaving it behind.
+    monkeypatch.setenv("LI_API_ACCESS", "")
+    derived = "derived-li-token"
+    monkeypatch.setattr(health, "inspect_token", lambda token, **k: {
+        "type": "PAGE", "expires": "never", "scopes": list(health.FB_SCOPES),
+        "expired": False, "valid": True,
+    })
+    monkeypatch.setattr(
+        "content_generator.publisher.linkedin.refresh_access_token",
+        lambda *a, **k: derived,
+    )
+    monkeypatch.setattr(health, "_fetch", lambda *a, **k: {"id": "threads-123", "username": "puritybeans", "name": "Purity Beans"})
+    assert health.run_checks(now=100) == 0
+    out = capsys.readouterr().out
+    exported = env_file.read_text(encoding="utf-8")
+    assert f"LI_API_ACCESS={derived}" in exported
+    mask = f"::add-mask::{derived}"
+    assert mask in out
+    for line in out.splitlines():
+        if derived in line:
+            assert line.strip() == mask
+
+
+def test_publish_workflows_resolve_tokens_through_the_shared_health_check():
+    root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".github", "workflows")
+    for name in ("daily.yml", "retry-unposted.yml", "publish-recovery.yml", "instagram-token-health.yml"):
+        text = open(os.path.join(root, name), encoding="utf-8").read()
+        assert "python -m content_generator.ops.meta_token_health" in text
+
+
 def test_strict_meta_preflight_fails_when_threads_identity_mismatches(monkeypatch, capsys):
     monkeypatch.setenv("META_TOKEN_MODE", "strict")
     monkeypatch.setenv("META_PUBLISH_PREFLIGHT", "true")

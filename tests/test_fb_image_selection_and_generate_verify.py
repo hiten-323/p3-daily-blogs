@@ -63,6 +63,56 @@ def test_retry_rerenders_when_on_disk_images_fail_provenance(monkeypatch):
     assert calls == [290]
 
 
+def test_retry_rerenders_feed_image_when_only_rejected_carousel_slides_exist(tmp_path, monkeypatch):
+    """Morning publishes the approved feed piece, not a rejected carousel.
+
+    Dated carousel slides still on disk must not count as the feed image, or
+    recovery skips the render and the slot then discovers nothing.
+    """
+    from content_generator.scheduler import retry_unposted
+
+    monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(tmp_path))
+    for name in (
+        "carousel_slide_3_day292_2026-10-20.jpg",
+        "carousel_slide_4_day292_2026-10-20.jpg",
+        "carousel_slide_5_day292_2026-10-20.jpg",
+    ):
+        (tmp_path / name).write_bytes(b"slide")
+    content = {
+        "day_number": 292,
+        "date": "2026-10-20",
+        "carousel": {"caption": "Read the jar.", "slides": [{"heading": "A", "body": "B"}]},
+        "instagram_post": {"caption": "At Purity Beans, pure coffee."},
+    }
+    monkeypatch.setattr(
+        "content_generator.core.editorial_engine.approved_assets",
+        lambda c: {"instagram_post": c["instagram_post"]},
+    )
+    monkeypatch.setattr(
+        "content_generator.creative.jar_provenance.verify_creative_suite",
+        lambda imgs: (True, []),
+    )
+    calls = []
+
+    def fake_render(c, d):
+        path = tmp_path / "instagram_post_day292_2026-10-20.jpg"
+        path.write_bytes(b"feed")
+        calls.append(d)
+        return {"instagram_post": str(path)}
+
+    monkeypatch.setattr("content_generator.scheduler.daily._do_generate_images", fake_render)
+    assert retry_unposted.ensure_ig_images(content) is True
+    assert calls == [292]
+
+
+def test_approved_photo_names_include_asset_date(monkeypatch):
+    from content_generator.core.ist_dates import creative_filename
+
+    monkeypatch.setenv("CREATIVE_ASSET_DATE", "2026-10-20")
+    assert creative_filename("instagram_post_day292") == "instagram_post_day292_2026-10-20.jpg"
+    assert creative_filename("carousel_slide_1_day292_2026-10-20") == "carousel_slide_1_day292_2026-10-20.jpg"
+
+
 def test_retry_keeps_verified_images(monkeypatch):
     from content_generator.scheduler import retry_unposted
     monkeypatch.setattr("content_generator.publisher.instagram._find_carousel_images", lambda c: ["a.jpg"])
@@ -101,6 +151,20 @@ def test_abandon_attempt_removes_new_publishing_row(monkeypatch):
     assert "k" not in store["records"]
     PL.abandon_attempt({"allowed": True, "key": "j", "prior": {"status": "FAILED", "error": "x"}})
     assert store["records"]["j"]["status"] == "FAILED"
+
+
+def test_feed_discovery_does_not_reuse_another_days_image(tmp_path, monkeypatch):
+    from content_generator.publisher import instagram
+    monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(tmp_path))
+    (tmp_path / "instagram_post_day1_2026-10-20.jpg").write_bytes(b"other-day")
+    (tmp_path / "carousel_slide_3_day292_2026-10-20.jpg").write_bytes(b"slide")
+    monkeypatch.setattr("content_generator.core.ist_dates.asset_date", lambda c: "2026-10-20")
+    found = instagram._find_carousel_images({
+        "day_number": 292,
+        "carousel": {},
+        "instagram_post": {"caption": "At Purity Beans"},
+    })
+    assert found == []
 
 
 def test_single_feed_image_found_when_undated(tmp_path, monkeypatch):

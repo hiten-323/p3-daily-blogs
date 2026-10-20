@@ -45,6 +45,28 @@ def test_corrected_instagram_account_id_reopens_only_stale_page_id_failures(tmp_
     assert ticket["record"]["attempt_count"] == 4
 
 
+def test_preflight_no_images_does_not_exhaust_retry_cap(tmp_path, monkeypatch):
+    """A no_images miss never reached Instagram, so it must stay retryable."""
+    from content_generator.publisher import publishing_ledger as ledger
+    from content_generator.core.ist_dates import today_ist
+
+    monkeypatch.setattr(ledger, "_PATH", tmp_path / "ledger.json")
+    content = {"date": today_ist().isoformat(), "generation_id": "ig-no-images"}
+    key, identity = ledger._identity(content, "instagram", "morning", 292)
+    past = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(minutes=10)).isoformat()
+    data = {"version": 1, "records": {key: {
+        **identity, "status": "FAILED", "attempt_count": 3,
+        "next_retry_at": None, "remote_id": "", "url": "",
+        "error": "no_images", "updated_at": past,
+    }}}
+    ledger._PATH.write_text(json.dumps(data), encoding="utf-8")
+
+    ticket = ledger.begin_attempt(content, "instagram", "morning", 292)
+    assert ticket["allowed"] is True
+    assert ticket["record"]["attempt_count"] == 4
+    assert ledger.attempt_budget_exhausted(data["records"][key]) is False
+
+
 def test_corrected_instagram_account_id_does_not_reopen_unrelated_or_ambiguous_failures(tmp_path, monkeypatch):
     from content_generator.publisher import publishing_ledger as ledger
     from content_generator.core.ist_dates import today_ist

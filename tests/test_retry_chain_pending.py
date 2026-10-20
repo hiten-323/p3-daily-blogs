@@ -52,6 +52,26 @@ def test_instagram_reel_alias_counts_as_posted():
     assert "ig_reel" not in ru.unposted_targets(rec, 23)
 
 
+def _morning_settled(**ig):
+    live = "VERIFIED_LIVE"
+    rec = [{"slot": s, "platform": p, "status": live, "attempt_count": 1, "error": ""} for s, p in (
+        ("morning", "instagram_story"), ("morning", "facebook"),
+        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
+    rec.append({"slot": "morning", "platform": "instagram", "status": "FAILED",
+                 "attempt_count": 3, "remote_id": "", "url": "", **ig})
+    return rec
+
+
+def test_pending_omits_targets_the_ledger_will_refuse():
+    rec = _morning_settled(error="caption rejected by the platform")
+    assert "ig_feed" not in ru.pending_targets(T(12), records=rec, pack_exists=True)
+
+
+def test_pending_keeps_preflight_no_images_retryable():
+    rec = _morning_settled(error="no_images")
+    assert "ig_feed" in ru.pending_targets(T(12), records=rec, pack_exists=True)
+
+
 def test_pending_probe_error_returns_nonzero(monkeypatch, capsys):
     import sys
     monkeypatch.setattr(ru, "pending_targets", lambda: (_ for _ in ()).throw(RuntimeError("probe broke")))

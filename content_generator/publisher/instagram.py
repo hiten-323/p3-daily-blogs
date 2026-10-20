@@ -346,6 +346,10 @@ def _find_carousel_images(content: dict) -> list[str]:
 
     from content_generator.core.ist_dates import asset_date
     today = asset_date(content)
+    try:
+        _day = int(content.get("day_number") or 0)
+    except (TypeError, ValueError):
+        _day = 0
     images = []
     if content.get("carousel"):
         patterns = [
@@ -363,22 +367,37 @@ def _find_carousel_images(content: dict) -> list[str]:
         # creative images persist 7 days in the repo for the publish slots,
         # so without this filter we would post a mix of old days' slides.
         images = [p for p in dict.fromkeys(images) if today in os.path.basename(p)]
+        if _day:
+            # day1 must not match inside day12 / day292.
+            day_token = re.compile(rf"day{_day}(?:_|\.)")
+            images = [p for p in images if day_token.search(os.path.basename(p))]
 
     # If no carousel slides found, look for feed post / instagram post images generated today
     if not images:
-        try:
-            _day = int(content.get("day_number") or 0)
-        except (TypeError, ValueError):
-            _day = 0
         # The Gemini/real-jar feed image is written undated as
         # instagram_post_day{N}.jpg; without this pattern a day whose carousel
         # was rejected found no feed image at all ("Images discovered: []").
-        single_patterns = ([f"instagram_post_day{_day}.jpg", f"instagram_post_day{_day}.png"] if _day else []) + [
-            f"instagram_post_*{today}.jpg",
-            f"instagram_post_*{today}.png",
-            f"feed_post_*{today}.jpg",
-            f"feed_post_*{today}.png",
-        ]
+        # Dated renders are instagram_post_day{N}_{date}.jpg. A bare
+        # instagram_post_*{date} glob also matches other days (day1 on the
+        # same date) and would post the wrong file.
+        if _day:
+            single_patterns = [
+                f"instagram_post_day{_day}.jpg",
+                f"instagram_post_day{_day}.png",
+                f"instagram_post_day{_day}_{today}.jpg",
+                f"instagram_post_day{_day}_{today}.png",
+                f"feed_post_day{_day}.jpg",
+                f"feed_post_day{_day}.png",
+                f"feed_post_day{_day}_{today}.jpg",
+                f"feed_post_day{_day}_{today}.png",
+            ]
+        else:
+            single_patterns = [
+                f"instagram_post_*{today}.jpg",
+                f"instagram_post_*{today}.png",
+                f"feed_post_*{today}.jpg",
+                f"feed_post_*{today}.png",
+            ]
         for sp in single_patterns:
             images.extend(sorted(_glob.glob(os.path.join(creative_dir, sp))))
         images = list(dict.fromkeys(images))
