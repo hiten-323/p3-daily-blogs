@@ -1754,17 +1754,17 @@
     "description": "Side-by-side: spray-dried powder dissolves into flat, bitter mud. Purity Beans Purica freeze-dried Arabica crystals bloom with amber crema, locked-in aroma, and natural caramel-chocolate notes. Zero chicory. Read the jar at https://p3online.in",
     "product": "Purica",
     "tagline": "Read the jar. Purica is pure Arabica freeze-dried coffee.",
-    "chosen_hook": "Betrayal Hook",
-    "hook": "You've been drinking burnt coffee your entire life. Here's the proof.",
-    "hook_text": "You've been drinking burnt coffee your entire life. Here's the proof.",
-    "emotion_arc": "Betrayal revelation → visual proof → sensory awakening → confident choice",
+    "chosen_hook": "Contrarian Statement",
+    "hook": "Your instant coffee isn't coffee. It's burnt leftovers. Here's the proof.",
+    "hook_text": "Your instant coffee isn't coffee. It's burnt leftovers. Here's the proof.",
+    "emotion_arc": "Contrarian shock → visual proof → sensory awakening → confident choice",
     "edit_pacing": "Fast cuts every 2-3 seconds, macro crystal detail pulls, subtle handheld sway, physics-first dissolution",
     "audio": "Diegetic kitchen ASMR — kettle whistle, spoon clink, crystal pour, steam hiss — layered under warm acoustic guitar bed",
     "audio_direction": "Pure diegetic sound first 4 seconds, then subtle instrumental bed under voiceover",
     "comment_trigger": "Comment CRYSTALS if you've seen the bloom. Comment POWDER if you're still drinking spray-dried.",
     "save_trigger": "Save this granule test before your next coffee run — you'll want the label check.",
     "share_trigger": "Send this to the friend who thinks all instant coffee tastes the same.",
-    "cta": "Shop Purica 50g for ₹329 or 100g for ₹559 at https://p3online.in",
+    "cta": "Follow @purepantryprovisions for Ultra Blend: 70% coffee and 30% chicory. Shop Purica 50g for ₹329 or 100g for ₹559 at https://p3online.in",
     "tags": [
       "Purica",
       "Purity Beans",
@@ -1788,7 +1788,7 @@
         "scene": 2,
         "type": "problem_reveal",
         "duration_s": 5,
-        "visual": "Quick cut: generic spray-dried powder dissolving into murky brown water in a chipped mug. Steam rises flat. Cut to: hand rotating the actual Purity Beans Purica glass jar — label catches light, ingredient panel visible: '100% Pure Arabica Coffee. Zero Chicory.' Fingerprint smudge on glass.",
+        "visual": "Quick cut: generic spray-dried powder dissolving into murky brown water in a chipped mug. Steam rises flat. Cut to: hand rotating the actual Purity Beans Purica glass jar — label catches light, ingredient panel visible: 'pure Arabica Coffee. Zero Chicory.' Fingerprint smudge on glass.",
         "visual_direction": "Whip pan transition. Label pan at 1/4 speed. Real paper texture on label. Contact shadow under jar on marble.",
         "on_screen": "Spray-dried = burnt flavor. Freeze-dried = the bean.",
         "spoken": "Most instant coffee is spray-dried — high heat burns the oils. Purity Beans Purica is freeze-dried pure Arabica. Zero chicory. Read the jar."
@@ -1815,20 +1815,23 @@
         "scene": 5,
         "type": "cta_end",
         "duration_s": 3,
-        "visual": "Hand reaches for"
+        "visual": "Hand reaches into frame, gently picking up the Purity Beans Purica glass jar against a warm, lived-in kitchen background with soft ambient lighting.",
+        "visual_direction": "Handheld 85mm portrait lens feel, natural falloff, shallow depth of field.",
+        "on_screen": "Read the jar at https://p3online.in",
+        "spoken": "Stop settling for burnt powder. Upgrade your morning cup today at https://p3online.in."
       }
     ],
-    "caption": "Ever wondered why freeze-dried coffee granules taste completely different from ordinary powder? Discover why Purity Beans Purica is crafted with pure Arabica beans through a freeze-drying process that locks in rich aroma and natural flavor notes. Read the jar. Available in 50g for ₹329 or 100g for ₹559. Shop now at https://p3online.in #PurityBeans #Purica #FreezeDriedCoffee #PureArabica #PurePantryProvisions",
+    "caption": "Ever wondered why freeze-dried coffee granules taste completely different from ordinary powder? Discover why Purity Beans Purica is crafted with pure Arabica beans through a freeze-drying process that locks in rich aroma and natural flavor notes. Read the jar. Available in 50g for ₹329 or 100g for ₹559. Shop",
     "editorial_score": {
-      "shareability": 6.5,
-      "saveability": 7.0,
-      "emotion_pull": 6.0,
-      "hook_strength": 5.5,
-      "brand_clarity": 8.5,
-      "overall": 6.7,
-      "verdict": "REJECT",
-      "feedback": "The hook 'Ever wondered why freeze-dried coffee granules taste completely different from ordinary powder?' is too passive and generic. It sounds like an educational textbook opener rather than an attention-grabbing scroll-stopper. To make this high-converting, replace the weak question hook with a stronger curiosity or identity challenge (e.g., 'Stop settling for bitter instant powder when freeze-drying changes everything'). The pacing is stable and product clarity is good, but the emotional spark and shareability suffer from overly safe, corporate-sounding phrasing.",
-      "retention_audit": "Scene 1: Hook opening uses a tired 'Ever wondered...' phrasing which causes a high drop-off/swipe away in the first 2 seconds. Scene 2: Label pan is good for transparency, but spoken delivery lacks a punchy claim about why pure Arabica matters over cheap commercial alternatives. Scene 3: Macro shot and steam add good sensory details, saving retention temporarily. Scene 4 & 5: Clear pricing and website URL, but closing lacks a strong urgency or identity-based CTA."
+      "shareability": 9.2,
+      "saveability": 8.8,
+      "emotion_pull": 9.0,
+      "hook_strength": 9.5,
+      "brand_clarity": 9.4,
+      "overall": 9.2,
+      "verdict": "PASS",
+      "feedback": "The asset moves from contrarian shock to sensory satisfaction without a single narrative lag. The contrast between spray-dried mud and freeze-dried Purica crystals hits the exact pain point of urban Indian coffee drinkers. Keep the fast 2-3 second pacing and micro-ASMR sound design.",
+      "retention_audit": "0-3s: Hook instantly forces the thumb to stop with a strong contrarian claim. 3-8s: Visual transition from generic burnt powder to the actual Purity Beans Purica jar maintains tension without drop-off. 8-14s: The bloom shot with realistic physics and amber crema locks in attention through the final call to action."
     },
     "funnel_objective": "FOLLOW",
     "objective": "Follower Growth",
@@ -1961,7 +1964,28 @@
       },
       "published": false
     },
-    "editorial_error": "schema: 3 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'type': 'cta...al': 'Hand reaches for'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type=missing, input_value={'scene': 5, 'type': 'cta...al': 'Hand reaches for'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.visual_direction   Field requ"
+    "viral_potential": {
+      "scores": {
+        "hook": 8.5,
+        "curiosity_gap": 9.0,
+        "relatability": 8.5,
+        "shareability": 8.5,
+        "comment_trigger": 9.0,
+        "format_fit": 9.0,
+        "follow_cta": 8.0
+      },
+      "overall": 8.64,
+      "weakest": [
+        "follow_cta",
+        "hook"
+      ],
+      "feedback": "The piece has strong visual direction and an engaging granule-test hook. To push it even higher, make the follow CTA feel more like an invitation to join the clean-coffee movement rather than a direct transaction. The contrast between powder and freeze-dried crystals is clear and effective.",
+      "better_hook": "Stop drinking burnt instant coffee until you see this granule test.",
+      "passed": true,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "viral_readiness_score": 87.0
   },
   "growth_reel": {
     "type": "reel",
@@ -2150,57 +2174,100 @@
     }
   },
   "threads_post": {
-    "featured_product": "Purica",
-    "objective": "follower_growth",
-    "primary_cta": "Follow @purepantryprovisions for daily coffee rituals that respect your intelligence — Purica awaits at https://p3online.in",
-    "success_metric": "Saves, Shares, and Profile Follows",
-    "angle": "Ritual Elevation meets Sensory Contrast: The 90-second window where freeze-dried Arabica reveals what spray-dried coffee never could.",
+    "featured_product": "Purica Gourmet Arabica Granules",
+    "objective": "Teach one verifiable coffee fact that changes how people read instant coffee labels — drive follows and profile visits.",
+    "primary_cta": "Follow @purepantryprovisions for more coffee truth",
+    "success_metric": "Profile visits > 500, follows > 50, shares > 100, saves > 200 within 48 hours",
+    "angle": "Myth-buster: Freeze-dried instant coffee preserves more aroma than spray-dried — Purica proves it with pure Arabica granules.",
     "asset_type": "threads_post",
-    "buy": "Experience the freeze-dried difference: https://p3online.in",
-    "comment_trigger": "Comment ARABICA if you can taste the caramel-chocolate notes in your first sip. Comment RITUAL if your morning cup is non-negotiable.",
-    "curiosity": "Why does freeze-dried Arabica bloom aroma in 3 seconds while spray-dried takes 3 minutes — if it ever does?",
-    "follow": "Follow @purepantryprovisions for coffee truth that makes your morning smarter.",
-    "funnel_objective": "FOLLOWER_GROWTH",
-    "gate_rejection": "none",
-    "growth_plan": "Anchor daily content in sensory specificity and label transparency. Each post teaches one verifiable fact about what is in the jar. Growth comes from being the only account that explains coffee science without jargon.",
-    "growth_review": "Previous ritual-only posts scored 4.1 — too soft. This version adds sensory contrast (freeze-dried vs spray-dried), identity signaling (comment triggers), and a verifiable curiosity gap. Target: 8+ editorial score.",
-    "hashtags": "#PurityBeans #Purica #FreezeDriedCoffee #PureArabica #IndiaCleanestInstantCoffee #CoffeeScience #MorningRitual #ReadTheLabel",
-    "save_trigger": "Save this: 3 signs your instant coffee is spray-dried, not freeze-dried. The difference is in the aroma.",
-    "share_trigger": "Share with the one person who claims they 'don't like instant coffee' — they've just never had freeze-dried Arabica.",
-    "stop": "Extreme close-up: steam curling off a ceramic mug where golden-brown crema forms naturally on freeze-dried Purica granules — no machine, no whisk, just hot water.",
-    "target": "Urban Indian professionals 22-45 who brew at home, read ingredient panels, and treat coffee as a quality signal, not just caffeine delivery.",
-    "text": "Most instant coffee is spray-dried — high heat strips aroma, leaves flat bitterness. You drink it fast because there is nothing to taste.\n\nPurica by Purity Beans is different. Freeze-dried pure Arabica. Zero chicory. Zero additives. The granules hit hot water and release caramel-chocolate notes with a natural crema in 3 seconds. That is not marketing. That is physics.\n\nRead the jar. One ingredient: coffee. India's Cleanest Instant Coffee.\n\nYour morning deserves 90 seconds of honesty. https://p3online.in",
-    "trust": "Freeze-drying preserves volatile aromatics that spray-drying destroys. Purica granules are 100% Arabica, frozen at -40°C, vacuum-dried. No fillers. No flavor carriers. The crema forms because the coffee oils survived the process. You can see it. You can taste it.",
-    "value": "Cafe-quality Arabica at Rs 5.60 per cup (50g jar, ₹329). Two minutes. Zero equipment. Zero chicory. The only decision: black or with milk.",
-    "viral_potential": "High — combines sensory proof (visible crema), verifiable science (freeze-dried vs spray-dried), identity signaling (comment triggers), and",
-    "viral_readiness_score": 9.2,
-    "editorial_score": {
-      "shareability": 4.5,
-      "saveability": 4.0,
-      "emotion_pull": 4.0,
-      "hook_strength": 3.0,
-      "brand_clarity": 5.0,
-      "overall": 4.1,
-      "verdict": "REJECT",
-      "feedback": ""
+    "buy": {
+      "cta_text": "Shop p3online.in",
+      "enabled": true,
+      "link": "https://p3online.in",
+      "product_id": "purica"
     },
+    "comment_trigger": "Comment MYTH if you thought instant coffee could never taste this clean.",
+    "curiosity": "What if the instant coffee in your jar keeps more of the bean's original aroma than most café brews?",
+    "follow": {
+      "cta_text": "Follow @purepantryprovisions for more coffee truth",
+      "handle": "@purepantryprovisions"
+    },
+    "funnel_objective": "discovery",
+    "gate_rejection": "No sales language in body. Product only appears as soft end card. No prices, offers, or discount mentions.",
+    "growth_plan": "Thread format maximizes shareability and saves. Myth-busting triggers curiosity and identity signaling. Soft follow CTA converts discovery to audience.",
+    "growth_review": "Myth-busting threads on coffee science consistently outperform product posts in saves/shares. Arabica purity angle resonates with specialty coffee curious.",
+    "hashtags": "#PurityBeans #PureCoffee #Arabica #FreezeDried #CoffeeMyths #SpecialtyCoffee #CleanLabel #IndianCoffeeBrand",
+    "save_trigger": "Save this thread before your next coffee purchase — you'll read the label differently.",
+    "share_trigger": "Share with the friend who thinks all instant coffee is the same.",
+    "stop": "Freeze-dried instant coffee keeps more of the bean's original aroma than spray-dried. Most people don't know this.",
+    "target": "Urban Indian coffee drinkers 22-45 who buy specialty coffee but haven't tried premium instant",
+    "text": "Freeze-dried instant coffee keeps more of the bean's original aroma than spray-dried. Most don't know this.\n\nMyth: instant coffee loses flavor.\nFact: freeze-drying locks in volatile aromatics that spray-drying destroys.\n\nPurity Beans Purica Gourmet Arabica Granules use freeze-dried pure Arabica — no chicory, no fillers. Process preserves caramel and chocolatey notes.\n\nNext time you read a label, look for 'freeze-dried' and 'pure Arabica'.\n\nFollow @purepantryprovisions for more coffee truth.\nShop https://p3online.in",
+    "trust": "Verifiable food science: freeze-drying preserves 85-95% of volatile aromatics vs 60-70% for spray-drying. Purica ingredient panel: 100% freeze-dried Arabica coffee. No additives.",
+    "value": "One actionable label-reading skill that upgrades every future coffee purchase. Zero fluff, zero sales pitch.",
+    "viral_potential": "High — myth-busting + label literacy + specialty coffee curiosity = shareable discovery content",
+    "viral_readiness_score": 8.5,
+    "frames": [
+      {
+        "on_screen": "Close-up of Purica jar on dark marble. Steam rises."
+      }
+    ],
     "editorial_error": "brand: ['Threads native text exceeds 480 characters']"
   },
   "facebook_post": {
     "featured_product": "purica",
-    "objective": "Drive product page visits and add-to-cart for Purica",
-    "primary_cta": "Shop Purica at https://p3online.in",
-    "success_metric": "Link clicks to Purica product page, save rate, comment-to-lead conversions, profile visits",
-    "angle": "The spoon-count reality check — a simple morning question that reveals why your instant coffee feels thin, and what freeze-dried Arabica actually changes.",
+    "objective": "Community engagement and product discovery through sensory storytelling",
+    "primary_cta": "Taste Purica's caramel and chocolate notes — Shop https://p3online.in",
+    "success_metric": "Comments describing personal flavor experiences + shares to coffee-loving friends + link clicks to Purica product page",
+    "angle": "The moment you taste freeze-dried pure Arabica and realize instant coffee can actually deliver cafe-quality flavor.",
     "asset_type": "facebook_post",
-    "body": "Be honest: how many spoons of coffee do you actually put in your mug to make it taste 'strong'?\n\nOne spoon — water hits — color looks fine. First sip: thin, hollow, gone.\nTwo spoons — better color, but now a sharp bitterness kicks in at minute two.\nThree spoons — you are basically drinking mud.\n\nThat is not your brewing. That is the powder.\n\nMost instant coffee is spray-dried. High heat strips the aromatics. What is left is brown powder that colors water but cannot carry flavor. You keep adding spoons to find the taste, but you only find more bitterness.\n\nHere is the difference: freeze-dried pure Arabica locks the volatile oils — the actual smell and taste of the bean — inside the crystal. No heat damage. No aroma loss.\n\nPurica from Purity Beans is freeze-dried pure Arabica. The process freezes the coffee extract at -40°C, then pulls the ice out under vacuum. \n\nThe result: one level teaspoon (2 g) in 180 ml hot water. High floral aroma on the pour. Smooth caramel mid-palate. Clean chocolate linger. No bitterness spike. No muddy tail.\n\n50 g jar at ₹329. 100 g jar at ₹559. Food-grade glass. Zero chicory. Pure Arabica.\n\nTomorrow morning, try the single-teaspoon test. Smell before you sip. That is the freeze-dried difference.\n\nRead the jar. Purity Beans. https://p3online.in",
-    "chosen_hook": "Be honest: how many spoons of coffee do you actually put in your mug to make it taste 'strong'?",
-    "comment_to_lead_mechanic": "Comment SPOONS and I will reply with the exact water temperature and stir time that unlocks Purica's caramel-chocolate profile from the 50 g and 100 g jars.",
-    "comment_trigger": "What is your spoon count? 1, 2, or 3? Comment below.",
-    "community_question": "If your instant coffee jar could show you one thing honestly, what would you want to see?",
-    "cta": "Send this to the person who makes your morning cup. Explore Purica freeze-dried Arabica at https://p3online.in\n\nFollow @purepantryprovisions for the label transparency cheat sheet — we break down exactly what the back of the jar tells you about your coffee.",
-    "funnel_objective": "Product discovery and trial intent for Purica 50g and 100g jars",
-    "gate_rejection": "growth engine regenerate: ultra_ratio_missing",
+    "body": "You take a sip expecting the usual instant coffee letdown — thin, bitter, gone in seconds.\n\nInstead: caramel and chocolate notes that actually linger. A crema that holds. The kind of cup you pay ₹180 for at a cafe, made in your kitchen in 60 seconds.\n\nThat is Purity Beans Purica — freeze-dried pure Arabica, zero chicory. 50g at ₹329, 100g at ₹559. Glass jar. Honest label.\n\nRead the jar: Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\nhttps://p3online.in",
+    "comment_trigger": "What is the one flavor note you keep chasing in your morning cup — and have you actually found it?",
+    "editorial_notes": "Rewritten with sensory hook in line 1 to stop scroll. Expectation vs reality creates immediate tension. Sensory payoff (caramel/chocolate, crema) delivered before product reveal. Partner quote removed to keep focus on personal discovery. Price points woven naturally. Brand transparency statement included per policy. Website as reference. Psychology frame 'sensory' drives flavor-description hook and comment trigger.",
+    "hashtags": "#PurityBeans #PureCoffee #Arabica #FreezeDried #CoffeeLoversIndia #CleanLabel #MorningRitual",
+    "psychology_frame": "sensory",
+    "regen_round": 3,
+    "retention_audit": "Line 1: 'You take a sip expecting the usual instant coffee letdown...' — Sensory expectation hook; reader leans in.\nLine 2: 'Instead: caramel and chocolate notes that actually linger.' — Sensory payoff delivered early; contrast lands.\nLine 3: 'A crema that holds. The kind of cup you pay ₹180 for at a cafe...' — Value anchor + sensory detail.\nLine 4: 'That is Purity Beans Purica — freeze-dried pure Arabica, zero chicory.' — Product reveal with specific claims.\nLine 5: '50g at ₹329, 100g at ₹559. Glass jar. Honest label.' — Facts woven naturally.\nLine 6: 'Read the jar: Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.' — Brand transparency statement.\nLine 7: Website — low-friction close.\nLine 8: Open-ended flavor question — low-barrier comment trigger.",
+    "save_trigger": "Save this for your next coffee restock — the flavor notes are worth remembering.",
+    "share_trigger": "Share with the friend who claims they can't tell instant from cafe coffee.",
+    "viral_potential": {
+      "scores": {
+        "hook": 8.0,
+        "curiosity_gap": 7.5,
+        "relatability": 9.0,
+        "shareability": 8.0,
+        "comment_trigger": 8.5,
+        "format_fit": 8.5,
+        "follow_cta": 8.0
+      },
+      "overall": 8.2,
+      "weakest": [
+        "curiosity_gap",
+        "hook",
+        "follow_cta"
+      ],
+      "feedback": "The brand_truth hard fail in the growth review indicates a mismatch with product specifications (e.g., Ultra Blend vs Purica rules). Ensure strict adherence to Purica being pure freeze-dried Arabica with zero chicory, and keep prices and variant descriptions completely aligned with brand guidelines. Strengthen the initial opening line to create an immediate emotional anchor for Facebook readers.",
+      "better_hook": "Most of us settle for instant coffee that tastes thin, bitter, and gone in seconds—until you try this.",
+      "passed": true,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "visual_concept": "Overhead shot of a kitchen counter at golden hour: Purity Beans Purica glass jar (100g) centered, lid off, a few granules spilled naturally on a wooden spoon beside it. A ceramic mug with fresh coffee shows rich crema. Soft window light casts long shadows. A half-read book and reading glasses in background suggest a slow morning. No staging perfection — lived-in warmth.",
+    "visual_prompt": "Overhead photographic shot, 9:16 vertical, Purity Beans Purica 100g glass jar center frame, lid off, coffee granules on wooden spoon, ceramic mug with rich crema, golden hour window light, long shadows, paperback book spine-up, wire-rim reading glasses folded, faint coffee ring on counter, shallow depth of field, jar and mug sharp, warm color grade, amber highlights on glass, realistic skin oils on spoon handle, 85mm equivalent lens, hyperrealistic, cinematic lighting",
+    "9": 16,
+    "Background": "paperback book spine-up, wire-rim reading glasses folded, faint coffee ring on counter. Shallow depth of field, jar and mug sharp. Warm color grade, amber highlights on glass. No text overlays. Realistic skin oils on spoon handle. 85mm equivalent lens,",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.8,
+      "emotion_pull": 9.0,
+      "hook_strength": 8.8,
+      "brand_clarity": 9.2,
+      "overall": 8.9,
+      "verdict": "PASS",
+      "feedback": "The sensory contrast in the opening line immediately anchors the reader's personal experience, preventing an attention drop. Clear value positioning, specific pricing, and precise brand distinction (Purica as zero-chicory pure Arabica) successfully build trust without using anti-chicory hostility. The transition from pain point to sensory payoff flows naturally. To maximize performance further, ensure the comment trigger is prominently paired with the final CTA.",
+      "retention_audit": "Line 1: 'You take a sip expecting the usual instant coffee letdown...' — Strong sensory expectation hook; immediately engages the reader. \nLine 2: 'Instead: caramel and chocolate notes that actually linger...' — Rapid payoff maintains momentum. \nLine 3: 'A crema that holds...' — Concrete sensory detail sustains interest. \nLine 4: 'That is Purity Beans Purica...' — Clear product pivot without jarring the flow. \nLine 5-6: Pricing and portfolio clarification — Transparent details satisfy the informed buyer persona. \nLine 7-8: Website link and open-ended question — Effective, low-friction closing loop."
+    },
+    "viral_readiness_score": 78.0,
+    "cta": "Send this to someone who drinks instant coffee.",
     "growth_plan": {
       "primary_objective": "reach new relevant coffee drinkers",
       "secondary_objective": "drive product-page visits/purchases",
@@ -2212,53 +2279,11 @@
       "sku": "Ultra Blend",
       "day": 292
     },
-    "hashtags": "#PurityBeans #PureCoffee #FreezeDriedArabica #Purica #CoffeeLoversIndia #CleanLabel #ReadTheJar",
-    "hook": "Be honest: how many spoons of coffee do you actually put in your mug to make it taste 'strong'?",
-    "hook_text": "Be honest: how many spoons of coffee do you actually put in your mug to make it taste 'strong'?",
-    "product_truth_check": "Purica is freeze-dried pure Arabica, 0% chicory. 50g ₹329, 100g ₹559. Natural caramel and chocolatey notes. Lead-free food-grade glass jar. Net weight printed on label. No per-cup claim made. Ultra Blend is correctly noted as 70% coffee, 30% chicory in brand profile.",
-    "psychology_frame": "sensory",
-    "regen_round": 6,
-    "retention_audit": "Hook opens with a direct, answerable question. Body uses a 'ladder' logic (1, 2, 3 spoons) to create a relatable frustration. Transitions from 'muddy' taste to the scientific 'why' (spray-dried vs freeze-dried) without losing momentum. Ends with a physical challenge (the single-teaspoon test).",
-    "save_trigger": "Save this before your next grocery run — the spoon-count test tells you everything.",
-    "share_trigger": "Share with the person who makes your coffee — they need to see this test.",
-    "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 8.0,
-      "emotion_pull": 8.5,
-      "hook_strength": 9.0,
-      "brand_clarity": 9.0,
-      "overall": 8.6,
-      "verdict": "PASS",
-      "feedback": "The asset hits a deeply relatable pain point regarding instant coffee dosage and bitterness. The transition from the problem (spray-dried limitations) to the solution (Purica freeze-dried Arabica) is smooth and educational. Retention stays high due to the sensory description and clear pricing/sizing details. The comment-to-lead mechanic creates instant interaction.",
-      "retention_audit": "Line 1-3 (Hook & Spoon Count): Instantly grounds the reader in a daily ritual experience. No drop-off. Middle paragraphs (Spray-dried vs. Freeze-dried): Educational value holds attention well without sounding overly technical. Final section (Pricing & CTA): Clear and actionable, driving direct intent to https://p3online.in."
-    },
-    "viral_potential": {
-      "scores": {
-        "hook": 9.0,
-        "curiosity_gap": 8.0,
-        "relatability": 10.0,
-        "shareability": 7.0,
-        "comment_trigger": 9.0,
-        "format_fit": 9.0,
-        "follow_cta": 7.0
-      },
-      "overall": 8.4,
-      "weakest": [
-        "shareability",
-        "follow_cta"
-      ],
-      "feedback": "The 'spoon-count' logic is a masterclass in relatability for the Indian household. However, the middle section becomes slightly too academic/scientific for Facebook's casual environment. To increase shareability, frame the 'spray-dried vs freeze-dried' part as a 'hack' or a 'secret' rather than a lecture. The follow CTA is a bit generic; make the 'label transparency cheat sheet' feel like an immediate, high-value win.",
-      "better_hook": "Be honest: do you keep adding spoons of coffee just to make it taste 'strong', or does it just end up tasting bitter?",
-      "passed": true,
-      "honesty": [],
-      "pass_mark": 8.0
-    },
-    "viral_readiness_score": 89.0,
     "growth_review": {
       "platform": "facebook",
       "label": "facebook_post",
-      "decision": "REGENERATE",
-      "overall": 8.0,
+      "decision": "PASS",
+      "overall": 8.67,
       "threshold": 8.0,
       "dimensions": [
         {
@@ -2311,9 +2336,9 @@
         },
         {
           "name": "brand_truth",
-          "score": 0.0,
-          "evidence": "Product truth failed.",
-          "hard_fail": true
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
         },
         {
           "name": "visual_integrity",
@@ -2352,12 +2377,10 @@
           "hard_fail": false
         }
       ],
-      "hard_fails": [
-        "ultra_ratio_missing"
-      ],
+      "hard_fails": [],
       "attempts": 1,
       "retry_limit": 8,
-      "feedback": "ultra_ratio_missing",
+      "feedback": "",
       "plan": {
         "primary_objective": "reach new relevant coffee drinkers",
         "secondary_objective": "drive product-page visits/purchases",
@@ -3511,6 +3534,153 @@
       {
         "status": "exhausted",
         "reason": "growth engine regenerate: ultra_ratio_missing"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "growth engine regenerate: ultra_ratio_missing"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The hook 'Have you ever wondered what real freeze-dried Arabica actually tastes like in your morning cup?' is too passive and generic. It reads like an FAQ rather than a scroll-stopping statement. To increase engagement, replace it with a direct curiosity gap or sensory challenge, such as: 'Stop set"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The revised hook 'Stop settling for bitter coffee. Here is what real freeze-dried Arabica actually tastes like in your morning cup.' is much stronger and creates a compelling sensory contrast. The body flows well with clear pricing and product positioning for Purica. To elevate it further, slightly "
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook is slightly too descriptive rather than provocative, causing an attention drop before the reader reaches the core sensory value. To push the overall score above the threshold, sharpen the opening hook to immediately contrast standard bitter instant coffee against pure Arabica, and make the "
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The content clearly communicates the product benefits and pricing, but the hook still relies on a standard industry critique ('Most instant coffee smells bitter') rather than a sharper pattern interrupt. To pass the threshold, the opening must create an immediate emotional reaction regarding hidden "
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The hook 'Drop these amber crystals into hot water...' is a solid sensory opener, but it misses an acute psychological trigger (such as betrayal, curiosity gap, or direct contrast) that forces a hard stop on Facebook feeds. To cross the threshold, focus the opening on the sensory proof of zero fille"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.5 < 8.0 (weakest: relatability, shareability, follow_cta). The post reads a bit too much like an ad copy block rather than a native, conversational Facebook post. To improve performance on Facebook, open with a relatable Indian household coffee pain point (like the morning sludge test"
+      },
+      {
+        "attempt": 8,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: freeze-dried vs agglomerated instant coffee (how each is made and why it changes taste). Every frame/slide must teach, debunk or show a ritual; no prices, n"
+      },
+      {
+        "status": "exhausted",
+        "reason": "brand: ['Missing brand mention', 'Missing required brand facts']"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', 'Missing required brand facts']"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The content is too 'corporate' and safe. It lacks a visceral trigger or a strong POV. The hook is a generic observation rather than a pattern interrupt. To improve, start with a 'Betrayal' or 'Contrarian' hook regarding cafe pricing or the 'illusion' of gourmet instant coffee. Remove the soft phrasi"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: Shopify price truth: price ₹180 is not a live Shopify price']"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The content is too descriptive and lacks a strong psychological trigger. It reads like a product brochure rather than a social media post. The hook is a generic comparison that doesn't create a 'gap' or a sense of betrayal/curiosity. To improve, pivot from 'describing flavor' to 'challenging the use"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The hook successfully forces a physical action (checking the jar), which is strong, but the transition into the body is too clinical. It shifts from a curiosity gap to a 'product brochure' tone almost immediately. To fix: replace the educational explanation of spray-drying with a 'Betrayal' angle. I"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The hook is elite—it triggers a physical action and a feeling of betrayal. However, the middle section collapses into a product brochure. The transition from 'bitter ash' to 'Purity Beans Purica is not powder' is too fast. You need to sustain the 'betrayal' emotion longer. Instead of explaining the "
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The hook is high-performing because it forces physical interaction, but the middle of the copy suffers from 'Corporate Shift.' The moment the text switches to 'Purity Beans Purica is different because...', it stops being a revelation and starts being an ad. To fix this, describe the sensory contrast"
+      },
+      {
+        "status": "exhausted",
+        "reason": "The hook is elite because it triggers a physical action, but the middle section collapses into a 'brand pitch.' The transition from the physical test to the explanation of spray-drying is too clinical. To fix: maintain the sensory experience longer. Instead of explaining 'spray-dried' as a technical"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook is a masterclass in pattern interrupt, but the mid-section fails the retention test. The transition from a physical experiment to a technical lecture on 'spray-drying' causes an immediate cognitive shift from 'curiosity' to 'being marketed to.' To fix: Replace technical jargon with sensory "
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The hook is a soft question ('Ever noticed...') which is too passive for social media; it feels like a brochure, not a scroll-stopper. To increase retention, replace the opening question with a direct accusation or a contrarian statement. The transition from the 'burnt' problem to the 'freeze-dried'"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "While the hook is now a strong 'Betrayal' pattern, the middle section slows down into 'educational' mode, which kills the momentum of the scroll. The shift from '200°C' to 'Freeze-drying changes everything' is a logical transition, but the phrasing 'The coffee's soul' is too poetic/corporate and cre"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook is elite, but the energy collapses in the second paragraph. The transition to 'Freeze-drying locks in...' feels like a textbook explanation, shifting the reader from an emotional 'betrayal' state to a passive 'learning' state. This is where the swipe occurs. To fix: maintain the aggressive "
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The hook is a powerhouse, but the middle section suffers from 'explanation fatigue.' Moving from the visceral '200°C burn' to 'You don't need a science degree' slows the momentum. The shift into the product description feels too much like a sales pitch and not enough like a revelation. To fix: remov"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 5.4 < 8.0 (weakest: follow_cta, format_fit, relatability). The copy is too 'Brand-Speak' and editorial for Facebook. It reads like a high-end magazine ad rather than a conversational community post. The tone is too aggressive ('Stop guessing') for a household angle. There is absolutely "
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: follow_cta, hook). The relatability and technical payoff (crystals vs dust) are strong, but the hook is a bit too polite for Facebook. It feels like a question from a brand rather than a conversation between coffee drinkers. The follow CTA is generic and doesn't give"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The asset is extremely strong on education but falters on emotional urgency. The 'wife brews, I drink' setup is relatable, but the transition to the technical explanation of spray-drying is too slow, causing a potential attention drop. To pass, the 'betrayal' of drinking 'dust' needs to be framed as"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 6.7 < 8.0 (weakest: format_fit, shareability, follow_cta). The copy is too polished and 'ad-like' for Facebook. It reads like a high-converting sales page rather than a conversational community post. To win on FB, you need to lean harder into the 'household' angle—less 'identity confron"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 6.4 < 8.0 (weakest: format_fit, shareability, curiosity_gap). The copy is too 'high-conversion landing page' and not enough 'Facebook community'. It feels like an ad, not a conversation. The 'Reverse-Qualifier' hook works for Reels, but on Facebook, it can come across as too aggressive/"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The opening line is a pleasant personal anecdote but lacks a scroll‑stopping hook; replace it with a curiosity‑gap or betrayal hook that makes the reader wonder what’s inside their coffee jar. Move the sensory payoff (caramel/chocolate) earlier and tighten the narrative so each sentence builds tensi"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "growth engine regenerate: ultra_ratio_missing"
       }
     ],
     "threads_post": [
@@ -3597,6 +3767,50 @@
         "attempt": 8,
         "rung": "feedback",
         "feedback": ""
+      },
+      {
+        "status": "exhausted",
+        "reason": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The text exceeds platform limits for Threads (480 characters) as noted in the error log, and the hook 'Most instant coffee is spray-dried' is a bit dry and educational rather than visceral. To elevate this to a passing score, compress the character count, tighten the hook into a sharper contrast sta"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The hook 'Spray-dried kills aroma' is"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The opening hook 'Your instant coffee has been hiding something from you.' is slightly overused in the market, causing a slight attention dip. To push this past an 8, sharpen the hook to target the sensory experience or physical deception directly (e.g., 'If your instant coffee dissolves silently, y"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a myth-buster (one common coffee myth, debunked with a verifiable fact). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no 'bu"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
       },
       {
         "status": "exhausted",
@@ -3737,6 +3951,21 @@
       {
         "status": "exhausted",
         "reason": "schema: 3 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'type': 'cta...al': 'Hand reaches for'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "schema: 3 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'type': 'cta...al': 'Hand reaches for'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "north-star gate (54/100): specific and checkable (6 concrete detail(s)); carries a surprise or contrarian turn; gives the viewer something to do"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "north-star gate (54/100): specific and checkable (6 concrete detail(s)); carries a surprise or contrarian turn; gives the viewer something to do"
       }
     ]
   },
@@ -5836,6 +6065,6 @@
     "asset_count": 32
   },
   "mandatory_regen_rounds": {
-    "facebook_post": 9
+    "facebook_post": 13
   }
 }
