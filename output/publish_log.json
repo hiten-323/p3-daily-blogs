@@ -2647,5 +2647,95 @@
       ],
       "timestamp": "2026-10-20T08:29:32"
     }
+  },
+  {
+    "date": "2026-10-21",
+    "day_number": 293,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "post_id": "urn:li:share:7518512138450325504",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7518512138450325504/",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 1,
+        "duration_ms": 3973
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "jTaqBSOBXxc",
+        "media_id": "jTaqBSOBXxc",
+        "video_id": "jTaqBSOBXxc",
+        "permalink": "https://www.youtube.com/shorts/jTaqBSOBXxc",
+        "url": "https://www.youtube.com/shorts/jTaqBSOBXxc",
+        "duration_ms": 0
+      },
+      "threads": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "post_id": "",
+        "url": "",
+        "error": "prepublish_gate:viral_readiness_failed",
+        "gate": {
+          "allowed": false,
+          "asset_key": "threads_post",
+          "reason": "viral_readiness_failed",
+          "checks": {
+            "editorial": true,
+            "viral_readiness": {
+              "score": 57.0,
+              "passes": false,
+              "dimensions": {
+                "hook": 4.0,
+                "novelty": 15.0,
+                "retention": 10.0,
+                "payoff": 0.0,
+                "share_reason": 10.0,
+                "follow_reason": 4.0,
+                "platform_nativeness": 4.0,
+                "truth_and_integrity": 10.0
+              },
+              "reasons": [
+                "weak or missing dedicated hook",
+                "high factual novelty (3 specific details)",
+                "payoff deficit: opens a curiosity loop and never closes it \u2014 the viewer learns nothing, which is the definition of bait",
+                "Threads post exceeds 480 characters"
+              ],
+              "basis": "pre-publication creative viral-readiness evaluation"
+            }
+          }
+        },
+        "ledger_status": "SKIPPED",
+        "ledger_attempt_count": 2,
+        "duration_ms": 2308
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Youtube | Held for slot: Instagram, Facebook | Skipped: Threads, Blog",
+      "published_platforms": [
+        "linkedin",
+        "youtube"
+      ],
+      "timestamp": "2026-10-21T03:23:04"
+    }
   }
 ]
