@@ -88,8 +88,11 @@ def _order(avoid: str | None) -> list[str]:
 
 def _http_json(url, payload=None, headers=None, timeout=60):
     data = json.dumps(payload).encode() if payload is not None else None
-    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json", **(headers or {})},
-                                 method="POST" if data else "GET")
+    req = urllib.request.Request(
+        url, data=data,
+        headers={"User-Agent": "PurityBeansBackground/1.0", "Content-Type": "application/json", **(headers or {})},
+        method="POST" if data else "GET",
+    )
     with urllib.request.urlopen(req, timeout=timeout) as r:  # noqa: S310 (provider URL from env/config)
         return json.loads(r.read().decode() or "{}")
 

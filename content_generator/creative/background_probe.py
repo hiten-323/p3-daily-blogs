@@ -13,6 +13,9 @@ import urllib.request
 
 logger = logging.getLogger(__name__)
 
+# Cloudflare returns HTTP 403 error 1010 for Python-urllib before the key is read.
+USER_AGENT = "PurityBeansBackground/1.0"
+
 ORDER = (
     "kaggle_bank", "kaggle_gpu", "hf_ltx", "hf_wan", "pixazo", "runway",
     "pexels", "pixabay", "coded",
@@ -31,7 +34,8 @@ def mask_derived(value: str) -> None:
 
 
 def _default_transport(method: str, url: str, headers: dict, timeout: float, data=None):
-    req = urllib.request.Request(url, data=data, headers=headers or {}, method=method)
+    merged = {"User-Agent": USER_AGENT, **(headers or {})}
+    req = urllib.request.Request(url, data=data, headers=merged, method=method)
     try:
         with urllib.request.urlopen(req, timeout=timeout) as response:  # noqa: S310
             return response.status, response.read(1024)
@@ -52,11 +56,18 @@ def _default_transport(method: str, url: str, headers: dict, timeout: float, dat
 
 
 def _http_state(status) -> str:
+    """Map a provider status to live, quota or down.
+
+    401 and 403 are auth failures. 404 is a missing route, not a live source.
+    400 and 422 still count as live: the key was accepted and the body was rejected.
+    """
     if status in (401, 403):
         return "down"
-    if status in ("timeout", "error"):
+    if status in (402, 429):
+        return "quota"
+    if status in ("timeout", "error", 404) or (isinstance(status, int) and status >= 500):
         return "down"
-    if isinstance(status, int):
+    if isinstance(status, int) and 200 <= status < 500:
         return "live"
     return "down"
 
@@ -69,6 +80,30 @@ def _kaggle_basic() -> str:
     mask_derived(derived)
     mask_derived(f"Basic {derived}")
     return derived
+
+
+def _pixazo_state(call, key: str) -> tuple[str, str]:
+    """Check the video route. A 404 there is not a live video source.
+
+    The image route is only used to tell a bad key from a missing video path.
+    An empty JSON body must not start a render.
+    """
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {key}",
+        "Ocp-Apim-Subscription-Key": key,
+    }
+    video = os.getenv("PIXAZO_VIDEO_URL", "https://gateway.pixazo.ai/ltx-video/v1/generate")
+    status, _body = call("POST", video, headers, 8, b"{}")
+    if status != 404:
+        return _http_state(status), f"http {status}"
+    image = os.getenv("PIXAZO_IMAGE_ENDPOINT", "https://gateway.pixazo.ai/flux-3-image/v1/text-to-image")
+    image_status, _body = call("POST", image, headers, 8, b"{}")
+    if image_status in (401, 403):
+        return "down", f"http {image_status}"
+    if _http_state(image_status) == "live":
+        return "down", "video route 404"
+    return "down", f"http {status}"
 
 
 def probe_results(transport=None) -> list[dict]:
@@ -89,9 +124,12 @@ def probe_results(transport=None) -> list[dict]:
         "detail": f"{unused} unused" if unused else "no unused clips",
     })
 
+    username, key = _secret("KAGGLE_USERNAME"), _secret("KAGGLE_KEY")
+    missing = [name for name, value in (("KAGGLE_USERNAME", username), ("KAGGLE_KEY", key)) if not value]
     derived = _kaggle_basic()
-    if not derived:
-        rows.append({"name": "kaggle_gpu", "status": "skipped", "detail": "KAGGLE_USERNAME or KAGGLE_KEY unset"})
+    if missing or not derived:
+        detail = " and ".join(missing or ["KAGGLE_USERNAME", "KAGGLE_KEY"]) + " unset"
+        rows.append({"name": "kaggle_gpu", "status": "skipped", "detail": detail})
     else:
         status, _body = call(
             "GET", "https://www.kaggle.com/api/v1/kernels/list?pageSize=1",
@@ -113,10 +151,14 @@ def probe_results(transport=None) -> list[dict]:
                 status, _body = call("GET", f"https://huggingface.co/api/models/{model}", {}, 8, None)
                 rows.append({"name": name, "status": _http_state(status), "detail": f"hub http {status}"})
 
+    pixazo_key = _secret("PIXAZO_API_KEY")
+    if not pixazo_key:
+        rows.append({"name": "pixazo", "status": "skipped", "detail": "PIXAZO_API_KEY unset"})
+    else:
+        status, detail = _pixazo_state(call, pixazo_key)
+        rows.append({"name": "pixazo", "status": status, "detail": detail})
+
     checks = (
-        ("pixazo", "PIXAZO_API_KEY", "GET", "https://gateway.pixazo.ai/", lambda key: {
-            "Ocp-Apim-Subscription-Key": key, "Authorization": f"Bearer {key}",
-        }),
         ("runway", "RUNWAY_API_KEY", "GET", "https://api.dev.runwayml.com/v1/organization", lambda key: {
             "Authorization": f"Bearer {key}", "X-Runway-Version": "2024-11-06",
         }),
