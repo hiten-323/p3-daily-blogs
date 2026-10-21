@@ -42,6 +42,8 @@ def _has_native_threads_text(piece: object) -> bool:
     """True only when a Threads-specific object contains publishable native copy."""
     if not isinstance(piece, dict):
         return False
+    from content_generator.core.piece_integrity import promote_threads_text
+    promote_threads_text(piece)
     text = str(piece.get("text") or piece.get("body") or piece.get("content") or "").strip()
     return bool(text) and len(text) <= 480
 

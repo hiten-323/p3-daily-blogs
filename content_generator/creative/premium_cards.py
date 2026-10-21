@@ -109,8 +109,11 @@ def load_jar(sku: str, target_h: int):
     return jar.resize((int(jar.width * s), int(jar.height * s)), Image.LANCZOS)
 
 
-def place_jar(canvas, jar, cx, base_y, pal):
-    """Soft contact shadow + faded reflection on the surface plane."""
+def place_jar(canvas, jar, cx, base_y, pal, floor_y=None):
+    """Soft contact shadow + faded reflection on the surface plane.
+
+    ``floor_y`` is a line the reflection must not cross (the CTA pill).
+    """
     W, H = canvas.size
     x0, y0 = int(cx - jar.width / 2), int(base_y - jar.height)
     sh = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
@@ -119,6 +122,11 @@ def place_jar(canvas, jar, cx, base_y, pal):
     canvas.alpha_composite(sh.filter(ImageFilter.GaussianBlur(max(6, jar.width // 14))))
     refl = jar.transpose(Image.FLIP_TOP_BOTTOM)
     rh = int(jar.height * 0.32)
+    if floor_y is not None:
+        rh = min(rh, max(0, int(floor_y) - int(base_y) - 2))
+    if rh < 8:
+        canvas.alpha_composite(jar, (x0, y0))
+        return (x0, y0, x0 + jar.width, base_y)
     refl = refl.crop((0, 0, jar.width, rh))
     grad = Image.linear_gradient("L").resize((jar.width, rh)).point(lambda p: int((255 - p) * 0.28))
     a = Image.fromarray(__import__("numpy").minimum(__import__("numpy").array(refl.getchannel("A")),
@@ -165,6 +173,19 @@ def _text(canvas, xy, s, font, fill, shadow=True, anchor="la"):
     ImageDraw.Draw(canvas).text(xy, s, font=font, fill=fill, anchor=anchor)
 
 
+def cta_pill_box(W: int, H: int, cta: str | None):
+    """Bottom-margin CTA pill. A 12% lift on 9:16 frames ran the pill through the jar."""
+    if not cta:
+        return None
+    cf = _font("sans", max(30, int(W) // 26))
+    tw = ImageDraw.Draw(Image.new("RGB", (1, 1))).textlength(cta, font=cf)
+    m = int(W * 0.055)
+    bw, bh = tw + W * 0.09, cf.size * 2.1
+    y0 = H - m - bh - H * 0.02
+    x0 = (W - bw) / 2
+    return (x0, y0, x0 + bw, y0 + bh)
+
+
 def brand_frame(canvas, pal, cta: str | None = None):
     """Logo wordmark + handle on every frame; strong CTA pill on final frames."""
     W, H = canvas.size
@@ -176,17 +197,15 @@ def brand_frame(canvas, pal, cta: str | None = None):
     d.text((m + W * 0.08, m + W * 0.012), "PURITY BEANS", font=f, fill=pal["ink"])
     d.text((m + W * 0.08, m + W * 0.012 + f.size * 1.2), HANDLE, font=_font("sans", max(18, W // 54)), fill=pal["accent"])
     if cta:
-        cf = _font("sans", max(30, W // 26))
-        tw = d.textlength(cta, font=cf)
-        bw, bh = tw + W * 0.09, cf.size * 2.1
-        x0, y0 = (W - bw) / 2, H - m - bh - (H * 0.12 if H > W * 1.6 else H * 0.02)
+        x0, y0, x1, y1 = cta_pill_box(W, H, cta)
+        bw, bh = x1 - x0, y1 - y0
         glow = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
-        ImageDraw.Draw(glow).rounded_rectangle((x0 - 8, y0 - 8, x0 + bw + 8, y0 + bh + 8), radius=int(bh / 2) + 8,
+        ImageDraw.Draw(glow).rounded_rectangle((x0 - 8, y0 - 8, x1 + 8, y1 + 8), radius=int(bh / 2) + 8,
                                                fill=pal["accent"] + (120,))
         canvas.alpha_composite(glow.filter(ImageFilter.GaussianBlur(14)))
         d = ImageDraw.Draw(canvas)
-        d.rounded_rectangle((x0, y0, x0 + bw, y0 + bh), radius=int(bh / 2), fill=pal["accent"])
-        d.text((W / 2, y0 + bh / 2), cta, font=cf, fill=pal["deep"], anchor="mm")
+        d.rounded_rectangle((x0, y0, x1, y1), radius=int(bh / 2), fill=pal["accent"])
+        d.text((W / 2, y0 + bh / 2), cta, font=_font("sans", max(30, W // 26)), fill=pal["deep"], anchor="mm")
 
 
 def strip_chip(canvas, xy, pal, sku, anchor="la"):
@@ -232,10 +251,16 @@ def render(sku: str, headline: str, sub: str = "", *, width=1080, height=1350, l
         m = int(W * 0.07)
         top = int(H * 0.15)
         cta_h = int(H * 0.11) if cta else int(H * 0.05)
+        pill = cta_pill_box(W, H, cta) if cta else None
+        # Keep the jar and its reflection above the pill, including the glow.
+        refl_floor = (pill[1] - 12) if pill else None
         texts = []
         if layout == "split_left":
             jar = load_jar(sku, int(H * 0.56))
-            jb = place_jar(canvas, jar, int(W * 0.70), int(H * 0.80), pal)
+            base_y = int(H * 0.80)
+            if refl_floor is not None:
+                base_y = min(base_y, int(refl_floor))
+            jb = place_jar(canvas, jar, int(W * 0.70), base_y, pal, floor_y=refl_floor)
             col_w = jb[0] - m - int(W * 0.03)
             f, lines = fit_headline(d, headline.upper(), col_w, H * 0.40, start=120)
             y = top + H * 0.04
@@ -297,12 +322,14 @@ def render(sku: str, headline: str, sub: str = "", *, width=1080, height=1350, l
         y = chip[3]
         if jb is None:
             base = H - cta_h - int(H * 0.06)
+            if refl_floor is not None:
+                base = min(base, refl_floor)
             avail = base - (y + H * 0.03)
-            if jar.height > avail:
+            if jar.height > avail > 40:
                 s = avail / jar.height
                 jar = jar.resize((int(jar.width * s), int(jar.height * s)), Image.LANCZOS)
             cx = W * (0.5 if layout != "diagonal_band" else 0.62)
-            jb = place_jar(canvas, jar, int(cx), int(base), pal)
+            jb = place_jar(canvas, jar, int(cx), int(base), pal, floor_y=refl_floor)
         price = _price_line(sku) if show_price else ""
         if price:
             pf = _font("sans", max(22, W // 44))
@@ -311,6 +338,8 @@ def render(sku: str, headline: str, sub: str = "", *, width=1080, height=1350, l
             if layout in ("split_left",) or jb[0] > m + 340:
                 _text(canvas, (px, py), rc.guard(price), pf, pal["ink"], shadow=True)
         brand_frame(canvas, pal, cta=cta)
+        if pill:
+            texts.append(tuple(pill))
         out_path = out_path or os.path.join(_OUT, f"premium_{sku}_{layout}_{seed}.jpg")
         os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
         canvas.convert("RGB").save(out_path, quality=93)

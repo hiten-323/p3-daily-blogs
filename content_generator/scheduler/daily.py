@@ -1037,6 +1037,7 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
     from content_generator.agents.editorial import EditorialScoreError, review_content
     from content_generator.core.editorial_engine import normalize_editorial_result, get_current_pass_score
     from content_generator.core.piece_integrity import ensure_structural_fields
+    from content_generator.core.product_truth import omit_per_cup_for_non_ultra
     from content_generator.providers import llm_router
 
     providers_ok = llm_router.any_provider_available()
@@ -1121,6 +1122,7 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                 break
             _drop_unmeasured_score(piece)
             ensure_structural_fields(piece, label)
+            omit_per_cup_for_non_ultra(piece, featured)
             schema_issues = _schema_issues(label, piece)
             is_copy_ok, copy_issues = _validate_piece_copy(label, piece)
             feedback = ""
@@ -1360,7 +1362,9 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
             f"frames, slides, script, audio, loop_note, or editorial subscores.\n"
             f"- Do not include an editorial_score. Scoring happens after you return.\n"
             f"- Keep STOP, CURIOSITY, VALUE, TRUST, FOLLOW, BUY. Do not use a banned generic opener.\n"
-            f"- Do not copy another platform's hook or CTA. The featured SKU controls the claims.\n\n"
+            f"- Do not copy another platform's hook or CTA. The featured SKU controls the claims.\n"
+            f"- Per-cup price and cup count are for Ultra Blend only, and only in a sentence that names Ultra Blend. "
+            f"For Bold, Purista, Purica, Prima, or any other jar, omit the figure.\n\n"
             f"Return ONLY the improved JSON object."
         )
         if from_scratch:

@@ -295,6 +295,52 @@ def _ensure_threads_hook_line(piece: dict) -> None:
     piece[key] = f"{m.group(1)}\n\n{m.group(2)}"
 
 
+def promote_threads_text(piece: dict) -> dict:
+    """Map a native Threads string onto ``text``.
+
+    NVIDIA and Gemini often return a whole content pack. The Threads line is
+    a string under the key ``threads_post`` (or post/caption) and ``text``,
+    ``body``, and ``content`` are absent. The brand gate then reports
+    Empty content even though the model wrote the post.
+    """
+    if not isinstance(piece, dict):
+        return piece
+    for key in ("text", "body", "content"):
+        val = piece.get(key)
+        if isinstance(val, str) and val.strip():
+            return piece
+    found = _threads_copy(piece.get("threads_post"))
+    if not found:
+        for key in ("post", "thread", "message", "copy", "native_text"):
+            val = piece.get(key)
+            if isinstance(val, str) and val.strip():
+                found = val.strip()
+                break
+    if not found:
+        cap = piece.get("caption")
+        if isinstance(cap, str) and cap.strip() and len(cap.strip()) <= 480 and "slides" not in piece:
+            found = cap.strip()
+    if found:
+        piece["text"] = found
+    return piece
+
+
+def _threads_copy(node) -> str:
+    if isinstance(node, str) and node.strip():
+        return node.strip()
+    if isinstance(node, dict):
+        for key in ("text", "body", "content", "post", "caption"):
+            val = node.get(key)
+            if isinstance(val, str) and val.strip():
+                return val.strip()
+    if isinstance(node, list):
+        for item in node:
+            found = _threads_copy(item)
+            if found:
+                return found
+    return ""
+
+
 def ensure_structural_fields(piece: dict, label: str = "") -> dict:
     """Fill structural gaps in place. Creative copy that is already present stays."""
     if not isinstance(piece, dict):
@@ -310,6 +356,7 @@ def ensure_structural_fields(piece: dict, label: str = "") -> dict:
     if label in _CAPTION_LABELS:
         _ensure_caption(piece, label)
     if label == "threads_post" or str(piece.get("asset_type") or "") == "threads_post":
+        promote_threads_text(piece)
         _ensure_threads_hook_line(piece)
     _ensure_engagement(piece)
     complete_editorial_score(piece)
