@@ -347,6 +347,11 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
         except Exception as e:
             logger.warning("[slots] instagram story failed: %s", e)
         logger.info("[slots] morning publish: %s", result.get("success"))
+        try:
+            from content_generator.campaigns.trial_diwali_push import publish_for_slot
+            result["sales_push"] = publish_for_slot(content, slot, day)
+        except Exception as e:
+            logger.warning("[slots] sales push publish skipped: %s", e)
         asset = "carousel" if "carousel" in approved else "instagram_post"
         return _contract(slot, day, content, {"instagram": result, "facebook": fb_result},
                          {"instagram": [asset], "facebook": [asset]})
@@ -458,6 +463,11 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
         result["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
         _track(result, content, slot, reel)
         logger.info("[slots] evening publish: %s", result.get("success"))
+        try:
+            from content_generator.campaigns.trial_diwali_push import publish_for_slot
+            result["sales_push"] = publish_for_slot(content, slot, day)
+        except Exception as e:
+            logger.warning("[slots] sales push publish skipped: %s", e)
         return _contract(slot, day, content,
                          {"instagram": result, "facebook": fb_result},
                          {"instagram": [chosen], "facebook": [chosen]})

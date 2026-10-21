@@ -196,14 +196,26 @@ def _music(seed, audio, format_type="reel", seconds=10.0):
 
 
 
+def _surface(fmt: str) -> str:
+    """Chrome family. push_reel follows the reel; push_story follows the story."""
+    raw = str(fmt or "reel").strip().lower()
+    if raw in ("short", "yt_short", "youtube"):
+        return "short"
+    if "story" in raw:
+        return "story"
+    return "reel"
+
+
 def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, sub: str = "",
                            seconds: float = 10.0, seed: int = 0, layout: str | None = None,
                            palette_idx: int | None = None, audio: str | None = None,
                            poster_path: str | None = None, format_type: str = "reel",
-                           concept: dict | None = None, ai_frames=None) -> dict:
+                           concept: dict | None = None, ai_frames=None,
+                           jar_source: str | None = None, end_cta: str | None = None) -> dict:
     """Render a 1080x1920 cinematic motion video with format-specific chrome and downbeat sync."""
     import imageio_ffmpeg
     fmt = str(format_type or "reel").strip().lower()
+    surf = _surface(fmt)
     if isinstance(beats, str):
         beats = [{"on": beats, "sub": sub}]
     beats = [b for b in beats if (b.get("on") or "").strip()] or [{"on": "PURITY BEANS", "sub": sub}]
@@ -221,7 +233,7 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             horizon, light, jar_cx, jar_scale = lay["horizon"], lay["light"], lay["cx"], lay["scale"]
             bd = cbk.ConceptBackdrop(pal, seed, concept.get("scene", "granules"), concept.get("motion", "push_in"),
                                      light, horizon, ai_frames=ai_frames)
-            hook_dur = 1.1 if fmt in ("reel", "short") and concept.get("hook") else 0.0
+            hook_dur = 1.1 if surf in ("reel", "short") and concept.get("hook") else 0.0
         else:
             layout = layout or LAYOUTS[seed % len(LAYOUTS)]
             horizon = {"cinematic_hero": 0.74, "cinematic_low": 0.78, "cinematic_offset": 0.75}[layout]
@@ -232,14 +244,14 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         m = int(W * 0.07)
 
         # Platform-specific CTA and chrome
-        if fmt == "short":
+        if surf == "short":
             cta = "SUBSCRIBE FOR COFFEE SECRETS"
             eyebrow_badge = "YOUTUBE SHORTS  •  COFFEE SECRETS"
             badge_border = (220, 50, 40)
             badge_text_col = (255, 220, 100)
             head_col = (255, 222, 0)       # High-visibility Canary Yellow
             sub_col = (255, 255, 255)      # Crisp White
-        elif fmt == "story":
+        elif surf == "story":
             cta = "REPLY TO THIS STORY"
             eyebrow_badge = "DAILY STORY  •  PURITY BEANS"
             badge_border = tuple(int(c) for c in pal["accent"])
@@ -253,13 +265,17 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             badge_text_col = tuple(int(c) for c in pal["ink"])
             head_col = tuple(int(c) for c in pal["ink"])
             sub_col = tuple(int(c) for c in pal["accent"])
+        if end_cta:
+            guarded = rc.guard(str(end_cta))
+            if guarded:
+                cta = guarded
 
         bf = pc._font("italic", max(30, W // 26))
         base_y = int(H * horizon) + 10
 
         # Text plans per beat (headline zone first, jar sized to the space left)
         scratch = ImageDraw.Draw(Image.new("RGBA", (W, H)))
-        text_top = int(H * (0.16 if fmt == "story" else 0.15))
+        text_top = int(H * (0.16 if surf == "story" else 0.15))
         plans, text_end = [], text_top
         for b in beats:
             head = rc.guard(str(b.get("on") or "")).upper()
@@ -271,7 +287,13 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             plans.append(dict(font=f, words=words, y_end=y, sub_lines=sub_lines))
             text_end = max(text_end, end)
         jar_h = min(int(H * 0.44 * jar_scale), base_y - text_end - int(H * 0.03))
-        jar_path = pc.official_jar_asset(sku)
+        if jar_source:
+            from content_generator.creative import jar_provenance as _jp
+            if not _jp._trusted_jar_asset(jar_source):
+                raise ValueError("untrusted product asset")
+            jar_path = jar_source
+        else:
+            jar_path = pc.official_jar_asset(sku)
         jar = pc.load_jar(sku, jar_h, source=jar_path)
         cx = int(min(W - jar.width / 2 - 8, max(jar.width / 2 + 8, W * jar_cx)))
         jl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -297,7 +319,7 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         # 120 BPM Downbeat synchronization (2.000s per measure)
         num_plans = len(plans)
         bar_dur = 2.0
-        if fmt in ("reel", "short"):
+        if surf in ("reel", "short"):
             if num_plans <= 1:
                 cta_at = max(2.0, seconds - bar_dur * 2)
                 beat_boundaries = [0.0]
@@ -419,7 +441,7 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             tldraw.text((W // 2, bp_y + 18), eyebrow_badge, font=badge_font, fill=badge_text_col, anchor="mm")
 
             # Draw YouTube Shorts Scene / Part Pill
-            if fmt == "short" and num_plans > 1:
+            if surf == "short" and num_plans > 1:
                 part_label = f"PART {bi + 1} OF {num_plans}"
                 pw = tldraw.textlength(part_label, font=pill_font)
                 pp_w = int(pw + 24)
@@ -467,7 +489,7 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             boxes.append(chip)
 
             # Simulated Instagram Native Link Sticker for Story format
-            if fmt == "story" and t >= 1.5:
+            if surf == "story" and t >= 1.5:
                 sta = min(1.0, (t - 1.5) / 0.4)
                 sticker_text = "🔗 TAP TO SHOP · p3online.in"
                 st_w = tldraw.textlength(sticker_text, font=sticker_font)
@@ -574,7 +596,8 @@ def _budget_left() -> float:
 
 
 def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, max_tries=None, gate=None,
-                                format_type="reel", audio=None, on_date=None, concepts: bool | None = None) -> dict | None:
+                                format_type="reel", audio=None, on_date=None, concepts: bool | None = None,
+                                jar_source: str | None = None, end_cta: str | None = None) -> dict | None:
     """Render, run the unchanged visual gate, re-render with a new layout/palette on failure.
 
     Bounded: at most CINEMATIC_MAX_TRIES attempts (default 2, hard cap 3), and no attempt starts unless
@@ -592,7 +615,8 @@ def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, m
         concepts = fmt in ("reel", "short") and os.getenv("DAILY_CONCEPTS", "1") != "0"
     if concepts:
         return _render_concept_until_pass(sku, beats, out_path, seconds=seconds, seed=seed, max_tries=max_tries,
-                                          gate=gate, format_type=fmt, audio=audio, on_date=on_date)
+                                          gate=gate, format_type=fmt, audio=audio, on_date=on_date,
+                                          jar_source=jar_source, end_cta=end_cta)
     for i in range(max_tries):
         if _budget_left() < est:
             logger.warning("[cinematic] time budget low (%.0fs left); falling back to legacy renderer", _budget_left())
@@ -600,7 +624,8 @@ def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, m
         t0 = time.monotonic()
         layout = LAYOUTS[(seed + i) % len(LAYOUTS)]
         meta = render_cinematic_video(sku, beats, out_path, seconds=seconds, seed=seed + i, layout=layout,
-                                      palette_idx=seed + i + i // len(LAYOUTS), format_type=format_type, audio=audio)
+                                      palette_idx=seed + i + i // len(LAYOUTS), format_type=format_type, audio=audio,
+                                      jar_source=jar_source, end_cta=end_cta)
         est = max(est, time.monotonic() - t0)
         verdict = gate(out_path, meta)
         meta["visual_gate"] = verdict
@@ -615,7 +640,8 @@ def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, m
 
 
 
-def _render_concept_until_pass(sku, beats, out_path, *, seconds, seed, max_tries, gate, format_type, audio, on_date):
+def _render_concept_until_pass(sku, beats, out_path, *, seconds, seed, max_tries, gate, format_type, audio, on_date,
+                               jar_source=None, end_cta=None):
     """Daily-concept path: rotation pick -> AI bg (if available) -> render -> unchanged visual gate +
     variety gate (concept / perceptual-hash vs last 7 days). Records history only on pass."""
     import time
@@ -643,7 +669,7 @@ def _render_concept_until_pass(sku, beats, out_path, *, seconds, seed, max_tries
         aud = audio or (os.path.join(mdir, track) if track and os.path.exists(os.path.join(mdir, track)) else None)
         meta = render_cinematic_video(sku, beats, out_path, seconds=seconds, seed=seed + i, layout=choice["layout"],
                                       palette_idx=seed + i, format_type=format_type, audio=aud,
-                                      concept=choice, ai_frames=ai_frames)
+                                      concept=choice, ai_frames=ai_frames, jar_source=jar_source, end_cta=end_cta)
         meta["bg_source"] = source
         est = max(est, time.monotonic() - t0)
         verdict = gate(out_path, meta)

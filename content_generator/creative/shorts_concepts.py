@@ -167,10 +167,24 @@ def _order(seq, key):
     return sorted(seq, key=lambda x: hashlib.sha256(f"{key}|{x}".encode()).hexdigest())
 
 
+def format_key(format_type: str) -> str:
+    """History key for a surface. Reel and Short stay themselves.
+
+    Other surfaces (a sales-push reel or story) do not collapse into the daily
+    reel, so they cannot overwrite that reel's variety slot.
+    """
+    raw = str(format_type or "reel").strip().lower()
+    if raw in ("short", "yt_short", "youtube"):
+        return "short"
+    if raw in ("reel", "ig_reel"):
+        return "reel"
+    return raw or "reel"
+
+
 def pick(on_date, format_type: str, *, sku: str = "", history: list[dict] | None = None,
          exclude_concepts=(), path: str | None = None) -> dict:
     """Choose today's concept/motion/layout/transition/hook for a format, honouring rotation rules."""
-    fmt = "short" if str(format_type).lower() in ("short", "yt_short", "youtube") else "reel"
+    fmt = format_key(format_type)
     rows = load_history(path) if history is None else history
     ds = _date(on_date).isoformat()
     recent = _window(rows, ds, ROTATION_DAYS, fmt)

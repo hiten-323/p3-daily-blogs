@@ -1,0 +1,31 @@
+{
+  "id": "trial_diwali_push",
+  "start": "2026-10-21",
+  "end": "2026-11-20",
+  "diwali_angle_through": "2026-11-08",
+  "goal_orders_per_month": 70,
+  "organic_only": true,
+  "utm": {
+    "utm_source": "instagram",
+    "utm_medium": "organic",
+    "utm_campaign": "trial_diwali_push"
+  },
+  "entry_price_slug": "bold",
+  "limited_stock_copy": false,
+  "exclude": [
+    "prima",
+    "purity-beans-prima-premium-instant-coffee",
+    "gourmet_duo",
+    "gourmet-duo",
+    "ultra_blend",
+    "purity-beans-ultra-blend-instant-coffee",
+    "variety_box",
+    "variety-box"
+  ],
+  "promote": [
+    {"slug": "bold", "grams": 50, "role": "trial", "verified_price": 239},
+    {"slug": "purista", "grams": 50, "role": "trial", "verified_price": 319},
+    {"slug": "purica", "grams": 50, "role": "trial", "verified_price": 329},
+    {"slug": "gourmet_duo_mini", "grams": 100, "role": "gift", "verified_price": 570, "low_stock_units": 9}
+  ]
+}
