@@ -1130,6 +1130,8 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
             _drop_unmeasured_score(piece)
             ensure_structural_fields(piece, label)
             omit_per_cup_for_non_ultra(piece, featured)
+            from content_generator.core.process_match import align_process_piece
+            align_process_piece(piece, featured)
             schema_issues = _schema_issues(label, piece)
             is_copy_ok, copy_issues = _validate_piece_copy(label, piece)
             feedback = ""
@@ -1371,7 +1373,11 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
             f"- Keep STOP, CURIOSITY, VALUE, TRUST, FOLLOW, BUY. Do not use a banned generic opener.\n"
             f"- Do not copy another platform's hook or CTA. The featured SKU controls the claims.\n"
             f"- Per-cup price and cup count are for Ultra Blend only, and only in a sentence that names Ultra Blend. "
-            f"For Bold, Purista, Purica, Prima, or any other jar, omit the figure.\n\n"
+            f"For Bold, Purista, Purica, Prima, or any other jar, omit the figure.\n"
+            f"- Freeze-dried is only Purica and Purista. Bold is agglomerated, not freeze-dried. "
+            f"Do not name a process for Ultra Blend. A process mention must match the featured or linked product, "
+            f"or rewrite it. Freeze-drying education links Purica, Purista, Variety Box, or Gourmet Duo Mini. "
+            f"A freeze-dried vs agglomerated comparison may link Bold for the agglomerated side only.\n\n"
             f"Return ONLY the improved JSON object."
         )
         if from_scratch:

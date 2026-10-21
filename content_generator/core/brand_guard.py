@@ -294,6 +294,8 @@ Language: ENGLISH ONLY. Never generate Hindi, Punjabi, Hinglish, Urdu, or mixed-
 
 ## MANDATORY PRODUCT RULES
 
+Freeze-dried is only Purica (Arabica) and Purista (Robusta). Agglomerated is Bold (pure coffee) and Prima (out of stock — never promote Prima). Do not name a process for Ultra Blend. Any mention of freeze-dried, freeze-drying, agglomerated, or granules as a process must match the featured or linked product on Threads, Instagram, Facebook, LinkedIn, YouTube, Stories, Reels, carousels, and campaign push. If it does not match, rewrite or regenerate. Freeze-drying education links Purica, Purista, the Variety Box, or Gourmet Duo Mini. A freeze-dried vs agglomerated comparison may link Bold for the agglomerated side and must not call Bold freeze-dried.
+
 Every content asset must reinforce at least one of:
 - Pure Coffee
 - Zero Chicory

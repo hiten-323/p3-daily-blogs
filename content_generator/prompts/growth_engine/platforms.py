@@ -94,6 +94,11 @@ def ultra_positive_story(sku: str) -> str:
     )
 
 
+def _process_match_rule() -> str:
+    from content_generator.core.process_match import PROCESS_MATCH_RULE
+    return PROCESS_MATCH_RULE
+
+
 def generation_preface(sku: str, day: int = 0) -> str:
     """Shared rules appended to every generation prompt for this day."""
     banned = "; ".join(f'"{line}"' for line in BANNED_OPENERS[:5])
@@ -108,6 +113,7 @@ def generation_preface(sku: str, day: int = 0) -> str:
         "No invented prices, stock, reviews, awards, or health claims. Shopify catalog is the source of truth.",
         f"Featured SKU: {sku or 'unset'}. The SKU controls which claims are allowed.",
         CHICORY_POLICY,
+        _process_match_rule(),
     ]
     if story:
         lines.append(story)
@@ -134,6 +140,7 @@ def prompt_block(label: str, sku: str = "", day: int = 0, *, variant: int = 0) -
         f"Follow promise: {plan['follow_promise']}",
         "Write only this platform. Do not reuse another asset's hook or CTA.",
         ultra_positive_story(sku),
+        _process_match_rule(),
         _viral_hooks(label),
     ]).strip()
 

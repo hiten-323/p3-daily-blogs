@@ -2,6 +2,7 @@
 
 Owner guardrails for Purity Beans copy:
 - Prima / Premium Agglomerate is pure Arabica and agglomerated, not freeze-dried.
+- Bold is agglomerated pure coffee, not freeze-dried. Ultra Blend has no process claim.
 - Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed for that jar.
 - Never call Ultra Blend no-chicory, zero-chicory, or 0% chicory.
 - When Ultra Blend or any other chicory blend is featured or named as the solution,
@@ -9,7 +10,7 @@ Owner guardrails for Purity Beans copy:
   "hidden chicory fillers", "chicory fillers").
   Honest 70/30 disclosure, smooth milk coffee, and lower caffeine are allowed.
 - Gourmet Duo and Gourmet Duo Mini are pure coffee and zero chicory. Do not apply Ultra Blend's chicory rules to either duo, and do not call either duo only Arabica or only Robusta.
-- Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica.
+- Purista is freeze-dried pure Robusta. Bold is agglomerated pure coffee. Purica is freeze-dried pure Arabica.
 - FSSAI: never write '100%' / '100 percent' in marketing copy (hard fail). Use 'pure'.
 - Do not invent other product claims, and do not apply a pure-jar claim to Ultra Blend.
 """
@@ -593,6 +594,8 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
             s = sentence.strip()
             if s and _ANTI_CHICORY.search(s):
                 findings.append(_finding(s, _ANTI_CHICORY_REASON))
+    from content_generator.core.process_match import process_match_findings
+    findings.extend(process_match_findings(source, featured=featured))
     seen: set[tuple[str, str]] = set()
     unique: list[dict] = []
     for item in findings:
