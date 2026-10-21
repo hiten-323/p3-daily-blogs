@@ -1,0 +1,60 @@
+# One-shot helper. The cloud-agent token cannot call workflow_dispatch
+# (actions=write is denied). This pull_request workflow uses the repository
+# GITHUB_TOKEN, which can dispatch kaggle-backgrounds.yml on main.
+# It does not publish and does not dispatch the daily pipeline.
+
+name: Dispatch background bank once
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - .github/workflows/dispatch-background-bank-once.yml
+      - scripts/render_probe_plates.py
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch-and-probe:
+    name: Dispatch bank and save probe plates
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      - name: Install plate dependencies
+        run: python -m pip install --no-cache-dir pillow numpy imageio imageio-ffmpeg
+
+      - name: Dispatch weekly background bank on main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run kaggle-backgrounds.yml --repo "$GITHUB_REPOSITORY" --ref main
+
+      - name: Probe sources and save one plate each
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PIXAZO_API_KEY: ${{ secrets.PIXAZO_API_KEY }}
+          RUNWAY_API_KEY: ${{ secrets.RUNWAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          HF_BG_TIMEOUT_S: "75"
+        run: python scripts/render_probe_plates.py
+
+      - name: Upload probe plates
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: background-probe-plates
+          path: output/probe_plates/
+          if-no-files-found: ignore
+          retention-days: 3
