@@ -70,7 +70,7 @@ def _cinematic(beats, product, day, label, on_date, seconds, format_type="short"
                            f"{label}_day{day}_{ds}_cinematic.mp4")
         meta = cinematic_motion.render_cinematic_until_pass(
             sku, [{"on": b.get("on", ""), "sub": b.get("sub", "")} for b in beats], out,
-            seconds=seconds, seed=day, format_type=format_type)
+            seconds=seconds, seed=day, format_type=format_type, on_date=ds)
         return out if meta else None
     except Exception as exc:
         logger.warning("[cinematic] path failed (%s); using legacy frames", exc)
