@@ -196,7 +196,8 @@ def _music(seed, audio, format_type="reel", seconds=10.0):
 def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, sub: str = "",
                            seconds: float = 10.0, seed: int = 0, layout: str | None = None,
                            palette_idx: int | None = None, audio: str | None = None,
-                           poster_path: str | None = None, format_type: str = "reel") -> dict:
+                           poster_path: str | None = None, format_type: str = "reel",
+                           concept: dict | None = None, ai_frames=None) -> dict:
     """Render a 1080x1920 cinematic motion video with format-specific chrome and downbeat sync."""
     import imageio_ffmpeg
     fmt = str(format_type or "reel").strip().lower()
@@ -206,11 +207,25 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
     tok = rc.set_sku(sku)
     try:
         pal = pc.PALETTES[sku][(seed if palette_idx is None else palette_idx) % len(pc.PALETTES[sku])]
-        layout = layout or LAYOUTS[seed % len(LAYOUTS)]
-        horizon = {"cinematic_hero": 0.74, "cinematic_low": 0.78, "cinematic_offset": 0.75}[layout]
-        light = {"cinematic_hero": (0.25, 0.30, 0.75, 0.40), "cinematic_low": (0.75, 0.25, 0.30, 0.42),
-                 "cinematic_offset": (0.40, 0.20, 0.65, 0.45)}[layout]
-        bd = _Backdrop(pal, seed, light, horizon)
+        hook_dur = 0.0
+        if concept:
+            # Daily concept (shorts_concepts): own scene, camera motion, tone, layout, transition, hook.
+            from content_generator.creative import concept_backdrop as cbk
+            from content_generator.creative import shorts_concepts as scn
+            pal = cbk.tone_palette(pal, concept.get("tone", "rich"))
+            layout = concept.get("layout") or "hero_center"
+            lay = scn.LAYOUTS.get(layout, scn.LAYOUTS["hero_center"])
+            horizon, light, jar_cx, jar_scale = lay["horizon"], lay["light"], lay["cx"], lay["scale"]
+            bd = cbk.ConceptBackdrop(pal, seed, concept.get("scene", "granules"), concept.get("motion", "push_in"),
+                                     light, horizon, ai_frames=ai_frames)
+            hook_dur = 1.1 if fmt in ("reel", "short") and concept.get("hook") else 0.0
+        else:
+            layout = layout or LAYOUTS[seed % len(LAYOUTS)]
+            horizon = {"cinematic_hero": 0.74, "cinematic_low": 0.78, "cinematic_offset": 0.75}[layout]
+            light = {"cinematic_hero": (0.25, 0.30, 0.75, 0.40), "cinematic_low": (0.75, 0.25, 0.30, 0.42),
+                     "cinematic_offset": (0.40, 0.20, 0.65, 0.45)}[layout]
+            bd = _Backdrop(pal, seed, light, horizon)
+            jar_cx, jar_scale = (0.5 if layout != "cinematic_offset" else 0.56), 1.0
         m = int(W * 0.07)
 
         # Platform-specific CTA and chrome
@@ -252,9 +267,9 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             end = y + int(H * 0.038) + len(sub_lines) * int(bf.size * 1.25) + int(H * 0.012) + bf.size * 2
             plans.append(dict(font=f, words=words, y_end=y, sub_lines=sub_lines))
             text_end = max(text_end, end)
-        jar_h = min(int(H * 0.44), base_y - text_end - int(H * 0.03))
+        jar_h = min(int(H * 0.44 * jar_scale), base_y - text_end - int(H * 0.03))
         jar = pc.load_jar(sku, jar_h)
-        cx = int(W * (0.5 if layout != "cinematic_offset" else 0.56))
+        cx = int(min(W - jar.width / 2 - 8, max(jar.width / 2 + 8, W * jar_cx)))
         jl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         jb = pc.place_jar(jl, jar, cx, base_y, pal)
         jar_alpha = np.zeros((H, W), np.float32)
@@ -311,10 +326,35 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         pill_font = pc._font("sans", 18)
         sticker_font = pc._font("sans", 22)
 
+        hook_font = pc._font("sans", 112) if hook_dur else None
+        hook_lines = []
+        if hook_dur:
+            htxt = rc.guard(str(concept.get("hook") or "")).upper()
+            hook_font, hook_lines = pc.fit_headline(scratch, htxt, W - 2 * m, H * 0.20, start=132, min_size=72, max_lines=3)
+        transition = (concept or {}).get("transition")
+        trans_at = [b for b in beat_boundaries[1:]] + [cta_at]
+        prev_rgb = None
+
         for fi in range(n):
             t = fi / FPS
-            fr = bd.frame(t, seconds)
-            fr.alpha_composite(jl)
+            fr = bd.frame(t, seconds, (W, H)) if concept else bd.frame(t, seconds)
+            if hook_dur and t < hook_dur + 0.5:
+                # Reveal: jar slides up + fades in right after the first-second hook (never scaled, stays sharp).
+                ra = float(np.clip((t - (hook_dur - 0.2)) / 0.55, 0, 1))
+                if ra > 0:
+                    ease = 1 - (1 - ra) ** 3
+                    moved = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+                    moved.alpha_composite(jl, (0, int((1 - ease) * 70)))
+                    if ra < 1:
+                        moved.putalpha(moved.getchannel("A").point(lambda v, e=ease: int(v * e)))
+                    fr.alpha_composite(moved)
+                    if 0 < ra < 0.6:  # reveal bloom
+                        arr = np.asarray(fr, np.float32)
+                        bloom = np.exp(-(((jxx - cx) / 260) ** 2 + ((jyy - (jb[1] + jb[3]) / 2) / 420) ** 2))
+                        arr[..., :3] += (bloom * 90 * (1 - ra / 0.6))[..., None]
+                        fr = Image.fromarray(np.clip(arr, 0, 255).astype("uint8"))
+            else:
+                fr.alpha_composite(jl)
 
             # 8. specular glint across the glass
             for c0 in (1.2, 6.0):
@@ -325,6 +365,30 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                     arr = np.asarray(fr, np.float32)
                     arr[..., :3] += (band * 0.16 * 255)[..., None] * (1 - arr[..., :3] / 255)
                     fr = Image.fromarray(np.clip(arr, 0, 255).astype("uint8"))
+            if hook_dur and t < hook_dur:
+                # First-second visual hook: big punch-in headline over the moving scene.
+                ha = min(1.0, t / 0.18) * min(1.0, (hook_dur - t) / 0.2)
+                sc_ = 1.0 + 0.10 * (1 - min(1.0, t / 0.35)) ** 2
+                hl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+                hd = ImageDraw.Draw(hl)
+                lh = int(hook_font.size * 1.06)
+                y0 = int(H * 0.40) - lh * len(hook_lines) // 2
+                for li, ln in enumerate(hook_lines):
+                    hd.text((W / 2 + 4, y0 + li * lh + 6), ln, font=hook_font, fill=(0, 0, 0, int(220 * ha)), anchor="ma")
+                hl = hl.filter(ImageFilter.GaussianBlur(6))
+                hd = ImageDraw.Draw(hl)
+                for li, ln in enumerate(hook_lines):
+                    hd.text((W / 2, y0 + li * lh), ln, font=hook_font, fill=head_col + (int(255 * ha),), anchor="ma")
+                if sc_ > 1.001:
+                    big = hl.resize((int(W * sc_), int(H * sc_)), Image.BILINEAR)
+                    ox, oy = (big.width - W) // 2, (big.height - H) // 2
+                    hl = big.crop((ox, oy, ox + W, oy + H))
+                fr.alpha_composite(hl)
+                pc.brand_frame(fr, pal, cta=None)
+                rgb = fr.convert("RGB")
+                proc.stdin.write(rgb.tobytes())
+                prev_rgb = rgb
+                continue
             fr.alpha_composite(scrim)
 
             # Determine active beat based on musical downbeat boundaries
@@ -334,7 +398,7 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                     bi = idx_b
             bi = min(bi, num_plans - 1)
             pl = plans[bi]
-            beat_start_t = beat_boundaries[bi]
+            beat_start_t = max(beat_boundaries[bi], hook_dur if bi == 0 else 0.0)
             lt = t - beat_start_t
 
             boxes = []
@@ -433,6 +497,9 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                 pc.brand_frame(fr, pal, cta=None)
 
             rgb = fr.convert("RGB")
+            if transition:
+                rgb = _transition(rgb, prev_rgb, transition, t, trans_at, pal)
+            prev_rgb = rgb
             proc.stdin.write(rgb.tobytes())
             if fi == int(n * 0.92):
                 poster_frame = rgb
@@ -454,9 +521,42 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         (poster_frame or rgb).save(poster_path, quality=93)
         return {"path": out_path, "poster": poster_path, "audio": audio_file, "jar_box": jb, "layout": layout,
                 "text_boxes": (last_meta or {}).get("boxes", []), "headline_px": (last_meta or {}).get("font", bf).size,
-                "body_px": bf.size, "sku": sku, "cinematic": True, "format_type": fmt}
+                "body_px": bf.size, "sku": sku, "cinematic": True, "format_type": fmt,
+                "concept": (concept or {}).get("concept"), "motion": (concept or {}).get("motion"),
+                "transition": transition, "hook": (concept or {}).get("hook") if hook_dur else None,
+                "bg_source": "ai" if ai_frames else "procedural"}
     finally:
         rc.reset_sku(tok)
+
+
+def _transition(rgb, prev, kind, t, marks, pal, dur=0.22):
+    """Beat/CTA transition effect for frames within `dur` after a mark."""
+    hit = [m for m in marks if 0 <= t - m < dur]
+    if not hit:
+        return rgb
+    k = 1 - (t - hit[0]) / dur  # 1 -> 0
+    if kind == "flash":
+        return Image.blend(rgb, Image.new("RGB", rgb.size, (255, 248, 236)), 0.55 * k)
+    if kind == "dissolve" and prev is not None:
+        return Image.blend(rgb, prev, 0.6 * k)
+    if kind == "whip":
+        a = np.asarray(rgb, np.float32)
+        sh = int(60 * k) or 1
+        acc = sum(np.roll(a, s, axis=1) for s in range(-sh, sh + 1, max(1, sh // 4)))
+        cnt = len(range(-sh, sh + 1, max(1, sh // 4)))
+        return Image.fromarray(np.clip(acc / cnt, 0, 255).astype("uint8"))
+    if kind == "zoom_punch":
+        z = 1 + 0.07 * k
+        w, h = rgb.size
+        cw, ch = int(w / z), int(h / z)
+        return rgb.crop(((w - cw) // 2, (h - ch) // 2, (w - cw) // 2 + cw, (h - ch) // 2 + ch)).resize((w, h), Image.BILINEAR)
+    if kind == "light_leak":
+        a = np.asarray(rgb, np.float32)
+        w = a.shape[1]
+        g = np.linspace(1, 0, w, dtype=np.float32)[None, :, None] ** 2
+        col = np.array(pal.get("accent", (255, 200, 120)), np.float32) * 0.5 + np.array([255, 160, 80], np.float32) * 0.5
+        return Image.fromarray(np.clip(a + g * col * 0.7 * k, 0, 255).astype("uint8"))
+    return rgb
 
 
 _PROCESS_START = __import__("time").monotonic()
@@ -469,7 +569,7 @@ def _budget_left() -> float:
 
 
 def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, max_tries=None, gate=None,
-                                format_type="reel", audio=None) -> dict | None:
+                                format_type="reel", audio=None, on_date=None, concepts: bool | None = None) -> dict | None:
     """Render, run the unchanged visual gate, re-render with a new layout/palette on failure.
 
     Bounded: at most CINEMATIC_MAX_TRIES attempts (default 2, hard cap 3), and no attempt starts unless
@@ -482,6 +582,12 @@ def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, m
     est = float(os.getenv("CINEMATIC_EST_RENDER_S", "300"))
     recent = visual_gate.recent_layouts()
     gate = gate or (lambda p, meta: visual_gate.evaluate_video(p, meta, recent))
+    fmt = str(format_type or "reel").lower()
+    if concepts is None:
+        concepts = fmt in ("reel", "short") and os.getenv("DAILY_CONCEPTS", "1") != "0"
+    if concepts:
+        return _render_concept_until_pass(sku, beats, out_path, seconds=seconds, seed=seed, max_tries=max_tries,
+                                          gate=gate, format_type=fmt, audio=audio, on_date=on_date)
     for i in range(max_tries):
         if _budget_left() < est:
             logger.warning("[cinematic] time budget low (%.0fs left); falling back to legacy renderer", _budget_left())
@@ -502,3 +608,51 @@ def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, m
             return None
     return None
 
+
+
+def _render_concept_until_pass(sku, beats, out_path, *, seconds, seed, max_tries, gate, format_type, audio, on_date):
+    """Daily-concept path: rotation pick -> AI bg (if available) -> render -> unchanged visual gate +
+    variety gate (concept / perceptual-hash vs last 7 days). Records history only on pass."""
+    import time
+    from content_generator.creative import visual_gate
+    from content_generator.creative import shorts_concepts as scn
+    from content_generator.creative import ai_backgrounds
+    from content_generator.creative.concept_backdrop import BW as _BW, BH as _BH
+    est = float(os.getenv("CINEMATIC_EST_RENDER_S", "300"))
+    ds = on_date.isoformat() if hasattr(on_date, "isoformat") else (str(on_date)[:10] if on_date else None)
+    if not ds:
+        from content_generator.core.ist_dates import today_ist
+        ds = today_ist().isoformat()
+    tried = []
+    for i in range(max_tries):
+        if _budget_left() < est:
+            logger.warning("[cinematic] time budget low (%.0fs left); falling back to legacy renderer", _budget_left())
+            return None
+        t0 = time.monotonic()
+        choice = scn.pick(ds, format_type, sku=sku, exclude_concepts=tried)
+        tried.append(choice["concept"])
+        label = os.path.basename(out_path).rsplit(".", 1)[0]
+        ai_frames, source = ai_backgrounds.fetch_background(choice, label, (_BW, _BH), seconds=min(10, seconds))
+        track = choice.get("music_track")
+        mdir = os.getenv("MUSIC_LIBRARY_DIR", "music_library")
+        aud = audio or (os.path.join(mdir, track) if track and os.path.exists(os.path.join(mdir, track)) else None)
+        meta = render_cinematic_video(sku, beats, out_path, seconds=seconds, seed=seed + i, layout=choice["layout"],
+                                      palette_idx=seed + i, format_type=format_type, audio=aud,
+                                      concept=choice, ai_frames=ai_frames)
+        meta["bg_source"] = source
+        est = max(est, time.monotonic() - t0)
+        verdict = gate(out_path, meta)
+        variety = scn.variety_check(out_path, choice)
+        meta["visual_gate"], meta["variety_gate"], meta["concept_choice"] = verdict, variety, choice
+        if verdict.get("passed") and variety.get("passed"):
+            visual_gate.remember_layout(choice["layout"], os.path.basename(out_path))
+            scn.record(choice, phashes=variety.get("phash", []), source=source, label=os.path.basename(out_path))
+            logger.info("[cinematic] %s %s concept=%s motion=%s layout=%s bg=%s", format_type, sku, choice["concept"],
+                        choice["motion"], choice["layout"], source)
+            return meta
+        logger.warning("[cinematic] %s try %d failed: gate=%s variety=%s", sku, i + 1,
+                       (verdict.get("reasons") or [])[:4], (variety.get("reasons") or [])[:3])
+        if visual_gate.is_vision_hold(verdict):
+            logger.error("[cinematic] no vision scorer available — holding (fail fast, no re-render)")
+            return None
+    return None
