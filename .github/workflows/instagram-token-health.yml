@@ -37,7 +37,6 @@ jobs:
           LI_CLIENT_SECRET: ${{ secrets.LI_CLIENT_SECRET }}
           LI_REFRESH_TOKEN: ${{ secrets.LI_REFRESH_TOKEN }}
           IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
-          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
           META_TOKEN_MODE: strict
         run: python -m content_generator.ops.meta_token_health
