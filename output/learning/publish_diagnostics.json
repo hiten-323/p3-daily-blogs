@@ -4264,5 +4264,41 @@
     "rate_limit": {},
     "exception_type": "",
     "exception_msg": ""
+  },
+  {
+    "ts": "2026-10-21T03:18:21",
+    "day_number": 293,
+    "platform": "youtube",
+    "content_id": "pb_3d7ec09c2e",
+    "generation_id": "gen_2026-10-21_a8bf1d31",
+    "publisher_version": "2.3.0",
+    "status": "success",
+    "duration_ms": 3066,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "none",
+    "error": "",
+    "response": "{\"success\": true, \"video_id\": \"jTaqBSOBXxc\", \"url\": \"https://www.youtube.com/shorts/jTaqBSOBXxc\", \"ledger_status\": \"VERIFIED_LIVE\", \"ledger_attempt_count\": 1}",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
+  },
+  {
+    "ts": "2026-10-21T03:18:23",
+    "day_number": 293,
+    "platform": "threads",
+    "content_id": "pb_3d7ec09c2e",
+    "generation_id": "gen_2026-10-21_a8bf1d31",
+    "publisher_version": "2.3.0",
+    "status": "failure",
+    "duration_ms": 2168,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "missing_input",
+    "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+    "response": "{\"success\": false, \"attempted\": false, \"skipped\": true, \"post_id\": \"\", \"url\": \"\", \"gate\": {\"allowed\": false, \"asset_key\": \"threads_post\", \"reason\": \"native_asset_missing_passing_editorial_score\", \"checks\": {\"editorial\": false}}, \"ledger_status\": \"SKIPPED\", \"ledger_attempt_count\": 1}",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
   }
 ]
