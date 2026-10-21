@@ -1,12 +1,16 @@
-"""Fresh AI background clips per day for Shorts/Reels (background ONLY).
+"""Background plates for Shorts and Reels. The official jar is never generated.
 
-Provider order: Pixazo (when PIXAZO_API_KEY is set), then Runway (existing
-runway_generator, when RUNWAY_API_KEY is set). Every prompt comes from the
-concept library and forbids jars/packaging/text/logos: the official jar
-cutout is always composited on top by cinematic_motion, never generated.
+Provider order: Kaggle clip bank, Hugging Face LTX-Video, Hugging Face Wan,
+Pixazo, Runway, Pexels, Pixabay, then the coded concept renderer. A missing
+secret skips that source. The Short and the Reel on the same day use different
+sources when another configured source can supply a plate.
 
-Returns a list of RGB numpy frames at (BH, BW) or None, so the caller falls
-back to the per-concept procedural renderer. Never raises.
+Every prompt comes from the concept library and forbids jars, packaging, text
+and logos. cinematic_motion composites the real jar cutout on top and the
+existing motion, variety and 8.0 gates still score the finished video.
+
+Returns RGB frames at (BH, BW) or None so the caller falls back to the
+procedural renderer. Never raises.
 """
 from __future__ import annotations
 
@@ -21,8 +25,65 @@ logger = logging.getLogger(__name__)
 _OUT = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 
 
+PROVIDER_ORDER = (
+    "kaggle_bank", "hf_ltx", "hf_wan", "pixazo", "runway", "pexels", "pixabay",
+)
+
+_SESSION: dict[tuple[str, str], str] = {}
+_PENDING: dict | None = None
+
+
+def _attribution_path() -> str:
+    return os.getenv("BACKGROUND_ATTRIBUTION", os.path.join("output", "learning", "background_attribution.json"))
+
+
+def reset_session() -> None:
+    global _PENDING
+    _SESSION.clear()
+    _PENDING = None
+    from content_generator.creative import hf_video, kaggle_bank, stock_video
+    hf_video.reset_session()
+    kaggle_bank.reset_session()
+    stock_video.reset_session()
+
+
 def enabled() -> bool:
-    return os.getenv("AI_VIDEO_BG", "1") != "0" and bool(os.getenv("PIXAZO_API_KEY") or os.getenv("RUNWAY_API_KEY"))
+    return os.getenv("AI_VIDEO_BG", "1") != "0"
+
+
+def _configured(name: str) -> bool:
+    from content_generator.creative import kaggle_bank
+    if name == "kaggle_bank":
+        return kaggle_bank.available()
+    env = {
+        "hf_ltx": "HF_TOKEN", "hf_wan": "HF_TOKEN", "pixazo": "PIXAZO_API_KEY",
+        "runway": "RUNWAY_API_KEY", "pexels": "PEXELS_API_KEY", "pixabay": "PIXABAY_API_KEY",
+    }.get(name)
+    return bool(env and os.getenv(env, "").strip())
+
+
+def _sibling_source(choice: dict) -> str | None:
+    date, fmt = choice.get("date"), choice.get("format")
+    if not date or not fmt:
+        return None
+    other = "reel" if fmt == "short" else "short"
+    if (date, other) in _SESSION:
+        return _SESSION[(date, other)]
+    try:
+        from content_generator.creative import shorts_concepts as scn
+        for row in scn.load_history():
+            if row.get("date") == date and row.get("format") == other and row.get("bg_source") not in (None, "", "procedural"):
+                return row.get("bg_source")
+    except Exception:
+        return None
+    return None
+
+
+def _order(avoid: str | None) -> list[str]:
+    names = list(PROVIDER_ORDER)
+    if avoid and avoid in names and any(_configured(name) and name != avoid for name in names):
+        names = [name for name in names if name != avoid] + [avoid]
+    return names
 
 
 def _http_json(url, payload=None, headers=None, timeout=60):
@@ -117,19 +178,117 @@ def load_frames(path: str, size, max_frames: int = 240):
     return out if len(out) >= 24 else None
 
 
+def _providers() -> dict:
+    from content_generator.creative import hf_video, kaggle_bank, stock_video
+    return {
+        "kaggle_bank": kaggle_bank.take,
+        "hf_ltx": hf_video.ltx,
+        "hf_wan": hf_video.wan,
+        "pixazo": lambda choice, label, seconds: _pixazo(choice.get("ai_prompt") or "", label, seconds),
+        "runway": lambda choice, label, seconds: _runway(choice.get("ai_prompt") or "", label, seconds),
+        "pexels": stock_video.pexels,
+        "pixabay": stock_video.pixabay,
+    }
+
+
+def _as_pending(name: str, result, choice: dict) -> dict | None:
+    if not result:
+        return None
+    if isinstance(result, str):
+        pending = {"path": result, "id": "", "source": name, "attribution": {"provider": name}}
+    elif isinstance(result, dict) and result.get("path"):
+        pending = dict(result)
+        pending["source"] = name
+    else:
+        return None
+    pending.setdefault("date", choice.get("date"))
+    pending.setdefault("format", choice.get("format"))
+    pending.setdefault("concept", choice.get("concept"))
+    return pending
+
+
+def commit_usage() -> None:
+    """Record the plate that passed the motion and variety gates. Never raises."""
+    global _PENDING
+    pending = _PENDING
+    _PENDING = None
+    if not pending:
+        return
+    try:
+        from content_generator.creative import kaggle_bank, stock_video
+        if pending.get("source") in {"pexels", "pixabay"} and pending.get("id"):
+            stock_video.remember(pending)
+        elif pending.get("source") == "kaggle_bank" and pending.get("id"):
+            kaggle_bank.remember(pending)
+        _append_attribution(pending)
+    except Exception as exc:
+        logger.info("[ai_bg] usage record failed: %s", type(exc).__name__)
+
+
+def _append_attribution(pending: dict) -> None:
+    dest = _attribution_path()
+    try:
+        with open(dest, encoding="utf-8") as handle:
+            rows = json.load(handle)
+        if not isinstance(rows, list):
+            rows = []
+    except Exception:
+        rows = []
+    rows.append({
+        "date": pending.get("date"),
+        "format": pending.get("format"),
+        "concept": pending.get("concept"),
+        "source": pending.get("source"),
+        "clip_id": pending.get("id"),
+        "attribution": pending.get("attribution") or {},
+    })
+    os.makedirs(os.path.dirname(dest) or ".", exist_ok=True)
+    with open(dest, "w", encoding="utf-8") as handle:
+        json.dump(rows[-400:], handle, indent=1)
+
+
+def _release(pending: dict | None) -> None:
+    if not pending or not pending.get("id"):
+        return
+    from content_generator.creative import kaggle_bank, stock_video
+    if pending.get("source") in {"pexels", "pixabay"}:
+        stock_video.release(pending["id"])
+    elif pending.get("source") == "kaggle_bank":
+        kaggle_bank.release(pending["id"])
+
+
 def fetch_background(choice: dict, label: str, size, seconds: float = 5) -> tuple[list | None, str]:
-    """Try providers for this concept's prompt. Returns (frames|None, source)."""
+    """Try providers for this concept. Returns (frames|None, source)."""
+    global _PENDING
+    _PENDING = None
     if not enabled():
         return None, "procedural"
-    prompt = choice.get("ai_prompt") or ""
-    for name, fn in (("pixazo", _pixazo), ("runway", _runway)):
-        path = fn(prompt, label, int(min(10, max(5, seconds))))
-        if path and os.path.exists(path):
-            try:
-                frames = load_frames(path, size)
-                if frames:
-                    logger.info("[ai_bg] %s background for %s (%d frames)", name, choice.get("concept"), len(frames))
-                    return frames, name
-            except Exception as exc:
-                logger.info("[ai_bg] %s clip unreadable: %s", name, type(exc).__name__)
+    duration = int(min(10, max(5, seconds)))
+    avoid = _sibling_source(choice)
+    providers = _providers()
+    for name in _order(avoid):
+        if not _configured(name):
+            logger.info("[ai_bg] %s skipped (not configured)", name)
+            continue
+        try:
+            pending = _as_pending(name, providers[name](choice, label, duration), choice)
+        except Exception as exc:
+            logger.info("[ai_bg] %s failed: %s", name, type(exc).__name__)
+            continue
+        if not pending or not os.path.exists(pending["path"]):
+            continue
+        try:
+            frames = load_frames(pending["path"], size)
+        except Exception as exc:
+            logger.info("[ai_bg] %s clip unreadable: %s", name, type(exc).__name__)
+            _release(pending)
+            continue
+        if not frames:
+            _release(pending)
+            continue
+        _PENDING = pending
+        if choice.get("date") and choice.get("format"):
+            _SESSION[(choice["date"], choice["format"])] = name
+        logger.info("[ai_bg] %s background for %s (%d frames)", name, choice.get("concept"), len(frames))
+        return frames, name
     return None, "procedural"

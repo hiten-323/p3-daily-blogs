@@ -30,6 +30,8 @@ content_generator.py
 *.env
 secrets.json
 service_account*.json
+kaggle.json
+.kaggle/
 
 # ── Runtime output — regenerated on every run ─────────────────────────────────
 output/

@@ -1,7 +1,10 @@
-"""Cinematic procedural motion backgrounds for vertical video (Reels, Stories, Shorts).
+"""Cinematic motion backgrounds for vertical video (Reels, Stories, Shorts).
 
-Everything is drawn in code (numpy + PIL), frame by frame. No AI composites,
-no stock footage. Layers, back to front:
+The coded fallback is drawn in numpy + PIL. External plates (Kaggle bank,
+Hugging Face, Pixazo, Runway, Pexels, Pixabay) replace the background only.
+The official studio jar cutout — the real file recorded in jar_provenance.json
+when one is verified — is composited on top. AI and stock jars are never used.
+Layers, back to front:
 
   1. per-SKU tonal gradient with a slowly drifting key light (light sweep)
   2. crema-swirl texture loop on the surface plane (perspective-squashed spiral)
@@ -268,7 +271,8 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             plans.append(dict(font=f, words=words, y_end=y, sub_lines=sub_lines))
             text_end = max(text_end, end)
         jar_h = min(int(H * 0.44 * jar_scale), base_y - text_end - int(H * 0.03))
-        jar = pc.load_jar(sku, jar_h)
+        jar_path = pc.official_jar_asset(sku)
+        jar = pc.load_jar(sku, jar_h, source=jar_path)
         cx = int(min(W - jar.width / 2 - 8, max(jar.width / 2 + 8, W * jar_cx)))
         jl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         jb = pc.place_jar(jl, jar, cx, base_y, pal)
@@ -524,7 +528,8 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
                 "body_px": bf.size, "sku": sku, "cinematic": True, "format_type": fmt,
                 "concept": (concept or {}).get("concept"), "motion": (concept or {}).get("motion"),
                 "transition": transition, "hook": (concept or {}).get("hook") if hook_dur else None,
-                "bg_source": "ai" if ai_frames else "procedural"}
+                "bg_source": "ai" if ai_frames else "procedural",
+                "jar_asset_id": jar_path}
     finally:
         rc.reset_sku(tok)
 
@@ -647,6 +652,7 @@ def _render_concept_until_pass(sku, beats, out_path, *, seconds, seed, max_tries
         if verdict.get("passed") and variety.get("passed"):
             visual_gate.remember_layout(choice["layout"], os.path.basename(out_path))
             scn.record(choice, phashes=variety.get("phash", []), source=source, label=os.path.basename(out_path))
+            ai_backgrounds.commit_usage()
             logger.info("[cinematic] %s %s concept=%s motion=%s layout=%s bg=%s", format_type, sku, choice["concept"],
                         choice["motion"], choice["layout"], source)
             return meta

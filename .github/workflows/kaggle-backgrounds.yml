@@ -1,0 +1,69 @@
+# Weekly Kaggle GPU batch for coffee background plates.
+# Pushes a private notebook (LTX-Video, CogVideoX-2B backup), then pulls the
+# previous run's clips into the bank. Does not publish or dispatch the daily pipeline.
+
+name: Weekly background bank
+
+on:
+  schedule:
+    - cron: '17 2 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: purity-beans-background-bank
+  cancel-in-progress: false
+
+jobs:
+  refresh-bank:
+    name: Refresh Kaggle background bank
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      - name: Install Kaggle client
+        run: python -m pip install --no-cache-dir kaggle
+
+      - name: Probe video background sources
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PIXAZO_API_KEY: ${{ secrets.PIXAZO_API_KEY }}
+          RUNWAY_API_KEY: ${{ secrets.RUNWAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: python -m content_generator.creative.background_probe
+
+      - name: Pull finished clips and push the next notebook
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: python -m content_generator.creative.kaggle_bank
+
+      - name: Persist clip bank manifest
+        run: |
+          set -euo pipefail
+          if [ ! -d assets/background_bank ]; then
+            echo "no background bank files to persist"
+            exit 0
+          fi
+          git config user.name "Purity Beans Engine"
+          git config user.email "engine@puritybeans.auto"
+          git add -f assets/background_bank
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: refresh background clip bank [skip ci]"
+            git push
+          fi

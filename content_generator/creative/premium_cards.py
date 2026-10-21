@@ -100,9 +100,52 @@ def background(w, h, pal, seed=0, light=(0.5, 0.35)):
     return Image.fromarray(img).convert("RGBA"), horizon
 
 
-def load_jar(sku: str, target_h: int):
+def official_jar_asset(sku: str) -> str:
+    """Real studio cutout for this SKU.
+
+    Prefers a verified ``jar_asset_id`` in jar_provenance.json when that file
+    sits in the trusted brand-assets tree and is a cutout for this SKU.
+    Stock footage and AI jars are never returned.
+    """
+    canonical = os.path.join(_DIR, CUTOUTS[sku])
+    try:
+        from content_generator.creative import jar_provenance as jp
+        registry = jp._load_registry()
+    except Exception:
+        return canonical
+    want = os.path.basename(CUTOUTS[sku]).lower()
+    sku_token = sku.lower().replace("-", "_")
+    fallback = None
+    seen = set()
+    for entry in registry.values():
+        if not isinstance(entry, dict) or not entry.get("asset_real_jar_verified"):
+            continue
+        marker = id(entry)
+        if marker in seen:
+            continue
+        seen.add(marker)
+        jar = str(entry.get("jar_asset_id") or "")
+        if not jar:
+            continue
+        try:
+            trusted = jp._trusted_jar_asset(jar)
+        except Exception:
+            trusted = False
+        if not trusted or not os.path.isfile(jar):
+            continue
+        base = os.path.basename(jar).lower()
+        if "cutout" not in base:
+            continue
+        if base == want:
+            return jar
+        if sku_token in base and fallback is None:
+            fallback = jar
+    return fallback or canonical
+
+
+def load_jar(sku: str, target_h: int, source: str | None = None):
     from content_generator.creative.real_jar_composer import knockout_white
-    src = Image.open(os.path.join(_DIR, CUTOUTS[sku]))
+    src = Image.open(source or os.path.join(_DIR, CUTOUTS[sku]))
     jar = knockout_white(src)
     s = target_h / jar.height
     s = min(s, 2.0)  # never upscale past 2x (sharpness)
