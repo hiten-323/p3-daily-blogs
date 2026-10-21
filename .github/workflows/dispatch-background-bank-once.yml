@@ -20,7 +20,7 @@ jobs:
   dispatch-and-probe:
     name: Dispatch bank and save probe plates
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -47,7 +47,8 @@ jobs:
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-          HF_BG_TIMEOUT_S: "75"
+          HF_BG_TIMEOUT_S: "300"
+          AI_BG_TIMEOUT_S: "300"
           PYTHONPATH: ${{ github.workspace }}
         run: python scripts/render_probe_plates.py
 

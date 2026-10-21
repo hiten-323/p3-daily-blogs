@@ -123,7 +123,7 @@ def main() -> int:
     else:
         print("plate pixabay: skipped")
     if classify(by_name.get("hf_ltx", {})) == "live" or classify(by_name.get("hf_wan", {})) == "live":
-        os.environ.setdefault("HF_BG_TIMEOUT_S", "75")
+        os.environ.setdefault("HF_BG_TIMEOUT_S", "300")
         hf_video.reset_session()
         before = hf_video.ltx(_choice(), "probe", 5)
         if before:
@@ -133,6 +133,15 @@ def main() -> int:
             _save("hf_wan", hf_video.wan(_choice(), "probe", 5))
     else:
         print("plate hf: skipped")
+    if classify(by_name.get("pixazo", {})) == "live":
+        from content_generator.creative import ai_backgrounds
+        os.environ.setdefault("AI_BG_TIMEOUT_S", "300")
+        try:
+            _save("pixazo", ai_backgrounds._pixazo(_choice()["ai_prompt"], "probe", 6))
+        except Exception as exc:
+            print(f"plate pixazo: failed {type(exc).__name__}")
+    else:
+        print("plate pixazo: skipped")
     return 0
 
 
