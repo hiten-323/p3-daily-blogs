@@ -370,6 +370,57 @@ def test_kaggle_push_masks_derived_token_and_skips_without_secrets(tmp_path, mon
     assert oct(os.stat(tmp_path / "kaggle" / "kaggle.json").st_mode & 0o777) == "0o600"
 
 
+def test_http_404_and_cloudflare_block_are_not_live():
+    assert background_probe._http_state(200) == "live"
+    assert background_probe._http_state(400) == "live"
+    assert background_probe._http_state(404) == "down"
+    assert background_probe._http_state(401) == "down"
+    assert background_probe._http_state(429) == "quota"
+
+
+def test_pexels_search_sends_named_user_agent(monkeypatch):
+    monkeypatch.setenv("PEXELS_API_KEY", "pexels-test-key")
+    captured = {}
+
+    class _Resp:
+        def read(self):
+            return b'{"videos":[]}'
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+    def opener(req, timeout):
+        captured["ua"] = req.get_header("User-agent")
+        return _Resp()
+
+    monkeypatch.setattr(stock_video, "_open", opener)
+    stock_video.pexels({"concept": "steam_backlight", "scene": "steam"}, "lab", 5)
+    assert captured["ua"] == stock_video.USER_AGENT
+    assert "Python-urllib" not in captured["ua"]
+
+
+def test_pixazo_missing_video_route_is_not_live(monkeypatch, capsys):
+    for name in SECRET_NAMES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("PIXAZO_API_KEY", "pixazo-test-key")
+
+    def transport(method, url, headers, timeout, data=None):
+        if "ltx-video" in url:
+            return 404, b'{"message":"Resource not found"}'
+        if "text-to-image" in url:
+            return 400, b'{"message":"prompt required"}'
+        return 500, b""
+
+    monkeypatch.setattr(background_probe, "_default_transport", transport)
+    rows = {row["name"]: row for row in background_probe.probe_results()}
+    assert rows["pixazo"]["status"] == "down"
+    assert rows["pixazo"]["detail"] == "video route 404"
+    assert "pixazo-test-key" not in capsys.readouterr().out
+
+
 def test_probe_reports_skips_and_hides_secrets(monkeypatch, capsys):
     for name in SECRET_NAMES:
         monkeypatch.delenv(name, raising=False)
