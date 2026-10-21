@@ -70,7 +70,7 @@ def test_discovery_publishes_the_verified_sibling_only(tmp_path, monkeypatch):
     monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(creative))
 
     def verify(path):
-        name = path.rsplit("/", 1)[-1]
+        import os; name = os.path.basename(path)
         return {"verified": name == fallback.name}
 
     monkeypatch.setattr("content_generator.creative.jar_provenance.verify_jar_provenance", verify)

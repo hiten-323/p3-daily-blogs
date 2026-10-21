@@ -400,7 +400,7 @@ def test_kaggle_push_masks_derived_token_and_skips_without_secrets(tmp_path, mon
     assert "kaggle-secret-key" not in caplog.text
     stored = json.loads((tmp_path / "kaggle" / "kaggle.json").read_text())
     assert stored["key"] == "kaggle-secret-key"
-    assert oct(os.stat(tmp_path / "kaggle" / "kaggle.json").st_mode & 0o777) == "0o600"
+    if os.name != "nt": assert oct(os.stat(tmp_path / "kaggle" / "kaggle.json").st_mode & 0o777) == "0o600"
 
 
 def test_http_404_and_cloudflare_block_are_not_live():
