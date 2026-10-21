@@ -132,6 +132,18 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python -m content_generator.providers.llm_probe
 
+      - name: Probe video background sources
+        if: ${{ success() && (env.FORCE_SLOT == 'generate' || github.event.inputs.dry_run == 'true') }}
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          PIXAZO_API_KEY: ${{ secrets.PIXAZO_API_KEY }}
+          RUNWAY_API_KEY: ${{ secrets.RUNWAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: python -m content_generator.creative.background_probe
+
       - name: Meta token soft-check (generate)
         if: ${{ success() && env.FORCE_SLOT == 'generate' && github.event.inputs.dry_run != 'true' }}
         env:
@@ -227,6 +239,11 @@ jobs:
           PIXAZO_API_KEY: ${{ secrets.PIXAZO_API_KEY }}
           FAL_KEY: ${{ secrets.FLUX_API_KEY }}
           RUNWAY_API_KEY: ${{ secrets.RUNWAY_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          GH_TOKEN: ${{ github.token }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}

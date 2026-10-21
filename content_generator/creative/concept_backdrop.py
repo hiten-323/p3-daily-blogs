@@ -24,6 +24,18 @@ _TONES = {
 }
 
 
+def grade_toward_palette(frame, pal: dict):
+    """Pull a background plate 30% toward the jar-label deep/glow colours."""
+    img = np.asarray(frame, np.float32)
+    if img.ndim == 2:
+        img = np.stack([img, img, img], axis=-1)
+    deep = np.array(pal["deep"], np.float32)
+    glow = np.array(pal["glow"], np.float32)
+    lum = img.mean(axis=2, keepdims=True) / 255.0
+    graded = deep * (1 - lum) + glow * lum
+    return np.clip(img * 0.7 + graded * 0.3, 0, 255).astype("uint8")
+
+
 def tone_palette(pal: dict, tone: str) -> dict:
     """Blend at most ~30% toward a mood colour, so the jar-label palette still leads."""
     out = {k: tuple(int(v) for v in c) for k, c in pal.items()}
@@ -243,12 +255,7 @@ class ConceptBackdrop:
 
     def _ai(self, te, t):
         fr = self.ai[int(te * (len(self.ai) - 1))]
-        img = np.asarray(fr, np.float32)
-        p = self.pal
-        lum = img.mean(axis=2, keepdims=True) / 255.0
-        graded = p["deep"] * (1 - lum) + p["glow"] * lum  # grade toward the jar-label palette
-        img = img * 0.7 + graded * 0.3
-        return Image.fromarray(np.clip(img, 0, 255).astype("uint8")).convert("RGBA")
+        return Image.fromarray(grade_toward_palette(fr, self.pal)).convert("RGBA")
 
     def frame(self, t, dur, out_size):
         u = min(1.0, max(0.0, t / dur))
