@@ -645,8 +645,12 @@ def post_reel_video(video_url: str, caption: str) -> dict:
         return {"success": False, "media_id": "", "error": str(e)}
 
 
-def _post_reel_direct_binary(video_path: str, caption: str) -> dict:
-    """Publish Instagram Reel directly via Meta's resumable video upload protocol."""
+def _post_direct_binary(video_path: str, init_params: dict, *, label: str) -> dict:
+    """Publish a local video via Meta's resumable upload. No public video URL.
+
+    Graph returns an upload URI. The file bytes go there, then the container
+    is published once FINISHED. Provider response bodies are not logged.
+    """
     acct_id = os.getenv("INSTAGRAM_ACCOUNT_ID", "").strip()
     token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
     if not acct_id or not token or not os.path.isfile(video_path):
@@ -657,18 +661,14 @@ def _post_reel_direct_binary(video_path: str, caption: str) -> dict:
         from content_generator.publisher.meta_graph import ContainerNotReady, MetaRequestError
 
         file_size = os.path.getsize(video_path)
-        init_params = {
-            "media_type": "REELS",
-            "upload_type": "resumable",
-            "caption": caption,
-            "share_to_feed": "true",
-            "audio_name": "Purity Beans • Pure Coffee",
-            "access_token": token,
-        }
+        params = dict(init_params)
+        params["upload_type"] = "resumable"
+        params["access_token"] = token
+        logger.info("[instagram] %s video using Meta resumable upload", label)
         init_data = meta_graph.graph_request(
             "POST",
             f"{_GRAPH_API}/{acct_id}/media",
-            init_params,
+            params,
             timeout=30,
         )
         container_id = init_data.get("id")
@@ -695,11 +695,34 @@ def _post_reel_direct_binary(video_path: str, caption: str) -> dict:
         )
         return _publish_container(container_id, acct_id, token)
     except (ContainerNotReady, MetaRequestError) as e:
-        logger.error("[instagram] Direct binary reel container failed: %s", e)
+        logger.error("[instagram] Direct binary %s container failed: %s", label, e)
         return {"success": False, "media_id": "", "error": str(e)}
     except Exception as exc:
-        logger.warning("[instagram] Direct binary reel upload failed: %s", exc)
-        return {"success": False, "media_id": "", "error": str(exc)}
+        logger.warning("[instagram] Direct binary %s upload failed: %s", label, type(exc).__name__)
+        return {"success": False, "media_id": "", "error": f"resumable_upload_failed:{type(exc).__name__}"}
+
+
+def _post_reel_direct_binary(video_path: str, caption: str) -> dict:
+    """Publish an Instagram Reel by uploading the local file to Meta."""
+    return _post_direct_binary(
+        video_path,
+        {
+            "media_type": "REELS",
+            "caption": caption,
+            "share_to_feed": "true",
+            "audio_name": "Purity Beans • Pure Coffee",
+        },
+        label="reel",
+    )
+
+
+def _post_story_direct_binary(video_path: str) -> dict:
+    """Publish a Story video by uploading the local file to Meta."""
+    return _post_direct_binary(
+        video_path,
+        {"media_type": "STORIES"},
+        label="story",
+    )
 
 
 def post_story(content: dict, day: int = 0) -> dict:
@@ -840,17 +863,13 @@ def post_story(content: dict, day: int = 0) -> dict:
             return {"success": False, "media_id": "", "error": str(e)}
 
     if video_path and os.path.exists(video_path):
-        from content_generator.publisher.video_host import upload_video
-        video_url = upload_video(video_path)
-        if video_url:
-            logger.info("[instagram] Story using motion video with audio: %s", video_url)
-            res = _attempt({"media_type": "STORIES", "access_token": token, "video_url": video_url})
-            if res.get("success"):
-                res["format"] = "video"
-                logger.info("[instagram] Story published (video)")
-                return res
-            logger.warning("[instagram] video Story failed (%s) — falling back to static poster",
-                           res.get("error"))
+        res = _post_story_direct_binary(video_path)
+        if res.get("success"):
+            res["format"] = "video"
+            logger.info("[instagram] Story published (video)")
+            return res
+        logger.warning("[instagram] video Story failed (%s) — falling back to static poster",
+                       res.get("error"))
 
     image_url = _upload_to_public_url(image_path)
     if not image_url:
@@ -907,11 +926,10 @@ def _get_permalink(media_id: str, token: str) -> str:
 
 def _upload_to_public_url(image_path: str) -> str | None:
     """
-    Instagram requires a publicly accessible HTTPS URL for image containers.
-    We try:
+    Instagram image containers need a publicly accessible HTTPS URL.
+    Videos use Meta resumable upload and do not come through here.
     1. Imgbb (IMGBB_API_KEY)
-    2. Cloudinary (CLOUDINARY_URL)
-    3. Meta Facebook Page CDN (native fallback using connected Facebook Page)
+    2. Meta Facebook Page CDN (unpublished photo on the connected Page)
     """
     try:
         import requests, base64
@@ -937,19 +955,13 @@ def _upload_to_public_url(image_path: str) -> str | None:
             except Exception as e:
                 logger.warning("[instagram] ImgBB request error: %s", e)
 
-        # Fallback 1: try Cloudinary if configured
-        cloud_url = _cloudinary_upload(image_path)
-        if cloud_url:
-            return cloud_url
-
-        # Fallback 2: Meta Facebook CDN upload
         meta_cdn_url = _upload_to_facebook_cdn(image_path)
         if meta_cdn_url:
             return meta_cdn_url
 
         logger.warning(
             "[instagram] No working image hosting available. "
-            "Tried Imgbb, Cloudinary, and Facebook CDN."
+            "Tried Imgbb and Facebook CDN."
         )
         return None
 
@@ -1001,49 +1013,6 @@ def _upload_to_facebook_cdn(image_path: str) -> str | None:
     except Exception as exc:
         logger.debug("[instagram] Facebook CDN upload exception: %s", exc)
     return None
-
-
-def _cloudinary_upload(image_path: str) -> str | None:
-    """Upload an image to Cloudinary if configured; never log provider response bodies."""
-    if not os.getenv("CLOUDINARY_URL", "").strip():
-        return None
-    try:
-        import requests, base64, hashlib, time as _time
-        from content_generator.publisher.video_host import _creds, is_public_https_url
-
-        credentials = _creds()
-        if not credentials:
-            return None
-        api_key, api_secret, cloud_name = credentials
-
-        with open(image_path, "rb") as f:
-            encoded = base64.b64encode(f.read()).decode()
-
-        ts = str(int(_time.time()))
-        sig = hashlib.sha1(f"timestamp={ts}{api_secret}".encode()).hexdigest()
-
-        resp = requests.post(
-            f"https://api.cloudinary.com/v1_1/{cloud_name}/image/upload",
-            data={"file": f"data:image/jpeg;base64,{encoded}",
-                  "timestamp": ts, "api_key": api_key, "signature": sig},
-            timeout=60,
-        )
-        if resp.status_code >= 400:
-            logger.warning("[instagram] Cloudinary image upload failed (HTTP %d)", resp.status_code)
-            return None
-        try:
-            data = resp.json()
-        except Exception:
-            logger.warning("[instagram] Cloudinary image upload returned invalid JSON (HTTP %d)", resp.status_code)
-            return None
-        url = data.get("secure_url", "")
-        if url and is_public_https_url(str(url)):
-            return str(url)
-        logger.warning("[instagram] Cloudinary image upload response did not contain a public HTTPS URL")
-        return None
-    except Exception as exc:
-        logger.warning("[instagram] Cloudinary image upload error: %s", type(exc).__name__)
-        return None
 
 
 def image_aspect_ratio(path: str) -> float | None:
@@ -1175,37 +1144,14 @@ def post_prepared_story(poster_path: str, video_path: str | None = None) -> dict
                      poster_path, prov.get("reason"))
         return {"success": False, "media_id": "", "error": f"real_jar_unverified: {prov.get('reason')}"}
 
-    acct_id = os.getenv("INSTAGRAM_ACCOUNT_ID", "")
-    token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
     if video_path and os.path.exists(video_path):
         try:
-            from content_generator.publisher.video_host import is_configured as vhost_ok
-            from content_generator.publisher.video_host import upload_video
-            if vhost_ok():
-                video_url = upload_video(video_path)
-                if video_url:
-                    from content_generator.publisher import meta_graph
-                    from content_generator.publisher.meta_graph import (
-                        ContainerNotReady, MetaRequestError, graph_request, wait_for_container,
-                    )
-                    data = graph_request(
-                        "POST",
-                        f"{_GRAPH_API}/{acct_id}/media",
-                        {"video_url": video_url, "media_type": "STORIES", "access_token": token},
-                        timeout=30,
-                    )
-                    container_id = data.get("id", "")
-                    if container_id:
-                        wait_for_container(
-                            container_id, token,
-                            max_wait=getattr(meta_graph, "_VIDEO_POLL_S", 180),
-                        )
-                        res = _publish_container(container_id, acct_id, token)
-                        if res.get("success"):
-                            res["format"] = "video"
-                            return res
-                        logger.warning("[instagram] prepared story video not published (%s)",
-                                       res.get("error"))
+            res = _post_story_direct_binary(video_path)
+            if res.get("success"):
+                res["format"] = "video"
+                return res
+            logger.warning("[instagram] prepared story video not published (%s)",
+                           res.get("error"))
         except Exception as exc:
             logger.warning("[instagram] prepared story video failed (%s)", type(exc).__name__)
     return post_local_story(poster_path)

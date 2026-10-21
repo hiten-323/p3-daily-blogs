@@ -362,7 +362,7 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
         approved = approved_assets(content)
 
         from content_generator.publisher.instagram import (
-            _post_single_image, _assemble_caption, is_configured, post_reel_video,
+            _post_single_image, _assemble_caption, is_configured, _post_reel_direct_binary,
             prepare_feed_image, post_local_story,
         )
         if not is_configured():
@@ -391,7 +391,6 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
         #    the format that actually spreads), else the free motion reel.
         result = None
         try:
-            from content_generator.publisher.video_host import upload_video, is_configured as vhost_ok
             hero = _find_hero_video()
             if hero:
                 video_path, is_hero = hero, True
@@ -399,20 +398,13 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
             else:
                 from content_generator.creative.reel_video import build_reel_video
                 video_path, is_hero = build_reel_video(reel, day, on_date=slot_date), False
-            video_url = None
-            if video_path and vhost_ok():
-                video_url = upload_video(video_path)
-            elif video_path:
-                logger.warning("[slots] video host not configured (CLOUDINARY_URL unusable) — "
-                               "using Meta resumable direct upload for the reel")
             if video_path:
+                logger.info("[slots] publishing reel via Meta resumable upload")
                 from content_generator.publisher.publishing_ledger import publish_with_ledger
-                if video_url:
-                    _pub = lambda: post_reel_video(video_url, caption)
-                else:
-                    from content_generator.publisher.instagram import _post_reel_direct_binary
-                    _pub = lambda: _post_reel_direct_binary(video_path, caption)
-                result = publish_with_ledger("instagram_video", content, slot, day, _pub)
+                result = publish_with_ledger(
+                    "instagram_video", content, slot, day,
+                    lambda: _post_reel_direct_binary(video_path, caption),
+                )
                 if result.get("success"):
                     logger.info("[slots] evening published as %s REEL VIDEO",
                                 "HERO" if is_hero else "motion")

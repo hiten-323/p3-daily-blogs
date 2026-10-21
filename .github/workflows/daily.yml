@@ -230,7 +230,6 @@ jobs:
           IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
           IG_PRODUCT_ID: ${{ secrets.IG_PRODUCT_ID }}
           IG_CATALOG_ID: ${{ secrets.IG_CATALOG_ID }}
-          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}

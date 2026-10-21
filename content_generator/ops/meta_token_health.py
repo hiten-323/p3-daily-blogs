@@ -490,16 +490,12 @@ def run_checks(now: int | None = None) -> int:
         except Exception as exc:
             messages.append(("warning", f"LinkedIn token check: {type(exc).__name__}"))
 
-    # Image hosting readiness
+    # Image containers need a public HTTPS URL. Video uses Meta resumable upload.
     imgbb = os.environ.get("IMGBB_API_KEY", "").strip()
-    cloud = os.environ.get("CLOUDINARY_URL", "").strip()
     if imgbb:
         secrets.append(imgbb)
         messages.append(("notice", "Image hosting: IMGBB_API_KEY configured"))
-    if cloud:
-        secrets.append(cloud)
-        messages.append(("notice", "Image hosting: CLOUDINARY_URL configured"))
-    if not imgbb and not cloud:
+    else:
         messages.append(("notice", "Image hosting: Meta Facebook CDN fallback active"))
 
     return _finish(messages, secrets, failed)

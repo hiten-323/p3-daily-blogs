@@ -67,7 +67,6 @@ def test_meta_cdn_upload_fallback(monkeypatch, tmp_path):
     monkeypatch.setenv("FACEBOOK_PAGE_ID", "12345")
     monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "fb_token")
     monkeypatch.delenv("IMGBB_API_KEY", raising=False)
-    monkeypatch.delenv("CLOUDINARY_URL", raising=False)
 
     class DummyPost:
         status_code = 200
