@@ -136,7 +136,28 @@ def mask_derived(value: str) -> None:
 
 
 def _credentials() -> tuple[str, str]:
-    return os.getenv("KAGGLE_USERNAME", "").strip(), os.getenv("KAGGLE_KEY", "").strip()
+    username = os.getenv("KAGGLE_USERNAME", "").strip()
+    key = os.getenv("KAGGLE_KEY", "").strip()
+    if username and key:
+        return username, key
+    token = os.getenv("KAGGLE_API_TOKEN", "").strip()
+    if token:
+        try:
+            parsed = json.loads(token)
+            if isinstance(parsed, dict):
+                u = str(parsed.get("username") or "").strip()
+                k = str(parsed.get("key") or "").strip()
+                if u and k:
+                    return u, k
+        except Exception:
+            pass
+        if ":" in token:
+            parts = token.split(":", 1)
+            u = parts[0].strip()
+            k = parts[1].strip()
+            if u and k:
+                return u, k
+    return username, key
 
 
 def _derived_basic(username: str, key: str) -> str:

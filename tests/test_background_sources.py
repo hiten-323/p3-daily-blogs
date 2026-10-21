@@ -551,3 +551,31 @@ def test_cinematic_composites_official_cutout(monkeypatch, tmp_path):
     assert seen["source"] == canonical
     assert meta["jar_asset_id"] == canonical
 
+
+
+def test_kaggle_credentials_parse_api_token(monkeypatch):
+    monkeypatch.delenv("KAGGLE_USERNAME", raising=False)
+    monkeypatch.delenv("KAGGLE_KEY", raising=False)
+    monkeypatch.delenv("KAGGLE_API_TOKEN", raising=False)
+
+    # Empty case
+    assert kaggle_bank._credentials() == ("", "")
+    assert background_probe._kaggle_basic() == ""
+
+    # JSON token case
+    token_json = json.dumps({"username": "purity_json_user", "key": "secret_key_123"})
+    monkeypatch.setenv("KAGGLE_API_TOKEN", token_json)
+    assert kaggle_bank._credentials() == ("purity_json_user", "secret_key_123")
+    basic = background_probe._kaggle_basic()
+    assert basic == base64.b64encode(b"purity_json_user:secret_key_123").decode()
+
+    # Colon-separated token case
+    monkeypatch.setenv("KAGGLE_API_TOKEN", "purity_colon_user:secret_key_456")
+    assert kaggle_bank._credentials() == ("purity_colon_user", "secret_key_456")
+    basic_colon = background_probe._kaggle_basic()
+    assert basic_colon == base64.b64encode(b"purity_colon_user:secret_key_456").decode()
+
+    # Direct username and key precedence
+    monkeypatch.setenv("KAGGLE_USERNAME", "direct_user")
+    monkeypatch.setenv("KAGGLE_KEY", "direct_key")
+    assert kaggle_bank._credentials() == ("direct_user", "direct_key")

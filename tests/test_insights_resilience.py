@@ -263,3 +263,38 @@ def test_systemic_insights_error_does_not_abandon_the_window(monkeypatch) -> Non
     stored = saved["posts"][0]
     assert stored["fetch_attempts_by_window"]["24h"] == 4
     assert stored["failed_windows"] == []
+
+
+def test_insights_skips_when_scope_missing_without_tripping_circuit(monkeypatch) -> None:
+    """When instagram_manage_insights is missing, skip /insights calls on subsequent media to prevent circuit trip."""
+    insights._reset_circuit()
+    monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "token")
+    insights_calls = []
+
+    def _mock_graph_get(path, params, bypass_circuit=False):
+        if "/insights" in path:
+            insights_calls.append(path)
+            insights._note_failure(path, "(#10) Application does not have permission for instagram_manage_insights")
+            return None
+        if path == "media_1":
+            return {"like_count": 14, "comments_count": 2, "media_product_type": "IMAGE"}
+        if path == "media_2":
+            return {"like_count": 7, "comments_count": 0, "media_product_type": "REELS"}
+        return None
+
+    monkeypatch.setattr(insights, "_graph_get", _mock_graph_get)
+
+    m1 = insights._fetch_media_insights("media_1")
+    assert m1 is None
+    assert insights._insights_missing_scope is True
+    assert len(insights_calls) == 1
+
+    # Subsequent media must skip /insights calls completely to prevent circuit trip
+    for i in range(20):
+        m = insights._fetch_media_insights(f"media_{i}")
+        assert m is None
+
+    # /insights was called only once across 21 posts
+    assert len(insights_calls) == 1
+    assert not insights._circuit_open
+    insights._reset_circuit()

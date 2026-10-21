@@ -73,7 +73,8 @@ def _http_state(status) -> str:
 
 
 def _kaggle_basic() -> str:
-    username, key = _secret("KAGGLE_USERNAME"), _secret("KAGGLE_KEY")
+    from content_generator.creative import kaggle_bank
+    username, key = kaggle_bank._credentials()
     if not username or not key:
         return ""
     derived = base64.b64encode(f"{username}:{key}".encode()).decode()

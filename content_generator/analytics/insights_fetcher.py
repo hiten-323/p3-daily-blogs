@@ -202,6 +202,7 @@ _MAX_CONSECUTIVE_FAILURES = 8
 _consecutive_failures = 0
 _circuit_open = False
 _last_failure_detail = ""
+_insights_missing_scope = False
 
 # These are account-wide. Burning a post's measurement window on them throws
 # away a post that never had a chance. A missing media object still counts.
@@ -221,10 +222,11 @@ def insight_failure_is_systemic(detail: str) -> bool:
 
 def _reset_circuit() -> None:
     """Called at the start of each run so one bad day never poisons the next."""
-    global _consecutive_failures, _circuit_open, _last_failure_detail
+    global _consecutive_failures, _circuit_open, _last_failure_detail, _insights_missing_scope
     _consecutive_failures = 0
     _circuit_open = False
     _last_failure_detail = ""
+    _insights_missing_scope = False
 
 
 def _error_detail(exc: Exception, token: str | None) -> str:
@@ -246,8 +248,11 @@ def _error_detail(exc: Exception, token: str | None) -> str:
 
 
 def _note_failure(path: str, detail: str) -> None:
-    global _consecutive_failures, _circuit_open, _last_failure_detail
+    global _consecutive_failures, _circuit_open, _last_failure_detail, _insights_missing_scope
     _last_failure_detail = detail
+    text = str(detail or "").lower()
+    if "instagram_manage_insights" in text or "permission" in text or "nonexisting field (insights)" in text:
+        _insights_missing_scope = True
     _consecutive_failures += 1
     logger.warning("[insights] Graph API call failed (%s): %s", path, detail)
     if _consecutive_failures >= _MAX_CONSECUTIVE_FAILURES and not _circuit_open:
@@ -357,25 +362,28 @@ def _fetch_media_insights(media_id: str) -> dict | None:
     comments = fields.get("comments_count") if fields else None
     is_reel = str((fields or {}).get("media_product_type", "")).upper() == "REELS"
 
-    metric_sets = (
-        (["reach", "saved", "shares", "total_interactions", "views",
-          "ig_reels_avg_watch_time", "ig_reels_video_view_total_time"] if is_reel
-         else ["reach", "saved", "shares", "total_interactions"]),
-        (["reach", "saved", "shares", "views"] if is_reel
-         else ["reach", "saved", "shares"]),
-        ["reach", "saved"],
-        ["reach"],
-    )
     raw = {}
-    for metrics in metric_sets:
-        data = _graph_get(f"{media_id}/insights", {"metric": ",".join(metrics)})
-        if data and "data" in data:
-            for item in data["data"]:
-                values = item.get("values") or [{}]
-                value = values[0].get("value")
-                if value is not None:
-                    raw[item.get("name", "")] = value
-            if raw:
+    if not _insights_missing_scope:
+        metric_sets = (
+            (["reach", "saved", "shares", "total_interactions", "views",
+              "ig_reels_avg_watch_time", "ig_reels_video_view_total_time"] if is_reel
+             else ["reach", "saved", "shares", "total_interactions"]),
+            (["reach", "saved", "shares", "views"] if is_reel
+             else ["reach", "saved", "shares"]),
+            ["reach", "saved"],
+            ["reach"],
+        )
+        for metrics in metric_sets:
+            data = _graph_get(f"{media_id}/insights", {"metric": ",".join(metrics)})
+            if data and "data" in data:
+                for item in data["data"]:
+                    values = item.get("values") or [{}]
+                    value = values[0].get("value")
+                    if value is not None:
+                        raw[item.get("name", "")] = value
+                if raw:
+                    break
+            if _insights_missing_scope:
                 break
 
     if not raw:
