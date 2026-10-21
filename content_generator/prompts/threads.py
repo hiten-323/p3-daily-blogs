@@ -13,7 +13,7 @@ KNOWLEDGE ANGLE: [{angle[0]}] — {angle[1]}
 
 NATIVE THREADS ARCHITECTURE (OPTIMIZED FOR REPLIES, QUOTES & FOLLOWS):
 1. CONVERSATION HOOK: Raw observation or contrarian stance that sparks immediate mental reaction (e.g. 'Unpopular opinion: most bitter instant coffee is just water that was too hot.').
-2. UNVARNISHED INSIGHT: 1-2 punchy lines breaking down the reality (freeze-drying vs spray drying, dose per cup, or 85°C extraction) — never attack chicory or other brands.
+2. UNVARNISHED INSIGHT: 1-2 punchy lines breaking down the reality (dose per cup, or 85°C extraction). Freeze-drying may be explained only when the linked jar is Purica or Purista (or Variety Box / Gourmet Duo Mini). Bold is agglomerated, not freeze-dried. Do not name a process for Ultra Blend. A freeze-dried vs agglomerated comparison may link Bold for the agglomerated side only. Never attack chicory or other brands.
 3. DISCUSSION SPARK: Prompt an effortless reply or quote ('Check the ingredient panel on your kitchen jar right now — what does it list?', 'Agree or disagree?').
 4. FOLLOWER CONVERSION: Give a clear reason to follow ('Follow for daily coffee truths Big Coffee hides.').
 

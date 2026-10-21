@@ -105,7 +105,9 @@ MESSAGE_ANGLES = [
     ("VALUE",       "Lead with practical value — money saved, a guide, a comparison. "
                     "Helpful first, brand second."),
     ("CONTRAST",    "Lead with an honest side-by-side of two Purity Beans jars (e.g. Arabica vs "
-                    "Robusta, freeze-dried vs agglomerated). No chicory-vs-pure framing."),
+                    "Robusta, freeze-dried Purica/Purista vs agglomerated Bold). "
+                    "Do not call Bold freeze-dried. Do not name a process for Ultra Blend. "
+                    "No chicory-vs-pure framing."),
 ]
 
 

@@ -111,7 +111,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "short_name": "Ultra Blend (70% coffee, 30% chicory)",
         "handle": "purity-beans-ultra-blend-instant-coffee",
         "bean_type": "70% coffee",
-        "process": "Agglomerated instant blend",
+        "process": "Do not name a process",
         "chicory": "30% chicory",
         "pure_coffee": False,
         "coffee_percent": 70,
@@ -141,7 +141,7 @@ SHOPIFY_PRODUCTS: dict[str, dict[str, Any]] = {
         "short_name": "Variety Box (4 × 50g Jars)",
         "handle": "variety-box",
         "bean_type": "All 4 Signature Blends (Ultra Blend, Bold, Purista, Purica)",
-        "process": "Combination (Freeze-Dried Granules & Agglomerated)",
+        "process": "Includes freeze-dried Purica and Purista, and agglomerated Bold. Do not name a process for the Ultra Blend jar.",
         "chicory": "Three pure coffee jars plus one Ultra Blend jar (70% coffee, 30% chicory)",
         "pure_coffee": False,
         "flavor_profile": "The complete tasting flight",
@@ -299,6 +299,11 @@ def _cup_line() -> str:
     return cup_phrase("ultra_blend", 100) or "omit per-cup figures"
 
 
+def _process_match_rule() -> str:
+    from content_generator.core.process_match import PROCESS_MATCH_RULE
+    return PROCESS_MATCH_RULE
+
+
 def format_catalog_for_prompt() -> str:
     """
     Compact, authoritative product catalog block for prompt injection.
@@ -326,9 +331,12 @@ def format_catalog_for_prompt() -> str:
     lines.append(
         "MANDATORY PRODUCT TRUTH RULES:\n"
         "1. Never invent prices, percentages, certificates, sourcing stories, or health outcomes.\n"
-        "2. Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. "
-        "All three are pure coffee and zero chicory.\n"
-        "3. Prima / Premium Agglomerate is pure Arabica. It is agglomerated, not freeze-dried.\n"
+        "2. Purista is freeze-dried pure Robusta. Bold is agglomerated pure coffee, not freeze-dried. "
+        "Purica is freeze-dried pure Arabica. All three are pure coffee and zero chicory.\n"
+        "3. Prima / Premium Agglomerate is pure Arabica. It is agglomerated, not freeze-dried. "
+        "Do not feature Prima or tell people to buy it.\n"
+        "3b. Do not name a process for Ultra Blend. Do not call it freeze-dried or agglomerated.\n"
+        "3c. " + _process_match_rule() + "\n"
         "4. Ultra Blend is 70% coffee and 30% chicory. A lower-caffeine description is allowed for Ultra Blend only. "
         "Never call Ultra Blend pure coffee, zero chicory, no chicory, no-chicory, zero-chicory, chicory-free, or 0% chicory.\n"
         "5. Variety Box is three pure coffee jars plus Ultra Blend. Do not call the box zero chicory.\n"

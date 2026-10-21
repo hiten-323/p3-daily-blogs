@@ -37,7 +37,7 @@ Do not reuse the reels' hooks or angles.
   "story_3": {{
     "type": "clean_truth",
     "headline": "THE INGREDIENT TRUTH",
-    f"fact": "Verifiable coffee truth: e.g. freeze-dried vs spray-dried, or on Ultra Blend days only: at least {_PT.ultra('cups')} cups per 100g jar. ZERO fabrication: NEVER invent fake customer counts, fake DMs, or synthetic handles.",
+    f"fact": "Verifiable coffee truth. Freeze-dried is only Purica and Purista. Agglomerated is Bold (Prima is out of stock — do not promote it). Do not name a process for Ultra Blend. On Ultra Blend days only, at least {_PT.ultra('cups')} cups per 100g jar is allowed. ZERO fabrication: NEVER invent fake customer counts, fake DMs, or synthetic handles.",
     "sticker_prompt": "Interactive quiz or emoji slider sticker for audience engagement"
   }},
   "story_4": {{

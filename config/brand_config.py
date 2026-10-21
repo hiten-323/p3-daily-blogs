@@ -48,7 +48,7 @@ POSITIONING = {
         "No transparency about coffee purity on labels",
     ],
     "proof_points": [
-        "Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. Prima is pure Arabica Premium Agglomerate.",
+        "Purista is freeze-dried pure Robusta. Bold is agglomerated pure coffee, not freeze-dried. Purica is freeze-dried pure Arabica. Prima is pure Arabica Premium Agglomerate. Ultra Blend has no process claim.",
         "Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. A lower-caffeine description is allowed only for that jar.",
         "Ultra Blend 100g makes at least 50 cups, about ₹6 a cup",
     ],

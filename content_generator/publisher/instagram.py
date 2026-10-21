@@ -727,6 +727,23 @@ def post_story(content: dict, day: int = 0) -> dict:
     except Exception as e:
         logger.debug("[instagram] story link line skipped: %s", e)
     logger.info("[instagram] story copy source=%s headline=%r", copy.get("source"), headline)
+    try:
+        from content_generator.core.process_match import process_match_findings
+        from content_generator.core.product_truth import featured_product_name
+        story_featured = featured_product_name(content)
+        story_hits = process_match_findings(f"{headline}\n{sub}", featured=story_featured)
+        if story_hits:
+            logger.warning("[instagram] story blocked by process match: %s", story_hits[0].get("reason"))
+            return {
+                "success": False, "media_id": "", "attempted": False, "skipped": True,
+                "error": "process_match_failed",
+            }
+    except Exception as e:
+        logger.warning("[instagram] story process match failed closed: %s", e)
+        return {
+            "success": False, "media_id": "", "attempted": False, "skipped": True,
+            "error": "process_match_error",
+        }
 
     product = None
     try:

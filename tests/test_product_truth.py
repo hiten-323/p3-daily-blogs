@@ -271,7 +271,7 @@ def test_repair_clears_hook_lists_and_comparison_tables():
 
     table = (
         "<table><tr><td>Ultra Blend</td><td>70% coffee</td><td>30% chicory</td>"
-        "<td>Agglomerated instant blend</td></tr>"
+        "<td>70% coffee and 30% chicory</td></tr>"
         "<tr><td>Prima</td><td>pure Arabica</td><td>0% chicory</td>"
         "<td>Premium Agglomerate</td></tr>"
         "<tr><td>Purica</td><td>pure Arabica</td><td>0% chicory</td>"
