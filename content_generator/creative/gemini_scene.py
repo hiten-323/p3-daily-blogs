@@ -26,8 +26,32 @@ import urllib.request
 logger = logging.getLogger(__name__)
 
 _OUT_DIR  = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
-_MODEL    = os.getenv("GEMINI_IMAGE_MODEL", "gemini-2.0-flash-exp")
+# gemini-2.0-flash-exp and the 2.0 image previews were shut down (HTTP 404).
+# Nano Banana 2.1 is the current image-edit model; the others are still served.
+_LIVE_IMAGE_MODELS = (
+    "gemini-nano-banana-2.1",
+    "gemini-3.1-flash-image",
+    "gemini-2.5-flash-image",
+)
+_RETIRED_IMAGE_MODELS = {
+    "gemini-2.0-flash-exp",
+    "gemini-2.0-flash-exp-image-generation",
+    "gemini-2.0-flash-preview-image-generation",
+}
+_DEAD_IMAGE_MODELS: set[str] = set()
 _TIMEOUT  = 120
+
+
+def _image_model_order() -> list[str]:
+    """Configured live model first, then known-live fallbacks. Retired ids are skipped."""
+    configured = os.getenv("GEMINI_IMAGE_MODEL", "").strip()
+    ordered: list[str] = []
+    if configured and configured not in _RETIRED_IMAGE_MODELS:
+        ordered.append(configured)
+    for model in _LIVE_IMAGE_MODELS:
+        if model not in ordered:
+            ordered.append(model)
+    return [model for model in ordered if model not in _DEAD_IMAGE_MODELS]
 
 def _build_scene_rules(aspect_desc: str = "Square 1:1 composition.") -> str:
     return (
@@ -49,6 +73,40 @@ _SCENE_RULES = _build_scene_rules("Vertical 9:16 composition.")
 
 def is_configured() -> bool:
     return bool(os.getenv("GEMINI_API_KEY"))
+
+
+def _fetch_scene(api_key: str, body: bytes) -> dict | None:
+    """POST the scene. A 404 retires that model for this process and tries the next."""
+    import urllib.error
+
+    models = _image_model_order()
+    if not models:
+        logger.warning("[gemini_scene] no live Gemini image model; falling back to the card composer")
+        return None
+    for model in models:
+        url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
+               f"{model}:generateContent?key={api_key}")
+        try:
+            req = urllib.request.Request(
+                url, data=body,
+                headers={"Content-Type": "application/json",
+                         "User-Agent": "PurityBeans/1.0"},
+                method="POST",
+            )
+            resp = urllib.request.urlopen(req, timeout=_TIMEOUT)
+            return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            if getattr(e, "code", None) == 404:
+                _DEAD_IMAGE_MODELS.add(model)
+                logger.warning("[gemini_scene] model %s not found (404); falling through", model)
+                continue
+            logger.warning("[gemini_scene] Gemini API failed: %s", e)
+            return None
+        except Exception as e:
+            logger.warning("[gemini_scene] Gemini API failed: %s", e)
+            return None
+    logger.warning("[gemini_scene] no live Gemini image model; falling back to the card composer")
+    return None
 
 
 def generate_scene_with_real_jar(
@@ -113,23 +171,11 @@ def generate_scene_with_real_jar(
                 {"text": f"{rules}\n\nSCENE: {scene_text}"},
             ]
         }],
-        "generationConfig": {"responseModalities": ["IMAGE"]},
+        "generationConfig": {"responseModalities": ["TEXT", "IMAGE"]},
     }).encode("utf-8")
 
-    url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
-           f"{_MODEL}:generateContent?key={api_key}")
-
-    try:
-        req = urllib.request.Request(
-            url, data=body,
-            headers={"Content-Type": "application/json",
-                     "User-Agent": "PurityBeans/1.0"},
-            method="POST",
-        )
-        resp = urllib.request.urlopen(req, timeout=_TIMEOUT)
-        data = json.loads(resp.read().decode("utf-8"))
-    except Exception as e:
-        logger.warning("[gemini_scene] Gemini API failed: %s", e)
+    data = _fetch_scene(api_key, body)
+    if not data:
         return None
 
     # Extract the returned image

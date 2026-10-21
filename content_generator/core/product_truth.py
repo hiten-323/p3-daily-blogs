@@ -401,6 +401,57 @@ def repair_content(content: dict) -> dict:
     return repaired
 
 
+def scrub_non_ultra_per_cup(text: str) -> str:
+    """Drop sentences that state a per-cup yield without naming Ultra Blend.
+
+    The publish gate is unchanged and still rejects any figure that remains.
+    This only stops the generator from handing that figure to the gate.
+    """
+    if not isinstance(text, str) or not text or not _PER_CUP_FIGURE.search(text):
+        return text
+    kept = []
+    for sentence in _SENTENCE.split(text):
+        s = sentence.strip()
+        if not s:
+            continue
+        if _PER_CUP_FIGURE.search(s) and not _ULTRA.search(s):
+            continue
+        kept.append(s)
+    return " ".join(kept)
+
+
+def omit_per_cup_for_non_ultra(piece: dict, featured: str | None = None) -> dict:
+    """On a non-Ultra Blend day, remove per-cup yield lines the gate would reject.
+
+    Sentences that name Ultra Blend are left alone: the gate allows those.
+    When the featured jar is Ultra Blend, the piece is not rewritten.
+    """
+    if not isinstance(piece, dict) or _featured_is_ultra_blend(featured):
+        return piece
+    skip = {"editorial_score", "editorial_error", "viral_potential", "gate_rejection", "fallback_ladder"}
+
+    def walk(node) -> None:
+        if isinstance(node, dict):
+            for key, value in list(node.items()):
+                if key in skip:
+                    continue
+                if isinstance(value, str):
+                    node[key] = scrub_non_ultra_per_cup(value)
+                elif isinstance(value, (dict, list)):
+                    walk(value)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item)
+
+    walk(piece)
+    return piece
+
+
+def _featured_is_ultra_blend(featured: str | None) -> bool:
+    name = str(featured or "").lower().replace("_", " ").replace("-", " ")
+    return "ultra blend" in name or name.strip() == "ultra"
+
+
 def _ultra_cup_phrase() -> str:
     from content_generator.core.price_truth import cup_phrase
     return cup_phrase("ultra_blend", 100) or "priced as listed on p3online.in"

@@ -329,6 +329,43 @@ def _assemble_caption(body: str, piece: dict, day: int = 0) -> str:
     return full
 
 
+def _prefer_verified_slide(images: list[str]) -> list[str]:
+    """One file per slide index.
+
+    A held premium render used to sit beside the registered fallback
+    (``carousel_slide_6_day293_premium_*.jpg`` unregistered,
+    ``carousel_slide_6_day293_*.jpg`` verified). The suite check then held
+    the whole morning slot. A verified file is what gets published. When
+    nothing for that slide is verified, every candidate stays so the gate
+    still fails closed.
+    """
+    from content_generator.creative.jar_provenance import verify_jar_provenance
+
+    groups: dict[int, list[str]] = {}
+    order: list[int] = []
+    rest: list[str] = []
+    for path in images:
+        match = re.search(r"carousel_slide_(\d+)", os.path.basename(path))
+        if not match:
+            rest.append(path)
+            continue
+        idx = int(match.group(1))
+        if idx not in groups:
+            order.append(idx)
+            groups[idx] = []
+        groups[idx].append(path)
+    chosen: list[str] = []
+    for idx in order:
+        group = groups[idx]
+        verified = [p for p in group if verify_jar_provenance(p).get("verified")]
+        if not verified:
+            chosen.extend(group)
+            continue
+        premium = [p for p in verified if "_premium" in os.path.basename(p)]
+        chosen.append((premium or verified)[0])
+    return chosen + rest
+
+
 def _find_carousel_images(content: dict) -> list[str]:
     """Find all carousel slide images generated today."""
     import glob as _glob
@@ -371,6 +408,7 @@ def _find_carousel_images(content: dict) -> list[str]:
             # day1 must not match inside day12 / day292.
             day_token = re.compile(rf"day{_day}(?:_|\.)")
             images = [p for p in images if day_token.search(os.path.basename(p))]
+        images = _prefer_verified_slide(images)
 
     # If no carousel slides found, look for feed post / instagram post images generated today
     if not images:

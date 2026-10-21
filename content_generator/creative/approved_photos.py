@@ -516,6 +516,17 @@ def _save(img, jar, label, src=None, texts=None, band=None):
     return path
 
 
+def _discard_render(path: str | None) -> None:
+    """Remove a render that will not be registered, so discovery cannot publish it."""
+    if not path:
+        return
+    try:
+        if os.path.isfile(path):
+            os.remove(path)
+    except OSError as exc:
+        logger.warning("[approved_photos] could not remove unregistered render %s: %s", path, exc)
+
+
 def _render_impl(surface: str, width: int, height: int, headline: str = "", body: str = "",
            day: int = 0, idx: int = 0, product=None, label: str = "approved",
            prefer: str = "photo") -> str | None:
@@ -557,11 +568,19 @@ def _render_impl(surface: str, width: int, height: int, headline: str = "", body
             if meta.get("held"):
                 logger.error("[visual-gate] %s held after re-renders: %s", label,
                              (meta.get("visual_gate") or {}).get("reasons"))
-                return None  # never post a failing piece; the retry loop regenerates
+                # The last failed try is already on disk at out_path. Leaving it
+                # there publishes an unregistered premium sibling and the morning
+                # slot holds the whole carousel (slide 6, 2026-10-21).
+                _discard_render(meta.get("path"))
+                return None  # never post a failing piece; the caller falls back
             visual_gate.remember_layout(meta.get("layout"), label)
             from content_generator.creative.jar_provenance import record_jar_provenance
-            record_jar_provenance(meta["path"], render_source="approved_photo",
-                                  jar_asset_id=os.path.join(premium_cards._DIR, premium_cards.CUTOUTS[sku]))
+            entry = record_jar_provenance(
+                meta["path"], render_source="approved_photo",
+                jar_asset_id=os.path.join(premium_cards._DIR, premium_cards.CUTOUTS[sku]))
+            if not entry.get("asset_real_jar_verified"):
+                _discard_render(meta.get("path"))
+                return None
             return meta["path"]
         return render_studio_card(cut[(day * 3 + idx) % len(cut)], width, height, headline, body, label, day)
     except Exception as e:  # never break the pipeline; caller falls back

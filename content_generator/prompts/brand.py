@@ -35,7 +35,10 @@ def brand_block() -> str:
     return (
         f"BRAND: {BRAND['name']} (by {BRAND.get('company', 'Pure Pantry Provisions')}) — premium pure instant coffee, India.\n"
         f"USP: {POSITIONING['usp']}\n"
-        f"Price: Rs{POSITIONING['price_per_cup']}/cup vs Rs{POSITIONING['cafe_price']} at cafes.\n"
+        f"A cafe cup often costs about Rs{POSITIONING['cafe_price']}. "
+        f"Our per-cup yield is verified only for Ultra Blend "
+        f"(₹309/100g, at least 66 cups, about ₹5 a cup) and only in a sentence that names Ultra Blend. "
+        f"When the featured jar is Bold, Purista, Purica, Prima, or any other jar, omit every per-cup price and cup count.\n"
         f"Website: {WEBSITE_URL} | Tagline: \"{BRAND['tagline']}\"\n"
         f"Tone: Premium but human. Honest, not corporate. Indian in DNA.\n"
         f"\n"
