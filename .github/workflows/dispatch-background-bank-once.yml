@@ -48,6 +48,7 @@ jobs:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
           HF_BG_TIMEOUT_S: "75"
+          PYTHONPATH: ${{ github.workspace }}
         run: python scripts/render_probe_plates.py
 
       - name: Upload probe plates

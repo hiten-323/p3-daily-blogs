@@ -11,6 +11,10 @@ import os
 import shutil
 import sys
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+
 SECRET_NAMES = (
     "PEXELS_API_KEY", "PIXABAY_API_KEY", "HF_TOKEN", "KAGGLE_USERNAME", "KAGGLE_KEY",
     "PIXAZO_API_KEY", "RUNWAY_API_KEY", "GH_TOKEN", "GITHUB_TOKEN",
@@ -53,6 +57,8 @@ def classify(row: dict) -> str:
         return "live"
     if row.get("name") == "kaggle_bank" and status == "empty":
         return "empty"
+    if status == "quota":
+        return "quota"
     if status == "skipped":
         return "error"
     if code in (401, 403):
