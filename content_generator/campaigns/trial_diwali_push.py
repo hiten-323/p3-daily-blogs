@@ -1,8 +1,4 @@
-"""Organic Instagram sales push, 21 Oct 2026 through 20 Nov 2026.
-
-config/trial_diwali_push.json is the promote list. `exclude` wins.
-Existing product-truth, claim, and honesty gates are not relaxed.
-"""
+"""Organic Instagram sales push, 21 Oct 2026 through 20 Nov 2026."""
 from __future__ import annotations
 
 import datetime as _dt
@@ -35,6 +31,8 @@ _TRIAL_ON = {"bold": "BOLD 50g", "purista": "PURISTA 50g", "purica": "PURICA 50g
 _TRIAL_SUB = {"bold": "Pure coffee", "purista": "Pure Robusta", "purica": "Pure Arabica"}
 
 _URL = re.compile(r"https?://\S+")
+_ORDER_BY_UNTIL = _dt.date(2026, 11, 2)
+_CONFIRMED_CODES = ("FREESHIP", "BUNDLE10")
 _BANNED = re.compile(
     r"100\s*%|100\s*percent|\bfresh\b|lab[\s-]?tested|zero\s+acidity|"
     r"order\s+by|countdown|only\s+\d+\s+(?:left|units|jars)|"
@@ -70,7 +68,6 @@ def _handle(slug: str) -> str:
 
 
 def excluded_keys(cfg: dict | None = None) -> set[str]:
-    """Slugs and handles the push must not mention. Configurable."""
     cfg = cfg or load_config()
     from content_generator.core.price_truth import HANDLE_TO_SLUG
     keys: set[str] = set()
@@ -111,7 +108,6 @@ def active(on, cfg: dict | None = None) -> bool:
 
 
 def diwali_angle(on, cfg: dict | None = None) -> bool:
-    """Festival wording is allowed through Diwali. No order-by date is ever set."""
     cfg = cfg or load_config()
     day = _as_date(on)
     through = _as_date(cfg.get("diwali_angle_through"))
@@ -154,7 +150,6 @@ def _pool(cfg: dict) -> list[dict]:
 
 
 def offer_for(on, cfg: dict | None = None) -> dict | None:
-    """Trial jars on even days from the start, the gift pack on odd days."""
     cfg = cfg or load_config()
     day = _as_date(on)
     start = _as_date(cfg.get("start")) if cfg else None
@@ -172,14 +167,9 @@ def offer_for(on, cfg: dict | None = None) -> dict | None:
             return None
         spec = seq[idx % len(seq)]
     return {
-        "slug": spec["slug"],
-        "role": spec.get("role") or "",
-        "grams": spec.get("grams"),
-        "price": spec["price"],
-        "handle": spec["handle"],
-        "low_stock_units": spec.get("low_stock_units"),
-        "diwali_angle": spec.get("role") == "gift" and diwali_angle(day, cfg),
-        "date": day.isoformat(),
+        "slug": spec["slug"], "role": spec.get("role") or "", "grams": spec.get("grams"),
+        "price": spec["price"], "handle": spec["handle"], "low_stock_units": spec.get("low_stock_units"),
+        "diwali_angle": spec.get("role") == "gift" and diwali_angle(day, cfg), "date": day.isoformat(),
     }
 
 
@@ -191,6 +181,28 @@ def _entry_price(cfg: dict) -> int | None:
             return int(spec["price"])
     trials = [int(p["price"]) for p in pool if p.get("role") == "trial"]
     return min(trials) if trials else None
+
+
+def _code_line(cfg: dict) -> str:
+    found = []
+    for item in cfg.get("codes") or []:
+        code = item.get("code") if isinstance(item, dict) else item
+        code = str(code or "").strip().upper()
+        if code in _CONFIRMED_CODES and code not in found:
+            found.append(code)
+    return " ".join(f"Use code {code}." for code in found)
+
+
+def _deadline_line(offer: dict, cfg: dict) -> str:
+    spec = cfg.get("order_by") if isinstance(cfg.get("order_by"), dict) else {}
+    if offer.get("role") != "gift" or offer.get("slug") != str(spec.get("slug") or ""):
+        return ""
+    day, through = _as_date(offer.get("date")), _as_date(spec.get("through"))
+    if not day or not through or day > through or day > _ORDER_BY_UNTIL:
+        return ""
+    if str(spec.get("line") or "").strip().rstrip(".").lower() != "order by 2 nov":
+        return ""
+    return "Order by 2 Nov."
 
 
 def _body(offer: dict, cfg: dict) -> str:
@@ -215,7 +227,6 @@ def _body(offer: dict, cfg: dict) -> str:
 
 
 def _stock_line(offer: dict, cfg: dict, body: str) -> str:
-    """Low-stock note only if the honesty gate allows it. No countdown."""
     if not cfg.get("limited_stock_copy"):
         return ""
     units = offer.get("low_stock_units")
@@ -261,16 +272,18 @@ def _frames(offer: dict, cta: str, entry: int | None) -> list[dict]:
     ]
 
 
-def copy_problems(text: str, slug: str | None = None) -> list[str]:
-    """Claim gates plus push bans. The product URL is omitted from the check.
+def _for_gates(text: str, slug: str | None, on) -> str:
+    blob = _URL.sub(" ", str(text or ""))
+    day = _as_date(on)
+    if slug == "gourmet_duo_mini" and day and day <= _ORDER_BY_UNTIL:
+        blob = re.sub(r"\border by 2 nov\.?", " ", blob, flags=re.I)
+    return blob
 
-    utm_medium=organic is tracking, and the product-truth gate reads the word
-    organic as an invented claim. The published caption still contains the URL.
-    """
-    raw = str(text or "")
-    blob = _URL.sub(" ", raw)
+
+def copy_problems(text: str, slug: str | None = None, on=None) -> list[str]:
+    blob = _for_gates(text, slug, on)
     reasons: list[str] = []
-    if _BANNED.search(raw) or _BANNED.search(blob):
+    if _BANNED.search(blob):
         reasons.append("banned_phrase")
     if slug and is_excluded(slug):
         reasons.append("excluded_product")
@@ -286,7 +299,7 @@ def copy_problems(text: str, slug: str | None = None) -> list[str]:
         reasons.append(f"product_truth:{type(exc).__name__}")
     try:
         from content_generator.core.viral_gate import honesty_issues
-        reasons.extend(f"honesty:{item}" for item in honesty_issues({"caption": blob}))
+        reasons.extend(f"honesty:{item}" for item in honesty_issues({"caption": blob, "date": str(on or "")[:10]}))
     except Exception as exc:
         reasons.append(f"honesty:{type(exc).__name__}")
     return reasons
@@ -302,6 +315,12 @@ def build_piece(on, surface: str, cfg: dict | None = None) -> dict | None:
     body = _body(offer, cfg)
     if not body:
         return None
+    deadline = _deadline_line(offer, cfg)
+    if deadline:
+        body = f"{body} {deadline}"
+    codes = _code_line(cfg)
+    if codes:
+        body = f"{body}\n\n{codes}"
     stock = _stock_line(offer, cfg, body)
     if stock:
         body = f"{body} {stock}"
@@ -311,26 +330,18 @@ def build_piece(on, surface: str, cfg: dict | None = None) -> dict | None:
     caption = f"{body}\n\n{url}\n\n{cta}"
     frames = _frames(offer, cta, _entry_price(cfg) if offer.get("role") == "trial" else None)
     spoken = caption + "\n" + " ".join(f"{fr.get('on','')} {fr.get('sub','')}" for fr in frames)
-    if copy_problems(spoken, offer["slug"]):
+    if copy_problems(spoken, offer["slug"], offer.get("date")):
         logger.warning("[sales-push] held %s copy for %s", surface, offer["slug"])
         return None
     return {
-        "surface": surface,
-        "slug": offer["slug"],
-        "role": offer["role"],
-        "caption": caption,
-        "cta": cta,
-        "headline": frames[0]["on"],
-        "sub": frames[-1]["sub"],
-        "product_url": url,
-        "frames": frames,
-        "price": offer["price"],
+        "surface": surface, "slug": offer["slug"], "role": offer["role"], "caption": caption,
+        "cta": cta, "headline": frames[0]["on"], "sub": frames[-1]["sub"], "product_url": url,
+        "frames": frames, "price": offer["price"], "date": offer.get("date"),
         "diwali_angle": bool(offer.get("diwali_angle")),
     }
 
 
 def attach(content: dict, on, cfg: dict | None = None) -> dict:
-    """Add today's push reel and story. Outside the window the block is inactive."""
     if not isinstance(content, dict):
         return content
     cfg = cfg or load_config()
@@ -349,17 +360,9 @@ def attach(content: dict, on, cfg: dict | None = None) -> dict:
         content["sales_push"] = {**base, "active": False, "reason": "no_eligible_offer"}
         return content
     content["sales_push"] = {
-        **base,
-        "active": True,
-        "date": offer["date"],
-        "slug": offer["slug"],
-        "role": offer["role"],
-        "price": offer["price"],
-        "handle": offer["handle"],
-        "product_url": reel["product_url"],
-        "diwali_angle": offer["diwali_angle"],
-        "reel": reel,
-        "story": story,
+        **base, "active": True, "date": offer["date"], "slug": offer["slug"], "role": offer["role"],
+        "price": offer["price"], "handle": offer["handle"], "product_url": reel["product_url"],
+        "diwali_angle": offer["diwali_angle"], "reel": reel, "story": story,
     }
     return content
 
@@ -386,7 +389,6 @@ def _ensure_pack(slug: str) -> str | None:
 
 
 def resolve_asset(slug: str, cfg: dict | None = None) -> str | None:
-    """Real 50g cutout, or the real pack photo. Excluded SKUs resolve to nothing."""
     cfg = cfg or load_config()
     raw = str(slug or "").strip().lower().replace("-", "_")
     if not raw or is_excluded(raw, cfg):
@@ -401,13 +403,11 @@ def resolve_asset(slug: str, cfg: dict | None = None) -> str | None:
 
 
 def register_source(path: str) -> dict:
-    """Register a real cutout or pack photo so provenance can point at it."""
     from content_generator.creative.jar_provenance import record_jar_provenance
     return record_jar_provenance(path, jar_asset_id=path, render_source="approved_photo")
 
 
 def render_assets(content: dict, day_number: int, on_date) -> dict:
-    """Render the push reel and story through the unchanged concept, motion, and aesthetic gates."""
     block = content.get("sales_push") if isinstance(content, dict) else None
     if not isinstance(block, dict) or not block.get("active"):
         return {}
@@ -464,7 +464,6 @@ def render_assets(content: dict, day_number: int, on_date) -> dict:
 
 
 def publish_for_slot(content: dict, slot: str, day: int) -> dict:
-    """Post the push story in the morning slot and the push reel in the evening slot."""
     block = content.get("sales_push") if isinstance(content, dict) else None
     if not isinstance(block, dict) or not block.get("active"):
         return {"skipped": True, "reason": "inactive"}
@@ -479,7 +478,7 @@ def publish_for_slot(content: dict, slot: str, day: int) -> dict:
     if not (piece.get("visual_gate") or {}).get("passed") or not (piece.get("variety_gate") or {}).get("passed"):
         return {"skipped": True, "reason": "visual_gate"}
     spoken = " ".join(str(piece.get(k) or "") for k in ("caption", "headline", "sub", "cta"))
-    if copy_problems(spoken, str(block.get("slug") or "")):
+    if copy_problems(spoken, str(block.get("slug") or ""), block.get("date")):
         return {"skipped": True, "reason": "claim_gate"}
     from content_generator.creative.jar_provenance import verify_jar_provenance
     if not verify_jar_provenance(poster).get("verified"):

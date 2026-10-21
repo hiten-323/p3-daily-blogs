@@ -1,28 +1,24 @@
-"""Weekly Kaggle clip bank and the daily reader.
-
-A workflow pushes a GPU notebook (LTX-Video, CogVideoX-2B backup) that renders
-one background plate per concept. Outputs land in the repo when they are small
-enough, otherwise as GitHub release assets on the tag ``bg-bank``. Daily runs
-take an unused clip whose concept matches the day before any live provider.
-
-Missing KAGGLE_USERNAME or KAGGLE_KEY skips the push and the pull. The bank
-reader does not need those secrets when clips are already local.
-"""
+"""Weekly Kaggle clip bank. KAGGLE_API_TOKEN authenticates the CLI; a JSON or username:key blob, or KAGGLE_USERNAME plus KAGGLE_KEY, is the legacy fallback."""
 from __future__ import annotations
 
 import base64
 import json
 import logging
 import os
+import re
 import shutil
 import subprocess
 import tempfile
+import urllib.request
 
 from content_generator.creative import kaggle_notebook as notebook
 
 logger = logging.getLogger(__name__)
 
 RELEASE_TAG = "bg-bank"
+_KERNEL_SLUG = "purity-beans-bg-bank"
+_TOKEN_ENVS = ("KAGGLE_API_TOKEN", "KAGGLE_TOKEN", "KAGGLE_API_KEY")
+_INTROSPECT_URL = "https://api.kaggle.com/v1/security.OAuthService/IntrospectToken"
 _RESERVED: set[str] = set()
 
 
@@ -128,11 +124,33 @@ def _redact(text: str, secrets: list[str]) -> str:
 
 
 def mask_derived(value: str) -> None:
-    """Register a derived token with GitHub Actions before any later log line."""
     raw = str(value or "").strip()
     if len(raw) < 6 or any(ch in raw for ch in "\r\n"):
         return
     print(f"::add-mask::{raw}", flush=True)
+
+
+def _legacy_blob(value: str) -> tuple[str, str]:
+    token = (value or "").strip()
+    if not token or token.startswith("KGAT_"):
+        return "", ""
+    if token[:1] in "{[":
+        try:
+            parsed = json.loads(token)
+        except Exception:
+            return "", ""
+        if isinstance(parsed, dict):
+            user = str(parsed.get("username") or "").strip()
+            key = str(parsed.get("key") or "").strip()
+            if user and key:
+                return user, key
+        return "", ""
+    if token.count(":") != 1:
+        return "", ""
+    user, key = (part.strip() for part in token.split(":", 1))
+    if user and key and re.fullmatch(r"[A-Za-z0-9_-]{1,64}", user):
+        return user, key
+    return "", ""
 
 
 def _credentials() -> tuple[str, str]:
@@ -140,24 +158,75 @@ def _credentials() -> tuple[str, str]:
     key = os.getenv("KAGGLE_KEY", "").strip()
     if username and key:
         return username, key
-    token = os.getenv("KAGGLE_API_TOKEN", "").strip()
-    if token:
-        try:
-            parsed = json.loads(token)
-            if isinstance(parsed, dict):
-                u = str(parsed.get("username") or "").strip()
-                k = str(parsed.get("key") or "").strip()
-                if u and k:
-                    return u, k
-        except Exception:
-            pass
-        if ":" in token:
-            parts = token.split(":", 1)
-            u = parts[0].strip()
-            k = parts[1].strip()
-            if u and k:
-                return u, k
-    return username, key
+    for name in _TOKEN_ENVS:
+        user, parsed_key = _legacy_blob(os.getenv(name, ""))
+        if user and parsed_key:
+            return user, parsed_key
+    return "", ""
+
+
+def _legacy_credentials() -> tuple[str, str]:
+    return _credentials()
+
+
+def api_token() -> str:
+    for name in _TOKEN_ENVS:
+        value = os.getenv(name, "").strip()
+        if not value or _legacy_blob(value) != ("", ""):
+            continue
+        if name != "KAGGLE_API_TOKEN":
+            os.environ["KAGGLE_API_TOKEN"] = value
+        return value
+    return ""
+
+
+def auth_present() -> bool:
+    if api_token():
+        return True
+    username, key = _credentials()
+    return bool(username and key)
+
+
+def log_auth_status() -> None:
+    print("kaggle auth: " + ("present" if auth_present() else "missing"), flush=True)
+
+
+def _mask_token(token: str) -> None:
+    mask_derived(token)
+    mask_derived(f"Bearer {token}")
+
+
+def _auth_secrets() -> list[str]:
+    token = api_token()
+    username, key = _legacy_credentials()
+    secrets = [token, username, key]
+    if username and key:
+        secrets.append(_derived_basic(username, key))
+    return [item for item in secrets if item]
+
+
+def _owner_from_token(token: str) -> str:
+    explicit = os.getenv("KAGGLE_USERNAME", "").strip()
+    if explicit or not token:
+        return explicit
+    _mask_token(token)
+    request = urllib.request.Request(
+        _INTROSPECT_URL, data=json.dumps({"token": token}).encode(), method="POST",
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json",
+                 "User-Agent": "PurityBeansBackground/1.0"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=15) as response:  # noqa: S310
+            payload = json.loads(response.read(2048).decode() or "{}")
+    except Exception as exc:
+        logger.info("[kaggle_bank] username lookup failed: %s", type(exc).__name__)
+        return ""
+    username = str((payload or {}).get("username") or "").strip()
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", username):
+        return ""
+    if payload.get("active") is False:
+        return ""
+    return username
 
 
 def _derived_basic(username: str, key: str) -> str:
@@ -258,7 +327,6 @@ def _dir_size(folder: str) -> int:
 
 
 def stage_clip(src: str, concept: str, *, model: str = "", prompt: str = "", query: str = "") -> dict:
-    """Copy a clip into the repo bank, or mark it for the release when it is too large."""
     clip_id = f"kaggle:{concept}"
     size = os.path.getsize(src)
     per_clip, total_cap = _limits()
@@ -308,7 +376,6 @@ def upload_release(files: list[str]) -> bool:
 
 
 def ingest_dir(folder: str) -> dict:
-    """Pull notebook outputs into the manifest. Large files stay out of git."""
     from content_generator.creative.stock_video import CONCEPT_QUERY
     manifest_file = os.path.join(folder, "manifest.json")
     described = {}
@@ -363,31 +430,51 @@ def write_kernel(folder: str, username: str) -> str:
 
 
 def push() -> int:
-    username, key = _credentials()
+    token = api_token()
+    username, key = _legacy_credentials()
+    if token:
+        _mask_token(token)
+        owner = _owner_from_token(token)
+        if not owner:
+            logger.info("[kaggle_bank] push skipped (kaggle username unresolved)")
+            return 1
+        folder = tempfile.mkdtemp(prefix="purity-kaggle-")
+        write_kernel(folder, owner)
+        return _run(["kaggle", "kernels", "push", "-p", folder], _auth_secrets()).returncode
     if not username or not key:
-        logger.info("[kaggle_bank] push skipped (KAGGLE_USERNAME or KAGGLE_KEY unset)")
+        logger.info("[kaggle_bank] push skipped (kaggle auth missing)")
         return 0
     _write_kaggle_json(username, key)
     folder = tempfile.mkdtemp(prefix="purity-kaggle-")
     write_kernel(folder, username)
-    proc = _run(["kaggle", "kernels", "push", "-p", folder], [username, key, _derived_basic(username, key)])
-    return proc.returncode
+    return _run(["kaggle", "kernels", "push", "-p", folder], _auth_secrets()).returncode
 
 
 def pull() -> int:
-    username, key = _credentials()
-    if not username or not key:
-        logger.info("[kaggle_bank] pull skipped (KAGGLE_USERNAME or KAGGLE_KEY unset)")
+    token = api_token()
+    username, key = _legacy_credentials()
+    if token:
+        _mask_token(token)
+        owner = _owner_from_token(token)
+    else:
+        owner = username
+    if not token and (not username or not key):
+        logger.info("[kaggle_bank] pull skipped (kaggle auth missing)")
         return 0
-    _write_kaggle_json(username, key)
-    secrets = [username, key, _derived_basic(username, key)]
-    status = _run(["kaggle", "kernels", "status", f"{username}/purity-beans-bg-bank"], secrets)
+    if not owner:
+        logger.info("[kaggle_bank] pull skipped (kaggle username unresolved)")
+        return 1
+    if not token:
+        _write_kaggle_json(username, key)
+    secrets = _auth_secrets()
+    ref = f"{owner}/{_KERNEL_SLUG}"
+    status = _run(["kaggle", "kernels", "status", ref], secrets)
     text = ((status.stdout or "") + (status.stderr or "")).lower()
     if "complete" not in text:
         logger.info("[kaggle_bank] kernel not complete — pull skipped")
         return 0
     folder = tempfile.mkdtemp(prefix="purity-kaggle-out-")
-    output = _run(["kaggle", "kernels", "output", f"{username}/purity-beans-bg-bank", "-p", folder], secrets)
+    output = _run(["kaggle", "kernels", "output", ref, "-p", folder], secrets)
     if output.returncode != 0:
         return output.returncode
     ingest_dir(folder)
@@ -395,11 +482,9 @@ def pull() -> int:
 
 
 def main() -> int:
-    """Pull a finished weekly notebook, then push the next one.
-
-    A missing secret is a clean skip (exit 0). A push or pull that was attempted
-    and failed exits non-zero so the weekly workflow does not look green.
-    """
+    log_auth_status()
+    if not auth_present():
+        return 0
     try:
         pull_rc = pull()
         push_rc = push()

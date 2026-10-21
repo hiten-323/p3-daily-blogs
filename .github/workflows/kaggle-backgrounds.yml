@@ -33,7 +33,22 @@ jobs:
           python-version: '3.11'
 
       - name: Install Kaggle client
-        run: python -m pip install --no-cache-dir kaggle
+        run: python -m pip install --no-cache-dir 'kaggle>=2.2.4'
+
+      - name: Kaggle auth
+        env:
+          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+          KAGGLE_TOKEN: ${{ secrets.KAGGLE_TOKEN }}
+          KAGGLE_API_KEY: ${{ secrets.KAGGLE_API_KEY }}
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: |
+          python - <<'PY'
+          import os
+          token = any(os.environ.get(name, "").strip() for name in ("KAGGLE_API_TOKEN", "KAGGLE_TOKEN", "KAGGLE_API_KEY"))
+          legacy = bool(os.environ.get("KAGGLE_USERNAME", "").strip() and os.environ.get("KAGGLE_KEY", "").strip())
+          print("kaggle auth: " + ("present" if token or legacy else "missing"))
+          PY
 
       - name: Probe video background sources
         env:
@@ -42,16 +57,20 @@ jobs:
           RUNWAY_API_KEY: ${{ secrets.RUNWAY_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+          KAGGLE_TOKEN: ${{ secrets.KAGGLE_TOKEN }}
+          KAGGLE_API_KEY: ${{ secrets.KAGGLE_API_KEY }}
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
         run: python -m content_generator.creative.background_probe
 
       - name: Pull finished clips and push the next notebook
         env:
+          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+          KAGGLE_TOKEN: ${{ secrets.KAGGLE_TOKEN }}
+          KAGGLE_API_KEY: ${{ secrets.KAGGLE_API_KEY }}
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-          KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
           GH_TOKEN: ${{ github.token }}
         run: python -m content_generator.creative.kaggle_bank
 
