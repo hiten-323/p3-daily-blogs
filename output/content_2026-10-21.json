@@ -1101,6 +1101,133 @@
       "passed": false,
       "honesty": [],
       "pass_mark": 8.0
+    },
+    "viral_readiness_score": 89.0,
+    "growth_plan": {
+      "primary_objective": "B2B inquiries (retailer, cafe, office, wholesale, distributor)",
+      "secondary_objective": "earn qualified followers",
+      "audience": "cafe owners, office buyers, retailers, and distributors",
+      "angle": "a business lesson from how the label is written",
+      "follow_promise": "Follow for how a coffee brand is actually built.",
+      "rationale": "LinkedIn is a B2B conversation with a named next step.",
+      "platform": "linkedin",
+      "sku": "Bold",
+      "day": 293
+    },
+    "growth_review": {
+      "platform": "linkedin",
+      "label": "linkedin_post",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "B2B inquiries (retailer, cafe, office, wholesale, distributor)",
+        "secondary_objective": "earn qualified followers",
+        "audience": "cafe owners, office buyers, retailers, and distributors",
+        "angle": "a business lesson from how the label is written",
+        "follow_promise": "Follow for how a coffee brand is actually built.",
+        "rationale": "LinkedIn is a B2B conversation with a named next step.",
+        "platform": "linkedin",
+        "sku": "Bold",
+        "day": 293
+      },
+      "published": false
     }
   },
   "blog_post": {
@@ -2305,105 +2432,39 @@
   },
   "threads_post": {
     "featured_product": "ultra_blend",
-    "objective": "drive sales and transparency for Ultra Blend",
+    "objective": "Drive sales of Ultra Blend by Purity Beans through an honest look at a classic 70-30 coffee-chicory milk coffee",
     "primary_cta": "Shop now at https://p3online.in",
-    "success_metric": "Click-through rate to website and add-to-cart conversions for Ultra Blend.",
-    "angle": "Hot take on industry labeling practices, presenting Purity Beans Ultra Blend's open 70% coffee and 30% chicory recipe for milk coffee lovers.",
-    "asset_type": "threads_post",
-    "carousel": {
-      "slides": [
-        {
-          "heading": "The Label Test",
-          "body": "Most coffee jars hide their actual blend ratios in fine print. We print our exact 70% coffee and 30% chicory breakdown right on the front.",
-          "visual_description": "Close-up of the exact Purity Beans Ultra Blend glass jar on a dark kitchen counter with morning window light catching the label."
-        },
-        {
-          "heading": "Why 70/30 Works",
-          "body": "When you want a traditional milk coffee that holds its body against hot milk, a balanced 70% coffee and 30% chicory blend delivers that familiar depth.",
-          "visual_description": "Warm milk being poured into a ceramic mug containing rich dark coffee extract."
-        },
-        {
-          "heading": "Designed For Milk",
-          "body": "Ultra Blend is crafted specifically for daily milk coffee drinkers who value consistency and a smooth, traditional morning cup.",
-          "visual_description": "A ceramic mug of steaming milk coffee resting next to the authentic Purity Beans Ultra Blend glass jar."
-        },
-        {
-          "heading": "Read The Jar",
-          "body": "No hidden fillers, no complicated marketing terms. Just transparent ingredients you can verify with your own eyes.",
-          "visual_description": "Macro shot of the ingredient panel on the Purity Beans Ultra Blend glass jar under warm amber light."
-        },
-        {
-          "heading": "Everyday Value",
-          "body": "Get your 50g jar for ₹209 or the 100g jar for ₹309. Orders above ₹399 qualify for free shipping.",
-          "visual_description": "Ultra Blend jar next to a spoon with coffee granules on a clean wooden tabletop."
-        },
-        {
-          "heading": "Shop Ultra Blend",
-          "body": "Read the jar, know your brew, and order today at https://p3online.in",
-          "visual_description": "Purity Beans Ultra Blend glass jar placed centrally with the website link overlay."
-        }
-      ]
-    },
-    "comment_trigger": "Comment BLEND if you prefer your morning coffee with milk.",
-    "cta": "Shop Ultra Blend at https://p3online.in",
-    "funnel_objective": "conversion",
-    "gate_rejection": "north-star gate (49/100): specific and checkable (1 concrete detail(s)); carries a surprise or contrarian turn; gives the viewer something to do",
-    "growth_plan": "Highlight transparency and honest ingredient ratios to build long-term consumer trust.",
-    "growth_review": "Clean, educational, and strictly adheres to product truth guidelines without attacking competitors.",
-    "hashtags": "#PurityBeans #UltraBlend #InstantCoffee #CoffeeLoversIndia #CleanCoffee",
-    "psychology_frame": "clean_label",
-    "reel": {
-      "frames": [
-        {
-          "on_screen": "Most jars hide their exact ratios.",
-          "spoken": "Most instant coffee jars hide their exact bean-to-filler ratios in fine print."
-        },
-        {
-          "on_screen": "70% Coffee, 30% Chicory",
-          "spoken": "With Purity Beans Ultra Blend, we proudly print our exact 70% coffee and 30% chicory ratio right on the label."
-        },
-        {
-          "on_screen": "Smooth Everyday Milk Coffee",
-          "spoken": "It is crafted specifically to give you a smooth, traditional milk coffee experience every single morning."
-        },
-        {
-          "on_screen": "50g for ₹209 | 100g for ₹309",
-          "spoken": "Get your 50g jar starting at just ₹209 or choose the 100g pack at ₹309 with free shipping over ₹399."
-        },
-        {
-          "on_screen": "Shop at https://p3online.in",
-          "spoken": "Read the jar, know your brew, and shop today at https://p3online.in."
-        }
-      ]
-    },
-    "save_trigger": "Save this post to remember the exact ingredients in Purity Beans Ultra Blend.",
-    "share_trigger": "Share this with a friend who always has coffee with milk.",
-    "target": "Urban Indian milk coffee drinkers looking for transparently labeled blends.",
-    "text": "Hot take: most people never check the actual ratio in their coffee jar because brands make it hard to find. Purity Beans Ultra Blend is crafted with 70% coffee and 30% chicory for a smooth, traditional milk coffee experience. No hidden surprises—just honest labeling and great taste for your morning cup. 50g for ₹209, 100g for ₹309. Orders above ₹399 ship free. Shop at https://p3online.in\n\nFollow @purepantryprovisions\nShop https://p3online.in",
-    "threads_post": "Hot take: most people never check the actual ratio in their coffee jar because brands make it hard to find. Purity Beans Ultra Blend is crafted with 70% coffee and 30% chicory for a smooth, traditional milk coffee experience. No hidden surprises—just honest labeling and great taste for your morning cup. 50g for ₹209, 100g for ₹309. Orders above ₹399 ship free. Shop at https://p3online.in\n\nFollow @purepantryprovisions\nShop https://p3online.in",
-    "viral_potential": {
-      "passed": false,
-      "overall": 0.0,
-      "scores": {},
-      "honesty": [
-        "fabricated reviews/metrics"
-      ],
-      "pass_mark": 8.0,
-      "feedback": "HONESTY: remove fabricated reviews/metrics. Earn attention with a true, specific hook instead."
-    },
-    "viral_readiness_score": 8.5,
-    "website": "https://p3online.in",
-    "editorial_score": {
-      "shareability": 7.5,
-      "saveability": 8.0,
-      "emotion_pull": 7.0,
-      "hook_strength": 8.5,
-      "brand_clarity": 9.0,
-      "overall": 8.0,
-      "verdict": "PASS",
-      "feedback": "The content strictly adheres to Purity Beans guidelines regarding Ultra Blend, maintaining complete honesty about the 70/30 coffee-to-chicory ratio without disparaging chicory. The pricing, transparency angle, and direct CTAs are well-placed. To maximize retention, ensure the initial hook visually emphasizes the bold text on the jar label within the first 1.5 seconds.",
-      "retention_audit": "Slide 1 / Frame 1 hook 'Most instant coffee jars hide their exact bean-to-filler ratios in fine print' creates an immediate curiosity gap and stops the scroll. Transition to Slide 2 maintains flow by explaining the functional benefit of 70/30 for milk coffee. Pricing transparency in Slide 5 adds high utilitarian value which drives saves and purchase intent."
-    }
+    "success_metric": "Add-to-cart rate and website visits",
+    "_shape": [
+      "angle",
+      "asset_type",
+      "blog_post",
+      "caption",
+      "carousel",
+      "comment_trigger",
+      "cta",
+      "featured_product",
+      "funnel_objective",
+      "gate_rejection",
+      "growth_plan",
+      "hashtags",
+      "objective",
+      "primary_cta",
+      "psychology_frame",
+      "reel",
+      "save_trigger",
+      "share_trigger",
+      "success_metric",
+      "target",
+      "text",
+      "threads_post",
+      "viral_potential",
+      "viral_readiness_score",
+      "website"
+    ],
+    "needs_regen": true,
+    "held": true,
+    "hold_reason": "purged banned-claim draft: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure"
   },
   "facebook_post": {
     "featured_product": "Ultra Blend (70% coffee, 30% chicory)",
@@ -3338,6 +3399,50 @@
       {
         "status": "exhausted",
         "reason": "viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove fabricated reviews/metrics. Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"Things nobody tells you about instant coffee, a thread:\". Format rules: a confident hot take "
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove fabricated reviews/metrics. Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"Hot take: most people never taste their coffee, they just drink it.\". Format rules: a confide"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove fabricated reviews/metrics. Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"Unpopular opinion: water temperature matters more than the brand.\". Format rules: a confident"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "brand: ['Threads native text exceeds 480 characters']"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The carousel starts with a bland heading (\"The Morning Habit\") that does not grab attention. The first spoken line in the Reel – \"Most people never check what is inside their daily milk coffee jar\" – is a weak curiosity hook; it could be replaced with a betrayal or identity challenge (e.g., \"You've "
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove fabricated reviews/metrics. Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"Unpopular opinion: water temperature matters more than the brand.\". Format rules: a confident"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The content maintains complete compliance with brand safety rules regarding Ultra Blend (properly disclosing the 70/30 coffee-chicory balance without anti-chicory attacks). To increase shareability and hook strength, inject more sensory contrast or relatable friction in the opening line instead of a"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The content executes an honest, transparent approach for Ultra Blend (70-30 coffee-chicory blend) without resorting to anti-chicory attacks. It respects brand guidelines, correctly highlights pricing (₹309 for 100g, ₹209 for 50g), and positions the product effectively for milk coffee lovers. Minor i"
+      },
+      {
+        "status": "exhausted",
+        "reason": "brand: ['product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
       }
     ],
     "growth_reel": [
