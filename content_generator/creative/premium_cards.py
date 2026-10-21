@@ -48,6 +48,12 @@ PALETTES = {
         {"deep": (48, 26, 4), "mid": (170, 100, 14), "glow": (255, 200, 70), "accent": (255, 236, 170), "ink": (255, 252, 240)},
         {"deep": (36, 18, 6), "mid": (140, 72, 10), "glow": (250, 170, 40), "accent": (255, 228, 150), "ink": (255, 250, 236)},
     ],
+    # Gift-pack stills use the same card grades. They are not in CUTOUTS, so the
+    # daily jar cards keep using the four studio cutouts.
+    "gourmet_duo_mini": [
+        {"deep": (28, 16, 12), "mid": (96, 42, 32), "glow": (214, 140, 96), "accent": (236, 206, 150), "ink": (255, 248, 240)},
+        {"deep": (12, 28, 22), "mid": (36, 88, 58), "glow": (140, 190, 140), "accent": (236, 214, 160), "ink": (244, 252, 246)},
+    ],
 }
 
 LAYOUTS = ("hero_center", "split_left", "editorial_top", "diagonal_band")

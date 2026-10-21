@@ -1140,6 +1140,60 @@ def post_local_story(image_path: str) -> dict:
         return {"success": False, "media_id": "", "error": str(e)}
 
 
+def post_prepared_story(poster_path: str, video_path: str | None = None) -> dict:
+    """Publish a story that was already rendered and provenance-checked.
+
+    Tries the motion file as a STORIES video, then the verified poster.
+    Does not rebuild a story from a caption.
+    """
+    if not is_configured():
+        return {"success": False, "media_id": "", "error": "not_configured"}
+    if not poster_path or not os.path.exists(poster_path):
+        return {"success": False, "media_id": "", "error": "no_story_image"}
+
+    from content_generator.creative.jar_provenance import verify_jar_provenance
+    prov = verify_jar_provenance(poster_path)
+    if not prov.get("verified"):
+        logger.error("[instagram] Refusing unverified prepared story: %s (%s)",
+                     poster_path, prov.get("reason"))
+        return {"success": False, "media_id": "", "error": f"real_jar_unverified: {prov.get('reason')}"}
+
+    acct_id = os.getenv("INSTAGRAM_ACCOUNT_ID", "")
+    token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
+    if video_path and os.path.exists(video_path):
+        try:
+            from content_generator.publisher.video_host import is_configured as vhost_ok
+            from content_generator.publisher.video_host import upload_video
+            if vhost_ok():
+                video_url = upload_video(video_path)
+                if video_url:
+                    from content_generator.publisher import meta_graph
+                    from content_generator.publisher.meta_graph import (
+                        ContainerNotReady, MetaRequestError, graph_request, wait_for_container,
+                    )
+                    data = graph_request(
+                        "POST",
+                        f"{_GRAPH_API}/{acct_id}/media",
+                        {"video_url": video_url, "media_type": "STORIES", "access_token": token},
+                        timeout=30,
+                    )
+                    container_id = data.get("id", "")
+                    if container_id:
+                        wait_for_container(
+                            container_id, token,
+                            max_wait=getattr(meta_graph, "_VIDEO_POLL_S", 180),
+                        )
+                        res = _publish_container(container_id, acct_id, token)
+                        if res.get("success"):
+                            res["format"] = "video"
+                            return res
+                        logger.warning("[instagram] prepared story video not published (%s)",
+                                       res.get("error"))
+        except Exception as exc:
+            logger.warning("[instagram] prepared story video failed (%s)", type(exc).__name__)
+    return post_local_story(poster_path)
+
+
 def _today() -> str:
     from content_generator.core.ist_dates import today_ist
     return today_ist().isoformat()

@@ -866,6 +866,13 @@ def _inject_brand_into_content(content: dict, day: int = 0) -> None:
                     piece[field] = _strip_invented_offers(
                         _strip_unsupported_stats(piece[field]))
 
+    try:
+        from content_generator.campaigns.trial_diwali_push import attach
+        from content_generator.core.ist_dates import asset_date
+        attach(content, asset_date(content))
+    except Exception as e:
+        logger.warning("[creative] sales push attach skipped: %s", e)
+
 
 def _schema_issues(label: str, piece: dict) -> list[str]:
     """Schema errors for this asset, or an empty list when it is valid."""
@@ -1642,6 +1649,13 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     except Exception as e:
         logger.warning("[images] UGC generation failed (non-blocking): %s", e)
         results["ugc_package"] = None
+
+    try:
+        from content_generator.campaigns.trial_diwali_push import render_assets
+        from content_generator.core.ist_dates import asset_date
+        results["sales_push"] = render_assets(content, day_number, asset_date(content))
+    except Exception as e:
+        logger.warning("[images] sales push render skipped: %s", e)
 
     return results
 
