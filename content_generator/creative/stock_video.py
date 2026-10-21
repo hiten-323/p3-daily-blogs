@@ -19,6 +19,10 @@ import urllib.request
 
 logger = logging.getLogger(__name__)
 
+# Cloudflare rejects Python-urllib's default agent with error 1010 (HTTP 403)
+# before the API key is checked. A named agent reaches the real auth response.
+USER_AGENT = "PurityBeansBackground/1.0"
+
 WINDOW_DAYS = int(os.getenv("STOCK_CLIP_WINDOW_DAYS", "30"))
 _OUT = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 _RESERVED: set[str] = set()
@@ -275,12 +279,19 @@ def _open(req: urllib.request.Request, timeout: float):
     return urllib.request.urlopen(req, timeout=timeout)  # noqa: S310
 
 
+def _headers(extra: dict | None = None) -> dict:
+    headers = {"User-Agent": USER_AGENT}
+    if extra:
+        headers.update(extra)
+    return headers
+
+
 def _search(provider: str, key: str, query: str) -> dict:
     if provider == "pexels":
         url = "https://api.pexels.com/videos/search?" + urllib.parse.urlencode({
             "query": query, "orientation": "portrait", "size": "large", "per_page": "15",
         })
-        req = urllib.request.Request(url, headers={"Authorization": key})
+        req = urllib.request.Request(url, headers=_headers({"Authorization": key}))
         with _open(req, 20) as response:
             payload = json.loads(response.read().decode() or "{}")
         if payload.get("videos"):
@@ -288,13 +299,13 @@ def _search(provider: str, key: str, query: str) -> dict:
         url = "https://api.pexels.com/videos/search?" + urllib.parse.urlencode({
             "query": query, "size": "large", "per_page": "15",
         })
-        req = urllib.request.Request(url, headers={"Authorization": key})
+        req = urllib.request.Request(url, headers=_headers({"Authorization": key}))
         with _open(req, 20) as response:
             return json.loads(response.read().decode() or "{}")
     url = "https://pixabay.com/api/videos/?" + urllib.parse.urlencode({
         "key": key, "q": query, "per_page": "15", "safesearch": "true", "video_type": "film",
     })
-    req = urllib.request.Request(url)
+    req = urllib.request.Request(url, headers=_headers())
     with _open(req, 20) as response:
         return json.loads(response.read().decode() or "{}")
 
@@ -303,7 +314,13 @@ def _download(url: str, dest: str, secrets: list[str]) -> bool:
     clean = _strip_secrets(url, secrets)
     try:
         os.makedirs(os.path.dirname(dest) or ".", exist_ok=True)
-        urllib.request.urlretrieve(clean, dest)  # noqa: S310
+        req = urllib.request.Request(clean, headers=_headers())
+        with _open(req, 60) as response:
+            data = response.read()
+        if len(data) <= 1000:
+            return False
+        with open(dest, "wb") as handle:
+            handle.write(data)
     except Exception as exc:
         logger.info("[stock] download failed: %s", _safe(exc, secrets))
         return False

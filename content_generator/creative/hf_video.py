@@ -96,7 +96,8 @@ def _walk_url(obj) -> str | None:
 def _request(url: str, payload, headers: dict, timeout: float) -> tuple[object, bytes, str]:
     data = None if payload is None else json.dumps(payload).encode()
     req = urllib.request.Request(
-        url, data=data, headers={"Content-Type": "application/json", **headers},
+        url, data=data,
+        headers={"User-Agent": "PurityBeansBackground/1.0", "Content-Type": "application/json", **headers},
         method="POST" if data is not None else "GET",
     )
     try:
