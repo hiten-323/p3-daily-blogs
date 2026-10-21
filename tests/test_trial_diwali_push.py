@@ -90,19 +90,38 @@ def test_captions_pass_claim_gates_and_end_on_the_cta():
     assert f"https://p3online.in/products/{HANDLES['bold']}?{UTM}" in reel["caption"]
     assert f"https://p3online.in/products/{HANDLES['gourmet_duo_mini']}?{UTM}" in story["caption"]
     assert "Trial jars from Rs239." in reel["caption"]
+    assert "Use code FREESHIP." in reel["caption"]
+    assert "Use code BUNDLE10." in reel["caption"]
+    assert "order by" not in reel["caption"].lower()
     assert "Diwali" in story["caption"]
+    assert "Order by 2 Nov." in story["caption"]
+    assert "Use code FREESHIP." in story["caption"]
+    assert "Use code BUNDLE10." in story["caption"]
+    assert "Order by 2 Nov." in push.build_piece(_day(11), "story")["caption"]
+    nov3 = push.build_piece(_day(13), "story")
+    assert "Diwali" in nov3["caption"]
+    assert "order by" not in nov3["caption"].lower()
+    assert "Use code FREESHIP." in nov3["caption"]
     assert "Diwali" not in push.build_piece(dt.date(2026, 11, 9), "story")["caption"]
+    assert "order by" not in push.build_piece(dt.date(2026, 11, 9), "story")["caption"].lower()
     assert "Diwali" not in push.build_piece(dt.date(2026, 11, 8), "reel")["caption"]
-    for piece in (reel, story, push.build_piece(dt.date(2026, 11, 9), "reel")):
+    assert "order by" not in push.build_piece(dt.date(2026, 11, 2), "reel")["caption"].lower()
+    for piece in (reel, story, nov3, push.build_piece(dt.date(2026, 11, 9), "reel")):
         text = _spoken(piece)
-        assert push.copy_problems(text, piece["slug"]) == []
+        assert push.copy_problems(text, piece["slug"], piece["date"]) == []
         low = text.lower()
         for banned in (
             "100%", "100 percent", "fresh", "lab tested", "lab-tested",
-            "zero acidity", "order by", "per cup", "66 cups", "limited stock",
+            "zero acidity", "per cup", "66 cups", "limited stock",
             "countdown", "variety box", "ultra blend", "prima", "november",
+            "free shipping", "10%", "on bundles",
         ):
             assert banned not in low
+        if piece["slug"] != "gourmet_duo_mini" or piece["date"] > "2026-11-02":
+            assert "order by" not in low
+        else:
+            assert low.count("order by") == 1
+            assert "order by 2 nov" in low
         assert "only " not in low or "only if" in low
 
 
@@ -235,7 +254,24 @@ def test_limited_stock_phrase_stays_blocked():
     offer = push.offer_for(_day(1), cfg)
     body = push._body(offer, cfg)
     assert push._stock_line(offer, cfg, body) == ""
-    assert "limited stock" not in push.build_piece(_day(1), "story", cfg)["caption"].lower()
+    caption = push.build_piece(_day(1), "story", cfg)["caption"].lower()
+    assert "limited stock" not in caption
+    assert "countdown" not in caption
+
+
+def test_confirmed_codes_and_deadline_match_the_honesty_gate():
+    cfg = push.load_config()
+    assert [row["code"] for row in cfg["codes"]] == ["FREESHIP", "BUNDLE10"]
+    assert "benefit" not in json.dumps(cfg["codes"]).lower()
+    assert cfg["order_by"]["through"] == "2026-11-02"
+    assert cfg["order_by"]["line"] == "Order by 2 Nov"
+    assert cfg["order_by"]["slug"] == "gourmet_duo_mini"
+    open_day = {"date": "2026-11-02"}
+    assert honesty_issues({**open_day, "caption": "Use code FREESHIP. Use code BUNDLE10."}) == []
+    assert honesty_issues({**open_day, "caption": "Order by 2 Nov."}) == []
+    assert "fabricated urgency" in honesty_issues({"date": "2026-11-03", "caption": "Order by 2 Nov."})
+    assert "fabricated urgency" in honesty_issues({**open_day, "caption": "Order by tomorrow."})
+    assert "fabricated urgency" in honesty_issues({**open_day, "caption": "Order by 2 Nov. Hurry, limited stock."})
 
 
 def test_existing_gates_are_unchanged():

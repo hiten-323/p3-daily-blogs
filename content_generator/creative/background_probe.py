@@ -7,6 +7,7 @@ tokens are registered with ::add-mask:: before any request.
 from __future__ import annotations
 
 import base64
+import json
 import logging
 import os
 import urllib.request
@@ -83,6 +84,28 @@ def _kaggle_basic() -> str:
     return derived
 
 
+def _kaggle_token() -> str:
+    """Opaque API token. A JSON or username:key blob stays on the legacy path."""
+    from content_generator.creative import kaggle_bank
+    return kaggle_bank.api_token()
+
+
+def _token_state(status, body: bytes) -> str:
+    """A 200 is live only when introspection says the token is active."""
+    state = _http_state(status)
+    if state != "live":
+        return state
+    try:
+        payload = json.loads((body or b"").decode() or "{}")
+    except Exception:
+        return "down"
+    if not isinstance(payload, dict) or payload.get("active") is False:
+        return "down"
+    if payload.get("active") is True or payload.get("username"):
+        return "live"
+    return "down"
+
+
 def _pixazo_state(call, key: str) -> tuple[str, str]:
     """Probe the documented LTX 2.5 text-to-video routes.
 
@@ -126,18 +149,26 @@ def probe_results(transport=None) -> list[dict]:
         "detail": f"{unused} unused" if unused else "no unused clips",
     })
 
-    username, key = _secret("KAGGLE_USERNAME"), _secret("KAGGLE_KEY")
-    missing = [name for name, value in (("KAGGLE_USERNAME", username), ("KAGGLE_KEY", key)) if not value]
-    derived = _kaggle_basic()
-    if missing or not derived:
-        detail = " and ".join(missing or ["KAGGLE_USERNAME", "KAGGLE_KEY"]) + " unset"
-        rows.append({"name": "kaggle_gpu", "status": "skipped", "detail": detail})
-    else:
-        status, _body = call(
-            "GET", "https://www.kaggle.com/api/v1/kernels/list?pageSize=1",
-            {"Authorization": f"Basic {derived}"}, 8, None,
+    token = _kaggle_token()
+    if token:
+        mask_derived(token)
+        mask_derived(f"Bearer {token}")
+        status, body = call(
+            "POST", "https://api.kaggle.com/v1/security.OAuthService/IntrospectToken",
+            {"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+            8, json.dumps({"token": token}).encode(),
         )
-        rows.append({"name": "kaggle_gpu", "status": _http_state(status), "detail": f"http {status}"})
+        rows.append({"name": "kaggle_gpu", "status": _token_state(status, body), "detail": f"http {status}"})
+    else:
+        derived = _kaggle_basic()
+        if not derived:
+            rows.append({"name": "kaggle_gpu", "status": "skipped", "detail": "kaggle auth: missing"})
+        else:
+            status, _body = call(
+                "GET", "https://www.kaggle.com/api/v1/kernels/list?pageSize=1",
+                {"Authorization": f"Basic {derived}"}, 8, None,
+            )
+            rows.append({"name": "kaggle_gpu", "status": _http_state(status), "detail": f"http {status}"})
 
     token = _secret("HF_TOKEN")
     if not token:

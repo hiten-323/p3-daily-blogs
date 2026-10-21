@@ -14,6 +14,7 @@ plus a different hook template, then is rescored. PASS_MARK is never lowered.
 """
 from __future__ import annotations
 
+import datetime as _dt
 import json
 import logging
 import os
@@ -101,6 +102,13 @@ HOOK_TEMPLATES = {
     ],
 }
 
+# Founder-confirmed campaign facts. The deadline is the gift-pack line only,
+# and only through 2 Nov 2026. Other urgency stays a hard fail.
+_CONFIRMED_CODES = ("FREESHIP", "BUNDLE10")
+_CONFIRMED_ORDER_BY = re.compile(r"\border by 2 nov\b", re.I)
+_ANY_ORDER_BY = re.compile(r"\border\s+by\b", re.I)
+_ORDER_BY_UNTIL = _dt.date(2026, 11, 2)
+
 # Fabrication screen: virality must never come from invented urgency, social proof, metrics or health.
 _DISHONEST = [
     (re.compile(r"\b(only \d+ (left|jars?|units?)|last chance|ends (tonight|today|in \d+)|hurry|selling out|sold out fast|limited stock|few hours left)\b", re.I), "fabricated urgency"),
@@ -122,11 +130,36 @@ def _text(piece) -> str:
         return str(piece)
 
 
+def _piece_day(piece: dict) -> _dt.date:
+    for key in ("date", "on", "asset_date", "on_date"):
+        raw = str((piece or {}).get(key) or "").strip()[:10]
+        try:
+            return _dt.date.fromisoformat(raw)
+        except ValueError:
+            continue
+    return _dt.date.today()
+
+
+def _without_confirmed(text: str, day: _dt.date) -> str:
+    """Drop founder-confirmed codes, and the 2 Nov line while it is still open."""
+    cleaned = text
+    for code in _CONFIRMED_CODES:
+        cleaned = re.sub(rf"\buse\s+code\s+{code}\b", " ", cleaned, flags=re.I)
+        cleaned = re.sub(rf"\b{code}\b", " ", cleaned, flags=re.I)
+    if day <= _ORDER_BY_UNTIL:
+        cleaned = _CONFIRMED_ORDER_BY.sub(" ", cleaned)
+    return cleaned
+
+
 def honesty_issues(piece: dict) -> list[str]:
     """Deterministic screen; any hit is a hard fail no matter how 'viral' the piece is."""
-    text = _text({k: v for k, v in (piece or {}).items()
-                  if not str(k).startswith(("editorial", "viral", "_")) and k not in ("fallback_ladder",)})
-    return sorted({why for rx, why in _DISHONEST if rx.search(text)})
+    raw = _text({k: v for k, v in (piece or {}).items()
+                 if not str(k).startswith(("editorial", "viral", "_")) and k not in ("fallback_ladder",)})
+    text = _without_confirmed(raw, _piece_day(piece or {}))
+    issues = {why for rx, why in _DISHONEST if rx.search(text)}
+    if _ANY_ORDER_BY.search(text):
+        issues.add("fabricated urgency")
+    return sorted(issues)
 
 
 def build_prompt(label: str, piece: dict) -> str:

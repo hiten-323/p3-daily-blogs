@@ -20,9 +20,10 @@ from content_generator.creative.visual_gate import AESTHETIC_PASS, MIN_BG_MOTION
 
 ROOT = Path(__file__).resolve().parents[1]
 SECRET_NAMES = (
-    "PEXELS_API_KEY", "PIXABAY_API_KEY", "HF_TOKEN", "KAGGLE_USERNAME", "KAGGLE_KEY",
+    "PEXELS_API_KEY", "PIXABAY_API_KEY", "HF_TOKEN", "KAGGLE_API_TOKEN", "KAGGLE_USERNAME", "KAGGLE_KEY",
     "PIXAZO_API_KEY", "RUNWAY_API_KEY",
 )
+_KAGGLE_ALIASES = ("KAGGLE_API_TOKEN", "KAGGLE_TOKEN", "KAGGLE_API_KEY", "KAGGLE_USERNAME", "KAGGLE_KEY")
 
 
 def _choice(**extra):
@@ -375,10 +376,11 @@ def test_daily_run_prefers_unused_matching_bank_clip(tmp_path, monkeypatch):
 
 def test_kaggle_push_masks_derived_token_and_skips_without_secrets(tmp_path, monkeypatch, capsys, caplog):
     caplog.set_level(logging.INFO)
-    monkeypatch.delenv("KAGGLE_USERNAME", raising=False)
-    monkeypatch.delenv("KAGGLE_KEY", raising=False)
+    for name in _KAGGLE_ALIASES:
+        monkeypatch.delenv(name, raising=False)
     monkeypatch.setattr(kaggle_bank, "_run", lambda *a, **k: (_ for _ in ()).throw(AssertionError("called")))
     assert kaggle_bank.main() == 0
+    assert "kaggle auth: missing" in capsys.readouterr().out
     monkeypatch.setenv("KAGGLE_USERNAME", "purity-user")
     monkeypatch.setenv("KAGGLE_KEY", "kaggle-secret-key")
     monkeypatch.setenv("KAGGLE_CONFIG_DIR", str(tmp_path / "kaggle"))
@@ -401,6 +403,66 @@ def test_kaggle_push_masks_derived_token_and_skips_without_secrets(tmp_path, mon
     stored = json.loads((tmp_path / "kaggle" / "kaggle.json").read_text())
     assert stored["key"] == "kaggle-secret-key"
     if os.name != "nt": assert oct(os.stat(tmp_path / "kaggle" / "kaggle.json").st_mode & 0o777) == "0o600"
+
+
+def test_kaggle_api_token_is_passed_to_the_cli_and_not_logged(tmp_path, monkeypatch, capsys, caplog):
+    caplog.set_level(logging.INFO)
+    for name in _KAGGLE_ALIASES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("KAGGLE_TOKEN", "KGAT_test_token_value")
+    monkeypatch.setenv("KAGGLE_USERNAME", "purity-user")
+    monkeypatch.setenv("KAGGLE_CONFIG_DIR", str(tmp_path / "kaggle"))
+    seen = {}
+
+    class _Proc:
+        returncode = 0
+        stdout = "pushed KGAT_test_token_value"
+        stderr = ""
+
+    def _run(args, secrets):
+        seen["args"] = args
+        seen["secrets"] = list(secrets)
+        seen["token"] = os.environ.get("KAGGLE_API_TOKEN")
+        return _Proc()
+
+    monkeypatch.setattr(kaggle_bank, "_run", _run)
+    assert kaggle_bank.push() == 0
+    assert seen["args"][:3] == ["kaggle", "kernels", "push"]
+    assert seen["token"] == "KGAT_test_token_value"
+    assert "KGAT_test_token_value" in seen["secrets"]
+    assert not (tmp_path / "kaggle" / "kaggle.json").exists()
+    out = capsys.readouterr().out
+    visible = out.replace("::add-mask::KGAT_test_token_value", "").replace("::add-mask::Bearer KGAT_test_token_value", "")
+    assert "KGAT_test_token_value" not in visible
+    assert "KGAT_test_token_value" not in caplog.text
+
+
+def test_probe_uses_bearer_token_and_hides_it(monkeypatch, capsys):
+    for name in SECRET_NAMES:
+        monkeypatch.delenv(name, raising=False)
+    for name in _KAGGLE_ALIASES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("KAGGLE_API_TOKEN", "KGAT_test_token_value")
+    seen = {}
+
+    def transport(method, url, headers, timeout, data=None):
+        seen["method"] = method
+        seen["url"] = url
+        seen["auth"] = headers.get("Authorization")
+        seen["body"] = data
+        return 200, b'{"active":true,"username":"purity-user"}'
+
+    monkeypatch.setattr(background_probe, "_default_transport", transport)
+    rows = {row["name"]: row for row in background_probe.probe_results()}
+    assert rows["kaggle_gpu"]["status"] == "live"
+    assert seen["method"] == "POST"
+    assert seen["url"].endswith("/IntrospectToken")
+    assert seen["auth"] == "Bearer KGAT_test_token_value"
+    assert b"KGAT_test_token_value" in seen["body"]
+    out = capsys.readouterr().out
+    visible = out.replace("::add-mask::KGAT_test_token_value", "").replace("::add-mask::Bearer KGAT_test_token_value", "")
+    assert "KGAT_test_token_value" not in visible
+    assert background_probe._token_state(200, b'{"active":false}') == "down"
 
 
 def test_http_404_and_cloudflare_block_are_not_live():
@@ -483,6 +545,8 @@ def test_probe_reports_skips_and_hides_secrets(monkeypatch, capsys):
     for name in SECRET_NAMES:
         monkeypatch.delenv(name, raising=False)
     monkeypatch.setenv("PIXABAY_API_KEY", "supersecretpixabay")
+    for name in _KAGGLE_ALIASES:
+        monkeypatch.delenv(name, raising=False)
     monkeypatch.setenv("KAGGLE_USERNAME", "purity-user")
     monkeypatch.setenv("KAGGLE_KEY", "kaggle-secret-key")
     seen = []
@@ -514,6 +578,9 @@ def test_workflows_wire_probe_and_do_not_dispatch_publish():
         assert f"{name}: ${{{{ secrets.{name} }}}}" in daily
     assert "GH_TOKEN: ${{ github.token }}" in daily
     assert "python -m content_generator.creative.kaggle_bank" in weekly
+    assert "kaggle>=2.2.4" in weekly
+    assert 'print("kaggle auth: "' in weekly
+    assert "KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}" in weekly
     assert "gh workflow run" not in weekly
     assert "daily.yml" not in weekly
     assert "retry-unposted" not in weekly
