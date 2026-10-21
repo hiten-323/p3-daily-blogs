@@ -118,32 +118,68 @@ def _find_url(obj):
     return None
 
 
+# Documented text-to-video route. ltx-video/v1/generate returns 404.
+# https://www.pixazo.ai/models/ltx — LTX 2.5 Lite, then poll v2/requests/status.
+PIXAZO_TEXT_TO_VIDEO = "https://gateway.pixazo.ai/ltx-2-5-lite/v1/text-to-video"
+_PIXAZO_DURATIONS = (6, 8, 10, 12, 14, 16, 18, 20)
+
+
+def _pixazo_duration(seconds: int) -> int:
+    """Lite and Pro accept only these lengths. Shorter asks use the 6 second floor."""
+    for value in _PIXAZO_DURATIONS:
+        if int(seconds or 0) <= value:
+            return value
+    return _PIXAZO_DURATIONS[0]
+
+
 def _pixazo(prompt: str, label: str, seconds: int) -> str | None:
     key = os.getenv("PIXAZO_API_KEY")
     if not key:
         return None
-    url = os.getenv("PIXAZO_VIDEO_URL", "https://gateway.pixazo.ai/ltx-video/v1/generate")
+    url = os.getenv("PIXAZO_VIDEO_URL", PIXAZO_TEXT_TO_VIDEO)
     hdr = {"Ocp-Apim-Subscription-Key": key, "Authorization": f"Bearer {key}"}
+    body = {
+        "prompt": prompt,
+        "resolution": "720p",
+        "duration": _pixazo_duration(seconds),
+        "aspect_ratio": "9:16",
+        "generate_audio": False,
+    }
     try:
-        res = _http_json(url, {"prompt": prompt, "duration": seconds, "aspect_ratio": "9:16",
-                               "negative_prompt": "jar, bottle, packaging, label, text, logo, watermark, people"},
-                         hdr, timeout=120)
+        res = _http_json(url, body, hdr, timeout=60)
         vid = _find_url(res)
-        poll = res.get("status_url") or res.get("polling_url") if isinstance(res, dict) else None
+        poll = ""
+        if isinstance(res, dict):
+            poll = res.get("polling_url") or ""
+            request_id = res.get("request_id") or ""
+            if not poll and request_id:
+                poll = f"https://gateway.pixazo.ai/v2/requests/status/{request_id}"
+            if str(res.get("status") or "").upper() == "ERROR":
+                logger.info("[ai_bg] pixazo status error")
+                return None
         deadline = time.monotonic() + float(os.getenv("AI_BG_TIMEOUT_S", "240"))
         while not vid and poll and time.monotonic() < deadline:
             time.sleep(6)
             res = _http_json(poll, None, hdr)
+            if isinstance(res, dict) and str(res.get("status") or "").upper() == "ERROR":
+                logger.info("[ai_bg] pixazo status error")
+                return None
             vid = _find_url(res)
         if not vid:
             logger.info("[ai_bg] pixazo returned no video url")
             return None
         os.makedirs(_OUT, exist_ok=True)
         out = os.path.join(_OUT, f"{label}_pixazo_bg.mp4")
-        urllib.request.urlretrieve(vid, out)  # noqa: S310
+        req = urllib.request.Request(vid, headers={"User-Agent": "PurityBeansBackground/1.0"})
+        with urllib.request.urlopen(req, timeout=60) as response:  # noqa: S310
+            data = response.read()
+        if len(data) < 1000:
+            return None
+        with open(out, "wb") as handle:
+            handle.write(data)
         return out
     except Exception as exc:
-        logger.info("[ai_bg] pixazo failed: %s", type(exc).__name__)
+        logger.info("[ai_bg] pixazo failed: %s", getattr(exc, "code", None) or type(exc).__name__)
         return None
 
 
