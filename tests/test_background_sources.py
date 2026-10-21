@@ -234,10 +234,10 @@ def test_hf_quota_busy_and_timeout_skip_cleanly(tmp_path, monkeypatch):
     monkeypatch.setenv("HF_TOKEN", "hf-secret-token")
     calls = []
 
-    def inference(model, prompt, token, timeout):
-        calls.append(model)
+    def inference(target, prompt, token, timeout):
+        calls.append(target[1])
         assert token == "hf-secret-token"
-        if "LTX" in model:
+        if "ltx" in target[1]:
             return 429, b'{"error":"quota exceeded"}', "application/json"
         return 200, b"\x00\x00\x00\x18ftyp" + b"\x00" * 40, "video/mp4"
 
@@ -250,7 +250,8 @@ def test_hf_quota_busy_and_timeout_skip_cleanly(tmp_path, monkeypatch):
     assert hf_video.ltx(_choice(), "lab", 5) is None
     saved = hf_video.wan(_choice(), "lab", 5)
     assert saved and saved.endswith("hf_wan_bg.mp4")
-    assert calls[0].endswith("LTX-Video") and "space" in calls
+    assert calls[0] == "space"
+    assert "fal-ai/ltx-video-13b-distilled" in calls
     assert hf_video.interpret("timeout", b"", "")[0] == "timeout"
     assert hf_video.interpret(503, b'{"estimated_time": 4}', "application/json")[0] == "busy"
     assert hf_video.interpret(401, b"unauthorized", "application/json")[0] == "auth"
@@ -259,10 +260,42 @@ def test_hf_quota_busy_and_timeout_skip_cleanly(tmp_path, monkeypatch):
 def test_hf_auth_failure_does_not_call_wan(monkeypatch):
     hf_video.reset_session()
     monkeypatch.setenv("HF_TOKEN", "hf-secret-token")
-    monkeypatch.setattr(hf_video, "_inference", lambda *a, **k: (401, b'{"error":"Invalid token"}', "application/json"))
-    monkeypatch.setattr(hf_video, "_space", lambda *a, **k: (_ for _ in ()).throw(AssertionError("space called")))
+    monkeypatch.setattr(hf_video, "_space", lambda *a, **k: (401, b'{"error":"Invalid token"}', "application/json"))
+    monkeypatch.setattr(hf_video, "_inference", lambda *a, **k: (_ for _ in ()).throw(AssertionError("router called")))
     assert hf_video.ltx(_choice(), "lab", 5) is None
     assert hf_video.wan(_choice(), "lab", 5) is None
+
+
+def test_space_payloads_match_the_live_gradio_apis():
+    api, data = hf_video.space_call("Lightricks/ltx-video-distilled", "steam rising")
+    assert api == "text_to_video"
+    assert data[0] == "steam rising"
+    assert data[6] == "text-to-video"
+    assert data[2] is None and data[3] is None
+    api, data = hf_video.space_call("Wan-AI/Wan2.1", "steam rising")
+    assert api == "t2v_generation_async"
+    assert data == ["steam rising", "720*1280", False, -1]
+    assert hf_video._router_url("fal-ai", "fal-ai/wan/v2.1/1.3b/text-to-video").startswith(
+        "https://router.huggingface.co/fal-ai/fal-ai/wan/v2.1/1.3b/text-to-video"
+    )
+
+
+def test_gradio_sse_complete_event_is_a_video_url():
+    body = (
+        b'event: complete\n'
+        b'data: [{"video":{"url":"https://lightricks-ltx-video-distilled.hf.space/gradio_api/file=/tmp/out.mp4"}}, 7]\n\n'
+    )
+    kind, extra = hf_video.interpret(200, body, "text/event-stream")
+    assert kind == "url"
+    assert extra.endswith("out.mp4")
+
+
+def test_pixazo_uses_documented_text_to_video_and_allowed_duration():
+    from content_generator.creative.ai_backgrounds import PIXAZO_TEXT_TO_VIDEO, _pixazo_duration
+    assert PIXAZO_TEXT_TO_VIDEO == "https://gateway.pixazo.ai/ltx-2-5-lite/v1/text-to-video"
+    assert _pixazo_duration(5) == 6
+    assert _pixazo_duration(8) == 8
+    assert "ltx-video/v1/generate" not in PIXAZO_TEXT_TO_VIDEO
 
 
 def test_colour_grade_moves_toward_label_palette():
@@ -402,23 +435,48 @@ def test_pexels_search_sends_named_user_agent(monkeypatch):
     assert "Python-urllib" not in captured["ua"]
 
 
-def test_pixazo_missing_video_route_is_not_live(monkeypatch, capsys):
+def test_pixazo_lite_route_400_is_live_and_does_not_send_a_prompt(monkeypatch, capsys):
     for name in SECRET_NAMES:
         monkeypatch.delenv(name, raising=False)
     monkeypatch.setenv("PIXAZO_API_KEY", "pixazo-test-key")
+    seen = []
 
     def transport(method, url, headers, timeout, data=None):
-        if "ltx-video" in url:
-            return 404, b'{"message":"Resource not found"}'
-        if "text-to-image" in url:
-            return 400, b'{"message":"prompt required"}'
+        seen.append((url, data))
+        if "ltx-2-5-lite" in url:
+            return 400, b'{"message":"duration rejected"}'
         return 500, b""
 
     monkeypatch.setattr(background_probe, "_default_transport", transport)
     rows = {row["name"]: row for row in background_probe.probe_results()}
-    assert rows["pixazo"]["status"] == "down"
-    assert rows["pixazo"]["detail"] == "video route 404"
+    assert rows["pixazo"]["status"] == "live"
+    assert rows["pixazo"]["detail"] == "http 400"
+    assert seen and b"duration" in seen[0][1]
+    assert b"prompt" not in seen[0][1]
     assert "pixazo-test-key" not in capsys.readouterr().out
+
+
+def test_hf_probe_checks_space_hosts(monkeypatch):
+    for name in SECRET_NAMES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("HF_TOKEN", "hf-test-token")
+    seen = []
+
+    def transport(method, url, headers, timeout, data=None):
+        seen.append(url)
+        if "whoami" in url:
+            return 200, b"{}"
+        if "lightricks-ltx-video-distilled" in url:
+            return 200, b"ok"
+        if "wan-ai-wan2-1" in url:
+            return 404, b"missing"
+        return 500, b""
+
+    monkeypatch.setattr(background_probe, "_default_transport", transport)
+    rows = {row["name"]: row for row in background_probe.probe_results()}
+    assert rows["hf_ltx"]["status"] == "live"
+    assert rows["hf_wan"]["status"] == "down"
+    assert any("lightricks-ltx-video-distilled.hf.space" in url for url in seen)
 
 
 def test_probe_reports_skips_and_hides_secrets(monkeypatch, capsys):

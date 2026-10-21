@@ -83,27 +83,28 @@ def _kaggle_basic() -> str:
 
 
 def _pixazo_state(call, key: str) -> tuple[str, str]:
-    """Check the video route. A 404 there is not a live video source.
+    """Probe the documented LTX 2.5 text-to-video routes.
 
-    The image route is only used to tell a bad key from a missing video path.
-    An empty JSON body must not start a render.
+    The body uses duration 1, which the API rejects. That must not queue a render.
     """
+    from content_generator.creative.ai_backgrounds import PIXAZO_TEXT_TO_VIDEO
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {key}",
         "Ocp-Apim-Subscription-Key": key,
     }
-    video = os.getenv("PIXAZO_VIDEO_URL", "https://gateway.pixazo.ai/ltx-video/v1/generate")
-    status, _body = call("POST", video, headers, 8, b"{}")
-    if status != 404:
+    primary = os.getenv("PIXAZO_VIDEO_URL", PIXAZO_TEXT_TO_VIDEO)
+    urls = [primary]
+    if not os.getenv("PIXAZO_VIDEO_URL"):
+        urls.append("https://gateway.pixazo.ai/ltx-2-5-pro/v1/text-to-video")
+    last = "error"
+    for url in urls:
+        status, _body = call("POST", url, headers, 8, b'{"duration":1}')
+        last = status
+        if status == 404:
+            continue
         return _http_state(status), f"http {status}"
-    image = os.getenv("PIXAZO_IMAGE_ENDPOINT", "https://gateway.pixazo.ai/flux-3-image/v1/text-to-image")
-    image_status, _body = call("POST", image, headers, 8, b"{}")
-    if image_status in (401, 403):
-        return "down", f"http {image_status}"
-    if _http_state(image_status) == "live":
-        return "down", "video route 404"
-    return "down", f"http {status}"
+    return "down", f"http {last}"
 
 
 def probe_results(transport=None) -> list[dict]:
@@ -147,9 +148,9 @@ def probe_results(transport=None) -> list[dict]:
             rows.append({"name": "hf_ltx", "status": "down", "detail": f"token http {who}"})
             rows.append({"name": "hf_wan", "status": "down", "detail": f"token http {who}"})
         else:
-            for name, model in (("hf_ltx", hf_video.LTX_MODEL), ("hf_wan", hf_video.WAN_MODEL)):
-                status, _body = call("GET", f"https://huggingface.co/api/models/{model}", {}, 8, None)
-                rows.append({"name": name, "status": _http_state(status), "detail": f"hub http {status}"})
+            for name, space in (("hf_ltx", hf_video.LTX_SPACE), ("hf_wan", hf_video.WAN_SPACE)):
+                status, _body = call("GET", hf_video._space_host(space) + "/", {}, 8, None)
+                rows.append({"name": name, "status": _http_state(status), "detail": f"space http {status}"})
 
     pixazo_key = _secret("PIXAZO_API_KEY")
     if not pixazo_key:
