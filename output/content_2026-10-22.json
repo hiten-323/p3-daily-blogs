@@ -2448,46 +2448,79 @@
   },
   "facebook_post": {
     "featured_product": "purista",
-    "objective": "Engagement and brand affinity through relatable household ritual content",
-    "primary_cta": "Comment MAKER or DRINKER",
-    "success_metric": "Comments > 50, Shares > 30, Saves > 40",
-    "_growth_attempts": 1,
-    "asset_id": "fb_purista_ritual_001",
-    "caption": "Who makes the coffee in your house, and who complains about it?\n\nIn our kitchen, the brew duty rotates. Some mornings it's a quick pour-over. Others, it's a jar of Purista Gourmet Robusta granules — freeze-dried, pure coffee, zero chicory — because the person who wakes up first deserves a cup that actually tastes like coffee.\n\nThe aroma hits different when it's pure Robusta. Naturally rich crema, bold yet smooth. No guessing what's inside. Just read the jar.\n\nPurity Beans keeps it honest. Purista. Purica. Bold. Prima — pure coffee. Ultra Blend is 70% coffee, 30% chicory for milk coffee lovers.\n\nFollow @purepantryprovisions for more coffee rituals that respect your morning.\nShop p3online.in",
-    "comment_trigger": "Who's the designated coffee maker at your place? Comment MAKER or DRINKER.",
-    "gate_rejection": false,
-    "hashtags": "#PurityBeans #PureCoffee #MorningRitual #Robusta #FreezeDried #IndianCoffeeBrand #CleanLabel",
-    "psychology_frame": "ritual",
-    "reel": [
+    "objective": "Product Education & Purchase Intent",
+    "primary_cta": "Shop Purista at https://p3online.in",
+    "success_metric": "Link clicks to Purista product page + comment rate on ROBUSTA trigger",
+    "_growth_attempts": 0,
+    "asset_id": "fb_purista_revelation_001",
+    "caption": "You've been told instant coffee is just caffeine delivery. That's the lie the industry wants you to believe.\n\nPurista Gourmet Robusta Granules from Purity Beans changes the equation. Freeze-dried. Pure Robusta. Zero chicory. The label reads exactly that — nothing hidden, nothing added.\n\nMost instant coffee masks cheap fillers behind dark roast bitterness. Purista doesn't need to. The freeze-dry process locks in the natural oils that give Robusta its signature crema and deep body. One sip and you taste the difference between commodity powder and actual coffee.\n\nThis is what gourmet Robusta tastes like when nobody cuts corners.\n\nRead the jar. Purity Beans.\nhttps://p3online.in",
+    "comment_trigger": "Comment ROBUSTA if you've never tasted pure freeze-dried Robusta without chicory.",
+    "compliance_check": {
+      "brand_name_present": true,
+      "website_present": true,
+      "product_truth_verified": true,
+      "no_banned_phrases": true,
+      "no_medical_claims": true,
+      "price_accuracy": true,
+      "process_match": true,
+      "chicory_rules_followed": true
+    },
+    "editorial_notes": "Revelation frame exposes the commodity instant coffee norm. Hook creates cognitive dissonance in 2 seconds. Body educates on freeze-dry vs commodity without attacking competitors. CTA drives to product page. All claims verified against catalog: Purista is freeze-dried pure Robusta, 0% chicory, ₹319/50g, ₹509/100g. No per-cup pricing (Ultra Blend only). Ends with mandated follow and shop lines.",
+    "hashtags": "#PurityBeans #PureCoffee #ZeroChicory #FreezeDriedCoffee #GourmetRobusta #ReadTheJar #IndianCoffeeBrand",
+    "hook_type": "Betrayal Hook",
+    "psychological_frame": "revelation",
+    "regen_round": 1,
+    "save_trigger": "Save this before your next coffee restock — know exactly what pure Robusta tastes like.",
+    "share_trigger": "Share with the coffee snob in your life who thinks instant can't be gourmet.",
+    "viral_potential": {
+      "scores": {
+        "hook": 8.0,
+        "curiosity_gap": 7.0,
+        "relatability": 6.0,
+        "shareability": 7.0,
+        "comment_trigger": 8.0,
+        "format_fit": 6.0,
+        "follow_cta": 3.0
+      },
+      "overall": 6.0,
+      "weakest": [
+        "follow_cta",
+        "format_fit",
+        "relatability"
+      ],
+      "feedback": "1. Missing follow CTA entirely — add 'Follow @purepantryprovisions for daily coffee truth' before the link. 2. Facebook posts need more conversational, household voice — shorten sentences, add a relatable Indian morning moment (e.g., 'That 7 AM cup before the house wakes up'). 3. Relatability is generic 'instant coffee drinker' — anchor",
+      "better_hook": "",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "reel_frames": [
       {
-        "on_screen": "Split screen: left side, sleepy partner handing a mug to the other; right side, Purista jar on counter with morning light hitting the label",
-        "spoken": "Who makes the coffee in your house, and who complains about it?"
+        "on_screen": "Close-up: A hand holds a Purity Beans Purista jar. Finger traces the ingredient line: 'Pure Gourmet Robusta — Freeze-Dried Granules — 0% Chicory'. Dark marble surface. Warm amber rim light on glass.",
+        "spoken": "Flip the jar. Read the line. Pure Gourmet Robusta. Freeze-dried. Zero chicory."
       },
       {
-        "on_screen": "Close-up: spoon scooping Purista granules into a mug, steam rising, granules dissolving cleanly",
-        "spoken": "Some mornings it's a quick pour-over. Others, it's Purista — freeze-dried pure Robusta, zero chicory."
+        "on_screen": "Split frame. Left: generic instant coffee jar — dark powder pours, dust clouds. Right: Purista jar — golden granules flow clean, no dust. Same hand, same pour. Text overlay: 'Commodity vs Craft'.",
+        "spoken": "Commodity instant hides fillers behind bitterness. Craft freeze-dry keeps the oils. The pour tells you everything."
       },
       {
-        "on_screen": "Slow pan: mug being carried to a desk, someone taking first sip, genuine relief on face",
-        "spoken": "The person who wakes up first deserves a cup that actually tastes like coffee."
+        "on_screen": "Macro slow-motion: Hot water hits Purista granules in a glass mug. Instant bloom — rich crema forms, swirling amber. Steam rises. No stirring needed. Label visible in background.",
+        "spoken": "Watch the crema form. That's Robusta's natural oils — locked in by freeze-drying, not sprayed on."
       },
       {
-        "on_screen": "Extreme close-up: crema forming on top of black coffee, light catching the texture",
-        "spoken": "Naturally rich crema. Bold yet smooth. No guessing what's inside."
-      },
-      {
-        "on_screen": "Hand turning Purista jar to show ingredient panel clearly: 'Pure Gourmet Robusta'",
-        "spoken": "Just read the jar. Purity Beans — Purista, Purica, Bold, Prima are pure coffee. Ultra Blend is 70% coffee, 30% chicory."
-      },
-      {
-        "on_screen": "Text overlay: 'Follow @purepantryprovisions for coffee rituals that respect your morning' + 'Shop p3online.in'",
-        "spoken": "Follow @purepantryprovisions. Shop p3online.in."
+        "on_screen": "Founder sits at a kitchen table, Purista jar beside a notebook. He"
       }
     ],
-    "regen_round": 1,
-    "save_trigger": "Save this for your next coffee rotation debate.",
-    "share_trigger": "Tag the person who always makes the coffee — or the one who always complains.",
-    "viral_potential": "High — relatable household dynamic + identity signaling through coffee ritual",
+    "editorial_score": {
+      "shareability": 8.0,
+      "saveability": 8.5,
+      "emotion_pull": 8.0,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.6,
+      "verdict": "PASS",
+      "feedback": "Strong betrayal hook stops scroll instantly. Educational body builds authority without competitor bashing. Save trigger is explicit and well-placed. Comment trigger uses identity bait (ROBUSTA) correctly. Reel frame 4 is incomplete"
+    },
     "editorial_error": "scoring_failed: scoring failed for facebook_post: All LLM providers failed for 'editorial_facebook_post'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
   },
   "video_prompts": {
@@ -5226,6 +5259,80 @@
         "attempt": 7,
         "rung": "from_scratch",
         "feedback": "viral: score 7.14 < 8.0 (weakest: follow_cta, curiosity_gap). Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"Who makes the coffee in your house, and who complains about it?\". Format rules: conversational, relatable household angle, a question that is easy to answer. Add a c"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, shareability). The opening question is relatable for Facebook, but it is a bit generic and conversational rather than a hard pattern-interrupt. To push it past an 8, the hook needs to immediately anchor into a familiar household dynamic or tension point in the "
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing website reference']"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, curiosity_gap). The opening line relies on a standard statement about morning routines rather than an instant pattern interrupt. To fit Facebook's conversational household angle better, start with a relatable scenario or a mild household debate (e.g., about wha"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral_scoring_failed: ValueError"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral_scoring_failed: RuntimeError"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral_scoring_failed: ValueError"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap). The opening line is a bit generic and preachy about what people value. Shift the hook to target the actual sensory experience or the shock of what is hidden in standard instant coffee jars to grab immediate attention in a Facebook feed. Suggeste"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral_scoring_failed: ValueError"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "The hook is sensory but generic — 'aroma before water hits granules' could be any premium coffee brand. No Purity Beans differentiator in the"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "The caption reads like a product spec sheet with sensory adjectives instead of a story that pulls the reader forward."
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The opening action ('You pick up the jar...') builds strong visualization, but the transition into product benefits slightly slows down the narrative flow. To boost shareability and saveability, tighten the second sentence to emphasize the hidden filler surprise most consumers experience, sharpening"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "status": "exhausted",
+        "reason": "The hook is a generic sensory promise that could belong to any premium coffee brand — no betrayal, curiosity gap, or identity challenge to stop the scroll. Emotion pull is flat; 'zero chicory' and 'honest label' are table stakes, not triggers for pride or anger. Shareability and saveability suffer b"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": ""
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: follow_cta, format_fit, relatability). 1. Missing follow CTA entirely — add 'Follow @purepantryprovisions for daily coffee truth' before the link. 2. Facebook posts need more conversational, household voice — shorten sentences, add a relatable Indian morning moment ("
       }
     ],
     "threads_post": [
@@ -7737,7 +7844,7 @@
     "asset_count": 39
   },
   "mandatory_regen_rounds": {
-    "facebook_post": 49,
+    "facebook_post": 55,
     "threads_post": 1
   }
 }
