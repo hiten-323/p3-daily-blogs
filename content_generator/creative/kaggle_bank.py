@@ -125,7 +125,7 @@ def _redact(text: str, secrets: list[str]) -> str:
     for secret in secrets:
         if secret:
             out = out.replace(secret, "***")
-    return out
+    return re.sub(r"KGAT_[A-Za-z0-9_-]+", "***", out)
 
 
 def mask_derived(value: str) -> None:
@@ -467,8 +467,10 @@ def pull() -> int:
     secrets = _auth_secrets()
     ref = f"{owner}/{_KERNEL_SLUG}"
     status = _run(["kaggle", "kernels", "status", ref], secrets, owner)
-    text = ((status.stdout or "") + (status.stderr or "")).lower()
-    if "complete" not in text:
+    text = f"{status.stdout or ''}\n{status.stderr or ''}"
+    if notebook.status_is_error(text):
+        notebook.emit_error_log(ref, secrets, owner, _run, _redact)
+    if "complete" not in text.lower():
         logger.info("[kaggle_bank] kernel not complete — pull skipped")
         return 0
     folder = tempfile.mkdtemp(prefix="purity-kaggle-out-")
