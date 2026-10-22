@@ -4852,6 +4852,127 @@
       "verification_detail": "public video confirmed by oEmbed",
       "verification_method": "youtube_oembed",
       "verified_at": "2026-10-22T06:06:03+00:00"
+    },
+    "2026-10-22|morning|facebook|pb_9ef5ab5c91": {
+      "attempt_count": 1,
+      "content_date": "2026-10-22",
+      "content_id": "pb_9ef5ab5c91",
+      "day_number": 294,
+      "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+      "history": [
+        {
+          "at": "2026-10-22T07:00:43+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-22T07:00:45+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-22T07:00:43+00:00",
+      "last_result": {
+        "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+        "success": false
+      },
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": false,
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-10-22T07:00:45+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-22|morning|instagram_story|pb_9ef5ab5c91": {
+      "attempt_count": 1,
+      "content_date": "2026-10-22",
+      "content_id": "pb_9ef5ab5c91",
+      "day_number": 294,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-22T07:00:45+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-22T07:09:50+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "17914267365284074",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/stories/purepantryprovisions/4013386572615211668",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-22T07:00:45+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-22T07:09:50+00:00",
+      "next_retry_at": null,
+      "platform": "instagram_story",
+      "published": true,
+      "remote_id": "17914267365284074",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-22T07:09:50+00:00",
+      "url": "https://www.instagram.com/stories/purepantryprovisions/4013386572615211668",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-22T07:09:50+00:00"
+    },
+    "2026-10-22|morning|instagram|pb_9ef5ab5c91": {
+      "attempt_count": 1,
+      "content_date": "2026-10-22",
+      "content_id": "pb_9ef5ab5c91",
+      "day_number": 294,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-22T06:59:47+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-22T07:00:43+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "17983845665902014",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DeyZZ80DUSd/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-22T06:59:47+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-22T07:00:43+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "17983845665902014",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-22T07:00:42+00:00",
+      "url": "https://www.instagram.com/p/DeyZZ80DUSd/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-22T07:00:43+00:00"
     }
   },
   "version": 1
