@@ -57,20 +57,33 @@ def _default_transport(method: str, url: str, headers: dict, timeout: float, dat
 
 
 def _http_state(status) -> str:
-    """Map a provider status to live, quota or down.
+    """Map a provider status to live, reachable, quota, or down.
 
-    401 and 403 are auth failures. 404 is a missing route, not a live source.
-    400 and 422 still count as live: the key was accepted and the body was rejected.
+    401 and 403 are auth failures. 404 and other 4xx are down. 400 and 422 are
+    reachable: the host answered and rejected the probe body, so no render was queued.
     """
     if status in (401, 403):
         return "down"
     if status in (402, 429):
         return "quota"
+    if status in (400, 422):
+        return "reachable"
     if status in ("timeout", "error", 404) or (isinstance(status, int) and status >= 500):
         return "down"
-    if isinstance(status, int) and 200 <= status < 500:
+    if isinstance(status, int) and 200 <= status < 300:
         return "live"
+    if isinstance(status, int) and 400 <= status < 500:
+        return "down"
     return "down"
+
+
+def configure_logging() -> None:
+    logging.getLogger("content_generator").setLevel(logging.INFO)
+    root = logging.getLogger()
+    if not root.handlers:
+        logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    elif root.level > logging.INFO:
+        root.setLevel(logging.INFO)
 
 
 def _kaggle_basic() -> str:
@@ -217,12 +230,14 @@ def probe_results(transport=None) -> list[dict]:
 
 
 def main() -> int:
+    configure_logging()
     rows = probe_results()
     summary = ", ".join(f"{row['name']}={row['status']}" for row in rows)
     for row in rows:
         detail = row.get("detail") or ""
         print(f"::notice::{row['name']}: {row['status']}" + (f" ({detail})" if detail else ""))
     print("background source probe: " + summary)
+    logger.info("[bg_probe] %s", summary)
     return 0
 
 

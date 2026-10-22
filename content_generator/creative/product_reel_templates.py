@@ -414,13 +414,13 @@ def _mux_local_audio(source: str, dest: str, day: int, hook_text: str) -> bool:
     if not music or not os.path.exists(str(music)):
         return False
     cmd = [
-        "ffmpeg", "-y", "-i", source, "-i", str(music),
+        "ffmpeg", "-nostdin", "-y", "-i", source, "-i", str(music),
         "-map", "0:v:0", "-map", "1:a:0",
         "-c:v", "copy", "-c:a", "aac", "-shortest",
         dest,
     ]
     try:
-        proc = subprocess.run(cmd, capture_output=True, timeout=60)
+        proc = subprocess.run(cmd, capture_output=True, timeout=60, stdin=subprocess.DEVNULL)
     except Exception as exc:
         logger.info("[product_reel] local audio mux unavailable (%s)", type(exc).__name__)
         return False

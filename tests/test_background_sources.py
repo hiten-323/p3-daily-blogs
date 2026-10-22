@@ -11,7 +11,7 @@ import pytest
 from content_generator.core.brand_guard import EDITORIAL_THRESHOLD
 from content_generator.core.fallback_ladder import PASS_FLOOR
 from content_generator.core.viral_gate import PASS_MARK
-from content_generator.creative import ai_backgrounds, background_probe, hf_video, kaggle_bank, stock_video
+from content_generator.creative import ai_backgrounds, background_probe, hf_video, kaggle_auth, kaggle_bank, stock_video
 from content_generator.creative import kaggle_notebook as kn
 from content_generator.creative import premium_cards as pc
 from content_generator.creative import shorts_concepts as scn
@@ -412,6 +412,7 @@ def test_kaggle_api_token_is_passed_to_the_cli_and_not_logged(tmp_path, monkeypa
     monkeypatch.setenv("KAGGLE_TOKEN", "KGAT_test_token_value")
     monkeypatch.setenv("KAGGLE_USERNAME", "purity-user")
     monkeypatch.setenv("KAGGLE_CONFIG_DIR", str(tmp_path / "kaggle"))
+    monkeypatch.setattr(kaggle_auth.urllib.request, "urlopen", lambda *a, **k: (_ for _ in ()).throw(OSError("offline")))
     seen = {}
 
     class _Proc:
@@ -419,10 +420,11 @@ def test_kaggle_api_token_is_passed_to_the_cli_and_not_logged(tmp_path, monkeypa
         stdout = "pushed KGAT_test_token_value"
         stderr = ""
 
-    def _run(args, secrets):
+    def _run(args, secrets, owner=""):
         seen["args"] = args
         seen["secrets"] = list(secrets)
         seen["token"] = os.environ.get("KAGGLE_API_TOKEN")
+        seen["owner"] = owner
         return _Proc()
 
     monkeypatch.setattr(kaggle_bank, "_run", _run)
@@ -435,6 +437,98 @@ def test_kaggle_api_token_is_passed_to_the_cli_and_not_logged(tmp_path, monkeypa
     visible = out.replace("::add-mask::KGAT_test_token_value", "").replace("::add-mask::Bearer KGAT_test_token_value", "")
     assert "KGAT_test_token_value" not in visible
     assert "KGAT_test_token_value" not in caplog.text
+
+
+def test_username_falls_back_when_the_token_names_nobody(monkeypatch, caplog):
+    caplog.set_level(logging.INFO)
+    for name in _KAGGLE_ALIASES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("KAGGLE_API_TOKEN", "KGAT_test_token_value")
+    monkeypatch.setenv("KAGGLE_USERNAME", "purity-user")
+    monkeypatch.setenv("KAGGLE_KEY", "")
+    monkeypatch.setattr(kaggle_auth.shutil, "which", lambda _name: None)
+    monkeypatch.setattr(kaggle_auth.urllib.request, "urlopen", lambda *a, **k: (_ for _ in ()).throw(OSError("offline")))
+    env = kaggle_bank._kaggle_env()
+    assert env["KAGGLE_USERNAME"] == "purity-user"
+    assert "KAGGLE_KEY" not in env
+    assert kaggle_bank._owner_from_token("KGAT_test_token_value") == "purity-user"
+    assert "using KAGGLE_USERNAME" in caplog.text
+    assert "KGAT_test_token_value" not in caplog.text
+    assert kaggle_bank._username_in_text("- username: None") == ""
+    assert kaggle_bank._username_in_text("- username: purity-user") == "purity-user"
+
+
+def test_token_account_wins_and_a_token_is_not_a_username(monkeypatch, caplog):
+    caplog.set_level(logging.INFO)
+    for name in _KAGGLE_ALIASES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("KAGGLE_USERNAME", "KGAT_pasted_token")
+    monkeypatch.setattr(kaggle_auth.shutil, "which", lambda _name: None)
+    state = {"mode": "fail"}
+
+    class _Resp:
+        def read(self, _n=4096):
+            return b'{"active":true,"username":"token-user"}'
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+    def _open(*_a, **_k):
+        if state["mode"] == "fail":
+            raise OSError("offline")
+        return _Resp()
+
+    monkeypatch.setattr(kaggle_auth.urllib.request, "urlopen", _open)
+    assert kaggle_bank._owner_from_token("KGAT_test_token_value") == ""
+    assert "not a slug" in caplog.text
+    assert "KGAT_pasted_token" not in caplog.text
+    state["mode"] = "ok"
+    monkeypatch.setenv("KAGGLE_USERNAME", "secret-user")
+    assert kaggle_bank._owner_from_token("KGAT_test_token_value") == "token-user"
+    assert "token account" in caplog.text
+    assert "KGAT_test_token_value" not in caplog.text
+
+
+def test_cli_stderr_is_logged_and_masked(monkeypatch, caplog):
+    caplog.set_level(logging.INFO)
+    for name in _KAGGLE_ALIASES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("KAGGLE_API_TOKEN", "KGAT_test_token_value")
+    monkeypatch.setenv("KAGGLE_KEY", " ")
+    seen = {}
+
+    def _run(args, capture_output, text, env, check, timeout):
+        seen["env"] = env
+        seen["timeout"] = timeout
+        return type("P", (), {"returncode": 7, "stdout": "ok", "stderr": "fail KGAT_test_token_value"})()
+
+    monkeypatch.setattr(kaggle_bank.subprocess, "run", _run)
+    proc = kaggle_bank._run(["kaggle", "kernels", "status", "purity-user/purity-beans-bg-bank"], ["KGAT_test_token_value"], "purity-user")
+    assert proc.returncode == 7
+    assert seen["env"]["KAGGLE_API_TOKEN"] == "KGAT_test_token_value"
+    assert seen["env"]["KAGGLE_USERNAME"] == "purity-user"
+    assert "KAGGLE_KEY" not in seen["env"]
+    assert "rc=7" in caplog.text and "stderr=" in caplog.text
+    assert "KGAT_test_token_value" not in caplog.text
+
+
+def test_main_logs_when_the_username_stays_unresolved(monkeypatch, caplog, capsys):
+    caplog.set_level(logging.INFO)
+    for name in _KAGGLE_ALIASES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("KAGGLE_API_TOKEN", "KGAT_test_token_value")
+    monkeypatch.setattr(kaggle_auth.shutil, "which", lambda _name: None)
+    monkeypatch.setattr(kaggle_auth.urllib.request, "urlopen", lambda *a, **k: (_ for _ in ()).throw(OSError("offline")))
+    assert kaggle_bank.main() == 1
+    out = capsys.readouterr().out
+    assert "kaggle auth: present" in out
+    assert "kaggle username: missing" in out
+    assert "unresolved" in caplog.text
+    assert "KGAT_test_token_value" not in caplog.text
+    assert "KGAT_test_token_value" not in out.replace("::add-mask::KGAT_test_token_value", "").replace("::add-mask::Bearer KGAT_test_token_value", "")
 
 
 def test_probe_uses_bearer_token_and_hides_it(monkeypatch, capsys):
@@ -467,7 +561,9 @@ def test_probe_uses_bearer_token_and_hides_it(monkeypatch, capsys):
 
 def test_http_404_and_cloudflare_block_are_not_live():
     assert background_probe._http_state(200) == "live"
-    assert background_probe._http_state(400) == "live"
+    assert background_probe._http_state(400) == "reachable"
+    assert background_probe._http_state(422) == "reachable"
+    assert background_probe._http_state(418) == "down"
     assert background_probe._http_state(404) == "down"
     assert background_probe._http_state(401) == "down"
     assert background_probe._http_state(429) == "quota"
@@ -511,7 +607,7 @@ def test_pixazo_lite_route_400_is_live_and_does_not_send_a_prompt(monkeypatch, c
 
     monkeypatch.setattr(background_probe, "_default_transport", transport)
     rows = {row["name"]: row for row in background_probe.probe_results()}
-    assert rows["pixazo"]["status"] == "live"
+    assert rows["pixazo"]["status"] == "reachable"
     assert rows["pixazo"]["detail"] == "http 400"
     assert seen and b"duration" in seen[0][1]
     assert b"prompt" not in seen[0][1]
@@ -581,6 +677,16 @@ def test_workflows_wire_probe_and_do_not_dispatch_publish():
     assert "kaggle>=2.2.4" in weekly
     assert 'print("kaggle auth: "' in weekly
     assert "KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}" in weekly
+    for label, text in (("daily", daily), ("weekly", weekly)):
+        start = 0
+        while True:
+            at = text.find("KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}", start)
+            if at < 0:
+                break
+            window = text[at:at + 400]
+            assert "KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}" in window, label
+            start = at + 1
+    assert "kaggle username: " in weekly
     assert "gh workflow run" not in weekly
     assert "daily.yml" not in weekly
     assert "retry-unposted" not in weekly

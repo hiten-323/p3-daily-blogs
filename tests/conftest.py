@@ -1,4 +1,10 @@
+import os
+
 import pytest
+
+# imageio-ffmpeg downloads a binary with no short timeout when this is unset.
+if os.path.isfile("/usr/bin/ffmpeg"):
+    os.environ.setdefault("IMAGEIO_FFMPEG_EXE", "/usr/bin/ffmpeg")
 
 
 @pytest.fixture(autouse=True)

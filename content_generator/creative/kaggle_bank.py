@@ -9,16 +9,21 @@ import re
 import shutil
 import subprocess
 import tempfile
-import urllib.request
 
+from content_generator.creative import kaggle_auth
 from content_generator.creative import kaggle_notebook as notebook
+
+configure_logging = kaggle_auth.configure_logging
+_valid_owner = kaggle_auth.valid_owner
+_kaggle_env = kaggle_auth.kaggle_env
+_username_in_text = kaggle_auth.username_in_text
+_owner_from_token = kaggle_auth.owner_from_token
 
 logger = logging.getLogger(__name__)
 
 RELEASE_TAG = "bg-bank"
 _KERNEL_SLUG = "purity-beans-bg-bank"
 _TOKEN_ENVS = ("KAGGLE_API_TOKEN", "KAGGLE_TOKEN", "KAGGLE_API_KEY")
-_INTROSPECT_URL = "https://api.kaggle.com/v1/security.OAuthService/IntrospectToken"
 _RESERVED: set[str] = set()
 
 
@@ -189,6 +194,7 @@ def auth_present() -> bool:
 
 def log_auth_status() -> None:
     print("kaggle auth: " + ("present" if auth_present() else "missing"), flush=True)
+    print("kaggle username: " + ("present" if os.getenv("KAGGLE_USERNAME", "").strip() else "missing"), flush=True)
 
 
 def _mask_token(token: str) -> None:
@@ -203,30 +209,6 @@ def _auth_secrets() -> list[str]:
     if username and key:
         secrets.append(_derived_basic(username, key))
     return [item for item in secrets if item]
-
-
-def _owner_from_token(token: str) -> str:
-    explicit = os.getenv("KAGGLE_USERNAME", "").strip()
-    if explicit or not token:
-        return explicit
-    _mask_token(token)
-    request = urllib.request.Request(
-        _INTROSPECT_URL, data=json.dumps({"token": token}).encode(), method="POST",
-        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json",
-                 "User-Agent": "PurityBeansBackground/1.0"},
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=15) as response:  # noqa: S310
-            payload = json.loads(response.read(2048).decode() or "{}")
-    except Exception as exc:
-        logger.info("[kaggle_bank] username lookup failed: %s", type(exc).__name__)
-        return ""
-    username = str((payload or {}).get("username") or "").strip()
-    if not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", username):
-        return ""
-    if payload.get("active") is False:
-        return ""
-    return username
 
 
 def _derived_basic(username: str, key: str) -> str:
@@ -253,10 +235,26 @@ def _write_kaggle_json(username: str, key: str) -> str:
     return dest
 
 
-def _run(args: list[str], secrets: list[str]) -> subprocess.CompletedProcess:
-    env = os.environ.copy()
-    proc = subprocess.run(args, capture_output=True, text=True, env=env, check=False)
-    logger.info("[kaggle_bank] %s rc=%s %s", args[0], proc.returncode, _redact((proc.stdout or "") + (proc.stderr or ""), secrets)[-240:])
+def _run(args: list[str], secrets: list[str], owner: str = "") -> subprocess.CompletedProcess:
+    env = _kaggle_env(owner)
+    command = " ".join(args[:3])
+    timeout = 60 if len(args) >= 3 and args[1:3] == ["config", "view"] else 300
+    try:
+        proc = subprocess.run(args, capture_output=True, text=True, env=env, check=False, timeout=timeout)
+    except subprocess.TimeoutExpired as exc:
+        stdout = exc.stdout if isinstance(exc.stdout, str) else (exc.stdout or b"").decode(errors="replace")
+        stderr = exc.stderr if isinstance(exc.stderr, str) else (exc.stderr or b"").decode(errors="replace")
+        logger.info(
+            "[kaggle_bank] %s timeout rc=124 stdout=%s stderr=%s",
+            command, _redact(stdout, secrets)[-240:], _redact(stderr, secrets)[-240:],
+        )
+        return subprocess.CompletedProcess(args, 124, stdout, stderr)
+    logger.info(
+        "[kaggle_bank] %s rc=%s stdout=%s stderr=%s",
+        command, proc.returncode,
+        _redact(proc.stdout or "", secrets)[-240:],
+        _redact(proc.stderr or "", secrets)[-240:],
+    )
     return proc
 
 
@@ -440,7 +438,7 @@ def push() -> int:
             return 1
         folder = tempfile.mkdtemp(prefix="purity-kaggle-")
         write_kernel(folder, owner)
-        return _run(["kaggle", "kernels", "push", "-p", folder], _auth_secrets()).returncode
+        return _run(["kaggle", "kernels", "push", "-p", folder], _auth_secrets(), owner).returncode
     if not username or not key:
         logger.info("[kaggle_bank] push skipped (kaggle auth missing)")
         return 0
@@ -468,13 +466,13 @@ def pull() -> int:
         _write_kaggle_json(username, key)
     secrets = _auth_secrets()
     ref = f"{owner}/{_KERNEL_SLUG}"
-    status = _run(["kaggle", "kernels", "status", ref], secrets)
+    status = _run(["kaggle", "kernels", "status", ref], secrets, owner)
     text = ((status.stdout or "") + (status.stderr or "")).lower()
     if "complete" not in text:
         logger.info("[kaggle_bank] kernel not complete — pull skipped")
         return 0
     folder = tempfile.mkdtemp(prefix="purity-kaggle-out-")
-    output = _run(["kaggle", "kernels", "output", ref, "-p", folder], secrets)
+    output = _run(["kaggle", "kernels", "output", ref, "-p", folder], secrets, owner)
     if output.returncode != 0:
         return output.returncode
     ingest_dir(folder)
@@ -482,6 +480,7 @@ def pull() -> int:
 
 
 def main() -> int:
+    configure_logging()
     log_auth_status()
     if not auth_present():
         return 0

@@ -441,7 +441,7 @@ def render_story_video(sku: str, headline: str, sub: str, out_path: str, *, seco
         audio = tracks[seed % len(tracks)] if tracks else None
     fps, t1 = 30, seconds * 0.6
     zoom = "zoompan=z='min(zoom+0.0009,1.08)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={d}:s=1080x1920:fps=30"
-    cmd = [ff, "-y", "-loop", "1", "-t", str(t1 + 0.6), "-i", a["path"], "-loop", "1", "-t", str(seconds - t1 + 0.6),
+    cmd = [ff, "-nostdin", "-y", "-loop", "1", "-t", str(t1 + 0.6), "-i", a["path"], "-loop", "1", "-t", str(seconds - t1 + 0.6),
            "-i", b["path"]]
     if audio:
         cmd += ["-i", audio]
@@ -452,6 +452,6 @@ def render_story_video(sku: str, headline: str, sub: str, out_path: str, *, seco
     if audio:
         cmd += ["-map", "2:a", "-af", f"afade=t=in:d=0.5,afade=t=out:st={seconds - 1}:d=1", "-c:a", "aac", "-b:a", "160k"]
     cmd += ["-t", str(seconds), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", str(fps), "-movflags", "+faststart", out_path]
-    subprocess.run(cmd, check=True, capture_output=True)
+    subprocess.run(cmd, check=True, capture_output=True, timeout=90, stdin=subprocess.DEVNULL)
     return {"path": out_path, "frames": [a, b], "audio": audio, "jar_box": b["jar_box"], "layout": layout,
             "text_boxes": b["text_boxes"], "headline_px": b["headline_px"], "body_px": b["body_px"]}

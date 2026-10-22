@@ -4,6 +4,8 @@ from content_generator.ops import growth_health
 
 
 def test_missing_metric_is_unknown_not_zero(monkeypatch, tmp_path):
+    monkeypatch.delenv("INSTAGRAM_ACCESS_TOKEN", raising=False)
+    monkeypatch.delenv("INSTAGRAM_ACCOUNT_ID", raising=False)
     monkeypatch.setattr(growth_health, "LEARNING", tmp_path)
     # A LIST, matching the real shape of performance_log.json. The scanner
     # accepts a list, or a dict keyed posts/entries/records/data — a bare dict
