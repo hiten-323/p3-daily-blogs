@@ -33,7 +33,7 @@ SEARCH_QUESTIONS = [
     "how to make coffee without a machine",
     "what is pure coffee",
     "cheapest way to drink good coffee daily",
-    "how to store instant coffee to keep it fresh",
+    "how to store instant coffee so the aroma lasts",
     "which coffee has the most caffeine India",
 ]
 

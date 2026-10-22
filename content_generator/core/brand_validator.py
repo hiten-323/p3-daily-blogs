@@ -3,6 +3,7 @@ Brand copy validator — validates text assets against language requirements,
 required brand facts, prohibited claims, and website references.
 """
 import logging
+import re
 from content_generator.core.brand_guard import (
     BRAND, FORBIDDEN_TERMS, BRAND_FACTS, WEBSITE_PATTERNS, BRAND_FACT_ALIASES,
     STRICT_LANGUAGE_MODE, MIN_COPY_LENGTH
@@ -63,6 +64,17 @@ def validate_no_prohibited_claims(text: str) -> bool:
             return False
     return True
 
+# Hiten's standing claim rules: no "fresh", "lab tested" or "zero acidity".
+_BANNED_CLAIMS = re.compile(
+    r"\b(?:fresh(?:er|est|ly|ness)?|lab[\s-]*tested|zero[\s-]*acid(?:ity|ic)?)\b",
+    re.IGNORECASE,
+)
+
+
+def banned_claim_hits(text: str) -> list[str]:
+    return sorted({m.group(0).lower() for m in _BANNED_CLAIMS.finditer(text or "")})
+
+
 def validate_website(text: str) -> bool:
     """
     Validate that the Purity Beans website is referenced using approved patterns.
@@ -109,6 +121,11 @@ def validate_asset_copy(
     if not validate_no_prohibited_claims(text):
         issues.append("Contains prohibited medical or weight loss claims")
         
+    # 5b. Banned marketing claims
+    hits = banned_claim_hits(text)
+    if hits:
+        issues.append("Contains banned claim wording: " + ", ".join(hits))
+
     # 6. Website check
     if check_website and not validate_website(text):
         issues.append("Missing website reference")
