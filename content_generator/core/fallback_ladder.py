@@ -168,6 +168,11 @@ def scratch_base(piece: dict) -> dict:
 
 def scratch_prompt(label: str, piece: dict, feedback: str, threshold: float, brand: str) -> str:
     """Prompt for a brand-new piece. The rejected copy is NOT included, only its shape."""
+    if label == "facebook_post":
+        # A saved facebook_post can carry a blog/carousel pack in `_shape`. Asking
+        # for those keys again makes every retry an article the native gates reject.
+        from content_generator.prompts.facebook import regeneration_prompt
+        return regeneration_prompt(piece, feedback, threshold, brand, from_scratch=True)
     keys = (piece or {}).get("_shape") or sorted(
         k for k in (piece or {}) if k not in ("editorial_score", "editorial_error", "needs_regen",
                                               "held", "hold_reason", "_shape"))
