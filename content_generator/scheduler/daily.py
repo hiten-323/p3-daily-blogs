@@ -1235,7 +1235,9 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                 if merged is None and fresh:
                     # A banned claim (e.g. the wrong per-cup price) in a saved draft: a rewrite
                     # of that draft keeps copying it, so build a new one from scratch.
-                    logger.warning("[ladder] %s failed on a banned claim — regenerating from scratch", label)
+                    # needs_regen uses the same path; the log used to call every case a banned claim.
+                    why = "banned claim" if ladder.is_banned_claim_failure(feedback) else "needs a new native draft"
+                    logger.warning("[ladder] %s regenerating from scratch (%s)", label, why)
                     ladder_log[label][-1]["rung"] = "from_scratch"
                     improved = _regenerate_piece(label, piece, feedback, content, from_scratch=True)
                     if not improved:
@@ -1338,6 +1340,13 @@ def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | No
         "linkedin_post": LinkedinSchema,
         "blog_post": BlogSchema,
     }
+    if label == "facebook_post":
+        from content_generator.core.piece_integrity import accept_facebook_regen
+        accepted = accept_facebook_regen(improved, original)
+        if not accepted:
+            logger.warning("[editorial] regenerated facebook_post was not a complete native post")
+            return None
+        return ensure_structural_fields(accepted, label)
     merged = ensure_structural_fields(merge_regenerated_piece(original, improved), label)
     if label == "blog_post" and not str((improved or {}).get("hold_reason") or "").strip():
         merged.pop("hold_reason", None)
@@ -1365,6 +1374,22 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
         from content_generator.core.editorial_engine import get_current_pass_score
 
         threshold = get_current_pass_score()
+        if label == "facebook_post":
+            from content_generator.prompts.facebook import regeneration_prompt
+            from content_generator.core.piece_integrity import accept_facebook_regen
+            regen_prompt = regeneration_prompt(
+                piece, feedback, threshold, brand_block(), from_scratch=from_scratch)
+            result = llm_call(
+                regen_prompt,
+                label=f"{'fresh' if from_scratch else 'regen'}_{label}",
+                max_tokens=1200,
+            )
+            accepted = accept_facebook_regen(result)
+            if accepted:
+                logger.info("[editorial] Regeneration successful for %s", label)
+                return accepted
+            logger.warning("[editorial] facebook_post regen was not a complete native post")
+            return None
         piece_json = json.dumps(piece, ensure_ascii=False)[:6000]
         regen_prompt = (
             f"{brand_block()}\n\n"
