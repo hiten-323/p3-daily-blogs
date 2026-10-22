@@ -536,12 +536,12 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         if proc.returncode:
             raise RuntimeError(f"ffmpeg encode failed rc={proc.returncode}")
 
-        cmd = [ff, "-y", "-i", tmpv]
+        cmd = [ff, "-nostdin", "-y", "-i", tmpv]
         if audio_file and os.path.exists(audio_file):
             cmd += ["-i", audio_file, "-map", "0:v", "-map", "1:a", "-af",
                     af_filter, "-c:a", "aac", "-b:a", "192k"]
         cmd += ["-c:v", "copy", "-t", str(seconds), "-movflags", "+faststart", out_path]
-        subprocess.run(cmd, check=True, capture_output=True)
+        subprocess.run(cmd, check=True, capture_output=True, timeout=90, stdin=subprocess.DEVNULL)
         os.remove(tmpv)
         poster_path = poster_path or out_path.rsplit(".", 1)[0] + "_poster.jpg"
         (poster_frame or rgb).save(poster_path, quality=93)

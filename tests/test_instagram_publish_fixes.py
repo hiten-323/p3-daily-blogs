@@ -13,8 +13,6 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ["LEARNING_DIR"] = tempfile.mkdtemp(prefix="pb_test_learning_")
-os.environ.setdefault("INSTAGRAM_ACCOUNT_ID", "ig_test")
-os.environ.setdefault("INSTAGRAM_ACCESS_TOKEN", "token_test")
 
 failures = []
 
@@ -126,7 +124,7 @@ def _realistic_content() -> dict:
     }
 
 
-def main():
+def _instagram_publish_checks():
     # 1. Date handling
     print("\nIST date field matches legacy long-form dates:")
     from content_generator.core.ist_dates import content_date_iso, content_matches_today, today_ist
@@ -435,6 +433,22 @@ def main():
     print(f"\n{'INSTAGRAM PUBLISH FIXES FAILED' if failures else 'instagram publish fixes hold'} "
           f"({len(failures)} failure(s))")
     return 1 if failures else 0
+
+
+def main():
+    """Script entry. The fake Instagram token must not leak into later tests."""
+    keys = ("INSTAGRAM_ACCOUNT_ID", "INSTAGRAM_ACCESS_TOKEN")
+    previous = {key: os.environ.get(key) for key in keys}
+    os.environ.setdefault("INSTAGRAM_ACCOUNT_ID", "ig_test")
+    os.environ.setdefault("INSTAGRAM_ACCESS_TOKEN", "token_test")
+    try:
+        return _instagram_publish_checks()
+    finally:
+        for key, value in previous.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
 
 
 def test_main():

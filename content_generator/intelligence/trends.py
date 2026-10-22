@@ -45,7 +45,7 @@ def fetch_google_trends(keywords: list[str] = None) -> list[dict]:
 
     kws = keywords or _COFFEE_KEYWORDS
     try:
-        pt = TrendReq(hl="en-IN", tz=330)   # IST = UTC+5:30
+        pt = TrendReq(hl="en-IN", tz=330, timeout=(10, 25))  # IST = UTC+5:30
         pt.build_payload(kws, cat=0, timeframe="now 7-d", geo="IN")
         data = pt.interest_over_time()
         if data.empty:

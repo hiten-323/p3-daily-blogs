@@ -89,12 +89,17 @@ def main():
     def _fake_track(**kw):
         captured.update(kw)
 
-    sys.modules["content_generator.analytics.insights_fetcher"].track_published_post = _fake_track
-    _track({"success": True, "media_id": "abc"}, {"day_number": 7}, "morning", carousel)
-    check("_track passes real hook", captured.get("hook") == "3 signs your coffee is not pure",
-          str(captured.get("hook")))
-    check("_track passes real format", captured.get("format_used") == "carousel",
-          str(captured.get("format_used")))
+    tracker = sys.modules["content_generator.analytics.insights_fetcher"]
+    original_track = tracker.track_published_post
+    tracker.track_published_post = _fake_track
+    try:
+        _track({"success": True, "media_id": "abc"}, {"day_number": 7}, "morning", carousel)
+        check("_track passes real hook", captured.get("hook") == "3 signs your coffee is not pure",
+              str(captured.get("hook")))
+        check("_track passes real format", captured.get("format_used") == "carousel",
+              str(captured.get("format_used")))
+    finally:
+        tracker.track_published_post = original_track
 
     # 5. The live log, REPORTED not asserted.
     #

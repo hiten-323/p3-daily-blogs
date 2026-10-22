@@ -150,6 +150,17 @@ def test_non_mini_day_receives_style_cues_without_publishing_the_mini_file(tmp_p
     assert rendered is None
     assert list(tmp_path.glob("*.mp4")) == []
     assert source.stat().st_size == before
+    # A non-mini story would encode a 10s zoompan. ffmpeg without -nostdin
+    # waits on pytest's stdin, so the suite never finishes. This test only
+    # checks that the mini file is not what gets published.
+    monkeypatch.setattr(
+        "content_generator.creative.premium_cards.render_story_video",
+        lambda *_a, **_k: (_ for _ in ()).throw(RuntimeError("encode skipped")),
+    )
+    monkeypatch.setattr(
+        "content_generator.creative.story_motion.render_story_motion",
+        lambda *_a, **_k: None,
+    )
     story = build_story_video(
         headline="PURISTA",
         day=9,

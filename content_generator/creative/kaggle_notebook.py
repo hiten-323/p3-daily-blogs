@@ -124,7 +124,7 @@ def kernel_metadata(username: str) -> dict:
     slug = f"{username}/purity-beans-bg-bank" if username else "purity-beans-bg-bank"
     return {
         "id": slug,
-        "title": "Purity Beans background bank",
+        "title": "Purity Beans bg bank",
         "code_file": "kaggle_backgrounds.ipynb",
         "language": "python",
         "kernel_type": "notebook",

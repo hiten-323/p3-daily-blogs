@@ -48,6 +48,7 @@ jobs:
           token = any(os.environ.get(name, "").strip() for name in ("KAGGLE_API_TOKEN", "KAGGLE_TOKEN", "KAGGLE_API_KEY"))
           legacy = bool(os.environ.get("KAGGLE_USERNAME", "").strip() and os.environ.get("KAGGLE_KEY", "").strip())
           print("kaggle auth: " + ("present" if token or legacy else "missing"))
+          print("kaggle username: " + ("present" if os.environ.get("KAGGLE_USERNAME", "").strip() else "missing"))
           PY
 
       - name: Probe video background sources
