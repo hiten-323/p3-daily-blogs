@@ -4774,11 +4774,11 @@
       "verified_at": "2026-10-22T06:05:58+00:00"
     },
     "2026-10-22|generate|threads|pb_9ef5ab5c91": {
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-10-22",
       "content_id": "pb_9ef5ab5c91",
       "day_number": 294,
-      "error": "prepublish_gate:product_truth_failed",
+      "error": "",
       "history": [
         {
           "at": "2026-10-22T06:06:03+00:00",
@@ -4794,23 +4794,40 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-22T09:53:04+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-22T09:53:17+00:00",
+          "attempt": 2,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18134358907706765",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.threads.com/@hiten_jain323/post/DeytJ0UEfLK",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-10-22T06:06:03+00:00",
+      "last_attempt_at": "2026-10-22T09:53:04+00:00",
       "last_result": {
-        "error": "prepublish_gate:product_truth_failed",
-        "success": false
+        "error": "",
+        "success": true
       },
+      "last_verification_at": "2026-10-22T09:53:17+00:00",
       "next_retry_at": null,
       "platform": "threads",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "18134358907706765",
       "slot": "generate",
-      "status": "SKIPPED",
-      "updated_at": "2026-10-22T06:06:05+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-22T09:53:17+00:00",
+      "url": "https://www.threads.com/@hiten_jain323/post/DeytJ0UEfLK",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-22T09:53:17+00:00"
     },
     "2026-10-22|generate|youtube|pb_9ef5ab5c91": {
       "attempt_count": 1,
