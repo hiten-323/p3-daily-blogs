@@ -225,6 +225,12 @@ def post_content(content: dict, day: int = 0) -> dict:
     if not _editor_approved(blog):
         return _skip("not_editor_approved")
 
+    from content_generator.core.publish_bar import quality_block, reason_code
+    block = quality_block(blog, "blog_post")
+    if block:
+        logger.warning("[shopify_blog] Quality bar held the article: %s", block)
+        return _skip(reason_code(block), quality=block)
+
     defects = assess(blog, on_date=on_date, output_dir=content_output_dir())
     try:
         validate_or_fail(BlogSchema, blog)

@@ -454,6 +454,20 @@ def asset_gate_reason(content: dict, key: str, piece: dict | None = None) -> str
     if not piece:
         return ""
     try:
+        from content_generator.core.publish_bar import ladder_block, viral_block
+        ladder = ladder_block(piece)
+        if ladder:
+            return ladder
+        viral = piece.get("viral_potential")
+        # A missing score is not a Growth Director reject: evergreen templates
+        # have no LLM judge. A measured miss (7.0, honesty) is.
+        if isinstance(viral, dict) and (viral.get("overall") not in (None, "") or viral.get("honesty")):
+            reason = viral_block(piece)
+            if reason and "no LLM viral score" not in reason and "score missing" not in reason:
+                return reason
+    except Exception as e:
+        return f"viral readiness gate: check error ({e}) — failing closed"
+    try:
         from content_generator.core.content_contract import shareability
         share = shareability(piece)
         if not share["passes"]:

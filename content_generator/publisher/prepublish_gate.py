@@ -21,6 +21,18 @@ _PLATFORM_KEYS = {
 }
 
 
+def _remember_block(platform: str, key: str, gate: str, reason: str, asset: dict) -> None:
+    try:
+        from content_generator.core.obstacle_lessons import record
+        feedback = ""
+        viral = asset.get("viral_potential") if isinstance(asset, dict) else None
+        if isinstance(viral, dict):
+            feedback = str(viral.get("feedback") or "")
+        record(platform, key, "publish", gate, reason, feedback)
+    except Exception:
+        logger.debug("[prepublish] lesson not recorded for %s", key)
+
+
 def _native_asset(content: dict, platform: str) -> tuple[str, dict | None]:
     for key in _PLATFORM_KEYS[platform]:
         value = content.get(key)
@@ -117,6 +129,22 @@ def authorize_publish(content: Any, platform: str) -> dict:
     except Exception as exc:
         logger.exception("[prepublish] Claim safety gate failed for %s", platform)
         return {"allowed": False, "asset_key": key, "reason": f"claim_safety_error:{type(exc).__name__}", "checks": {"editorial": True}}
+
+    # Same 8.0 editorial + LLM viral bar on every platform. A 7.0 viral
+    # reject used to pass this function because only the editorial float
+    # and the deterministic readiness score were checked.
+    try:
+        from content_generator.core.publish_bar import quality_block, reason_code
+        block = quality_block(asset, key)
+        if block:
+            code = reason_code(block)
+            _remember_block(platform, key, code, block, asset)
+            return {"allowed": False, "asset_key": key, "reason": code,
+                    "checks": {"editorial": True, "quality": block}}
+    except Exception as exc:
+        logger.exception("[prepublish] Quality bar failed for %s", platform)
+        return {"allowed": False, "asset_key": key, "reason": f"quality_gate_error:{type(exc).__name__}",
+                "checks": {"editorial": True}}
 
     try:
         from content_generator.core.viral_readiness import evaluate_viral_readiness

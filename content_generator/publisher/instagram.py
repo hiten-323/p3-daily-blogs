@@ -750,6 +750,21 @@ def post_story(content: dict, day: int = 0) -> dict:
     except Exception as e:
         logger.debug("[instagram] story link line skipped: %s", e)
     logger.info("[instagram] story copy source=%s headline=%r", copy.get("source"), headline)
+    source = str(copy.get("source") or "")
+    if source.startswith("stories.story_1") and isinstance(content, dict):
+        stories = content.get("stories") if isinstance(content.get("stories"), dict) else {}
+        story_piece = stories.get("story_1") if isinstance(stories.get("story_1"), dict) else {}
+        # Bank lines are hand-written. A generated story that was scored and
+        # missed the bar does not publish. An unscored story_1 is unchanged.
+        measured = isinstance(story_piece.get("editorial_score"), dict) or isinstance(story_piece.get("viral_potential"), dict)
+        if measured or story_piece.get("ladder_exhausted"):
+            from content_generator.core.publish_bar import quality_block, reason_code
+            story_block = quality_block(story_piece, "stories")
+            if story_block:
+                return {
+                    "success": False, "media_id": "", "attempted": False, "skipped": True,
+                    "error": "prepublish_gate:" + reason_code(story_block),
+                }
     try:
         from content_generator.core.process_match import process_match_findings
         from content_generator.core.product_truth import featured_product_name

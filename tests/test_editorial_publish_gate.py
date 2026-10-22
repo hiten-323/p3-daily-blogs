@@ -56,6 +56,7 @@ def _passing(body):
         "cta": "Shop Purity Beans at p3online.in today.",
         "hashtags": "#PurityBeans #PureCoffee",
         "editorial_score": _score(8.6, "PASS"),
+        "viral_potential": {"passed": True, "overall": 8.4, "honesty": []},
     }
 
 

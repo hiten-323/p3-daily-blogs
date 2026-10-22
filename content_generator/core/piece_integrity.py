@@ -341,6 +341,46 @@ def _threads_copy(node) -> str:
     return ""
 
 
+def _fit_threads_length(piece: dict, limit: int = 480) -> None:
+    """Cut a Threads post at the last sentence that fits. No clean cut stays long."""
+    for key in ("text", "body", "content"):
+        text = piece.get(key)
+        if not isinstance(text, str) or len(text.strip()) <= limit:
+            continue
+        raw = text.strip()
+        window = raw[:limit]
+        idx = max(window.rfind("."), window.rfind("!"), window.rfind("?"))
+        if idx >= 40:
+            piece[key] = window[: idx + 1].strip()
+
+
+def _ensure_facebook_brand_facts(piece: dict) -> None:
+    """Facebook was never in the brand-injection list, so drafts failed 'missing facts'.
+
+    The sentence is the product's own process line. It does not say
+    'not freeze-dried' next to Bold — that phrase fails the process matcher.
+    """
+    from content_generator.core.brand_validator import (
+        validate_brand_facts, validate_brand_mention, validate_website,
+    )
+    from content_generator.core.process_match import _DEST_LINE, _featured_slug
+
+    keys = ("hook", "body", "community_question", "cta", "hashtags")
+
+    def joined() -> str:
+        return " ".join(str(piece.get(key) or "") for key in keys)
+
+    if not validate_brand_mention(joined()):
+        piece["body"] = (str(piece.get("body") or "").rstrip() + " Purity Beans").strip()
+    if not validate_brand_facts(joined()):
+        slug = _featured_slug(str(piece.get("featured_product") or ""))
+        line = _DEST_LINE.get(slug) or "Purity Beans is pure coffee."
+        if line.lower() not in joined().lower():
+            piece["body"] = (str(piece.get("body") or "").rstrip() + " " + line).strip()
+    if not validate_website(joined()):
+        piece["cta"] = (str(piece.get("cta") or "").rstrip() + " Shop: https://p3online.in").strip()
+
+
 def promote_facebook_copy(piece: dict) -> dict:
     """Lift nested Facebook copy and drop any article pack before the 8.0 scorer."""
     from content_generator.prompts.facebook import normalize_facebook_piece
@@ -370,8 +410,10 @@ def ensure_structural_fields(piece: dict, label: str = "") -> dict:
     if label == "threads_post" or str(piece.get("asset_type") or "") == "threads_post":
         promote_threads_text(piece)
         _ensure_threads_hook_line(piece)
+        _fit_threads_length(piece)
     if label == "facebook_post" or str(piece.get("asset_type") or "") == "facebook_post":
         promote_facebook_copy(piece)
+        _ensure_facebook_brand_facts(piece)
     _ensure_engagement(piece)
     complete_editorial_score(piece)
     return piece

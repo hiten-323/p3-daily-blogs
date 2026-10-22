@@ -380,6 +380,10 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
             return _held(slot, day, content, "canonical_validation_failed")
         chosen, reel = picked
         logger.info("[slots] evening slot publishing gate-approved asset: %s", chosen)
+        from content_generator.core.publish_bar import quality_block, reason_code
+        reel_block = quality_block(reel, chosen)
+        if reel_block:
+            return _held(slot, day, content, reason_code(reel_block) + " — " + reel_block)
 
         body = str(reel.get("caption") or reel.get("hook_text") or reel.get("chosen_hook") or reel.get("hook") or "").strip()
         cta  = str(reel.get("cta") or "").strip()
@@ -442,15 +446,24 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
                 from content_generator.publisher.publishing_ledger import publish_with_ledger
                 result = publish_with_ledger("instagram", content, slot, day,
                                              lambda: _post_single_image(feed, caption))
-                fb_result = _mirror_to_facebook(content, day, slot, image=feed, message=caption)
+                fb_result = _mirror_to_facebook(
+                    content, day, slot, image=feed, message=caption,
+                    mirror_piece=reel, mirror_label=chosen,
+                )
             else:
                 logger.warning("[slots] reel thumbnail is not a feed aspect — posting as Story")
                 from content_generator.publisher.publishing_ledger import publish_with_ledger
                 result = publish_with_ledger("instagram_story", content, slot, day,
                                              lambda: post_local_story(image))
-                fb_result = _mirror_to_facebook(content, day, slot, message=caption)
+                fb_result = _mirror_to_facebook(
+                    content, day, slot, message=caption,
+                    mirror_piece=reel, mirror_label=chosen,
+                )
         else:
-            fb_result = _mirror_to_facebook(content, day, slot, message=caption)
+            fb_result = _mirror_to_facebook(
+                content, day, slot, message=caption,
+                mirror_piece=reel, mirror_label=chosen,
+            )
 
         result["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
         _track(result, content, slot, reel)
@@ -508,7 +521,9 @@ def _mark_hero_posted(path: str) -> None:
 
 
 def _mirror_to_facebook(content: dict, day: int, slot: str,
-                        image: str | None = None, message: str | None = None) -> dict:
+                        image: str | None = None, message: str | None = None,
+                        mirror_piece: dict | None = None,
+                        mirror_label: str | None = None) -> dict:
     """
     Facebook copies Instagram's timing: same slot, same image, same text.
 
@@ -521,7 +536,10 @@ def _mirror_to_facebook(content: dict, day: int, slot: str,
         from content_generator.publisher.publishing_ledger import publish_with_ledger
         r = publish_with_ledger(
             "facebook", content, slot, day,
-            lambda: fb_post(content, day=day, preferred_image=image, message_override=message),
+            lambda: fb_post(
+                content, day=day, preferred_image=image, message_override=message,
+                mirror_piece=mirror_piece, mirror_label=mirror_label,
+            ),
         ) or {}
         if r.get("success"):
             logger.info("[slots] facebook mirror (%s): published", slot)

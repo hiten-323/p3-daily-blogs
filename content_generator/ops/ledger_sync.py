@@ -24,6 +24,8 @@ LEDGER = Path("output/learning/publishing_ledger.json")
 STASH = Path(tempfile.gettempdir()) / "publishing_ledger.local.json"
 POSTS = Path("output/learning/published_posts.json")
 POSTS_STASH = Path(tempfile.gettempdir()) / "published_posts.local.json"
+LESSONS = Path("output/learning/obstacle_lessons.json")
+LESSONS_STASH = Path(tempfile.gettempdir()) / "obstacle_lessons.local.json"
 _RANK = {"VERIFIED_LIVE": 5, "PUBLISHED_UNVERIFIED": 4, "UNCERTAIN": 3, "PUBLISHING": 2}
 
 
@@ -132,13 +134,55 @@ def _write_posts(data: list[dict], path: Path) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def _read_lessons(path: Path) -> dict:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(data, dict) and isinstance(data.get("lessons"), list):
+            return data
+    except (OSError, ValueError):
+        pass
+    return {"version": 1, "lessons": []}
+
+
+def merge_lessons(base: dict, other: dict) -> dict:
+    """Keep the higher count for each lesson id and preserve a fix either side learned."""
+    by_id: dict[str, dict] = {}
+    order: list[str] = []
+    for src in list(base.get("lessons") or []) + list(other.get("lessons") or []):
+        if not isinstance(src, dict):
+            continue
+        lid = str(src.get("id") or "")
+        if not lid:
+            continue
+        if lid not in by_id:
+            by_id[lid] = dict(src)
+            order.append(lid)
+            continue
+        cur = by_id[lid]
+        winner = src if int(src.get("count") or 0) >= int(cur.get("count") or 0) else cur
+        loser = cur if winner is src else src
+        merged = dict(winner)
+        if not merged.get("fix") and loser.get("fix"):
+            merged["fix"] = loser["fix"]
+        if str(loser.get("last_seen") or "") > str(merged.get("last_seen") or ""):
+            merged["last_seen"] = loser["last_seen"]
+        first = [str(item.get("first_seen") or "") for item in (loser, merged) if item.get("first_seen")]
+        if first:
+            merged["first_seen"] = min(first)
+        by_id[lid] = merged
+    return {"version": 1, "lessons": [by_id[key] for key in order]}
+
+
 def save() -> None:
     if LEDGER.exists():
         _write(_read(LEDGER), STASH)
     if POSTS.exists():
         _write_posts(_read_posts(POSTS), POSTS_STASH)
+    if LESSONS.exists():
+        _write(_read_lessons(LESSONS), LESSONS_STASH)
     subprocess.run(["git", "checkout", "HEAD", "--", str(LEDGER)], check=False)
     subprocess.run(["git", "checkout", "HEAD", "--", str(POSTS)], check=False)
+    subprocess.run(["git", "checkout", "HEAD", "--", str(LESSONS)], check=False)
 
 
 def restore() -> None:
@@ -146,6 +190,8 @@ def restore() -> None:
         _write(merge(_read(LEDGER), _read(STASH)), LEDGER)
     if POSTS_STASH.exists():
         _write_posts(merge_posts(_read_posts(POSTS), _read_posts(POSTS_STASH)), POSTS)
+    if LESSONS_STASH.exists():
+        _write(merge_lessons(_read_lessons(LESSONS), _read_lessons(LESSONS_STASH)), LESSONS)
 
 
 if __name__ == "__main__":

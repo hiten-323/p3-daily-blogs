@@ -1203,6 +1203,8 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                         piece.pop("hold_reason", None)
                         piece.pop("held", None)
                     piece.pop("needs_regen", None)
+                    if attempt > 0:
+                        _remember_fixed(label, "later draft passed the same gates")
                     logger.info("[editorial] %s PASS — score %.1f (threshold %.1f)", label, score, threshold)
                     break
                 if verdict not in ("VIRAL_REJECT", "GATE_REJECT"):
@@ -1218,6 +1220,7 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                 )
 
             if attempt + 1 < attempts_allowed:
+                _remember_obstacle(label, feedback, "generation")
                 rung = ladder.rung_for(attempt + 1)
                 logger.info("[ladder] %s attempt %d/%d rung=%s", label, attempt + 2, attempts_allowed, rung)
                 ladder_log.setdefault(label, []).append({"attempt": attempt + 1, "rung": rung, "feedback": str(feedback)[:300]})
@@ -1267,6 +1270,8 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                         label,
                     )
                     continue
+                from content_generator.core.publish_bar import clear_ladder_hold
+                clear_ladder_hold(merged)
                 if idx is not None:
                     content[key][idx] = merged
                     piece = merged
@@ -1285,11 +1290,73 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                     _alert(f"FALLBACK LADDER EXHAUSTED — {label} held after {attempts_allowed} attempts: {str(reason)[:300]}")
                 except Exception:
                     logger.error("[ladder] alert failed for %s", label)
-                if label == "blog_post":
-                    piece["hold_reason"] = f"rewrites exhausted: {reason}"[:500]
-                    piece["held"] = True
-                    logger.error("[blog] HELD blog_post: %s", piece["hold_reason"])
+                from content_generator.core.publish_bar import hold_exhausted
+                hold_exhausted(piece, str(reason))
+                _remember_obstacle(label, str(reason), "generation", gate="ladder_exhausted")
+                logger.error("[editorial] HELD %s: %s", label, piece.get("hold_reason"))
 
+    if only is None:
+        _score_sales_push(content)
+
+
+def _remember_obstacle(label: str, feedback: str, stage: str, gate: str = "") -> None:
+    try:
+        from content_generator.core.obstacle_lessons import classify, platform_for, record
+        text = str(feedback or "").strip()
+        if not text:
+            return
+        record(platform_for(label), label, stage, gate or classify(text), text[:300], text[:400])
+    except Exception as exc:
+        logger.debug("[lessons] record skipped for %s: %s", label, exc)
+
+
+def _remember_fixed(label: str, fix: str) -> None:
+    try:
+        from content_generator.core.obstacle_lessons import mark_fixed
+        mark_fixed(label, fix)
+    except Exception as exc:
+        logger.debug("[lessons] mark_fixed skipped for %s: %s", label, exc)
+
+
+def _score_sales_push(content: dict) -> None:
+    """Score campaign templates once. Do not rewrite offer codes or deadlines."""
+    block = content.get("sales_push") if isinstance(content, dict) else None
+    if not isinstance(block, dict) or not block.get("active"):
+        return
+    from content_generator.agents.editorial import EditorialScoreError, review_content
+    from content_generator.core import viral_gate
+    from content_generator.core.editorial_engine import normalize_editorial_result
+    from content_generator.core.publish_bar import quality_block
+
+    for surface in ("story", "reel"):
+        piece = block.get(surface)
+        if not isinstance(piece, dict) or not piece:
+            continue
+        label = f"sales_{surface}"
+        try:
+            review = normalize_editorial_result(review_content(piece, label=label))
+        except EditorialScoreError as exc:
+            if piece.get("held") not in ("visual_or_variety_gate", "provenance", "render_error"):
+                piece["held"] = "editorial_gate"
+            _remember_obstacle(label, f"scoring_failed: {exc}", "generation", gate="provider")
+            continue
+        piece["editorial_score"] = review
+        if viral_gate.enabled():
+            vg = viral_gate.evaluate(label, piece)
+            piece["viral_potential"] = vg
+        reason = quality_block(piece, label)
+        if reason:
+            if piece.get("held") not in ("visual_or_variety_gate", "provenance", "render_error"):
+                piece["held"] = "quality_gate"
+            piece["quality_hold"] = reason[:300]
+            feedback = ""
+            viral = piece.get("viral_potential")
+            if isinstance(viral, dict):
+                feedback = str(viral.get("feedback") or "")
+            _remember_obstacle(label, feedback or reason, "generation")
+        elif piece.get("held") in ("quality_gate", "editorial_gate", "viral_gate"):
+            piece.pop("held", None)
+            piece.pop("quality_hold", None)
 
 
 def _growth_gate_reason(content: dict, label: str, piece: dict) -> str:
@@ -1408,12 +1475,22 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
             f"- Do not copy another platform's hook or CTA. The featured SKU controls the claims.\n"
             f"- Per-cup price and cup count are for Ultra Blend only, and only in a sentence that names Ultra Blend. "
             f"For Bold, Purista, Purica, Prima, or any other jar, omit the figure.\n"
-            f"- Freeze-dried is only Purica and Purista. Bold is agglomerated, not freeze-dried. "
+            f"- Freeze-dried is only Purica and Purista. Bold is agglomerated pure coffee. "
+            f"You must not call Bold freeze-dried. "
             f"Do not name a process for Ultra Blend. A process mention must match the featured or linked product, "
             f"or rewrite it. Freeze-drying education links Purica, Purista, Variety Box, or Gourmet Duo Mini. "
-            f"A freeze-dried vs agglomerated comparison may link Bold for the agglomerated side only.\n\n"
+            f"A freeze-dried vs agglomerated comparison may link Bold for the agglomerated side only.\n"
+            f"Name the product in the first lines, close the curiosity loop, and give a specific follow reason. "
+            f"Never write the word fully. This is not a blog.\n\n"
             f"Return ONLY the improved JSON object."
         )
+        try:
+            from content_generator.core.obstacle_lessons import prompt_block as lesson_block
+            extra = lesson_block(label)
+            if extra:
+                regen_prompt += "\n\n" + extra
+        except Exception:
+            logger.debug("[lessons] regen prompt suffix skipped for %s", label)
         if from_scratch:
             from content_generator.core.fallback_ladder import scratch_prompt
             regen_prompt = scratch_prompt(label, piece, feedback, threshold, brand_block())

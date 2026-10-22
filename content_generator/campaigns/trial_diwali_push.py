@@ -443,16 +443,19 @@ def render_assets(content: dict, day_number: int, on_date) -> dict:
         except Exception as exc:
             logger.warning("[sales-push] %s render failed (%s)", surface, type(exc).__name__)
             piece["held"] = "render_error"
+            _note_campaign_obstacle(surface, "render", str(exc)[:200])
             continue
         verdict = (meta or {}).get("visual_gate") or {}
         variety = (meta or {}).get("variety_gate") or {}
         poster = (meta or {}).get("poster")
         if not meta or not verdict.get("passed") or not variety.get("passed") or not poster:
             piece["held"] = "visual_or_variety_gate"
+            _note_campaign_obstacle(surface, "aesthetic", "visual_or_variety_gate")
             continue
         record_jar_provenance(poster, jar_asset_id=asset, render_source="cinematic_real_jar")
         if not verify_jar_provenance(poster).get("verified"):
             piece["held"] = "provenance"
+            _note_campaign_obstacle(surface, "provenance", "real jar provenance failed")
             continue
         piece["video_path"] = meta.get("path") or out_path
         piece["poster_path"] = poster
@@ -461,6 +464,14 @@ def render_assets(content: dict, day_number: int, on_date) -> dict:
         piece.pop("held", None)
         rendered[surface] = piece["video_path"]
     return rendered
+
+
+def _note_campaign_obstacle(surface: str, gate: str, reason: str) -> None:
+    try:
+        from content_generator.core.obstacle_lessons import record
+        record("instagram_campaign", f"sales_{surface}", "generation", gate, reason, "")
+    except Exception:
+        logger.debug("[sales-push] lesson not recorded for %s", surface)
 
 
 def publish_for_slot(content: dict, slot: str, day: int) -> dict:
@@ -483,6 +494,15 @@ def publish_for_slot(content: dict, slot: str, day: int) -> dict:
     from content_generator.creative.jar_provenance import verify_jar_provenance
     if not verify_jar_provenance(poster).get("verified"):
         return {"skipped": True, "reason": "provenance"}
+    from content_generator.core.publish_bar import quality_block, reason_code
+    block = quality_block(piece, f"sales_{surface}")
+    if block:
+        try:
+            from content_generator.core.obstacle_lessons import record
+            record("instagram_campaign", f"sales_{surface}", "publish", reason_code(block), block[:300], "")
+        except Exception:
+            logger.debug("[sales-push] lesson not recorded")
+        return {"skipped": True, "reason": reason_code(block)}
     platform = "instagram_sales_story" if surface == "story" else "instagram_sales_reel"
 
     def _publish() -> dict:

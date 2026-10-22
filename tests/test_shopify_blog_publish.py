@@ -44,6 +44,7 @@ def _ready_post(tmp_path) -> dict:
         "brand_clarity": 8.6,
         "feedback": "Measured review.",
     }
+    piece["viral_potential"] = {"passed": True, "overall": 8.4, "honesty": [], "feedback": "Measured."}
     return {"blog_post": piece, "day_number": 6}
 
 

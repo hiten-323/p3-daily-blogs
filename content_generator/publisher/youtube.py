@@ -109,6 +109,15 @@ def post_content(content: dict, day: int = 0) -> dict:
         return {"success": False, "attempted": False, "skipped": True,
                 "video_id": "", "url": "", "error": "product_truth_failed", "held": True}
 
+    from content_generator.core.publish_bar import quality_block, reason_code
+    short = content.get("yt_short") if isinstance(content.get("yt_short"), dict) else {}
+    block = quality_block(short, "yt_short")
+    if block:
+        code = reason_code(block)
+        logger.warning("[youtube] Quality bar held the Short: %s", block)
+        return {"success": False, "attempted": False, "skipped": True,
+                "video_id": "", "url": "", "error": "prepublish_gate:" + code, "held": True}
+
     result = _upload_video(access_token, video_path, title, description, tags)
 
     if result["success"]:
