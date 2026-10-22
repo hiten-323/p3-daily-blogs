@@ -80,6 +80,8 @@ def classify(feedback: str) -> str:
         return "provenance"
     if "visual" in text or "variety" in text or "aesthetic" in text or "render" in text:
         return "aesthetic"
+    if "banned claim" in text or "lab tested" in text or "lab-tested" in text or "zero acidity" in text:
+        return "banned_claim"
     if "empty content" in text or "480" in text or "brand" in text or "brand mention" in text:
         return "brand"
     if "payoff" in text or "curiosity" in text or "hook/payoff" in text:
@@ -225,9 +227,16 @@ def prompt_block(label: str) -> str:
     ]
     if not rows:
         return ""
-    rows.sort(key=lambda row: (str(row.get("last_seen") or ""), int(row.get("count") or 0)))
+    # Standing claim bans stay in the prompt when newer rows fill the line cap.
+    pinned = [row for row in rows if row.get("gate") == "banned_claim"]
+    rest = [row for row in rows if row.get("gate") != "banned_claim"]
+    rest.sort(key=lambda row: (str(row.get("last_seen") or ""), int(row.get("count") or 0)))
+    if len(pinned) >= _MAX_LINES:
+        chosen = pinned[:_MAX_LINES]
+    else:
+        chosen = pinned + rest[-(_MAX_LINES - len(pinned)):]
     lines = ["OBSTACLE LESSONS (do not repeat these; a repeat fails the gate):"]
-    for row in rows[-_MAX_LINES:]:
+    for row in chosen:
         reason = scrub(row.get("reason") or "")
         fix = scrub(row.get("fix") or "")
         feedback = scrub(row.get("feedback") or "")

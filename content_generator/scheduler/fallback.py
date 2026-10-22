@@ -430,7 +430,7 @@ _EVERGREEN: list[dict] = [
              "visual": "Macro shot of fine coffee powder"},
             {"slide": 4, "heading": "Why the method matters",
              "body": "Freeze drying works cold, so more of the aroma survives.",
-             "visual": "Steam rising from a fresh cup"},
+             "visual": "Steam rising from a just-poured cup"},
             {"slide": 5, "heading": "It is on the pack",
              "body": "The method is usually printed on the label. Look for it.",
              "visual": "Label with the drying method in frame"},
@@ -686,7 +686,7 @@ _EVERGREEN: list[dict] = [
         "source": "evergreen_template",
     },
 
-    # ── Set 9 — the first thing a fresh jar does ──────────────────────────────
+    # ── Set 9 — the first thing a newly opened jar does ───────────────────────
     {
         "type": "reel",
         "hook": "Smell the jar before you make the first cup.",
@@ -722,7 +722,7 @@ _EVERGREEN: list[dict] = [
         "hook": "A one month test for your coffee storage",
         "title": "A one month test for your coffee storage",
         "slides": [
-            {"slide": 1, "heading": "Open a fresh jar",
+            {"slide": 1, "heading": "Open the jar",
              "body": "Break the seal and smell it before you make anything.",
              "visual": "Foil seal being peeled back"},
             {"slide": 2, "heading": "That smell is your baseline",
@@ -741,7 +741,7 @@ _EVERGREEN: list[dict] = [
              "body": "Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. p3online.in",
              "visual": "Purity Beans jar, label facing camera"},
         ],
-        "caption": "Smell a fresh jar the moment you open it. That is your baseline.\n\nSmell it again in a month. Faded means air, heat or damp got in, and all three are fixable.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
+        "caption": "Smell the jar the moment you open it. That is your baseline.\n\nSmell it again in a month. Faded means air, heat or damp got in, and all three are fixable.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
         "cta": "Run the test, then restock at p3online.in",
         "comment_trigger": "When did you last smell your coffee jar?",
         "save_trigger": "Save this and start with your next jar.",
@@ -751,7 +751,7 @@ _EVERGREEN: list[dict] = [
     },
     {
         "type": "instagram_post",
-        "hook": "Smell a fresh jar the moment you break the seal.",
+        "hook": "Smell the jar the moment you break the seal.",
         "body": "That is the strongest it will ever be, and it is your baseline. Smell it again in a month, and if it has faded, air, heat or damp got in. Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
         "caption": "Smell the jar the moment you break the seal. That is your baseline.\n\nSmell it again in a month. Faded means air, heat or damp got in, and all three are fixable.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
         "cta": "Run the test, then restock at p3online.in",
@@ -1004,12 +1004,12 @@ _EVERGREEN: list[dict] = [
             {"on_screen": "FIND THE OTHER ONE",
              "spoken": "Look for the packed or manufactured date too. Both are usually printed."},
             {"on_screen": "DO THE MATH",
-             "spoken": "The gap between them tells you how fresh the jar was when you bought it."},
+             "spoken": "The gap between them tells you how recently the jar was packed when you bought it."},
             {"on_screen": "CHECK TONIGHT",
              "spoken": "Turn your jar around and find both dates. It takes five seconds."},
         ],
         "body": "Purity Beans — Bold, Purista, Purica, and Prima are pure coffee with no additives. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date as well. The gap between the two tells you how fresh the jar was when you bought it.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
+        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date as well. The gap between the two tells you how recently the jar was packed when you bought it.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
         "cta": "Check both dates, then shop at p3online.in",
         "comment_trigger": "What dates are printed on your jar?",
         "save_trigger": "Save this for your next grocery run.",
@@ -1056,7 +1056,7 @@ _EVERGREEN: list[dict] = [
         "type": "instagram_post",
         "hook": "Best before is a quality note, not a safety deadline.",
         "body": "Find the packed or manufactured date as well. The gap between the two tells you how much of the jar's life was already gone when you bought it. Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date too. The gap tells you how fresh the jar was when you bought it.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
+        "caption": "Best before is a quality note, not a safety deadline.\n\nFind the packed date too. The gap tells you how recently the jar was packed when you bought it.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
         "cta": "Check both dates, then shop at p3online.in",
         "comment_trigger": "What dates are printed on your jar?",
         "save_trigger": "Save this for your next grocery run.",

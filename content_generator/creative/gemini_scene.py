@@ -152,7 +152,7 @@ def generate_scene_with_real_jar(
         if dirs.get("boost_exposure"):
             extras.append("bright natural morning sunlight, high exposure, strong subject separation")
         if dirs.get("add_action_texture"):
-            extras.append("visible action: rising aromatic steam or freshly poured coffee")
+            extras.append("visible action: rising aromatic steam from a just-poured cup")
         if dirs.get("break_centered_catalog"):
             extras.append("candid lifestyle depth with natural human context, warm organic materials")
         if extras:

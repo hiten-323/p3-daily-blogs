@@ -113,7 +113,7 @@ UGC_SCENES = [
     {
         "id": "office_desk",
         "setting": "realistic office or WFH desk, monitor in background, papers around",
-        "jar_placement": "beside laptop, partially open lid, fresh cup of coffee next to it",
+        "jar_placement": "beside laptop, partially open lid, a cup of coffee next to it",
         "vibe": "real person, real workspace, not staged",
         "caption_voice": "First person, busy tone. 'Keeps me going without the crash.'",
     },

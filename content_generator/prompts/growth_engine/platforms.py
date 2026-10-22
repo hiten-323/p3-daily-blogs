@@ -111,6 +111,7 @@ def generation_preface(sku: str, day: int = 0) -> str:
         f"Banned openers: {banned}.",
         "Do not repeat today's hook or CTA on another platform. Same fact, different treatment.",
         "No invented prices, stock, reviews, awards, or health claims. Shopify catalog is the source of truth.",
+        "Never write fresh, freshly, freshness, fresher, freshest, lab tested, lab-tested, or zero acidity. The word refresh is allowed.",
         f"Featured SKU: {sku or 'unset'}. The SKU controls which claims are allowed.",
         CHICORY_POLICY,
         _process_match_rule(),

@@ -93,7 +93,7 @@ LEAD_MAGNETS = [
         "keyword": "STORE",
         "promise": "how to store instant coffee so it never goes flat",
         "deliverable": (
-            "Keep coffee fresh:\n"
+            "Store it so the aroma lasts:\n"
             "1. Airtight, always — oxygen kills aroma faster than time.\n"
             "2. Cool + dark cupboard. NOT the fridge (moisture ruins granules).\n"
             "3. Dry spoon only. One wet spoon clumps the whole jar.\n"
