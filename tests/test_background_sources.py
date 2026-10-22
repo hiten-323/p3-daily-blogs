@@ -3,6 +3,7 @@ import base64
 import json
 import logging
 import os
+import subprocess
 from pathlib import Path
 
 import numpy as np
@@ -316,11 +317,22 @@ def test_notebook_prompts_forbid_jars_and_cover_the_library():
         low = job["prompt"].lower()
         assert "jar" not in low and "logo" not in low and "packaging" not in low
     source = kn.notebook_source()
+    compile(source, "<kaggle_backgrounds>", "exec")
     assert "Lightricks/LTX-Video" in source
     assert "THUDM/CogVideoX-2b" in source
+    assert "float16" in source and "bfloat16" not in source
+    assert "enable_model_cpu_offload" in source and 'to("cuda")' not in source
+    assert "/kaggle/working/clips" in source and "/kaggle/working/manifest.json" in source
+    assert 'Path.home() / ".cache" / "huggingface"' in source
+    assert "sentencepiece" in source and "imageio-ffmpeg" in source
+    assert "time_budget_reached" in source and "disk_usage" in source
+    assert base64.b64encode(json.dumps(kn.prompts()).encode()).decode() in source
     assert "jar" in kn.NEGATIVE and "logo" in kn.NEGATIVE and "text" in kn.NEGATIVE
     meta = kn.kernel_metadata("purity")
     assert meta["enable_gpu"] == "true"
+    assert meta["enable_internet"] == "true"
+    assert meta["machine_shape"] == "NvidiaTeslaT4"
+    assert meta["keywords"] == []
     assert meta["id"] == "purity/purity-beans-bg-bank"
     document = kn.notebook_document()
     blob = json.dumps(document["cells"][1])
@@ -490,6 +502,88 @@ def test_token_account_wins_and_a_token_is_not_a_username(monkeypatch, caplog):
     assert kaggle_bank._owner_from_token("KGAT_test_token_value") == "token-user"
     assert "token account" in caplog.text
     assert "KGAT_test_token_value" not in caplog.text
+
+
+def _kaggle_pull_env(monkeypatch, tmp_path):
+    for name in _KAGGLE_ALIASES:
+        monkeypatch.delenv(name, raising=False)
+    monkeypatch.setenv("KAGGLE_USERNAME", "purity-user")
+    monkeypatch.setenv("KAGGLE_KEY", "kaggle-secret-key")
+    monkeypatch.setenv("KAGGLE_CONFIG_DIR", str(tmp_path / "kaggle"))
+
+
+def test_error_status_prints_masked_kernel_log(tmp_path, monkeypatch, capsys, caplog):
+    caplog.set_level(logging.INFO)
+    _kaggle_pull_env(monkeypatch, tmp_path)
+    calls = []
+
+    def _run(args, secrets, owner=""):
+        calls.append(list(args))
+        if args[1:3] == ["kernels", "status"]:
+            stdout = 'purity-user/purity-beans-bg-bank has status "KernelWorkerStatus.ERROR"\n'
+            return subprocess.CompletedProcess(args, 0, stdout, "")
+        if args[1:3] == ["kernels", "output"]:
+            folder = args[args.index("-p") + 1]
+            os.makedirs(folder, exist_ok=True)
+            log_path = os.path.join(folder, "purity-beans-bg-bank.log")
+            with open(log_path, "w", encoding="utf-8") as handle:
+                handle.write("boot\n" * 3)
+                handle.write("crash kaggle-secret-key KGAT_test_token_value at cuda\n")
+            return subprocess.CompletedProcess(args, 0, "saved kaggle-secret-key", "")
+        raise AssertionError(args)
+
+    monkeypatch.setattr(kaggle_bank, "_run", _run)
+    monkeypatch.setattr(kaggle_bank, "ingest_dir", lambda *_a, **_k: (_ for _ in ()).throw(AssertionError("ingest")))
+    assert kaggle_bank.pull() == 0
+    output_calls = [cmd for cmd in calls if cmd[1:3] == ["kernels", "output"]]
+    assert output_calls == [["kaggle", "kernels", "output", "purity-user/purity-beans-bg-bank", "-p", output_calls[0][5]]]
+    assert output_calls[0][5]
+    visible = capsys.readouterr().out
+    derived = base64.b64encode(b"purity-user:kaggle-secret-key").decode()
+    for secret in ("kaggle-secret-key", derived, "KGAT_test_token_value"):
+        visible = visible.replace(f"::add-mask::{secret}", "").replace(f"::add-mask::Basic {secret}", "")
+    assert "kernel error log tail" in visible
+    assert "crash *** *** at cuda" in visible
+    assert "kaggle-secret-key" not in visible
+    assert "KGAT_test_token_value" not in visible
+    assert "kaggle-secret-key" not in caplog.text
+    assert "KGAT_test_token_value" not in caplog.text
+    assert "kernel not complete" in caplog.text
+
+
+def test_running_kernel_does_not_download_output(tmp_path, monkeypatch, capsys):
+    _kaggle_pull_env(monkeypatch, tmp_path)
+    calls = []
+
+    def _run(args, secrets, owner=""):
+        calls.append(list(args))
+        stdout = 'purity-user/purity-beans-bg-bank has status "KernelWorkerStatus.RUNNING"\n'
+        return subprocess.CompletedProcess(args, 0, stdout, "")
+
+    monkeypatch.setattr(kaggle_bank, "_run", _run)
+    assert kaggle_bank.pull() == 0
+    assert [cmd[1:3] for cmd in calls] == [["kernels", "status"]]
+    assert "kernel error log tail" not in capsys.readouterr().out
+
+
+def test_complete_kernel_still_ingests_output(tmp_path, monkeypatch):
+    _kaggle_pull_env(monkeypatch, tmp_path)
+    ingested = []
+
+    def _run(args, secrets, owner=""):
+        if args[1:3] == ["kernels", "status"]:
+            stdout = 'purity-user/purity-beans-bg-bank has status "KernelWorkerStatus.COMPLETE"\n'
+            return subprocess.CompletedProcess(args, 0, stdout, "")
+        if args[1:3] == ["kernels", "output"]:
+            folder = args[args.index("-p") + 1]
+            os.makedirs(folder, exist_ok=True)
+            return subprocess.CompletedProcess(args, 0, "", "")
+        raise AssertionError(args)
+
+    monkeypatch.setattr(kaggle_bank, "_run", _run)
+    monkeypatch.setattr(kaggle_bank, "ingest_dir", lambda folder: ingested.append(folder) or {"clips": []})
+    assert kaggle_bank.pull() == 0
+    assert len(ingested) == 1
 
 
 def test_cli_stderr_is_logged_and_masked(monkeypatch, caplog):
