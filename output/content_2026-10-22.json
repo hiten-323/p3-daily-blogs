@@ -2447,81 +2447,54 @@
     }
   },
   "facebook_post": {
-    "featured_product": "purista",
+    "featured_product": "Purista",
     "objective": "Product Education & Purchase Intent",
     "primary_cta": "Shop Purista at https://p3online.in",
     "success_metric": "Link clicks to Purista product page + comment rate on ROBUSTA trigger",
-    "_growth_attempts": 0,
-    "asset_id": "fb_purista_revelation_001",
-    "caption": "You've been told instant coffee is just caffeine delivery. That's the lie the industry wants you to believe.\n\nPurista Gourmet Robusta Granules from Purity Beans changes the equation. Freeze-dried. Pure Robusta. Zero chicory. The label reads exactly that — nothing hidden, nothing added.\n\nMost instant coffee masks cheap fillers behind dark roast bitterness. Purista doesn't need to. The freeze-dry process locks in the natural oils that give Robusta its signature crema and deep body. One sip and you taste the difference between commodity powder and actual coffee.\n\nThis is what gourmet Robusta tastes like when nobody cuts corners.\n\nRead the jar. Purity Beans.\nhttps://p3online.in",
-    "comment_trigger": "Comment ROBUSTA if you've never tasted pure freeze-dried Robusta without chicory.",
-    "compliance_check": {
-      "brand_name_present": true,
-      "website_present": true,
-      "product_truth_verified": true,
-      "no_banned_phrases": true,
-      "no_medical_claims": true,
-      "price_accuracy": true,
-      "process_match": true,
-      "chicory_rules_followed": true
+    "angle": "clean_label",
+    "hook": "My husband drank black coffee for fifteen years before he finally tasted actual coffee.",
+    "body": "We picked up a jar of Purista Gourmet Robusta Granules from Purity Beans last month. Freeze-dried pure Robusta, zero chicory, nothing added. The first sip stopped him mid-sentence — deep, naturally rich, with a crema that actually holds on the surface. He looked at the label, then at me, and said, \"This is what coffee is supposed to taste like.\" No masking. No compromise. Just pure coffee in a glass jar that tells you exactly what's inside. We keep the 100g jar (₹509) on the counter now, right next to the moka pot. Some mornings it's a quick pour-over with hot water. Others it's a cold brew steeped overnight in the fridge. Either way, the ingredient list reads the same: coffee. That's it. https://p3online.in",
+    "community_question": "When did you last read the ingredient list on your coffee jar?",
+    "cta": "Follow @purepantryprovisions for more honest coffee talk. https://p3online.in",
+    "hashtags": "#PurityBeans #PureCoffee #CleanLabel #FreezeDried #IndianCoffeeBrand",
+    "comment_trigger": "When did you last read the ingredient list on your coffee jar?",
+    "hook_text": "My husband drank black coffee for fifteen years before he finally tasted actual coffee.",
+    "chosen_hook": "My husband drank black coffee for fifteen years before he finally tasted actual coffee.",
+    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.0,
+      "overall": 8.6,
+      "verdict": "PASS",
+      "feedback": "Strong personal narrative hook that stops the scroll instantly. The husband's 15-year revelation creates immediate curiosity and identity signaling. Body builds trust through sensory detail (crema, cold brew, pour-over) and transparent pricing. Attention dip risk at the moka pot reference — may alienate non-enthusiasts; replace with 'kettle' or 'morning routine' for broader relatability. Price (₹509) is a friction point"
     },
-    "editorial_notes": "Revelation frame exposes the commodity instant coffee norm. Hook creates cognitive dissonance in 2 seconds. Body educates on freeze-dry vs commodity without attacking competitors. CTA drives to product page. All claims verified against catalog: Purista is freeze-dried pure Robusta, 0% chicory, ₹319/50g, ₹509/100g. No per-cup pricing (Ultra Blend only). Ends with mandated follow and shop lines.",
-    "hashtags": "#PurityBeans #PureCoffee #ZeroChicory #FreezeDriedCoffee #GourmetRobusta #ReadTheJar #IndianCoffeeBrand",
-    "hook_type": "Betrayal Hook",
-    "psychological_frame": "revelation",
-    "regen_round": 1,
-    "save_trigger": "Save this before your next coffee restock — know exactly what pure Robusta tastes like.",
-    "share_trigger": "Share with the coffee snob in your life who thinks instant can't be gourmet.",
     "viral_potential": {
       "scores": {
         "hook": 8.0,
         "curiosity_gap": 7.0,
-        "relatability": 6.0,
+        "relatability": 9.0,
         "shareability": 7.0,
-        "comment_trigger": 8.0,
-        "format_fit": 6.0,
-        "follow_cta": 3.0
+        "comment_trigger": 7.0,
+        "format_fit": 8.0,
+        "follow_cta": 6.0
       },
-      "overall": 6.0,
+      "overall": 7.0,
       "weakest": [
         "follow_cta",
-        "format_fit",
-        "relatability"
+        "curiosity_gap",
+        "shareability",
+        "comment_trigger"
       ],
-      "feedback": "1. Missing follow CTA entirely — add 'Follow @purepantryprovisions for daily coffee truth' before the link. 2. Facebook posts need more conversational, household voice — shorten sentences, add a relatable Indian morning moment (e.g., 'That 7 AM cup before the house wakes up'). 3. Relatability is generic 'instant coffee drinker' — anchor",
+      "feedback": "Hook is strong and personal but the curiosity gap closes too slowly — the Purista reveal arrives late in the body. Shareability and comment trigger rely on generic templates ('Save before grocery run', 'Share with coffee lover') instead of a specific insight from the story (e.g., the crema test, the ingredient-list moment). Follow CTA gives no distinct reason",
       "better_hook": "",
       "passed": false,
       "honesty": [],
       "pass_mark": 8.0
-    },
-    "reel_frames": [
-      {
-        "on_screen": "Close-up: A hand holds a Purity Beans Purista jar. Finger traces the ingredient line: 'Pure Gourmet Robusta — Freeze-Dried Granules — 0% Chicory'. Dark marble surface. Warm amber rim light on glass.",
-        "spoken": "Flip the jar. Read the line. Pure Gourmet Robusta. Freeze-dried. Zero chicory."
-      },
-      {
-        "on_screen": "Split frame. Left: generic instant coffee jar — dark powder pours, dust clouds. Right: Purista jar — golden granules flow clean, no dust. Same hand, same pour. Text overlay: 'Commodity vs Craft'.",
-        "spoken": "Commodity instant hides fillers behind bitterness. Craft freeze-dry keeps the oils. The pour tells you everything."
-      },
-      {
-        "on_screen": "Macro slow-motion: Hot water hits Purista granules in a glass mug. Instant bloom — rich crema forms, swirling amber. Steam rises. No stirring needed. Label visible in background.",
-        "spoken": "Watch the crema form. That's Robusta's natural oils — locked in by freeze-drying, not sprayed on."
-      },
-      {
-        "on_screen": "Founder sits at a kitchen table, Purista jar beside a notebook. He"
-      }
-    ],
-    "editorial_score": {
-      "shareability": 8.0,
-      "saveability": 8.5,
-      "emotion_pull": 8.0,
-      "hook_strength": 9.0,
-      "brand_clarity": 9.5,
-      "overall": 8.6,
-      "verdict": "PASS",
-      "feedback": "Strong betrayal hook stops scroll instantly. Educational body builds authority without competitor bashing. Save trigger is explicit and well-placed. Comment trigger uses identity bait (ROBUSTA) correctly. Reel frame 4 is incomplete"
-    },
-    "editorial_error": "scoring_failed: scoring failed for facebook_post: All LLM providers failed for 'editorial_facebook_post'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
+    }
   },
   "video_prompts": {
     "reel_1": {
@@ -5333,6 +5306,60 @@
         "attempt": 5,
         "rung": "alt_angle",
         "feedback": "viral: score 6.0 < 8.0 (weakest: follow_cta, format_fit, relatability). 1. Missing follow CTA entirely — add 'Follow @purepantryprovisions for daily coffee truth' before the link. 2. Facebook posts need more conversational, household voice — shorten sentences, add a relatable Indian morning moment ("
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The copy relies on a slightly overused 'industry lie' framing that reduces originality. While Purista is correctly identified as freeze-dried pure Robusta with zero chicory, the caption lacks a punchy follow CTA as noted in the editorial feedback, and the transition between educational points feels "
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The content is honest, clear, and accurately represents Purista as freeze-dried pure Robusta with zero chicory. However, the hook is too conversational and slow for a fast-scrolling feed ('Ever notice how...' lacks immediate friction or a strong curiosity gap). To elevate performance, replace the op"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook is too passive ('I used to think...') and feels like a generic essay opening rather than a thumb-stopping pattern interrupt. To increase retention, replace the opening narrative style with a direct confrontation or curiosity gap (e.g., 'Check the back of your coffee jar right now. If it lis"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": ""
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": ""
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "Hook is generic — 'read the label' applies to any coffee brand and fails the 2-second scroll stop test. Per rules, a non-brand-specific hook caps hook_strength at 5. Body is authentic and product-specific (freeze-dried Robusta, zero chicory, ₹509/100g) which drives saveability, but emotion_pull stay"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": ""
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "The hook 'Sunday morning and the house is quiet until...' is too slow and cozy, failing the under-2-second scroll-stopping rule. It lacks immediate punch or a sharp curiosity gap. To fix, re-engineer the hook with a stronger identity or contrast angle (e.g., 'Stop masking bad coffee with sugar. Here"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": ""
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The hook is a generic personal anecdote ('I never realized...') that could belong to any coffee brand — zero pattern interrupt, zero betrayal or curiosity gap. The body drifts into a pleasant but passive Sunday routine story with no stakes, no revelation, and no education about WHY freeze-dried Robu"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.0 < 8.0 (weakest: follow_cta, curiosity_gap, shareability, comment_trigger). Hook is strong and personal but the curiosity gap closes too slowly — the Purista reveal arrives late in the body. Shareability and comment trigger rely on generic templates ('Save before grocery run', 'Share"
       }
     ],
     "threads_post": [
@@ -7844,7 +7871,7 @@
     "asset_count": 39
   },
   "mandatory_regen_rounds": {
-    "facebook_post": 55,
+    "facebook_post": 58,
     "threads_post": 1
   }
 }

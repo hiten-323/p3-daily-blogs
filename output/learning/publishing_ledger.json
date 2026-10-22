@@ -4871,11 +4871,11 @@
       "verified_at": "2026-10-22T06:06:03+00:00"
     },
     "2026-10-22|morning|facebook|pb_9ef5ab5c91": {
-      "attempt_count": 2,
+      "attempt_count": 3,
       "content_date": "2026-10-22",
       "content_id": "pb_9ef5ab5c91",
       "day_number": 294,
-      "error": "prepublish_gate:viral_readiness_failed",
+      "error": "",
       "history": [
         {
           "at": "2026-10-22T07:00:43+00:00",
@@ -4906,23 +4906,40 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-22T11:59:36+00:00",
+          "attempt": 3,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-22T11:59:44+00:00",
+          "attempt": 3,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "494003270464484_122168640326655685",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/posts/122168640326655685",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-10-22T09:36:26+00:00",
+      "last_attempt_at": "2026-10-22T11:59:36+00:00",
       "last_result": {
-        "error": "prepublish_gate:viral_readiness_failed",
-        "success": false
+        "error": "",
+        "success": true
       },
-      "next_retry_at": "2026-10-22T09:36:29+00:00",
+      "last_verification_at": "2026-10-22T11:59:44+00:00",
+      "next_retry_at": null,
       "platform": "facebook",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "494003270464484_122168640326655685",
       "slot": "morning",
-      "status": "FAILED",
-      "updated_at": "2026-10-22T09:36:29+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-22T11:59:43+00:00",
+      "url": "https://www.facebook.com/494003270464484/posts/122168640326655685",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-22T11:59:44+00:00"
     },
     "2026-10-22|morning|instagram_story|pb_9ef5ab5c91": {
       "attempt_count": 1,
