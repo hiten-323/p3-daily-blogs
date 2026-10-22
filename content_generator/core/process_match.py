@@ -264,17 +264,15 @@ def process_match_findings(text: str, featured: str | None = None) -> list[dict]
                         bold_called_freeze = True
                     if not _allows(owner, kind):
                         findings.append(_finding(clause, _reason(kind, owner, owner)))
-                else:
-                    attributions[kind]  # unattributed: empty owner set stays empty
-
     if not claimed:
         return _unique(findings)
 
     dest = _destination(source, featured)
     comparison = "freeze" in claimed and "agglomerated" in claimed
     named = named_slugs(source)
-    if dest and not _destination_ok(
-        dest, claimed, attributions, comparison, bold_called_freeze, named,
+    if dest and not all(
+        _kind_ok(dest, kind, attributions, comparison, bold_called_freeze, named)
+        for kind in claimed
     ):
         kind = next(iter(claimed))
         for item in ("freeze", "granule_process", "agglomerated"):
@@ -312,13 +310,6 @@ def _kind_ok(dest, kind, attributions, comparison, bold_called_freeze, named) ->
     return True
 
 
-def _destination_ok(dest, claimed, attributions, comparison, bold_called_freeze, named) -> bool:
-    return all(
-        _kind_ok(dest, kind, attributions, comparison, bold_called_freeze, named)
-        for kind in claimed
-    )
-
-
 def _unique(findings: list[dict]) -> list[dict]:
     seen: set[tuple[str, str]] = set()
     unique: list[dict] = []
@@ -345,12 +336,7 @@ def rewrite_process_text(text: str) -> str:
 
 
 def _drop_unowned_agglomerated(text: str, featured: str | None) -> str:
-    """A freeze-dried jar cannot carry a stray agglomerated claim.
-
-    "Freeze-dried and agglomerated variants" on Purica becomes freeze-dried
-    only. A line that names Bold or Prima keeps its agglomerated wording so a
-    real comparison can still link Bold.
-    """
+    """Drop stray agglomerated wording on a freeze-dried jar that names no Bold or Prima."""
     if not text or not _AGGLO_WORD.search(text):
         return text
     dest = _destination(text, featured) or _featured_slug(featured)
@@ -381,25 +367,119 @@ def _drop_unowned_agglomerated(text: str, featured: str | None) -> str:
     return re.sub(r"\ue000(\d+)\ue001", restore, held).strip()
 
 
+_MIXED_PROCESS = re.compile(
+    r"\bagglomerat\w*\s+or\s+freeze[\s-]?dr\w*\b|\bfreeze[\s-]?dr\w*\s+or\s+agglomerat\w*\b",
+    re.I,
+)
+_PROCESS_WORD = re.compile(
+    r"freeze[\s-]?dr(?:ied|ying)|\bagglomerat\w*\b|" + _GRANULE_PROCESS.pattern, re.I,
+)
+_DEST_LINE = {
+    "bold": "Bold is agglomerated pure coffee.",
+    "prima": "Prima is agglomerated pure Arabica, not freeze-dried.",
+    "ultra_blend": "Ultra Blend is 70% coffee and 30% chicory.",
+    "purica": "Purica is freeze-dried pure Arabica.",
+    "purista": "Purista is freeze-dried pure Robusta.",
+    "gourmet_duo": "Gourmet Duo is freeze-dried Purica and Purista.",
+    "gourmet_duo_mini": "Gourmet Duo Mini is freeze-dried Purica and Purista.",
+    "variety_box": "The Variety Box includes freeze-dried Purica and Purista and agglomerated Bold.",
+}
+_SCORE_KEYS = {"editorial_score", "editorial_error", "viral_potential", "gate_rejection", "fallback_ladder"}
+
+
+def _sentences(text: str) -> list[str]:
+    from content_generator.core.product_truth import _SENTENCE
+    return [part.strip() for part in _SENTENCE.split(text) if part and part.strip()]
+
+
+def _bad(text: str, featured: str | None) -> bool:
+    return bool(process_match_findings(text, featured))
+
+
+def _with_line(text: str, line: str) -> str:
+    text = (text or "").strip()
+    if not line or line.lower() in text.lower():
+        return text
+    if text and text[-1] not in ".!?":
+        text += "."
+    return f"{text} {line}".strip()
+
+
+def _fix_sentence(sentence: str) -> str:
+    if _BOX_COPULA.search(sentence):
+        return _DEST_LINE["variety_box"]
+    if _MIXED_PROCESS.search(sentence):
+        return _MIXED_PROCESS.sub(
+            "Bold is agglomerated pure coffee, and Purica and Purista are freeze-dried", sentence,
+        )
+    from content_generator.core.product_truth import _CLAUSE, _locally_negated
+    for clause in _CLAUSE.split(sentence):
+        clause = clause.strip()
+        if not clause:
+            continue
+        alone = {slug for _start, _end, slug in _token_hits(clause)}
+        for kind, match in _spans(clause):
+            if _locally_negated(clause, match.start()):
+                continue
+            owner = _owner(clause, match) or (next(iter(alone)) if len(alone) == 1 else "")
+            if owner and not _allows(owner, kind):
+                return _DEST_LINE.get(owner) or sentence
+    return sentence
+
+
+def comply_process_text(text: str, featured: str | None = None) -> str:
+    """Rewrite process wording until the gate is clean. A miss still fails closed."""
+    if not isinstance(text, str) or not text.strip():
+        return text
+    dest = _destination(text, featured) or _featured_slug(featured)
+
+    def polish(value: str) -> str:
+        return _drop_unowned_agglomerated(rewrite_process_text(value), featured)
+
+    updated = polish(text)
+    if not _bad(updated, featured):
+        return updated
+    if updated.strip().startswith("#") or updated.count("#") >= 2:
+        cleaned = re.sub(r"\s{2,}", " ", _PROCESS_WORD.sub("", updated)).strip()
+        if cleaned and not _bad(cleaned, featured):
+            return cleaned
+    updated = polish(" ".join(_fix_sentence(part) for part in _sentences(updated)))
+    if not _bad(updated, featured):
+        return updated
+    if dest == "ultra_blend":
+        updated = " ".join(part for part in _sentences(updated) if not _spans(part)).strip()
+        return _with_line(updated, _DEST_LINE["ultra_blend"]) if "70% coffee" not in updated else updated
+    if dest in _AGGLO_SLUGS:
+        updated = polish(_with_line(updated, _DEST_LINE[dest]))
+        if not _bad(updated, featured):
+            return updated
+    updated = " ".join(part for part in _sentences(updated) if not _bad(part, featured)).strip()
+    line = _DEST_LINE.get(dest, "")
+    if line and not _bad(_with_line(updated, line), featured):
+        return _with_line(updated, line)
+    if line and _bad(updated, featured) and not _bad(line, featured):
+        return line
+    return updated.strip() or text
+
+
 def align_process_piece(piece: dict, featured: str | None = None) -> dict:
-    """Rewrite direct false process labels on one asset before the gate runs."""
+    """Rewrite process labels on one asset before the gate runs."""
     if not isinstance(piece, dict):
         return piece
-    skip = {"editorial_score", "editorial_error", "viral_potential", "gate_rejection", "fallback_ladder"}
 
     def walk(node):
         if isinstance(node, dict):
             for key, value in list(node.items()):
-                if key in skip:
+                if key in _SCORE_KEYS:
                     continue
                 if isinstance(value, str):
-                    node[key] = _drop_unowned_agglomerated(rewrite_process_text(value), featured)
+                    node[key] = comply_process_text(value, featured)
                 elif isinstance(value, (dict, list)):
                     walk(value)
         elif isinstance(node, list):
             for index, item in enumerate(node):
                 if isinstance(item, str):
-                    node[index] = _drop_unowned_agglomerated(rewrite_process_text(item), featured)
+                    node[index] = comply_process_text(item, featured)
                 else:
                     walk(item)
 

@@ -138,6 +138,27 @@ def is_mandatory(target: str) -> bool:
     return TARGETS[target][0] in MANDATORY_SLOTS
 
 
+def labels_to_regen(todo: list[str], approved: dict | None, records: list[dict] | None) -> list[str]:
+    """Mandatory unapproved labels, plus prepublish_gate SKIPPED or FAILED rows."""
+    approved, queued = approved or {}, []
+    for name, (slot, platforms, labs, _hour) in TARGETS.items():
+        if name not in todo:
+            continue
+        labels = labs[:2] if name == "ig_reel" else labs[:1]
+        mandatory = is_mandatory(name) and not any(label in approved for label in labs)
+        gate = any(
+            r.get("slot") == slot and str(r.get("platform") or "").lower() in platforms
+            and str(r.get("status") or "") in ("SKIPPED", "FAILED")
+            and str(r.get("error") or "").startswith("prepublish_gate:")
+            for r in records or [])
+        if not mandatory and not gate:
+            continue
+        for label in labels:
+            if label not in queued and (mandatory or label not in approved):
+                queued.append(label)
+    return queued
+
+
 def prioritise(todo: list[str]) -> list[str]:
     """Mandatory morning/evening targets first, in TARGETS order."""
     return [t for t in todo if is_mandatory(t)] + [t for t in todo if not is_mandatory(t)]
@@ -392,21 +413,18 @@ def main() -> int:
     from content_generator.scheduler.daily import _do_editorial
     from content_generator.pipeline.generator import save_content
     import time as _time
-    mandatory_need = [l for t in todo if is_mandatory(t) and not any(x in approved for x in TARGETS[t][2])
-                      for l in (TARGETS[t][2][:2] if t == "ig_reel" else TARGETS[t][2][:1])]
+    regen_need = labels_to_regen(todo, approved, records)
     deadline = _time.monotonic() + MANDATORY_BUDGET_S
-    rounds = 0
-    while mandatory_need and _time.monotonic() < deadline:
-        rounds += 1
-        log.warning("MANDATORY slot regen round %d (from scratch): %s", rounds, mandatory_need)
-        mark_fresh(content, mandatory_need)
-        _do_editorial(content, only=set(mandatory_need))
+    while regen_need and _time.monotonic() < deadline:
+        log.warning("Gate regen (from scratch, 8.0 unchanged): %s", regen_need)
+        mark_fresh(content, regen_need)
+        _do_editorial(content, only=set(regen_need))
         save_content(content)
         approved = _approved(content)
-        mandatory_need = [l for l in mandatory_need
-                          if not any(x in approved for t in todo if l in TARGETS[t][2] for x in TARGETS[t][2])]
-    need = [l for l in need if l not in approved and not any(
-        l in TARGETS[t][2] and is_mandatory(t) for t in todo)]
+        regen_need = [l for l in regen_need
+                      if not any(x in approved for t in todo if l in TARGETS[t][2] for x in TARGETS[t][2])]
+    handled = set(labels_to_regen(todo, {}, records))
+    need = [l for l in need if l not in approved and l not in handled]
     if need:
         _do_editorial(content, only=set(need))
         save_content(content)

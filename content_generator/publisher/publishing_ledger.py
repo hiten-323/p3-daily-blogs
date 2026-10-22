@@ -256,7 +256,14 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
         error = str(result.get("error") or result.get("message") or "")
         success = bool(result.get("success"))
         not_attempted = bool(result.get("skipped") or result.get("held") or result.get("attempted") is False)
-        if not_attempted and not success:
+        gate_hold = error.lower().startswith("prepublish_gate:")
+        if gate_hold and not success:
+            # The platform was never called. Record a due failure so
+            # retry-unposted regenerates the piece. A terminal SKIPPED row
+            # (Oct 22 threads product_truth) had no next_retry_at and the
+            # generate slot never came back.
+            status, next_retry = "FAILED", _iso(_now())
+        elif not_attempted and not success:
             # A deliberate hold/skip (e.g. no native Threads copy or no native video)
             # is not a failed delivery and must not enter the automatic retry queue.
             status, next_retry = "SKIPPED", None
