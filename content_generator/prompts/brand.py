@@ -72,7 +72,9 @@ def brand_block() -> str:
         f"\n"
         f"BANNED PHRASES: \"transform your mornings\" / \"elevate your experience\" / "
         f"\"perfect cup\" / \"fuel your day\" / \"game changer\" / \"level up\" / "
-        f"\"discover the difference\" / \"premium quality\"\n"
+        f"\"discover the difference\" / \"premium quality\". "
+        f"Never write fresh, freshly, freshness, fresher, freshest, lab tested, lab-tested, or zero acidity. "
+        f"The word refresh is allowed.\n"
         f"Return ONLY valid JSON — no markdown fences, no text outside the JSON object."
     )
 
