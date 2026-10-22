@@ -120,7 +120,9 @@ def resolve_page_access_token(page_id: str, candidate_token: str) -> str:
 
 def post_content(content: dict, day: int = 0,
                  preferred_image: str | None = None,
-                 message_override: str | None = None) -> dict:
+                 message_override: str | None = None,
+                 mirror_piece: dict | None = None,
+                 mirror_label: str | None = None) -> dict:
     """
     Post today's content to Facebook Page.
 
@@ -134,11 +136,28 @@ def post_content(content: dict, day: int = 0,
         logger.info("[facebook] Not configured — FACEBOOK_PAGE_ID or token missing")
         return {"success": False, "post_id": "", "url": "", "error": "not_configured"}
 
-    from content_generator.publisher.prepublish_gate import authorize_publish
-    gate = authorize_publish(content, "facebook")
-    if not gate["allowed"]:
-        logger.warning("[facebook] Pre-publish gate blocked content: %s", gate["reason"])
-        return {"success": False, "post_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
+    if message_override:
+        # Evening copies a reel/post that already cleared the bar. The
+        # facebook_post object is a different piece and is not a bypass.
+        if not isinstance(mirror_piece, dict) or not mirror_piece:
+            return {"success": False, "post_id": "", "url": "",
+                    "error": "prepublish_gate:mirror_source_missing"}
+        from content_generator.core.publish_bar import quality_block, reason_code
+        block = quality_block(mirror_piece, mirror_label or "")
+        if block:
+            code = reason_code(block)
+            return {"success": False, "post_id": "", "url": "",
+                    "error": "prepublish_gate:" + code, "quality": block}
+        from content_generator.core.product_truth import product_truth_findings
+        if product_truth_findings(message_override):
+            return {"success": False, "post_id": "", "url": "",
+                    "error": "prepublish_gate:product_truth_failed"}
+    else:
+        from content_generator.publisher.prepublish_gate import authorize_publish
+        gate = authorize_publish(content, "facebook")
+        if not gate["allowed"]:
+            logger.warning("[facebook] Pre-publish gate blocked content: %s", gate["reason"])
+            return {"success": False, "post_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
 
 
     page_id = os.getenv("FACEBOOK_PAGE_ID", "")

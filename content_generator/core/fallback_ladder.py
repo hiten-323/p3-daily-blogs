@@ -166,6 +166,15 @@ def scratch_base(piece: dict) -> dict:
     return {k: piece[k] for k in _SCRATCH_KEEP if isinstance(piece, dict) and k in piece}
 
 
+def _lesson_suffix(label: str) -> str:
+    try:
+        from content_generator.core.obstacle_lessons import prompt_block
+        extra = prompt_block(label)
+    except Exception:
+        extra = ""
+    return f"\n\n{extra}" if extra else ""
+
+
 def scratch_prompt(label: str, piece: dict, feedback: str, threshold: float, brand: str) -> str:
     """Prompt for a brand-new piece. The rejected copy is NOT included, only its shape."""
     if label == "facebook_post":
@@ -191,4 +200,4 @@ def scratch_prompt(label: str, piece: dict, feedback: str, threshold: float, bra
         "Keep STOP, CURIOSITY, VALUE, TRUST, FOLLOW, BUY. End with 'Follow @purepantryprovisions' and "
         "'Shop p3online.in'. Do not include an editorial_score.\n"
         "Return ONLY the JSON object."
-    )
+    ) + _lesson_suffix(label)

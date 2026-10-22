@@ -142,9 +142,18 @@ def prompt_block(label: str, sku: str = "", day: int = 0, *, variant: int = 0) -
         ultra_positive_story(sku),
         _process_match_rule(),
         _viral_hooks(label),
+        _obstacle_lessons(label),
     ]).strip()
 
 
 def _viral_hooks(label: str) -> str:
     from content_generator.core.viral_gate import hook_block
     return hook_block(label)
+
+
+def _obstacle_lessons(label: str) -> str:
+    try:
+        from content_generator.core.obstacle_lessons import prompt_block as lessons
+        return lessons(label)
+    except Exception:
+        return ""

@@ -23,6 +23,7 @@ def _bold_post():
         "body": "Bold is pure coffee with zero chicory.",
         "cta": "Send this to someone who reads the jar.",
         "editorial_score": {"overall": 9.0},
+        "viral_potential": {"passed": True, "overall": 8.4, "honesty": []},
     }
 
 

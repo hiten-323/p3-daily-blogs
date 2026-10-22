@@ -29,6 +29,7 @@ def test_threads_over_limit_fails_closed_even_with_score(monkeypatch):
         "hook": "Why coffee labels matter",
         "body": "Check the ingredient list.",
         "editorial_score": {"overall": 9.0},
+        "viral_potential": {"passed": True, "overall": 8.4, "honesty": []},
     }
     result = authorize_publish({"threads_post": piece}, "threads")
     assert result["allowed"] is False
@@ -96,6 +97,7 @@ def test_bold_zero_chicory_is_not_a_product_truth_failure(monkeypatch):
         "body": "Bold is pure coffee with zero chicory.",
         "cta": "Send this to someone who reads the jar.",
         "editorial_score": {"overall": 9.0},
+        "viral_potential": {"passed": True, "overall": 8.4, "honesty": []},
     }
     result = authorize_publish({"facebook_post": piece}, "facebook")
     assert result["reason"] != "product_truth_failed"

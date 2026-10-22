@@ -142,6 +142,15 @@ def post_content(content: dict, day: int = 0) -> dict:
         return {"success": False, "attempted": False, "skipped": True,
                 "post_id": "", "url": "", "error": "product_truth_failed"}
 
+    from content_generator.core.publish_bar import quality_block, reason_code
+    linkedin_piece = content.get("linkedin_post") if isinstance(content.get("linkedin_post"), dict) else {}
+    block = quality_block(linkedin_piece, "linkedin_post")
+    if block:
+        code = reason_code(block)
+        logger.warning("[linkedin] Quality bar held the post: %s", block)
+        return {"success": False, "attempted": False, "skipped": True,
+                "post_id": "", "url": "", "error": "prepublish_gate:" + code}
+
     # Try to attach an image (carousel cover or first reel thumbnail)
     image_path = _find_image(content)
     image_urn  = None

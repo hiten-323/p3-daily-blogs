@@ -172,6 +172,17 @@ def test_editorial_pass_repairs_day_275_without_zero_scores(monkeypatch):
             return _score(8.6)
         if str(label).startswith("editorial_"):
             return _score(8.6)
+        if str(label).startswith("viral_"):
+            return {
+                "scores": {
+                    "hook": 8.4, "curiosity_gap": 8.4, "relatability": 8.4,
+                    "shareability": 8.4, "comment_trigger": 8.4, "format_fit": 8.4,
+                    "follow_cta": 8.4,
+                },
+                "overall": 8.4,
+                "feedback": "Specific jar check, loop closed.",
+                "better_hook": "Read the label before the kettle boils.",
+            }
         if label == "regen_reel_1":
             frames = [dict(frame) for frame in content["reels"][0]["frames"]]
             while len(frames) < 6:

@@ -10,6 +10,15 @@ FB_HASHTAGS = "#PurityBeans #IndianCoffee #MorningCoffee #CoffeeLovers"
 NATIVE_KEYS = ("angle", "hook", "body", "community_question", "cta", "hashtags")
 
 
+def _lesson_suffix(label: str) -> str:
+    try:
+        from content_generator.core.obstacle_lessons import prompt_block
+        extra = prompt_block(label)
+    except Exception:
+        extra = ""
+    return f"\n\n{extra}" if extra else ""
+
+
 def native_contract() -> str:
     """Shape the model must return. Article words stay above the key list.
 
@@ -29,11 +38,12 @@ def native_contract() -> str:
         "cta: Follow @purepantryprovisions and include the website. "
         "hashtags: a short set. "
         "The body must end on a complete sentence. "
-        "Name Purity Beans and include one true brand fact for the featured jar. "
+        "Name Purity Beans and the featured jar in the first two sentences, and include one true brand fact. "
         "Purista is freeze-dried pure Robusta. Purica is freeze-dried pure Arabica. "
-        "Bold is agglomerated pure coffee, not freeze-dried. "
+        "Bold is agglomerated pure coffee. You must not call Bold freeze-dried. "
         "Ultra Blend is 70% coffee and 30% chicory. Never call that jar no chicory, and never use a percent-purity claim. "
-        "Do not name a process for Ultra Blend. "
+        "Do not name a process for Ultra Blend. Never write the word fully. "
+        "Close the curiosity loop before the CTA. The follow line needs a specific reason from this post, not a generic daily-tips line. "
         "Use only catalog prices. Do not invent a cup count."
     )
 
@@ -68,7 +78,7 @@ def regeneration_prompt(piece: dict, feedback: str, threshold: float, brand: str
         "If the featured jar is anything else, omit the figure.\n"
         f"{native_contract()}\n"
         "Do not include an editorial_score. Return ONLY the JSON object."
-    )
+    ) + _lesson_suffix("facebook_post")
 
 
 _ARTICLE_KEYS = (
@@ -190,21 +200,26 @@ Generate ONE original, relatable, community-engaging Facebook post for Pure Pant
 
 COMMUNITY ANGLE: [{angle[0]}] — {angle[1]}
 
+This is a Facebook post, not a blog or an article. Do not write headings, an introduction, or a long explainer.
+Name the featured jar in the first two sentences and close the loop before the CTA.
+Bold is agglomerated pure coffee. You must not call Bold freeze-dried.
+Never write the word fully. Never use a generic follow line.
+
 PLATFORM INTENT (FACEBOOK 2026):
 - Audience: Indian families, professionals, and home coffee drinkers (25-50).
 - Tone: Warm, relatable, authentic, conversational. Zero LinkedIn corporate jargon. Zero hard sales infomercials.
 - Distribution Levers: Comments, shares with friends/family, and dwell time.
 - Structure:
-  1. Relatable Opening Hook: Connect with a shared Indian coffee experience or common morning habit.
-  2. Insight / Story: A brewing tip, a household coffee moment, or what makes today's jar taste the way it does (never attack chicory).
+  1. Relatable Opening Hook: Connect with a shared Indian coffee experience or common morning habit, and name today's jar.
+  2. Insight: One specific check (the crema, the ingredient list, the water temperature) that pays off the hook.
   3. Conversation Starter: A question that compels people to comment their own habits or tag a family member.
-  4. Follow & Explore CTA: Invite following the page for daily coffee truths, with website link.
+  4. Follow CTA: A specific reason to follow, taken from this post, plus the website.
 
 {{
   "angle": "{angle[0]}",
-  "hook": "Relatable 1-line hook that connects with everyday Indian coffee drinkers.",
-  "body": "150-250 words. Warm, engaging, storytelling style. Discusses today's jar on its own merits, or brewing tips that anyone can try at home. Clear paragraph breaks.",
+  "hook": "Relatable 1-line hook that names today's jar for everyday Indian coffee drinkers.",
+  "body": "150-250 words. Warm and spoken, not a blog. Today's jar is named in the first two sentences. One concrete check pays off the hook. Clear paragraph breaks.",
   "community_question": "A friendly, conversational question that asks about their morning routine, favorite mug, or family coffee debate.",
-  "cta": "Follow our page for daily honest coffee tips. Discover pure coffee at {WEBSITE_URL}",
+  "cta": "Follow @purepantryprovisions for the next jar-label check. Discover pure coffee at {WEBSITE_URL}",
   "hashtags": "{FB_HASHTAGS}"
 }}"""

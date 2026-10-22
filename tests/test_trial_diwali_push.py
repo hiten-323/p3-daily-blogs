@@ -229,6 +229,8 @@ def test_publish_skips_until_gates_and_provenance_pass(prov, monkeypatch):
         "poster_path": poster,
         "visual_gate": {"passed": True},
         "variety_gate": {"passed": True},
+        "editorial_score": {"overall": 9.0, "verdict": "PASS"},
+        "viral_potential": {"passed": True, "overall": 8.4, "honesty": []},
     })
     posted = {}
 

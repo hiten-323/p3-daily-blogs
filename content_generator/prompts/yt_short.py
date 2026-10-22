@@ -26,6 +26,8 @@ ABSOLUTE RULES:
 - '{WEBSITE_URL}' MUST appear in cta and description
 - scenes.on_screen = text displayed on screen only (max 4 words per scene)
 - scenes.spoken = voiceover only, no production notes
+- Every scene object must include scene, type, duration_s, on_screen, spoken, and visual_direction. Do not omit any of those fields.
+- Bold is agglomerated pure coffee. You must not call Bold freeze-dried. Purica and Purista are freeze-dried. Do not name a process for Ultra Blend. Never write the word fully.
 
 {{
   "product": "{product}",
