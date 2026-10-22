@@ -1119,7 +1119,10 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                 slot[idx] = piece
             else:
                 content[key] = piece
-        if featured and not piece.get("featured_product"):
+        if featured:
+            # The publish gate judges process claims against the day's jar.
+            # A piece-level SKU (Purica on a Bold day) used to pass here and
+            # then fail prepublish forever.
             piece["featured_product"] = featured
 
         for attempt in range(attempts_allowed):
@@ -1131,7 +1134,13 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
             ensure_structural_fields(piece, label)
             omit_per_cup_for_non_ultra(piece, featured)
             from content_generator.core.process_match import align_process_piece
+            from content_generator.core.product_truth import piece_copy_text
+            before_copy = piece_copy_text(piece)
             align_process_piece(piece, featured)
+            if piece_copy_text(piece) != before_copy:
+                # The measured score belonged to the non-compliant draft.
+                piece.pop("editorial_score", None)
+                piece.pop("viral_potential", None)
             schema_issues = _schema_issues(label, piece)
             is_copy_ok, copy_issues = _validate_piece_copy(label, piece)
             feedback = ""

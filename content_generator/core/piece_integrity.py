@@ -341,6 +341,40 @@ def _threads_copy(node) -> str:
     return ""
 
 
+def promote_facebook_copy(piece: dict) -> dict:
+    """Lift nested Facebook copy onto hook and body so the 8.0 scorer can read it.
+
+    Models often return ``{"facebook_post": {"body": "..."}}`` with no top-level
+    hook or body. Brand validation then joins the metadata strings, reports
+    missing brand facts, and the editorial score is never measured.
+    """
+    if not isinstance(piece, dict):
+        return piece
+    if any(isinstance(piece.get(key), str) and str(piece.get(key)).strip()
+           for key in ("hook", "body", "text", "caption", "content")):
+        return piece
+    nested = piece.get("facebook_post")
+    hook, body = "", ""
+    if isinstance(nested, str) and nested.strip():
+        body = nested.strip()
+    elif isinstance(nested, dict):
+        hook = str(nested.get("hook") or nested.get("headline") or "").strip()
+        body = str(
+            nested.get("body") or nested.get("text") or nested.get("content") or nested.get("caption") or ""
+        ).strip()
+    if not body and not hook:
+        return piece
+    if hook:
+        piece["hook"] = hook
+    if body:
+        piece["body"] = body
+        if not str(piece.get("hook") or "").strip():
+            opening = body.strip().split("\n", 1)[0].strip()
+            end = re.search(r"[.!?]", opening)
+            piece["hook"] = opening[: end.end()] if end else opening[:180]
+    return piece
+
+
 def ensure_structural_fields(piece: dict, label: str = "") -> dict:
     """Fill structural gaps in place. Creative copy that is already present stays."""
     if not isinstance(piece, dict):
@@ -358,6 +392,8 @@ def ensure_structural_fields(piece: dict, label: str = "") -> dict:
     if label == "threads_post" or str(piece.get("asset_type") or "") == "threads_post":
         promote_threads_text(piece)
         _ensure_threads_hook_line(piece)
+    if label == "facebook_post" or str(piece.get("asset_type") or "") == "facebook_post":
+        promote_facebook_copy(piece)
     _ensure_engagement(piece)
     complete_editorial_score(piece)
     return piece
