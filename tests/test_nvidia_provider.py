@@ -327,6 +327,51 @@ def test_timeout_tries_the_next_model(monkeypatch, caplog):
     assert "trying next configured model google/gemma-4-31b-it" in caplog.text
 
 
+def test_ultra_disables_reasoning_and_reads_reasoning_content(monkeypatch):
+    """Nemotron Ultra thinks by default and, with a short max_tokens, fills the
+    budget with the trace. Ask it not to, and still read a JSON answer that
+    landed in reasoning_content instead of content."""
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv("NVIDIA_MODEL", "nvidia/nemotron-3-ultra-550b-a55b")
+    seen = {}
+    answer = (
+        "The user wants me to score a YouTube Short piece.\n"
+        '{"scores": {"hook": 9}, "overall": 8.7}'
+    )
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen["json"] = json
+        return _Response(200, {
+            "choices": [{"message": {"content": None, "reasoning_content": answer}}],
+            "usage": {"prompt_tokens": 10, "completion_tokens": 20},
+        })
+
+    monkeypatch.setattr(nvidia._http, "post", post)
+    text, usage = nvidia.call("Score this short.", 700)
+    assert seen["json"]["stream"] is False
+    assert seen["json"]["reasoning_effort"] == "none"
+    assert seen["json"]["chat_template_kwargs"]["enable_thinking"] is False
+    assert text == answer
+    assert usage["model"] == "nvidia/nemotron-3-ultra-550b-a55b"
+
+
+def test_non_reasoning_nvidia_model_does_not_send_reasoning_controls(monkeypatch):
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv("NVIDIA_MODEL", "google/gemma-4-31b-it")
+    seen = {}
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen["json"] = json
+        return _Response(200, _ok_body())
+
+    monkeypatch.setattr(nvidia._http, "post", post)
+    text, _usage = nvidia.call("Write JSON.", 40)
+    assert text == '{"ok": true}'
+    assert seen["json"]["stream"] is False
+    assert "reasoning_effort" not in seen["json"]
+    assert "chat_template_kwargs" not in seen["json"]
+
+
 def test_nvidia_only_satisfies_the_key_check(monkeypatch):
     from content_generator.scheduler.health_monitor import _check_api_keys
 

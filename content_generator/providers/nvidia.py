@@ -24,6 +24,8 @@ import time
 
 import requests as _http
 
+from content_generator.providers.openai_compat import completion_body, message_text
+
 logger = logging.getLogger(__name__)
 
 _BASE = "https://integrate.api.nvidia.com/v1"
@@ -141,6 +143,17 @@ def _redact(text: str) -> str:
     return _NVAPI.sub("nvapi-***", out)
 
 
+def _reasoning_model(model: str) -> bool:
+    """Ultra (and other explicit reasoning ids) think by default.
+
+    On 2026-10-23 viral_yt_short gave nemotron-3-ultra max_tokens=700. The
+    hosted default reasoning_effort is high, so the whole budget came back as
+    'The user wants me to score...' and the JSON score never started.
+    """
+    name = (model or "").lower()
+    return "ultra" in name or "reason" in name
+
+
 def _call_model(prompt: str, max_tokens: int, model: str, headers: dict) -> tuple[str | None, dict]:
     """One configured model, including the transient-error backoff."""
     payload = {
@@ -148,7 +161,12 @@ def _call_model(prompt: str, max_tokens: int, model: str, headers: dict) -> tupl
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.92,
         "max_tokens": max_tokens,
+        # The Ultra API defaults stream to true. We parse one JSON body.
+        "stream": False,
     }
+    if _reasoning_model(model):
+        payload["reasoning_effort"] = "none"
+        payload["chat_template_kwargs"] = {"enable_thinking": False}
     attempts = len(_BACKOFF_S) + 1
     last_failure: dict = {"status_code": 0, "model": model, "error": ""}
 
@@ -164,8 +182,8 @@ def _call_model(prompt: str, max_tokens: int, model: str, headers: dict) -> tupl
 
         if resp.status_code == 200:
             try:
-                body = resp.json()
-                text = body["choices"][0]["message"]["content"]
+                body = completion_body(resp)
+                text = message_text(body["choices"][0]["message"])
             except (KeyError, IndexError, TypeError, ValueError) as e:
                 logger.warning("NVIDIA %s returned malformed success payload: %s", model, e)
                 return None, {

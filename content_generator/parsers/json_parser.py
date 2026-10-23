@@ -2,6 +2,11 @@
 JSON extraction with json_repair as primary strategy, multi-strategy fallback.
 json_repair is an optional dependency — if not installed, falls back to
 regex-based extraction with trailing-comma repair.
+
+Reasoning models (Nemotron Ultra on 2026-10-23) put a think trace in front of
+the score object, and the trace itself may contain a brace example. The answer
+is the last JSON object outside that trace. A trace with no object is not a
+score: callers must keep holding the piece.
 """
 import re
 import json
@@ -17,6 +22,11 @@ except ImportError:
     _json_repair = None
     _HAS_JSON_REPAIR = False
     logger.debug("json_repair not installed — using built-in fallback parser")
+
+_CLOSED_REASONING = re.compile(
+    r"<(?:think|thinking|reasoning)\b[^>]*>[\s\S]*?</(?:think|thinking|reasoning)>",
+    re.I,
+)
 
 
 def _sanitize_control_chars(text: str) -> str:
@@ -37,40 +47,76 @@ def _sanitize_control_chars(text: str) -> str:
     return ''.join(result)
 
 
-def _legacy_extract(raw: str) -> dict:
-    """
-    Regex-based extraction — three strategies in order:
-    1. Direct parse
-    2. Strip markdown fences
-    3. Outermost { ... } with trailing-comma repair
-    """
-    cleaned = raw.strip()
+def _strip_closed_reasoning(text: str) -> str:
+    """Drop finished think/reasoning blocks. An unclosed trace is left intact
+    so a truncated reply still fails closed instead of losing the only clue."""
+    return _CLOSED_REASONING.sub("", text)
 
+
+def _top_level_objects(text: str) -> list[str]:
+    """Balanced top-level {...} slices, ignoring braces inside strings."""
+    objects: list[str] = []
+    start = None
+    depth = 0
+    in_str = escape = False
+    for i, ch in enumerate(text):
+        if in_str:
+            if escape:
+                escape = False
+            elif ch == "\\":
+                escape = True
+            elif ch == '"':
+                in_str = False
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch == "{":
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == "}" and depth:
+            depth -= 1
+            if depth == 0 and start is not None:
+                objects.append(text[start:i + 1])
+                start = None
+    return objects
+
+
+def _loads_object(text: str) -> dict | None:
+    cleaned = _sanitize_control_chars(text.strip())
+    if not cleaned:
+        return None
     try:
-        return json.loads(_sanitize_control_chars(cleaned))
+        result = json.loads(cleaned)
     except json.JSONDecodeError:
-        pass
+        if not _HAS_JSON_REPAIR:
+            return None
+        try:
+            result = _json_repair.loads(cleaned)
+        except Exception:
+            return None
+    return result if isinstance(result, dict) else None
 
-    fence = re.search(r'```(?:json)?\s*([\s\S]*?)```', cleaned)
+
+def _extract_from(text: str) -> dict | None:
+    cleaned = text.strip()
+    if not cleaned:
+        return None
+    direct = _loads_object(cleaned)
+    if direct is not None:
+        return direct
+    fence = re.search(r"```(?:json)?\s*([\s\S]*?)```", cleaned)
     if fence:
-        try:
-            return json.loads(_sanitize_control_chars(fence.group(1).strip()))
-        except json.JSONDecodeError:
-            pass
-
-    match = re.search(r'\{[\s\S]*\}', cleaned)
-    if match:
-        candidate = _sanitize_control_chars(match.group(0))
-        candidate = re.sub(r',\s*([}\]])', r'\1', candidate)
-        try:
-            return json.loads(candidate)
-        except json.JSONDecodeError as e:
-            raise json.JSONDecodeError(
-                f"Fallback extraction failed: {e}. First 400 chars: {raw[:400]}",
-                candidate, e.pos,
-            ) from e
-
-    raise ValueError(f"No JSON object found. First 300 chars: {raw[:300]}")
+        fenced = _loads_object(fence.group(1).strip())
+        if fenced is not None:
+            return fenced
+    # Last object: reasoning models put scratch JSON in the trace and the
+    # real score after it. A greedy first-brace match joins those and fails.
+    for candidate in reversed(_top_level_objects(cleaned)):
+        parsed = _loads_object(candidate)
+        if parsed is not None:
+            return parsed
+    return None
 
 
 def extract(raw: str) -> dict:
@@ -79,14 +125,15 @@ def extract(raw: str) -> dict:
     Uses json_repair if available (handles malformed JSON automatically),
     otherwise falls back to the legacy multi-strategy extractor.
     """
-    if _HAS_JSON_REPAIR:
-        try:
-            result = _json_repair.loads(raw)
-            if isinstance(result, dict):
-                return result
-            # json_repair may return a list for malformed input — handle it
-            logger.warning("json_repair returned non-dict — falling back to legacy extractor")
-        except Exception as e:
-            logger.warning("json_repair failed (%s) — falling back to legacy extractor", e)
-
-    return _legacy_extract(raw)
+    if not isinstance(raw, str):
+        raw = "" if raw is None else str(raw)
+    stripped = _strip_closed_reasoning(raw)
+    seen: list[str] = []
+    for text in (stripped, raw):
+        if text in seen:
+            continue
+        seen.append(text)
+        found = _extract_from(text)
+        if found is not None:
+            return found
+    raise ValueError(f"No JSON object found. First 300 chars: {raw[:300]}")
