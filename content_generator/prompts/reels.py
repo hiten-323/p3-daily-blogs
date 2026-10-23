@@ -38,7 +38,7 @@ def build(reel_id: str, arch: tuple, time_slot: str,
             "Do not attack chicory and never compare zero-chicory jars with Ultra Blend."
         )
 
-    return f"""{brand_block()}
+    prompt = f"""{brand_block()}
 
 Generate ONE complete publish-ready Instagram Reel for Purity Beans. Return a single JSON object.
 
@@ -85,11 +85,11 @@ ABSOLUTE RULES:
   "hook_spoken": "First 3 spoken words — mid-action, never Hey guys. MUST NOT repeat hook_text word-for-word: the on-screen line and the spoken line do different jobs. On-screen is what they READ in silence; spoken is what they HEAR. Together they should say more than either alone.",
   "hook_text_overlay": "The on-screen hook — 4-6 words, different wording from hook_spoken",
   "frames": [
-    {{"on_screen": "4 WORDS MAX ALL CAPS", "spoken": "8-12 words expanding the hook with a real Indian detail"}},
-    {{"on_screen": "THE PROBLEM", "spoken": "What most Indians drink without knowing — specific, not statistical"}},
-    {{"on_screen": "THE TWIST", "spoken": "The thing they did not expect — contrarian, relatable"}},
-    {{"on_screen": "THE LABEL", "spoken": "{villain_spoken}"}},
-    {{"on_screen": "PURITY BEANS FIX", "spoken": "Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee."}},
+    {{"on_screen": "4 WORDS MAX ALL CAPS", "spoken": "Open on a specific surprising moment. Never 'Most people never' or 'Most people don't'."}},
+    {{"on_screen": "THE STAKES", "spoken": "Tension: what goes wrong if they keep doing the usual thing. Specific, not statistical."}},
+    {{"on_screen": "THE TURN", "spoken": "The unexpected turn. Contrarian, concrete, still unresolved."}},
+    {{"on_screen": "THE PAYOFF", "spoken": "Settle the hook BEFORE the product line. {villain_spoken}"}},
+    {{"on_screen": "PURITY BEANS FIX", "spoken": "Payoff, then the jar: Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee."}},
     {{"on_screen": "FOLLOW @PUREPANTRYPROVISIONS", "spoken": "{follow_spoken}"}}
   ],
   "loop_note": "One sentence: how the last frame connects back to frame 1 for infinite loop",
@@ -110,6 +110,8 @@ ABSOLUTE RULES:
     {{"concept": "3 different thumbnail concepts for this reel. Each: a one-line visual concept + a paste-ready image prompt (9:16, photographic, realism rules apply, NO text in image). Vary the psychological angle: one shock-based, one curiosity-based, one product-hero.", "image_prompt": "...", "predicted_ctr_reason": "one sentence: why this stops the scroll in a 2cm feed tile"}}
   ]
 }}"""
+    from content_generator.prompts.piece_craft import craft_block
+    return prompt + "\n\n" + craft_block(reel_id)
 
 
 # Instagram-native V2 rules (shared growth/creative contract)

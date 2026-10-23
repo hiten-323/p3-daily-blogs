@@ -1500,6 +1500,9 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
         if from_scratch:
             from content_generator.core.fallback_ladder import scratch_prompt
             regen_prompt = scratch_prompt(label, piece, feedback, threshold, brand_block())
+        elif label in ("yt_short", "reel_1", "reel_2", "growth_reel", "instagram_post", "carousel"):
+            from content_generator.prompts.piece_craft import craft_block
+            regen_prompt += "\n\nJUDGE CRITIQUE TO FIX:\n" + str(feedback or "") + "\n\n" + craft_block(label)
         if label == "yt_short":
             from content_generator.prompts.yt_short import scene_contract
             regen_prompt += "\n\n" + scene_contract()

@@ -123,8 +123,11 @@ def test_unposted_respects_timed_slots(monkeypatch):
     monkeypatch.delenv("SHOPIFY_BLOG_ENABLED", raising=False)
     assert RU.unposted_targets([], 8) == ["linkedin", "youtube", "threads"]
     assert "blog" not in RU.unposted_targets([], 8)
-    assert "ig_reel" not in RU.unposted_targets([], 16)
-    assert "ig_reel" in RU.unposted_targets([], 22)
+    assert "reel_1" not in RU.unposted_targets([], 8)
+    assert "carousel" not in RU.unposted_targets([], 8)
+    assert "reel_1" in RU.unposted_targets([], 10)
+    assert "carousel" in RU.unposted_targets([], 10)
+    assert "reel_2" in RU.unposted_targets([], 22)
     monkeypatch.setenv("BLOG_ENABLED", "true")
     assert "blog" in RU.unposted_targets([], 8)
 
@@ -134,7 +137,8 @@ def test_posted_and_uncertain_are_not_retried():
             _rec("generate", "linkedin", "PUBLISHED_UNVERIFIED"),
             _rec("evening", "instagram_video", "UNCERTAIN")]
     todo = RU.unposted_targets(recs, 23)
-    assert "ig_feed" not in todo and "linkedin" not in todo and "ig_reel" not in todo
+    assert "ig_feed" not in todo and "linkedin" not in todo and "reel_1" not in todo
+    assert "reel_2" in todo and "carousel" in todo
     assert "facebook" in todo
 
 
