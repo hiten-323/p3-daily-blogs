@@ -14,10 +14,13 @@ logger = logging.getLogger(__name__)
 def validate_language(text: str) -> bool:
     """
     Validate that the text is in English.
-    For short text (under 50 characters), skip detection to avoid false positives.
+    For short text (under 60 characters) or text with handles/URLs/hashtags,
+    strip metadata before detection to avoid false positives.
     """
-    cleaned = text.strip()
-    if len(cleaned) < 50:
+    cleaned = re.sub(r'https?://\S+', '', text)
+    cleaned = re.sub(r'[@#]\w+', '', cleaned)
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    if len(cleaned) < 60:
         return True
     try:
         from langdetect import detect
@@ -87,7 +90,8 @@ def validate_asset_copy(
     check_brand_facts: bool = True,
     check_website: bool = False,
     check_brand_mention: bool = True,
-    check_length: bool = True
+    check_length: bool = True,
+    check_language: bool = True
 ) -> tuple[bool, list[str]]:
     """
     Perform all brand validations in order:
@@ -106,7 +110,7 @@ def validate_asset_copy(
         return False, ["Empty content"]
         
     # 2. Language check
-    if not validate_language(text):
+    if check_language and not validate_language(text):
         issues.append("Language is not English")
         
     # 3. Brand mention check
@@ -202,7 +206,8 @@ def validate_asset(label: str, piece: dict,
                     check_brand_facts=False, 
                     check_website=False, 
                     check_brand_mention=False, 
-                    check_length=False
+                    check_length=False,
+                    check_language=False
                 )
                 if not is_frame_ok:
                     is_valid = False
@@ -226,7 +231,8 @@ def validate_asset(label: str, piece: dict,
                     check_brand_facts=False,
                     check_website=False,
                     check_brand_mention=False,
-                    check_length=False
+                    check_length=False,
+                    check_language=False
                 )
                 if not is_slide_ok:
                     is_valid = False

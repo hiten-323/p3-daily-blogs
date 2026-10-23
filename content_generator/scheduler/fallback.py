@@ -265,8 +265,8 @@ _EVERGREEN: list[dict] = [
     },
     {
         "type": "carousel",
-        "hook": "Ultra Blend, the 70/30 milk coffee",
-        "title": "Ultra Blend, the 70/30 milk coffee",
+        "hook": "Why your milk coffee actually needs a 70/30 ratio",
+        "title": "Why your milk coffee actually needs a 70/30 ratio",
         "slides": [
             {"slide": 1, "heading": "Seventy, thirty",
              "body": "Ultra Blend is 70% coffee and 30% chicory.",

@@ -32,10 +32,14 @@ WINDOW = 20
 MAX_PRODUCT_SHARE = 0.20
 
 # Language that makes a post an ask rather than a gift.
+# Note: negative lookbehind/lookahead avoids false positives on non-commercial phrases
+# like "in order to", "order problem", "order of operations", "out of order".
 _PRODUCT_SIGNALS = re.compile(
-    r"\b(buy|shop|order|cart|checkout|purchase|price|discount|offer|deal|sale|"
+    r"\b(buy|shop|cart|checkout|purchase|price|discount|offer|deal|sale|"
     r"launch|now available|in stock|grab your|get yours|link in bio|"
-    r"free shipping|use code|limited)\b", re.I)
+    r"free shipping|use code|limited)\b|"
+    r"(?<!in\s)(?<!out of\s)\border(?!\s+(?:problem|of\b|matters|sequence))\b",
+    re.I)
 
 # Language that marks genuine value delivery.
 _VALUE_SIGNALS = re.compile(
