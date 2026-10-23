@@ -5204,6 +5204,46 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-23T17:12:39+00:00"
     },
+    "2026-10-23|evening|instagram_video|pb_055ca5a630|growth_reel": {
+      "asset": "growth_reel",
+      "attempt_count": 1,
+      "content_date": "2026-10-23",
+      "content_id": "pb_055ca5a630",
+      "day_number": 295,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-23T17:41:29+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-23T17:41:29+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-23T17:41:29+00:00",
+      "last_result": {
+        "error": "",
+        "success": false
+      },
+      "next_retry_at": null,
+      "platform": "instagram_video",
+      "published": false,
+      "remote_id": "",
+      "slot": "evening",
+      "status": "SKIPPED",
+      "updated_at": "2026-10-23T17:41:29+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
     "2026-10-23|generate|linkedin|pb_055ca5a630": {
       "attempt_count": 1,
       "content_date": "2026-10-23",
@@ -5423,6 +5463,46 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-23T08:57:23+00:00"
+    },
+    "2026-10-23|morning|instagram|pb_055ca5a630|carousel": {
+      "asset": "carousel",
+      "attempt_count": 1,
+      "content_date": "2026-10-23",
+      "content_id": "pb_055ca5a630",
+      "day_number": 295,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-23T17:35:09+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-23T17:35:09+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-23T17:35:09+00:00",
+      "last_result": {
+        "error": "",
+        "success": false
+      },
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": false,
+      "remote_id": "",
+      "slot": "morning",
+      "status": "SKIPPED",
+      "updated_at": "2026-10-23T17:35:09+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
     }
   },
   "version": 1

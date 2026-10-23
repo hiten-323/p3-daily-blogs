@@ -120,33 +120,8 @@
       "loop_ending": "Final frame holds the Ultra Blend jar turning slowly; the ingredient panel faces camera. The last frame reads as the first — 70/30 on purpose.",
       "angle": "EDUCATE",
       "source": "evergreen_template",
-      "featured_product": "ultra_blend",
+      "featured_product": "Purica",
       "chosen_hook": "Your milk coffee has been 30% chicory this whole time — and the jar actually tells you.",
-      "editorial_score": {
-        "shareability": 8.5,
-        "saveability": 8.0,
-        "emotion_pull": 7.0,
-        "hook_strength": 8.5,
-        "brand_clarity": 9.0,
-        "overall": 8.2,
-        "verdict": "PASS",
-        "feedback": "The betrayal hook ('30% chicory this whole time') lands instantly and the radical transparency payoff (label proof → purpose → contrast) builds high trust. Attention dip at Frame 4: listing Bold, Purista, Purica in one spoken line without visual separation causes a micro-drop. Fix: split into two frames — Frame 4a 'BOLD = PURE ROBUSTA' with jar visual, Frame 4b 'PURISTA & PURICA = PURE ARABICA' — or add a quick on-screen bullet list as each name is spoken. Caption's 'Read the jar' closer is strong but 'how do you take yours?' comment trigger is generic; swap for 'Comment MILK or BLACK — I'll tell you which jar fits.' That turns comments into qualified leads.",
-        "retention_audit": "Frame 1-3: Strong retention — label proof, purpose, cup math. Frame 4: Attention dip — four SKUs in one breath, no visual anchor. Frame 5: Recovery — clear C"
-      },
-      "viral_potential": {
-        "passed": false,
-        "overall": null,
-        "scores": {},
-        "honesty": [],
-        "pass_mark": 8.0,
-        "error": "viral_scoring_failed: RuntimeError",
-        "feedback": ""
-      },
-      "ladder_exhausted": true,
-      "publish_blocked": "ladder_exhausted",
-      "needs_regen": true,
-      "held": true,
-      "hold_reason": "FALLBACK LADDER EXHAUSTED: viral_scoring_failed: RuntimeError",
       "funnel_objective": "COMMUNITY",
       "objective": "Engagement Growth",
       "primary_cta": "Which one would you choose? Comment below",
@@ -277,7 +252,42 @@
           "day": 295
         },
         "published": false
-      }
+      },
+      "regen_round": 1,
+      "editorial_score": {
+        "shareability": 8.7,
+        "saveability": 8.3,
+        "emotion_pull": 7.8,
+        "hook_strength": 9.0,
+        "brand_clarity": 8.9,
+        "overall": 8.7,
+        "verdict": "PASS",
+        "feedback": "The reel’s hook is highly effective and the content delivers a clear, brand‑centric narrative. Minor adjustments: rename the featured_product field to 'Ultra Blend' to avoid confusion, and consider tightening the final CTA to avoid sounding overly promotional (e.g., 'Explore Ultra Blend: https://p3online.in'). The audio and loop ending are well‑aligned with the visual story, ensuring high retention.",
+        "retention_audit": "Frame 1 ("
+      },
+      "viral_potential": {
+        "scores": {
+          "hook": 9.0,
+          "curiosity_gap": 8.0,
+          "relatability": 8.0,
+          "shareability": 9.0,
+          "comment_trigger": 8.0,
+          "format_fit": 9.0,
+          "follow_cta": 8.0
+        },
+        "overall": 8.43,
+        "weakest": [
+          "curiosity_gap",
+          "comment_trigger",
+          "follow_cta"
+        ],
+        "feedback": "The hook is solid, and the visual flow is on‑point. To push virality higher, deepen the curiosity loop—hint at a hidden fact that isn’t fully revealed until the end. Tighten the comment trigger by asking a clearer, yes/no or two‑option question (e.g., \"Black or milk? Drop your choice below.\") and make the follow CTA more action‑oriented (e.g., \"Follow for the next label secret—drop a 🔥 in the comments!\" ). This will drive more comments and improve follow‑through.",
+        "better_hook": "Your milk coffee has been 30% chicory all along—and the jar already tells you. ",
+        "passed": true,
+        "honesty": [],
+        "pass_mark": 8.0
+      },
+      "viral_readiness_score": 94.0
     }
   ],
   "carousel": {
@@ -1418,87 +1428,80 @@
     "viral_readiness_score": 69.0
   },
   "yt_short": {
-    "featured_product": "Purica",
-    "objective": "Educate on freeze-dried Arabica purity and drive profile visits to Purity Beans.",
-    "primary_cta": "Follow @purepantryprovisions for daily coffee truth",
-    "success_metric": "Profile visits and website clicks from Shorts feed.",
+    "featured_product": "Purica Gourmet Arabica Granules",
+    "objective": "Product Education and Conversion",
+    "primary_cta": "Shop at https://p3online.in",
+    "success_metric": "Website visits and product page conversions",
     "platform": "YouTube Shorts",
-    "chosen_hook": "One spoon, 85°C water, wait 30 seconds. Watch the aroma that should have been in your cup rise from Purica instead.",
-    "comment_trigger": "Comment PURICA if you read every label.",
-    "cta": "Follow @purepantryprovisions | Shop https://p3online.in",
-    "duration_s": 30,
-    "hashtags": "#PurityBeans #Purica #FreezeDriedCoffee #PureCoffee #Arabica #InstantCoffeeIndia #ReadTheJar",
-    "hook": "One spoon, 85°C water, wait 30 seconds. Watch the aroma that should have been in your cup rise from Purica instead.",
-    "hook_text": "One spoon, 85°C water, wait 30 seconds. Watch the aroma that should have been in your cup rise from Purica instead.",
-    "ladder_exhausted": true,
-    "loop_note": "Final frame: Purica jar label close-up with 'Your coffee lost its aroma at 200°C. Purica didn't.' text overlay. Loops seamlessly to opening hook showing the steam rise comparison.",
+    "chosen_hook": "Look at the crystals in your jar right now.",
+    "comment_trigger": "Comment ARABICA if you want pure coffee crystals delivered to your desk.",
+    "cta": "Shop Purity Beans at https://p3online.in",
+    "duration_s": 35,
+    "hashtags": "#PurityBeans #PureCoffee #FreezeDriedCoffee #InstantCoffeeIndia #CoffeeLoversIndia",
+    "hook": "Look at the crystals in your jar right now.",
+    "hook_text": "Look at the crystals in your jar right now.",
     "product": "Purica Gourmet Arabica Granules",
-    "publish_blocked": "ladder_exhausted",
-    "save_trigger": "Save this freeze-dried vs spray-dried cheat sheet before your next grocery run.",
+    "save_trigger": "Save this before you buy your next jar of instant coffee.",
     "scenes": [
       {
         "scene": 1,
-        "type": "hook",
-        "duration_s": 3.0,
-        "on_screen": "One spoon, 85°C water, wait 30 seconds. Watch the aroma rise.",
-        "spoken": "One spoon, eighty-five degree water, wait thirty seconds. Watch the aroma that should have been in your cup rise from Purica instead.",
-        "visual_direction": "POV handheld iPhone 15 vertical. Kitchen counter, morning light through window. Hand drops one spoon of Purica granules into a matte black ceramic cup. Hot water poured from a gooseneck kettle. Steam blooms upward, thick and aromatic, catching the light. Granules dissolve instantly, deep amber liquid. No cut. Real-time. Slight hand tremor, natural micro-jitter. Shallow depth of field, background kitchen blur."
+        "type": "problem",
+        "duration_s": 6.0,
+        "on_screen": "LOOK AT THE CRYSTALS",
+        "spoken": "Look at the crystals in your coffee jar right now. Are they irregular and golden amber, or just a dull brown powder?",
+        "visual_direction": "Extreme macro close-up of Purica Gourmet Arabica Granules inside the glass jar, catching warm amber window light."
       },
       {
         "scene": 2,
-        "type": "problem",
-        "duration_s": 5.0,
-        "on_screen": "Most instant coffee: brewed, then blasted at 200°C. Aroma burned off before the jar.",
-        "spoken": "Most instant coffee is brewed, then blasted at two hundred degrees. The aroma burns off before it ever reaches the jar.",
-        "visual_direction": "Quick cut: extreme close-up of generic instant coffee powder on a stainless steel tray under harsh industrial fluorescent light. Heat haze shimmers above the powder. No steam. Flat, lifeless granules. Color grade shifts cold, desaturated. Handheld shake. 0.5s cut back to the Purica cup on the kitchen counter — steam still rising, warm golden light. Contrast is immediate and visceral."
+        "type": "tension",
+        "duration_s": 7.0,
+        "on_screen": "THE FREEZE-DRIED DIFFERENCE",
+        "spoken": "Heat destroys delicate aromas instantly. That is why ordinary instant coffee loses its natural character before it ever hits your mug.",
+        "visual_direction": "Hand turning the Purity Beans jar slightly, showing the label texture clearly against a dark wooden kitchen counter."
       },
       {
         "scene": 3,
-        "type": "value",
-        "duration_s": 8.0,
-        "on_screen": "Purity Beans Purica: freeze-dried at -40°C. Pure Arabica. Zero chicory. Aroma locked in.",
-        "spoken": "Purity Beans Purica is freeze-dried at minus forty. Pure Arabica. Zero chicory. The aroma locks in, not out. Read the jar — ingredients: coffee. That is it.",
-        "visual_direction": "Return to Purica jar on dark marble slab. Frost-like condensation beads on the glass, visible vapor wisps clinging to the jar shoulder — visual proof of the minus forty process. Warm amber rim light traces the jar. Granules at the neck catch light like amber crystals. Slow push-in, 85mm equivalent, shallow depth of field. Natural film grain. Subtle handheld sway. Cut to top-down: finger lifts lid, granules catch light. Label facing camera: 'Pure Arabica', 'Freeze-Dried', '0% Chicory' legible. Soft fingerprint smudge on glass. One water ring on marble beside jar. Warm gold backlight glows through the granules."
+        "type": "turn",
+        "duration_s": 7.0,
+        "on_screen": "PURE ARABICA, ZERO CHICORY",
+        "spoken": "Purity Beans Purica uses pure Arabica beans locked in freeze-dried crystals. No hidden fillers, no roasted chicory roots.",
+        "visual_direction": "A dry teaspoon scoops amber Purica crystals out of the glass jar with a slight, realistic clink against the rim."
       },
       {
         "scene": 4,
-        "type": "trust",
-        "duration_s": 7.0,
-        "on_screen": "Real coffee drinkers read the jar. Follow @purepantryprovisions for daily coffee truth.",
-        "spoken": "Real coffee drinkers read the jar. Follow pure pantry provisions for daily coffee truth.",
-        "visual_direction": "Single 100g Purity Beans Purica jar centered on dark marble. Warm amber rim light. Handle enters frame from lower right, taps jar once — confident, deliberate. Fingerprint catches light on the glass. Final frame holds on jar with Instagram handle '@purepantryprovisions' bottom center. Slow pull-back. Handheld sway settles to lock-off."
+        "type": "payoff",
+        "duration_s": 8.0,
+        "on_screen": "THE AROMA LOCK",
+        "spoken": "Hot water hits the glass, and the aroma blooms instantly because nothing was burned away during production.",
+        "visual_direction": "Hot water pouring from a kettle into a clear glass mug containing Purica granules, with steam rising gracefully in soft side light."
       },
       {
         "scene": 5,
-        "type": "buy",
+        "type": "cta",
         "duration_s": 7.0,
-        "on_screen": "Your coffee lost its aroma at 200°C. Purica didn't. Shop https://p3online.in",
-        "spoken": "Your coffee lost its aroma at two hundred degrees. Purica didn't. Shop p three online dot in.",
-        "visual_direction": "Extreme close-up on Purica jar label — 'Pure Arabica', 'Freeze-Dried', '0% Chicory' sharp in focus. Warm gold light sweeps across text. Text overlay 'Your coffee lost its aroma at 200°C. Purica didn't.' appears, then 'Shop https://p3online.in'. Subtle dust motes float in the light beam. Lock-off hold for 2 seconds. Seamless loop: steam rise from scene 1 matches the light sweep here."
+        "on_screen": "p3online.in",
+        "spoken": "Read the jar and taste the difference. Follow @purepantryprovisions and shop p3online.in today.",
+        "visual_direction": "The Purica Gourmet Arabica Granules jar sitting on a slate coaster next to the glass of coffee, shot on iPhone 15 with shallow depth of field."
       }
     ],
-    "share_trigger": "Share with the friend who claims all instant coffee tastes the same — they need to read the jar.",
+    "share_trigger": "Share this with someone who drinks instant coffee every single morning.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "viral_potential": {
-      "scores": {
-        "hook": 8.5,
-        "curiosity_gap": 8.0
-      }
-    },
     "editorial_score": {
-      "shareability": 7.5,
-      "saveability": 8.5,
-      "emotion_pull": 6.5,
-      "hook_strength": 7.0,
-      "brand_clarity": 8.5,
-      "overall": 7.6,
+      "shareability": 5.0,
+      "saveability": 4.0,
+      "emotion_pull": 5.0,
+      "hook_strength": 6.0,
+      "brand_clarity": 9.0,
+      "overall": 5.8,
       "verdict": "REJECT",
-      "feedback": "The script is technically accurate and visually strong, but it lacks emotional stakes. It reads like a product demo, not a revelation. The hook is procedural ('One spoon... wait 30 seconds') rather than provocative — it demands patience before delivering value. The 'Problem' scene attacks a generic 'industrial process' without naming the betrayal the viewer feels (paying for coffee, getting burnt dust). The 'Trust' scene cuts off mid-sentence ('Real cof...'), breaking the loop logic. To pass: 1) Rewrite the hook to lead with the betrayal/fact gap ('Your coffee lost its aroma at 200°C. Purica didn't.'). 2) Complete the Trust scene dialogue and visual. 3) Add a specific identity trigger in the CTA frame ('Real coffee drinkers read the jar.'). 4) Ensure the loop text overlay matches the new hook verbatim.",
-      "retention_audit": "Scene 1 (Hook): 'One spoon, 85°C water, wait 30 seconds' is a recipe instruction, not a scroll-stopper. Viewer has zero reason to stay for the 30-second payoff. Attention drop risk: HIGH at 1.5s. Scene 2 (Problem): Strong visual contrast (industrial vs kitchen), but the spoken line 'Most instant coffee is brewed...' is passive education. Missing the 'You've been lied to' punch. Attention drop risk: MEDIUM at 6s. Scene 3 (Value): Best scene. Visuals (frost, amber light, label close-up) prove the claim. 'Read the jar — ingredients: coffee. That is it.' is the strongest line in the script. Retention peak here. Scene 4 (Trust): INCOMPLETE. 'Real cof' cuts off. No CTA delivered. Loop fails because the final frame text ('Your coffee lost its aroma at 200°C...') does not match the opening hook. Loop logic broken."
+      "feedback": "The hook ‘Look at the crystals in your jar right now.’ is too generic and does not immediately hint at a unique benefit or problem, so it fails to interrupt the scroll strongly. The content leans heavily on product description rather than a compelling narrative or myth‑busting angle, reducing shareability and saveability. The emotional pull is moderate—there is pride in purity, but no strong identity or curiosity gap. The brand is clear but the hook and story lack hook‑strength, so the overall score falls below 8. To improve, start with a statement that reveals a hidden truth or betrayal (e.g., ‘You’ve been drinking melted crystals all along’), and weave in a short, surprising insight early on. Also, add a concise comparison or problem‑solution flash that generates excitement and encourages viewers to keep watching for the reveal.",
+      "retention_audit": "Scene 1 (problem) unclear hook; Scene 2 (tension) lacks visual contrast; Scene 3 (turn) no new emotional angle; Scene 4 (payoff) could use sound cue; Scene 5 (cta) too generic."
     },
+    "ladder_exhausted": true,
+    "publish_blocked": "ladder_exhausted",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The script is technically accurate and visually strong, but it lacks emotional stakes. It reads like a product demo, not a revelation. The hook is procedural ('One spoon... wait 30 seconds') rather than provocative — it demands patience before delivering value. The 'Problem' scene attacks a generic 'industrial process' without naming the betrayal the viewer feels (paying for coffee, getting burnt dust). The 'Trust' scene cuts off mid-sentence ('Real cof...'), breaking "
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: The hook ‘Look at the crystals in your jar right now.’ is too generic and does not immediately hint at a unique benefit or problem, so it fails to interrupt the scroll strongly. The content leans heavily on product description rather than a compelling narrative or myth‑busting angle, reducing shareability and saveability. The emotional pull is moderate—there is pride in purity, but no strong identity or curiosity gap. The brand is clear but the hook and story lack hook"
   },
   "_asset_metadata": [
     {
@@ -1938,6 +1941,26 @@
       {
         "status": "exhausted",
         "reason": "viral_scoring_failed: RuntimeError"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The reel scores below the 8.0 threshold primarily because the featured product (Purica) contradicts the entire narrative. The script educates on Ultra Blend's 70/30 ratio but ends by featuring a zero-chicory freeze-dried variant, creating a disconnect that kills trust and saveability. The hook is a "
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "CRITICAL STRATEGIC ERROR: The 'featured_product' is Purica (freeze-dried, zero-chicory pure coffee) but the entire Reel script, hook, and visual narrative center on Ultra Blend (70/30 chicory blend). This creates a fatal disconnect — the CTA drives traffic to a product the video doesn't sell. The ho"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "CRITICAL MISMATCH: The reel's content, hook, and CTA center entirely on Ultra Blend (70/30 chicory blend), yet 'featured_product' is set to 'Purica' (freeze-dried pure Arabica, zero chicory). This creates a disconnect between what the viewer sees/hears and the product they would be sent to buy. The "
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "Critical mismatch: the reel is entirely about Ultra Blend (70/30 chicory blend) but featured_product is set to Purica (freeze-dried pure coffee). This creates brand confusion — the product shown in the concept doesn't match the SKU tagged for distribution. Fix: change featured_product to 'Ultra Blen"
       }
     ],
     "carousel": [
@@ -3886,6 +3909,50 @@
       {
         "status": "exhausted",
         "reason": "The script is technically accurate and visually strong, but it lacks emotional stakes. It reads like a product demo, not a revelation. The hook is procedural ('One spoon... wait 30 seconds') rather than provocative — it demands patience before delivering value. The 'Problem' scene attacks a generic "
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 6.14 < 8.0 (weakest: hook, comment_trigger). The opening line is too procedural and lacks a visceral win‑condition. It takes 30 seconds before anything interesting appears, which hurts first‑second retention. The comment question is generic; a two‑word or a choice‑based prompt (e.g. ‘PU"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook and script feel generic and could apply to any instant coffee brand. The opening line is neutral and doesn't immediately create a sense of betrayal or urgent curiosity. The on‑screen text and spoken lines in each scene are explanatory rather than punchy, leading to a slide‑by‑slide feel tha"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', 'Contains banned claim wording: fresh, freshly']"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 7,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...and: ['Empty content']\"}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 8,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...d: [\\'Empty content\\']'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "status": "exhausted",
+        "reason": "The hook ‘Look at the crystals in your jar right now.’ is too generic and does not immediately hint at a unique benefit or problem, so it fails to interrupt the scroll strongly. The content leans heavily on product description rather than a compelling narrative or myth‑busting angle, reducing sharea"
       }
     ]
   },
@@ -5947,7 +6014,8 @@
     "facebook_post": 1,
     "growth_reel": 2,
     "reel_1": 2,
-    "threads_post": 1
+    "threads_post": 1,
+    "reel_2": 1
   },
   "growth_reel": {
     "featured_product": "Purica Gourmet Arabica Granules [purica]",
