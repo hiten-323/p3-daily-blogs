@@ -20,18 +20,36 @@ def test_dropped_morning_slot_with_no_rows_is_pending():
     # Oct 17: only a generate|threads SKIPPED row, morning never ran.
     rec = [{"slot": "generate", "platform": "threads", "status": "SKIPPED"}]
     todo = ru.pending_targets(T(11, 37), records=rec, pack_exists=True)
-    for t in ("ig_feed", "ig_story", "facebook", "threads"):
+    for t in ("ig_feed", "ig_story", "facebook", "threads", "carousel", "reel_1", "reel_2", "youtube"):
         assert t in todo
-    assert "ig_reel" not in todo  # evening reel is not due before 22:00
+    assert "growth_reel" in todo
 
 
-def test_nothing_pending_once_morning_and_generate_live():
+def test_nothing_pending_once_each_piece_is_live():
+    live = "VERIFIED_LIVE"
+    rec = [{"slot": s, "platform": p, "status": live} for s, p in (
+        ("morning", "instagram_story"), ("morning", "facebook"),
+        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
+    rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "instagram_post"})
+    rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "carousel"})
+    for asset in ("reel_1", "reel_2", "growth_reel"):
+        rec.append({"slot": "evening", "platform": "instagram_video", "status": live, "asset": asset})
+    assert ru.pending_targets(T(12), records=rec, pack_exists=True) == []
+    assert ru.pending_targets(T(22, 37), records=rec, pack_exists=True) == []
+
+
+def test_bare_morning_post_does_not_hide_carousel_or_reels():
+    # 2026-10-23 21:57 IST: feed, story, FB, LinkedIn and Threads were live.
+    # The missing-target check listed only YouTube.
     live = "VERIFIED_LIVE"
     rec = [{"slot": s, "platform": p, "status": live} for s, p in (
         ("morning", "instagram"), ("morning", "instagram_story"), ("morning", "facebook"),
-        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
-    assert ru.pending_targets(T(12), records=rec, pack_exists=True) == []
-    assert ru.pending_targets(T(22, 37), records=rec, pack_exists=True) == ["ig_reel"]
+        ("generate", "linkedin"), ("generate", "threads"))]
+    pending = ru.pending_targets(dt.datetime(2026, 10, 23, 21, 57), records=rec, pack_exists=True)
+    for target in ("carousel", "reel_1", "reel_2", "growth_reel", "youtube"):
+        assert target in pending
+    assert pending != ["youtube"]
+    assert "ig_feed" not in pending and "linkedin" not in pending and "threads" not in pending
 
 
 def test_workflows_chain_on_due_targets_not_ledger_rows():
@@ -48,8 +66,10 @@ def test_workflows_chain_on_due_targets_not_ledger_rows():
 
 def test_instagram_reel_alias_counts_as_posted():
     # The publisher writes the platform key instagram_reel for some reel paths.
+    # A legacy row with no asset is the historical single reel (reel_1 only).
     rec = [{"slot": "evening", "platform": "instagram_reel", "status": "VERIFIED_LIVE"}]
-    assert "ig_reel" not in ru.unposted_targets(rec, 23)
+    assert "reel_1" not in ru.unposted_targets(rec, 23)
+    assert "reel_2" in ru.unposted_targets(rec, 23)
 
 
 def _morning_settled(**ig):

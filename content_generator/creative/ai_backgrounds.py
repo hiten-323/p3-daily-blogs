@@ -30,6 +30,7 @@ PROVIDER_ORDER = (
 )
 
 _SESSION: dict[tuple[str, str], str] = {}
+_REJECTED: dict[tuple[str, str], set[str]] = {}
 _PENDING: dict | None = None
 
 
@@ -40,6 +41,7 @@ def _attribution_path() -> str:
 def reset_session() -> None:
     global _PENDING
     _SESSION.clear()
+    _REJECTED.clear()
     _PENDING = None
     from content_generator.creative import hf_video, kaggle_bank, stock_video
     hf_video.reset_session()
@@ -296,6 +298,21 @@ def _release(pending: dict | None) -> None:
         kaggle_bank.release(pending["id"])
 
 
+def reject_source(choice: dict, source: str) -> None:
+    """A plate that failed the visual gate must not be the next try's first choice."""
+    global _PENDING
+    name = str(source or "")
+    if not name or name == "procedural":
+        return
+    key = (str(choice.get("date") or ""), str(choice.get("format") or ""))
+    _REJECTED.setdefault(key, set()).add(name)
+    if _SESSION.get(key) == name:
+        del _SESSION[key]
+    if _PENDING and str(_PENDING.get("source") or name) == name:
+        _release(_PENDING)
+        _PENDING = None
+
+
 def fetch_background(choice: dict, label: str, size, seconds: float = 5) -> tuple[list | None, str]:
     """Try providers for this concept. Returns (frames|None, source)."""
     global _PENDING
@@ -305,7 +322,11 @@ def fetch_background(choice: dict, label: str, size, seconds: float = 5) -> tupl
     duration = int(min(10, max(5, seconds)))
     avoid = _sibling_source(choice)
     providers = _providers()
+    rejected = _REJECTED.get((str(choice.get("date") or ""), str(choice.get("format") or "")), set())
     for name in _order(avoid):
+        if name in rejected:
+            logger.info("[ai_bg] %s skipped (plate failed the visual gate)", name)
+            continue
         if not _configured(name):
             logger.info("[ai_bg] %s skipped (not configured)", name)
             continue

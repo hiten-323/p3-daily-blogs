@@ -32,6 +32,8 @@ def test_backstop_waits_until_2215():
 
 
 def test_reel_counted_missing_without_evening_records():
-    assert "ig_reel" in ru.unposted_targets([], 23)
+    assert "reel_1" in ru.unposted_targets([], 23)
+    assert "reel_2" in ru.unposted_targets([], 23)
     rec = [{"slot": "evening", "platform": "instagram", "status": "VERIFIED_LIVE"}]
-    assert "ig_reel" not in ru.unposted_targets(rec, 23)
+    assert "reel_1" not in ru.unposted_targets(rec, 23)
+    assert "reel_2" in ru.unposted_targets(rec, 23)

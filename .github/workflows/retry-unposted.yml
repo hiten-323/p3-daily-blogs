@@ -206,6 +206,7 @@ jobs:
           if [ "$HOUR_IST" -lt 7 ] || [ "$HOUR_IST" -ge 23 ]; then echo "Outside 07-23 IST; not chaining."; exit 0; fi
           # Count what is DUE and not posted (not just non-live ledger rows): a
           # dropped cron writes no rows, which used to stop the chain at 0.
+          # Each reel, the carousel, and the YouTube Short are separate targets.
           PENDING_OUTPUT=$(python -m content_generator.scheduler.retry_unposted --pending 2>/dev/null) || { echo "::error::Pending-target probe failed"; exit 1; }
           if ! printf '%s\n' "$PENDING_OUTPUT" | grep -q '^PENDING:'; then
             echo "::error::Pending-target probe returned malformed output."

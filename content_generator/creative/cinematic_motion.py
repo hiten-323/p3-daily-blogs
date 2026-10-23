@@ -655,13 +655,16 @@ def _render_concept_until_pass(sku, beats, out_path, *, seconds, seed, max_tries
         from content_generator.core.ist_dates import today_ist
         ds = today_ist().isoformat()
     tried = []
+    tried_layouts = []
     for i in range(max_tries):
         if _budget_left() < est:
             logger.warning("[cinematic] time budget low (%.0fs left); falling back to legacy renderer", _budget_left())
             return None
         t0 = time.monotonic()
-        choice = scn.pick(ds, format_type, sku=sku, exclude_concepts=tried)
+        choice = scn.pick(ds, format_type, sku=sku, exclude_concepts=tried, exclude_layouts=tried_layouts)
         tried.append(choice["concept"])
+        if choice.get("layout") not in tried_layouts:
+            tried_layouts.append(choice["layout"])
         label = os.path.basename(out_path).rsplit(".", 1)[0]
         ai_frames, source = ai_backgrounds.fetch_background(choice, label, (_BW, _BH), seconds=min(10, seconds))
         track = choice.get("music_track")
@@ -682,9 +685,28 @@ def _render_concept_until_pass(sku, beats, out_path, *, seconds, seed, max_tries
             logger.info("[cinematic] %s %s concept=%s motion=%s layout=%s bg=%s", format_type, sku, choice["concept"],
                         choice["motion"], choice["layout"], source)
             return meta
+        reasons = [str(r) for r in (verdict.get("reasons") or [])]
         logger.warning("[cinematic] %s try %d failed: gate=%s variety=%s", sku, i + 1,
-                       (verdict.get("reasons") or [])[:4], (variety.get("reasons") or [])[:3])
+                       reasons[:4], (variety.get("reasons") or [])[:3])
         if visual_gate.is_vision_hold(verdict):
             logger.error("[cinematic] no vision scorer available — holding (fail fast, no re-render)")
             return None
+        blob = " ".join(reasons).lower()
+        if source and source != "procedural" and any(
+            token in blob for token in ("pale_background", "weak_hierarchy", "no_tonal_depth", "flat", "low_contrast", "muddy")
+        ):
+            ai_backgrounds.reject_source(choice, source)
+        _remember_render_obstacle(format_type, reasons or (variety.get("reasons") or []))
     return None
+
+
+def _remember_render_obstacle(format_type: str, reasons) -> None:
+    """A failed plate or layout is a lesson for the next render, not a silent drop."""
+    try:
+        from content_generator.core.obstacle_lessons import platform_for, record
+        label = "yt_short" if str(format_type or "").lower() == "short" else "reel_1"
+        text = "; ".join(str(r) for r in (reasons or []) if str(r).strip())[:300] or "visual gate failed"
+        record(platform_for(label), label, "render", "aesthetic", text,
+               "Use a different layout and the next background provider. Do not repeat a failed plate.")
+    except Exception:
+        return

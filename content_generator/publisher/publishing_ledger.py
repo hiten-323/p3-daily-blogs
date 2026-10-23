@@ -64,8 +64,15 @@ def _identity(content: dict, platform: str, slot: str, day_number: int) -> tuple
         content_date = today_ist().isoformat() if fresh else raw_date
     except Exception:
         content_date = raw_date
-    key = "|".join((content_date, slot, platform.lower(), content_id))
-    return key, {"content_date": content_date, "content_id": content_id, "platform": platform.lower(), "slot": slot, "day_number": day_number}
+    asset = str(content.get("_publish_asset") or "").strip() if isinstance(content, dict) else ""
+    parts = [content_date, slot, platform.lower(), content_id]
+    if asset:
+        parts.append(asset)
+    key = "|".join(parts)
+    return key, {
+        "content_date": content_date, "content_id": content_id, "platform": platform.lower(),
+        "slot": slot, "day_number": day_number, "asset": asset,
+    }
 
 
 def _due(record: dict, now: dt.datetime) -> bool:
@@ -325,12 +332,17 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
         return record
 
 
-def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int, publish: Callable[[], dict]) -> dict:
+def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int, publish: Callable[[], dict],
+                        asset: str = "") -> dict:
     """Run one publisher with durable duplicate prevention and outcome recording."""
+    if asset and isinstance(content, dict):
+        content = dict(content)
+        content["_publish_asset"] = asset
     ticket = begin_attempt(content, platform, slot, day_number)
     if ticket.get("allowed"):
         _kdate = str(ticket.get("key", "")).split("|")[0]
-        prior = already_posted_today(platform, slot, ticket.get("key", ""), on_date=_kdate or None)
+        named = str((content or {}).get("_publish_asset") or asset or "")
+        prior = already_posted_today(platform, slot, ticket.get("key", ""), on_date=_kdate or None, asset=named)
         if prior:
             abandon_attempt(ticket)
             ticket = {"allowed": False, "reason": "already_published", "record": prior, "key": ticket.get("key")}
@@ -374,12 +386,17 @@ def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int
 POSTED_STATES = ("VERIFIED_LIVE", "PUBLISHED_UNVERIFIED", "UNCERTAIN")
 
 
-def already_posted_today(platform: str, slot: str, exclude_key: str = "", on_date: str | None = None) -> dict | None:
+def already_posted_today(platform: str, slot: str, exclude_key: str = "", on_date: str | None = None,
+                         asset: str = "") -> dict | None:
     """A post for this (date, slot, platform) under ANY content_id blocks a second one.
 
     The ledger key includes content_id, so a regenerated pack used to look like
     new work. Dedupe here is by date + slot + platform. UNCERTAIN counts as
     posted: a possible duplicate is worse than a late retry.
+
+    A named asset blocks only that asset. A legacy row with no asset is the
+    historical single post: it still blocks reel_1 and the feed post, and it
+    does not block a second reel or the carousel.
     """
     # Dedupe against the CONTENT date being published, not the wall-clock
     # day: a backfill of 2026-10-18 was matched against 2026-10-19's live
@@ -389,10 +406,18 @@ def already_posted_today(platform: str, slot: str, exclude_key: str = "", on_dat
         for record in records:
             if record.get("ledger_key") == exclude_key:
                 continue
-            if (str(record.get("platform", "")).lower() == platform.lower()
-                    and record.get("slot") == slot
-                    and record.get("status") in POSTED_STATES):
-                return record
+            if (str(record.get("platform", "")).lower() != platform.lower()
+                    or record.get("slot") != slot
+                    or record.get("status") not in POSTED_STATES):
+                continue
+            named = str(asset or "").strip()
+            recorded = str(record.get("asset") or "").strip()
+            if named:
+                if recorded and recorded != named:
+                    continue
+                if not recorded and named not in ("reel_1", "instagram_post"):
+                    continue
+            return record
     except Exception:
         return None
     return None

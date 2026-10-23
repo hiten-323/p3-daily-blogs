@@ -114,7 +114,7 @@ def test_blog_sections_use_router(monkeypatch):
 
 def test_mandatory_slots_first_and_marked_fresh():
     from content_generator.scheduler import retry_unposted as ru
-    assert ru.prioritise(["linkedin", "ig_reel", "blog", "ig_feed"])[:2] == ["ig_reel", "ig_feed"]
+    assert ru.prioritise(["linkedin", "reel_1", "blog", "ig_feed"])[:2] == ["reel_1", "ig_feed"]
     content = {"carousel": {"slides": []}, "reels": [{"hook": "a"}, {"hook": "b"}]}
     ru.mark_fresh(content, ["carousel", "reel_2"])
     assert content["carousel"]["needs_regen"] and content["reels"][1]["needs_regen"]

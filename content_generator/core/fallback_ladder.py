@@ -186,18 +186,40 @@ def scratch_prompt(label: str, piece: dict, feedback: str, threshold: float, bra
         k for k in (piece or {}) if k not in ("editorial_score", "editorial_error", "needs_regen",
                                               "held", "hold_reason", "_shape"))
     featured = (piece or {}).get("featured_product") or "the featured Purity Beans jar"
-    reasons = _re.sub(r"\s+", " ", str(feedback or ""))[:600]
+    reasons = _re.sub(r"\s+", " ", str(feedback or ""))[:900]
+    banned = is_banned_claim_failure(feedback)
+    if banned:
+        why = (
+            f"The previous draft was discarded because it contained a banned claim: {reasons}\n"
+            "Do not reuse any sentence, number, or price from that draft. Use only catalog prices and facts "
+            "from the brand rules above. "
+        )
+    else:
+        why = (
+            f"JUDGE CRITIQUE TO FIX on the next attempt: {reasons}\n"
+            "Do not repeat the rejected hook. Answer the critique with a specific, surprising, "
+            "awe-inspiring hook and a tension-then-payoff scene arc: problem with stakes, the turn, "
+            "then the payoff before the CTA. "
+        )
+    closer = "End with 'Follow @purepantryprovisions'."
+    if label not in ("instagram_post", "carousel", "growth_reel"):
+        closer += " And 'Shop p3online.in'."
+    craft = ""
+    if label in ("yt_short", "reel_1", "reel_2", "growth_reel", "instagram_post", "carousel"):
+        try:
+            from content_generator.prompts.piece_craft import craft_block
+            craft = "\n\n" + craft_block(label)
+        except Exception:
+            craft = ""
     return (
         f"{brand}\n\n"
         f"TASK: Write a BRAND-NEW {label} from scratch for {featured}. It must pass schema and an "
         f"editorial score of {threshold}.\n"
-        f"The previous draft was discarded because it contained a banned claim: {reasons}\n"
-        "Do not reuse any sentence, number, or price from that draft. Use only catalog prices and facts "
-        "from the brand rules above. Per-cup price and cup count belong only to Ultra Blend, in a sentence "
+        f"{why}"
+        "Per-cup price and cup count belong only to Ultra Blend, in a sentence "
         "that names Ultra Blend. If the featured jar is anything else, omit the figure.\n"
         f"Return ONE JSON object with these keys: {_json.dumps(keys)}.\n"
         "Reel frames: at least 5 objects, each with on_screen and spoken. Captions at least 50 characters. "
-        "Keep STOP, CURIOSITY, VALUE, TRUST, FOLLOW, BUY. End with 'Follow @purepantryprovisions' and "
-        "'Shop p3online.in'. Do not include an editorial_score.\n"
+        f"Keep STOP, CURIOSITY, VALUE, TRUST, FOLLOW, BUY. {closer} Do not include an editorial_score.\n"
         "Return ONLY the JSON object."
-    ) + _lesson_suffix(label)
+    ) + craft + _lesson_suffix(label)

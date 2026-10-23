@@ -68,6 +68,12 @@ def classify(feedback: str) -> str:
         return "ladder_exhausted"
     if "viral_scoring_failed" in text or "scoring_failed" in text or "no json" in text:
         return "provider"
+    if "generic" in text and "hook" in text:
+        return "generic_hook"
+    if "no tension" in text or "without tension" in text or "lack tension" in text or "no stakes" in text:
+        return "tension"
+    if "promotional" in text or "sales-led" in text or "too salesy" in text or "primarily promotional" in text:
+        return "salesy_follow"
     if "viral" in text or "honesty" in text:
         return "llm_viral"
     if "product truth" in text or "fssai" in text or "chicory" in text or "per-cup" in text:
@@ -78,7 +84,7 @@ def classify(feedback: str) -> str:
         return "schema"
     if "provenance" in text or "unregistered_image" in text:
         return "provenance"
-    if "visual" in text or "variety" in text or "aesthetic" in text or "render" in text:
+    if "visual" in text or "variety" in text or "aesthetic" in text or "render" in text or "layout" in text or "pale_background" in text:
         return "aesthetic"
     if "banned claim" in text or "lab tested" in text or "lab-tested" in text or "zero acidity" in text:
         return "banned_claim"

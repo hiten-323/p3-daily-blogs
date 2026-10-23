@@ -217,6 +217,32 @@ def _recent_creative_history() -> list[dict]:
     return items
 
 
+def hooks_within_days(days: int = 7) -> list[str]:
+    """Hooks posted inside `days`, newest window first, duplicates removed."""
+    cutoff = datetime.datetime.now() - datetime.timedelta(days=days)
+    found: list[str] = []
+    for entry in _recent_creative_history():
+        ts = entry.get("posted_at") or entry.get("published_at") or ""
+        try:
+            when = datetime.datetime.fromisoformat(str(ts)[:19])
+        except Exception:
+            continue
+        hook = str(entry.get("hook") or "").strip()
+        if hook and when >= cutoff:
+            found.append(hook)
+    return list(dict.fromkeys(found))
+
+
+def week_hook_ban(days: int = 7) -> str:
+    """Hard ban: do not repeat a hook used in the last week."""
+    lines = [f"HOOK BAN: do not repeat or lightly rephrase a hook used in the last {days} days."]
+    hooks = hooks_within_days(days)
+    if hooks:
+        lines.append("Hooks already used this week:")
+        lines.extend(f"- {hook[:160]}" for hook in hooks[:30])
+    return "\n".join(lines)
+
+
 def get_fatigue_block(max_items: int = 15) -> str:
     """
     Prompt-injectable block listing recently used hooks/topics so the

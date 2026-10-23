@@ -78,7 +78,7 @@ it, then make commenting the keyword the way to receive it.
   comment_trigger to exactly: "Comment {lm['keyword']} and I'll send you {lm['promise']}."
 '''
 
-    return f"""GROWTH TRACK ASSET — follower-first, non-branded. GROWTH_MODE_CONTEXT rules apply.
+    text = f"""GROWTH TRACK ASSET — follower-first, non-branded. GROWTH_MODE_CONTEXT rules apply.
 
 Generate ONE complete growth-track Instagram Reel about coffee culture.
 Return a single JSON object.
@@ -144,6 +144,8 @@ HARD RULES:
   "story_version": "How to cut this into a 15s Instagram Story with a poll or slider",
   "shorts_version": "What changes for YouTube Shorts (title with search keyword, tighter cut)"
 }}"""
+    from content_generator.prompts.piece_craft import craft_block
+    return text + "\n\n" + craft_block("growth_reel")
 
 
 # Instagram-native V2 rules (shared growth/creative contract)

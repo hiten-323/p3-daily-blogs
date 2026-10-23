@@ -1,42 +1,36 @@
-"""Self-resuming retry: regenerate and publish anything not yet posted today.
+"""Self-resuming retry. Each reel, the carousel, and the YouTube Short are separate targets.
 
-Runs every 30 minutes (.github/workflows/retry-unposted.yml). Each run:
-  1. finds which platform/type has no live post today (ledger, deduped by
-     date + slot + platform, any content_id),
-  2. runs the fallback ladder (~8 attempts) on the blocked pieces, with the
-     8.0 gate unchanged,
-  3. publishes only what then passes, via the normal slot/dispatcher paths,
-  4. backs off exponentially on rate limits / repeated failures.
-There is no overall cap: it keeps going every 30 min until everything is
-posted or the IST day ends. The Shopify blog is excluded unless
-BLOG_ENABLED=true (owned by the separate Blogs bot). Tomorrow's pack then takes over (carry-over), and
-the same loop covers it. Timed slots are respected: the morning targets wait
-for 10:00 IST and the evening reel for 22:00 IST.
+A legacy ledger row with no asset still clears single-platform targets and reel_1.
+It does not clear carousel, reel_2, or growth_reel. Reels regenerate from 10:00 IST
+and publish at 22:00. The 8.0 gates stay. Blog stays off unless BLOG_ENABLED.
 """
 from __future__ import annotations
 
 import datetime as dt
-import json
 import logging
 import os
 import re
-from pathlib import Path
 
 log = logging.getLogger(__name__)
 
-# target -> (slot, ledger platforms that count as posted, labels that feed it, earliest IST hour)
+# target -> (slot, ledger platforms, labels, earliest IST hour)
+_EVENING_PLATFORMS = ("instagram_reel", "instagram_video", "instagram")
 TARGETS = {
-    "ig_feed":   ("morning", ("instagram",), ("carousel", "instagram_post"), 10),
-    "ig_story":  ("morning", ("instagram_story",), ("carousel", "instagram_post"), 10),
-    "facebook":  ("morning", ("facebook",), ("facebook_post",), 10),
-    "ig_reel":   ("evening", ("instagram_reel", "instagram_video", "instagram"), ("growth_reel", "reel_1", "reel_2"), 22),
-    "linkedin":  ("generate", ("linkedin",), ("linkedin_post",), 6),
-    "youtube":   ("generate", ("youtube",), ("yt_short",), 6),
-    "threads":   ("generate", ("threads",), ("threads_post",), 6),
-    "blog":      ("generate", ("blog",), ("blog_post",), 6),
+    "ig_feed":     ("morning", ("instagram",), ("instagram_post",), 10),
+    "carousel":    ("morning", ("instagram",), ("carousel",), 10),
+    "ig_story":    ("morning", ("instagram_story",), ("carousel", "instagram_post"), 10),
+    "facebook":    ("morning", ("facebook",), ("facebook_post",), 10),
+    "reel_1":      ("evening", _EVENING_PLATFORMS, ("reel_1",), 10),
+    "reel_2":      ("evening", _EVENING_PLATFORMS, ("reel_2",), 10),
+    "growth_reel": ("evening", _EVENING_PLATFORMS, ("growth_reel",), 10),
+    "linkedin":    ("generate", ("linkedin",), ("linkedin_post",), 6),
+    "youtube":     ("generate", ("youtube",), ("yt_short",), 6),
+    "threads":     ("generate", ("threads",), ("threads_post",), 6),
+    "blog":        ("generate", ("blog",), ("blog_post",), 6),
 }
-# Morning and evening posts are MANDATORY every day: a missing one is always
-# regenerated from scratch (fresh angle / template / provider), never left idle.
+PIECE_ASSET = {"carousel": "carousel", "reel_1": "reel_1", "reel_2": "reel_2", "growth_reel": "growth_reel"}
+LEGACY_BARE_ASSET = frozenset({"reel_1"})
+REEL_TARGETS = ("reel_1", "reel_2", "growth_reel")
 MANDATORY_SLOTS = ("morning", "evening")
 MANDATORY_BUDGET_S = int(os.getenv("MANDATORY_REGEN_BUDGET_S", "2400"))
 _RATE = re.compile(r"429|rate.?limit|too many|throttl|quota", re.I)
@@ -70,55 +64,65 @@ def evening_backstop_wait(now_ist: dt.datetime) -> bool:
     return now_ist.hour == 22 and now_ist.minute < 15
 
 
+def _asset_matches(record: dict, target: str) -> bool:
+    recorded = str(record.get("asset") or "").strip()
+    if target == "ig_feed":
+        # A carousel row is not the feed post. A bare legacy row is.
+        return recorded in ("", "instagram_post")
+    asset = PIECE_ASSET.get(target)
+    if not asset:
+        return True
+    if recorded:
+        return recorded == asset
+    return target in LEGACY_BARE_ASSET
+
+
+def _row_covers(record: dict, name: str, slot: str, platforms: tuple) -> bool:
+    if record.get("slot") != slot:
+        return False
+    if str(record.get("platform") or "").lower() not in platforms:
+        return False
+    if record.get("status") not in _posted_states():
+        return False
+    return _asset_matches(record, name)
+
+
+def _target_rows(records: list[dict], target: str) -> list[dict]:
+    slot, platforms, _labels, _hour = TARGETS[target]
+    return [r for r in records
+            if r.get("slot") == slot and str(r.get("platform") or "").lower() in platforms
+            and _asset_matches(r, target)]
+
+
 def unposted_targets(records: list[dict], now_hour: int) -> list[str]:
-    states = _posted_states()
     out = []
     for name, (slot, platforms, _labels, hour) in active_targets().items():
         if now_hour < hour:
             continue
-        done = any(r.get("slot") == slot and str(r.get("platform", "")).lower() in platforms
-                   and r.get("status") in states for r in records)
-        if not done:
+        if not any(_row_covers(r, name, slot, platforms) for r in records):
             out.append(name)
     return out
 
 
 NO_PACK = "no_pack"
-# Chain from 07:00 IST: the 06:13 generate cron is often dropped or hours late.
 CHAIN_FROM_HOUR = 7
 
 
 def target_refuses_retry(records: list[dict], target: str) -> bool:
-    """True when every attempt for this target is past the ledger retry cap.
+    """True when every real attempt for this target is past the ledger retry cap.
 
-    Pre-flight misses (nothing was sent) do not count. A target in this state
-    must drop out of the self-resume chain; otherwise retry-unposted
-    re-dispatches itself every few minutes and exits 1 without publishing.
+    Pre-flight misses do not count, so the self-resume chain can drop this target.
     """
     from content_generator.publisher.publishing_ledger import attempt_budget_exhausted
-    slot, platforms, _labels, _hour = TARGETS[target]
-    saw_attempt = False
-    for platform in platforms:
-        rows = [r for r in records
-                if r.get("slot") == slot and str(r.get("platform") or "").lower() == platform]
-        if not rows:
-            continue
-        saw_attempt = True
-        if any(not attempt_budget_exhausted(r) for r in rows):
-            return False
-    return saw_attempt
+    rows = _target_rows(records, target)
+    if not rows:
+        return False
+    return all(attempt_budget_exhausted(r) for r in rows)
 
 
 def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | None = None,
                     pack_exists: bool | None = None) -> list[str]:
-    """What is still due today; drives the workflow's self-resume chain.
-
-    The chain used to count only non-live ledger rows for today. A slot whose
-    cron GitHub dropped writes NO rows (e.g. the 09:53 morning slot on Oct 17),
-    and before generate there is no pack, so the count was 0 and the chain died
-    with nothing posted. This counts targets that are due now and not posted,
-    whether or not anything was ever attempted, plus a missing pack.
-    """
+    """Due targets plus a missing pack. A dropped cron writes no rows and must stay pending."""
     if now_ist is None:
         now_ist = dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=5, minutes=30)
     if now_ist.hour < CHAIN_FROM_HOUR:
@@ -144,7 +148,7 @@ def labels_to_regen(todo: list[str], approved: dict | None, records: list[dict] 
     for name, (slot, platforms, labs, _hour) in TARGETS.items():
         if name not in todo:
             continue
-        labels = labs[:2] if name == "ig_reel" else labs[:1]
+        labels = labs[:1]
         mandatory = is_mandatory(name) and not any(label in approved for label in labs)
         gate = any(
             r.get("slot") == slot and str(r.get("platform") or "").lower() in platforms
@@ -234,18 +238,20 @@ def mark_fresh(content: dict, labels) -> list[str]:
         if not isinstance(piece, dict) or not piece:
             _store_piece(content, key, idx, native_regen_stub(content, label, rounds[label]))
         else:
+            from content_generator.core.publish_bar import clear_ladder_hold
+            clear_ladder_hold(piece)
             piece["needs_regen"] = True
             piece["regen_round"] = rounds[label]
             piece.pop("editorial_review", None)
+            piece.pop("editorial_score", None)
+            piece.pop("viral_potential", None)
         marked.append(label)
     return marked
 
 
 def backoff_ok(records: list[dict], target: str, now: dt.datetime) -> bool:
     """Exponential backoff on rate limits: 30, 60, 120, 240 min (capped)."""
-    slot, platforms, _l, _h = TARGETS[target]
-    fails = [r for r in records if r.get("slot") == slot and str(r.get("platform", "")).lower() in platforms
-             and r.get("status") == "FAILED"]
+    fails = [r for r in _target_rows(records, target) if r.get("status") == "FAILED"]
     if not fails:
         return True
     last = max(fails, key=lambda r: str(r.get("updated_at") or ""))
@@ -291,13 +297,7 @@ def _approved(content: dict) -> dict:
 
 
 def _feed_content_for_discovery(content: dict) -> dict:
-    """The pack the morning slot will actually hand to Instagram.
-
-    Discovery on the raw pack treats a rejected carousel as present, so the
-    three dated slides that survived prune look like a successful feed image
-    set. The slot then blanks that carousel and looks only for the approved
-    instagram_post file, which an undated render had already lost.
-    """
+    """Approved feed copy only, so a rejected carousel is not treated as images on disk."""
     if not isinstance(content, dict) or not (content.get("carousel") or content.get("instagram_post")):
         return content if isinstance(content, dict) else {}
     try:
@@ -374,9 +374,10 @@ def main() -> int:
         # Evening backstop across midnight: a dropped 21:53 cron (or a crash)
         # must not lose yesterday's mandatory evening reel.
         y = (dt.date.fromisoformat(date) - dt.timedelta(days=1)).isoformat()
-        if "ig_reel" in unposted_targets(records_for_date(y), 23):
-            log.warning("Evening backstop: %s has no evening post; publishing it now.", y)
-            date, ist_hour, only = y, 23, {"ig_reel"}
+        due = [t for t in REEL_TARGETS if t in unposted_targets(records_for_date(y), 23)]
+        if due:
+            log.warning("Evening backstop: %s still missing %s; publishing them now.", y, due)
+            date, ist_hour, only = y, 23, set(due)
     content, why = _load_content(date)
     if content is None:
         log.info("No pack for %s yet (%s); carry-over waits for today's generate.", date, why)
@@ -388,14 +389,10 @@ def main() -> int:
         missing = [t for t in missing if t in only]
     if not override and only is None and evening_backstop_wait(now_ist):
         # The scheduled evening slot owns 21:53-22:15; backstop only after.
-        missing = [t for t in missing if t != "ig_reel"]
-    # Mandatory evening reel: regenerate from 10:00 IST so a passing reel is
-    # ready at 22:00 (publishing still waits for the evening slot hour).
-    if ist_hour >= 10 and "ig_reel" not in missing and unposted_targets(records, 23).count("ig_reel"):
-        missing.append("ig_reel")
-        prewarm_reel = True
-    else:
-        prewarm_reel = False
+        missing = [t for t in missing if t not in REEL_TARGETS]
+    # Reel targets are due from 10:00 so the chain regenerates them. Publishing
+    # still waits until 22:00.
+    prewarm = {t for t in missing if t in REEL_TARGETS} if (not override and only is None and ist_hour < 22) else set()
     # A missing mandatory slot is never parked in backoff.
     todo = prioritise([t for t in missing if is_mandatory(t) or backoff_ok(records, t, now)])
     if not todo:
@@ -409,7 +406,7 @@ def main() -> int:
     for t in todo:
         labels = TARGETS[t][2]
         if not any(l in approved for l in labels):
-            need.extend(labels[:1] if t != "ig_reel" else labels[:2])
+            need.extend(labels[:1])
     from content_generator.scheduler.daily import _do_editorial
     from content_generator.pipeline.generator import save_content
     import time as _time
@@ -421,8 +418,7 @@ def main() -> int:
         _do_editorial(content, only=set(regen_need))
         save_content(content)
         approved = _approved(content)
-        regen_need = [l for l in regen_need
-                      if not any(x in approved for t in todo if l in TARGETS[t][2] for x in TARGETS[t][2])]
+        regen_need = [l for l in regen_need if l not in approved]
     handled = set(labels_to_regen(todo, {}, records))
     need = [l for l in need if l not in approved and l not in handled]
     if need:
@@ -432,9 +428,8 @@ def main() -> int:
 
     # 2. Publish through the normal paths; the ledger dedupes by date+slot+platform.
     failures = []
-    slots = {TARGETS[t][0] for t in todo if any(l in approved for l in TARGETS[t][2])
-             and not (t == "ig_reel" and prewarm_reel)}
-    if "ig_feed" in todo and "morning" in slots:
+    slots = {TARGETS[t][0] for t in todo if any(l in approved for l in TARGETS[t][2]) and t not in prewarm}
+    if ("ig_feed" in todo or "carousel" in todo) and "morning" in slots:
         ensure_ig_images(content)
     os.environ.setdefault("ENABLE_TIMED_SLOTS", "true")
     if "generate" in slots:
@@ -451,7 +446,7 @@ def main() -> int:
     blocked = [t for t in todo if not any(l in approved for l in TARGETS[t][2])]
     # Prewarming the evening reel before 22:00 is expected; every other target
     # selected for this run must now be present in the authoritative ledger.
-    checked_todo = [t for t in todo if not (t == "ig_reel" and prewarm_reel)]
+    checked_todo = [t for t in todo if t not in prewarm]
     after_records = records_for_date(date)
     remaining = [t for t in checked_todo if t in unposted_targets(after_records, ist_hour)]
     unresolved = sorted(set(blocked + remaining))

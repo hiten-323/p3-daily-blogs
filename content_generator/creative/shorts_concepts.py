@@ -182,7 +182,7 @@ def format_key(format_type: str) -> str:
 
 
 def pick(on_date, format_type: str, *, sku: str = "", history: list[dict] | None = None,
-         exclude_concepts=(), path: str | None = None) -> dict:
+         exclude_concepts=(), exclude_layouts=(), path: str | None = None) -> dict:
     """Choose today's concept/motion/layout/transition/hook for a format, honouring rotation rules."""
     fmt = format_key(format_type)
     rows = load_history(path) if history is None else history
@@ -204,11 +204,13 @@ def pick(on_date, format_type: str, *, sku: str = "", history: list[dict] | None
     bad_m = used("motion")
     motions = [m for m in c["motions"] if m not in bad_m] + [m for m in _order(MOTIONS, key) if m not in bad_m]
     motion = (motions or list(_order(MOTIONS, key)))[0]
-    bad_l = used("layout")
-    layouts = [lay for lay in _order(list(LAYOUTS), key) if lay not in bad_l] or _order(list(LAYOUTS), key)
+    bad_l = used("layout") | set(exclude_layouts)
+    layouts = [lay for lay in _order(list(LAYOUTS), key) if lay not in bad_l] \
+        or [lay for lay in _order(list(LAYOUTS), key) if lay not in set(exclude_layouts)] \
+        or _order(list(LAYOUTS), key)
     sib_t = {r.get("transition") for r in sibling}
-    transition = c["transition"] if c["transition"] not in sib_t else \
-        [t for t in _order(TRANSITIONS, key) if t not in sib_t][0]
+    alts = [t for t in _order(TRANSITIONS, key) if t not in sib_t]
+    transition = c["transition"] if c["transition"] not in sib_t else (alts[0] if alts else c["transition"])
     hooks = [h for h in c["hooks"] if h not in hooks_used] or list(c["hooks"])
     hook = _order(hooks, key)[0]
     return dict(date=ds, format=fmt, concept=c["id"], name=c["name"], scene=c["scene"], tone=c["tone"],

@@ -100,21 +100,66 @@ def _find_reel_thumbnail(date_str: str | None = None) -> str | None:
     return None
 
 
-def _select_evening_reel(approved: dict) -> tuple[str, dict] | None:
-    """Prefer growth_reel, then reel_1, then any other approved reel."""
+def _select_evening_reel(approved: dict, skip: set | None = None) -> tuple[str, dict] | None:
+    """Prefer growth_reel, then reel_1, then any other approved reel not already posted."""
+    posted = skip or set()
     if not isinstance(approved, dict):
         return None
     for key in ("growth_reel", "reel_1", "reel_2"):
+        if key in posted:
+            continue
         piece = approved.get(key)
         if isinstance(piece, dict) and piece:
             return key, piece
     for key, piece in approved.items():
-        if not isinstance(piece, dict) or not piece:
+        if key in posted or not isinstance(piece, dict) or not piece:
             continue
         kind = f"{key} {piece.get('type') or ''} {piece.get('id') or ''}".lower()
         if "reel" in kind or str(piece.get("track") or "").lower() == "growth":
             return key, piece
     return None
+
+
+def _evening_assets_posted(on_date) -> set[str]:
+    """Assets already live for this evening. A legacy row with no asset is reel_1."""
+    from content_generator.publisher.publishing_ledger import POSTED_STATES
+    from content_generator.scheduler.retry_unposted import records_for_date
+    posted = set()
+    for record in records_for_date(on_date.isoformat()):
+        if record.get("slot") != "evening":
+            continue
+        if str(record.get("platform") or "").lower() not in ("instagram_reel", "instagram_video", "instagram"):
+            continue
+        if record.get("status") not in POSTED_STATES:
+            continue
+        asset = str(record.get("asset") or "").strip()
+        posted.add(asset or "reel_1")
+    return posted
+
+
+def _feed_assets_to_publish(approved: dict, on_date) -> list[str]:
+    """Carousel and the feed post are separate. A bare morning row is the feed post only."""
+    from content_generator.publisher.publishing_ledger import POSTED_STATES
+    from content_generator.scheduler.retry_unposted import records_for_date
+    live = set()
+    bare = False
+    for record in records_for_date(on_date.isoformat()):
+        if record.get("slot") != "morning" or str(record.get("platform") or "").lower() != "instagram":
+            continue
+        if record.get("status") not in POSTED_STATES:
+            continue
+        asset = str(record.get("asset") or "").strip()
+        if asset:
+            live.add(asset)
+        else:
+            bare = True
+    queue = []
+    if isinstance(approved.get("carousel"), dict) and approved.get("carousel") and "carousel" not in live:
+        queue.append("carousel")
+    post = approved.get("instagram_post")
+    if isinstance(post, dict) and post and "instagram_post" not in live and not bare:
+        queue.append("instagram_post")
+    return queue
 
 
 def _first(piece: dict, *keys: str) -> str:
@@ -312,17 +357,14 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
         if "carousel" not in approved and "instagram_post" not in approved:
             return _held(slot, day, content, "canonical_validation_failed")
 
-        # Hand the publisher ONLY gate-approved objects. Blanking a rejected key
-        # to {} and relying on post_content to interpret empty-dict as "skip"
-        # made the publisher a safety boundary enforced by convention. Assigning
-        # straight from `approved` means a rejected asset is absent by
-        # construction, not by downstream cooperation.
-        filtered_content = content.copy()
-        filtered_content["carousel"]        = approved.get("carousel", {})
-        filtered_content["instagram_post"]  = approved.get("instagram_post", {})
-
+        feed_queue = _feed_assets_to_publish(approved, slot_date)
+        # Hand the publisher ONLY gate-approved objects. A rejected asset is
+        # absent by construction, not by downstream cooperation.
         from content_generator.publisher.instagram import _find_carousel_images, post_content, post_story
-        imgs = _find_carousel_images(filtered_content)
+        preview = content.copy()
+        preview["carousel"] = approved.get("carousel", {})
+        preview["instagram_post"] = approved.get("instagram_post", {})
+        imgs = _find_carousel_images(preview)
         if imgs:
             from content_generator.creative.jar_provenance import verify_creative_suite
             ok, issues = verify_creative_suite(imgs)
@@ -330,12 +372,21 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
                 return _held(slot, day, content, f"real_jar_unverified — {'; '.join(issues)}")
 
         from content_generator.publisher.publishing_ledger import publish_with_ledger
-        result = publish_with_ledger("instagram", filtered_content, slot, day,
-                                     lambda: post_content(filtered_content, day=day))
-        # Track the approved piece — tracking content.get("carousel") could stamp
-        # the learning log with a hook that never passed the gate.
-        piece = approved.get("carousel") or approved.get("instagram_post") or {}
-        _track(result, content, slot, piece)
+        result = {"success": True, "skipped": True, "error": ""}
+        piece = {}
+        for asset_name in feed_queue:
+            filtered_content = content.copy()
+            filtered_content["carousel"] = approved.get("carousel", {}) if asset_name == "carousel" else {}
+            filtered_content["instagram_post"] = approved.get("instagram_post", {}) if asset_name == "instagram_post" else {}
+            result = publish_with_ledger(
+                "instagram", filtered_content, slot, day,
+                lambda c=filtered_content: post_content(c, day=day),
+                asset=asset_name,
+            )
+            piece = approved.get(asset_name) or {}
+            _track(result, content, slot, piece)
+        if not feed_queue:
+            piece = approved.get("carousel") or approved.get("instagram_post") or {}
         fb_result = _mirror_to_facebook(content, day, slot)
         # Instagram Story (image, 24h) — separate method, same slot
         try:
@@ -352,7 +403,7 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
             result["sales_push"] = publish_for_slot(content, slot, day)
         except Exception as e:
             logger.warning("[slots] sales push publish skipped: %s", e)
-        asset = "carousel" if "carousel" in approved else "instagram_post"
+        asset = feed_queue[0] if feed_queue else ("carousel" if "carousel" in approved else "instagram_post")
         return _contract(slot, day, content, {"instagram": result, "facebook": fb_result},
                          {"instagram": [asset], "facebook": [asset]})
 
@@ -373,7 +424,7 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
         # growth_reel and reel_1 are preferred, then reel_2 and anything else
         # the gate returned. A valid reel_2 used to be ignored, so the slot
         # held even when an approved reel was sitting in the file.
-        picked = _select_evening_reel(approved)
+        picked = _select_evening_reel(approved, _evening_assets_posted(slot_date))
         if not picked:
             logger.error("[slots] evening slot: no reel passed the canonical gate "
                          "(approved=%s)", sorted(approved))
@@ -401,13 +452,14 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
                 logger.info("[slots] using HERO video: %s", os.path.basename(hero))
             else:
                 from content_generator.creative.reel_video import build_reel_video
-                video_path, is_hero = build_reel_video(reel, day, on_date=slot_date), False
+                video_path, is_hero = build_reel_video(reel, day, label=chosen, on_date=slot_date), False
             if video_path:
                 logger.info("[slots] publishing reel via Meta resumable upload")
                 from content_generator.publisher.publishing_ledger import publish_with_ledger
                 result = publish_with_ledger(
                     "instagram_video", content, slot, day,
                     lambda: _post_reel_direct_binary(video_path, caption),
+                    asset=chosen,
                 )
                 if result.get("success"):
                     logger.info("[slots] evening published as %s REEL VIDEO",
@@ -445,7 +497,8 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
                     )
                 from content_generator.publisher.publishing_ledger import publish_with_ledger
                 result = publish_with_ledger("instagram", content, slot, day,
-                                             lambda: _post_single_image(feed, caption))
+                                             lambda: _post_single_image(feed, caption),
+                                             asset=chosen)
                 fb_result = _mirror_to_facebook(
                     content, day, slot, image=feed, message=caption,
                     mirror_piece=reel, mirror_label=chosen,
@@ -454,7 +507,8 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
                 logger.warning("[slots] reel thumbnail is not a feed aspect — posting as Story")
                 from content_generator.publisher.publishing_ledger import publish_with_ledger
                 result = publish_with_ledger("instagram_story", content, slot, day,
-                                             lambda: post_local_story(image))
+                                             lambda: post_local_story(image),
+                                             asset=chosen)
                 fb_result = _mirror_to_facebook(
                     content, day, slot, message=caption,
                     mirror_piece=reel, mirror_label=chosen,

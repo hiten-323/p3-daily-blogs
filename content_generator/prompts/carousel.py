@@ -37,7 +37,7 @@ The final slide gives away a REAL free resource in exchange for a comment.
 - The founder replies personally with the resource (no auto-DM).
 '''
 
-    return f"""{brand_block()}{unlock_block}
+    prompt = f"""{brand_block()}{unlock_block}
 
 Generate ONE complete publish-ready Instagram Carousel for Purity Beans. Return a single JSON object.
 
@@ -80,7 +80,7 @@ ABSOLUTE RULES:
     {{"slide": 6, "heading": "Purity Beans Difference", "body": "Bold is agglomerated pure coffee, not freeze-dried. Purista is freeze-dried pure Robusta. Purica is freeze-dried pure Arabica. Prima is Premium Agglomerate and is not promoted while out of stock. Ultra Blend is 70% coffee and 30% chicory — do not name a process for it. Shop {WEBSITE_URL}", "visual": "Product hero — full Purity Beans jar, cinematic, gold accent"}},
     {{"slide": 7, "heading": "Save & Follow", "body": "Save this guide for your next coffee run. Follow @purepantryprovisions for one buying check you can save. Visit {WEBSITE_URL}", "visual": "Brand CTA — dark bg, Purity Beans logo, minimal gold"}}
   ],
-  "caption": "HOOK LINE that stops the scroll.\\n\\nWhat you will learn in this carousel (preview the value). Tell the story of why this matters to a real coffee lover. Mention Purity Beans naturally. Include: Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Purica is freeze-dried pure Arabica. Prima is Premium Agglomerate pure Arabica.\\n\\nThis is a 200-300 word paste-ready caption with emotional storytelling and brand facts.\\n\\nSave this post & Follow @purepantryprovisions for daily coffee truths. Shop now: {WEBSITE_URL}",
+  "caption": "HOOK LINE that stops the scroll.\\n\\nWhat you will learn in this carousel (preview the value). Teach the tension, the turn, and the payoff before any jar. Mention Purity Beans only in the soft end card. Ultra Blend is 70% coffee and 30% chicory. Freeze-dried is only Purica and Purista. Agglomerated is only Bold and Prima. Do not promote Prima.\\n\\nThis is a 200-300 word paste-ready caption. Value first. No shop, price, or offer language.\\n\\nSave this post and Follow @purepantryprovisions for the next lesson. {WEBSITE_URL}",
   "cta": "Save this post + Follow @purepantryprovisions. Explore pure coffee at {WEBSITE_URL}",
   "comment_trigger": "Comment SAVE if you are switching to real coffee this week.",
   "save_trigger": "Save this carousel — it will change how you buy coffee forever.",
@@ -88,6 +88,8 @@ ABSOLUTE RULES:
   "seo_keywords": ["premium instant coffee", "gourmet instant coffee", "freeze dried coffee", "agglomerated coffee", "coffee without preservatives", "pure instant coffee india", "instant coffee brand india"],
   "hashtags": "{HASHTAG_25}"
 }}"""
+    from content_generator.prompts.piece_craft import craft_block
+    return prompt + "\n\n" + craft_block("carousel")
 
 
 # Instagram-native V2 rules (shared growth/creative contract)
