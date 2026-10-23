@@ -1429,79 +1429,101 @@
   },
   "yt_short": {
     "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "Product Education and Conversion",
-    "primary_cta": "Shop at https://p3online.in",
-    "success_metric": "Website visits and product page conversions",
+    "objective": "Brand Awareness",
+    "primary_cta": "Follow @purepantryprovisions. Shop https://p3online.in",
+    "success_metric": "Average view duration > 80% and profile visits > 500",
     "platform": "YouTube Shorts",
-    "chosen_hook": "Look at the crystals in your jar right now.",
-    "comment_trigger": "Comment ARABICA if you want pure coffee crystals delivered to your desk.",
-    "cta": "Shop Purity Beans at https://p3online.in",
+    "chosen_hook": "You've been drinking coffee sludge your whole life. Here's the freeze-dried fix.",
+    "comment_trigger": "Comment COLD and I will send you the Purica cold-brew ratio.",
+    "cta": "Follow @purepantryprovisions for weekly coffee science that saves your morning. Shop https://p3online.in. Comment COLD and I will send you the Purica cold-brew ratio.",
     "duration_s": 35,
-    "hashtags": "#PurityBeans #PureCoffee #FreezeDriedCoffee #InstantCoffeeIndia #CoffeeLoversIndia",
-    "hook": "Look at the crystals in your jar right now.",
-    "hook_text": "Look at the crystals in your jar right now.",
-    "product": "Purica Gourmet Arabica Granules",
-    "save_trigger": "Save this before you buy your next jar of instant coffee.",
+    "hashtags": "#PurityBeans #Purica #PureArabica #FreezeDriedCoffee #InstantCoffeeIndia #CleanLabel #CoffeeScience",
+    "hook": "You've been drinking coffee sludge your whole life. Here's the freeze-dried fix.",
+    "hook_text": "You've been drinking coffee sludge your whole life. Here's the freeze-dried fix.",
+    "ladder_exhausted": true,
+    "product": "purica",
+    "publish_blocked": "ladder_exhausted",
+    "save_trigger": "Save this to test your coffee tomorrow — if it leaves sludge, it's not freeze-dried.",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
-        "duration_s": 6.0,
-        "on_screen": "LOOK AT THE CRYSTALS",
-        "spoken": "Look at the crystals in your coffee jar right now. Are they irregular and golden amber, or just a dull brown powder?",
-        "visual_direction": "Extreme macro close-up of Purica Gourmet Arabica Granules inside the glass jar, catching warm amber window light."
+        "duration_s": 5.0,
+        "on_screen": "Kitchen counter, 7:42 AM. Hand pours cold water over regular instant powder in a glass. Powder clumps instantly, tan sludge sinks to bottom. Text overlay: 'Your iced coffee is mostly water.'",
+        "spoken": "7:42 AM. One spoon. Cold water. And there it is — sludge at the bottom before you even taste it.",
+        "visual_direction": "Locked-off overhead macro on dark marble. Warm amber rim light isolates the Purity Beans Purica jar in background. Shallow depth of field, 85mm equivalent. Slight handheld micro-sway for realism. Condensation beads on cold glass. Fingerprint smudge on glass rim."
       },
       {
         "scene": 2,
         "type": "tension",
         "duration_s": 7.0,
-        "on_screen": "THE FREEZE-DRIED DIFFERENCE",
-        "spoken": "Heat destroys delicate aromas instantly. That is why ordinary instant coffee loses its natural character before it ever hits your mug.",
-        "visual_direction": "Hand turning the Purity Beans jar slightly, showing the label texture clearly against a dark wooden kitchen counter."
+        "on_screen": "Same hand, same glass. Finger runs along outside of glass — residue visible. Cut to: wallet on counter with Rs 500 note. Text overlay: 'Paying for coffee you don't drink.'",
+        "spoken": "You're paying for coffee that settles at the bottom. Every sip is weaker than the last. That's money in the sink.",
+        "visual_direction": "Eye-level side profile. Light catches the clear water above, sediment layer sharply defined below. Purity Beans Purica label catches a gold glint in background. Natural handheld sway. Condensation beads on cold glass."
       },
       {
         "scene": 3,
-        "type": "turn",
-        "duration_s": 7.0,
-        "on_screen": "PURE ARABICA, ZERO CHICORY",
-        "spoken": "Purity Beans Purica uses pure Arabica beans locked in freeze-dried crystals. No hidden fillers, no roasted chicory roots.",
-        "visual_direction": "A dry teaspoon scoops amber Purica crystals out of the glass jar with a slight, realistic clink against the rim."
+        "type": "unexpected_turn",
+        "duration_s": 8.0,
+        "on_screen": "Purica crystals dropped into identical iced water. Crystals hit water and vanish completely — zero sediment, pure amber clarity. Hand swirls glass — stays perfectly clear. Split text overlay: 'Heat fractures the structure.' then 'Freeze-drying protects it.'",
+        "spoken": "Heat fractures the coffee structure. Freeze-drying protects it. Purica dissolves. It does not settle. Pure Arabica. Zero chicory.",
+        "visual_direction": "Alternating holds, 1.5s minimum per glass. Locked-off. Natural handheld sway. No steam — both glasses cold. Background bokeh, warm key light wraps the Purity Beans Purica jar. Label texture catches light like real printed paper. Contact shadow under jar on marble."
       },
       {
         "scene": 4,
         "type": "payoff",
         "duration_s": 8.0,
-        "on_screen": "THE AROMA LOCK",
-        "spoken": "Hot water hits the glass, and the aroma blooms instantly because nothing was burned away during production.",
-        "visual_direction": "Hot water pouring from a kettle into a clear glass mug containing Purica granules, with steam rising gracefully in soft side light."
+        "on_screen": "Hand lifts Purity Beans Purica jar to chest height. Label faces camera: 'Purica Gourmet Arabica Granules. Pure Arabica. Freeze-dried. Zero Chicory.' Thumb rests naturally on label.",
+        "spoken": "Purity Beans Purica. Pure Arabica. Freeze-dried granules. Zero chicory. Read the jar.",
+        "visual_direction": "Slow push-in. Hand holds jar naturally, thumb resting on label. Background bokeh. Warm key light wraps the glass. Subtle lens breath. Contact shadow under jar on marble. Environment reflections visible on glass."
       },
       {
         "scene": 5,
         "type": "cta",
         "duration_s": 7.0,
-        "on_screen": "p3online.in",
-        "spoken": "Read the jar and taste the difference. Follow @purepantryprovisions and shop p3online.in today.",
-        "visual_direction": "The Purica Gourmet Arabica Granules jar sitting on a slate coaster next to the glass of coffee, shot on iPhone 15 with shallow depth of field."
+        "on_screen": "End card loops to Scene 1: Jar remains in lower third. Text overlay: 'Follow @purepantryprovisions for weekly coffee science.' | 'Shop https://p3online.in' | 'Comment COLD for Purica cold-brew ratio.' Final frame matches Scene 1 opening composition.",
+        "spoken": "Follow @purepantryprovisions for weekly coffee science. Shop https://p3online.in. Comment COLD and I will send you the Purica cold-brew ratio.",
+        "visual_direction": "Static end card holds 2 seconds then seamlessly loops to Scene 1 composition. Jar stays in frame lower third. Clean typography. No animation. Warm amber light consistent throughout."
       }
     ],
-    "share_trigger": "Share this with someone who drinks instant coffee every single morning.",
+    "share_trigger": "Share with the friend who still stirs sludge in their iced coffee every morning.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "editorial_score": {
-      "shareability": 5.0,
-      "saveability": 4.0,
-      "emotion_pull": 5.0,
-      "hook_strength": 6.0,
+      "shareability": 7.0,
+      "saveability": 7.0,
+      "emotion_pull": 7.0,
+      "hook_strength": 8.0,
       "brand_clarity": 9.0,
-      "overall": 5.8,
+      "overall": 7.6,
       "verdict": "REJECT",
-      "feedback": "The hook ‘Look at the crystals in your jar right now.’ is too generic and does not immediately hint at a unique benefit or problem, so it fails to interrupt the scroll strongly. The content leans heavily on product description rather than a compelling narrative or myth‑busting angle, reducing shareability and saveability. The emotional pull is moderate—there is pride in purity, but no strong identity or curiosity gap. The brand is clear but the hook and story lack hook‑strength, so the overall score falls below 8. To improve, start with a statement that reveals a hidden truth or betrayal (e.g., ‘You’ve been drinking melted crystals all along’), and weave in a short, surprising insight early on. Also, add a concise comparison or problem‑solution flash that generates excitement and encourages viewers to keep watching for the reveal.",
-      "retention_audit": "Scene 1 (problem) unclear hook; Scene 2 (tension) lacks visual contrast; Scene 3 (turn) no new emotional angle; Scene 4 (payoff) could use sound cue; Scene 5 (cta) too generic."
+      "feedback": "The hook is solid, but the overall asset lacks the viral punch needed for Indian coffee lovers. Boost shareability by adding a betrayal or identity hook (e.g., \"You've been drinking coffee sludge your whole life\"). Give a stronger save incentive early (\"Save this to test your coffee tomorrow\"). Tighten the narrative to keep the viewer’s curiosity high – avoid the \"If you only drink hot coffee, skip this\" line which can cause a mental skip. Highlight the pain point (wasting money on bad instant coffee) before showing the solution. End with a clear, single CTA to"
     },
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
+    "viral_potential": {
+      "scores": {
+        "hook": 7.0,
+        "curiosity_gap": 7.0,
+        "relatability": 5.0,
+        "shareability": 7.0,
+        "comment_trigger": 8.0,
+        "format_fit": 7.0,
+        "follow_cta": 6.0
+      },
+      "overall": 6.7,
+      "weakest": [
+        "relatability",
+        "follow_cta"
+      ],
+      "feedback": "The hook is strong but slightly jargon-heavy ('heat-fractured powder'). Relatability is low — the piece never shows the morning ritual, the iced coffee craving in Indian summer, or the frustration of stirring sludge while rushing. It feels like a lab demo, not a moment from a user's life. Add a 1-second relatable beat: someone trying to make quick cold coffee before work and getting sludge. The follow CTA is generic; tie the follow to a specific ongoing value ('Follow for weekly coffee science that saves your morning'). The loopable ending is missing — the end card just stops. Make the final f",
+      "better_hook": "Stop stirring sludge in your iced coffee — your instant powder was never built for cold water.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "retention_audit": "Scene 1 (0-5s): Hook lands at 0.5s with concrete ritual (7:42 AM, one spoon, boiling water). Reverse-qualifier text at 1.5s creates identity filter. Visual proof starts immediately — clumping sludge is relatable frustration. Strong.\nScene 2 (5-12s): Cold water test mirrors real iced coffee attempt. Finger-on-glass tactile detail grounds the macro. Spoken line explains the 'why' as viewer sees sediment. Strong.\nScene 3 (12-20s): Purica dissolve is the payoff visual. 1.5s minimum holds prevent auditory-visual desync. Split text overlay reinforces science without jargon. Strong.\nScene 4 (20-28s): Jar reveal is clean, label readable, claim stack (Pure Arabica, Freeze-dried, Zero Chicory) matches product rules exactly. Thumb-on-label realism cue passes.\nScene 5 (28-35s): CTA stack ties follow to specific",
+    "editorial_error": "brand: ['product truth: Shopify price truth: price ₹500 is not a live Shopify price']",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The hook ‘Look at the crystals in your jar right now.’ is too generic and does not immediately hint at a unique benefit or problem, so it fails to interrupt the scroll strongly. The content leans heavily on product description rather than a compelling narrative or myth‑busting angle, reducing shareability and saveability. The emotional pull is moderate—there is pride in purity, but no strong identity or curiosity gap. The brand is clear but the hook and story lack hook"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: ['product truth: Shopify price truth: price ₹500 is not a live Shopify price']"
   },
   "_asset_metadata": [
     {
@@ -3953,6 +3975,50 @@
       {
         "status": "exhausted",
         "reason": "The hook ‘Look at the crystals in your jar right now.’ is too generic and does not immediately hint at a unique benefit or problem, so it fails to interrupt the scroll strongly. The content leans heavily on product description rather than a compelling narrative or myth‑busting angle, reducing sharea"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook 'Look at the crystals in your jar right now.' is too generic and lacks a strong curiosity gap or betrayal trigger to stop the scroll effectively. The pacing in scenes 2 through 4 relies heavily on standard product description rather than an escalating tension or surprising fact. To achieve "
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "The hook ‘Look at the crystals in your jar right now.’ fails to create a strong curiosity gap or betrayal trigger, making it too generic for instant scroll‑stop. Scene 1 lacks a pattern interrupt, and scenes 2‑4 deliver standard product facts without escalating tension or surprising facts. To lift t"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 5.0 < 8.0 (weakest: curiosity_gap, comment_trigger, follow_cta). Hook is a claim, not a visual pattern interrupt. Cold-water sludge is niche; most Indians drink hot coffee or milk-based cold coffee. Curiosity gap opens with the answer (freeze-dried) instead of a question. Comment trigge"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The concept is strong and scientifically credible, but the hook lacks the visceral 'betrayal' or 'identity' trigger needed for viral shareability on YouTube Shorts. 'Brown sludge' is a functional pain point, not an emotional betrayal. The viewer doesn't feel cheated by a brand; they just see a physi"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.7 < 8.0 (weakest: relatability, follow_cta). The hook is strong but slightly jargon-heavy ('heat-fractured powder'). Relatability is low — the piece never shows the morning ritual, the iced coffee craving in Indian summer, or the frustration of stirring sludge while rushing. It feels "
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The hook is solid, but the overall asset lacks the viral punch needed for Indian coffee lovers. Boost shareability by adding a betrayal or identity hook (e.g., \"You've been drinking coffee sludge your whole life\"). Give a stronger save incentive early (\"Save this to test your coffee tomorrow\"). Tigh"
+      },
+      {
+        "status": "exhausted",
+        "reason": "brand: ['product truth: Shopify price truth: price ₹500 is not a live Shopify price']"
       }
     ]
   },
