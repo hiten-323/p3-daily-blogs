@@ -185,3 +185,29 @@ def test_an_answered_response_outranks_a_4xx_elsewhere(monkeypatch, caplog) -> N
     )
     assert "decommissioned" not in caplog.text.split("verdict:")[-1]
     router.reset_cascade_log()
+
+
+def test_blank_200_is_not_ok_and_falls_through(monkeypatch) -> None:
+    """Groq HTTP 200 with 0 chars must not be recorded as a successful answer."""
+    calls = []
+
+    def blank(_prompt, _max_tokens):
+        calls.append("groq")
+        return "", {"model": "openai/gpt-oss-120b"}
+
+    def good(_prompt, _max_tokens):
+        calls.append("gemini")
+        return '{"ok": true}', {"model": "gemini-ok"}
+
+    monkeypatch.setattr(router, "_PROVIDERS", [("groq", blank), ("gemini", good)])
+    monkeypatch.setattr(router, "extract", lambda raw: {"ok": True})
+
+    out = router.call("prompt", "yt_short")
+
+    assert out == {"ok": True}
+    assert calls == ["groq", "gemini"]
+    groq_rows = [row for row in router.get_cascade_log() if row["provider"] == "groq"]
+    assert groq_rows and groq_rows[0]["category"] == "empty_content"
+    assert groq_rows[0]["detail"] == "empty content"
+    assert not any(row["category"] == "ok" and "0 chars" in str(row.get("detail"))
+                   for row in router.get_cascade_log())

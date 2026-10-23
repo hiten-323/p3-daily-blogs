@@ -85,3 +85,55 @@ def test_groq_skips_an_oversized_prompt_without_posting(monkeypatch):
     assert usage["status_code"] == 413
     assert "exceeds 8000" in usage["error"]
     assert posted == []
+
+
+def test_groq_200_with_zero_chars_is_a_failure_and_tries_the_next_model(monkeypatch):
+    """Run 39956370166 logged groq OK (0 chars) and never tried gpt-oss-20b."""
+    monkeypatch.setattr(groq, "MODELS", ["openai/gpt-oss-120b", "openai/gpt-oss-20b"])
+    monkeypatch.setenv("GROQ_API_KEY", "gsk_test")
+    bodies = iter([
+        {"choices": [{"message": {"content": ""}}], "usage": {"prompt_tokens": 3, "completion_tokens": 0}},
+        {"choices": [{"message": {"content": '{"ok": true}'}}],
+         "usage": {"prompt_tokens": 1, "completion_tokens": 2}},
+    ])
+    calls = []
+
+    def post(*_args, **kwargs):
+        calls.append(kwargs["json"]["model"])
+        return _Response(200, next(bodies))
+
+    monkeypatch.setattr(groq._http, "post", post)
+    text, usage = groq.call("prompt", 100)
+    assert text == '{"ok": true}'
+    assert usage["model"] == "openai/gpt-oss-20b"
+    assert calls == ["openai/gpt-oss-120b", "openai/gpt-oss-20b"]
+
+
+def test_groq_reads_reasoning_json_when_content_is_empty(monkeypatch):
+    monkeypatch.setattr(groq, "MODELS", ["openai/gpt-oss-120b"])
+    monkeypatch.setenv("GROQ_API_KEY", "gsk_test")
+
+    def post(*_args, **_kwargs):
+        return _Response(200, {
+            "choices": [{"message": {"content": "", "reasoning": '{"hook": "from reasoning"}'}}],
+            "usage": {},
+        })
+
+    monkeypatch.setattr(groq._http, "post", post)
+    text, usage = groq.call("prompt", 100)
+    assert text == '{"hook": "from reasoning"}'
+    assert usage["model"] == "openai/gpt-oss-120b"
+
+
+def test_groq_all_empty_200s_return_a_provider_failure(monkeypatch):
+    monkeypatch.setattr(groq, "MODELS", ["a", "b"])
+    monkeypatch.setenv("GROQ_API_KEY", "gsk_test")
+
+    def post(*_args, **_kwargs):
+        return _Response(200, {"choices": [{"message": {"content": None}}], "usage": {}})
+
+    monkeypatch.setattr(groq._http, "post", post)
+    text, usage = groq.call("prompt", 100)
+    assert text is None
+    assert usage["status_code"] == 200
+    assert usage["error"] == "empty content"

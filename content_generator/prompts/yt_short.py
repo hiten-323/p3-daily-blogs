@@ -1,6 +1,33 @@
 """YouTube Shorts prompt — full publish-ready asset."""
+import json
+
 from content_generator.prompts.brand import brand_block
 from content_generator.rotation import COMMERCIAL_EMOTIONS, WEBSITE_URL, get_todays_viral_idea
+
+# Every scenes[] object. A missing key fails YoutubeShortSchema and burns a ladder attempt.
+SCENE_FIELDS = ("scene", "type", "duration_s", "on_screen", "spoken", "visual_direction")
+
+_SCENE_EXAMPLE = {
+    "scene": 1,
+    "type": "problem",
+    "duration_s": 5,
+    "on_screen": "READ THE JAR",
+    "spoken": "The label says what the cup actually is.",
+    "visual_direction": "Close-up of the jar label in warm light",
+}
+
+
+def scene_contract() -> str:
+    """Hard scene schema for the generator and for ladder rewrites."""
+    fields = ", ".join(SCENE_FIELDS)
+    return (
+        "REQUIRED SCENE FIELDS: every object in scenes MUST include all of these keys: "
+        f"{fields}. Do not omit any of them. Do not leave any of them as an empty string. "
+        "scene is an integer, duration_s is a number of seconds, and on_screen, spoken, "
+        "and visual_direction are non-empty strings. "
+        "Example of one complete scene object:\n"
+        + json.dumps(_SCENE_EXAMPLE, indent=2)
+    )
 
 
 def build(product: str, day: int) -> str:
@@ -26,8 +53,9 @@ ABSOLUTE RULES:
 - '{WEBSITE_URL}' MUST appear in cta and description
 - scenes.on_screen = text displayed on screen only (max 4 words per scene)
 - scenes.spoken = voiceover only, no production notes
-- Every scene object must include scene, type, duration_s, on_screen, spoken, and visual_direction. Do not omit any of those fields.
 - Bold is agglomerated pure coffee. You must not call Bold freeze-dried. Purica and Purista are freeze-dried. Do not name a process for Ultra Blend. Never write the word fully.
+
+{scene_contract()}
 
 {{
   "product": "{product}",

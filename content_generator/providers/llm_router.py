@@ -250,6 +250,15 @@ def _try_provider(
         with _API_SEMAPHORE:
             text, usage = call_fn(prompt, max_tokens)
         elapsed = time.time() - t0
+        # HTTP 200 with an empty body used to be logged as OK (0 chars) and
+        # recorded as a successful call, so the next model was never tried and
+        # the budget kept the provider in front. Blank text is a failure.
+        if isinstance(text, str) and not text.strip():
+            usage = dict(usage or {})
+            usage.setdefault("status_code", 200)
+            if "empty" not in str(usage.get("error") or "").lower():
+                usage["error"] = "empty content"
+            text = None
         if text is None and not usage:
             # No key configured: skip instantly, never count it as a failure.
             _record_attempt(
@@ -283,6 +292,8 @@ def _try_provider(
             category = "auth_rejected"
         elif status in _RETRY_STATUSES:
             category = "retryable"
+        elif status == 200 and "empty content" in str(detail or "").lower():
+            category = "empty_content"
         elif 400 <= status < 500:
             category = "client_error"
         else:
@@ -431,7 +442,7 @@ def _log_cascade_verdict(label: str) -> None:
     # cerebras 404'd, when the actual proximate failure was openrouter
     # answering with reasoning prose instead of JSON — sending the reader to
     # the wrong fix.
-    if cats & {"unparseable", "parsed_empty"}:
+    if cats & {"unparseable", "parsed_empty", "empty_content"}:
         hint = ("a provider ANSWERED and the response was unusable — this is not a "
                 "cascade outage; inspect the model's output, the prompt and the schema")
     elif cats <= {"no_api_key_or_transport", "circuit_open"}:
