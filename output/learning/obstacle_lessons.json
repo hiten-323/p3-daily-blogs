@@ -3737,6 +3737,48 @@
       "reason": "viral: score 5.0 < 8.0 (weakest: comment_trigger, relatability). Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"What's actually inside this jar? Let's read it\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trig",
       "stage": "generation",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.5 < 8.0 (weakest: relatability, shareability, comment_trigger). The opening hook uses a slightly generic phrase ('coffee mistake'). To elevate this to an 8+ for YouTube Shorts, ground the hook directly in an everyday Indian coffee kitchen habit without knocking chicory or sounding preachy. Strengthen the comment trigger by asking a specific preference question rather than a complian",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 6.5 < 8.0 (weakest: relatability, shareability, comment_trigger). the opening hook uses a slightly generic phrase ('coffee mistake'). to elevate this to an 8+ for yout",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "viral: score 6.5 < 8.0 (weakest: relatability, shareability, comment_trigger). The opening hook uses a slightly generic phrase ('coffee mistake'). To elevate this to an 8+ for YouTube Shorts, ground the hook directly in an everyday Indian coffee kitchen habit without knocking chicory or sounding pre",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 20 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'on_screen': 'Macro clos...ring harsh processing.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.type Field required [type=missing, input_value={'on_screen': 'Macro clos...ring harsh processing.'}, input_type=dict] For furt",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "process_match",
+      "id": "youtube|yt_short|process_match|schema: 20 validation errors for youtubeshortschema scenes.0.scene field required [type=missing, input_value={'on_screen': 'macro clos...ring harsh processing.'}, input_type=dict] ",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 20 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'on_screen': 'Macro clos...ring harsh processing.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.type Field required [type=miss",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 10 validation errors for YoutubeShortSchema scenes.0.scene Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='Macro close-up of Purity...ranules in a glass jar.', input_type=str] For further information visit https://errors.pydantic.dev/2.14/v/int_parsing scenes.0.visual_direction Field required [type=missing, input_value={'scene':",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 10 validation errors for youtubeshortschema scenes.0.scene input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='macro close",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 10 validation errors for YoutubeShortSchema scenes.0.scene Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='Macro close-up of Purity...ranules in a glass jar.', input_type=str] For further information visit https://errors.pydantic.de",
+      "stage": "generation",
+      "status": "gate_holding"
     }
   ],
   "version": 1
