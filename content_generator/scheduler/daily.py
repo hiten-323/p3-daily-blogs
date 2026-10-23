@@ -1141,6 +1141,12 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                 # The measured score belonged to the non-compliant draft.
                 piece.pop("editorial_score", None)
                 piece.pop("viral_potential", None)
+            if label == "yt_short":
+                # Fill missing scene fields from copy already on the scene, or
+                # ask the model to repair only those fields, before this
+                # attempt is counted as a schema failure.
+                from content_generator.core.yt_short_repair import repair_yt_short
+                repair_yt_short(piece)
             schema_issues = _schema_issues(label, piece)
             is_copy_ok, copy_issues = _validate_piece_copy(label, piece)
             feedback = ""
@@ -1494,6 +1500,9 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
         if from_scratch:
             from content_generator.core.fallback_ladder import scratch_prompt
             regen_prompt = scratch_prompt(label, piece, feedback, threshold, brand_block())
+        if label == "yt_short":
+            from content_generator.prompts.yt_short import scene_contract
+            regen_prompt += "\n\n" + scene_contract()
         if label == "blog_post":
             from content_generator.core.blog_writer import generate_blog_post
             improved = generate_blog_post(

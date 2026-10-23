@@ -3,6 +3,7 @@ import os
 import re
 import logging
 import requests as _http
+from content_generator.providers.openai_compat import message_text
 from content_generator.providers.provider_budget import rate_headers
 
 logger = logging.getLogger(__name__)
@@ -142,11 +143,18 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
         if resp.status_code == 200:
             try:
                 body = resp.json()
-                text = body["choices"][0]["message"]["content"]
+                msg = body["choices"][0].get("message") or {}
+                # gpt-oss often leaves content empty and puts the JSON in reasoning.
+                # A 200 with nothing in either field is not an answer.
+                text = message_text(msg) if isinstance(msg, dict) else str(msg or "")
             except (KeyError, IndexError, TypeError, ValueError) as e:
                 logger.warning("Groq %s returned malformed success payload: %s", model, e)
                 last_failure = {"status_code": 200, "model": model,
                                 "error": f"malformed success payload: {e}"}
+                continue
+            if not str(text or "").strip():
+                logger.warning("Groq %s HTTP 200 with 0 chars — provider failure, trying next model", model)
+                last_failure = {"status_code": 200, "model": model, "error": "empty content"}
                 continue
             u = body.get("usage", {})
             return text, {
