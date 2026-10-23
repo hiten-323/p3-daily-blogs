@@ -4425,8 +4425,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 12,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...es.1.duration_s Fiel\"}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error",
+      "count": 16,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...y morning with coffee.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "schema",
@@ -4509,8 +4509,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 3,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur..._direction Field req\"}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error",
+      "count": 4,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...y morning with coffee.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "ladder_exhausted",
@@ -4967,6 +4967,62 @@
       "last_seen": "2026-10-23",
       "platform": "youtube",
       "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s Field required [type=missing, input_value={'scene': 1, 'type': 'STO...ever reaches your mug.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s Field required",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The hook relies on a standard industry statement rather than an immediate personal challenge or shocking coffee realization. To push this score above 8, open with a direct question about what is actually in the viewer's cup right now or highlight the invisible aroma loss with a sharper visual contrast in the first second. Ensure the lo",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). the hook relies on a standard industry statement rather than an immediate personal challenge or shocking coffee reali",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The hook relies on a standard industry statement rather than an immediate personal challenge or shocking coffee realization. To push this score above 8, open with a direct question about what is actually in the viewer's cup right now or",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "The hook, while informative, is too generic and could apply to any instant coffee brand. Strengthen it with a betrayal or curiosity twist that directly implicates common instant coffee practices (e.g., \u201cYou\u2019ve been drinking instant coffee that has already lost its aroma\u201d). Make the brand message tighter by inserting the approved slogan \u201cIndia\u2019s Cleanest Instant Coffee\u201d for Purica, which will sharp",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "youtube|yt_short|aesthetic|the hook, while informative, is too generic and could apply to any instant coffee brand. strengthen it with a betrayal or curiosity twist that directly implicates common instant co",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "The hook, while informative, is too generic and could apply to any instant coffee brand. Strengthen it with a betrayal or curiosity twist that directly implicates common instant coffee practices (e.g., \u201cYou\u2019ve been drinking instant coffee that has already lost its aroma\u201d). Make the brand message tig",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema scenes List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'type': 'pr...e Arabica experience.'}], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/too_short | brand: ['Contains banned claim wording: fresh']",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 1 validation error for youtubeshortschema scenes list should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'type': 'pr...e arabic",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 1 validation error for YoutubeShortSchema scenes List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'type': 'pr...e Arabica experience.'}], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/too_short | br",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "product_truth",
+      "id": "youtube|yt_short|product_truth|brand: ['missing brand mention', \"product truth: fssai: never use '100%' in marketing copy; say 'pure coffee', 'pure arabica', 'pure robusta'\"]",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "brand: ['Missing brand mention', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
       "stage": "generation",
       "status": "gate_holding"
     }

@@ -1418,75 +1418,37 @@
     "viral_readiness_score": 69.0
   },
   "yt_short": {
-    "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "Drive product awareness and website traffic for Purica freeze-dried Arabica.",
-    "primary_cta": "Shop p3online.in",
-    "success_metric": "Views, profile visits, and website clicks to p3online.in",
+    "featured_product": "Purica",
+    "objective": "Increase awareness and drive traffic to shop",
+    "primary_cta": "Shop",
+    "success_metric": "Views, profile visits, and website clicks to https://p3online.in",
     "platform": "YouTube Shorts",
-    "asset_id": "yt_short_purica_freeze_dried_001",
-    "audio": "Lo-fi instrumental coffee house beat, subtle crackle of boiling water in the background, clean acoustic pluck.",
-    "brand_mention": "Purity Beans Purica",
-    "caption": "Freeze-drying locks in aroma that standard instant coffee loses in hot air towers. Meet Purity Beans Purica: pure Arabica crystals with nothing else added. Read the jar, taste the difference. Shop now at https://p3online.in",
-    "chosen_hook": "Most instant coffee loses its natural aroma before it ever reaches your mug.",
-    "comment_trigger": "Comment ARABICA if you drink your coffee black.",
-    "cta": "Shop pure Arabica at https://p3online.in",
-    "hashtags": "#PurityBeans #pureinstantcoffee #freeze dried coffee #gourmet coffee #coffee lovers India",
-    "hook": "Most instant coffee loses its natural aroma before it ever reaches your mug.",
-    "hook_text": "Most instant coffee loses its natural aroma before it ever reaches your mug.",
-    "ladder_exhausted": true,
-    "loop_note": "Loops seamlessly back to the steaming mug in the first frame.",
-    "product": "purica",
-    "publish_blocked": "ladder_exhausted",
-    "save_trigger": "Save this video for your next grocery shopping guide.",
-    "scenes": [
-      {
-        "scene": 1,
-        "type": "STOP",
-        "duration": "0-4s",
-        "visual_direction": "Macro shot of hot water pouring into a dark glass mug, steam rising softly against a warm kitchen background. Shot on iPhone 15, handheld, shallow depth of field.",
-        "on_screen": "Most instant coffee loses aroma instantly.",
-        "spoken": "Most instant coffee loses its natural aroma before it ever reaches your mug."
-      },
-      {
-        "scene": 2,
-        "type": "CURIOSITY",
-        "duration": "4-10s",
-        "visual_direction": "Close-up of the exact Purity Beans Purica glass jar sitting on a dark wooden counter. Light catching the amber glass and the freeze-dried granules inside.",
-        "on_screen": "How freeze-drying changes everything.",
-        "spoken": "That is because conventional heat ruins delicate coffee notes. Freeze-drying protects them."
-      },
-      {
-        "scene": 3,
-        "type": "VALUE",
-        "duration": "10-22s",
-        "visual_direction": "A hand tipping the Purica jar over a spoon, revealing crystalline pure Arabica granules falling slowly. Natural lighting from a side window.",
-        "on_screen": "Pure Arabica. Zero chicory.",
-        "spoken": "Purity Beans Purica is pure Arabica freeze-dried into delicate crystals. Pure coffee with zero chicory and zero fillers added."
-      },
-      {
-        "scene": 4,
-        "type": "TRUST",
-        "duration": "22-32s",
-        "visual_direction": "Finger pointing directly to the back label of the Purity Beans Purica jar in a well-lit kitchen. Real skin texture and slight reflection on glass.",
-        "on_screen": "Read the jar. Nothing hidden.",
-        "spoken": "Check the ingredient panel yourself. What you see is precisely what you get in your cup."
-      },
-      {
-        "scene": 5,
-        "type": "FOLLOW",
-        "duration": "32-40s",
-        "visual_direction": "The Purica jar resting next to a ceramic cup of dark coffee on a wooden table. Subtle lens flare from a warm desk lamp.",
-        "on_screen": "Follow @purepantryprovisions | Shop p3online.in",
-        "spoken": "Follow @purepantryprovisions and discover India's cleanest instant coffee at p3online.in."
-      }
+    "_shape": [
+      "asset_id",
+      "audio",
+      "comment_trigger",
+      "featured_product",
+      "hashtags",
+      "objective",
+      "platform",
+      "primary_cta",
+      "product",
+      "save_trigger",
+      "scenes",
+      "share_trigger",
+      "success_metric",
+      "tagline"
     ],
-    "script": "Most instant coffee loses its natural aroma before it ever reaches your mug. That is because conventional heat ruins delicate coffee notes. Freeze-drying protects them. Purity Beans Purica is pure Arabica freeze-dried into delicate crystals. Pure coffee with zero chicory and zero fillers added. Check the ingredient panel yourself. What you see is precisely what you get in your cup. Follow @purepantryprovisions and discover India's cleanest instant coffee at p3online.in.",
-    "share_trigger": "Share this with a coffee lover who appreciates pure Arabica.",
-    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "editorial_error": "schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'scene': 1, 'type': 'STO...ever reaches your mug.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s   Field required [type=missing, input_value={'scene': 2, 'type': 'CUR...-drying protects them.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.2.duration_s   Field requi",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'scene': 1, 'type': 'STO...ever reaches your mug.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s   Field required [type=missing, input_value={'scene': 2, 'type': 'CUR...-drying protects them.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missin"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...y morning with coffee.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
+    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "editorial_error": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...y morning with coffee.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
+    "ladder_exhausted": true,
+    "publish_blocked": "ladder_exhausted"
   },
   "_asset_metadata": [
     {
@@ -3522,6 +3484,50 @@
       {
         "status": "exhausted",
         "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'scene': 1, 'type': 'STO...ever reaches your mug.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s   Field required "
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The hook relies on a standard industry statement rather than an immediate personal challenge or shocking coffee realization. To push this score above 8, open with a direct question about what is actually in the viewer's cup right now or "
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "The hook, while informative, is too generic and could apply to any instant coffee brand. Strengthen it with a betrayal or curiosity twist that directly implicates common instant coffee practices (e.g., “You’ve been drinking instant coffee that has already lost its aroma”). Make the brand message tig"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...required brand facts']\"}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema scenes   List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'type': 'pr...e Arabica experience.'}], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/too_short | br"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...s to taste pure coffee'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 8,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "status": "exhausted",
+        "reason": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
       }
     ]
   },
