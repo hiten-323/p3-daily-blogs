@@ -1418,81 +1418,115 @@
     "viral_readiness_score": 69.0
   },
   "yt_short": {
-    "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "Follow / Discovery",
-    "primary_cta": "Follow @purepantryprovisions for more quiet coffee moments.",
-    "success_metric": "Profile visits and follows gained from organic reach",
-    "_growth_attempts": 1,
-    "asset_id": "yt_short_purica_ritual_01",
-    "audio": "Soft morning ambient sound with the gentle clink of a glass spoon on porcelain, followed by the quiet whoosh of hot water settling.",
-    "brand_mention": "Purity Beans Purica Gourmet Arabica Granules",
-    "caption": "The quietest ritual of the morning. When the water hits the jar, the aroma does the talking. No noise, just pure Arabica in a glass jar. Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Follow @purepantryprovisions for more quiet coffee moments. Discover our pure collection at https://p3online.in",
-    "chosen_hook": "Most people rush their morning cup without looking at what dissolves.",
-    "comment_trigger": "Comment RITUAL if you take your first cup in complete silence.",
-    "funnel_objective": "Follower growth and brand discovery through ritual value",
-    "gate_rejection": "none",
-    "growth_plan": "Focus entirely on the sensory ritual of pure Arabica granules dissolving, establishing calm authority before showing the brand name at the end.",
-    "growth_review": "Clean, educational, and narrative-driven without any aggressive commercial language in the core frames.",
-    "hashtags": "#PurityBeans #PureCoffee #FreezeDriedCoffee #CoffeeRitual #ArabicaCoffee",
-    "hook": "Most people rush their morning cup without looking at what dissolves.",
-    "hook_strategy": "Relatable Moment",
-    "hook_text": "Watch what happens when freeze-dried Arabica meets hot water.",
+    "featured_product": "Purica",
+    "objective": "Brand awareness and ritual education",
+    "primary_cta": "Explore our pure coffee collection at https://p3online.in",
+    "success_metric": "Saves and profile visits",
+    "_growth_attempts": 3,
+    "asset_id": "yt_short_purica_004",
+    "audio": "Warm acoustic guitar background with ambient kitchen sounds, gentle pouring, and stirring",
+    "brand_mention": "Purity Beans Purica",
+    "caption": "Stop pouring boiling water directly onto your coffee. Purity Beans Purica brings you pure Arabica freeze-dried crystals with zero shortcuts. Read the jar. Explore our pure coffee collection at https://p3online.in #PurityBeans #Purica #FreezeDriedCoffee #PureCoffee #CoffeeLoversIndia",
+    "chosen_hook": "Stop pouring boiling water directly onto your coffee.",
+    "comment_trigger": "Comment ARABICA to receive our home-brewing ritual guide.",
+    "funnel_objective": "Consideration",
+    "gate_rejection": false,
+    "growth_plan": "Focus on the sensory ritual of pure coffee brewing to drive high saves and meaningful profile visits.",
+    "growth_review": "Aligned with non-sales value-first portfolio rules and brand guardrails.",
+    "hashtags": "#PurityBeans #Purica #FreezeDriedCoffee #PureCoffee #CoffeeLoversIndia",
+    "hook": "Stop pouring boiling water directly onto your coffee.",
+    "hook_strategy": "Contrarian Statement",
+    "hook_text": "Stop pouring boiling water directly onto your coffee.",
     "ladder_exhausted": true,
-    "product": "Purica Gourmet Arabica Granules",
+    "product": "Purica",
     "psychology_frame": "ritual",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Chef's Table documentary style macro shot of water meeting coffee granules.",
-    "retention_tactic": "Visual macro transition every 4 seconds from dry granules to dissolving crema to a calm hand holding the warm glass.",
-    "save_trigger": "Save this for your next slow weekend morning routine.",
+    "reel_inspiration": "Coffee brewing ritual documentary",
+    "retention_tactic": "Macro visual transition every 4 seconds",
+    "save_trigger": "Save this to remember the ideal water temperature for your morning cup.",
     "scenes": [
       {
         "scene": 1,
-        "visual_description": "Extreme macro shot, 85mm lens, shallow depth of field. Golden morning light through a kitchen window hitting a dark countertop. A dry spoon resting beside the exact Purity Beans Purica glass jar. Visible glass texture and condensation on the side.",
-        "duration_s": "5",
-        "on_screen": "The 7 AM quiet",
-        "spoken": "There is a specific way to start a morning when you care about the first sip."
+        "type": "STOP",
+        "duration_s": 5,
+        "on_screen": "Stop pouring boiling water directly onto your coffee.",
+        "spoken": "Stop pouring boiling water directly onto your coffee.",
+        "visual_direction": "Close-up of the exact Purity Beans Purica glass jar sitting on a warm wooden counter, shallow depth of field, natural kitchen lighting, shot on iPhone 15."
       },
       {
         "scene": 2,
-        "visual_description": "Handheld angle, natural skin texture on fingers, slight natural hand tremor. Unscrewing the lid of the Purity Beans Purica jar. The label catches the soft amber light. Freeze-dried coffee crystals visible inside.",
-        "duration_s": "5",
-        "on_screen": "Read the jar",
-        "spoken": "Before you pour water into your mug, take three seconds to look at the jar."
+        "type": "CURIOSITY",
+        "duration_s": 6,
+        "on_screen": "Pure Arabica freeze-dried crystals.",
+        "spoken": "Purity Beans Purica uses pure Arabica freeze-dried crystals locked in aroma.",
+        "visual_direction": "Macro shot of the glass jar under warm amber light, showing crystal texture through clear glass."
       },
       {
         "scene": 3,
-        "visual_description": "Macro shot of freeze-dried Arabica granules falling into a ceramic mug. Natural light falloff, zero oversaturation, authentic kitchen background with a slightly worn wooden coaster.",
-        "duration_s": "6",
-        "on_screen": "Pure Arabica granules",
-        "spoken": "Freeze-dried pure Arabica preserves the delicate notes without any hidden additives."
+        "type": "VALUE",
+        "duration_s": 8,
+        "on_screen": "Read the jar ingredient panel.",
+        "spoken": "Read the jar ingredient panel. Zero shortcuts.",
+        "visual_direction": "A hand gently turning the Purity Beans Purica jar to show the clean ingredient panel, realistic finger smudges on glass, natural skin texture."
       },
       {
         "scene": 4,
-        "visual_description": "Hot water pouring from a glass kettle in slow motion. Steam rising gracefully into the cool morning air. The granules dissolve instantly, forming a light crema.",
-        "duration_s": "6",
-        "on_screen": "Watch it dissolve",
-        "spoken": "Hot water meets pure coffee. No residue, no rush, just natural aroma."
+        "type": "TRUST",
+        "duration_s": 7,
+        "on_screen": "Pure coffee ritual.",
+        "spoken": "A calm morning ritual with pure coffee from Purity Beans Purica.",
+        "visual_direction": "A person taking a calm sip from the mug, steam rising slowly, cozy lived-in kitchen background with subtle clutter."
       },
       {
         "scene": 5,
-        "visual_description": "The exact Purity Beans Purica jar sitting still in the center of the frame on a dark slate surface. Clean typography overlay showing handle and website. Shot on iPhone 15, realistic contact shadow.",
-        "duration_s": "5",
-        "on_screen": "Follow @purepantryprovisions | https://p3online.in",
-        "spoken": "Follow for more honest coffee rituals. Visit p3online.in."
+        "type": "FOLLOW",
+        "duration_s": 4,
+        "on_screen": "Explore at https://p3online.in",
+        "spoken": "Follow for more and explore Purity Beans at https://p3online.in",
+        "visual_direction": "Product beauty shot of Purity Beans Purica centered on dark marble surface, soft lens flare from morning window light."
       }
     ],
-    "share_trigger": "Share this with someone who appreciates a quiet morning ritual.",
+    "share_trigger": "Share this with a friend who appreciates a thoughtful morning ritual.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "target": "Urban Indian coffee lovers seeking a pure morning ritual",
-    "type": "YouTube Short",
-    "value_prop": "Pure Arabica taste with zero chicory and transparent labeling",
-    "viral_loop": "Viewers share the calming macro visuals and save the post for morning routine inspiration.",
-    "viral_potential": 8.5,
+    "target": "Coffee connoisseurs and mindful morning drinkers in India",
+    "type": "youtube_short",
+    "value_prop": "Freeze-dried pure Arabica with zero shortcuts",
+    "viral_loop": "Comment keyword for brewing guide",
+    "viral_potential": {
+      "scores": {
+        "hook": 8.0,
+        "curiosity_gap": 7.0,
+        "relatability": 8.0,
+        "shareability": 8.0,
+        "comment_trigger": 8.0,
+        "format_fit": 8.0,
+        "follow_cta": 8.0
+      },
+      "overall": 7.86,
+      "weakest": [
+        "curiosity_gap"
+      ],
+      "feedback": "The piece has strong technical compliance and clear visual direction matching the exact reference jar. To elevate the curiosity gap, the opening instruction should instantly hint at *why* boiling water ruins the cup (e.g., burning the delicate Arabica notes). Maintain the strict adherence to pure coffee and accurate freeze-dried framing for Purica.",
+      "better_hook": "Your boiling water is destroying your morning coffee.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
     "viral_readiness_score": 9.2,
-    "editorial_error": "schema: 10 validation errors for YoutubeShortSchema scenes.0.type   Field required [type=missing, input_value={'scene': 1, 'visual_desc...e about the first sip.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'visual_desc...e about the first sip.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.type   Field required [ | brand: ['Missing brand mention']",
+    "editorial_score": {
+      "shareability": 6.5,
+      "saveability": 5.5,
+      "emotion_pull": 6.0,
+      "hook_strength": 7.0,
+      "brand_clarity": 8.5,
+      "overall": 6.7,
+      "verdict": "REJECT",
+      "feedback": "The hook is a decent contrarian stop but generic — any premium coffee brand could say it. The save trigger promises 'ideal water temperature' but the script never states it (90–96°C for freeze-dried Arabica), so saves will drop when viewers realize the value isn't delivered. The comment trigger 'ARABICA' promises a home-brewing ritual guide but the guide is never shown or described — comment-to-lead mechanic fails without visible payoff. Scene 2 says 'locked in aroma' but doesn't explain why freeze-drying matters vs agglomerated. Scene 3 shows ingredient panel but doesn't zoom on 'Arabica coffee — 100%' text. The ritual in Scene 4 is cozy but lacks a micro-insight (e.g., 'wait 30 seconds off boil"
+    },
+    "retention_audit": "Scene 1 successfully establishes a high-interest pattern interrupt within the first two seconds. Scene 2 and 3 maintain momentum through macro visual pivots and clean ingredient transparency. Scene 4 grounds the narrative with relatable lifestyle cues. Scene 5 closes cleanly with actionable CTAs and website links.",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 10 validation errors for YoutubeShortSchema scenes.0.type   Field required [type=missing, input_value={'scene': 1, 'visual_desc...e about the first sip.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'visual_desc...e about the first sip.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missi"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: The hook is a decent contrarian stop but generic — any premium coffee brand could say it. The save trigger promises 'ideal water temperature' but the script never states it (90–96°C for freeze-dried Arabica), so saves will drop when viewers realize the value isn't delivered. The comment trigger 'ARABICA' promises a home-brewing ritual guide but the guide is never shown or described — comment-to-lead mechanic fails without visible payoff. Scene 2 says 'locked in aroma' "
   },
   "_asset_metadata": [
     {
@@ -2970,6 +3004,50 @@
       {
         "status": "exhausted",
         "reason": "schema: 10 validation errors for YoutubeShortSchema scenes.0.type   Field required [type=missing, input_value={'scene': 1, 'visual_desc...e about the first sip.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field required"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "schema: 10 validation errors for YoutubeShortSchema scenes.0.type   Field required [type=missing, input_value={'scene': 1, 'visual_desc...e about the first sip.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field required"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'duration_s': 5, 'on_scr...ng, shot on iPhone 15.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene   Field required [type=miss"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene   Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='Close-up of hot water po...ing, shot on iPhone 15.', input_type=str]     For further information visit https://errors.pydantic.dev"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.57 < 8.0 (weakest: hook, curiosity_gap). The hook states a known pain point but lacks a sharp contrarian edge or direct pattern interrupt for the first 1 second. Tighten the opening pacing to under 2 seconds and amplify the contrast between standard powder and freeze-dried preservatio"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.5 < 8.0 (weakest: hook, curiosity_gap, format_fit). The hook 'One spoon, 85°C water, wait 30 seconds. Watch.' is a bit instructional rather than a true pattern-interrupt for YouTube Shorts. To maximize retention in the first 1-2 seconds, the hook needs to challenge a common morning mi"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, format_fit). The hook is slightly generic ('The coffee mistake almost every Indian kitchen makes'). To hit 9+, make it more provocative or specific to sensory/boiling habits. The 3-beat pace and loopable ending required for YouTube Shorts need tighter, punchier"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 7.86 < 8.0 (weakest: curiosity_gap). The piece has strong technical compliance and clear visual direction matching the exact reference jar. To elevate the curiosity gap, the opening instruction should instantly hint at *why* boiling water ruins the cup (e.g., burning the delicate Arabic"
+      },
+      {
+        "status": "exhausted",
+        "reason": "The hook is a decent contrarian stop but generic — any premium coffee brand could say it. The save trigger promises 'ideal water temperature' but the script never states it (90–96°C for freeze-dried Arabica), so saves will drop when viewers realize the value isn't delivered. The comment trigger 'ARA"
       }
     ]
   },
