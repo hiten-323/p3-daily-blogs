@@ -4243,7 +4243,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 4,
       "feedback": "viral_scoring_failed: RuntimeError",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -4257,7 +4257,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 2,
       "feedback": "",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -4268,6 +4268,62 @@
       "platform": "youtube",
       "reason": "viral readiness gate: LLM viral score missing",
       "stage": "publish",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 5.71 < 8.0 (weakest: comment_trigger, follow_cta). Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"One spoon, 85\u00b0C water, wait 30 seconds. Watch.\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trigger and a clear 'Follow @purepantryprovisions' reason. Never invent urgency, reviews, metrics, health",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 5.71 < 8.0 (weakest: comment_trigger, follow_cta). use a different hook and angle from the last draft, e.g. this template: \"one spoon, 85\u00b0c water, wait 30 seconds. wat",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "viral: score 5.71 < 8.0 (weakest: comment_trigger, follow_cta). Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"One spoon, 85\u00b0C water, wait 30 seconds. Watch.\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trigg",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Hook is process-specific (85\u00b0C, 30s) but not brand-differentiated \u2014 any instant coffee could demonstrate the same pour. Shareability suffers because the content feels like a generic 'how to brew' demo rather than a revelation unique to Purity Beans. Emotion_pull is low: no betrayal, pride, or identity trigger \u2014 just calm education. Saveability is strong due to explicit save_trigger and visual proo",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "process_match",
+      "id": "youtube|yt_short|process_match|hook is process-specific (85\u00b0c, 30s) but not brand-differentiated \u2014 any instant coffee could demonstrate the same pour. shareability suffers because the content feels like a generi",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "Hook is process-specific (85\u00b0C, 30s) but not brand-differentiated \u2014 any instant coffee could demonstrate the same pour. Shareability suffers because the content feels like a generic 'how to brew' demo rather than a revelation unique to Purity Beans. Emotion_pull is low: no betrayal, pride, or identi",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.7 < 8.0 (weakest: relatability). Rel Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"The coffee mistake almost every Indian kitchen makes\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trigger and a clear 'Follow @purepantryprovisions' reason. Never invent urgency, reviews, metrics, health claim",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.7 < 8.0 (weakest: relatability). rel use a different hook and angle from the last draft, e.g. this template: \"the coffee mistake almost every indian kitchen makes\". ",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "viral: score 7.7 < 8.0 (weakest: relatability). Rel Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"The coffee mistake almost every Indian kitchen makes\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trigger and",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral_scoring_failed: RuntimeError",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|viral_scoring_failed: runtimeerror",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "viral_scoring_failed: RuntimeError",
+      "stage": "generation",
       "status": "gate_holding"
     }
   ],

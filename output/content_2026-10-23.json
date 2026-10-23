@@ -1418,32 +1418,32 @@
     "viral_readiness_score": 69.0
   },
   "yt_short": {
-    "featured_product": "purica",
+    "featured_product": "Purica",
     "objective": "awareness",
     "primary_cta": "Follow @purepantryprovisions | Shop https://p3online.in",
     "success_metric": "Completion rate > 75%, profile visits > 2%, follows > 1%",
     "_growth_attempts": 0,
-    "asset_id": "yt_short_purica_arabica_004",
-    "audio": "Subtle kitchen ambience — ceramic spoon tap, gentle water kettle hiss. Voiceover: warm, measured, close-mic, unhurried.",
+    "asset_id": "yt_short_purica_arabica_004_v2",
+    "audio": "Subtle kitchen ambience — ceramic spoon tap on glass, gentle kettle sigh. Voiceover: warm, measured, close-mic, unhurried. Soft ASMR granules hitting water. Faint steam hiss at 0:08.",
     "brand_mention": "Purity Beans",
-    "caption": "Most people never check the back of the jar. When you pick up Purity Beans Purica, you get pure Arabica, freeze-dried to lock in natural notes, with zero chicory. One scoop, hot water, and the natural aroma tells the whole story. Follow @purepantryprovisions for honest coffee education. Shop https://p3online.in",
-    "chosen_hook": "Most people have no idea what they're actually drinking when they scoop instant coffee.",
-    "comment_trigger": "Comment ARABICA if you check the back of your coffee jar before buying.",
+    "caption": "Most instant coffee labeled Arabica still hides chicory in the ingredient list. Purity Beans Purica is freeze-dried pure Arabica — zero chicory, zero fillers. One spoon, hot water, and the natural caramel-chocolate aroma tells you everything. Follow @purepantryprovisions for honest coffee education. Shop https://p3online.in",
+    "chosen_hook": "Your Arabica instant coffee lists chicory as ingredient #2. Purity Beans Purica lists only one: freeze-dried Arabica.",
+    "comment_trigger": "Comment ARABICA if you've ever checked a label and felt betrayed.",
     "funnel_objective": "awareness",
     "gate_rejection": false,
-    "growth_plan": "Post at 7:30 PM IST. Pin comment linking to Purica 100g. Reply to first 25 comments personally.",
-    "hashtags": "#PurityBeans #PureCoffee #Arabica #FreezeDried #ZeroChicory #CoffeeLoversIndia",
-    "hook": "Most people have no idea what they're actually drinking when they scoop instant coffee.",
-    "hook_strategy": "clean_label_self_signaling",
-    "hook_text": "Most people have no idea what they're actually drinking when they scoop instant coffee.",
-    "ladder_exhausted": false,
+    "growth_plan": "Post at 7:30 PM IST. Pin comment linking to Purica 100g. Reply to first 25 comments personally with the Purica product link.",
+    "hashtags": "#PurityBeans #PureCoffee #Arabica #FreezeDried #ZeroChicory #CoffeeLoversIndia #ReadTheLabel",
+    "hook": "Your Arabica instant coffee lists chicory as ingredient #2. Purity Beans Purica lists only one: freeze-dried Arabica.",
+    "hook_strategy": "revelation",
+    "hook_text": "Your Arabica instant coffee lists chicory as ingredient #2. Purity Beans Purica lists only one: freeze-dried Arabica.",
+    "ladder_exhausted": true,
     "product": "Purica Gourmet Arabica Granules",
-    "psychology_frame": "clean_label",
-    "publish_blocked": false,
-    "reel_inspiration": "Chef's Table macro style — tight focus on freeze-dried crystal facets catching amber window light.",
-    "retention_audit": "Scene changes every 3s. Macro -> label -> pour -> cup -> jar. Zero dead frames.",
-    "retention_tactic": "Visual rhythm: macro label angle, slow pan to texture, cut to hot water pour, cut to clean amber cup, hold steady on jar.",
-    "save_trigger": "Save this before your next grocery run — know exactly what pure freeze-dried Arabica looks like.",
+    "psychology_frame": "revelation",
+    "publish_blocked": "ladder_exhausted",
+    "reel_inspiration": "Chef's Table macro style — tight focus on freeze-dried crystal facets catching amber window light, then reveal the clean ingredient panel.",
+    "retention_audit": "Scene changes every 2-3s. Macro label -> finger point -> crystal texture -> pour -> bloom -> cup -> jar hold. Zero dead frames. Loopable end frame mirrors opening macro.",
+    "retention_tactic": "Visual rhythm: extreme macro label reveal, slow pan to crystal texture, cut to hot water pour, hold on bloom, cut to clean amber cup, steady jar with CTA overlay. Final frame matches Scene 1 composition for seamless loop.",
+    "save_trigger": "Save this before your next grocery run — know exactly what pure freeze-dried Arabica looks like on the label.",
     "scenes": [
       {
         "scene": 1,
@@ -1491,14 +1491,13 @@
     "target": "Café coffee lovers, black coffee drinkers, mindful buyers, 25-45, Tier-1 and Tier-2 cities",
     "editorial_score": {
       "shareability": 8.5,
-      "saveability": 9.0,
-      "emotion_pull": 8.2,
-      "hook_strength": 9.2,
+      "saveability": 8.5,
+      "emotion_pull": 8.0,
+      "hook_strength": 9.0,
       "brand_clarity": 9.5,
-      "overall": 8.9,
+      "overall": 8.7,
       "verdict": "PASS",
-      "feedback": "The asset hits all required brand and technical constraints. It clearly highlights Purica as freeze-dried pure Arabica with zero chicory, maintains exact product references, and avoids any prohibited claims. The retention strategy (fast visual pacing every 3 seconds) and clean-label psychology make it strong for awareness and engagement.",
-      "retention_audit": ""
+      "feedback": "Hook is specific, accusatory, and brand-native — stops the scroll instantly. Betrayal framing ('ingredient #2') paired with pure-ingredient reveal creates high share/save intent. Comment trigger ('felt betrayed') taps identity + anger cleanly. Save trigger is practical and timely. Only gap: Scene 4 (trust) is truncated in the supplied payload — ensure the final 3s deliver a visible trust signal (clean cup, jar hold, CTA overlay) and that the loop frame matches Scene 1 macro composition exactly. Also verify the voiceover line for Scene 4 reinforces 'zero"
     },
     "viral_potential": {
       "passed": false,
@@ -1509,8 +1508,11 @@
       "error": "viral_scoring_failed: RuntimeError",
       "feedback": ""
     },
-    "title": "One spoon, 85°C water, wait 30 seconds. Watch the pure Arabica unlock.",
-    "editorial_error": "scoring_failed: scoring failed for yt_short: All LLM providers failed for 'editorial_yt_short'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
+    "title": "One spoon, 85°C water, 30 seconds. Watch pure Arabica unlock.",
+    "viral_readiness_score": 94.0,
+    "needs_regen": true,
+    "held": true,
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral_scoring_failed: RuntimeError"
   },
   "_asset_metadata": [
     {
@@ -3116,6 +3118,40 @@
         "attempt": 8,
         "rung": "feedback",
         "feedback": "viral_scoring_failed: RuntimeError"
+      },
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "viral: score 5.71 < 8.0 (weakest: comment_trigger, follow_cta). Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"One spoon, 85°C water, wait 30 seconds. Watch.\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trigg"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "Hook is process-specific (85°C, 30s) but not brand-differentiated — any instant coffee could demonstrate the same pour. Shareability suffers because the content feels like a generic 'how to brew' demo rather than a revelation unique to Purity Beans. Emotion_pull is low: no betrayal, pride, or identi"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral_scoring_failed: RuntimeError"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral_scoring_failed: RuntimeError"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral_scoring_failed: RuntimeError"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 7.7 < 8.0 (weakest: relatability). Rel Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"The coffee mistake almost every Indian kitchen makes\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trigger and"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral_scoring_failed: RuntimeError"
       }
     ]
   },
