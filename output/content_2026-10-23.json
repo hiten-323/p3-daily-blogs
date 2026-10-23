@@ -1418,90 +1418,27 @@
     "viral_readiness_score": 69.0
   },
   "yt_short": {
-    "featured_product": "Purica",
-    "objective": "Brand awareness and education on reading ingredient labels.",
-    "primary_cta": "Shop Purica at https://p3online.in",
-    "success_metric": "Watch completion rate and website visits to https://p3online.in",
+    "featured_product": "purica",
+    "objective": "Increase traffic and awareness for Pure Arabica granules while reinforcing brand transparency.",
+    "primary_cta": "Shop p3online.in",
+    "success_metric": "views & clicks",
     "platform": "YouTube Shorts",
-    "chosen_hook": "Most people never read the back of their coffee jar.",
-    "comment_trigger": "Comment COFFEE to get our pure coffee guide sent directly to your DMs.",
-    "cta": "Read the jar and choose pure coffee today at https://p3online.in",
-    "duration_s": 35,
-    "hashtags": "#PurityBeans #Purica #PureCoffee #InstantCoffee #FreezeDriedCoffee #CoffeeLoversIndia",
-    "hook": "Most people never read the back of their coffee jar.",
-    "hook_text": "Most people never read the back of their coffee jar.",
-    "loop_note": "Loops seamlessly back to the person holding the Purica jar.",
-    "save_trigger": "Save this short before your next grocery run.",
-    "scene": "Close-up of Purica jar label in warm natural light, revealing pure Arabica ingredients.",
-    "scenes": [
-      {
-        "scene": 1,
-        "type": "stop",
-        "duration_s": 4.0,
-        "on_screen": "READ THE JAR",
-        "spoken": "Most people never read the back of their coffee jar.",
-        "visual_direction": "Extreme close-up of a human hand turning the Purity Beans Purica jar to show the ingredient panel under warm morning light."
-      },
-      {
-        "scene": 2,
-        "type": "curiosity",
-        "duration_s": 6.0,
-        "on_screen": "WHAT'S INSIDE?",
-        "spoken": "Take a closer look at what goes into your morning cup every single day.",
-        "visual_direction": "Shallow depth-of-field shot of freeze-dried Purica Arabica granules catching golden sunlight near a kitchen window."
-      },
-      {
-        "scene": 3,
-        "type": "value",
-        "duration_s": 8.0,
-        "on_screen": "PURICA: PURE ARABICA",
-        "spoken": "Purity Beans Purica gives you pure Arabica beans with zero chicory and nothing hidden.",
-        "visual_direction": "Hand gently tapping the Purica glass jar on a dark wooden countertop, with soft steam rising from a ceramic mug nearby."
-      },
-      {
-        "scene": 4,
-        "type": "trust",
-        "duration_s": 9.0,
-        "on_screen": "COMPLETE TRANSPARENCY",
-        "spoken": "No fillers, no confusion. Just honest ingredients crafted for people who value real coffee.",
-        "visual_direction": "A relaxed home barista pouring hot water over Purica freeze-dried granules, watching the rich aroma release naturally."
-      },
-      {
-        "scene": 5,
-        "type": "follow",
-        "duration_s": 4.0,
-        "on_screen": "FOLLOW FOR MORE",
-        "spoken": "Follow @purepantryprovisions for more transparent coffee education.",
-        "visual_direction": "The Purica jar resting on a clean wooden table with soft ambient lighting and natural shadows."
-      },
-      {
-        "scene": 6,
-        "type": "buy",
-        "duration_s": 4.0,
-        "on_screen": "SHOP P3ONLINE.IN",
-        "spoken": "Discover pure coffee and shop online at p3online.in today.",
-        "visual_direction": "Clear final shot of the Purity Beans Purica jar with the website URL displayed cleanly on screen."
-      }
-    ],
-    "script": "Most people never read the back of their coffee jar. Take a closer look at what goes into your morning cup every single day. Purity Beans Purica gives you pure Arabica beans with zero chicory and nothing hidden. No fillers, no confusion. Just honest ingredients crafted for people who value real coffee. Follow @purepantryprovisions for more transparent coffee education. Discover pure coffee and shop online at https://p3online.in today.",
-    "share_trigger": "Share this with someone who drinks instant coffee every morning.",
-    "type": "education",
-    "editorial_score": {
-      "shareability": 5.5,
-      "saveability": 5.0,
-      "emotion_pull": 4.0,
-      "hook_strength": 4.5,
-      "brand_clarity": 6.5,
-      "overall": 5.1,
-      "verdict": "REJECT",
-      "feedback": "The hook 'Most people never read the back of their coffee jar' is generic and applies to any brand — it fails the betrayal/curiosity-gap test. Scenes 2–4 are safe, educational B-roll with no tension, stakes, or identity trigger; viewers have no reason to keep watching past second 6. The script never names the freeze-dried process (the key differentiator for Purica) and never contrasts Purica against the chicory-filled jars the audience actually buys. The CTA 'Follow @purepantryprovisions' is a vanity ask; growth-track rules demand a high-intent comment trigger (e.g., 'Comment ARABICA for the freeze-dried guide') that doubles as a lead capture. Add a betrayal hook ('Your instant coffee is 30% roasted root'), a visual chicory-vs-Purica split frame, and an intent-comment CTA. Cut the generic follow ask.",
-      "retention_audit": "Scene 1 (0-4s): Hook is flat — no betrayal, no curiosity gap, no identity challenge. Scene 2 (4-10s): 'What's inside?' curiosity card is passive; no visual shock (chicory dust swirl, red-highlighted label) to lock attention. Scene 3 (10-18s): Product reveal lacks contrast — show a chicory jar murky vs Purica amber side-by-side. Scene 4 (18-27s): Trust beat is corporate language ('crafted for people who value real coffee'); replace with founder POV: 'We refuse to bulk up with chicory. If you want wood-root, buy the cheap jar.' Scene 5 (27-31s): Follow CTA kills momentum — swap for 'Comment PURE and I'll DM the ingredient cheat sheet.' Scene 6 (31-35s): Buy CTA is correct but arrives after attention has already leaked."
-    },
+    "chosen_hook": "Your instant coffee might have a hidden ingredient.",
+    "comment_trigger": "Comment YES if you love pure Arabica.",
+    "cta": "Visit https://p3online.in",
+    "duration_s": 30,
+    "hashtags": "#PureArabica #Purica #CoffeeIndia #InstantCoffee #CoffeeLovers #PurityBeans",
+    "hook": "Your instant coffee might have a hidden ingredient.",
+    "hook_text": "Your instant coffee might have a hidden ingredient.",
     "ladder_exhausted": true,
+    "loop_note": "The final 4 seconds loop by showing the jar and call to follow for more facts.",
+    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "editorial_error": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Missing brand mention', 'Missing required brand facts']",
     "publish_blocked": "ladder_exhausted",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The hook 'Most people never read the back of their coffee jar' is generic and applies to any brand — it fails the betrayal/curiosity-gap test. Scenes 2–4 are safe, educational B-roll with no tension, stakes, or identity trigger; viewers have no reason to keep watching past second 6. The script never names the freeze-dried process (the key differentiator for Purica) and never contrasts Purica against the chicory-filled jars the audience actually buys. The CTA 'Follow @p"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Missing brand mention', 'Missing required brand facts']"
   },
   "_asset_metadata": [
     {
@@ -3752,11 +3689,55 @@
       {
         "attempt": 8,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "status": "exhausted",
         "reason": "The hook 'Most people never read the back of their coffee jar' is generic and applies to any brand — it fails the betrayal/curiosity-gap test. Scenes 2–4 are safe, educational B-roll with no tension, stakes, or identity trigger; viewers have no reason to keep watching past second 6. The script never"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook 'Most people never read the back of their coffee jar' is a solid start but slightly common. To push above the 8.0 threshold, the hook needs a sharper curiosity gap or an identity challenge—such as pointing out what is secretly hidden in standard labels. Strengthen the emotional pull by emph"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Contains banned claim wording: fresh']"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', 'Missing website reference', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 7,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 8,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema scenes   List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'type': 'ho...Hands sprinkling gran'}], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/too_short | br"
+      },
+      {
+        "status": "exhausted",
+        "reason": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
       }
     ]
   },

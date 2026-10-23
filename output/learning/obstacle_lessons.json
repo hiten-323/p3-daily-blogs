@@ -4425,8 +4425,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 27,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...and: ['Empty content']\"}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
+      "count": 30,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "schema",
@@ -4509,8 +4509,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 8,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...ed': 'ladder_exhausted'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
+      "count": 9,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Missing brand mention', 'Missing required brand fact",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "ladder_exhausted",
@@ -4551,7 +4551,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 2,
+      "count": 3,
       "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -5275,6 +5275,62 @@
       "last_seen": "2026-10-23",
       "platform": "youtube",
       "reason": "The hook 'Most people never read the back of their coffee jar' is generic and applies to any brand \u2014 it fails the betrayal/curiosity-gap test. Scenes 2\u20134 are safe, educational B-roll with no tension, stakes, or identity trigger; viewers have no reason to keep watching past second 6. The script never",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "The hook 'Most people never read the back of their coffee jar' is a solid start but slightly common. To push above the 8.0 threshold, the hook needs a sharper curiosity gap or an identity challenge\u2014such as pointing out what is secretly hidden in standard labels. Strengthen the emotional pull by emphasizing the contrast between genuine transparency and industry norms. Rewrite the middle scenes to f",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "product_truth",
+      "id": "youtube|yt_short|product_truth|the hook 'most people never read the back of their coffee jar' is a solid start but slightly common. to push above the 8.0 threshold, the hook needs a sharper curiosity gap or an i",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "The hook 'Most people never read the back of their coffee jar' is a solid start but slightly common. To push above the 8.0 threshold, the hook needs a sharper curiosity gap or an identity challenge\u2014such as pointing out what is secretly hidden in standard labels. Strengthen the emotional pull by emph",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "brand: ['Contains banned claim wording: fresh']",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "banned_claim",
+      "id": "youtube|yt_short|banned_claim|brand: ['contains banned claim wording: fresh']",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "brand: ['Contains banned claim wording: fresh']",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "brand: ['Missing brand mention', 'Missing website reference', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "product_truth",
+      "id": "youtube|yt_short|product_truth|brand: ['missing brand mention', 'missing website reference', \"product truth: fssai: never use '100%' in marketing copy; say 'pure coffee', 'pure arabica', 'pure robusta'\"]",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "brand: ['Missing brand mention', 'Missing website reference', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema scenes List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'type': 'ho...Hands sprinkling gran'}], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/too_short | brand: ['Missing brand mention', 'Missing website reference', \"product truth: FSSAI: never use '100%'",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "product_truth",
+      "id": "youtube|yt_short|product_truth|schema: 1 validation error for youtubeshortschema scenes list should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'type': 'ho...hands sp",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 1 validation error for YoutubeShortSchema scenes List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'type': 'ho...Hands sprinkling gran'}], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/too_short | br",
       "stage": "generation",
       "status": "gate_holding"
     }
