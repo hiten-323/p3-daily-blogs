@@ -4243,7 +4243,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 4,
+      "count": 5,
       "feedback": "viral_scoring_failed: RuntimeError",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -4323,6 +4323,62 @@
       "last_seen": "2026-10-23",
       "platform": "youtube",
       "reason": "viral_scoring_failed: RuntimeError",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 20 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'on_screen': 'Extreme cl...00-degree spray dryer.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.type Field required [type=missing, input_value={'on_screen': 'Extreme cl...00-degree spray dryer.'}, input_type=dict] For furt",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 20 validation errors for youtubeshortschema scenes.0.scene field required [type=missing, input_value={'on_screen': 'extreme cl...00-degree spray dryer.'}, input_type=dict] ",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 20 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'on_screen': 'Extreme cl...00-degree spray dryer.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.type Field required [type=miss",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 15 validation errors for YoutubeShortSchema scenes.0.scene Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='Extreme close-up: indust...ght catching its label.', input_type=str] For further information visit https://errors.pydantic.dev/2.14/v/int_parsing scenes.0.on_screen Field required [type=missing, input_value={'scene': 'Extre",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 15 validation errors for youtubeshortschema scenes.0.scene input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='extreme clo",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 15 validation errors for YoutubeShortSchema scenes.0.scene Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='Extreme close-up: indust...ght catching its label.', input_type=str] For further information visit https://errors.pydantic.de",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 5,
+      "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Field required [type=missing, input_value={'scene': 2, 'type': 'mac...right out of the bean.'}, input_t",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 5 validation errors for youtubeshortschema scenes.0.visual_direction field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_t",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Fie",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Field required [type=missing, input_value={'scene': 2, 'type': 'mac...right out of the bean.'}, input_t",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|schema: 5 validation errors for youtubeshortschema scenes.0.visual_direction field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_t",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Fie",
       "stage": "generation",
       "status": "gate_holding"
     }

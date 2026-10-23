@@ -1418,101 +1418,74 @@
     "viral_readiness_score": 69.0
   },
   "yt_short": {
-    "featured_product": "Purica",
-    "objective": "awareness",
-    "primary_cta": "Follow @purepantryprovisions | Shop https://p3online.in",
-    "success_metric": "Completion rate > 75%, profile visits > 2%, follows > 1%",
+    "featured_product": "Purica Gourmet Arabica Granules",
+    "objective": "Drive educated purchases of Purica 50g and 100g via profile link and website traffic",
+    "primary_cta": "Comment ARABICA for the tasting map and visit https://p3online.in",
+    "success_metric": "Profile visits > 1,200, comment rate > 3%, click-through to https://p3online.in/products/purica > 40",
     "_growth_attempts": 0,
-    "asset_id": "yt_short_purica_arabica_004_v2",
-    "audio": "Subtle kitchen ambience — ceramic spoon tap on glass, gentle kettle sigh. Voiceover: warm, measured, close-mic, unhurried. Soft ASMR granules hitting water. Faint steam hiss at 0:08.",
+    "asset_id": "yt_short_purica_revelation_001",
+    "audio": "Low hum of a spray dryer, then sudden silence. Soft crackle of ice crystals. Warm amber tone.",
     "brand_mention": "Purity Beans",
-    "caption": "Most instant coffee labeled Arabica still hides chicory in the ingredient list. Purity Beans Purica is freeze-dried pure Arabica — zero chicory, zero fillers. One spoon, hot water, and the natural caramel-chocolate aroma tells you everything. Follow @purepantryprovisions for honest coffee education. Shop https://p3online.in",
-    "chosen_hook": "Your Arabica instant coffee lists chicory as ingredient #2. Purity Beans Purica lists only one: freeze-dried Arabica.",
-    "comment_trigger": "Comment ARABICA if you've ever checked a label and felt betrayed.",
-    "funnel_objective": "awareness",
+    "caption": "Most Arabica instant coffee loses its soul in a 200°C spray dryer. Purica doesn't. Freeze-dried at -40°C to lock in natural caramel and chocolate notes. Pure Arabica. Zero chicory. Read the jar. Follow @purepantryprovisions Shop https://p3online.in",
+    "chosen_hook": "Your Arabica instant coffee lost its soul in the spray dryer.",
+    "comment_trigger": "Comment ARABICA and I'll send you the tasting map for Purica vs commercial instant.",
+    "funnel_objective": "Awareness → Education → Profile Visit → Purchase",
     "gate_rejection": false,
-    "growth_plan": "Post at 7:30 PM IST. Pin comment linking to Purica 100g. Reply to first 25 comments personally with the Purica product link.",
-    "hashtags": "#PurityBeans #PureCoffee #Arabica #FreezeDried #ZeroChicory #CoffeeLoversIndia #ReadTheLabel",
-    "hook": "Your Arabica instant coffee lists chicory as ingredient #2. Purity Beans Purica lists only one: freeze-dried Arabica.",
-    "hook_strategy": "revelation",
-    "hook_text": "Your Arabica instant coffee lists chicory as ingredient #2. Purity Beans Purica lists only one: freeze-dried Arabica.",
+    "growth_plan": "Seed via YouTube Shorts feed, cross-post to Reels as companion (different concept), embed in blog 'Freeze-Dried vs Spray-Dried' article, DM commenters with Purica product link.",
+    "hashtags": "#PurityBeans #PureArabica #FreezeDriedCoffee #InstantCoffeeTruth #ReadTheJar #CoffeeScience",
+    "hook": "Your Arabica instant coffee lost its soul in the spray dryer.",
+    "hook_strategy": "Revelation / Cognitive Dissonance — exposes hidden industrial process that strips Arabica of its signature aroma, creating immediate need to know the alternative.",
+    "hook_text": "Your Arabica instant coffee lost its soul in the spray dryer.",
     "ladder_exhausted": true,
     "product": "Purica Gourmet Arabica Granules",
     "psychology_frame": "revelation",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Chef's Table macro style — tight focus on freeze-dried crystal facets catching amber window light, then reveal the clean ingredient panel.",
-    "retention_audit": "Scene changes every 2-3s. Macro label -> finger point -> crystal texture -> pour -> bloom -> cup -> jar hold. Zero dead frames. Loopable end frame mirrors opening macro.",
-    "retention_tactic": "Visual rhythm: extreme macro label reveal, slow pan to crystal texture, cut to hot water pour, hold on bloom, cut to clean amber cup, steady jar with CTA overlay. Final frame matches Scene 1 composition for seamless loop.",
-    "save_trigger": "Save this before your next grocery run — know exactly what pure freeze-dried Arabica looks like on the label.",
+    "reel_inspiration": "Companion Reel: '30-second freeze-dried aroma test you can do at home' — different concept, same product.",
+    "retention_audit": "Scene changes every 2.5s. Visual contrast (industrial vs artisanal) holds attention. Open loop: 'what does -40°C taste like?' resolves at scene 5.",
+    "retention_tactic": "Visual thermometer countdown 200 → -40 across scenes. Sound design shifts from harsh mechanical to calm crystalline.",
+    "save_trigger": "Save this before your next coffee buy — the freeze-dried difference is real.",
     "scenes": [
       {
         "scene": 1,
-        "type": "hook",
-        "duration_s": 2,
-        "visual_direction": "Shot on iPhone 15, 85mm portrait lens equivalent, shallow depth of field, warm indoor kitchen light mixed with cool window daylight. Macro close-up of the exact Purity Beans Purica jar label.",
-        "on_screen": "What are you actually drinking?",
-        "spoken": "Most people have no idea what they're actually drinking when they scoop instant coffee."
+        "type": "industrial_contrast",
+        "duration_s": 3.5,
+        "on_screen": "Extreme close-up: industrial spray dryer nozzle blasting brown liquid into white-hot chamber. Temperature overlay: 200°C. Steam violent. Purity Beans Purica jar sits cold and untouched on a dark marble ledge just outside the frame, amber light catching its label.",
+        "spoken": "Your Arabica instant coffee lost its soul in a 200-degree spray dryer."
       },
       {
         "scene": 2,
-        "type": "curiosity",
-        "duration_s": 3,
-        "visual_direction": "Slight handheld sway, natural skin texture on hands, visible fabric wrinkles on sleeve, natural light falloff. Finger pointing directly at the pure Arabica ingredient line.",
-        "on_screen": "Pure Arabica. Freeze-dried. Zero chicory.",
-        "spoken": "When you read the back panel of Purity Beans Purica, the ingredients are simple: pure Arabica, zero chicory."
+        "type": "macro_comparison",
+        "duration_s": 3.5,
+        "on_screen": "Macro shot: coffee particles tumbling in superheated air, fracturing, darkening. Label on a generic jar reads 'Arabica' but the granules look burnt. Cut to: Purica jar label — 'Freeze-Dried Pure Arabica' — sharp, clean, zero chicory.",
+        "spoken": "Spray drying burns the caramel and chocolate notes right out of the bean."
       },
       {
         "scene": 3,
-        "type": "value",
-        "duration_s": 3,
-        "visual_direction": "85mm lens, handheld micro-movement, visible water ring on dark wood counter. A spoonful of freeze-dried granules catching golden morning light.",
-        "on_screen": "Freeze-dried crystals, locked aroma.",
-        "spoken": "Freeze-drying preserves natural aromatic notes without fillers or artificial additives."
+        "type": "process_reveal",
+        "duration_s": 4.0,
+        "on_screen": "Silence. Frost forms on a stainless tray. Arabica extract droplets freeze into perfect beads at -40°C. Vacuum pump whirs low. Purica jar glows in warm side-light, condensation beading on its glass.",
+        "spoken": "Freeze-drying at minus forty locks them in."
       },
       {
         "scene": 4,
-        "type": "trust",
-        "duration_s": 3,
-        "visual_direction": "Natural lighting falloff, subtle lens flare from side window, lived-in kitchen background. Hot water pouring into a clear glass, creating a rich amber extraction.",
-        "on_screen": "Aroma unlocks instantly in hot water.",
-        "spoken": "Watch how hot water releases the clean aroma instantly."
+        "type": "sensory_payoff",
+        "duration_s": 4.0,
+        "on_screen": "Hand pours Purica granules into a clear glass. They dissolve instantly, releasing a visible aroma plume — golden backlit. No clumps. No burnt smell. Text overlay: 'Pure Arabica. Zero Chicory. Freeze-Dried.'",
+        "spoken": "What you taste is what the bean actually grew."
       },
       {
         "scene": 5,
-        "type": "follow",
-        "duration_s": 4,
-        "visual_direction": "Locked-off shot, pristine contact shadow under the reference Purity Beans jar, label texture catches light clearly against dark marble.",
-        "on_screen": "Follow @purepantryprovisions. Shop https://p3online.in",
-        "spoken": "Follow @purepantryprovisions for honest coffee choices. Shop at p3online.in"
+        "type": "founder_close",
+        "duration_s": 3.5,
+        "on_screen": "Founder stands in a sunlit kitchen, holding Purica jar. Smiles. 'Read the jar.' Logo animation: Purity Beans. URL: https://p3online.in",
+        "spoken": "Purica. Freeze-dried pure Arabica. Read the jar. Purity Beans at https://p3online.in."
       }
     ],
-    "share_trigger": "Share this with someone who drinks instant coffee every single morning.",
-    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "target": "Café coffee lovers, black coffee drinkers, mindful buyers, 25-45, Tier-1 and Tier-2 cities",
-    "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 8.5,
-      "emotion_pull": 8.0,
-      "hook_strength": 9.0,
-      "brand_clarity": 9.5,
-      "overall": 8.7,
-      "verdict": "PASS",
-      "feedback": "Hook is specific, accusatory, and brand-native — stops the scroll instantly. Betrayal framing ('ingredient #2') paired with pure-ingredient reveal creates high share/save intent. Comment trigger ('felt betrayed') taps identity + anger cleanly. Save trigger is practical and timely. Only gap: Scene 4 (trust) is truncated in the supplied payload — ensure the final 3s deliver a visible trust signal (clean cup, jar hold, CTA overlay) and that the loop frame matches Scene 1 macro composition exactly. Also verify the voiceover line for Scene 4 reinforces 'zero"
-    },
-    "viral_potential": {
-      "passed": false,
-      "overall": null,
-      "scores": {},
-      "honesty": [],
-      "pass_mark": 8.0,
-      "error": "viral_scoring_failed: RuntimeError",
-      "feedback": ""
-    },
-    "title": "One spoon, 85°C water, 30 seconds. Watch pure Arabica unlock.",
-    "viral_readiness_score": 94.0,
+    "share_trigger": "Share this with the friend who says 'all instant coffee tastes the same.'",
+    "editorial_error": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Field required [type=missing, input_value={'scene': 2, 'type': 'mac...right out of the bean.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.2.visual_direc",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral_scoring_failed: RuntimeError"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Field required [type=missing, input_value={'scene': 2, 'type': 'mac...right out of the bean.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2"
   },
   "_asset_metadata": [
     {
@@ -3152,6 +3125,50 @@
       {
         "status": "exhausted",
         "reason": "viral_scoring_failed: RuntimeError"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral_scoring_failed: RuntimeError"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "schema: 20 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'on_screen': 'Extreme cl...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.type   Field required [type=miss"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "schema: 15 validation errors for YoutubeShortSchema scenes.0.scene   Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='Extreme close-up: indust...ght catching its label.', input_type=str]     For further information visit https://errors.pydantic.de"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Fie"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Fie"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Fie"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Fie"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Fie"
+      },
+      {
+        "status": "exhausted",
+        "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Fie"
       }
     ]
   },
