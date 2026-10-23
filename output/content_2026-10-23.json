@@ -3,51 +3,79 @@
   "reels": [
     {
       "type": "reel",
-      "hook": "Your Arabica instant coffee is not freeze-dried. Ours is.",
-      "hook_text": "Your Arabica instant coffee is not freeze-dried. Ours is.",
-      "hook_spoken": "Most Arabica instant coffee is . Purity Beans Purica is freeze-dried. There is a difference you can taste.",
-      "hook_text_overlay": "FREEZE-DRIED ARABICA",
+      "hook": "I read the label so you don't have to: your office instant coffee is 30% chicory.",
+      "hook_text": "I read the label so you don't have to: your office instant coffee is 30% chicory.",
+      "hook_spoken": "I read the label so you don't have to — your office instant coffee is 30% chicory.",
+      "hook_text_overlay": "30% CHICORY. READ THE JAR.",
       "frames": [
         {
-          "on_screen": "FREEZE-DRIED ARABICA",
-          "spoken": "Most Arabica instant coffee is . Purity Beans Purica is freeze-dried. There is a difference you can taste."
+          "on_screen": "30% CHICORY. READ THE JAR.",
+          "spoken": "I read the label so you don't have to — your office instant coffee is 30% chicory."
         },
         {
-          "on_screen": "WHY FREEZE-DRYING MATTERS",
-          "spoken": "Freeze-drying locks in aroma at minus 40 degrees. No high-heat spray towers. No burnt notes."
+          "on_screen": "PURITY BEANS ULTRA BLEND — 70% COFFEE, 30% CHICORY",
+          "spoken": "Purity Beans Ultra Blend prints it honestly: 70% coffee, 30% chicory, blended for a smooth milk coffee."
         },
         {
-          "on_screen": "READ THE JAR",
-          "spoken": "Turn the jar. Ingredients: pure freeze-dried Arabica coffee. Zero chicory. Zero fillers."
+          "on_screen": "EXACT RATIO ON EVERY GLASS JAR",
+          "spoken": "The exact ratio is on the label. No guessing. No hidden filler."
         },
         {
-          "on_screen": "CARAMEL. CHOCOLATE. NO BITTERNESS.",
-          "spoken": "Natural caramel and chocolate notes survive the process. That is what freeze-dried Arabica delivers."
+          "on_screen": "BOLD, PURISTA, PURICA, PRIMA — PURE COFFEE ONLY",
+          "spoken": "Bold, Purista, Purica, and Prima list pure coffee and nothing else. You choose your cup."
         },
         {
-          "on_screen": "FIND YOUR CUP",
-          "spoken": "Black coffee drinkers, dessert makers, cafe coffee lovers — this is your jar. Purity Beans Purica. p3online.in"
+          "on_screen": "FOLLOW @PUREPANTRYPROVISIONS FOR DAILY COFFEE TRUTH",
+          "spoken": "Follow @purepantryprovisions for daily coffee transparency. Link in bio: https://p3online.in"
+        },
+        {
+          "on_screen": "30% CHICORY. READ THE JAR.",
+          "spoken": "I read the label so you don't have to — your office instant coffee is 30% chicory."
         }
       ],
-      "body": "Purity Beans Purica is freeze-dried pure Arabica. Zero chicory. Natural caramel and chocolate notes. Most Arabica instant coffee uses high-heat . Freeze-drying preserves what heat destroys.",
-      "caption": "Purity Beans Purica is freeze-dried pure Arabica. Zero chicory. Natural caramel and chocolate notes. Most Arabica instant coffee uses high-heat . Freeze-drying at minus 40 degrees preserves the aroma that heat destroys. Read the jar. Ingredients: pure freeze-dried Arabica coffee. Nothing else. Follow @purepantryprovisions for coffee you can trust. https://p3online.in",
-      "cta": "Follow @purepantryprovisions for coffee you can trust. https://p3online.in",
-      "comment_trigger": "Have you tasted freeze-dried Arabica? Comment YES or NO.",
-      "save_trigger": "Save this before your next coffee purchase.",
-      "share_trigger": "Send this to the black coffee drinker who deserves better.",
-      "hashtags": "#PurityBeans #Purica #FreezeDriedCoffee #PureArabica #InstantCoffeeIndia #ReadTheLabel #CoffeeLovers",
-      "audio": "Quiet kitchen ambience, subtle steam hiss, soft spoon clink on ceramic — spoken line carries the weight.",
-      "loop_ending": "Final frame holds on the Purica jar rotating slowly; the label catches light exactly as frame one",
+      "body": "Purity Beans Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee, labelled plainly. Purity Beans Bold, Purista, Purica, and Prima list pure coffee only. The 100g Ultra Blend jar at ₹309 yields about 66 cups — roughly ₹5 a cup.",
+      "caption": "I read the label so you don't have to: your office instant coffee is 30% chicory. Purity Beans Ultra Blend prints the ratio honestly — 70% coffee, 30% chicory, blended for a smooth milk coffee. Bold, Purista, Purica, and Prima list pure coffee only. You choose your cup.\n\nFollow @purepantryprovisions for daily coffee transparency. Shop the range at https://p3online.in",
+      "cta": "Follow @purepantryprovisions for daily coffee truth. Shop at https://p3online.in",
+      "comment_trigger": "Do you check the label before you buy instant coffee? Comment YES or NO.",
+      "save_trigger": "Save this to remember what to look for on the ingredient panel.",
+      "share_trigger": "Send this to the colleague who drinks three office cups a day.",
+      "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia #UltraBlend #CoffeeTransparency",
+      "audio": "Quiet office ambience, subtle ceramic cup clink, low hum of an air conditioner.",
+      "loop_ending": "Final frame mirrors opening frame — '30% CHICORY. READ THE JAR.' — looping seamlessly back to the hook.",
       "angle": "EDUCATE",
       "source": "evergreen_template",
-      "featured_product": "Purica",
-      "chosen_hook": "Ultra Blend: 70% coffee, 30% chicory, on purpose.",
-      "editorial_error": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
+      "featured_product": "ultra_blend",
+      "chosen_hook": "I read the label so you don't have to: your office instant coffee is 30% chicory.",
+      "editorial_score": {
+        "shareability": 8.5,
+        "saveability": 8.5,
+        "emotion_pull": 8.0,
+        "hook_strength": 9.0,
+        "brand_clarity": 9.5,
+        "overall": 8.7,
+        "verdict": "PASS",
+        "feedback": "The asset successfully balances product transparency by directly addressing the 70/30 coffee-to-chicory ratio of Ultra Blend while differentiating it clearly from the pure coffee variants (Bold, Purista, Purica). The office reality hook effectively grounds the scenario in a relatable moment, and the clear labeling message drives trust. Retention is well-maintained by moving quickly from the daily problem to transparent product facts and a clean call to action.",
+        "retention_audit": "Frame 1 (0-2s): The office POV hook immediately captures attention by setting a relatable scene. Frame 2 (2-6s): Transparent product ratio disclosure maintains viewer trust without inducing friction. Frames 3-4 (6-25s): Clear product line segmentation keeps viewers engaged. Frame 5 (25-30s): Smooth loop ending and direct website link ensure a clean finish."
+      },
+      "viral_potential": {
+        "scores": {
+          "hook": 8.5,
+          "curiosity_gap": 8.0,
+          "relatability": 8.5,
+          "shareability": 8.0,
+          "comment_trigger": 8.0,
+          "format_fit": 8.5,
+          "follow_cta": 8.0
+        },
+        "overall": 8.2,
+        "weakest": []
+      },
+      "editorial_error": "brand: [\"Reel frame 5 overlay error: ['Language is not English']\"]",
       "ladder_exhausted": true,
       "publish_blocked": "ladder_exhausted",
       "needs_regen": true,
       "held": true,
-      "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: [\"Reel frame 5 overlay error: ['Language is not English']\"]"
     },
     {
       "type": "reel",
@@ -254,62 +282,94 @@
   ],
   "carousel": {
     "type": "carousel",
-    "hook": "Your milk coffee is a guessing game. South India solved it 50 years ago.",
-    "title": "Your milk coffee is a guessing game. South India solved it 50 years ago.",
+    "hook": "Ultra Blend, the 70/30 milk coffee",
+    "title": "Ultra Blend, the 70/30 milk coffee",
     "slides": [
       {
         "slide": 1,
-        "heading": "The Guessing Game Ends Here",
-        "body": "Most instant coffee jars hide the ratio. You pour, hope, and adjust. Purity Beans Ultra Blend prints 70% coffee, 30% chicory right on the glass — no guessing, no dilution surprise.",
-        "visual": "Close-up of a Purity Beans Ultra Blend glass jar on a dark marble counter, warm amber light catching the label. The ingredient panel is clearly legible: 70% coffee, 30% chicory. A single coffee bean rests beside the jar for scale."
+        "heading": "Seventy, thirty",
+        "body": "Ultra Blend is 70% coffee and 30% chicory.",
+        "visual": "Ultra Blend jar, label facing camera"
       },
       {
         "slide": 2,
-        "heading": "Why 70/30 Exists",
-        "body": "Pure coffee + milk can taste thin. Chicory adds body, rounds the edge, and holds up to milk the way South Indian filter coffee drinkers have preferred for generations. This isn't filler — it's function.",
-        "visual": "Side-by-side in identical ceramic mugs: left mug shows pale, watery coffee-milk; right mug shows rich, golden-brown Ultra Blend with visible crema. A stainless steel spoon rests across the right mug. Morning window light."
+        "heading": "Made for milk",
+        "body": "The blend gives a smooth, rounded milk coffee.",
+        "visual": "Milk coffee being poured into a steel tumbler"
       },
       {
         "slide": 3,
-        "heading": "Read the Back Panel",
-        "body": "Flip the jar. The ingredient list is short, honest, and unhidden. 70% coffee. 30% chicory. No preservatives. No vague 'coffee solids' language. You know exactly what you're drinking.",
-        "visual": "A hand holds the Purity Beans Ultra Blend jar, thumb pointing at the back label. The label text is sharp and readable. Background is a lived-in kitchen: used spoon, water ring on counter, half-open bag of sugar."
+        "heading": "A South Indian tradition",
+        "body": "Coffee-chicory milk coffee is a long-loved South Indian cup.",
+        "visual": "Two cups poured side by side"
       },
       {
         "slide": 4,
-        "heading": "The Math You Can Trust",
-        "body": "Ultra Blend 100g at ₹309 yields at least 66 cups.",
-        "visual": "Macro shot of the Ultra Blend label showing '100g • ₹309' alongside a 1g measuring spoon mid-scoop. Coffee granules caught mid-air. Shallow depth of field, warm directional light."
+        "heading": "Said plainly",
+        "body": "The 70/30 ratio is printed on the jar.",
+        "visual": "Ingredient panel with a finger pointing at a line"
       },
       {
         "slide": 5,
-        "heading": "Prefer It Black?",
-        "body": "Purista is freeze-dried pure Robusta. Three distinct profiles. One standard: nothing added.",
-        "visual": "Three Purity Beans jars — Bold, Purista, Purica — arranged on a rustic wooden board. Purista is freeze-dried pure Robusta. No props needed."
+        "heading": "Prefer it black?",
+        "body": "Bold, Purista, Purica and Prima are pure coffee.",
+        "visual": "Hand rotating a jar to the back label"
       },
       {
         "slide": 6,
-        "heading": "Save This For Your Next Grocery Run",
-        "body": "Next time you're in the coffee aisle, flip the jar. If the ratio isn't printed, you're guessing. Purity Beans Ultra Blend: 70% coffee, 30% chicory. Honest milk coffee. https://p3online.in",
-        "visual": "The Ultra Blend jar centered, clean and uncluttered. Website URL https://p3online.in etched subtly into the surface reflection. Dark background, single gold rim light on the jar's shoulder."
+        "heading": "What ours says",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima list coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. p3online.in",
+        "visual": "Purity Beans jar, label facing camera"
       }
     ],
-    "caption": "Your milk coffee is a guessing game. South India solved it 50 years ago with a 70/",
+    "caption": "Why is Purity Beans Ultra Blend 70% coffee and 30% chicory? The reason is milk: the blend gives a smooth, rounded milk coffee.\n\nRead the label and you will see the ratio printed plainly. That is the difference between a blend and a guess.\n\nFollow @purepantryprovisions for daily coffee know-how. https://p3online.in",
     "cta": "Follow @purepantryprovisions for the how-to, https://p3online.in",
-    "comment_trigger": "Milk coffee or black: how do you take yours? Comment below.",
-    "save_trigger": "Save this carousel so you know what to look for on your next grocery run.",
-    "share_trigger": "Send this to the milk-coffee lover in your house who appreciates transparency.",
-    "hashtags": "#PurityBeans #InstantCoffee #CoffeeIndia #ReadTheLabel #UltraBlend",
+    "comment_trigger": "Milk coffee or black: how do you take yours?",
+    "save_trigger": "Save this so you know what to look for.",
+    "share_trigger": "Send this to the milk-coffee lover in your house.",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia",
     "source": "evergreen_template",
     "featured_product": "ultra_blend",
-    "hook_text": "Why South India's favorite 70/30 coffee ratio beats a guessing game.",
-    "chosen_hook": "Why South India's favorite 70/30 coffee ratio beats a guessing game.",
-    "editorial_error": "brand: [\"Carousel caption error: ['Missing brand mention', 'Missing required brand facts', 'Missing website reference']\"]",
+    "hook_text": "Ultra Blend, the 70/30 milk coffee",
+    "chosen_hook": "Ultra Blend, the 70/30 milk coffee",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.0,
+      "hook_strength": 8.5,
+      "brand_clarity": 9.5,
+      "overall": 8.7,
+      "verdict": "PASS",
+      "feedback": "The carousel executes strong transparency by explicitly breaking down the 70/30 ratio for Ultra Blend while clearly distinguishing pure coffee variants. The retention flow maintains user interest from slide to slide by solving a common consumer question regarding milk coffee preferences.",
+      "retention_audit": "Slide 1 introduces the 70/30 ratio directly; Slide 2 successfully connects the blend to milk coffee usage; Slide 3 adds cultural context; Slide 4 emphasizes transparent label reading; Slide 5 cleanly separates pure coffee options; Slide 6 drives direct conversion via website and clear brand attribution."
+    },
+    "viral_potential": {
+      "scores": {
+        "hook": 5.0,
+        "curiosity_gap": 6.0,
+        "relatability": 7.0,
+        "shareability": 6.0,
+        "comment_trigger": 7.0,
+        "format_fit": 6.0,
+        "follow_cta": 7.0
+      },
+      "overall": 6.0,
+      "weakest": [
+        "hook",
+        "shareability",
+        "format_fit"
+      ],
+      "feedback": "The opening hook reads like a product manual rather than a pattern interrupt; it lacks a scroll-stopping trigger. Slide-to-slide swipe tension is weak because each slide states a fact rather than opening a loop for the next slide. To elevate this, frame the hook around the consumer truth of why 70/30 milk coffee actually exists in Indian households.",
+      "better_hook": "Why do South Indian milk coffee lovers specifically look for a 70/30 ratio?",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
     "ladder_exhausted": true,
     "publish_blocked": "ladder_exhausted",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: [\"Carousel caption error: ['Missing brand mention', 'Missing required brand facts', 'Missing website reference']\"]"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 6.0 < 8.0 (weakest: hook, shareability, format_fit). The opening hook reads like a product manual rather than a pattern interrupt; it lacks a scroll-stopping trigger. Slide-to-slide swipe tension is weak because each slide states a fact rather than opening a loop for the next slide. To elevate this, frame the hook around the consumer truth of why 70/30 milk coffee actually exists in Indian households. Suggested hook: Why do South Indian milk coffee lovers "
   },
   "instagram_post": {
     "type": "instagram_post",
@@ -1238,109 +1298,110 @@
   },
   "yt_short": {
     "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "DISCOVERY",
-    "primary_cta": "Follow Purity Beans for more daily coffee insights and visit https://p3online.in.",
-    "success_metric": "Shares, Saves, Profile Visits",
-    "_growth_attempts": 2,
-    "asset_id": "yt_short_purica_freeze_dried_004",
-    "audio": "Subtle, crisp atmospheric coffee lab ASMR, soft acoustic guitar picking, no vocals",
-    "caption": "The coffee mistake almost every Indian kitchen makes is ignoring the ingredient list. Check Purity Beans Purica Gourmet Arabica Granules and read the back. Pure coffee with zero chicory. Discover the details at https://p3online.in. #PurityBeans #FreezeDriedCoffee #CoffeeScience #GourmetCoffee #PureCoffee #InstantCoffeeInIndia",
-    "comment_trigger": "Comment COFFEE if you want a complete breakdown of how instant coffee is made.",
-    "funnel_objective": "DISCOVERY",
-    "growth_plan": "Maximize profile visits and shares through clean coffee education and visual ASMR of pure coffee granules.",
-    "growth_review": "Clean, educational, non-promotional body focused entirely on coffee composition, ending with a clear brand anchor and website reference.",
-    "hashtags": "#PurityBeans #FreezeDriedCoffee #CoffeeScience #GourmetCoffee #PureCoffee #InstantCoffeeInIndia",
-    "hook_strategy": "Direct pattern interrupt: 'The coffee mistake almost every Indian kitchen makes is ignoring the ingredient list.'",
-    "product": "purica",
-    "psychology_frame": "clean_label",
-    "reel_inspiration": "Documentary-style macro breakdown of food science and crystal formation.",
-    "retention_tactic": "Macro zoom cuts every 3 seconds paired with satisfying audio cues to keep completion rate above 85%.",
-    "save_trigger": "Save this video before your next grocery run to know what freeze-dried really means.",
+    "objective": "Engagement, saves, shares, and profile follows through high-value coffee education.",
+    "primary_cta": "Follow @purepantryprovisions for daily coffee wisdom and shop pure at https://p3online.in",
+    "success_metric": "Saves per view ratio and follower conversion rate.",
+    "_growth_attempts": 1,
+    "asset_id": "yt_short_purica_brew_tip_02",
+    "audio": "Lo-fi warm acoustic guitar strumming with ambient kitchen water kettle sounds, building a calm and focused atmosphere.",
+    "caption": "The coffee mistake almost every Indian kitchen makes every single morning. Pouring boiling water straight onto your Purity Beans Purica granules scalds the coffee and ruins the aroma. Let your boiled water rest for 60 seconds first to let those delicate caramel and chocolate notes bloom properly. Read the jar. Discover India's Cleanest Instant Coffee at https://p3online.in. Follow @purepantryprovisions for daily coffee wisdom.",
+    "comment_trigger": "Comment WATER below if you want the exact temperature guide for your morning brew.",
+    "funnel_objective": "Follower Growth and Brand Discovery",
+    "gate_rejection": false,
+    "growth_plan": "Focus on non-sales educational coffee brewing technique that viewers naturally want to save and share, driving profile visits and follows.",
+    "growth_review": "Passed all content quality, realism, and brand safety checks. Zero sales language in the core value section.",
+    "hashtags": "#PurityBeans #Purica #CoffeeBrewing #PureCoffee #FreezeDriedCoffee #CoffeeTips #CleanCoffee",
+    "hook_strategy": "Contrarian Statement: The coffee mistake almost every Indian kitchen makes.",
+    "ladder_exhausted": true,
+    "product": "Purica Gourmet Arabica Granules",
+    "psychology_frame": "ritual",
+    "publish_blocked": "ladder_exhausted",
+    "reel_inspiration": "Specialty coffee barista masterclasses adapted for home instant coffee enthusiasts.",
+    "retention_tactic": "Rapid visual transition every 3 seconds from boiling kettle to thermometer test to smooth aroma bloom.",
+    "save_trigger": "Save this reel so you remember to let your water rest tomorrow morning.",
     "scenes": [
       {
         "scene": 1,
-        "type": "HOOK",
-        "duration_s": 3,
-        "on_screen": "The coffee mistake in your kitchen",
-        "spoken": "The coffee mistake almost every Indian kitchen makes is ignoring the back of the pack.",
-        "visual_direction": "Extreme macro shot on iPhone 15 of dark coffee granules under warm, directional kitchen light. Shallow depth of field, visible texture on glass."
+        "type": "hook",
+        "duration_s": 4,
+        "visual_direction": "Extreme close-up of boiling water splashing over a ceramic mug with the Purity Beans Purica jar resting beside it on a dark wooden kitchen counter, shallow depth of field, shot on iPhone 15.",
+        "on_screen": "The mistake in your kitchen",
+        "spoken": "The coffee mistake almost every Indian kitchen makes every single morning."
       },
       {
         "scene": 2,
-        "type": "CURIOSITY",
-        "duration_s": 5,
-        "on_screen": "Read the ingredient label",
-        "spoken": "When you pick up Purity Beans Purica Gourmet Arabica Granules, turn it around and check the ingredient list.",
-        "visual_direction": "Handheld shot of a hand turning the Purity Beans jar to show the authentic printed label on a lived-in wooden kitchen counter with a used spoon."
+        "type": "curiosity",
+        "duration_s": 6,
+        "visual_direction": "Macro shot of water bubbling aggressively inside a stainless steel kettle, warm side lighting catching rising steam.",
+        "on_screen": "Water straight off the boil",
+        "spoken": "Pouring water straight off the boil scalds the delicate coffee compounds instantly."
       },
       {
         "scene": 3,
-        "type": "VALUE",
-        "duration_s": 6,
-        "on_screen": "Pure Arabica. Zero chicory.",
-        "spoken": "You will find pure coffee with zero chicory. That is freeze-dried gourmet Arabica made to preserve natural aroma.",
-        "visual_direction": "Cinematic close-up of pure Arabica coffee crystals catching the light, shot with an 85mm lens, slight natural grain."
+        "type": "value",
+        "duration_s": 8,
+        "visual_direction": "A real human hand holding a kitchen timer counting down 60 seconds next to a steaming kettle on a lived-in kitchen counter with coffee spoons and water rings.",
+        "on_screen": "Wait 60 seconds",
+        "spoken": "Boil your water, then let it rest for sixty seconds so the temperature drops to the sweet spot."
       },
       {
         "scene": 4,
-        "type": "TRUST",
-        "duration_s": 5,
-        "on_screen": "Purity Beans Purica",
-        "spoken": "Nothing hidden, nothing added. Just pure ingredients for your daily cup.",
-        "visual_direction": "Slow tilt down revealing the exact Purity Beans glass jar with its authentic printed label resting on a dark marble surface with a correct contact shadow."
+        "type": "trust",
+        "duration_s": 8,
+        "visual_direction": "Close-up of the exact Purity Beans Purica glass jar label catching morning window light, showing freeze-dried pure Arabica granules clearly.",
+        "on_screen": "Pure Arabica Granules",
+        "spoken": "When you brew Purity Beans Purica freeze-dried pure Arabica, that gentle warmth lets the natural notes bloom completely."
       },
       {
         "scene": 5,
-        "type": "FOLLOW",
-        "duration_s": 6,
-        "on_screen": "Follow Purity Beans | p3online.in",
-        "spoken": "Follow Purity Beans for more transparent coffee facts and visit https://p3online.in.",
-        "visual_direction": "Locked-off shot of the Purity Beans jar next to a crumpled napkin, subtle lens flare from a morning window."
+        "type": "follow",
+        "duration_s": 4,
+        "visual_direction": "Slightly off-center framing of a clean kitchen counter with the Purity Beans jar and a finished cup of black coffee, warm ambient room light.",
+        "on_screen": "Follow @purepantryprovisions\nShop: p3online.in",
+        "spoken": "Save this tip for tomorrow, follow @purepantryprovisions for more, and read the jar at p3online.in."
       }
     ],
-    "share_trigger": "Share this with someone who drinks instant coffee every single day.",
-    "tagline": "Read the jar. Pure coffee with zero chicory.",
-    "target": "Urban Indian coffee drinkers interested in the craft and transparency of home brewing.",
+    "share_trigger": "Share this with a friend who always pours boiling water straight into their mug.",
+    "tagline": "Read the jar. Purica is pure Arabica with zero chicory.",
+    "target": "Home coffee drinkers looking to elevate their daily instant coffee ritual without spending cafe prices.",
     "type": "yt_short",
-    "viral_loop": "Educational content that prompts viewers to share coffee facts with friends.",
-    "viral_readiness_score": 9.2,
-    "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 9.0,
-      "emotion_pull": 8.5,
-      "hook_strength": 9.0,
-      "brand_clarity": 9.5,
-      "overall": 8.9,
-      "verdict": "PASS",
-      "feedback": "The asset successfully leverages clean-label consumer anxiety and transparency triggers. The macro ASMR visual direction builds immediate curiosity, and the precise focus on Purica's freeze-dried Arabica with zero chicory reinforces trust. The pacing holds attention through structured scene shifts.",
-      "retention_audit": "Scene 1 hits with a strong pattern interrupt. Scenes 2-4 maintain high cognitive engagement by directing the viewer's attention to label verification and crystal texture. Scene 5 delivers a clear, low-friction CTA anchored to the website."
-    },
+    "viral_loop": "Viewers save the brewing tip for their morning routine and share it with friends who drink instant coffee.",
     "viral_potential": {
       "scores": {
         "hook": 7.0,
-        "curiosity_gap": 7.0,
-        "relatability": 8.0,
+        "curiosity_gap": 8.0,
+        "relatability": 9.0,
         "shareability": 8.0,
-        "comment_trigger": 8.0,
+        "comment_trigger": 7.0,
         "format_fit": 8.0,
         "follow_cta": 8.0
       },
-      "overall": 7.7,
+      "overall": 7.8,
       "weakest": [
         "hook",
-        "curiosity_gap"
+        "comment_trigger"
       ],
-      "feedback": "The opening hook is a bit long and relies on a standard warning format. Shorten it to create an immediate visual and mental jolt in the first 1.5 seconds. Tighten the pacing in the opening beat to immediately grab attention before the viewer swipes away.",
-      "better_hook": "Most Indian kitchens are hiding this exact coffee mistake.",
+      "feedback": "The hook relies on a slightly generic 'mistake in your kitchen' trope that can be tightened for a YouTube Short. Strengthen the first 1-2 seconds with an immediate visual or auditory jolt. The comment trigger works well with the keyword prompt, but could be framed more as an urgent choice or simple yes/no question to boost comment velocity.",
+      "better_hook": "Stop pouring boiling water directly onto your coffee.",
       "passed": false,
       "honesty": [],
       "pass_mark": 8.0
     },
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
+    "viral_readiness_score": 9.2,
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.0,
+      "hook_strength": 9.0,
+      "brand_clarity": 8.5,
+      "overall": 8.8,
+      "verdict": "PASS",
+      "feedback": "The asset successfully leverages a highly practical everyday brewing tip that coffee enthusiasts naturally want to save and share. The contrarian opening hook effectively stops the scroll by challenging a common routine habit. Brand integration is smooth, highlighting Purica freeze-dried Arabica without sounding aggressively promotional.",
+      "retention_audit": "Scene 1 immediately introduces a relatable kitchen mistake, maintaining high engagement. Scene 2 and 3 deliver actionable value with clear pacing. Scene 4 bridges the technique directly to the Purity Beans Purica jar, reinforcing product value without breaking educational flow."
+    },
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.7 < 8.0 (weakest: hook, curiosity_gap). The opening hook is a bit long and relies on a standard warning format. Shorten it to create an immediate visual and mental jolt in the first 1.5 seconds. Tighten the pacing in the opening beat to immediately grab attention before the viewer swipes away. Suggested hook: Most Indian kitchens are hiding this exact coffee mistake. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"What's actually"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.8 < 8.0 (weakest: hook, comment_trigger). The hook relies on a slightly generic 'mistake in your kitchen' trope that can be tightened for a YouTube Short. Strengthen the first 1-2 seconds with an immediate visual or auditory jolt. The comment trigger works well with the keyword prompt, but could be framed more as an urgent choice or simple yes/no question to boost comment velocity. Suggested hook: Stop pouring boiling water directly onto your coffee. Use"
   },
   "_asset_metadata": [
     {
@@ -1700,6 +1761,50 @@
       {
         "status": "exhausted",
         "reason": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, format_fit). The hook is slightly defensive and relies on a generic industry callout. To push the score above 8, make the contrast sharper and more sensory in the first 2 seconds. Ensure on-screen beats change every 1-2 seconds with high-contrast macro visuals "
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "brand: [\"Reel caption error: ['Missing brand mention']\"]"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 7.7 < 8.0 (weakest: curiosity_gap, shareability). The piece has strong product clarity and adheres strictly to safety rules (pure Arabica, freeze-dried process correctly applied to Purica, zero chicory). However, the hook relies slightly on a generic instructional trope. To push the sco"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral_scoring_failed: ValueError"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: Bold is agglomerated pure coffee, not freeze-dried; do not call Bold freeze-dried or a granule process']"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "brand: [\"Reel caption error: ['Missing brand mention']\", 'product truth: Bold is agglomerated pure coffee, not freeze-dried; do not call Bold freeze-dried or a granule process']"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, curiosity_gap). The current hook reads like a product manual rather than a pattern interrupt. To stop the scroll, lead with a relatable friction point about milk coffee rather than starting with product specs. Shorten the text beats so they cut every 1-2 second"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 6.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). The opening hook relies on a generic 'POV' format that is overdone on feeds, and it doesn't create an immediate pattern interrupt. To push the score above 8, start with a punchier visual and a sharper contrast about office instant co"
+      },
+      {
+        "status": "exhausted",
+        "reason": "brand: [\"Reel frame 5 overlay error: ['Language is not English']\"]"
       }
     ],
     "reel_2": [
@@ -1797,6 +1902,133 @@
       {
         "status": "exhausted",
         "reason": "brand: [\"Carousel caption error: ['Missing brand mention', 'Missing required brand facts', 'Missing website reference']\"]"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"Carousel caption error: ['Missing brand mention', 'Missing required brand facts', 'Missing website reference']\"]"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"Carousel caption error: ['Missing brand mention', 'Missing required brand facts', 'Missing website reference']\"]"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"Carousel caption error: ['Missing brand mention', 'Missing required brand facts', 'Missing website reference']\"]"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"Carousel caption error: ['Missing brand mention', 'Missing required brand facts', 'Missing website reference']\"]"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"Carousel caption error: ['Missing brand mention', 'Missing required brand facts', 'Missing website reference']\"]"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "brand: [\"Carousel caption error: ['Missing brand mention', 'Missing required brand facts', 'Missing website reference']\"]"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, curiosity_gap, shareability). Slide 1 uses a weak, informational hook instead of a punchy pattern-interrupt. The swipe tension between slides is flat because each slide just states a fact rather than building anticipation or opening a loop. Ensure every slide t"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, shareability, format_fit). Slide 1 hook is too bland and reads like a product title rather than a pattern interrupt. Every slide needs active swipe tension (e.g., ending with a dangling thought or question like '...but here is why that ratio matters'). Ensure n"
+      },
+      {
+        "status": "exhausted",
+        "reason": "The opening hook 'Ultra Blend, the 70/30 milk coffee' fails to stop the scroll because it reads like a standard catalog title rather than a curiosity gap or pattern interrupt. To pass the threshold, the hook needs to provoke thought about milk coffee ratios (e.g., 'Why pure coffee actually ruins you"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The provided JSON evaluates the previous carousel asset. The score remains below the 8.0 threshold because the hook is a descriptive label rather than a scroll-stopping psychological trigger. To achieve an APPROVE verdict, the carousel must lead with a compelling pattern interrupt or a counter-intui"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "The hook 'Ultra Blend, the 70/30 milk coffee' is a product descriptor, not a pattern interrupt. It fails the curiosity-gap test — anyone scrolling sees a label, not a reason to stop. Slide 1 repeats the hook without tension. Slides 2-4 are functional but lack emotional friction or a dangling thought"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": ""
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "The opening hook is too informational rather than engaging. To increase scroll-stopping power, it needs a sharper tension regarding milk coffee preferences or ratio disclosures. The narrative flow across slides needs stronger transitional momentum to boost retention before slide 6."
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The hook 'Ultra Blend, the 70/30 milk coffee' is a product descriptor, not a pattern interrupt — it could belong to any chicory-coffee brand. Slide 1 opens with a flat statement ('Seventy, thirty') that creates zero curiosity gap. Slides 2–4 deliver facts but lack micro-tension (no dangling question"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.5 < 8.0 (weakest: hook, curiosity_gap, shareability). Slide 1 hook is too descriptive and reads like a label instead of a pattern interrupt. It lacks tension or a reason to swipe. Build an open loop about why the 70/30 ratio actually works better for milk than pure coffee, increasing "
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "brand: [\"Carousel caption error: ['Missing brand mention']\"]"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove 'fully' is not allowed (FSSAI). Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"Which coffee person are you? Swipe to find your jar\". Format rules: slide-1 promise, swipe"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "FALLBACK LADDER EXHAUSTED"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "FALLBACK LADDER EXHAUSTED"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "FALLBACK LADDER EXHAUSTED"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "FALLBACK LADDER EXHAUSTED"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "The carousel is educationally strong and transparent — saveability is high because of the price-per-cup math, ritual matching, and label close-ups. However, the hook 'Why do South Indian coffee lovers mix 30% chicory into their milk?' is descriptive, not disruptive. It does not create a betrayal, re"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: curiosity_gap, shareability, comment_trigger, follow_cta). Solid educational carousel with strong cultural relatability and clean format execution. The hook is specific and stops the scroll, but the curiosity gap pays off with an expected answer (deliberate ratio for"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral_scoring_failed: ValueError"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, curiosity_gap, format_fit). Slide 1 hook is too flat and reads like a product title rather than an attention-grabber. Increase swipe tension by creating a stronger curiosity gap between slides about why milk needs a different blend than black coffee. Suggested "
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 6.0 < 8.0 (weakest: hook, shareability, format_fit). The opening hook reads like a product manual rather than a pattern interrupt; it lacks a scroll-stopping trigger. Slide-to-slide swipe tension is weak because each slide states a fact rather than opening a loop for the next slide. To "
       }
     ],
     "facebook_post": [
@@ -1912,6 +2144,16 @@
       {
         "status": "exhausted",
         "reason": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, shareability). The hook is informative but a bit flat; framing it around a hidden surprise or a direct comparison creates a stronger pattern interrupt. Ensure the visual cuts match the 1-2 second beat rule strictly to maintain high retention. Sug"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.6 < 8.0 (weakest: hook, shareability). The opening hook is a bit dry and intellectual; a sharper pattern interrupt like 'Stop scrolling if you have never checked the back label of your coffee jar' would pull thumbs faster. Increase the visual contrast between the ingredient breakdowns"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, format_fit). The hook relies on a slightly generic physical action ('Stop stirring your coffee like this') which doesn't immediately tie into the label-reading angle until frame 2. Sharpen the opening to target ingredient transparency directly. Ensure the visua"
       }
     ],
     "linkedin_post": [
@@ -1965,6 +2207,50 @@
       {
         "status": "exhausted",
         "reason": "viral: score 7.7 < 8.0 (weakest: hook, curiosity_gap). The opening hook is a bit long and relies on a standard warning format. Shorten it to create an immediate visual and mental jolt in the first 1.5 seconds. Tighten the pacing in the opening beat to immediately grab attention before the viewer swi"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral_scoring_failed: ValueError"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "schema: 20 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'on_screen': 'Extreme cl... your shelf right now.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.type   Field required [type=miss"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'hoo...ow.', 'duration_s': 2.0}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Fie"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "schema: 10 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'duration_s': 3.0, 'on_s...tly resting beside it.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.type   Field required [type=miss"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "growth engine regenerate: wrong_handle:@puritybeans (use @purepantryprovisions)"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a brew tip (exact water temperature, ratio or technique for a better instant cup). Every frame/slide must teach, debunk or show a ritual; no prices, no offe"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "schema: 10 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'scene': 1, 'type': 'hoo... your coffee granules.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field re"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 7.7 < 8.0 (weakest: hook, format_fit). The hook is a bit generic ('You are burning your coffee') and doesn't fully optimize the first 1-second visual pattern interrupt required for YouTube Shorts. The pacing needs to hit faster in the opening beat. Brand rules are well-followed (zero ch"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.8 < 8.0 (weakest: hook, comment_trigger). The hook relies on a slightly generic 'mistake in your kitchen' trope that can be tightened for a YouTube Short. Strengthen the first 1-2 seconds with an immediate visual or auditory jolt. The comment trigger works well with the keyword prompt"
       }
     ]
   },
@@ -4022,90 +4308,218 @@
     "asset_count": 42
   },
   "mandatory_regen_rounds": {
-    "carousel": 1,
+    "carousel": 4,
     "facebook_post": 1,
-    "growth_reel": 1,
-    "reel_1": 1,
+    "growth_reel": 2,
+    "reel_1": 2,
     "threads_post": 1
   },
   "growth_reel": {
-    "type": "reel",
-    "hook": "I read the label so you don't have to: one jar is pure coffee, the other adds chicory.",
-    "hook_text": "I READ THE LABEL SO YOU DON'T HAVE TO",
-    "hook_spoken": "I read the label so you don't have to: one Purity Beans jar is pure coffee, the other adds chicory.",
-    "hook_text_overlay": "ONE JAR IS PURE COFFEE. THE OTHER ADDS CHICORY.",
+    "featured_product": "Purica Gourmet Arabica Granules [purica]",
+    "angle": "clean_label",
+    "audio": "Quiet office ambience: keyboard clicks, distant chatter. Crisp glass jar lid pop at 2s. Hot water pour at 4s. Gentle spoon stir at 6s. Satisfied exhale at 8s. Loop seamlessly back to keyboard clicks.",
+    "body": "Stop stirring your morning coffee until you know exactly what is sitting in your glass jar. Most instant coffee buyers never turn the pack around to check the ingredient panel. When you actually read the jar of Purity Beans Purica, you will find pure Arabica freeze-dried granules with zero chicory and zero fillers. No hidden additions, just pure coffee processed with care in India. Experience the natural caramel and chocolatey notes of freeze-dried pure Arabica without the mystery.",
+    "caption": "Most instant coffee buyers never turn the pack around to check the ingredient panel. When you actually read the jar of Purity Beans Purica, you will find pure Arabica freeze-dried granules with zero chicory and zero fillers. No hidden additions, just pure coffee. Experience the natural caramel and chocolatey notes of pure Arabica. Order your 50g jar for ₹329 or the 100g jar for ₹559 at https://p3online.in. Orders above ₹399 qualify for free shipping. Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. #PurityBeans #FreezeDriedCoffee #PureCoffee #CleanCoffeeMovement #CoffeeWithoutChicory",
+    "chosen_hook": "Stop stirring your coffee like this ↓",
+    "comment_trigger": "Comment LABEL if you always check the back of your coffee jar.",
+    "cta": "Explore our pure freeze-dried Arabica at https://p3online.in.",
     "frames": [
       {
-        "on_screen": "CHECK THE BACK PANEL",
-        "spoken": "I read the label so you don't have to: one Purity Beans jar is pure coffee, the other adds chicory."
+        "on_screen": "POV close-up: hand lifts Purity Beans Purica jar from desk. Camera tilts to reveal ingredient panel: \"Pure Arabica. Freeze-dried. Zero chicory.\"",
+        "spoken": "POV: It's 9:40 at your desk and you actually read the label on your coffee jar."
       },
       {
-        "on_screen": "READ THE INGREDIENTS",
-        "spoken": "When you pick up Bold, Purista, Purica, or Prima, the ingredient panel lists pure coffee and nothing else."
+        "on_screen": "Extreme close-up of label text. Finger traces \"Pure Arabica\" and \"Freeze-dried granules\". No other ingredients listed.",
+        "spoken": "Most people never flip the jar. But the back tells you everything: pure Arabica, freeze-dried, zero chicory."
       },
       {
-        "on_screen": "THE 70/30 BREAKDOWN",
-        "spoken": "Purity Beans Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee, labelled plainly for what it is."
+        "on_screen": "Steam rises as hot water hits granules. Macro shot: granules dissolve instantly, releasing aromatic swirls. Warm amber light catches the glass.",
+        "spoken": "Freeze-drying locks in natural caramel and chocolatey notes that spray-drying loses."
       },
       {
-        "on_screen": "NO GUESSWORK",
-        "spoken": "The ratio is printed right there on the glass so you always know exactly what is in your morning cup."
+        "on_screen": "Person takes a sip, eyes close briefly in appreciation. Jar sits clean on desk, label facing camera.",
+        "spoken": "Pure coffee. No fillers. No mystery. Just clean label confidence."
       },
       {
-        "on_screen": "FOLLOW FOR DAILY FACTS",
-        "spoken": "Milk coffee or black coffee: know your pour. Follow @purepantryprovisions for daily coffee facts."
+        "on_screen": "Jar centered with website overlay: \"p3online.in\" and handle \"@purepantryprovisions\". Text: \"Read the jar. 50g ₹329 | 100g ₹559. Free shipping over ₹399.\"",
+        "spoken": "Read the jar. Get Purica at p3online.in. Follow @purepantryprovisions for more label truths."
+      },
+      {
+        "on_screen": "Macro replay: granules dissolving in hot water, steam rising. Matches frame 3. Loop point.",
+        "spoken": "Watch the granules dissolve and ask yourself: what's in your jar?"
       }
     ],
-    "body": "Purity Beans Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee, labelled plainly. Purity Beans — Bold, Purista, Purica, and Prima list coffee only.",
-    "caption": "Why is Purity Beans Ultra Blend 70% coffee and 30% chicory? The reason is milk: the blend gives a smooth, rounded milk coffee.\n\nRead the label and you will see the ratio printed plainly. That is the difference between a blend and a guess.\n\nFollow @purepantryprovisions for daily coffee know-how. https://p3online.in",
-    "cta": "Follow @purepantryprovisions for the how-to, https://p3online.in",
-    "comment_trigger": "Milk coffee or black: how do you take yours?",
-    "save_trigger": "Save this so you remember what to look for on your next grocery run.",
-    "share_trigger": "Send this to the milk-coffee lover in your house.",
-    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia",
-    "audio": "Quiet kitchen ambience, no music bed - the spoken line carries it.",
-    "loop_ending": "Ends on the jar turning, which is how it opens - the last frame reads as the first.",
-    "angle": "EDUCATE",
-    "source": "evergreen_template",
-    "featured_product": "Purica",
-    "chosen_hook": "I read the label so you don't have to: one jar is pure coffee, the other adds chicory.",
-    "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 8.8,
-      "emotion_pull": 8.2,
-      "hook_strength": 9.0,
-      "brand_clarity": 9.2,
-      "overall": 8.7,
-      "verdict": "PASS",
-      "feedback": "The asset achieves high effectiveness by directly addressing label transparency and differentiating the pure lines from Ultra Blend without relying on anti-chicory negativity. To maintain this high standard, ensure future visual prompts strictly incorporate the exact reference jar with realistic lighting and texture.",
-      "retention_audit": "0-2s: The hook immediately captures attention by promising an honest label breakdown. 2-15s: Direct contrast between pure coffee and the 70/30 milk blend maintains viewer interest. 15-30s: Clear positioning and the website link drive high completion rates and immediate intent."
-    },
+    "hashtags": "#PurityBeans #FreezeDriedCoffee #PureCoffee #CleanCoffeeMovement #CoffeeWithoutChicory #ArabicaCoffee",
+    "hook": "POV: It's 9:40 at your desk and you actually read the label on your coffee jar.",
+    "hook_spoken": "POV: It's 9:40 at your desk and you actually read the label on your coffee jar.",
+    "hook_text": "POV: 9:40 AM. You read the label.",
+    "hook_text_overlay": "POV: 9:40 AM. You read the label.",
+    "ladder_exhausted": false,
+    "loop_ending": "Watch the granules dissolve",
+    "publish_blocked": false,
+    "regen_round": 1,
+    "save_trigger": "Save this before your next grocery run so you remember to check ingredient panels.",
+    "share_trigger": "Share this with someone who drinks instant coffee every single day.",
+    "source": "https://p3online.in",
+    "type": "growth_reel",
     "viral_potential": {
       "scores": {
-        "hook": 7.0,
-        "curiosity_gap": 7.0,
-        "relatability": 8.0,
-        "shareability": 7.0,
-        "comment_trigger": 7.0,
-        "format_fit": 8.0,
+        "hook": 8.0,
+        "curiosity_gap": 8.0,
+        "relatability": 9.0,
+        "shareability": 8.0,
+        "comment_trigger": 8.0,
+        "format_fit": 9.0,
         "follow_cta": 8.0
       },
-      "overall": 7.4,
+      "overall": 8.29,
       "weakest": [
-        "hook",
-        "curiosity_gap",
-        "shareability"
+        "comment_trigger",
+        "follow_cta"
       ],
-      "feedback": "The hook is informative but a bit flat; framing it around a hidden surprise or a direct comparison creates a stronger pattern interrupt. Ensure the visual cuts match the 1-2 second beat rule strictly to maintain high retention.",
-      "better_hook": "Most people never check the back of their instant coffee jar—here is what I found.",
-      "passed": false,
+      "feedback": "The reel has strong pacing, high format fit, and an excellent desk-POV opening that hits office workers instantly. To elevate it further, tighten the comment trigger by asking viewers to drop their current coffee brand's ingredient list in the comments to create higher engagement. Ensure the visual cut keeps the 1-2 second cadence strictly adhered to.",
+      "better_hook": "Stop what you're doing and look at the back of your coffee jar right now.",
+      "passed": true,
       "honesty": [],
       "pass_mark": 8.0
     },
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, shareability). The hook is informative but a bit flat; framing it around a hidden surprise or a direct comparison creates a stronger pattern interrupt. Ensure the visual cuts match the 1-2 second beat rule strictly to maintain high retention. Suggested hook: Most people never check the back of their instant coffee jar—here is what I found. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"You'"
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.9,
+      "verdict": "PASS",
+      "feedback": "The asset hits all the right notes for clean-label education. The POV hook immediately targets office professionals and home-brewers who care about ingredients. Specifying the exact product (Purica), pricing details, and clear separation from chicory blends maintains absolute brand integrity while driving high intent.",
+      "retention_audit": "Transition from desk POV to macro jar-reading feels natural and keeps visual interest high. Pacing ensures no dead space before the hot water pour. Strong loop mechanics on the final dissolve macro shot."
+    },
+    "viral_readiness_score": 94.0,
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "people who buy instant coffee and have never turned the jar around",
+      "angle": "visual discovery of one label fact",
+      "follow_promise": "Follow for the next thing the label is hiding.",
+      "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+      "platform": "reel",
+      "sku": "Purica",
+      "day": 295
+    },
+    "growth_review": {
+      "platform": "reel",
+      "label": "growth_reel",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "people who buy instant coffee and have never turned the jar around",
+        "angle": "visual discovery of one label fact",
+        "follow_promise": "Follow for the next thing the label is hiding.",
+        "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+        "platform": "reel",
+        "sku": "Purica",
+        "day": 295
+      },
+      "published": false
+    }
   }
 }
