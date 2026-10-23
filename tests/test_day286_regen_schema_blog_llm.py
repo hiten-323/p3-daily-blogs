@@ -115,6 +115,46 @@ def test_free_provider_fails_over_on_empty(monkeypatch):
     assert text == '{"ok": 1}' and len(seen) == 2
 
 
+def test_github_models_assembles_sse_instead_of_calling_it_malformed(monkeypatch):
+    """An HTTP 200 whose body is SSE used to die in resp.json() with
+    'Expecting value: line 1 column 1'. That is a parse bug when the frames
+    hold a completion. A truly empty 200 is still a failure."""
+    import json as _json
+    from content_generator.providers import github_models, openai_compat
+
+    class Resp:
+        def __init__(self, text):
+            self.status_code = 200
+            self.text = text
+
+        def json(self):
+            return _json.loads(self.text)
+
+    seen = {}
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen["json"] = json
+        if not seen.get("n"):
+            seen["n"] = 1
+            return Resp(
+                'data: {"choices":[{"delta":{"content":"{\\"overall\\": 8.7}"}}]}\n\n'
+                "data: [DONE]\n"
+            )
+        return Resp("")
+
+    monkeypatch.setattr(openai_compat._http, "post", post)
+    monkeypatch.setenv("GITHUB_MODELS_TOKEN", "ghs_test")
+    monkeypatch.setattr(github_models, "MODELS", ["meta/Llama-3.3-70B-Instruct"])
+    text, usage = github_models.call("score", 700)
+    assert seen["json"]["stream"] is False
+    assert text == '{"overall": 8.7}'
+    assert usage["model"] == "meta/Llama-3.3-70B-Instruct"
+
+    empty, failure = github_models.call("score", 700)
+    assert empty is None
+    assert "empty success body" in failure["error"]
+
+
 def test_openrouter_only_free_models():
     from content_generator.providers import openrouter
     assert openrouter.MODELS and all(m.endswith(":free") for m in openrouter.MODELS)
