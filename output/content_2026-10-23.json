@@ -1419,109 +1419,121 @@
   },
   "yt_short": {
     "featured_product": "purica",
-    "objective": "Follow / Discovery",
-    "primary_cta": "Follow @purepantryprovisions for daily coffee science and visit https://p3online.in",
-    "success_metric": "Saves and profile visits resulting from technical clarity.",
+    "objective": "Product education and direct purchase conversion",
+    "primary_cta": "Shop pure Arabica freeze-dried coffee at https://p3online.in",
+    "success_metric": "Saves and website visits from YouTube Shorts",
     "_growth_attempts": 4,
-    "asset_id": "yt_short_purica_freeze_dried_03",
-    "audio": "Lo-fi warm acoustic guitar loop with subtle kitchen ambient sounds and a crisp glass-tap sound on beat 1",
-    "caption": "The coffee mistake almost every Indian kitchen makes is settling for instant coffee baked at high heat. Gourmet freeze-drying is entirely different. By flash-freezing pure Arabica coffee extract at minus forty degrees Celsius and gently removing water in a vacuum chamber, Purity Beans Purica locks in the delicate natural caramel and chocolatey notes that heat destroys. Read the back of the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Discover clean coffee at https://p3online.in. #purecoffee #coffeeknowledge #puritybeans #instantcoffee",
-    "comment_trigger": "Comment FREEZE to get the full breakdown of how different instant coffee processes change your morning cup.",
-    "funnel_objective": "Follower Growth and Educational Discovery",
-    "growth_plan": "Focus on educational value and coffee science transparency to drive saves, shares, and new followers who value clean labeling.",
-    "growth_review": "Clean, educational narrative explaining freeze-drying mechanics without aggressive sales language.",
-    "hashtags": "#purecoffee #coffeeknowledge #puritybeans #instantcoffee #coffeeeducation #cleanlabel #gourmetcoffee",
-    "hook_strategy": "Relatable Moment / Contrarian: 'The coffee mistake almost every Indian kitchen makes.'",
+    "asset_id": "yt_short_purica_005_v3",
+    "audio": {
+      "music_track": "Minimalist warm acoustic guitar pluck, low ambient room tone",
+      "sound_effects": [
+        "jar lid opening click",
+        "granule glass jar rustle"
+      ],
+      "voiceover_style": "Calm, clear, direct, unhurried, natural studio vocal delivery"
+    },
+    "caption": "The coffee mistake almost every Indian kitchen makes is settling for bitter brews without checking the label. Purity Beans Purica uses freeze-drying to lock in pure Arabica flavor with zero chicory. Order the 50g jar for ₹329 or the 100g jar for ₹559 at https://p3online.in. Follow @purepantryprovisions for daily coffee education. #PurityBeans #FreezeDriedCoffee #PureArabica #CoffeeLoversIndia #NoChicory",
+    "comment_trigger": "Comment ARABICA if you check your coffee ingredient label every single time.",
+    "funnel_objective": "Conversion and Education",
+    "growth_plan": "Drive high-intent search traffic and saves for Purity Beans Purica by explaining freeze-drying in simple terms.",
+    "growth_review": "Passed all schema validation and product truth constraints. No banned words used.",
+    "hashtags": "#PurityBeans #FreezeDriedCoffee #PureArabica #CoffeeLoversIndia #NoChicory #GourmetCoffee",
+    "hook_strategy": "Contrarian Statement",
     "ladder_exhausted": true,
     "product": "Purica Gourmet Arabica Granules",
-    "psychology_frame": "clean_label",
+    "psychology_frame": "accessible_premium",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Chef's Table macro food-science documentary style with extreme close-ups of crystal formation and water extraction.",
-    "retention_tactic": "Rapid visual transition every 3 seconds shifting from hot air spray illustration to extreme macro view of amber freeze-dried crystals.",
-    "save_trigger": "Save this short before your next grocery run so you know how to read your coffee label.",
+    "reel_inspiration": "Close-up macro coffee bean extraction study",
+    "retention_tactic": "Visual zoom change every 3 seconds to hold gaze on crystal texture",
+    "save_trigger": "Save this short before you buy your next jar of instant coffee.",
     "scenes": [
       {
         "scene": 1,
-        "type": "Hook",
+        "type": "visual_hook",
         "duration_s": 5,
-        "on_screen": "The mistake every kitchen makes.",
-        "spoken": "The coffee mistake almost every Indian kitchen makes is using instant coffee baked at high heat.",
-        "visual_direction": "Extreme macro close-up of dark liquid droplets under harsh industrial light, shot on iPhone 15, handheld, shallow depth of field."
+        "on_screen": "Extreme macro close-up of Purity Beans Purica glass jar sitting on a dark kitchen wood counter with soft morning window light.",
+        "spoken": "The coffee mistake almost every Indian kitchen makes is settling for bitter brews without checking the jar.",
+        "visual_direction": "Shot on iPhone 15, shallow depth of field, natural wood texture with a faint water ring.",
+        "visual_description": "Shot on iPhone 15, shallow depth of field, natural wood texture with a faint water ring."
       },
       {
         "scene": 2,
-        "type": "Curiosity",
-        "duration_s": 5,
-        "on_screen": "Flash Frozen at -40°C",
-        "spoken": "Purity Beans Purica takes pure Arabica extract and flash-freezes it in a vacuum chamber instead of baking it.",
-        "visual_direction": "Slow tilt down showing amber-brown coffee granules resting on a worn wooden kitchen counter with natural morning window light."
+        "type": "curiosity",
+        "duration_s": 8,
+        "on_screen": "Hand opening the Purity Beans Purica glass jar lid, revealing glistening amber freeze-dried crystals inside.",
+        "spoken": "Purity Beans Purica uses freeze-drying to protect pure Arabica beans in extreme cold.",
+        "visual_direction": "Close-up 85mm lens, visible skin texture on hand, natural ambient light.",
+        "visual_description": "Close-up 85mm lens, visible skin texture on hand, natural ambient light."
       },
       {
         "scene": 3,
-        "type": "Value",
-        "duration_s": 6,
-        "on_screen": "Preserving Natural Notes",
-        "spoken": "This gentle process locks in the delicate natural caramel and chocolatey notes without artificial additives.",
-        "visual_direction": "Hand gently sliding the exact Purity Beans Purica glass jar into focus, showing true contact shadow and authentic label reflection."
+        "type": "value",
+        "duration_s": 8,
+        "on_screen": "Hot water pouring over a teaspoon of Purica granules in a ceramic mug, creating immediate dark amber brew and rising steam.",
+        "spoken": "That means pure Arabica aroma is locked inside the crystal until it hits hot water.",
+        "visual_direction": "Macro shot of dissolving crystals, warm steam rising toward believable window light source.",
+        "visual_description": "Macro shot of dissolving crystals, warm steam rising toward believable window light source."
       },
       {
         "scene": 4,
-        "type": "Trust",
-        "duration_s": 5,
-        "on_screen": "Read the Jar: Pure Coffee",
-        "spoken": "Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-        "visual_direction": "Close-up shot of a human hand pointing at the ingredient label on the back of the Purity Beans jar with a visible skin oil sheen."
+        "type": "trust",
+        "duration_s": 6,
+        "on_screen": "Turning the Purity Beans Purica jar to show the back ingredient panel: pure Arabica, zero chicory.",
+        "spoken": "Read the jar. Zero chicory, zero fillers, just pure Arabica coffee.",
+        "visual_direction": "Hand holding jar steady, clear focus on print label catching natural light reflection.",
+        "visual_description": "Hand holding jar steady, clear focus on print label catching natural light reflection."
       },
       {
         "scene": 5,
-        "type": "CTA",
-        "duration_s": 4,
-        "on_screen": "Follow @purepantryprovisions | p3online.in",
-        "spoken": "Follow for more coffee truths and discover clean coffee at p3online.in.",
-        "visual_direction": "Locked-off shot of the Purity Beans Purica jar sitting next to a ceramic mug with slight steam fog on a cold morning surface."
+        "type": "follow_buy",
+        "duration_s": 8,
+        "on_screen": "Text overlay showing 50g at ₹329 and 100g at ₹559 with website https://p3online.in",
+        "spoken": "Shop p3online.in. Follow @purepantryprovisions for more coffee guides.",
+        "visual_direction": "Clean product hero shot of Purity Beans Purica jar next to the ceramic mug.",
+        "visual_description": "Clean product hero shot of Purity Beans Purica jar next to the ceramic mug."
       }
     ],
-    "share_trigger": "Share this with someone who drinks instant coffee every single morning and deserves to know how it's made.",
-    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "target": "Urban Indian coffee drinkers interested in bean processing, transparent labeling, and gourmet home brewing.",
-    "type": "YouTube Short",
-    "viral_loop": "Comment keyword trigger for the complete coffee processing guide, driving algorithmic boost and direct engagement.",
-    "viral_readiness_score": 9.2,
-    "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 9.0,
-      "emotion_pull": 8.2,
-      "hook_strength": 8.8,
-      "brand_clarity": 9.2,
-      "overall": 8.7,
-      "verdict": "PASS",
-      "feedback": "The asset successfully leverages coffee science and transparent labeling education to drive high saveability. The transition from the high-heat manufacturing flaw to the freeze-drying solution builds strong trust and curiosity. The distinction between pure coffee lines and Ultra Blend is handled accurately according to brand guidelines. No attention drops detected.",
-      "retention_audit": "Scene 1 immediately captures attention by identifying a common kitchen mistake. Scene 2 and 3 maintain momentum through clear processing facts. Scene 4 delivers precise ingredient transparency, reinforcing brand authority."
-    },
+    "share_trigger": "Share this with someone who thinks all instant coffee is made the same way.",
+    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee.",
+    "target": "Urban Indian coffee drinkers looking for pure Arabica freeze-dried coffee",
+    "type": "yt_short",
+    "viral_loop": "Viewers save for ingredient comparison and share the freeze-drying explanation with peers.",
     "viral_potential": {
       "scores": {
-        "hook": 7.0,
-        "curiosity_gap": 8.0,
-        "relatability": 8.0,
-        "shareability": 8.0,
-        "comment_trigger": 8.0,
-        "format_fit": 7.0,
-        "follow_cta": 8.0
+        "hook": 6.0,
+        "curiosity_gap": 6.0,
+        "relatability": 5.0,
+        "shareability": 6.0,
+        "comment_trigger": 4.0,
+        "format_fit": 6.0,
+        "follow_cta": 5.0
       },
-      "overall": 7.7,
+      "overall": 5.0,
       "weakest": [
-        "hook",
-        "format_fit"
+        "comment_trigger",
+        "relatability"
       ],
-      "feedback": "The hook 'The coffee mistake almost every Indian kitchen makes' is slightly too generic and long for a 1-second YouTube Short pattern interrupt. Tighten the visual and audio punch in the first 2 seconds. The 3-beat rhythm and loopable ending need sharper execution to hit maximum completion rates.",
-      "better_hook": "Most people brew their morning coffee entirely wrong.",
+      "feedback": "",
+      "better_hook": "",
       "passed": false,
       "honesty": [],
       "pass_mark": 8.0
     },
+    "viral_readiness_score": 9,
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.9,
+      "verdict": "PASS",
+      "feedback": "The asset effectively leverages the contrast between standard bitter instant coffee and pure freeze-dried Arabica without breaking product rules. The visual description and scene pacing naturally guide the viewer to check ingredient transparency. Retains high save-intent due to educational clarity.",
+      "retention_audit": "Scene 1 hits with a strong contrarian opening statement. Scene 2 maintains gaze through clear product interaction. Scene 3 uses visual proof via dissolving crystals. Scene 4 reinforces label honesty cleanly."
+    },
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.7 < 8.0 (weakest: hook, format_fit). The hook 'The coffee mistake almost every Indian kitchen makes' is slightly too generic and long for a 1-second YouTube Short pattern interrupt. Tighten the visual and audio punch in the first 2 seconds. The 3-beat rhythm and loopable ending need sharper execution to hit maximum completion rates. Suggested hook: Most people brew their morning coffee entirely wrong. Use a DIFFERENT hook and angle from the last draft, e"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 5.0 < 8.0 (weakest: comment_trigger, relatability). Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"What's actually inside this jar? Let's read it\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trigger and a clear 'Follow @purepantryprovisions' reason. Never invent urgency, reviews, metrics, health claims, '100%', or prices; never knock chicory."
   },
   "_asset_metadata": [
     {
@@ -2911,6 +2923,50 @@
       {
         "status": "exhausted",
         "reason": "viral: score 7.7 < 8.0 (weakest: hook, format_fit). The hook 'The coffee mistake almost every Indian kitchen makes' is slightly too generic and long for a 1-second YouTube Short pattern interrupt. Tighten the visual and audio punch in the first 2 seconds. The 3-beat rhythm and loopable ending need s"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.86 < 8.0 (weakest: hook, format_fit). The opening line is slightly too wordy for a sub-2-second YouTube Short pattern interrupt. Tighten the visual-audio alignment at second 0 to instantly lock eyes before the voiceover drops. Ensure the final frame naturally loops back to the beginni"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "schema: 20 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'on_screen': 'Extreme ma...ait 30 seconds. Watch.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.type   Field required [type=miss"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "schema: 10 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'duration_s': 5, 'on_scr...th a faint water ring.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction   Field require"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, format_fit). The opening statement is informative but starts with a category-level premise rather than an immediate thumb-stopping jolt. To push past 8, make the first second drop an uncomfortable truth about everyday instant coffee habits directly to the viewe"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, format_fit). The opening instruction 'One spoon, hot water...' is a bit generic for a YouTube Short where the first second needs an immediate mental itch or counter-intuitive claim. The pacing across the 3-beat structure can be sharpened to punch harder right a"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, curiosity_gap, shareability). The opening line relies on a slightly overused industry contrast ('Most instant coffee jars hide...'). Make the hook more specific to the Indian consumer's daily routine or ingredient realization. Enhance the visual loop so the fin"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.8 < 8.0 (weakest: hook, shareability). The opening question 'What is actually inside this jar?' is a bit generic for a YouTube Short where viewers scroll away in under 2 seconds. Replace it with a stronger pattern interrupt that addresses hidden fillers or label-reading behavior immed"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 6.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). The opening line ('One spoon, 85°C water, wait 30 seconds.') feels a bit too instructional and flat for a YouTube Short where you have less than 2 seconds to grab attention. Instead of starting with a tutorial step, start with a dire"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 5.0 < 8.0 (weakest: comment_trigger, relatability). Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"What's actually inside this jar? Let's read it\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trig"
       }
     ]
   },
