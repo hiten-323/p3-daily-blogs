@@ -4425,8 +4425,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 17,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...ur instant coffee jar?'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error",
+      "count": 21,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...d: [\\'Empty content\\']'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "schema",
@@ -4509,8 +4509,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 6,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...ed': 'ladder_exhausted'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
+      "count": 7,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...and: ['Empty content']\"}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "ladder_exhausted",
@@ -4551,7 +4551,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 2,
       "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -5013,7 +5013,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 2,
       "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -5107,6 +5107,34 @@
       "last_seen": "2026-10-23",
       "platform": "youtube",
       "reason": "viral: score 6.0 < 8.0 (weakest: relatability, follow_cta, format_fit, curiosity_gap). 1. Hook is strong legally but visually generic \u2014 split-frame 'bad vs good' is overused on Shorts. 2. Curiosity gap opens with 'can legally hide' but pays off with standard product demo; no unexpected insight or tw",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.1 < 8.0 (weakest: relatability, curiosity_gap, follow_cta). 1. **Relatability** \u2013 Add unmistakable Indian coffee moments: a filter\u2011coffee kettle on a balcony, an office pantr with a shared kettle, a commuter sipping from a steel tumbler. Show the ritual of a Mumbai morning or a Bangalore startup break to make the audience see themselves. 2. **Curiosity Gap** \u2013 Instead of only showin",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 6.1 < 8.0 (weakest: relatability, curiosity_gap, follow_cta). 1. **relatability** \u2013 add unmistakable indian coffee moments: a filter\u2011coffee kettle on a balcony, an off",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "viral: score 6.1 < 8.0 (weakest: relatability, curiosity_gap, follow_cta). 1. **Relatability** \u2013 Add unmistakable Indian coffee moments: a filter\u2011coffee kettle on a balcony, an office pantr with a shared kettle, a commuter sipping from a steel tumbler. Show the ritual of a Mumbai morning or a Bangal",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "brand: ['Missing brand mention', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory']",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "product_truth",
+      "id": "youtube|yt_short|product_truth|brand: ['missing brand mention', 'product truth: anti-chicory attack is not allowed when ultra blend or another chicory blend is featured or named as the solution; disclose 70% cof",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "brand: ['Missing brand mention', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory']",
       "stage": "generation",
       "status": "gate_holding"
     }
