@@ -5206,7 +5206,7 @@
     },
     "2026-10-23|evening|instagram_video|pb_055ca5a630|growth_reel": {
       "asset": "growth_reel",
-      "attempt_count": 4,
+      "attempt_count": 5,
       "content_date": "2026-10-23",
       "content_id": "pb_055ca5a630",
       "day_number": 295,
@@ -5271,9 +5271,24 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-23T23:33:43+00:00",
+          "attempt": 5,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-23T23:33:44+00:00",
+          "attempt": 5,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-23T20:48:54+00:00",
+      "last_attempt_at": "2026-10-23T23:33:43+00:00",
       "last_result": {
         "error": "",
         "success": false
@@ -5284,7 +5299,7 @@
       "remote_id": "",
       "slot": "evening",
       "status": "SKIPPED",
-      "updated_at": "2026-10-23T20:48:55+00:00",
+      "updated_at": "2026-10-23T23:33:44+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
