@@ -1961,7 +1961,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 2,
+      "count": 3,
       "feedback": "brand: ['Missing website reference']",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -4425,8 +4425,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...issing brand mention']\"}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Missing brand mention']",
+      "count": 5,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...and: ['Empty content']\"}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "schema",
@@ -4463,6 +4463,62 @@
       "last_seen": "2026-10-23",
       "platform": "youtube",
       "reason": "brand: ['Missing website reference']",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 13 validation errors for YoutubeShortSchema scenes.0.type Field required [type=missing, input_value={'scene': 1, 'duration_s'...side your Arabica jar?'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'duration_s'...side your Arabica jar?'}, input_type=dict]",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "product_truth",
+      "id": "youtube|yt_short|product_truth|schema: 13 validation errors for youtubeshortschema scenes.0.type field required [type=missing, input_value={'scene': 1, 'duration_s'...side your arabica jar?'}, input_type=dict] f",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 13 validation errors for YoutubeShortSchema scenes.0.type Field required [type=missing, input_value={'scene': 1, 'duration_s'...side your Arabica jar?'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction Field required",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'duration_s'...urica is pure Arabica.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Field required [type=missing, input_value={'scene': 2, 'duration_s'...y spray-dried instant.'}, input_t",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 5 validation errors for youtubeshortschema scenes.0.visual_direction field required [type=missing, input_value={'scene': 1, 'duration_s'...urica is pure arabica.'}, input_t",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'duration_s'...urica is pure Arabica.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Fie",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 10 validation errors for YoutubeShortSchema scenes.0.type Field required [type=missing, input_value={'scene': 1, 'duration_s'...de, slight lens flare.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'duration_s'...de, slight lens flare.'}, input_type=dict]",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "product_truth",
+      "id": "youtube|yt_short|product_truth|schema: 10 validation errors for youtubeshortschema scenes.0.type field required [type=missing, input_value={'scene': 1, 'duration_s'...de, slight lens flare.'}, input_type=dict] f",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 10 validation errors for YoutubeShortSchema scenes.0.type Field required [type=missing, input_value={'scene': 1, 'duration_s'...de, slight lens flare.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.visual_direction Field required",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...d: [\\'Empty content\\']'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|schema: 1 validation error for youtubeshortschema value error, youtube short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_val",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...d: [\\'Empty content\\']'}, input_type=dict] For further information visit https://er",
       "stage": "generation",
       "status": "gate_holding"
     }
