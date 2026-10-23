@@ -4425,8 +4425,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 5,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...and: ['Empty content']\"}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
+      "count": 8,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...contrast, locked off'}]}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Missing required brand facts', 'Missing website refe",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "schema",
@@ -4705,7 +4705,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 3,
+      "count": 4,
       "feedback": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict] For",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -4729,6 +4729,62 @@
       "last_seen": "2026-10-23",
       "platform": "youtube",
       "reason": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken Field required [type",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 2,
+      "feedback": "schema: 20 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'type': 'hook', 'duratio...Beans Purica jar label'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.duration_s Field required [type=missing, input_value={'type': 'hook', 'duratio...Beans Purica jar label'}, input_type=dict] Fo",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 20 validation errors for youtubeshortschema scenes.0.scene field required [type=missing, input_value={'type': 'hook', 'duratio...beans purica jar label'}, input_type=dict] ",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 20 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'type': 'hook', 'duratio...Beans Purica jar label'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.duration_s Field required [typ",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'type': 'hoo...p burning your Arabica'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Field required [type=missing, input_value={'scene': 2, 'type': 'val...'85\u00b0C \u2014 not boiling'}, input_type",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 5 validation errors for youtubeshortschema scenes.0.visual_direction field required [type=missing, input_value={'scene': 1, 'type': 'hoo...p burning your arabica'}, input_t",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'type': 'hoo...p burning your Arabica'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Fie",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "brand: ['Missing required brand facts', 'Missing website reference']",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "brand",
+      "id": "youtube|yt_short|brand|brand: ['missing required brand facts', 'missing website reference']",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "brand: ['Missing required brand facts', 'Missing website reference']",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'type': 'hook', 'duratio... macro, 4K, locked off'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene Field required [type=missing, input_value={'type': 'value', 'durati...eld subtle sway, 24fps'}, input_type=dict] For furt",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|schema: 5 validation errors for youtubeshortschema scenes.0.scene field required [type=missing, input_value={'type': 'hook', 'duratio... macro, 4k, locked off'}, input_type=dict] f",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'type': 'hook', 'duratio... macro, 4K, locked off'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene Field required [type=miss",
       "stage": "generation",
       "status": "gate_holding"
     }
