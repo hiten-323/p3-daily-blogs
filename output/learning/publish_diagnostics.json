@@ -4516,5 +4516,23 @@
     "rate_limit": {},
     "exception_type": "",
     "exception_msg": ""
+  },
+  {
+    "ts": "2026-10-23T06:39:16",
+    "day_number": 295,
+    "platform": "threads",
+    "content_id": "pb_055ca5a630",
+    "generation_id": "fallback_2026-10-23_b6eb3603",
+    "publisher_version": "2.3.0",
+    "status": "failure",
+    "duration_ms": 2449,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "missing_input",
+    "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+    "response": "{\"success\": false, \"attempted\": false, \"skipped\": true, \"post_id\": \"\", \"url\": \"\", \"gate\": {\"allowed\": false, \"asset_key\": \"threads_post\", \"reason\": \"native_asset_missing_passing_editorial_score\", \"checks\": {\"editorial\": false}}, \"ledger_status\": \"FAILED\", \"ledger_attempt_count\": 1}",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
   }
 ]

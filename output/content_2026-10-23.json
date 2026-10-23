@@ -1,0 +1,4190 @@
+{
+  "day_number": 295,
+  "reels": [
+    {
+      "type": "reel",
+      "hook": "70 / 30, ON PURPOSE.",
+      "hook_text": "70 / 30, ON PURPOSE.",
+      "hook_spoken": "Purity Beans Ultra Blend is 70% coffee and 30% chicory, blended specifically for a smooth milk coffee.",
+      "hook_text_overlay": "70 / 30, ON PURPOSE",
+      "frames": [
+        {
+          "on_screen": "70 / 30, ON PURPOSE",
+          "spoken": "Purity Beans Ultra Blend is 70% coffee and 30% chicory, blended specifically for a smooth milk coffee."
+        },
+        {
+          "on_screen": "READ THE JAR",
+          "spoken": "We do not hide the ratio. It is printed plainly on the label for you to see."
+        },
+        {
+          "on_screen": "BUILT FOR MILK COFFEE",
+          "spoken": "This specific blend is crafted for the classic Indian milk-coffee cup, delivering a rounded taste that holds up to milk."
+        },
+        {
+          "on_screen": "PURE COFFEE RANGE ALSO AVAILABLE",
+          "spoken": "While Ultra Blend is our milk-coffee specialist, our other ranges are pure coffee with zero chicory."
+        },
+        {
+          "on_screen": "CHOOSE YOUR CUP",
+          "spoken": "Choose Ultra Blend for milk, or our pure range for black. Visit p3online.in to find your match."
+        },
+        {
+          "on_screen": "FIND YOUR MATCH AT P3ONLINE.IN",
+          "spoken": "At about ₹5 a cup, Purity Beans Ultra Blend delivers a premium, honest experience for your daily routine."
+        }
+      ],
+      "body": "Purity Beans Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee, labelled plainly. Purity Beans — Bold, Purista, Purica, and Prima list coffee only.",
+      "caption": "Why is Purity Beans Ultra Blend 70% coffee and 30% chicory? The reason is milk: this specific blend creates a smooth, rounded milk coffee that holds its flavor. Read the label and you will see the ratio printed plainly. That is the difference between a transparent blend and a guess. At about ₹5 a cup, Purity Beans Ultra Blend offers a premium, honest experience for your daily routine. Follow @purepantryprovisions for daily coffee know-how and label-reading tips. Shop at https://p3online.in",
+      "cta": "Shop Purity Beans Ultra Blend at https://p3online.in",
+      "comment_trigger": "Milk coffee or black: how do you take yours? Comment below.",
+      "save_trigger": "Save this so you remember what to look for on your next coffee label.",
+      "share_trigger": "Send this to the milk-coffee lover in your house who deserves a better blend.",
+      "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia #UltraBlend",
+      "audio": "Quiet kitchen ambience, sound of a spoon stirring a ceramic cup, no music bed - the spoken line carries the authority.",
+      "loop_ending": "The video ends with a close-up of the Purity Beans Ultra Blend jar rotating back to the front label, seamlessly looping into the first frame.",
+      "angle": "EDUCATE",
+      "source": "evergreen_template",
+      "featured_product": "ultra_blend",
+      "chosen_hook": "70 / 30, ON PURPOSE.",
+      "editorial_score": {
+        "shareability": 7.0,
+        "saveability": 6.0,
+        "emotion_pull": 6.5,
+        "hook_strength": 9.0,
+        "brand_clarity": 9.0,
+        "overall": 7.5,
+        "verdict": "REJECT",
+        "feedback": "The hook '70/30, ON PURPOSE' is elite and stops the scroll, but the asset fails on retention. Frame 4 introduces a list of four other products (Bold, Purista, Purica, Prima), which creates a cognitive load spike and kills the momentum of the 'Ultra Blend' story. The transition from a specific blend's purpose to a general brand catalog is too abrupt. To fix: remove the specific product list in the script and replace it with 'Our other ranges are 100% pure coffee' to keep the focus on transparency. Additionally, the provided visual prompt is truncated and incomplete.",
+        "retention_audit": "Frame 4: 'While Ultra Blend is our milk-coffee specialist, the rest of the Purity Beans range is pure coffee' is a momentum killer. It shifts from a specific product benefit to a general brand statement too quickly. Replace with a punchier bridge like 'Prefer it black? Our pure range has you covered.'"
+      },
+      "visual_prompt": "Vertical 9:16. Hyperrealistic photographic shot on iPhone 15. A Purity Beans Ultra Blend jar sitting on a dark marble",
+      "editorial_error": "schema: 1 validation error for ReelSchema frames.5.on_screen   String should have at least 1 character [type=string_too_short, input_value='', input_type=str]     For further information visit https://errors.pydantic.dev/2.14/v/string_too_short | brand: [\"Reel frame 6 overlay error: ['Empty content']\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
+      "ladder_exhausted": true,
+      "publish_blocked": "ladder_exhausted",
+      "needs_regen": true,
+      "held": true,
+      "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 1 validation error for ReelSchema frames.5.on_screen   String should have at least 1 character [type=string_too_short, input_value='', input_type=str]     For further information visit https://errors.pydantic.dev/2.14/v/string_too_short | brand: [\"Reel frame 6 overlay error: ['Empty content']\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
+      "funnel_objective": "DISCOVERY",
+      "objective": "Engagement Growth",
+      "primary_cta": "Send this to someone who drinks instant coffee",
+      "success_metric": "shares",
+      "target": 500,
+      "growth_plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "people who buy instant coffee and have never turned the jar around",
+        "angle": "visual discovery of one label fact",
+        "follow_promise": "Follow for the next thing the label is hiding.",
+        "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+        "platform": "reel",
+        "sku": "Purica",
+        "day": 295
+      },
+      "growth_review": {
+        "platform": "reel",
+        "label": "reel_1",
+        "decision": "PASS",
+        "overall": 8.67,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 2,
+        "retry_limit": 8,
+        "feedback": "",
+        "plan": {
+          "primary_objective": "reach new relevant coffee drinkers",
+          "secondary_objective": "earn qualified followers",
+          "audience": "people who buy instant coffee and have never turned the jar around",
+          "angle": "visual discovery of one label fact",
+          "follow_promise": "Follow for the next thing the label is hiding.",
+          "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+          "platform": "reel",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      },
+      "_growth_attempts": 2,
+      "reel_inspiration": {
+        "inspiration_id": "gourmet_duo_mini_style",
+        "mode": "style_cues",
+        "source_template_id": "gourmet_duo_mini_reel",
+        "source_filename": "gourmet_duo_mini.mp4",
+        "publish_source_video": false,
+        "copied": {
+          "pixels": false,
+          "audio": false,
+          "sku": false
+        },
+        "featured_product": "",
+        "featured_slug": "",
+        "cues": [
+          {
+            "id": "pacing",
+            "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
+          },
+          {
+            "id": "framing",
+            "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
+          },
+          {
+            "id": "storytelling",
+            "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
+          },
+          {
+            "id": "aesthetic",
+            "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
+          }
+        ],
+        "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
+      }
+    },
+    {
+      "type": "reel",
+      "hook": "Your milk coffee has been 30% chicory this whole time — and the jar actually tells you.",
+      "hook_text": "Your milk coffee has been 30% chicory this whole time — and the jar actually tells you.",
+      "hook_spoken": "Most instant coffee hides the ratio. Purity Beans Ultra Blend prints it: 70% coffee, 30% chicory, on purpose.",
+      "hook_text_overlay": "70% COFFEE. 30% CHICORY. ON PURPOSE.",
+      "frames": [
+        {
+          "on_screen": "70% COFFEE. 30% CHICORY. ON PURPOSE.",
+          "spoken": "Most instant coffee hides the ratio. Purity Beans Ultra Blend prints it: 70% coffee, 30% chicory, on purpose."
+        },
+        {
+          "on_screen": "PRINTED PLAINLY ON THE LABEL",
+          "spoken": "Turn the jar. The ingredient panel reads: coffee 70%, chicory 30%. No footnotes, no fine print."
+        },
+        {
+          "on_screen": "BUILT FOR THE SOUTH INDIAN MILK CUP",
+          "spoken": "That ratio isn't random. It's calibrated for the way India actually drinks coffee — strong decoction, hot milk, a touch of sugar."
+        },
+        {
+          "on_screen": "100g = AT LEAST 66 CUPS.",
+          "spoken": "One 100g jar of Ultra Blend makes at least 66 cups."
+        },
+        {
+          "on_screen": "THE REST OF THE RANGE IS PURE COFFEE",
+          "spoken": "Bold, Purista, and Purica list coffee and nothing else. Zero chicory. Ultra Blend is the only one with 30% chicory — and it says so up front."
+        },
+        {
+          "on_screen": "FIND YOUR CUP AT P3ONLINE.IN",
+          "spoken": "Milk coffee drinkers: Ultra Blend. Black and strong: Bold, Purista, or Purica. Follow Purity Beans for the how-to."
+        }
+      ],
+      "body": "Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee, labelled plainly. Purity Beans — Bold, Purista, and Purica list coffee only. Read the jar.",
+      "caption": "Your milk coffee has been 30% chicory this whole time — and the jar actually tells you. Purity Beans Ultra Blend prints the ratio on the label: 70% coffee, 30% chicory. Built for the South Indian milk cup. The rest of the Purity Beans range — Bold, Purista, Purica — is pure coffee with zero chicory. Ultra Blend is the only blend with chicory, and it owns it. Milk coffee or black: how do you take yours? Comment below. Follow @purepantryprovisions for daily coffee know-how. Shop: https://p3online.in",
+      "cta": "Follow @purepantryprovisions for the how-to. Shop Ultra Blend: https://p3online.in",
+      "comment_trigger": "Milk coffee or black: how do you take yours?",
+      "save_trigger": "Save this before your next grocery run — know exactly what's in your jar.",
+      "share_trigger": "Send this to the milk-coffee lover in your house who deserves to read the label.",
+      "hashtags": "#PurityBeans #UltraBlend #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia #MilkCoffee",
+      "audio": "Quiet kitchen ambience — spoon against ceramic, steam hiss, soft spoken delivery. No music bed.",
+      "loop_ending": "Final frame holds the Ultra Blend jar turning slowly; the ingredient panel faces camera. The last frame reads as the first — 70/30 on purpose.",
+      "angle": "EDUCATE",
+      "source": "evergreen_template",
+      "featured_product": "ultra_blend",
+      "chosen_hook": "Your milk coffee has been 30% chicory this whole time — and the jar actually tells you.",
+      "editorial_score": {
+        "shareability": 8.5,
+        "saveability": 8.0,
+        "emotion_pull": 7.0,
+        "hook_strength": 8.5,
+        "brand_clarity": 9.0,
+        "overall": 8.2,
+        "verdict": "PASS",
+        "feedback": "The betrayal hook ('30% chicory this whole time') lands instantly and the radical transparency payoff (label proof → purpose → contrast) builds high trust. Attention dip at Frame 4: listing Bold, Purista, Purica in one spoken line without visual separation causes a micro-drop. Fix: split into two frames — Frame 4a 'BOLD = PURE ROBUSTA' with jar visual, Frame 4b 'PURISTA & PURICA = PURE ARABICA' — or add a quick on-screen bullet list as each name is spoken. Caption's 'Read the jar' closer is strong but 'how do you take yours?' comment trigger is generic; swap for 'Comment MILK or BLACK — I'll tell you which jar fits.' That turns comments into qualified leads.",
+        "retention_audit": "Frame 1-3: Strong retention — label proof, purpose, cup math. Frame 4: Attention dip — four SKUs in one breath, no visual anchor. Frame 5: Recovery — clear C"
+      },
+      "viral_potential": {
+        "passed": false,
+        "overall": null,
+        "scores": {},
+        "honesty": [],
+        "pass_mark": 8.0,
+        "error": "viral_scoring_failed: RuntimeError",
+        "feedback": ""
+      },
+      "ladder_exhausted": true,
+      "publish_blocked": "ladder_exhausted",
+      "needs_regen": true,
+      "held": true,
+      "hold_reason": "FALLBACK LADDER EXHAUSTED: viral_scoring_failed: RuntimeError",
+      "funnel_objective": "COMMUNITY",
+      "objective": "Engagement Growth",
+      "primary_cta": "Which one would you choose? Comment below",
+      "success_metric": "comments",
+      "target": 150,
+      "growth_plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "people who buy instant coffee and have never turned the jar around",
+        "angle": "visual discovery of one label fact — variant 2, different hook",
+        "follow_promise": "Follow for the next thing the label is hiding (part 2).",
+        "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+        "platform": "reel",
+        "sku": "Purica",
+        "day": 295
+      },
+      "growth_review": {
+        "platform": "reel",
+        "label": "reel_2",
+        "decision": "PASS",
+        "overall": 8.67,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 1,
+        "retry_limit": 8,
+        "feedback": "",
+        "plan": {
+          "primary_objective": "reach new relevant coffee drinkers",
+          "secondary_objective": "earn qualified followers",
+          "audience": "people who buy instant coffee and have never turned the jar around",
+          "angle": "visual discovery of one label fact — variant 2, different hook",
+          "follow_promise": "Follow for the next thing the label is hiding (part 2).",
+          "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+          "platform": "reel",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      }
+    }
+  ],
+  "carousel": {
+    "type": "carousel",
+    "hook": "Four steps to a milk coffee with no lumps",
+    "title": "Four steps to a milk coffee with no lumps",
+    "slides": [
+      {
+        "slide": 1,
+        "heading": "Coffee in the cup",
+        "body": "Your usual spoon, straight into a dry cup.",
+        "visual": "Granules in the bottom of an empty mug"
+      },
+      {
+        "slide": 2,
+        "heading": "A splash of hot water",
+        "body": "Just enough to cover the granules. Not a full cup.",
+        "visual": "Small amount of water being poured"
+      },
+      {
+        "slide": 3,
+        "heading": "Stir to a paste",
+        "body": "Keep going until it is smooth and nothing is grainy.",
+        "visual": "Spoon working a dark paste"
+      },
+      {
+        "slide": 4,
+        "heading": "Then the milk",
+        "body": "Top it up hot or cold. It will not clump now.",
+        "visual": "Milk being poured into the cup"
+      },
+      {
+        "slide": 5,
+        "heading": "Why it works",
+        "body": "Coffee dissolves in water more easily than in milk.",
+        "visual": "Two cups, one smooth and one grainy"
+      },
+      {
+        "slide": 6,
+        "heading": "What ours says",
+        "body": "Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. p3online.in",
+        "visual": "Purity Beans jar, label facing camera"
+      }
+    ],
+    "caption": "Coffee in the cup, splash of hot water, stir to a smooth paste, then milk. Coffee dissolves in water more easily than in milk, which is the whole reason for the order. Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. p3online.in",
+    "cta": "Try it tomorrow, then restock at p3online.in — Purity Beans",
+    "comment_trigger": "Do you add water or milk first?",
+    "save_trigger": "Save this and try it in the morning.",
+    "share_trigger": "Send this to whoever complains about lumps.",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia",
+    "source": "evergreen_template",
+    "hook_text": "Four steps to a milk coffee with no lumps",
+    "chosen_hook": "Four steps to a milk coffee with no lumps",
+    "audio": {
+      "audio_category": "coffee_aesthetic",
+      "mood": "lofi",
+      "local_track": "music_library/lofi_cafe.wav",
+      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
+    },
+    "featured_product": "Purica",
+    "editorial_score": {
+      "shareability": 4.5,
+      "saveability": 5.5,
+      "emotion_pull": 2.5,
+      "hook_strength": 3.5,
+      "brand_clarity": 3.5,
+      "overall": 3.9,
+      "verdict": "REJECT",
+      "feedback": "The carousel teaches a generic instant-coffee technique that works for any brand. The hook is functional, not curiosity-driven, and could belong to"
+    },
+    "editorial_error": "editorial time budget reached before this piece passed",
+    "funnel_objective": "FOLLOW",
+    "objective": "Follower Growth",
+    "primary_cta": "Follow @purepantryprovisions for one buying check you can save",
+    "success_metric": "follows",
+    "target": 250,
+    "growth_plan": {
+      "primary_objective": "drive product-page visits/purchases",
+      "secondary_objective": "earn qualified followers",
+      "audience": "buyers comparing jars in a grocery aisle or a comment section",
+      "angle": "a saveable framework for one buying decision",
+      "follow_promise": "Follow for one buying check you can save.",
+      "rationale": "A carousel is the reference someone screenshots.",
+      "platform": "carousel",
+      "sku": "Purica",
+      "day": 295
+    },
+    "growth_review": {
+      "platform": "carousel",
+      "label": "carousel",
+      "decision": "PASS",
+      "overall": 8.47,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 6.0,
+          "evidence": "No explicit share or reply ask.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "shareability 6.0: No explicit share or reply ask.",
+      "plan": {
+        "primary_objective": "drive product-page visits/purchases",
+        "secondary_objective": "earn qualified followers",
+        "audience": "buyers comparing jars in a grocery aisle or a comment section",
+        "angle": "a saveable framework for one buying decision",
+        "follow_promise": "Follow for one buying check you can save.",
+        "rationale": "A carousel is the reference someone screenshots.",
+        "platform": "carousel",
+        "sku": "Purica",
+        "day": 295
+      },
+      "published": false
+    }
+  },
+  "instagram_post": {
+    "type": "instagram_post",
+    "hook": "Lumps in your milk coffee are an order problem, not a coffee problem.",
+    "body": "Splash of hot water onto the granules first, stir to a smooth paste, then top up with milk. Coffee dissolves in water more easily than in milk. Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "caption": "Lumps are an order problem. Hot water onto the granules first, stir smooth, then milk. Coffee dissolves in water more easily than in milk. Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. p3online.in",
+    "cta": "Try it tomorrow, then restock at p3online.in — Purity Beans",
+    "comment_trigger": "Do you add water or milk first?",
+    "save_trigger": "Save this and try it in the morning.",
+    "share_trigger": "Send this to whoever complains about lumps.",
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia",
+    "source": "evergreen_template",
+    "hook_text": "Lumps in your milk coffee are an order problem, not a coffee problem.",
+    "chosen_hook": "Lumps in your milk coffee are an order problem, not a coffee problem.",
+    "reel_inspiration": {
+      "inspiration_id": "gourmet_duo_mini_style",
+      "mode": "style_cues",
+      "source_template_id": "gourmet_duo_mini_reel",
+      "source_filename": "gourmet_duo_mini.mp4",
+      "publish_source_video": false,
+      "copied": {
+        "pixels": false,
+        "audio": false,
+        "sku": false
+      },
+      "featured_product": "",
+      "featured_slug": "",
+      "cues": [
+        {
+          "id": "pacing",
+          "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
+        },
+        {
+          "id": "framing",
+          "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
+        },
+        {
+          "id": "storytelling",
+          "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
+        },
+        {
+          "id": "aesthetic",
+          "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
+        }
+      ],
+      "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
+    },
+    "audio": {
+      "audio_category": "coffee_aesthetic",
+      "mood": "lofi",
+      "local_track": "music_library/lofi_cafe.wav",
+      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
+    },
+    "featured_product": "Purica",
+    "editorial_error": "editorial time budget reached before this piece passed",
+    "funnel_objective": "FOLLOW",
+    "objective": "Follower Growth",
+    "primary_cta": "Follow @purepantryprovisions for one buying check you can save",
+    "success_metric": "follows",
+    "target": 250,
+    "growth_plan": {
+      "primary_objective": "repeat purchase/recall",
+      "secondary_objective": "drive product-page visits/purchases",
+      "audience": "people who already know the jar and need one reason to remember it",
+      "angle": "one sensory moment with the real jar",
+      "follow_promise": "Follow for the jar that matches how you actually drink.",
+      "rationale": "A single image is recall, not a second copy of the Reel.",
+      "platform": "ig_single",
+      "sku": "Purica",
+      "day": 295
+    },
+    "growth_review": {
+      "platform": "ig_single",
+      "label": "instagram_post",
+      "decision": "PASS",
+      "overall": 8.47,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 6.0,
+          "evidence": "No explicit share or reply ask.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "shareability 6.0: No explicit share or reply ask.",
+      "plan": {
+        "primary_objective": "repeat purchase/recall",
+        "secondary_objective": "drive product-page visits/purchases",
+        "audience": "people who already know the jar and need one reason to remember it",
+        "angle": "one sensory moment with the real jar",
+        "follow_promise": "Follow for the jar that matches how you actually drink.",
+        "rationale": "A single image is recall, not a second copy of the Reel.",
+        "platform": "ig_single",
+        "sku": "Purica",
+        "day": 295
+      },
+      "published": false
+    }
+  },
+  "linkedin_post": {
+    "type": "linkedin_post",
+    "hook": "What our distributors ask about first",
+    "body": "The first question is always the ingredient list, because it is what the customer asks them about at the counter. Purity Beans — Bold, Purista, Purica, and Prima are pure coffee with no additives. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. That is a straightforward range to stand behind on a shelf full of blends. We are expanding our distributor network. If you distribute FMCG and want the details, message me. p3online.in",
+    "cta": "DM for the distributor pack Try Purity Beans — zero chicory on the pure coffee jars. Shop: https://p3online.in",
+    "hashtags": "#FMCG #Distribution #Coffee #IndianBrands #PurityBeans",
+    "source": "evergreen_distributor",
+    "hook_text": "What our distributors ask about first",
+    "chosen_hook": "What our distributors ask about first",
+    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "featured_product": "Purica",
+    "editorial_error": "editorial time budget reached before this piece passed",
+    "funnel_objective": "FOLLOW",
+    "objective": "Follower Growth",
+    "primary_cta": "Follow @purepantryprovisions for one buying check you can save",
+    "success_metric": "follows",
+    "target": 250,
+    "growth_plan": {
+      "primary_objective": "B2B inquiries (retailer, cafe, office, wholesale, distributor)",
+      "secondary_objective": "earn qualified followers",
+      "audience": "cafe owners, office buyers, retailers, and distributors",
+      "angle": "a business lesson from how the label is written",
+      "follow_promise": "Follow for how a coffee brand is actually built.",
+      "rationale": "LinkedIn is a B2B conversation with a named next step.",
+      "platform": "linkedin",
+      "sku": "Purica",
+      "day": 295
+    },
+    "growth_review": {
+      "platform": "linkedin",
+      "label": "linkedin_post",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "B2B inquiries (retailer, cafe, office, wholesale, distributor)",
+        "secondary_objective": "earn qualified followers",
+        "audience": "cafe owners, office buyers, retailers, and distributors",
+        "angle": "a business lesson from how the label is written",
+        "follow_promise": "Follow for how a coffee brand is actually built.",
+        "rationale": "LinkedIn is a B2B conversation with a named next step.",
+        "platform": "linkedin",
+        "sku": "Purica",
+        "day": 295
+      },
+      "published": false
+    }
+  },
+  "_source": "emergency_fallback_evergreen",
+  "_recycled": true,
+  "stories": {
+    "story_1": {
+      "type": "poll",
+      "headline": "BREW PURE",
+      "subtext": "Join real coffee lovers switching to pure coffee.",
+      "poll_question": "Join real coffee lovers switching to pure coffee.",
+      "option_a": "Haven't checked",
+      "option_b": "Read the back",
+      "reel_inspiration": {
+        "inspiration_id": "gourmet_duo_mini_style",
+        "mode": "style_cues",
+        "source_template_id": "gourmet_duo_mini_reel",
+        "source_filename": "gourmet_duo_mini.mp4",
+        "publish_source_video": false,
+        "copied": {
+          "pixels": false,
+          "audio": false,
+          "sku": false
+        },
+        "featured_product": "",
+        "featured_slug": "",
+        "cues": [
+          {
+            "id": "pacing",
+            "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
+          },
+          {
+            "id": "framing",
+            "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
+          },
+          {
+            "id": "storytelling",
+            "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
+          },
+          {
+            "id": "aesthetic",
+            "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
+          }
+        ],
+        "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
+      }
+    },
+    "audio": {
+      "audio_category": "coffee_aesthetic",
+      "mood": "lofi",
+      "local_track": "music_library/lofi_cafe.wav",
+      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
+    },
+    "funnel_objective": "COMMUNITY",
+    "objective": "Engagement Growth",
+    "primary_cta": "Which one would you choose? Comment below",
+    "success_metric": "comments",
+    "target": 150,
+    "growth_plan": {
+      "primary_objective": "drive product-page visits/purchases",
+      "secondary_objective": "earn qualified followers",
+      "audience": "people already watching who will answer one real question",
+      "angle": "a connected sequence from a hook to one next step",
+      "follow_promise": "Follow for a short answer and the honest next step.",
+      "rationale": "Stories are a sequence, not four unrelated posters.",
+      "platform": "stories",
+      "sku": "Purica",
+      "day": 295
+    },
+    "growth_review": {
+      "platform": "stories",
+      "label": "stories",
+      "decision": "PASS",
+      "overall": 8.0,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 4.0,
+          "evidence": "The hook is too thin to stop a scroll.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 5.0,
+          "evidence": "No follow promise is visible.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 6.0,
+          "evidence": "No product next step. Allowed when the objective is reach, scored as incomplete for a shop ask.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "hook 4.0: The hook is too thin to stop a scroll.; follow_conversion 5.0: No follow promise is visible.; purchase_relevance 6.0: No product next step. Allowed when the objective is reach, scored as incomplete for a shop ask.",
+      "plan": {
+        "primary_objective": "drive product-page visits/purchases",
+        "secondary_objective": "earn qualified followers",
+        "audience": "people already watching who will answer one real question",
+        "angle": "a connected sequence from a hook to one next step",
+        "follow_promise": "Follow for a short answer and the honest next step.",
+        "rationale": "Stories are a sequence, not four unrelated posters.",
+        "platform": "stories",
+        "sku": "Purica",
+        "day": 295
+      },
+      "published": false
+    }
+  },
+  "facebook_post": {
+    "type": "facebook_post",
+    "needs_regen": true,
+    "featured_product": "Purica",
+    "audio": {
+      "audio_category": "coffee_aesthetic",
+      "mood": "lofi",
+      "local_track": "music_library/lofi_cafe.wav",
+      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+      "trend_status": "not_live_verified",
+      "audio_name": null,
+      "audio_id": null,
+      "audio_source": null,
+      "audio_attached": false,
+      "audio_publish_mode": "licensed_embedded",
+      "audio_required": true,
+      "manual_instruction": "Check the Instagram audio catalogue for a currently rising sound matching: Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe'). Verify it is available to this account and licensed for this commercial post before selecting it. If no verified track is attached, hold the Reel for manual/native audio selection.",
+      "rights_check_required": true,
+      "confidence": 0.5,
+      "reason": "Content classified as 'coffee_aesthetic' -> lofi mood. No performance history yet — exploring."
+    },
+    "editorial_error": "editorial time budget reached before this piece passed",
+    "funnel_objective": "COMMUNITY",
+    "objective": "Engagement Growth",
+    "primary_cta": "Which one would you choose? Comment below",
+    "success_metric": "comments",
+    "target": 150,
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "drive product-page visits/purchases",
+      "audience": "households who talk about the morning cup with someone else",
+      "angle": "a situation the reader has already had this week",
+      "follow_promise": "Follow for the coffee conversation without the pitch.",
+      "rationale": "Facebook is shared in a conversation, so the opener is a situation.",
+      "platform": "facebook",
+      "sku": "Purica",
+      "day": 295
+    },
+    "growth_review": {
+      "platform": "facebook",
+      "label": "facebook_post",
+      "decision": "BLOCKED",
+      "overall": 8.0,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 0.0,
+          "evidence": "Product truth failed.",
+          "hard_fail": true
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [
+        "claim_or_brand:{'claim': 'Bold is our agglomerated pure coffee for a heavier kick, Purista is freeze-dried Robusta for crema lovers, and Ultra Blend is 70% coffee wit', 'type': 'product_truth', '"
+      ],
+      "attempts": 9,
+      "retry_limit": 8,
+      "feedback": "claim_or_brand:{'claim': 'Bold is our agglomerated pure coffee for a heavier kick, Purista is freeze-dried Robusta for crema lovers, and Ultra Blend is 70% coffee wit', 'type': 'product_truth', '",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "drive product-page visits/purchases",
+        "audience": "households who talk about the morning cup with someone else",
+        "angle": "a situation the reader has already had this week",
+        "follow_promise": "Follow for the coffee conversation without the pitch.",
+        "rationale": "Facebook is shared in a conversation, so the opener is a situation.",
+        "platform": "facebook",
+        "sku": "Purica",
+        "day": 295
+      },
+      "published": false
+    },
+    "_growth_attempts": 9,
+    "angle": "sensory",
+    "hook": "Ever notice how the kitchen smells like a bakery the moment you twist open a jar of Purica before the water even heats?",
+    "body": "Purity Beans Purica is freeze-dried pure Arabica with zero chicory, and that caramel-chocolate aroma hits different because freeze-drying locks in what other methods lose. The 50g jar is ₹329 and the 100g is ₹559, with free shipping on orders over ₹399. It comes in a food-grade glass jar so nothing leaches into your cup. Bold is our agglomerated pure coffee for a heavier kick, Purista is freeze-dried Robusta for crema lovers, and Ultra Blend is 70% coffee with 30% chicory for everyday milk cups. I reach for Purica when the morning asks for something smooth and deliberate rather than just strong, and that first sip carries the same caramel-chocolate promise the jar made.",
+    "community_question": "Black or with a splash of milk — how do you take your Purica?",
+    "cta": "Follow @purepantryprovisions for honest coffee rituals like this. Shop Purica at https://p3online.in",
+    "hashtags": "#PurityBeans #Purica #PureCoffee #FreezeDriedArabica #IndianCoffeeBrand",
+    "comment_trigger": "Black or with a splash of milk — how do you take your Purica?"
+  },
+  "threads_post": {
+    "type": "threads_post",
+    "needs_regen": false,
+    "featured_product": "Purica",
+    "editorial_error": "",
+    "funnel_objective": "COMMUNITY",
+    "objective": "Engagement Growth",
+    "primary_cta": "Which one would you choose? Comment below",
+    "success_metric": "comments",
+    "target": 150,
+    "growth_plan": {
+      "primary_objective": "earn qualified followers",
+      "secondary_objective": "reach new relevant coffee drinkers",
+      "audience": "people who will reply to one precise coffee question",
+      "angle": "one honest question, not a caption pasted short",
+      "follow_promise": "Follow for one honest coffee question a day.",
+      "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
+      "platform": "threads",
+      "sku": "Purica",
+      "day": 295
+    },
+    "growth_review": {
+      "platform": "threads",
+      "label": "threads_post",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 5,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "earn qualified followers",
+        "secondary_objective": "reach new relevant coffee drinkers",
+        "audience": "people who will reply to one precise coffee question",
+        "angle": "one honest question, not a caption pasted short",
+        "follow_promise": "Follow for one honest coffee question a day.",
+        "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
+        "platform": "threads",
+        "sku": "Purica",
+        "day": 295
+      },
+      "published": false
+    },
+    "_growth_attempts": 5,
+    "psychology_frame": "[sensory]",
+    "text": "Purica by Purity Beans is freeze-dried pure Arabica — smooth, caramel and chocolatey notes that taste like a cafe cup. Robusta hits different: more caffeine, more bitterness, heavier body.\n\nIf you could only drink one forever: Purica's aromatic Arabica or Robusta's bold kick?\n\nComment your pick. Follow for one honest coffee question daily.\nhttps://p3online.in",
+    "visual_description": "A high-resolution, vertical shot of the Purica Gourmet Arabica jar on a dark marble surface. Soft gold accent lighting hits the label. A few freeze-dried granules are scattered naturally next to the jar. Shallow depth of field, shot on 85mm lens, realistic skin texture on a hand partially visible, reaching for the jar.",
+    "hashtags": [
+      "#PurityBeans",
+      "#PureCoffee"
+    ],
+    "triggers": [
+      "Identity Challenge",
+      "Sensory Contrast"
+    ],
+    "editorial_review": {
+      "platform_fit": 9.0,
+      "hook": 8.5,
+      "retention": 8.0,
+      "payoff": 8.5,
+      "shareability": 8.0,
+      "saveability": 7.0,
+      "follow_conversion": 9.0,
+      "purchase_relevance": 8.0,
+      "brand_truth": 10.0,
+      "visual_integrity": 10.0,
+      "claim_verification": 10.0,
+      "originality": 9.0,
+      "mobile_readability": 9.0,
+      "cta_clarity": 9.0,
+      "schema": 10.0
+    },
+    "published": false
+  },
+  "yt_short": {
+    "type": "yt_short",
+    "needs_regen": false,
+    "featured_product": "Purica",
+    "reel_inspiration": {
+      "inspiration_id": "gourmet_duo_mini_style",
+      "mode": "style_cues",
+      "source_template_id": "gourmet_duo_mini_reel",
+      "source_filename": "gourmet_duo_mini.mp4",
+      "publish_source_video": false,
+      "copied": {
+        "pixels": false,
+        "audio": false,
+        "sku": false
+      },
+      "featured_product": "",
+      "featured_slug": "",
+      "cues": [
+        {
+          "id": "pacing",
+          "cue": "About ten seconds, beats near two seconds, two moods that resolve before the end."
+        },
+        {
+          "id": "framing",
+          "cue": "Vertical 1080x1920 with the featured jar forward so the glass and label stay readable."
+        },
+        {
+          "id": "storytelling",
+          "cue": "Two moods. A single jar shows two moods of that jar. A duo shows its own two jars. Do not swap in the Gourmet Duo Mini pair."
+        },
+        {
+          "id": "aesthetic",
+          "cue": "Warm editorial glass-jar photography. The jar is the hero. Not a poster turned into a video."
+        }
+      ],
+      "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
+    },
+    "audio": {
+      "audio_category": "coffee_aesthetic",
+      "mood": "lofi",
+      "local_track": "music_library/lofi_cafe.wav"
+    },
+    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
+    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
+    "save_trigger": "Save this before your next grocery run — real coffee matters.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "editorial_error": "editorial time budget reached before this piece passed",
+    "funnel_objective": "DISCOVERY",
+    "objective": "Engagement Growth",
+    "primary_cta": "Send this to someone who drinks instant coffee",
+    "success_metric": "shares",
+    "target": 500,
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "viewers who will watch one complete answer with the sound off",
+      "angle": "a standalone payoff that ends without needing another post",
+      "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+      "rationale": "A Short has to pay off on its own, then ask for the next one.",
+      "platform": "yt_short",
+      "sku": "Purica",
+      "day": 295
+    },
+    "growth_review": {
+      "platform": "yt_short",
+      "label": "yt_short",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 2,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "viewers who will watch one complete answer with the sound off",
+        "angle": "a standalone payoff that ends without needing another post",
+        "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+        "rationale": "A Short has to pay off on its own, then ask for the next one.",
+        "platform": "yt_short",
+        "sku": "Purica",
+        "day": 295
+      },
+      "published": false
+    },
+    "_growth_attempts": 2,
+    "product": "Purica",
+    "tagline": "Purity Beans Purica — freeze-dried pure Arabica, zero chicory, naturally caramel and chocolatey notes.",
+    "scenes": [
+      {
+        "scene": 1,
+        "type": "hook",
+        "duration_s": 2,
+        "on_screen": "Extreme close-up of Purity Beans Purica jar label. Finger traces '0% chicory' and 'freeze-dried Arabica'. Dark background, warm amber light on glass.",
+        "spoken": "What is actually inside your instant coffee jar?",
+        "visual_direction": "Handheld macro, shallow depth of field. Label texture catches light. Slow push in."
+      },
+      {
+        "scene": 2,
+        "type": "curiosity",
+        "duration_s": 3,
+        "on_screen": "Split frame: left side — generic instant coffee powder clumping, dark murky liquid. Right side — Purica granules dissolving clean, amber clarity. Same spoon, same water.",
+        "spoken": "Most instant coffee hides chicory and fillers. Purica is pure Arabica, freeze-dried to lock aroma.",
+        "visual_direction": "Locked-off, side-by-side comparison. Steam rises naturally. No text overlay needed."
+      },
+      {
+        "scene": 3,
+        "type": "value",
+        "duration_s": 3,
+        "on_screen": "Pour-over style: hot water hits Purica granules in a glass server. Creamy crema forms. Cut to sip — relaxed exhale, genuine satisfaction.",
+        "spoken": "Freeze-drying keeps the oils. You taste caramel, chocolate, no bitter aftertaste.",
+        "visual_direction": "Slow motion pour, 120fps. Crema close-up. Real sip, not acted."
+      },
+      {
+        "scene": 4,
+        "type": "trust",
+        "duration_s": 2,
+        "on_screen": "Jar on kitchen counter. Morning light. Label readable: 'Purica Gourmet Arabica Granules — Pure Arabica — 0% Chicory — Freeze-Dried'.",
+        "spoken": "Read the jar. Purity Beans puts it in writing.",
+        "visual_direction": "Static, cinematic. Dust motes in light. Lived-in kitchen — used spoon, crumpled napkin."
+      },
+      {
+        "scene": 5,
+        "type": "cta",
+        "duration_s": 2,
+        "on_screen": "Phone screen recording: thumb taps 'Add to Cart' on p3online.in/products/purica. URL visible. Jar beside phone.",
+        "spoken": "Purica, 50g or 100g. https://p3online.in. Pure coffee, nothing added.",
+        "visual_direction": "POV phone view. Thumb slightly imperfect. Natural screen glare."
+      },
+      {
+        "scene": 6,
+        "type": "follow_promise",
+        "duration_s": 2,
+        "on_screen": "Purity Beans logo subtle on jar cap. Text: 'Follow for label checks that save you money.'",
+        "spoken": "Follow Purity Beans. Next short: why freeze-dried changes everything.",
+        "visual_direction": "Slow pull back. Jar stays hero. Warm tone holds."
+      }
+    ]
+  },
+  "_asset_metadata": [
+    {
+      "content_id": "pb_055ca5a630",
+      "day": 295,
+      "channel": "instagram",
+      "type": "reel",
+      "topic": "",
+      "hook": "Add the water first, then the milk. Not the other way round.",
+      "cta": "Try it tomorrow, then restock at p3online.in",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Festival Gifting",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "",
+      "scroller_state": "curious",
+      "attention_mechanism": "curiosity_gap",
+      "psychology_frame": null,
+      "psychology_frame_version": null,
+      "hook_strategy": "second_person",
+      "payoff_type": "practical_action",
+      "hook_promise": "explanation",
+      "payoff_present": true,
+      "payoff_validation_status": "satisfied",
+      "payoff_gate_version": "1.0.0",
+      "platform": "instagram",
+      "format": "reel",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": null,
+      "hook_layers_distinct": true,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.8.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-23T05:39:51",
+      "status": "scheduled"
+    },
+    {
+      "content_id": "pb_86d58ee900",
+      "day": 295,
+      "channel": "instagram",
+      "type": "carousel",
+      "topic": "Four steps to a milk coffee with no lumps",
+      "hook": "Four steps to a milk coffee with no lumps",
+      "cta": "Try it tomorrow, then restock at p3online.in",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Festival Gifting",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "",
+      "scroller_state": "curious",
+      "attention_mechanism": "curiosity_gap",
+      "psychology_frame": null,
+      "psychology_frame_version": null,
+      "hook_strategy": null,
+      "payoff_type": "verified_discovery",
+      "hook_promise": null,
+      "payoff_present": true,
+      "payoff_validation_status": "satisfied",
+      "payoff_gate_version": "1.0.0",
+      "platform": "instagram",
+      "format": "carousel",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": null,
+      "hook_layers_distinct": null,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.8.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-23T05:39:51",
+      "status": "scheduled"
+    },
+    {
+      "content_id": "pb_cbc54af1db",
+      "day": 295,
+      "channel": "instagram",
+      "type": "story",
+      "topic": "",
+      "hook": "",
+      "cta": "",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Festival Gifting",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "",
+      "scroller_state": null,
+      "attention_mechanism": null,
+      "psychology_frame": null,
+      "psychology_frame_version": null,
+      "hook_strategy": null,
+      "payoff_type": null,
+      "hook_promise": null,
+      "payoff_present": null,
+      "payoff_validation_status": "no_copy",
+      "payoff_gate_version": "1.0.0",
+      "platform": "instagram",
+      "format": "story",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": null,
+      "hook_layers_distinct": null,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.8.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-23T05:39:51",
+      "status": "scheduled"
+    },
+    {
+      "content_id": "pb_8d9e6008f1",
+      "day": 295,
+      "channel": "linkedin",
+      "type": "post",
+      "topic": "",
+      "hook": "What our distributors ask about first",
+      "cta": "DM for the distributor pack",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Festival Gifting",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "",
+      "scroller_state": "skeptical",
+      "attention_mechanism": "specificity",
+      "psychology_frame": null,
+      "psychology_frame_version": null,
+      "hook_strategy": "question",
+      "payoff_type": "new_knowledge",
+      "hook_promise": null,
+      "payoff_present": true,
+      "payoff_validation_status": "satisfied",
+      "payoff_gate_version": "1.0.0",
+      "platform": "linkedin",
+      "format": "post",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": null,
+      "hook_layers_distinct": null,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.8.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-23T05:39:51",
+      "status": "scheduled"
+    },
+    {
+      "content_id": "pb_6c0bbd7612",
+      "day": 295,
+      "channel": "youtube",
+      "type": "short",
+      "topic": "",
+      "hook": "",
+      "cta": "",
+      "audience": "IGNITION (0-1K)",
+      "campaign": "Festival Gifting",
+      "experiment": "hook_style",
+      "variant": "B",
+      "playbook": "Baseline_v1",
+      "policy_version": "1.2",
+      "generation_id": "",
+      "scroller_state": null,
+      "attention_mechanism": null,
+      "psychology_frame": null,
+      "psychology_frame_version": null,
+      "hook_strategy": null,
+      "payoff_type": null,
+      "hook_promise": null,
+      "payoff_present": null,
+      "payoff_validation_status": "no_copy",
+      "payoff_gate_version": "1.0.0",
+      "platform": "youtube",
+      "format": "short",
+      "funnel_stage": null,
+      "business_objective": null,
+      "target_kpi_at_creation": null,
+      "hook_layers_distinct": null,
+      "decision_version": "1.0.0",
+      "basis": "classified from copy; mechanism SELECTION is ADR-002 Phase 4 and is not active",
+      "prompt_version": "2.8.0",
+      "schema_version": "1.4.0",
+      "publisher_version": "2.3.0",
+      "asset_format": "3.1.0",
+      "publish_time": "2026-10-23T05:39:51",
+      "status": "scheduled"
+    }
+  ],
+  "sales_push": {
+    "campaign": "trial_diwali_push",
+    "ends_on": "2026-11-20",
+    "organic_only": true,
+    "active": true,
+    "date": "2026-10-23",
+    "slug": "purista",
+    "role": "trial",
+    "price": 319,
+    "handle": "purity-beans-purista-gourmet-instant-coffee-granules",
+    "product_url": "https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules?utm_source=instagram&utm_medium=organic&utm_campaign=trial_diwali_push",
+    "diwali_angle": false,
+    "reel": {
+      "surface": "reel",
+      "slug": "purista",
+      "role": "trial",
+      "caption": "Purista 50g trial jar. Freeze-dried pure Robusta. Rs319.\n\nTrial jars from Rs239.\n\nUse code FREESHIP. Use code BUNDLE10.\n\nhttps://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules?utm_source=instagram&utm_medium=organic&utm_campaign=trial_diwali_push\n\nLink in bio to order at p3online.in",
+      "cta": "Link in bio to order at p3online.in",
+      "headline": "PURISTA 50g",
+      "sub": "Link in bio to order at p3online.in",
+      "product_url": "https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules?utm_source=instagram&utm_medium=organic&utm_campaign=trial_diwali_push",
+      "frames": [
+        {
+          "on": "PURISTA 50g",
+          "sub": "Pure Robusta"
+        },
+        {
+          "on": "Rs319",
+          "sub": "Trial jars from Rs239"
+        },
+        {
+          "on": "ORDER",
+          "sub": "Link in bio to order at p3online.in"
+        }
+      ],
+      "price": 319,
+      "date": "2026-10-23",
+      "diwali_angle": false,
+      "held": "visual_or_variety_gate"
+    },
+    "story": {
+      "surface": "story",
+      "slug": "purista",
+      "role": "trial",
+      "caption": "Purista 50g trial jar. Freeze-dried pure Robusta. Rs319.\n\nTrial jars from Rs239.\n\nUse code FREESHIP. Use code BUNDLE10.\n\nhttps://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules?utm_source=instagram&utm_medium=organic&utm_campaign=trial_diwali_push\n\nDM us to order",
+      "cta": "DM us to order",
+      "headline": "PURISTA 50g",
+      "sub": "DM us to order",
+      "product_url": "https://p3online.in/products/purity-beans-purista-gourmet-instant-coffee-granules?utm_source=instagram&utm_medium=organic&utm_campaign=trial_diwali_push",
+      "frames": [
+        {
+          "on": "PURISTA 50g",
+          "sub": "Pure Robusta"
+        },
+        {
+          "on": "Rs319",
+          "sub": "Trial jars from Rs239"
+        },
+        {
+          "on": "ORDER",
+          "sub": "DM us to order"
+        }
+      ],
+      "price": 319,
+      "date": "2026-10-23",
+      "diwali_angle": false,
+      "editorial_score": {
+        "shareability": 4.0,
+        "saveability": 5.0,
+        "emotion_pull": 2.0,
+        "hook_strength": 3.0,
+        "brand_clarity": 5.0,
+        "overall": 3.8,
+        "verdict": "REJECT",
+        "feedback": "This is a pure price-list story with zero scroll-stopping power. The opening line 'Purista 50g trial jar. Freeze-dried pure Robusta. Rs319.' reads like a catalogue entry — no curiosity gap, no betrayal hook, no identity challenge, no relatable moment"
+      },
+      "viral_potential": {
+        "scores": {
+          "hook": 3.0,
+          "curiosity_gap": 2.0,
+          "relatability": 2.0,
+          "shareability": 2.0,
+          "comment_trigger": 1.0,
+          "format_fit": 3.0,
+          "follow_cta": 1.0
+        },
+        "overall": 2.0,
+        "weakest": [
+          "comment_trigger",
+          "follow_cta"
+        ],
+        "feedback": "",
+        "better_hook": "",
+        "passed": false,
+        "honesty": [],
+        "pass_mark": 8.0
+      },
+      "held": "visual_or_variety_gate",
+      "quality_hold": "editorial gate (3.8/10 < 8.0)"
+    }
+  },
+  "featured_product": "Purica",
+  "fallback_ladder": {
+    "reel_1": [
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The content is a high-value 'hack' which drives saves and shares, but it fails as a brand asset because the hook is generic—it could be for any coffee brand in the world. The Purity Beans mention feels like a tacked-on footer rather than the reason the hack works. To fix: tie the 'no lumps' result s"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The educational value is high (saveable), but the brand integration is a 'tacked-on' paragraph at the end rather than a cohesive part of the narrative. The hook is a useful tip, but it's a 'generic coffee' hook—it doesn't leverage the Purity Beans authority or the 'Clean Coffee' movement. To improve"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The asset fails the product-matching rule. The content focuses entirely on Ultra Blend, but the 'featured_product' is listed as Purica. This mismatch in product focus vs. featured product is a critical error. Additionally, the transition from the '70/30' hook to the 'Rest of the Range' is too abrupt"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The hook '70/30, ON PURPOSE' is elite and stops the scroll, but the asset fails on retention. Frame 4 introduces a list of four other products (Bold, Purista, Purica, Prima), which creates a cognitive load spike and kills the momentum of the 'Ultra Blend' story. The transition from a specific blend'"
+      },
+      {
+        "status": "exhausted",
+        "reason": "schema: 1 validation error for ReelSchema frames.5.on_screen   String should have at least 1 character [type=string_too_short, input_value='', input_type=str]     For further information visit https://errors.pydantic.dev/2.14/v/string_too_short | brand: [\"Reel frame 6 overlay error: ['Empty content'"
+      }
+    ],
+    "reel_2": [
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "viral_scoring_failed: ValueError"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "Hook is a generic curiosity gap that could apply to any instant coffee brand — no Purity Beans specificity in the first 2 seconds. Emotion_pull is low (5/10): purely instructional with no"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral_scoring_failed: RuntimeError"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "brand: [\"Reel caption error: ['Missing brand mention', 'Missing website reference']\", \"Reel frame 2 overlay error: ['Language is not English']\"]"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral_scoring_failed: ValueError"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for ReelSchema frames.3.on_screen   String should have at least 1 character [type=string_too_short, input_value='', input_type=str]     For further information visit https://errors.pydantic.dev/2.14/v/string_too_short | brand: [\"Reel frame 4 overlay error: ['Empty content'"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral_scoring_failed: RuntimeError"
+      }
+    ],
+    "carousel": [
+      {
+        "attempt": 1,
+        "rung": "feedback",
+        "feedback": "The carousel teaches a generic instant-coffee technique that works for any brand. The hook is functional, not curiosity-driven, and could belong to Nescafé or Bru. Purity Beans appears only on the final slide and in the caption — too late to claim authority. No emotional trigger (pride, betrayal, re"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The carousel teaches a generic instant-coffee technique that works for any brand. The hook is functional, not curiosity-driven, and could belong to Nescafé or Bru. Purity Beans appears only on the final slide and in the caption — too late to claim authority. No emotional trigger (pride, betrayal, re"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The carousel teaches a generic instant-coffee technique that works for any brand. The hook is functional, not curiosity-driven, and could belong to Nescafé or Bru. Purity Beans appears only on the final slide and in the caption — too late to claim authority. No emotional trigger (pride, betrayal, re"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The carousel teaches a generic instant-coffee technique that works for any brand. The hook is functional, not curiosity-driven, and could belong to"
+      }
+    ]
+  },
+  "growth_portfolio": {
+    "sku": "Purica",
+    "threshold": 8.0,
+    "objectives": [
+      "reach new relevant coffee drinkers",
+      "earn qualified followers",
+      "drive product-page visits/purchases",
+      "B2B inquiries (retailer, cafe, office, wholesale, distributor)",
+      "repeat purchase/recall"
+    ],
+    "assets": [
+      {
+        "platform": "reel",
+        "label": "reel_1",
+        "decision": "PASS",
+        "overall": 8.67,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 2,
+        "retry_limit": 8,
+        "feedback": "",
+        "plan": {
+          "primary_objective": "reach new relevant coffee drinkers",
+          "secondary_objective": "earn qualified followers",
+          "audience": "people who buy instant coffee and have never turned the jar around",
+          "angle": "visual discovery of one label fact",
+          "follow_promise": "Follow for the next thing the label is hiding.",
+          "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+          "platform": "reel",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      },
+      {
+        "platform": "reel",
+        "label": "reel_2",
+        "decision": "PASS",
+        "overall": 8.67,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 1,
+        "retry_limit": 8,
+        "feedback": "",
+        "plan": {
+          "primary_objective": "reach new relevant coffee drinkers",
+          "secondary_objective": "earn qualified followers",
+          "audience": "people who buy instant coffee and have never turned the jar around",
+          "angle": "visual discovery of one label fact — variant 2, different hook",
+          "follow_promise": "Follow for the next thing the label is hiding (part 2).",
+          "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+          "platform": "reel",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      },
+      {
+        "platform": "carousel",
+        "label": "carousel",
+        "decision": "PASS",
+        "overall": 8.47,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 6.0,
+            "evidence": "No explicit share or reply ask.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 1,
+        "retry_limit": 8,
+        "feedback": "shareability 6.0: No explicit share or reply ask.",
+        "plan": {
+          "primary_objective": "drive product-page visits/purchases",
+          "secondary_objective": "earn qualified followers",
+          "audience": "buyers comparing jars in a grocery aisle or a comment section",
+          "angle": "a saveable framework for one buying decision",
+          "follow_promise": "Follow for one buying check you can save.",
+          "rationale": "A carousel is the reference someone screenshots.",
+          "platform": "carousel",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      },
+      {
+        "platform": "ig_single",
+        "label": "instagram_post",
+        "decision": "PASS",
+        "overall": 8.47,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 6.0,
+            "evidence": "No explicit share or reply ask.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 1,
+        "retry_limit": 8,
+        "feedback": "shareability 6.0: No explicit share or reply ask.",
+        "plan": {
+          "primary_objective": "repeat purchase/recall",
+          "secondary_objective": "drive product-page visits/purchases",
+          "audience": "people who already know the jar and need one reason to remember it",
+          "angle": "one sensory moment with the real jar",
+          "follow_promise": "Follow for the jar that matches how you actually drink.",
+          "rationale": "A single image is recall, not a second copy of the Reel.",
+          "platform": "ig_single",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      },
+      {
+        "platform": "stories",
+        "label": "stories",
+        "decision": "PASS",
+        "overall": 8.0,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 4.0,
+            "evidence": "The hook is too thin to stop a scroll.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 5.0,
+            "evidence": "No follow promise is visible.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 6.0,
+            "evidence": "No product next step. Allowed when the objective is reach, scored as incomplete for a shop ask.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 1,
+        "retry_limit": 8,
+        "feedback": "hook 4.0: The hook is too thin to stop a scroll.; follow_conversion 5.0: No follow promise is visible.; purchase_relevance 6.0: No product next step. Allowed when the objective is reach, scored as incomplete for a shop ask.",
+        "plan": {
+          "primary_objective": "drive product-page visits/purchases",
+          "secondary_objective": "earn qualified followers",
+          "audience": "people already watching who will answer one real question",
+          "angle": "a connected sequence from a hook to one next step",
+          "follow_promise": "Follow for a short answer and the honest next step.",
+          "rationale": "Stories are a sequence, not four unrelated posters.",
+          "platform": "stories",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      },
+      {
+        "platform": "facebook",
+        "label": "facebook_post",
+        "decision": "BLOCKED",
+        "overall": 8.0,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 0.0,
+            "evidence": "Product truth failed.",
+            "hard_fail": true
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [
+          "claim_or_brand:{'claim': 'Bold is our agglomerated pure coffee for a heavier kick, Purista is freeze-dried Robusta for crema lovers, and Ultra Blend is 70% coffee wit', 'type': 'product_truth', '"
+        ],
+        "attempts": 9,
+        "retry_limit": 8,
+        "feedback": "claim_or_brand:{'claim': 'Bold is our agglomerated pure coffee for a heavier kick, Purista is freeze-dried Robusta for crema lovers, and Ultra Blend is 70% coffee wit', 'type': 'product_truth', '",
+        "plan": {
+          "primary_objective": "reach new relevant coffee drinkers",
+          "secondary_objective": "drive product-page visits/purchases",
+          "audience": "households who talk about the morning cup with someone else",
+          "angle": "a situation the reader has already had this week",
+          "follow_promise": "Follow for the coffee conversation without the pitch.",
+          "rationale": "Facebook is shared in a conversation, so the opener is a situation.",
+          "platform": "facebook",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      },
+      {
+        "platform": "threads",
+        "label": "threads_post",
+        "decision": "PASS",
+        "overall": 8.67,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 5,
+        "retry_limit": 8,
+        "feedback": "",
+        "plan": {
+          "primary_objective": "earn qualified followers",
+          "secondary_objective": "reach new relevant coffee drinkers",
+          "audience": "people who will reply to one precise coffee question",
+          "angle": "one honest question, not a caption pasted short",
+          "follow_promise": "Follow for one honest coffee question a day.",
+          "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
+          "platform": "threads",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      },
+      {
+        "platform": "linkedin",
+        "label": "linkedin_post",
+        "decision": "PASS",
+        "overall": 8.67,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 1,
+        "retry_limit": 8,
+        "feedback": "",
+        "plan": {
+          "primary_objective": "B2B inquiries (retailer, cafe, office, wholesale, distributor)",
+          "secondary_objective": "earn qualified followers",
+          "audience": "cafe owners, office buyers, retailers, and distributors",
+          "angle": "a business lesson from how the label is written",
+          "follow_promise": "Follow for how a coffee brand is actually built.",
+          "rationale": "LinkedIn is a B2B conversation with a named next step.",
+          "platform": "linkedin",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      },
+      {
+        "platform": "yt_short",
+        "label": "yt_short",
+        "decision": "PASS",
+        "overall": 8.67,
+        "threshold": 8.0,
+        "dimensions": [
+          {
+            "name": "platform_fit",
+            "score": 9.0,
+            "evidence": "Hook and body are both present.",
+            "hard_fail": false
+          },
+          {
+            "name": "hook",
+            "score": 9.0,
+            "evidence": "The hook names a specific subject.",
+            "hard_fail": false
+          },
+          {
+            "name": "retention",
+            "score": 8.0,
+            "evidence": "The body contains a concrete coffee fact.",
+            "hard_fail": false
+          },
+          {
+            "name": "payoff",
+            "score": 8.0,
+            "evidence": "The body continues the hook.",
+            "hard_fail": false
+          },
+          {
+            "name": "shareability",
+            "score": 9.0,
+            "evidence": "There is a reason to pass this on.",
+            "hard_fail": false
+          },
+          {
+            "name": "saveability",
+            "score": 8.0,
+            "evidence": "A checkable fact is worth saving.",
+            "hard_fail": false
+          },
+          {
+            "name": "follow_conversion",
+            "score": 8.0,
+            "evidence": "The follow reason is specific.",
+            "hard_fail": false
+          },
+          {
+            "name": "purchase_relevance",
+            "score": 8.0,
+            "evidence": "The featured jar or a verified next step is named.",
+            "hard_fail": false
+          },
+          {
+            "name": "brand_truth",
+            "score": 10.0,
+            "evidence": "No product-truth finding.",
+            "hard_fail": false
+          },
+          {
+            "name": "visual_integrity",
+            "score": 8.0,
+            "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+            "hard_fail": false
+          },
+          {
+            "name": "claim_verification",
+            "score": 10.0,
+            "evidence": "No prohibited health or medical claim.",
+            "hard_fail": false
+          },
+          {
+            "name": "originality",
+            "score": 9.0,
+            "evidence": "Hook and CTA are not copied from another asset today.",
+            "hard_fail": false
+          },
+          {
+            "name": "mobile_readability",
+            "score": 9.0,
+            "evidence": "The hook is short enough to read on a phone.",
+            "hard_fail": false
+          },
+          {
+            "name": "cta_clarity",
+            "score": 9.0,
+            "evidence": "One CTA field is present.",
+            "hard_fail": false
+          },
+          {
+            "name": "schema",
+            "score": 8.0,
+            "evidence": "No schema or length failure for this format.",
+            "hard_fail": false
+          }
+        ],
+        "hard_fails": [],
+        "attempts": 2,
+        "retry_limit": 8,
+        "feedback": "",
+        "plan": {
+          "primary_objective": "reach new relevant coffee drinkers",
+          "secondary_objective": "earn qualified followers",
+          "audience": "viewers who will watch one complete answer with the sound off",
+          "angle": "a standalone payoff that ends without needing another post",
+          "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+          "rationale": "A Short has to pay off on its own, then ask for the next one.",
+          "platform": "yt_short",
+          "sku": "Purica",
+          "day": 295
+        },
+        "published": false
+      }
+    ],
+    "counts": {
+      "PASS": 8,
+      "REGENERATE": 0,
+      "BLOCKED": 1
+    },
+    "complement": "Reel discovers a label fact, the carousel saves the check, the single image is recall, Stories ask for one interaction, Facebook tells the situation, Threads asks one question, LinkedIn speaks to a buyer, the Short pays off alone, and the blog answers the search.",
+    "published": false
+  },
+  "date": "2026-10-23",
+  "generation_id": "fallback_2026-10-23_b6eb3603",
+  "_creative_audit": {
+    "ts": "2026-10-23T06:39:13.866206+00:00",
+    "day_number": 295,
+    "generation_id": "fallback_2026-10-23_b6eb3603",
+    "image_assets": [
+      {
+        "path": "output/creative/instagram_post_day295_2026-10-23.jpg",
+        "platform": "instagram",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7709,
+          "contrast": 0.2839,
+          "edge_density": 0.028,
+          "upper_activity": 0.318,
+          "center_brightness_delta": 0.1412,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "facd7099432b02a0"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/facebook_post_day295_2026-10-23.jpg",
+        "platform": "facebook",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7735,
+          "contrast": 0.2817,
+          "edge_density": 0.0265,
+          "upper_activity": 0.3126,
+          "center_brightness_delta": 0.1438,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "466312f867a8798b"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_1_day295_2026-10-23.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7788,
+          "contrast": 0.2788,
+          "edge_density": 0.0212,
+          "upper_activity": 0.3047,
+          "center_brightness_delta": 0.1474,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "f6a4959e8f9b4a7b"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_2_day295_2026-10-23.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7756,
+          "contrast": 0.2813,
+          "edge_density": 0.0227,
+          "upper_activity": 0.3116,
+          "center_brightness_delta": 0.1442,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "569d2c87c03a2a3d"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_3_day295_2026-10-23.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.781,
+          "contrast": 0.2763,
+          "edge_density": 0.0205,
+          "upper_activity": 0.298,
+          "center_brightness_delta": 0.1497,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "da48f10cdfc290b5"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_4_day295_2026-10-23.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7803,
+          "contrast": 0.2774,
+          "edge_density": 0.0202,
+          "upper_activity": 0.301,
+          "center_brightness_delta": 0.1489,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "336bd917e94e0697"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_5_day295_2026-10-23.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7812,
+          "contrast": 0.2762,
+          "edge_density": 0.0204,
+          "upper_activity": 0.2977,
+          "center_brightness_delta": 0.1498,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "b4e183a4045eda23"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_6_day295_2026-10-23.jpg",
+        "platform": "instagram_carousel",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.4277,
+          "contrast": 0.3772,
+          "edge_density": 0.0176,
+          "upper_activity": 0.3508,
+          "center_brightness_delta": 0.0818,
+          "lower_center_edge_ratio": 0.461,
+          "lower_center_edge_density": 0.0134,
+          "visual_hash": "aaa9fffecadc9bee"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_thumb_day295_2026-10-23.jpg",
+        "platform": "instagram_reel_thumbnail",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.6828,
+          "contrast": 0.3282,
+          "edge_density": 0.0256,
+          "upper_activity": 0.3555,
+          "center_brightness_delta": 0.2364,
+          "lower_center_edge_ratio": 2.69,
+          "lower_center_edge_density": 0.0518,
+          "visual_hash": "c45939575f818c91"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/adaptation_test_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 600,
+          "height": 600,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7796,
+          "contrast": 0.2771,
+          "edge_density": 0.0229,
+          "upper_activity": 0.3006,
+          "center_brightness_delta": 0.1487,
+          "lower_center_edge_ratio": 473.858,
+          "lower_center_edge_density": 0.0474,
+          "visual_hash": "cc576897ca91f839"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene4_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2196,
+          "contrast": 0.1445,
+          "edge_density": 0.0157,
+          "upper_activity": 0.1275,
+          "center_brightness_delta": 0.0827,
+          "lower_center_edge_ratio": 17.714,
+          "lower_center_edge_density": 0.0307,
+          "visual_hash": "95dc8dc2c6e55faf"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/test_reel_thumb_day1_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2293,
+          "contrast": 0.1803,
+          "edge_density": 0.0141,
+          "upper_activity": 0.107,
+          "center_brightness_delta": 0.0985,
+          "lower_center_edge_ratio": 26.203,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "b0b4237a5b03bd0d"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat1_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2105,
+          "contrast": 0.129,
+          "edge_density": 0.0112,
+          "upper_activity": 0.1119,
+          "center_brightness_delta": 0.066,
+          "lower_center_edge_ratio": 14.457,
+          "lower_center_edge_density": 0.0228,
+          "visual_hash": "ae539804754a1183"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene2_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2207,
+          "contrast": 0.1464,
+          "edge_density": 0.0166,
+          "upper_activity": 0.1347,
+          "center_brightness_delta": 0.082,
+          "lower_center_edge_ratio": 18.401,
+          "lower_center_edge_density": 0.0307,
+          "visual_hash": "290bd05dc6e51103"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/instagram_post_day1_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.775,
+          "contrast": 0.2821,
+          "edge_density": 0.0225,
+          "upper_activity": 0.3136,
+          "center_brightness_delta": 0.1436,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "14fdedf5bc7388f4"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/c2_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7776,
+          "contrast": 0.2804,
+          "edge_density": 0.0211,
+          "upper_activity": 0.3092,
+          "center_brightness_delta": 0.1462,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "b7b2d782b831bfa7"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/avatar_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2159,
+          "contrast": 0.1436,
+          "edge_density": 0.0124,
+          "upper_activity": 0.1253,
+          "center_brightness_delta": 0.0763,
+          "lower_center_edge_ratio": 20.064,
+          "lower_center_edge_density": 0.0299,
+          "visual_hash": "1bf2e23e403c4655"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/c1_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7776,
+          "contrast": 0.2804,
+          "edge_density": 0.0211,
+          "upper_activity": 0.3092,
+          "center_brightness_delta": 0.1462,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "b7b2d782b831bfa7"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/avatar_day1_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2313,
+          "contrast": 0.184,
+          "edge_density": 0.0152,
+          "upper_activity": 0.1256,
+          "center_brightness_delta": 0.1026,
+          "lower_center_edge_ratio": 26.203,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "b97e95083af237af"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat0_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2111,
+          "contrast": 0.1307,
+          "edge_density": 0.0109,
+          "upper_activity": 0.1297,
+          "center_brightness_delta": 0.0691,
+          "lower_center_edge_ratio": 9.507,
+          "lower_center_edge_density": 0.0142,
+          "visual_hash": "59585dc6edd20d00"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/story_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2153,
+          "contrast": 0.1387,
+          "edge_density": 0.0126,
+          "upper_activity": 0.1064,
+          "center_brightness_delta": 0.0745,
+          "lower_center_edge_ratio": 18.573,
+          "lower_center_edge_density": 0.031,
+          "visual_hash": "2accf86eaf773bb0"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/ugc_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2159,
+          "contrast": 0.1436,
+          "edge_density": 0.0124,
+          "upper_activity": 0.1253,
+          "center_brightness_delta": 0.0763,
+          "lower_center_edge_ratio": 20.064,
+          "lower_center_edge_density": 0.0299,
+          "visual_hash": "1bf2e23e403c4655"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat5_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.218,
+          "contrast": 0.1434,
+          "edge_density": 0.0149,
+          "upper_activity": 0.1557,
+          "center_brightness_delta": 0.0726,
+          "lower_center_edge_ratio": 15.099,
+          "lower_center_edge_density": 0.0228,
+          "visual_hash": "807b34b617ed9f76"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_hook_day1_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2285,
+          "contrast": 0.179,
+          "edge_density": 0.0136,
+          "upper_activity": 0.0991,
+          "center_brightness_delta": 0.0989,
+          "lower_center_edge_ratio": 26.203,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "5ea5baa8cf5665b1"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/ugc_day1_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2313,
+          "contrast": 0.184,
+          "edge_density": 0.0152,
+          "upper_activity": 0.1256,
+          "center_brightness_delta": 0.1026,
+          "lower_center_edge_ratio": 26.203,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "b97e95083af237af"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene1_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2216,
+          "contrast": 0.1477,
+          "edge_density": 0.0172,
+          "upper_activity": 0.1394,
+          "center_brightness_delta": 0.0819,
+          "lower_center_edge_ratio": 18.38,
+          "lower_center_edge_density": 0.0307,
+          "visual_hash": "72f1557b855a71e3"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat3_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2179,
+          "contrast": 0.1446,
+          "edge_density": 0.0151,
+          "upper_activity": 0.1594,
+          "center_brightness_delta": 0.0701,
+          "lower_center_edge_ratio": 14.728,
+          "lower_center_edge_density": 0.0228,
+          "visual_hash": "1a0d03a791b63986"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat4_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2125,
+          "contrast": 0.1336,
+          "edge_density": 0.0126,
+          "upper_activity": 0.1263,
+          "center_brightness_delta": 0.0674,
+          "lower_center_edge_ratio": 13.89,
+          "lower_center_edge_density": 0.0227,
+          "visual_hash": "2d39835dc0d445be"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_hook_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2137,
+          "contrast": 0.1383,
+          "edge_density": 0.0112,
+          "upper_activity": 0.105,
+          "center_brightness_delta": 0.0721,
+          "lower_center_edge_ratio": 20.064,
+          "lower_center_edge_density": 0.0299,
+          "visual_hash": "9148e69908da3aea"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/facebook_post_day1_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7762,
+          "contrast": 0.2807,
+          "edge_density": 0.0231,
+          "upper_activity": 0.3099,
+          "center_brightness_delta": 0.1448,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "4af4172d7b278d11"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene5_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2216,
+          "contrast": 0.1453,
+          "edge_density": 0.0161,
+          "upper_activity": 0.131,
+          "center_brightness_delta": 0.0811,
+          "lower_center_edge_ratio": 19.12,
+          "lower_center_edge_density": 0.0307,
+          "visual_hash": "011c40b5774674b2"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/yt_thumb_day1_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1280,
+          "height": 720,
+          "aspect_ratio": 1.778,
+          "brightness": 0.3281,
+          "contrast": 0.2281,
+          "edge_density": 0.0214,
+          "upper_activity": 0.2027,
+          "center_brightness_delta": 0.0522,
+          "lower_center_edge_ratio": 0.864,
+          "lower_center_edge_density": 0.0106,
+          "visual_hash": "9d0aeba6a51e62f4"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat2_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2143,
+          "contrast": 0.1375,
+          "edge_density": 0.0139,
+          "upper_activity": 0.1391,
+          "center_brightness_delta": 0.067,
+          "lower_center_edge_ratio": 14.465,
+          "lower_center_edge_density": 0.0227,
+          "visual_hash": "5d1f7cbd8e78d249"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene0_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2192,
+          "contrast": 0.1434,
+          "edge_density": 0.0154,
+          "upper_activity": 0.1241,
+          "center_brightness_delta": 0.0788,
+          "lower_center_edge_ratio": 17.692,
+          "lower_center_edge_density": 0.0307,
+          "visual_hash": "fe9d04b66557db6d"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene3_day295_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.219,
+          "contrast": 0.1415,
+          "edge_density": 0.0146,
+          "upper_activity": 0.1177,
+          "center_brightness_delta": 0.0804,
+          "lower_center_edge_ratio": 18.695,
+          "lower_center_edge_density": 0.0307,
+          "visual_hash": "653a6bfc5007d324"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/t_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1202,
+          "contrast": 0.1876,
+          "edge_density": 0.0231,
+          "upper_activity": 0.2202,
+          "center_brightness_delta": 0.0317,
+          "lower_center_edge_ratio": 18.341,
+          "lower_center_edge_density": 0.0239,
+          "visual_hash": "b8f1f6852cf234ab"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/c0_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7776,
+          "contrast": 0.2804,
+          "edge_density": 0.0211,
+          "upper_activity": 0.3092,
+          "center_brightness_delta": 0.1462,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "b7b2d782b831bfa7"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/story_day1_2026-10-23.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.232,
+          "contrast": 0.1827,
+          "edge_density": 0.0161,
+          "upper_activity": 0.1197,
+          "center_brightness_delta": 0.1011,
+          "lower_center_edge_ratio": 23.286,
+          "lower_center_edge_density": 0.0414,
+          "visual_hash": "4d5378560e4fcdb8"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      }
+    ],
+    "video_assets": [
+      {
+        "path": "output/creative/sales_reel_day295_2026-10-23.mp4",
+        "platform": "video",
+        "frames_sampled": 8,
+        "frame_delta": 0.0424,
+        "recommendations": [
+          "video is consistently dark; raise exposure/background separation"
+        ],
+        "sample_strategy": "timeline_evenly_spaced",
+        "duration_s": 10.0,
+        "mean_brightness": 0.2141,
+        "mean_contrast": 0.218
+      },
+      {
+        "path": "output/creative/sales_story_day295_2026-10-23.mp4",
+        "platform": "video",
+        "frames_sampled": 8,
+        "frame_delta": 0.023,
+        "recommendations": [
+          "increase scene/motion change; video is visually static"
+        ],
+        "sample_strategy": "timeline_evenly_spaced",
+        "duration_s": 10.0,
+        "mean_brightness": 0.2877,
+        "mean_contrast": 0.1856
+      },
+      {
+        "path": "output/creative/short_video_day295_2026-10-23.mp4",
+        "platform": "video",
+        "frames_sampled": 8,
+        "frame_delta": 0.0182,
+        "recommendations": [
+          "increase scene/motion change; video is visually static",
+          "video is consistently dark; raise exposure/background separation"
+        ],
+        "sample_strategy": "timeline_evenly_spaced",
+        "duration_s": 12.0,
+        "mean_brightness": 0.2054,
+        "mean_contrast": 0.182
+      },
+      {
+        "path": "output/creative/reel_1_video_day295_2026-10-23.mp4",
+        "platform": "video",
+        "frames_sampled": 8,
+        "frame_delta": 0.0168,
+        "recommendations": [
+          "increase scene/motion change; video is visually static",
+          "video is consistently dark; raise exposure/background separation"
+        ],
+        "sample_strategy": "timeline_evenly_spaced",
+        "duration_s": 12.0,
+        "mean_brightness": 0.2066,
+        "mean_contrast": 0.177
+      }
+    ],
+    "copy_audit": [
+      {
+        "asset": "reel_1",
+        "hook_length": 20,
+        "recommendations": [
+          "reel_1: commercial language repeats; protect discovery value before selling"
+        ]
+      },
+      {
+        "asset": "reel_2",
+        "hook_length": 87,
+        "recommendations": [
+          "reel_2: commercial language repeats; protect discovery value before selling"
+        ]
+      },
+      {
+        "asset": "yt_short",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem"
+        ]
+      },
+      {
+        "asset": "carousel",
+        "hook_length": 41,
+        "recommendations": [
+          "carousel: carousel lacks an explicit save/share cue for algorithmic distribution"
+        ]
+      },
+      {
+        "asset": "instagram_post",
+        "hook_length": 69,
+        "recommendations": [
+          "instagram_post: community asset lacks a question/debate trigger"
+        ]
+      },
+      {
+        "asset": "facebook_post",
+        "hook_length": 119,
+        "recommendations": []
+      },
+      {
+        "asset": "threads_post",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem"
+        ]
+      },
+      {
+        "asset": "linkedin_post",
+        "hook_length": 37,
+        "recommendations": []
+      },
+      {
+        "asset": "stories",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem"
+        ]
+      }
+    ],
+    "vision_audit": {
+      "status": "failed_non_blocking",
+      "model": "gemini-2.5-flash",
+      "assets": [],
+      "recommendations": [],
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "portfolio_diversity": 0.993,
+    "recommendations": [
+      "add visible action/texture such as pour, hand, steam, granules, or environment",
+      "lower-center focal composition dominates; vary into a contextual or off-center composition",
+      "raise exposure/background separation; avoid another near-black frame",
+      "video is consistently dark; raise exposure/background separation",
+      "increase scene/motion change; video is visually static",
+      "reel_1: commercial language repeats; protect discovery value before selling",
+      "reel_2: commercial language repeats; protect discovery value before selling",
+      "hook is too short to communicate a clear curiosity/problem",
+      "carousel: carousel lacks an explicit save/share cue for algorithmic distribution",
+      "instagram_post: community asset lacks a question/debate trigger"
+    ],
+    "asset_count": 42
+  }
+}
