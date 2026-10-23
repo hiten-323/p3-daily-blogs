@@ -5629,7 +5629,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 2,
+      "count": 3,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -5779,6 +5779,20 @@
       "last_seen": "2026-10-23",
       "platform": "instagram",
       "reason": "no_tonal_depth:range=58; weak_hierarchy:60/41; pale_background:sat=0.22",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|pale_background:sat=0.12; pale_background:sat=0.19; weak_hierarchy:60/41; pale_background:sat=0.16",
+      "label": "reel_1",
+      "last_seen": "2026-10-23",
+      "platform": "instagram",
+      "reason": "pale_background:sat=0.12; pale_background:sat=0.19; weak_hierarchy:60/41; pale_background:sat=0.16",
       "stage": "render",
       "status": "gate_holding"
     }
