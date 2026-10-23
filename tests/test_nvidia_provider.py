@@ -54,15 +54,31 @@ def test_empty_model_env_keeps_the_default(monkeypatch):
         "google/gemma-4-31b-it",
         "nvidia/nemotron-3-ultra-550b-a55b",
         "nvidia/nemotron-3-super-120b-a12b",
+        "openai/gpt-oss-20b",
     ]
     assert nvidia.get_model() == "nvidia/nemotron-3.5-lightning-30b-a3b"
     assert "meta/llama-3.3-70b-instruct" not in nvidia.get_models()
+    assert "moonshotai/kimi-k2.6" not in nvidia.get_models()
+    assert len(nvidia.get_models()) >= 2
     monkeypatch.setenv("NVIDIA_MODEL", "meta/llama-3.1-70b-instruct")
     assert nvidia.get_model() == "meta/llama-3.1-70b-instruct"
     assert nvidia.get_models() == ["meta/llama-3.1-70b-instruct"]
     monkeypatch.setenv("NVIDIA_MODEL", " first/model , second/model ")
     assert nvidia.get_models() == ["first/model", "second/model"]
     assert nvidia.get_model() == "first/model"
+
+
+def test_removed_model_in_env_is_dropped(monkeypatch):
+    monkeypatch.delenv("NVIDIA_API_KEY", raising=False)
+    monkeypatch.setattr(nvidia, "_DISCOVERED", None)
+    monkeypatch.setenv(
+        "NVIDIA_MODEL",
+        "moonshotai/kimi-k2.6,openai/gpt-oss-120b,openai/gpt-oss-20b",
+    )
+    assert nvidia.get_models() == ["openai/gpt-oss-20b"]
+    monkeypatch.setenv("NVIDIA_MODEL", "moonshotai/kimi-k2.6")
+    assert nvidia.get_models() == list(nvidia._DEFAULT_MODELS)
+    assert "moonshotai/kimi-k2.6" not in nvidia.get_models()
 
 
 def test_success_uses_chat_completions(monkeypatch):

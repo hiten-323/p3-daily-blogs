@@ -14,6 +14,11 @@ configured model is tried, and when none of them return text the router falls
 through to the next provider. 429 and 5xx are retried with backoff on the
 same model. Each call has a short timeout so one hung model cannot consume
 the editorial deadline.
+
+moonshotai/kimi-k2.6 is still returned by GET /v1/models, but chat/completions
+answers HTTP 404 ("Function not found for account") — run 39939422932 on
+2026-10-23. openai/gpt-oss-120b is not on that catalog. Both are skipped.
+The backup chain is the other ids below, each present on the catalog that day.
 """
 from __future__ import annotations
 
@@ -35,12 +40,14 @@ _URL = f"{_BASE}/chat/completions"
 # It often returned HTTP 200 with empty content (reel_1, carousel, stories,
 # yt_short, blog sections) and the calls that did answer took 12–17s.
 # Nemotron 3.5 Lightning is NVIDIA's current text-only model with a free hosted
-# endpoint. Prefer it for generation; retain Gemma, Ultra, and Super as fallbacks.
+# endpoint. Prefer it for generation; retain Gemma, Ultra, Super, and GPT-OSS 20B
+# as fallbacks. All five were on GET /v1/models on 2026-10-23.
 _DEFAULT_MODELS = (
     "nvidia/nemotron-3.5-lightning-30b-a3b",
     "google/gemma-4-31b-it",
     "nvidia/nemotron-3-ultra-550b-a55b",
     "nvidia/nemotron-3-super-120b-a12b",
+    "openai/gpt-oss-20b",
 )
 _DEFAULT_MODEL = _DEFAULT_MODELS[0]
 _BACKOFF_S = (2, 5, 12)
@@ -90,12 +97,25 @@ def get_key() -> str:
     return os.environ.get("NVIDIA_API_KEY", "").strip()
 
 
+# Exact ids, in try-order. Each one was on GET /v1/models on 2026-10-23.
+# qwen/qwen3 and meta/llama-4 matched nothing on that list, so they are not here.
 _PREFER = (
-    "nvidia/nemotron-3.5-lightning-30b-a3b", "google/gemma-4-31b-it",
-    "nvidia/nemotron-3-ultra-550b-a55b", "nvidia/nemotron-3-super-120b-a12b",
-    "deepseek-ai/deepseek-v4.1-flash", "qwen/qwen3", "meta/llama-4",
-    "moonshotai/kimi-k2.6", "openai/gpt-oss-120b", "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "google/gemma-4-31b-it",
+    "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3-super-120b-a12b",
+    "deepseek-ai/deepseek-v4.1-flash",
+    "openai/gpt-oss-20b",
+    "z-ai/glm-5.3-flash",
+    "minimaxai/minimax-m3.1-flash",
+    "nvidia/nemotron-nano-3-30b-a3b",
+    "nvidia/llama-3.1-nemotron-70b-instruct",
 )
+# Catalog-listed or previously configured, but not a working chat model.
+_REMOVED = frozenset({
+    "moonshotai/kimi-k2.6",
+    "openai/gpt-oss-120b",
+})
 _SKIP = ("embed", "safety", "guard", "retriever", "reward", "coder", "-vl", "vision", "omni", "parse", "rerank")
 _DISCOVERED: list[str] | None = None
 
@@ -111,7 +131,7 @@ def discover_models() -> list[str]:
         try:
             resp = _http.get(f"{_BASE}/models", headers={"Authorization": f"Bearer {key}"}, timeout=15)
             ids = [str(m.get("id", "")) for m in (resp.json().get("data") or [])] if resp.status_code == 200 else []
-            ids = [i for i in ids if not any(x in i.lower() for x in _SKIP)]
+            ids = [i for i in ids if i not in _REMOVED and not any(x in i.lower() for x in _SKIP)]
             for pref in _PREFER:
                 out += sorted([i for i in ids if i.startswith(pref) and i not in out], reverse=True)
         except Exception as e:  # discovery is best-effort
@@ -121,12 +141,19 @@ def discover_models() -> list[str]:
 
 
 def get_models() -> list[str]:
-    """Model ids in try-order. NVIDIA_MODEL (comma list) wins; else live discovery; else defaults."""
+    """Model ids in try-order. NVIDIA_MODEL (comma list) wins; else live discovery; else defaults.
+
+    Removed ids are dropped from an explicit list. If that leaves nothing, discovery
+    and the static backup chain are used so a stale secret cannot pin the provider
+    to a 404.
+    """
     raw = os.environ.get("NVIDIA_MODEL", "")
-    models = [part.strip() for part in raw.split(",") if part.strip()]
+    models = [part.strip() for part in raw.split(",") if part.strip() and part.strip() not in _REMOVED]
     if models:
         return models
-    return (discover_models() or list(_DEFAULT_MODELS))[:6]
+    discovered = discover_models()
+    chain = discovered or [model for model in _DEFAULT_MODELS if model not in _REMOVED]
+    return chain[:6]
 
 
 def get_model() -> str:
