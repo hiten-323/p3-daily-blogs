@@ -1419,73 +1419,96 @@
   },
   "yt_short": {
     "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "Drive educated purchases of Purica 50g and 100g via profile link and website traffic",
-    "primary_cta": "Comment ARABICA for the tasting map and visit https://p3online.in",
-    "success_metric": "Profile visits > 1,200, comment rate > 3%, click-through to https://p3online.in/products/purica > 40",
-    "_growth_attempts": 0,
-    "asset_id": "yt_short_purica_revelation_001",
-    "audio": "Low hum of a spray dryer, then sudden silence. Soft crackle of ice crystals. Warm amber tone.",
-    "brand_mention": "Purity Beans",
-    "caption": "Most Arabica instant coffee loses its soul in a 200°C spray dryer. Purica doesn't. Freeze-dried at -40°C to lock in natural caramel and chocolate notes. Pure Arabica. Zero chicory. Read the jar. Follow @purepantryprovisions Shop https://p3online.in",
-    "chosen_hook": "Your Arabica instant coffee lost its soul in the spray dryer.",
-    "comment_trigger": "Comment ARABICA and I'll send you the tasting map for Purica vs commercial instant.",
-    "funnel_objective": "Awareness → Education → Profile Visit → Purchase",
+    "objective": "educate and convert",
+    "primary_cta": "Shop pure Arabica at https://p3online.in",
+    "success_metric": "saves_and_website_clicks",
+    "_growth_attempts": 1,
+    "asset_id": "yt_short_purica_arabica_01",
+    "audio": {
+      "music_track": "Warm acoustic guitar picking with ambient kitchen morning tones",
+      "sound_effects": [
+        "Subtle glass jar cap unscrewing click",
+        "Soft spoon tap against ceramic mug",
+        "Gentle pour of hot water",
+        "Light steam hiss"
+      ],
+      "voiceover": "professional_warm_indian_female"
+    },
+    "brand_mention": true,
+    "caption": "Most instant coffee is aggressively heat-treated, killing the natural character of the bean. Purica Gourmet Arabica Granules from Purity Beans uses a gentle freeze-drying process to lock in the true profile of pure Arabica without shortcuts. Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Shop now: https://p3online.in",
+    "chosen_hook": "Betrayal Hook",
+    "comment_trigger": "Comment COFFEE if you read your coffee labels before buying.",
+    "funnel_objective": "conversion",
     "gate_rejection": false,
-    "growth_plan": "Seed via YouTube Shorts feed, cross-post to Reels as companion (different concept), embed in blog 'Freeze-Dried vs Spray-Dried' article, DM commenters with Purica product link.",
-    "hashtags": "#PurityBeans #PureArabica #FreezeDriedCoffee #InstantCoffeeTruth #ReadTheJar #CoffeeScience",
-    "hook": "Your Arabica instant coffee lost its soul in the spray dryer.",
-    "hook_strategy": "Revelation / Cognitive Dissonance — exposes hidden industrial process that strips Arabica of its signature aroma, creating immediate need to know the alternative.",
-    "hook_text": "Your Arabica instant coffee lost its soul in the spray dryer.",
+    "growth_plan": {
+      "distribution": [
+        "YouTube Shorts",
+        "Instagram Reels"
+      ],
+      "repurposing": "Convert key frame into educational carousel slide on freeze-drying vs spray-drying."
+    },
+    "hashtags": "#PurityBeans #freezeDriedCoffee #pureArabica #gourmetCoffee #cleanCoffee",
+    "hook": "What happens to your instant coffee before it reaches your mug?",
+    "hook_strategy": "curiosity_gap",
+    "hook_text": "What happens to your instant coffee before it reaches your mug?",
     "ladder_exhausted": true,
     "product": "Purica Gourmet Arabica Granules",
-    "psychology_frame": "revelation",
+    "psychology_frame": "clean_label",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Companion Reel: '30-second freeze-dried aroma test you can do at home' — different concept, same product.",
-    "retention_audit": "Scene changes every 2.5s. Visual contrast (industrial vs artisanal) holds attention. Open loop: 'what does -40°C taste like?' resolves at scene 5.",
-    "retention_tactic": "Visual thermometer countdown 200 → -40 across scenes. Sound design shifts from harsh mechanical to calm crystalline.",
-    "save_trigger": "Save this before your next coffee buy — the freeze-dried difference is real.",
+    "reel_inspiration": "Minimalist documentary style coffee process breakdown",
+    "retention_audit": "Paces the reveal of the freeze-drying process at second 12 to maintain viewer curiosity.",
+    "retention_tactic": "Macro visual zoom on freeze-dried crystal texture combined with sudden audio drop.",
+    "save_trigger": "Save this before your next grocery run.",
     "scenes": [
       {
         "scene": 1,
+        "duration_s": 4,
         "type": "industrial_contrast",
-        "duration_s": 3.5,
-        "on_screen": "Extreme close-up: industrial spray dryer nozzle blasting brown liquid into white-hot chamber. Temperature overlay: 200°C. Steam violent. Purity Beans Purica jar sits cold and untouched on a dark marble ledge just outside the frame, amber light catching its label.",
-        "spoken": "Your Arabica instant coffee lost its soul in a 200-degree spray dryer."
+        "on_screen": "Most instant coffee loses its aroma in industrial heat dryers.",
+        "spoken": "Most instant coffee loses its aroma in industrial heat dryers.",
+        "visual_direction": "Shot on iPhone 15, handheld close-up of dark swirling powder in hot water, warm kitchen falloff light, visible skin pores on hand holding mug."
       },
       {
         "scene": 2,
-        "type": "macro_comparison",
-        "duration_s": 3.5,
-        "on_screen": "Macro shot: coffee particles tumbling in superheated air, fracturing, darkening. Label on a generic jar reads 'Arabica' but the granules look burnt. Cut to: Purica jar label — 'Freeze-Dried Pure Arabica' — sharp, clean, zero chicory.",
-        "spoken": "Spray drying burns the caramel and chocolate notes right out of the bean."
+        "duration_s": 6,
+        "type": "process_reveal",
+        "on_screen": "Purica uses slow freeze-drying to protect the bean.",
+        "spoken": "Purica uses slow freeze-drying to protect the bean.",
+        "visual_direction": "Macro lens 85mm f/1.8, amber crystal granules of Purica Gourmet Arabica Granules glittering under soft morning window light in a genuine glass Purity Beans jar."
       },
       {
         "scene": 3,
-        "type": "process_reveal",
-        "duration_s": 4.0,
-        "on_screen": "Silence. Frost forms on a stainless tray. Arabica extract droplets freeze into perfect beads at -40°C. Vacuum pump whirs low. Purica jar glows in warm side-light, condensation beading on its glass.",
-        "spoken": "Freeze-drying at minus forty locks them in."
+        "duration_s": 7,
+        "type": "label_truth",
+        "on_screen": "Read the jar: pure Arabica, zero chicory.",
+        "spoken": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee.",
+        "visual_direction": "Hand turning the Purity Beans jar to show the transparent ingredient panel, real fingernail texture, slight water ring on the wooden kitchen counter."
       },
       {
         "scene": 4,
-        "type": "sensory_payoff",
-        "duration_s": 4.0,
-        "on_screen": "Hand pours Purica granules into a clear glass. They dissolve instantly, releasing a visible aroma plume — golden backlit. No clumps. No burnt smell. Text overlay: 'Pure Arabica. Zero Chicory. Freeze-Dried.'",
-        "spoken": "What you taste is what the bean actually grew."
+        "duration_s": 8,
+        "type": "brew_tip",
+        "on_screen": "Try tomorrow: water at 85°C, one level spoon, wait 30 seconds.",
+        "spoken": "Try this tomorrow: water at eighty-five degrees, one level spoon, wait thirty seconds before stirring.",
+        "visual_direction": "Steaming kettle pouring into ceramic mug, spoon resting on saucer, timer overlay counting thirty seconds, Purity Beans jar in background with warm amber glow."
       },
       {
         "scene": 5,
-        "type": "founder_close",
-        "duration_s": 3.5,
-        "on_screen": "Founder stands in a sunlit kitchen, holding Purica jar. Smiles. 'Read the jar.' Logo animation: Purity Beans. URL: https://p3online.in",
-        "spoken": "Purica. Freeze-dried pure Arabica. Read the jar. Purity Beans at https://p3online.in."
+        "duration_s": 6,
+        "type": "sensory_payoff",
+        "on_screen": "Natural caramel and chocolatey notes unlocked. Purity Beans.",
+        "spoken": "Natural caramel and chocolatey notes unlocked by the right temperature. Experience true coffee character. Purity Beans.",
+        "visual_direction": "Slow pull-back from steaming mug to reveal Purity Beans Purica jar centered on marble counter, morning light catching label, subtle steam rising, handheld sway settles to lock-off."
       }
     ],
-    "share_trigger": "Share this with the friend who says 'all instant coffee tastes the same.'",
-    "editorial_error": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Field required [type=missing, input_value={'scene': 2, 'type': 'mac...right out of the bean.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.2.visual_direc",
+    "share_trigger": "Share this with someone who drinks instant coffee every morning.",
+    "editorial_error": "brand: ['Missing website reference']",
+    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee.",
+    "cta": "Shop pure Arabica at https://p3online.in",
+    "script": "Most instant coffee loses its aroma in industrial heat dryers. Purica uses slow freeze-drying to protect the bean. Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Try this tomorrow: water at eighty-five degrees, one level spoon, wait thirty seconds before stirring. Natural caramel and chocolatey notes unlocked by the right temperature. Experience true coffee character. Visit https://p3online.in",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Field required [type=missing, input_value={'scene': 2, 'type': 'mac...right out of the bean.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: ['Missing website reference']"
   },
   "_asset_metadata": [
     {
@@ -3169,6 +3192,50 @@
       {
         "status": "exhausted",
         "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Fie"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction   Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction   Fie"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'scene': 1, 'type': 'mac...ven touched hot water.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s   Field required "
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "schema: 4 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'duration_s': 5, 'on_scr...pores on barista hand.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene   Field required [type=miss"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema scenes   List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'duration_s...allow depth of field.'}], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/too_short | br"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema scenes   List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'duration_s...allow depth of field.'}], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/too_short | br"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...issing brand mention']\"}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "schema: 3 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'duration_s'...type': 'sensory_payoff'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing website reference']"
+      },
+      {
+        "status": "exhausted",
+        "reason": "brand: ['Missing website reference']"
       }
     ]
   },

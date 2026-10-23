@@ -1961,7 +1961,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 2,
       "feedback": "brand: ['Missing website reference']",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -4355,7 +4355,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 5,
+      "count": 6,
       "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Field required [type=missing, input_value={'scene': 2, 'type': 'mac...right out of the bean.'}, input_t",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -4379,6 +4379,90 @@
       "last_seen": "2026-10-23",
       "platform": "youtube",
       "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.visual_direction Field required [type=missing, input_value={'scene': 1, 'type': 'ind...00-degree spray dryer.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.visual_direction Fie",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s Field required [type=missing, input_value={'scene': 1, 'type': 'mac...ven touched hot water.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s Field required [type=missing, input_value={'scene': 2, 'type': 'pro...rabica bean character.'}, input_type=dict]",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "product_truth",
+      "id": "youtube|yt_short|product_truth|schema: 5 validation errors for youtubeshortschema scenes.0.duration_s field required [type=missing, input_value={'scene': 1, 'type': 'mac...ven touched hot water.'}, input_type=di",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s Field required [type=missing, input_value={'scene': 1, 'type': 'mac...ven touched hot water.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s Field required",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 4 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'duration_s': 5, 'on_scr...pores on barista hand.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene Field required [type=missing, input_value={'duration_s': 8, 'on_scr...lass Purity Beans jar.'}, input_type=dict] For furt",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 4 validation errors for youtubeshortschema scenes.0.scene field required [type=missing, input_value={'duration_s': 5, 'on_scr...pores on barista hand.'}, input_type=dict] f",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 4 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'duration_s': 5, 'on_scr...pores on barista hand.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene Field required [type=miss",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 2,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema scenes List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'duration_s...allow depth of field.'}], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/too_short | brand: ['Missing brand mention']",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 1 validation error for youtubeshortschema scenes list should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'duration_s...allow de",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 1 validation error for YoutubeShortSchema scenes List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'duration_s...allow depth of field.'}], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/too_short | br",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...issing brand mention']\"}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Missing brand mention']",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 1 validation error for youtubeshortschema value error, youtube short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_val",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...issing brand mention']\"}, input_type=dict] For further information visit https://er",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 3 validation errors for YoutubeShortSchema scenes.4.on_screen Field required [type=missing, input_value={'scene': 5, 'duration_s'...type': 'sensory_payoff'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken Field required [type=missing, input_value={'scene': 5, 'duration_s'...type': 'sensory_payoff'}, input_type=dict] For",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 3 validation errors for youtubeshortschema scenes.4.on_screen field required [type=missing, input_value={'scene': 5, 'duration_s'...type': 'sensory_payoff'}, input_type=dic",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 3 validation errors for YoutubeShortSchema scenes.4.on_screen Field required [type=missing, input_value={'scene': 5, 'duration_s'...type': 'sensory_payoff'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken Field required [type",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "brand: ['Missing website reference']",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|brand: ['missing website reference']",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "brand: ['Missing website reference']",
       "stage": "generation",
       "status": "gate_holding"
     }
