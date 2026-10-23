@@ -1419,42 +1419,75 @@
   },
   "yt_short": {
     "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "Drive awareness, engagement, and sales for Purica Gourmet Arabica Granules",
-    "primary_cta": "Shop now at p3online.in",
-    "success_metric": "80% watch time, comments with COFFEE, saves",
-    "platform": "YouTube Shorts",
-    "_shape": [
-      "asset_id",
-      "audio",
-      "chosen_hook",
-      "comment_trigger",
-      "cta",
-      "featured_product",
-      "hashtags",
-      "hook",
-      "hook_text",
-      "loop_note",
-      "objective",
-      "platform",
-      "primary_cta",
-      "product",
-      "publish_blocked",
-      "save_trigger",
-      "scenes",
-      "share_trigger",
-      "success_metric",
-      "tagline"
+    "objective": "Awareness and consideration for Purica Gourmet Arabica Granules",
+    "primary_cta": "Shop now: https://p3online.in",
+    "success_metric": "Watch time > 70%, click-through rate to product page, comment rate on ARABICA trigger",
+    "platform": "youtube_shorts",
+    "asset_id": "yt_short_purica_arabica_001",
+    "product": "purica",
+    "hook": "revelation",
+    "chosen_hook": "What if your instant coffee is not coffee at all?",
+    "hook_text": "What if your instant coffee is not coffee at all?",
+    "audio": "Quiet ambient kitchen hum. Soft clink of spoon on ceramic. Gentle steam hiss. Warm, confident voiceover.",
+    "scenes": [
+      {
+        "scene": 1,
+        "type": "problem",
+        "duration_s": 5.0,
+        "on_screen": "What is actually inside your instant coffee jar?",
+        "spoken": "What is actually inside your instant coffee jar?",
+        "visual_direction": "Handheld close-up of Purity Beans Purica jar label. Finger traces ingredient line. Dim kitchen lighting, shallow depth of field, natural grain visible on the glass."
+      },
+      {
+        "scene": 2,
+        "type": "curiosity",
+        "duration_s": 5.0,
+        "on_screen": "Most brands add filler. Purity Beans does not.",
+        "spoken": "Most brands add filler. Purity Beans does not.",
+        "visual_direction": "Cut to dark marble surface. Purity Beans Purica jar enters frame from left. Warm amber rim light catches the glass, a faint fingerprint smudge is visible. Slow push-in reveals the label clearly."
+      },
+      {
+        "scene": 3,
+        "type": "value",
+        "duration_s": 6.0,
+        "on_screen": "Purica. Freeze-dried pure Arabica. Zero chicory.",
+        "spoken": "Purica. Freeze-dried pure Arabica. Zero chicory.",
+        "visual_direction": "Macro shot of freeze-dried granules pouring into a ceramic cup. Steam rises naturally, catching golden light. Granules swirl and dissolve. The Purica jar rests in the background, sharply focused."
+      },
+      {
+        "scene": 4,
+        "type": "trust",
+        "duration_s": 5.0,
+        "on_screen": "Read the jar. Pure coffee. Nothing added.",
+        "spoken": "Read the jar. Pure coffee. Nothing added.",
+        "visual_direction": "Static tripod shot. Hand holds Purica jar, rotating slowly to show the ingredient panel: Coffee (100%). Warm side lighting highlights the glass texture. Lived-in kitchen counter shows a used spoon and a crumpled napkin."
+      },
+      {
+        "scene": 5,
+        "type": "ct",
+        "visual_direction": "Hold on the line already written.",
+        "duration_s": 5.0
+      }
     ],
+    "comment_trigger": "Comment ARABICA if you drink pure coffee.",
+    "save_trigger": "Save this before your next coffee run.",
+    "share_trigger": "Share with someone who deserves better coffee.",
+    "cta": "Shop Purity Beans Purica at https://p3online.in. Follow @purepantryprovisions for more coffee truth.",
+    "hashtags": "#PurityBeans #PureCoffee #Arabica #FreezeDried #InstantCoffee #CleanLabel #CoffeeLovers #India",
+    "loop_note": "End frame mirrors opening question — 'What is actually inside your instant coffee jar?' — to trigger replay.",
+    "publish_blocked": "ladder_exhausted",
+    "editorial_error": "schema: 2 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'type': 'ct'...en.', 'duration_s': 5.0}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type=missing, input_value={'scene': 5, 'type': 'ct'...en.', 'duration_s': 5.0}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing | brand: ['Missing website reference']",
+    "tagline": "India's Cleanest Instant Coffee",
+    "scene": 4,
+    "type": "trust",
+    "duration_s": 5.0,
+    "on_screen": "Read the jar. Pure coffee. Nothing added.",
+    "spoken": "Read the jar. Pure coffee. Nothing added.",
+    "visual_direction": "Static tripod shot...",
+    "ladder_exhausted": true,
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...and: ['Empty content']\"}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
-    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
-    "comment_trigger": "Comment COFFEE below if you refuse to drink chicory disguised as coffee.",
-    "save_trigger": "Save this before your next grocery run — real coffee matters.",
-    "share_trigger": "Share with someone who starts every morning with coffee.",
-    "editorial_error": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...and: ['Empty content']\"}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 2 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'type': 'ct'...en.', 'duration_s': 5.0}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type=missing, input_value={'scene': 5, 'type': 'ct'...en.', 'duration_s': 5.0}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing | b"
   },
   "_asset_metadata": [
     {
@@ -3597,12 +3630,12 @@
       {
         "attempt": 4,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 5,
         "rung": "from_scratch",
-        "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 6,
@@ -3622,6 +3655,50 @@
       {
         "status": "exhausted",
         "reason": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...and: ['Empty content']\"}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...ed': 'ladder_exhausted'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "schema: 2 validation errors for YoutubeShortSchema scenes.0.on_screen   Field required [type=missing, input_value={'scene': 1, 'visual_dire... 5.0, 'type': 'problem'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.0.spoken   Field required [type"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "schema: 2 validation errors for YoutubeShortSchema scenes.2.on_screen   Field required [type=missing, input_value={'scene': 3, 'visual_dire...type': 'product_reveal'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.2.spoken   Field required [type"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...publish_blocked': False}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...dev/2.14/v/value_error\"}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "schema: 2 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'type': 'cta... line already written.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "schema: 2 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'type': 'cta... line already written.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "schema: 2 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'type': 'ct'...en.', 'duration_s': 5.0}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type"
+      },
+      {
+        "status": "exhausted",
+        "reason": "schema: 2 validation errors for YoutubeShortSchema scenes.4.on_screen   Field required [type=missing, input_value={'scene': 5, 'type': 'ct'...en.', 'duration_s': 5.0}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.4.spoken   Field required [type"
       }
     ]
   },
