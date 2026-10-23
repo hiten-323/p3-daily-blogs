@@ -1419,26 +1419,110 @@
   },
   "yt_short": {
     "featured_product": "purica",
-    "objective": "Increase traffic and awareness for Pure Arabica granules while reinforcing brand transparency.",
-    "primary_cta": "Shop p3online.in",
-    "success_metric": "views & clicks",
-    "platform": "YouTube Shorts",
-    "chosen_hook": "Your instant coffee might have a hidden ingredient.",
-    "comment_trigger": "Comment YES if you love pure Arabica.",
-    "cta": "Visit https://p3online.in",
-    "duration_s": 30,
-    "hashtags": "#PureArabica #Purica #CoffeeIndia #InstantCoffee #CoffeeLovers #PurityBeans",
-    "hook": "Your instant coffee might have a hidden ingredient.",
-    "hook_text": "Your instant coffee might have a hidden ingredient.",
+    "objective": "brand_awareness",
+    "primary_cta": "Follow @purepantryprovisions",
+    "success_metric": "profile_visits_and_website_clicks",
+    "platform": "youtube_shorts",
+    "chosen_hook": "revelation",
+    "comment_trigger": "Comment ARABICA if you taste the caramel and chocolate notes in your cup.",
+    "cta": "Shop Purica at https://p3online.in | Purity Beans",
+    "duration_s": 35,
+    "hashtags": "#puricabeans #purearabica #freezedriedcoffee #instantcoffeeindia #coffeelovers #puritybeans",
+    "hook": "You’ve been drinking instant coffee that isn’t what it says.",
+    "hook_text": "You’ve been drinking instant coffee that isn’t what it says.",
     "ladder_exhausted": true,
-    "loop_note": "The final 4 seconds loop by showing the jar and call to follow for more facts.",
-    "save_trigger": "Save this before your next grocery run — real coffee matters.",
-    "share_trigger": "Share with someone who starts every morning with coffee.",
-    "editorial_error": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Missing brand mention', 'Missing required brand facts']",
+    "loop_note": "Ends on the Purica jar close‑up with finger on 'Pure Arabica'; opening line mirrors final frame for seamless loop.",
+    "save_trigger": "Save this to compare labels on your next grocery run.",
+    "scenes": [
+      {
+        "scene": 1,
+        "type": "hook",
+        "duration_s": 3.0,
+        "on_screen": "Your instant coffee hides the bean. Ours prints it.",
+        "spoken": "Your instant coffee hides the bean. Ours prints it.",
+        "visual_direction": "Extreme close-up of Purity Beans Purica jar label under warm amber spotlight on dark marble. Finger taps directly on 'Pure Arabica' text. Shallow depth of field, 85mm equivalent. Contact shadow grounds the jar. Slight fingerprint smudge on glass catches the light."
+      },
+      {
+        "scene": 2,
+        "type": "curiosity",
+        "duration_s": 5.0,
+        "on_screen": "Pure Arabica. Freeze-dried. Zero chicory.",
+        "spoken": "Pure Arabica. Freeze-dried. Zero chicory. That is the whole ingredient list.",
+        "visual_direction": "Macro shot: Purica granules dissolve in hot water inside a glass cup. Thick aromatic swirl rises in slow motion, backlit by gold rim light. Steam disperses naturally. Hand holds cup steady, slight micro-movement. Background: dark kitchen counter with used spoon and crumpled napkin — lived-in realism."
+      },
+      {
+        "scene": 3,
+        "type": "value",
+        "duration_s": 7.0,
+        "on_screen": "Freeze-drying locks in natural caramel and chocolate notes.",
+        "spoken": "Freeze-drying locks in the natural caramel and chocolate notes that high heat strips away.",
+        "visual_direction": "Side profile of Purica jar on marble. Natural hand enters frame, lifts jar — contact shadow and label reflection stay perfect. Phone screen beside jar shows p3online.in product page with Purica 100g in cart. Thumb hovers over checkout. Warm mixed lighting: cool daylight from window, warm lamp glow on jar."
+      },
+      {
+        "scene": 4,
+        "type": "trust",
+        "duration_s": 8.0,
+        "on_screen": "Purica 50g ₹329 | 100g ₹559. Free shipping over ₹399.",
+        "spoken": "Purica starts at three twenty-nine for fifty grams. Free shipping above three ninety-nine on p3online.in.",
+        "visual_direction": "Jar sits beside phone showing live cart. Finger taps phone screen, then rests on jar lid. Price text overlays naturally near jar base. Label texture catches light like real printed paper. Single water droplet on glass implies recent use."
+      },
+      {
+        "scene": 5,
+        "type": "follow",
+        "duration_s": 6.0,
+        "on_screen": "If you already drink single-origin, skip. Everyone else: follow for the truth.",
+        "spoken": "If you already drink single-origin, skip. Everyone else: follow for the truth.",
+        "visual_direction": "Hold on Purica jar center frame. Slow subtle handheld sway. Finger remains on 'Pure Arabica' line. Background bokeh shifts slightly. Final 2 seconds: subtle zoom into label texture, then cut to black with @purepantryprovisions handle and https://p3online.in held on screen."
+      },
+      {
+        "scene": 6,
+        "type": "buy",
+        "duration_s": 6.0,
+        "on_screen": "Shop Purica at https://p3online.in | Purity Beans",
+        "spoken": "Shop Purica at p3online.in. Purity Beans.",
+        "visual_direction": "Clean title card on dark gradient: 'Purica Gourmet Arabica Granules' with price line '50g ₹329 · 100g ₹559'. Purity Beans logo and https://p3online.in URL below. Subtle fade in, hold 4s, fade out."
+      }
+    ],
+    "share_trigger": "Share this with someone who still thinks all instant coffee tastes the same.",
+    "product": "Purica",
+    "tagline": "Read the jar. Pure Arabica. Freeze‑dried. Zero chicory.",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.5,
+      "emotion_pull": 8.0,
+      "hook_strength": 8.0,
+      "brand_clarity": 8.5,
+      "overall": 8.3,
+      "verdict": "PASS",
+      "feedback": "The hook and value segments are strong, but the price overlay and the “skip if single‑origin” line interrupt the narrative flow and reduce the sense of continuous discovery. Tighten the price reveal to a quick glance (e.g., a subtle low‑light overlay at the bottom of the frame) so it doesn’t compete with the video’s rhythm, and replace the “skip” line with a more inclusive call (e.g., “Curious about pure instant coffee? Stick around and follow.”). This keeps the viewer engaged through the entire 35 seconds.",
+      "retention_audit": "Scene 4 – price overlay feels slightly jarring; consider a soft, low‑contrast label that blends with the marble background. Scene 5 – the “skip” statement creates an exclusionary tone; rewrite to invite all curious viewers instead of creating a barrier. All other scenes maintain strong continuity and realistic detail."
+    },
+    "viral_potential": {
+      "scores": {
+        "hook": 7.0,
+        "curiosity_gap": 8.0,
+        "relatability": 8.0,
+        "shareability": 8.0,
+        "comment_trigger": 8.0,
+        "format_fit": 7.0,
+        "follow_cta": 7.0
+      },
+      "overall": 7.57,
+      "weakest": [
+        "hook",
+        "format_fit",
+        "follow_cta"
+      ],
+      "feedback": "1) Hook should be a sharper, shorter shock that instantly cuts the viewer off – e.g., a quick line that says \"Everyone drinks instant coffee and nobody knows what’s inside.\" 2) Remove screen overlays that look like composites (the phone cart and price overlay). 3) Make the follow CTA a hard call‑to‑action with a visual cue (e.g., bright button or overlay) that says \"Double‑tap follow @purepantryprovisions.\"",
+      "better_hook": "Everyone thinks instant coffee is the same. Think again.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
     "publish_blocked": "ladder_exhausted",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Missing brand mention', 'Missing required brand facts']"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.57 < 8.0 (weakest: hook, format_fit, follow_cta). 1) Hook should be a sharper, shorter shock that instantly cuts the viewer off – e.g., a quick line that says \"Everyone drinks instant coffee and nobody knows what’s inside.\" 2) Remove screen overlays that look like composites (the phone cart and price overlay). 3) Make the follow CTA a hard call‑to‑action with a visual cue (e.g., bright button or overlay) that says \"Double‑tap follow @purepantryprovisions"
   },
   "_asset_metadata": [
     {
@@ -3703,7 +3787,7 @@
       {
         "attempt": 2,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 3,
@@ -3723,7 +3807,7 @@
       {
         "attempt": 6,
         "rung": "from_scratch",
-        "feedback": "brand: ['Missing brand mention', 'Missing website reference', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: ['Missing brand mention', 'Missing website reference', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 7,
@@ -3738,6 +3822,50 @@
       {
         "status": "exhausted",
         "reason": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...required brand facts']\"}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...t wooden desk setup.'}]}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...offee tastes the same.'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook 'Purity Beans reveals the bean. Ours name it.' is semantically opaque and fails the 2-second scroll-stop test — it raises confusion, not curiosity. A generic 'dark jar' comparison lacks specificity; viewers cannot verify the contrast, so trust isn't earned. Scene 3's dissolve macro is the o"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The hook is strong and brand-specific but Scene 3's 'Phone screen shows p3online.in product page with Purica 100g in cart' creates an attention drop: it forces the viewer to read a UI instead of watching the story. Replace with a lifestyle payoff — pour the dissolved coffee, show the crema, or a sat"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The short is competently scripted but its hook is somewhat generic: “Your instant coffee hides the bean…” could apply to any premium‑label brand, falling short of a distinct, betrayal‑style hook that stops the scroll instantly. The “skip if single‑origin” line in scene 5 narrows the audience too agg"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The opening line, while on point, is too generic for the Indian instant coffee market – many brands can claim they’re ‘pure’. This lowers hook_strength to 6 and trade‑offs in shareability. To boost attention, tighten the hook to a specific betrayal angle, e.g. “You’ve been drinking chicory in your c"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.57 < 8.0 (weakest: hook, format_fit, follow_cta). 1) Hook should be a sharper, shorter shock that instantly cuts the viewer off – e.g., a quick line that says \"Everyone drinks instant coffee and nobody knows what’s inside.\" 2) Remove screen overlays that look like composites (the phon"
       }
     ]
   },

@@ -771,7 +771,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 6,
+      "count": 7,
       "feedback": "brand: ['Missing brand mention']",
       "first_seen": "2026-10-04",
       "fix": "Fix the cited gate before the next draft.",
@@ -4425,8 +4425,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 30,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...y morning with coffee.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Empty content']",
+      "count": 32,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...offee tastes the same.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: ['Missing brand mention']",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "schema",
@@ -5237,8 +5237,8 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
-      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Pur...truth. Read the label.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: [\"product truth: FSSAI: never use '100%' in marketing",
+      "count": 2,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'pur...t wooden desk setup.'}]}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/value_error | brand: [\"product truth: FSSAI: never use '100%' in marketing",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "product_truth",
@@ -5331,6 +5331,76 @@
       "last_seen": "2026-10-23",
       "platform": "youtube",
       "reason": "schema: 1 validation error for YoutubeShortSchema scenes List should have at least 5 items after validation, not 4 [type=too_short, input_value=[{'scene': 1, 'type': 'ho...Hands sprinkling gran'}], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/too_short | br",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "The hook 'Purity Beans reveals the bean. Ours name it.' is semantically opaque and fails the 2-second scroll-stop test \u2014 it raises confusion, not curiosity. A generic 'dark jar' comparison lacks specificity; viewers cannot verify the contrast, so trust isn't earned. Scene 3's dissolve macro is the only visually arresting moment but arrives late (15s in). The price card in Scene 4 reads like a stat",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "youtube|yt_short|aesthetic|the hook 'purity beans reveals the bean. ours name it.' is semantically opaque and fails the 2-second scroll-stop test \u2014 it raises confusion, not curiosity. a generic 'dark jar' co",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "The hook 'Purity Beans reveals the bean. Ours name it.' is semantically opaque and fails the 2-second scroll-stop test \u2014 it raises confusion, not curiosity. A generic 'dark jar' comparison lacks specificity; viewers cannot verify the contrast, so trust isn't earned. Scene 3's dissolve macro is the o",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "The hook is strong and brand-specific but Scene 3's 'Phone screen shows p3online.in product page with Purica 100g in cart' creates an attention drop: it forces the viewer to read a UI instead of watching the story. Replace with a lifestyle payoff \u2014 pour the dissolved coffee, show the crema, or a satisfied first sip. Scene 4's price overlay reads like a catalog; integrate price into spoken line onl",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "youtube|yt_short|aesthetic|the hook is strong and brand-specific but scene 3's 'phone screen shows p3online.in product page with purica 100g in cart' creates an attention drop: it forces the viewer to read a",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "The hook is strong and brand-specific but Scene 3's 'Phone screen shows p3online.in product page with Purica 100g in cart' creates an attention drop: it forces the viewer to read a UI instead of watching the story. Replace with a lifestyle payoff \u2014 pour the dissolved coffee, show the crema, or a sat",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "The short is competently scripted but its hook is somewhat generic: \u201cYour instant coffee hides the bean\u2026\u201d could apply to any premium\u2011label brand, falling short of a distinct, betrayal\u2011style hook that stops the scroll instantly. The \u201cskip if single\u2011origin\u201d line in scene 5 narrows the audience too aggressively, creating a drop in attention. Also, the price reveal in scene 4 pulls focus from the prod",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "brand",
+      "id": "youtube|yt_short|brand|the short is competently scripted but its hook is somewhat generic: \u201cyour instant coffee hides the bean\u2026\u201d could apply to any premium\u2011label brand, falling short of a distinct, betra",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "The short is competently scripted but its hook is somewhat generic: \u201cYour instant coffee hides the bean\u2026\u201d could apply to any premium\u2011label brand, falling short of a distinct, betrayal\u2011style hook that stops the scroll instantly. The \u201cskip if single\u2011origin\u201d line in scene 5 narrows the audience too agg",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "The opening line, while on point, is too generic for the Indian instant coffee market \u2013 many brands can claim they\u2019re \u2018pure\u2019. This lowers hook_strength to 6 and trade\u2011offs in shareability. To boost attention, tighten the hook to a specific betrayal angle, e.g. \u201cYou\u2019ve been drinking chicory in your cup for years \u2013 here\u2019s why.\u201d That hooks instantly and makes the audience feel betrayed, raising hook_",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "product_truth",
+      "id": "youtube|yt_short|product_truth|the opening line, while on point, is too generic for the indian instant coffee market \u2013 many brands can claim they\u2019re \u2018pure\u2019. this lowers hook_strength to 6 and trade\u2011offs in share",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "The opening line, while on point, is too generic for the Indian instant coffee market \u2013 many brands can claim they\u2019re \u2018pure\u2019. This lowers hook_strength to 6 and trade\u2011offs in shareability. To boost attention, tighten the hook to a specific betrayal angle, e.g. \u201cYou\u2019ve been drinking chicory in your c",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.57 < 8.0 (weakest: hook, format_fit, follow_cta). 1) Hook should be a sharper, shorter shock that instantly cuts the viewer off \u2013 e.g., a quick line that says \"Everyone drinks instant coffee and nobody knows what\u2019s inside.\" 2) Remove screen overlays that look like composites (the phone cart and price overlay). 3) Make the follow CTA a hard call\u2011to\u2011action with a visual cue (e.g., bri",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|viral: score 7.57 < 8.0 (weakest: hook, format_fit, follow_cta). 1) hook should be a sharper, shorter shock that instantly cuts the viewer off \u2013 e.g., a quick line that says \"every",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "viral: score 7.57 < 8.0 (weakest: hook, format_fit, follow_cta). 1) Hook should be a sharper, shorter shock that instantly cuts the viewer off \u2013 e.g., a quick line that says \"Everyone drinks instant coffee and nobody knows what\u2019s inside.\" 2) Remove screen overlays that look like composites (the phon",
       "stage": "generation",
       "status": "gate_holding"
     }
