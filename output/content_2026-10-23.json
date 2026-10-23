@@ -1418,77 +1418,93 @@
     "viral_readiness_score": 69.0
   },
   "yt_short": {
-    "featured_product": "Purica Gourmet Arabica Granules (50g / 100g)",
-    "objective": "Discovery",
-    "primary_cta": "Shop at https://p3online.in",
-    "success_metric": "Watch time over 85% and saves",
-    "platform": "YouTube Shorts",
-    "asset_id": "yt_short_purica_01",
-    "audio": "Lo‑fi ambient background hum with the gentle clink of a glass jar on a wooden desk",
-    "brand_mention": "Purity Beans Purica",
-    "caption": "Most coffee lovers don’t know why freeze‑dried keeps aroma locked inside crystal, preventing loss before you brew. Purity Beans Purica is pure Arabica crafted to keep every note. Read the jar. Discover more at https://p3online.in",
-    "chosen_hook": "Why most instant coffee loses its aroma the second you open the jar",
-    "comment_trigger": "Comment AROMA if you prefer freeze‑dried coffee over regular granules",
-    "cta": "Shop at https://p3online.in",
-    "funnel_objective": "Discovery and Education",
-    "growth_plan": "Drive high watch completion and save rates through coffee science education",
-    "hashtags": "#freezeDriedCoffee #pureCoffee #coffeeEducation #purityBeans #arabicaCoffee",
-    "hook": "Why most instant coffee loses its aroma the second you open the jar",
-    "hook_strategy": "Curiosity Gap",
-    "hook_text": "Why most instant coffee loses its aroma the second you open the jar",
+    "featured_product": "Purica Gourmet Arabica Granules",
+    "objective": "brand_awareness",
+    "primary_cta": "Follow @purepantryprovisions",
+    "success_metric": "Watch time > 75%, saves > 200, profile visits > 500 in first 24h",
+    "platform": "youtube_shorts",
+    "asset_id": "yt_short_purica_001",
+    "audio": "Soft ambient kitchen hum, gentle spoon clink, subtle steam hiss",
+    "brand_mention": "Purity Beans",
+    "caption": "Purity Beans Purica is freeze-dried pure Arabica with zero chicory. Brew tip: water at 85°C, one level spoon, wait 30 seconds before stirring. Taste the difference tomorrow. Follow @purepantryprovisions | Shop https://p3online.in",
+    "chosen_hook": "revelation",
+    "comment_trigger": "Comment ARABICA if you will try this brew tip tomorrow.",
+    "cta": "Follow @purepantryprovisions | Shop https://p3online.in",
+    "funnel_objective": "awareness_to_consideration",
+    "growth_plan": "Post at 7 AM IST. Pin comment with product link. Reply to every comment in first hour. Share to Stories with 'Swipe Up' sticker. Boost to coffee enthusiasts 25-40 in Tier 1 cities for 48h.",
+    "hashtags": "#PurityBeans #PureCoffee #FreezeDried #Arabica #ZeroChicory #CleanLabel #IndianCoffeeBrand #MorningRitual #CoffeeLovers #p3online",
+    "hook": "Your instant coffee tastes flat because the water is too hot. Purica fixes this.",
+    "hook_strategy": "Revelation / Cognitive Dissonance — exposes a common brewing mistake that ruins Arabica flavor in two seconds.",
+    "hook_text": "Your instant coffee tastes flat because the water is too hot. Purica fixes this.",
     "ladder_exhausted": true,
-    "product": "Purica Gourmet Arabica Granules",
-    "psychology_frame": "sensory",
+    "product": "purica",
+    "psychology_frame": "revelation",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Documentary‑style macro breakdown of coffee crystal structures",
-    "retention_audit": "Scenes cut every 4 seconds to maintain high visual engagement and prevent drop‑off",
-    "retention_tactic": "Rapid macro angle shifts and side‑by‑side visual comparisons",
-    "save_trigger": "Save this short to understand how freeze‑drying works before your next coffee purchase",
+    "reel_inspiration": "Chef's Table opening sequence — macro ingredient beauty, slow motion reverence, human hands in ritual.",
+    "retention_audit": "Frame 1: counter-intuitive claim stops scroll. Frame 2: visual proof of correct technique. Frame 3: process transparency builds trust. Frame 4: sensory payoff creates desire. Frame 5: clear CTA converts intent. Frame 6: follow nudge.",
+    "retention_tactic": "Visual contrast every 3 seconds: boiling vs optimal temp, pour vs pause, stir vs settle. Audio layers shift at each beat.",
+    "save_trigger": "Save this brew tip before your next coffee purchase.",
     "scenes": [
       {
-        "type": "Scene",
-        "duration_s": 4,
-        "visual_direction": "center",
-        "on_screen": "Why most instant coffee loses its aroma the second you open the jar",
-        "spoken": "Ever wonder why instant coffee feels flat even before water touches it?"
+        "scene": 1,
+        "type": "hook",
+        "duration_sec": 3,
+        "duration_s": 3,
+        "on_screen": "Extreme close-up: boiling water (100°C) pouring violently over instant coffee in a cup. Coffee scorches, turns dark instantly, bitter steam rises. Text overlay: 'Boiling water burns Arabica.'",
+        "spoken": "Your instant coffee tastes flat because the water is too hot. Purica fixes this.",
+        "visual_direction": "Handheld macro, 85mm equivalent. High contrast. Cold blue-white lighting. Steam blurs lens slightly."
       },
       {
-        "type": "Scene",
+        "scene": 2,
+        "type": "curiosity",
+        "duration_sec": 4,
         "duration_s": 4,
-        "visual_direction": "left",
-        "on_screen": "High‑heat drying strips aroma",
-        "spoken": "Commercial blends often use high‑heat drying that drives delicate flavor molecules into the air before you brew."
+        "on_screen": "Hard cut. Warm amber glow. Purity Beans Purica jar (50g) on dark marble. Kettle pours water at 85°C — gentle steam, no violent boil. One level spoon of Purica granules added. Text overlay: '85°C. One level spoon. Wait 30s.'",
+        "spoken": "Purica is freeze-dried pure Arabica. Water at 85°C. One level spoon. Wait thirty seconds before stirring.",
+        "visual_direction": "Locked-off, 85mm f/1.8. Shallow depth. Warm gold rim light on jar. Gentle steam catches backlight. Photorealistic."
       },
       {
-        "type": "Scene",
-        "duration_s": 4,
-        "visual_direction": "right",
-        "on_screen": "Freeze‑drying keeps aroma inside",
-        "spoken": "Purica is freeze‑dried, locking aroma deep inside each crystalline granule through gentle sublimation."
+        "scene": 3,
+        "type": "value",
+        "duration_sec": 6,
+        "duration_s": 6,
+        "on_screen": "Slow macro: granules bloom at 85°C. Aromatic oils swirl on surface — visible micro-bubbles expanding. Timer graphic counts 30 seconds. Hand stirs once, slow. Natural caramel color deepens.",
+        "spoken": "Freeze-drying locks in the oils. The aroma. The natural caramel and chocolate notes Arabica is born with. The pause lets them open.",
+        "visual_direction": "Macro slow-mo, 120fps. Side light catches oil ribbons. Focus pulls from bloom to surface swirl. ASMR audio: pour, bloom, stir."
       },
       {
-        "type": "Scene",
-        "duration_s": 4,
-        "visual_direction": "center",
-        "on_screen": "Zero chicory, pure Arabica",
-        "spoken": "No chicory, no fillers—just pure Arabica, every scoop delivering the intended taste."
+        "scene": 4,
+        "type": "trust",
+        "duration_sec": 5,
+        "duration_s": 5,
+        "on_screen": "Person lifts cup. First sip. Eyes close slightly — genuine pause. Exhale. Jar in background, slightly defocused. Morning window light hits their face. Label readable: 'Freeze-dried pure Arabica. 0% chicory.'",
+        "spoken": "One sip and you know. This is what coffee is supposed to taste like.",
+        "visual_direction": "Medium close-up, 50mm. Natural window light. Real skin texture. Micro-expression capture. No rush."
       },
       {
-        "type": "Scene",
+        "scene": 5,
+        "type": "cta",
+        "duration_sec": 4,
         "duration_s": 4,
-        "visual_direction": "center",
-        "on_screen": "Read the jar, taste the difference",
-        "spoken": "Open the jar, read the label, and feel the difference. Shop at https://p3online.in"
+        "on_screen": "Purica jar center frame. Clean text overlay: 'Purica Gourmet Arabica — Freeze-dried. Zero chicory. ₹329 / 50g | ₹559 / 100g'\n\n'Follow @purepantryprovisions'\n'Shop p3online.in'",
+        "spoken": "Purity Beans. Pure coffee. Read the jar.",
+        "visual_direction": "Slow push-in. Warm product lighting. Text fade-in staggered. Hold final frame 2 seconds."
+      },
+      {
+        "scene": 6,
+        "type": "follow",
+        "duration_sec": 3,
+        "duration_s": 3
       }
     ],
-    "script": "Ever wonder why ordinary instant coffee smells flat before hot water even touches it? Standard manufacturing uses high heat that strips away delicate aromatic compounds. Freeze-drying locks flavor deep inside pure Arabica crystals through gentle sublimation. No fillers, no chicory—just pure gourmet coffee retaining its natural notes. Read the jar and taste the difference. Follow @purepantryprovisions and visit p3online.in.",
-    "share_trigger": "Share this with someone who loves a truly aromatic cup of morning coffee.",
+    "script": "Most instant coffee loses its soul in high-heat manufacturing. Purica does not. Purica is freeze-dried pure Arabica. Nothing removed. Nothing added. Freeze-drying locks in the oils. The aroma. The natural caramel and chocolate notes Arabica is born with. One sip and you know. This is what coffee is supposed to taste like. Purity Beans. Pure coffee. Read the jar.",
+    "share_trigger": "Share with the coffee purist in your life who deserves better than spray-dried dust.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "editorial_error": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'type': 'Scene', 'durati...fore water touches it?'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene   Field required [type=missing, input_value={'type': 'Scene', 'durati...e air before you brew.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.2.scene   Field required [type=missi | brand: ['Missing brand mention']",
-    "type": "Scene",
+    "type": "youtube_short",
+    "editorial_error": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen   Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken   Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.visual_direction   Field requ",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 5 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'type': 'Scene', 'durati...fore water touches it?'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene   Field required [type=missing, input_value={'type': 'Scene', 'durati...e air before you brew.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.2"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen   Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken   Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing sce"
   },
   "_asset_metadata": [
     {
@@ -3348,6 +3364,50 @@
       {
         "status": "exhausted",
         "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'type': 'Scene', 'durati...fore water touches it?'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene   Field required [type=miss"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'type': 'Scene', 'durati...fore water touches it?'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene   Field required [type=miss"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene   Field required [type=missing, input_value={'type': 'Scene', 'durati...fore water touches it?'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene   Field required [type=miss"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s   Field required [type=missing, input_value={'scene': 1, 'type': 'hoo...d blue-white lighting.'}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s   Field required "
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema scenes.5.spoken   String should have at least 1 character [type=string_too_short, input_value='', input_type=str]     For further information visit https://errors.pydantic.dev/2.14/v/string_too_short"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema scenes.5.spoken   String should have at least 1 character [type=string_too_short, input_value='', input_type=str]     For further information visit https://errors.pydantic.dev/2.14/v/string_too_short"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen   Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken   Field required [type"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen   Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken   Field required [type"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen   Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken   Field required [type"
+      },
+      {
+        "status": "exhausted",
+        "reason": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen   Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict]     For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken   Field required [type"
       }
     ]
   },

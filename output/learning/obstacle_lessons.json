@@ -4649,7 +4649,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 2,
+      "count": 4,
       "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'type': 'Scene', 'durati...fore water touches it?'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene Field required [type=missing, input_value={'type': 'Scene', 'durati...e air before you brew.'}, input_type=dict] For furt",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -4673,6 +4673,62 @@
       "last_seen": "2026-10-23",
       "platform": "youtube",
       "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.scene Field required [type=missing, input_value={'type': 'Scene', 'durati...fore water touches it?'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.scene Field required [type=miss",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s Field required [type=missing, input_value={'scene': 1, 'type': 'hoo...d blue-white lighting.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s Field required [type=missing, input_value={'scene': 2, 'type': 'cur...light. Photorealistic.'}, input_type=dict]",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 5 validation errors for youtubeshortschema scenes.0.duration_s field required [type=missing, input_value={'scene': 1, 'type': 'hoo...d blue-white lighting.'}, input_type=di",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 5 validation errors for YoutubeShortSchema scenes.0.duration_s Field required [type=missing, input_value={'scene': 1, 'type': 'hoo...d blue-white lighting.'}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.1.duration_s Field required",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 2,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema scenes.5.spoken String should have at least 1 character [type=string_too_short, input_value='', input_type=str] For further information visit https://errors.pydantic.dev/2.14/v/string_too_short",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 1 validation error for youtubeshortschema scenes.5.spoken string should have at least 1 character [type=string_too_short, input_value='', input_type=str] for further inform",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 1 validation error for YoutubeShortSchema scenes.5.spoken String should have at least 1 character [type=string_too_short, input_value='', input_type=str] For further information visit https://errors.pydantic.dev/2.14/v/string_too_short",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 3,
+      "feedback": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict] For",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 3 validation errors for youtubeshortschema scenes.5.on_screen field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dic",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken Field required [type",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict] For",
+      "first_seen": "2026-10-23",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|schema: 3 validation errors for youtubeshortschema scenes.5.on_screen field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dic",
+      "label": "yt_short",
+      "last_seen": "2026-10-23",
+      "platform": "youtube",
+      "reason": "schema: 3 validation errors for YoutubeShortSchema scenes.5.on_screen Field required [type=missing, input_value={'scene': 6, 'type': 'fol...ec': 3, 'duration_s': 3}, input_type=dict] For further information visit https://errors.pydantic.dev/2.14/v/missing scenes.5.spoken Field required [type",
       "stage": "generation",
       "status": "gate_holding"
     }
