@@ -340,8 +340,8 @@ _EVERGREEN: list[dict] = [
     },
     {
         "type": "carousel",
-        "hook": "Why your coffee loses 40% of its aroma before you reach the bottom of the jar",
-        "title": "Why your coffee loses 40% of its aroma before you reach the bottom of the jar",
+        "hook": "Why your instant coffee loses most of its aroma before you finish the jar",
+        "title": "Why your instant coffee loses most of its aroma before you finish the jar",
         "slides": [
             {"slide": 1, "heading": "An open lid",
              "body": "Aroma leaves the moment the jar is open. Close it between cups.",
