@@ -25,6 +25,9 @@ def scene_contract() -> str:
         f"{fields}. Do not omit any of them. Do not leave any of them as an empty string. "
         "scene is an integer, duration_s is a number of seconds, and on_screen, spoken, "
         "and visual_direction are non-empty strings. "
+        "TOP-LEVEL SHAPE: the Short is valid only with (hook, script, cta) or "
+        "(product, tagline, and at least 5 scenes). The product field is named product, "
+        "not featured_product. When you return scenes, tagline is required. "
         "Example of one complete scene object:\n"
         + json.dumps(_SCENE_EXAMPLE, indent=2)
     )
