@@ -1961,7 +1961,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 5,
+      "count": 7,
       "feedback": "brand: ['Missing website reference']",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -13259,7 +13259,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 2,
       "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a myth-buster (one common coffee myth, debunked with a verifiable fact). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no 'buy', 'shop', 'order' or discount language in the body. The product appears ONLY as a soft end card (j",
       "first_seen": "2026-10-24",
       "fix": "",
@@ -13465,6 +13465,90 @@
       "last_seen": "2026-10-24",
       "platform": "youtube",
       "reason": "The hook 'Your current blend hides the split. Ours doesn't.' is generic and could apply to any transparent brand \u2014 it lacks the specificity that makes a viewer feel personally targeted. Scene 2's 'competing generic jars in blurred background' is a weak visual trope; AI-generated 'blurred jars' read",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). The hook feels slightly conversational rather than a thumb-stopping pattern interrupt. Avoid generic claims about 'hiding the split' and instead focus on the direct, transparent 70/30 ratio revelation. Ensure the visual direction strictly adheres to realistic macro-photography of the exact Ultra Blend jar without relying on fake co",
+      "first_seen": "2026-10-24",
+      "fix": "",
+      "gate": "generic_hook",
+      "id": "youtube|yt_short|generic_hook|viral: score 6.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). the hook feels slightly conversational rather than a thumb-stopping pattern interrupt. avoid generic claims about",
+      "label": "yt_short",
+      "last_seen": "2026-10-24",
+      "platform": "youtube",
+      "reason": "viral: score 6.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). The hook feels slightly conversational rather than a thumb-stopping pattern interrupt. Avoid generic claims about 'hiding the split' and instead focus on the direct, transparent 70/30 ratio revelation. Ensure the visual direction str",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.0 < 8.0 (weakest: hook, comment_trigger). The opening line is a bit academic and dry for a short-form video hook; it reads like a textbook sentence rather than an instant pattern interrupt. To lift the score, make the hook focus on an everyday observation or an unexpected truth about morning coffee preparation. The comment trigger also relies on a generic keyword command rather than",
+      "first_seen": "2026-10-24",
+      "fix": "",
+      "gate": "generic_hook",
+      "id": "youtube|yt_short|generic_hook|viral: score 6.0 < 8.0 (weakest: hook, comment_trigger). the opening line is a bit academic and dry for a short-form video hook; it reads like a textbook sentence rather than an in",
+      "label": "yt_short",
+      "last_seen": "2026-10-24",
+      "platform": "youtube",
+      "reason": "viral: score 6.0 < 8.0 (weakest: hook, comment_trigger). The opening line is a bit academic and dry for a short-form video hook; it reads like a textbook sentence rather than an instant pattern interrupt. To lift the score, make the hook focus on an everyday observation or an unexpected truth about",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema scenes List should have at least 5 items after validation, not 0 [type=too_short, input_value=[], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/too_short",
+      "first_seen": "2026-10-24",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 1 validation error for youtubeshortschema scenes list should have at least 5 items after validation, not 0 [type=too_short, input_value=[], input_type=list] for further inf",
+      "label": "yt_short",
+      "last_seen": "2026-10-24",
+      "platform": "youtube",
+      "reason": "schema: 1 validation error for YoutubeShortSchema scenes List should have at least 5 items after validation, not 0 [type=too_short, input_value=[], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/too_short",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.86 < 8.0 (weakest: relatability). The piece hits a strong note on transparency and label reading, meeting all product rules for Ultra Blend (correctly stating 70% coffee and 30% chicory). To elevate relatability further, tie the action of reading the label directly to a common Indian household coffee moment (like checking the kitchen shelf before the morning rush). Suggested hook: G",
+      "first_seen": "2026-10-24",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.86 < 8.0 (weakest: relatability). the piece hits a strong note on transparency and label reading, meeting all product rules for ultra blend (correctly stating 70% co",
+      "label": "yt_short",
+      "last_seen": "2026-10-24",
+      "platform": "youtube",
+      "reason": "viral: score 7.86 < 8.0 (weakest: relatability). The piece hits a strong note on transparency and label reading, meeting all product rules for Ultra Blend (correctly stating 70% coffee and 30% chicory). To elevate relatability further, tie the action of reading the label directly to a common Indian",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned FOLLOWER GROWTH objective is primarily promotional/commercial copy \u2014 selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a ritual (a calm, relatable daily coffee moment the viewer will recognise). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no 'buy', 'shop', 'ord",
+      "first_seen": "2026-10-24",
+      "fix": "",
+      "gate": "salesy_follow",
+      "id": "youtube|yt_short|salesy_follow|rejected as sales-led (objective compliance: asset assigned follower growth objective is primarily promotional/commercial copy \u2014 selling to strangers wastes viral reach). build a b",
+      "label": "yt_short",
+      "last_seen": "2026-10-24",
+      "platform": "youtube",
+      "reason": "REJECTED AS SALES-LED (objective compliance: Asset assigned FOLLOWER GROWTH objective is primarily promotional/commercial copy \u2014 selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a ritual (a calm, relatable daily coffee moment the viewer will recognise).",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "REJECTED AS SALES-LED (The asset fails the growth-track mandate by featuring the Ultra Blend jar and a hard purchase CTA with the website link, which violates the rule that growth content must never show the product or include buying CTAs. The hook is generic and lacks a curiosity gap or betrayal trigger; 'wet cardboard' is a weak sensory descriptor that does not stop the scroll. The script pivots",
+      "first_seen": "2026-10-24",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|rejected as sales-led (the asset fails the growth-track mandate by featuring the ultra blend jar and a hard purchase cta with the website link, which violates the rule that growth ",
+      "label": "yt_short",
+      "last_seen": "2026-10-24",
+      "platform": "youtube",
+      "reason": "REJECTED AS SALES-LED (The asset fails the growth-track mandate by featuring the Ultra Blend jar and a hard purchase CTA with the website link, which violates the rule that growth content must never show the product or include buying CTAs. The hook is generic and lacks a curiosity gap or betrayal tr",
       "stage": "generation",
       "status": "gate_holding"
     }
