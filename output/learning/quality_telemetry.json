@@ -10312,5 +10312,963 @@
       }
     ],
     "emergency": false
+  },
+  {
+    "ts": "2026-10-24T03:59:16",
+    "date": "2026-10-24",
+    "day_number": 296,
+    "generation_ms": 4854564,
+    "validation_ms": 0,
+    "publish_ms": 2436,
+    "assets_generated": 7,
+    "assets_valid": 1,
+    "throughput": 7,
+    "avg_editorial_score": 6.55,
+    "min_editorial_score": 4.6,
+    "max_editorial_score": 8.5,
+    "avg_confidence": 0.5,
+    "schema_failure_rate": 0.0,
+    "brand_failure_rate": 0.0,
+    "editorial_reject_rate": 0.143,
+    "retry_count": 0,
+    "providers_used": [
+      {
+        "label": "carousel",
+        "provider": "gemini",
+        "prompt_tokens": 17048,
+        "completion_tokens": 1149
+      },
+      {
+        "label": "reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 17877,
+        "completion_tokens": 1597
+      },
+      {
+        "label": "linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 16006,
+        "completion_tokens": 514
+      },
+      {
+        "label": "growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 14068,
+        "completion_tokens": 2500
+      },
+      {
+        "label": "instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 17027,
+        "completion_tokens": 666
+      },
+      {
+        "label": "reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 18393,
+        "completion_tokens": 1800
+      },
+      {
+        "label": "yt_short",
+        "provider": "nvidia",
+        "prompt_tokens": 16039,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "stories",
+        "provider": "nvidia",
+        "prompt_tokens": 14640,
+        "completion_tokens": 463
+      },
+      {
+        "label": "facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 15937,
+        "completion_tokens": 404
+      },
+      {
+        "label": "threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 15942,
+        "completion_tokens": 174
+      },
+      {
+        "label": "threads_post_repair_1",
+        "provider": "nvidia",
+        "prompt_tokens": 15213,
+        "completion_tokens": 179
+      },
+      {
+        "label": "reel_1",
+        "provider": "groq",
+        "prompt_tokens": 6313,
+        "completion_tokens": 1800
+      },
+      {
+        "label": "carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 17552,
+        "completion_tokens": 1272
+      },
+      {
+        "label": "reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 18387,
+        "completion_tokens": 1800
+      },
+      {
+        "label": "linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 16509,
+        "completion_tokens": 687
+      },
+      {
+        "label": "instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 17027,
+        "completion_tokens": 747
+      },
+      {
+        "label": "reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 18393,
+        "completion_tokens": 1800
+      },
+      {
+        "label": "stories",
+        "provider": "nvidia",
+        "prompt_tokens": 14640,
+        "completion_tokens": 469
+      },
+      {
+        "label": "yt_short",
+        "provider": "nvidia",
+        "prompt_tokens": 16039,
+        "completion_tokens": 979
+      },
+      {
+        "label": "threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 15942,
+        "completion_tokens": 165
+      },
+      {
+        "label": "facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 15937,
+        "completion_tokens": 372
+      },
+      {
+        "label": "carousel",
+        "provider": "groq",
+        "prompt_tokens": 5938,
+        "completion_tokens": 2200
+      },
+      {
+        "label": "reel_1",
+        "provider": "groq",
+        "prompt_tokens": 6313,
+        "completion_tokens": 1726
+      },
+      {
+        "label": "instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 17027,
+        "completion_tokens": 660
+      },
+      {
+        "label": "linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 16509,
+        "completion_tokens": 733
+      },
+      {
+        "label": "reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 18393,
+        "completion_tokens": 1800
+      },
+      {
+        "label": "growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 14068,
+        "completion_tokens": 2500
+      },
+      {
+        "label": "stories",
+        "provider": "nvidia",
+        "prompt_tokens": 14640,
+        "completion_tokens": 463
+      },
+      {
+        "label": "threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 15942,
+        "completion_tokens": 193
+      },
+      {
+        "label": "facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 15937,
+        "completion_tokens": 308
+      },
+      {
+        "label": "yt_short",
+        "provider": "nvidia",
+        "prompt_tokens": 16039,
+        "completion_tokens": 1102
+      },
+      {
+        "label": "threads_post_repair_1",
+        "provider": "nvidia",
+        "prompt_tokens": 15213,
+        "completion_tokens": 131
+      },
+      {
+        "label": "video_prompts",
+        "provider": "groq",
+        "prompt_tokens": 4500,
+        "completion_tokens": 3500
+      },
+      {
+        "label": "fresh_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 11094,
+        "completion_tokens": 1175
+      },
+      {
+        "label": "fresh_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 10972,
+        "completion_tokens": 1243
+      },
+      {
+        "label": "fresh_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 11105,
+        "completion_tokens": 1408
+      },
+      {
+        "label": "fresh_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 11177,
+        "completion_tokens": 1210
+      },
+      {
+        "label": "fresh_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 11177,
+        "completion_tokens": 1269
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 7279,
+        "completion_tokens": 424
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12390,
+        "completion_tokens": 1124
+      },
+      {
+        "label": "fresh_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 10931,
+        "completion_tokens": 1107
+      },
+      {
+        "label": "editorial_reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 7823,
+        "completion_tokens": 517
+      },
+      {
+        "label": "regen_reel_2",
+        "provider": "groq",
+        "prompt_tokens": 6365,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_reel_2",
+        "provider": "groq",
+        "prompt_tokens": 6769,
+        "completion_tokens": 800
+      },
+      {
+        "label": "regen_reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 12696,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "fresh_reel_2",
+        "provider": "groq",
+        "prompt_tokens": 6326,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "fresh_reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 11065,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "fresh_reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 11065,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 7279,
+        "completion_tokens": 464
+      },
+      {
+        "label": "regen_reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 12586,
+        "completion_tokens": 874
+      },
+      {
+        "label": "editorial_reel_2",
+        "provider": "nvidia",
+        "prompt_tokens": 7563,
+        "completion_tokens": 537
+      },
+      {
+        "label": "regen_reel_2",
+        "provider": "groq",
+        "prompt_tokens": 6481,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_reel_2",
+        "provider": "groq",
+        "prompt_tokens": 6807,
+        "completion_tokens": 630
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12788,
+        "completion_tokens": 1240
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12690,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12690,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12780,
+        "completion_tokens": 1486
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12764,
+        "completion_tokens": 1236
+      },
+      {
+        "label": "editorial_carousel",
+        "provider": "groq",
+        "prompt_tokens": 6800,
+        "completion_tokens": 800
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12259,
+        "completion_tokens": 1091
+      },
+      {
+        "label": "editorial_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 7699,
+        "completion_tokens": 399
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12290,
+        "completion_tokens": 1108
+      },
+      {
+        "label": "regen_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12502,
+        "completion_tokens": 1349
+      },
+      {
+        "label": "editorial_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7775,
+        "completion_tokens": 661
+      },
+      {
+        "label": "regen_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 13246,
+        "completion_tokens": 1359
+      },
+      {
+        "label": "editorial_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7830,
+        "completion_tokens": 416
+      },
+      {
+        "label": "viral_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7721,
+        "completion_tokens": 348
+      },
+      {
+        "label": "regen_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 13342,
+        "completion_tokens": 1373
+      },
+      {
+        "label": "regen_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12836,
+        "completion_tokens": 1296
+      },
+      {
+        "label": "regen_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12822,
+        "completion_tokens": 1423
+      },
+      {
+        "label": "editorial_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7826,
+        "completion_tokens": 406
+      },
+      {
+        "label": "editorial_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7023,
+        "completion_tokens": 405
+      },
+      {
+        "label": "regen_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12212,
+        "completion_tokens": 400
+      },
+      {
+        "label": "editorial_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7496,
+        "completion_tokens": 443
+      },
+      {
+        "label": "regen_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12356,
+        "completion_tokens": 473
+      },
+      {
+        "label": "editorial_instagram_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7607,
+        "completion_tokens": 443
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7534,
+        "completion_tokens": 473
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 11899,
+        "completion_tokens": 813
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7698,
+        "completion_tokens": 502
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 11834,
+        "completion_tokens": 1302
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7695,
+        "completion_tokens": 511
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 11828,
+        "completion_tokens": 796
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7700,
+        "completion_tokens": 497
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 11906,
+        "completion_tokens": 797
+      },
+      {
+        "label": "fresh_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10294,
+        "completion_tokens": 572
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 6964,
+        "completion_tokens": 475
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 11354,
+        "completion_tokens": 521
+      },
+      {
+        "label": "fresh_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10298,
+        "completion_tokens": 510
+      },
+      {
+        "label": "fresh_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10461,
+        "completion_tokens": 297
+      },
+      {
+        "label": "editorial_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7086,
+        "completion_tokens": 394
+      },
+      {
+        "label": "regen_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10874,
+        "completion_tokens": 273
+      },
+      {
+        "label": "fresh_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10455,
+        "completion_tokens": 285
+      },
+      {
+        "label": "fresh_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10455,
+        "completion_tokens": 303
+      },
+      {
+        "label": "editorial_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7099,
+        "completion_tokens": 420
+      },
+      {
+        "label": "regen_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10843,
+        "completion_tokens": 278
+      },
+      {
+        "label": "fresh_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10439,
+        "completion_tokens": 355
+      },
+      {
+        "label": "fresh_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10417,
+        "completion_tokens": 341
+      },
+      {
+        "label": "editorial_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7158,
+        "completion_tokens": 419
+      },
+      {
+        "label": "regen_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 10893,
+        "completion_tokens": 312
+      },
+      {
+        "label": "editorial_facebook_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7155,
+        "completion_tokens": 423
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7023,
+        "completion_tokens": 497
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 11430,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7833,
+        "completion_tokens": 497
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12358,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7835,
+        "completion_tokens": 800
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7835,
+        "completion_tokens": 672
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12366,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7811,
+        "completion_tokens": 672
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 12037,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "groq",
+        "prompt_tokens": 6767,
+        "completion_tokens": 800
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12340,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "groq",
+        "prompt_tokens": 6809,
+        "completion_tokens": 800
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12285,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7852,
+        "completion_tokens": 592
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12409,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7890,
+        "completion_tokens": 655
+      },
+      {
+        "label": "editorial_sales_story",
+        "provider": "groq",
+        "prompt_tokens": 6627,
+        "completion_tokens": 564
+      },
+      {
+        "label": "viral_sales_story",
+        "provider": "nvidia",
+        "prompt_tokens": 6740,
+        "completion_tokens": 375
+      },
+      {
+        "label": "editorial_sales_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 7059,
+        "completion_tokens": 560
+      },
+      {
+        "label": "viral_sales_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 6765,
+        "completion_tokens": 416
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12859,
+        "completion_tokens": 1155
+      },
+      {
+        "label": "regen_growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 12581,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12788,
+        "completion_tokens": 1492
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12157,
+        "completion_tokens": 592
+      },
+      {
+        "label": "blog_outline",
+        "provider": "nvidia",
+        "prompt_tokens": 6177,
+        "completion_tokens": 165
+      },
+      {
+        "label": "blog_section_s0",
+        "provider": "nvidia",
+        "prompt_tokens": 8234,
+        "completion_tokens": 236
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "nvidia",
+        "prompt_tokens": 8235,
+        "completion_tokens": 196
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "nvidia",
+        "prompt_tokens": 8286,
+        "completion_tokens": 236
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "nvidia",
+        "prompt_tokens": 8286,
+        "completion_tokens": 249
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "nvidia",
+        "prompt_tokens": 8232,
+        "completion_tokens": 264
+      },
+      {
+        "label": "blog_section_s3",
+        "provider": "nvidia",
+        "prompt_tokens": 8233,
+        "completion_tokens": 218
+      },
+      {
+        "label": "blog_section_s4",
+        "provider": "nvidia",
+        "prompt_tokens": 8234,
+        "completion_tokens": 212
+      },
+      {
+        "label": "blog_section_s5",
+        "provider": "nvidia",
+        "prompt_tokens": 8233,
+        "completion_tokens": 232
+      },
+      {
+        "label": "blog_section_s5",
+        "provider": "nvidia",
+        "prompt_tokens": 8284,
+        "completion_tokens": 252
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12875,
+        "completion_tokens": 1455
+      },
+      {
+        "label": "regen_growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 12560,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12779,
+        "completion_tokens": 1204
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12139,
+        "completion_tokens": 621
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12860,
+        "completion_tokens": 1377
+      },
+      {
+        "label": "regen_growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 12630,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12781,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "groq",
+        "prompt_tokens": 6575,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12860,
+        "completion_tokens": 1409
+      },
+      {
+        "label": "regen_growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 12634,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12769,
+        "completion_tokens": 1285
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 12256,
+        "completion_tokens": 1422
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12871,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 12659,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12925,
+        "completion_tokens": 1384
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12907,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 12634,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "nvidia",
+        "prompt_tokens": 12806,
+        "completion_tokens": 1396
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12922,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 12634,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12930,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "regen_growth_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 12630,
+        "completion_tokens": 1500
+      }
+    ],
+    "emergency": false
   }
 ]

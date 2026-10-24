@@ -5578,6 +5578,46 @@
       "url": "",
       "verification_method": "",
       "verified_at": null
+    },
+    "2026-10-24|generate|threads|pb_9254549f59": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-24",
+      "content_id": "pb_9254549f59",
+      "day_number": 296,
+      "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+      "history": [
+        {
+          "at": "2026-10-24T03:59:14+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-24T03:59:16+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-24T03:59:14+00:00",
+      "last_result": {
+        "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+        "success": false
+      },
+      "next_retry_at": "2026-10-24T03:59:16+00:00",
+      "platform": "threads",
+      "published": false,
+      "remote_id": "",
+      "slot": "generate",
+      "status": "FAILED",
+      "updated_at": "2026-10-24T03:59:16+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
     }
   },
   "version": 1
