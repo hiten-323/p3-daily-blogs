@@ -5693,6 +5693,48 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-24T10:41:25+00:00"
     },
+    "2026-10-24|generate|youtube|pb_9254549f59": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-24",
+      "content_id": "pb_9254549f59",
+      "day_number": 296,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-24T11:26:35+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-24T11:26:39+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "0zyE-tF1rmQ",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.youtube.com/shorts/0zyE-tF1rmQ",
+          "verification_method": "youtube_oembed"
+        }
+      ],
+      "last_attempt_at": "2026-10-24T11:26:35+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-24T11:26:39+00:00",
+      "next_retry_at": null,
+      "platform": "youtube",
+      "published": true,
+      "remote_id": "0zyE-tF1rmQ",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-24T11:26:38+00:00",
+      "url": "https://www.youtube.com/shorts/0zyE-tF1rmQ",
+      "verification_detail": "public video confirmed by oEmbed",
+      "verification_method": "youtube_oembed",
+      "verified_at": "2026-10-24T11:26:39+00:00"
+    },
     "2026-10-24|morning|facebook|pb_9254549f59": {
       "asset": "",
       "attempt_count": 1,
@@ -5821,7 +5863,7 @@
     },
     "2026-10-24|morning|instagram|pb_9254549f59|instagram_post": {
       "asset": "instagram_post",
-      "attempt_count": 6,
+      "attempt_count": 7,
       "content_date": "2026-10-24",
       "content_id": "pb_9254549f59",
       "day_number": 296,
@@ -5916,9 +5958,24 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-24T11:26:39+00:00",
+          "attempt": 7,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-24T11:26:41+00:00",
+          "attempt": 7,
+          "error": "claimed_by_other_run",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-24T11:20:24+00:00",
+      "last_attempt_at": "2026-10-24T11:26:39+00:00",
       "last_result": {
         "error": "claimed_by_other_run",
         "success": false
@@ -5929,7 +5986,7 @@
       "remote_id": "",
       "slot": "morning",
       "status": "SKIPPED",
-      "updated_at": "2026-10-24T11:20:26+00:00",
+      "updated_at": "2026-10-24T11:26:41+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
