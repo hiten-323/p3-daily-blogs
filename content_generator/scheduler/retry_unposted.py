@@ -2,7 +2,8 @@
 
 A legacy ledger row with no asset still clears single-platform targets and reel_1.
 It does not clear carousel, reel_2, or growth_reel. Reels regenerate from 10:00 IST
-and publish at 22:00. The 8.0 gates stay. Blog stays off unless BLOG_ENABLED.
+and each one publishes once the evening slot time has passed. The 8.0 gates stay.
+Blog stays off unless BLOG_ENABLED.
 """
 from __future__ import annotations
 
@@ -60,8 +61,57 @@ def records_for_date(date: str) -> list[dict]:
 
 
 def evening_backstop_wait(now_ist: dt.datetime) -> bool:
-    """True before 22:15 IST, while the scheduled evening slot should run."""
+    """True before 22:15 IST, the old window when the cron alone owned every reel.
+
+    Kept so callers can still name that window. publish_plan does not use it:
+    the cron publishes one reel, and deleting reel_1, reel_2, and growth_reel
+    from the retry left them unattempted when that cron did not run.
+    """
     return now_ist.hour == 22 and now_ist.minute < 15
+
+
+def _evening_clock() -> tuple[int, int]:
+    from content_generator.core.slot_registry import SLOTS_BY_ID
+    hour, minute = (int(part) for part in SLOTS_BY_ID["evening"]["ist"].split(":"))
+    return hour, minute
+
+
+def prewarm_targets(missing: list[str], ist_hour: int, ist_minute: int, *,
+                    override: bool = False, only: set | None = None) -> set[str]:
+    """Reels regenerate before the evening slot. They publish once that slot is due."""
+    if override or only is not None:
+        return set()
+    hour, minute = _evening_clock()
+    if (ist_hour, ist_minute) >= (hour, minute):
+        return set()
+    return {t for t in missing if t in REEL_TARGETS}
+
+
+def slots_for_targets(todo: list[str], prewarm: set[str], approved: dict) -> set[str]:
+    approved = approved or {}
+    return {
+        TARGETS[t][0] for t in todo
+        if t not in prewarm and any(label in approved for label in TARGETS[t][2])
+    }
+
+
+def evening_assets_due(todo: list[str], prewarm: set[str]) -> list[str]:
+    """Same preference as the evening slot, one entry per unposted reel."""
+    return [name for name in ("growth_reel", "reel_1", "reel_2") if name in todo and name not in prewarm]
+
+
+def publish_plan(todo: list[str], approved: dict, ist_hour: int, ist_minute: int, *,
+                 override: bool = False, only: set | None = None,
+                 missing: list[str] | None = None) -> dict:
+    """Slots to run, reels to publish one by one, and targets that are regen-only."""
+    prewarm = prewarm_targets(
+        list(missing if missing is not None else todo), ist_hour, ist_minute,
+        override=override, only=only)
+    return {
+        "prewarm": prewarm,
+        "slots": slots_for_targets(todo, prewarm, approved),
+        "reels": evening_assets_due(todo, prewarm),
+    }
 
 
 def _asset_matches(record: dict, target: str) -> bool:
@@ -387,12 +437,9 @@ def main() -> int:
     missing = unposted_targets(records, ist_hour)
     if only is not None:
         missing = [t for t in missing if t in only]
-    if not override and only is None and evening_backstop_wait(now_ist):
-        # The scheduled evening slot owns 21:53-22:15; backstop only after.
-        missing = [t for t in missing if t not in REEL_TARGETS]
-    # Reel targets are due from 10:00 so the chain regenerates them. Publishing
-    # still waits until 22:00.
-    prewarm = {t for t in missing if t in REEL_TARGETS} if (not override and only is None and ist_hour < 22) else set()
+    # Reel targets stay in `missing` after the evening slot time, including
+    # 22:00-22:15. The cron publishes one reel; the others are this retry's.
+    minute = now_ist.minute if ist_hour == now_ist.hour else 0
     # A missing mandatory slot is never parked in backoff.
     todo = prioritise([t for t in missing if is_mandatory(t) or backoff_ok(records, t, now)])
     if not todo:
@@ -426,9 +473,12 @@ def main() -> int:
         save_content(content)
         approved = _approved(content)
 
-    # 2. Publish through the normal paths; the ledger dedupes by date+slot+platform.
+    # 2. Publish through the normal paths; the ledger dedupes by date+slot+platform+asset.
     failures = []
-    slots = {TARGETS[t][0] for t in todo if any(l in approved for l in TARGETS[t][2]) and t not in prewarm}
+    plan = publish_plan(
+        todo, approved, ist_hour, minute, override=bool(override), only=only, missing=missing)
+    prewarm = plan["prewarm"]
+    slots = plan["slots"]
     if ("ig_feed" in todo or "carousel" in todo) and "morning" in slots:
         ensure_ig_images(content)
     os.environ.setdefault("ENABLE_TIMED_SLOTS", "true")
@@ -437,14 +487,21 @@ def main() -> int:
         from content_generator.publisher.dispatcher import publish_all
         res = publish_all(content, day_number=int(content.get("day_number") or 0))
         log.info("generate-path result: %s", res.get("summary"))
+    from content_generator.scheduler.slots import run_publish_slot
+    on_date = dt.date.fromisoformat(date)
     for slot in ("morning", "evening"):
-        if slot in slots:
-            os.environ["FORCE_SLOT"] = slot
-            from content_generator.scheduler.slots import run_publish_slot
-            res = run_publish_slot(slot, force_retry=True, on_date=dt.date.fromisoformat(date))
-            log.info("%s result: %s", slot, res.get("status"))
+        if slot not in slots:
+            continue
+        os.environ["FORCE_SLOT"] = slot
+        if slot == "evening":
+            for asset in plan["reels"]:
+                res = run_publish_slot(slot, force_retry=True, on_date=on_date, only_asset=asset)
+                log.info("%s %s result: %s", slot, asset, res.get("status"))
+            continue
+        res = run_publish_slot(slot, force_retry=True, on_date=on_date)
+        log.info("%s result: %s", slot, res.get("status"))
     blocked = [t for t in todo if not any(l in approved for l in TARGETS[t][2])]
-    # Prewarming the evening reel before 22:00 is expected; every other target
+    # Prewarming a reel before the evening slot is expected; every other target
     # selected for this run must now be present in the authoritative ledger.
     checked_todo = [t for t in todo if t not in prewarm]
     after_records = records_for_date(date)

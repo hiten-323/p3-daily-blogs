@@ -100,9 +100,20 @@ def _find_reel_thumbnail(date_str: str | None = None) -> str | None:
     return None
 
 
-def _select_evening_reel(approved: dict, skip: set | None = None) -> tuple[str, dict] | None:
-    """Prefer growth_reel, then reel_1, then any other approved reel not already posted."""
+def _select_evening_reel(approved: dict, skip: set | None = None, only: str = "") -> tuple[str, dict] | None:
+    """Prefer growth_reel, then reel_1, then any other approved reel not already posted.
+
+    ``only`` publishes that asset and no substitute. Retry uses it so a held
+    growth reel cannot skip reel_1 and reel_2.
+    """
     posted = skip or set()
+    if only:
+        if only in posted or not isinstance(approved, dict):
+            return None
+        piece = approved.get(only)
+        if isinstance(piece, dict) and piece:
+            return only, piece
+        return None
     if not isinstance(approved, dict):
         return None
     for key in ("growth_reel", "reel_1", "reel_2"):
@@ -267,7 +278,8 @@ def _skipped(slot: str, day: int = 0, reason: str = "") -> dict:
     return res
 
 
-def run_publish_slot(slot: str, force_retry: bool = False, on_date: datetime.date | None = None) -> dict:
+def run_publish_slot(slot: str, force_retry: bool = False, on_date: datetime.date | None = None,
+                     only_asset: str = "") -> dict:
     """
     Execute a publish-only slot (morning or evening).
     Loads the content day for this slot and posts the slot's asset.
@@ -308,7 +320,7 @@ def run_publish_slot(slot: str, force_retry: bool = False, on_date: datetime.dat
     # skipped slot as green, every later slot that day skipped in silence. The
     # lock file is committed to the repo, so that state outlived the container.
     try:
-        result = _execute_publish_slot(slot, on_date=slot_date)
+        result = _execute_publish_slot(slot, on_date=slot_date, only_asset=only_asset)
     except Exception:
         lock.release()          # crashed — let the next slot attempt proceed
         raise
@@ -319,7 +331,7 @@ def run_publish_slot(slot: str, force_retry: bool = False, on_date: datetime.dat
     return result
 
 
-def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> dict:
+def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_asset: str = "") -> dict:
     """The slot's actual work. The lock lifecycle belongs to run_publish_slot."""
     # MISSING CONTENT IS A HOLD, NEVER A GENERATION.
     #
@@ -424,7 +436,7 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None) -> di
         # growth_reel and reel_1 are preferred, then reel_2 and anything else
         # the gate returned. A valid reel_2 used to be ignored, so the slot
         # held even when an approved reel was sitting in the file.
-        picked = _select_evening_reel(approved, _evening_assets_posted(slot_date))
+        picked = _select_evening_reel(approved, _evening_assets_posted(slot_date), only=only_asset)
         if not picked:
             logger.error("[slots] evening slot: no reel passed the canonical gate "
                          "(approved=%s)", sorted(approved))

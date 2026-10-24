@@ -13,6 +13,12 @@ Creating a ref without --force is atomic on GitHub: exactly one runner wins.
   as in the ledger). A claim older than PUBLISH_CLAIM_STALE_MIN is treated as
   abandoned only when origin's ledger shows no posted record for the key.
 
+A piece claim is a sibling ref (``.../platform--asset``), not a child of the
+legacy ``.../platform`` ref. Git cannot create the child while the parent ref
+exists, and a stale check of the missing child then blocks the piece forever.
+A fresh platform claim owned by another run still blocks every piece. A claim
+past the stale window is abandoned: the owning run has outlived the job timeout.
+
 Active only inside GitHub Actions (or PUBLISH_CLAIMS=1); PUBLISH_CLAIMS=0
 disables it. Local runs and tests are unaffected.
 """
@@ -46,9 +52,12 @@ def enabled() -> bool:
 
 def ref_for(date: str, slot: str, platform: str, asset: str = "") -> str:
     safe = lambda s: re.sub(r"[^A-Za-z0-9._-]", "_", str(s))
+    base = f"refs/publish-claims/{safe(date)}/{safe(slot)}/{safe(platform)}"
+    # Sibling, not child. refs/.../instagram already exists for older posts;
+    # git rejects refs/.../instagram/instagram_post while that prefix is a ref.
     if asset:
-        return f"refs/publish-claims/{safe(date)}/{safe(slot)}/{safe(platform)}/{safe(asset)}"
-    return f"refs/publish-claims/{safe(date)}/{safe(slot)}/{safe(platform)}"
+        return f"{base}--{safe(asset)}"
+    return base
 
 
 def _git(*args: str, timeout: int = 60) -> subprocess.CompletedProcess:
@@ -97,16 +106,37 @@ def _remote_posted(date: str, slot: str, platform: str, asset: str = "") -> bool
     return False
 
 
-def _claim_details(ref: str) -> tuple[float | None, str | None]:
-    """Return age and observed SHA after fetching; SHA is used for CAS takeover."""
+def _claim_meta(ref: str) -> tuple[float | None, str | None, str | None]:
+    """Age in minutes, observed SHA, and owning run id. A missing ref is all None."""
     if _git("fetch", "-q", "origin", f"+{ref}:{ref}").returncode != 0:
-        return None, None
+        return None, None, None
     observed = _git("rev-parse", ref).stdout.strip()
     if not observed:
-        return None, None
+        return None, None, None
     msg = _git("log", "-1", "--format=%s", ref).stdout
-    m = re.search(r"publish-claim (\d+)", msg)
-    return ((time.time() - int(m.group(1))) / 60 if m else None, observed)
+    age_m = re.search(r"publish-claim (\d+)", msg)
+    run_m = re.search(r"\brun=(\S*)", msg)
+    age = (time.time() - int(age_m.group(1))) / 60 if age_m else None
+    run_id = (run_m.group(1) if run_m else "") or None
+    return age, observed, run_id
+
+
+def _legacy_blocks_piece(date: str, slot: str, platform: str) -> bool:
+    """True when another run's fresh platform claim still covers this slot.
+
+    The platform ref is kept after a successful unscoped publish, so age is
+    what expires it. The owner run id lets the run that created the claim
+    publish the next piece. An unreadable claim fails closed.
+    """
+    age, observed, run_id = _claim_meta(ref_for(date, slot, platform))
+    if not observed:
+        return False
+    if age is None:
+        return True
+    current = os.getenv("GITHUB_RUN_ID", "").strip()
+    if current and run_id == current:
+        return False
+    return age < _STALE_MIN
 
 
 def acquire(date: str, slot: str, platform: str, asset: str = "") -> tuple[bool, str]:
@@ -117,20 +147,22 @@ def acquire(date: str, slot: str, platform: str, asset: str = "") -> tuple[bool,
     try:
         if _remote_posted(date, slot, platform, asset=asset):
             return False, "already_published_remote"
+        if asset and _legacy_blocks_piece(date, slot, platform):
+            return False, "claimed_by_other_run"
         sha = _claim_commit()
         if not sha:
             return False, "claim_unavailable"
         if _git("push", "-q", "origin", f"{sha}:{ref}").returncode == 0:
             _OWNED_CLAIMS[ref] = sha
             return True, ref
-        age, observed_sha = _claim_details(ref)
+        age, observed_sha, _owner = _claim_meta(ref)
         if age is not None and observed_sha and age >= _STALE_MIN and not _remote_posted(date, slot, platform, asset=asset):
             # Compare-and-swap: takeover succeeds only if the remote ref still
             # points at the exact stale SHA observed above. Never unconditional force-push.
             lease = f"--force-with-lease={ref}:{observed_sha}"
             if _git("push", "-q", lease, "origin", f"{sha}:{ref}").returncode == 0:
                 _OWNED_CLAIMS[ref] = sha
-                log.warning("[publish-claim] took over stale claim %s (%.0f min)", ref, age)
+                log.warning("[publish-claim] took over stale claim %s (%.0f min, owner=%s)", ref, age, _owner or "")
                 return True, ref
         return False, "claimed_by_other_run"
     except Exception as exc:  # fail closed: never risk a duplicate post
