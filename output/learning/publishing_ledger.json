@@ -5579,6 +5579,90 @@
       "verification_method": "",
       "verified_at": null
     },
+    "2026-10-24|evening|facebook|pb_9254549f59": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-24",
+      "content_id": "pb_9254549f59",
+      "day_number": 296,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-24T16:59:55+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-24T16:59:59+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "494003270464484_122168791112655685",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/posts/122168791112655685",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-24T16:59:55+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-24T16:59:59+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": true,
+      "remote_id": "494003270464484_122168791112655685",
+      "slot": "evening",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-24T16:59:59+00:00",
+      "url": "https://www.facebook.com/494003270464484/posts/122168791112655685",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-24T16:59:59+00:00"
+    },
+    "2026-10-24|evening|instagram_video|pb_9254549f59|growth_reel": {
+      "asset": "growth_reel",
+      "attempt_count": 1,
+      "content_date": "2026-10-24",
+      "content_id": "pb_9254549f59",
+      "day_number": 296,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-24T16:59:25+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-24T16:59:55+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18169243390499652",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/reel/De4niggDvpa/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-24T16:59:25+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-24T16:59:55+00:00",
+      "next_retry_at": null,
+      "platform": "instagram_video",
+      "published": true,
+      "remote_id": "18169243390499652",
+      "slot": "evening",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-24T16:59:55+00:00",
+      "url": "https://www.instagram.com/reel/De4niggDvpa/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-24T16:59:55+00:00"
+    },
     "2026-10-24|generate|linkedin|pb_9254549f59": {
       "asset": "",
       "attempt_count": 1,
@@ -5863,27 +5947,12 @@
     },
     "2026-10-24|morning|instagram|pb_9254549f59|instagram_post": {
       "asset": "instagram_post",
-      "attempt_count": 62,
+      "attempt_count": 63,
       "content_date": "2026-10-24",
       "content_id": "pb_9254549f59",
       "day_number": 296,
       "error": "claimed_by_other_run",
       "history": [
-        {
-          "at": "2026-10-24T12:00:05+00:00",
-          "attempt": 13,
-          "event": "attempt_started"
-        },
-        {
-          "at": "2026-10-24T12:00:07+00:00",
-          "attempt": 13,
-          "error": "claimed_by_other_run",
-          "event": "attempt_finished",
-          "remote_id": "",
-          "status": "SKIPPED",
-          "url": "",
-          "verification_method": ""
-        },
         {
           "at": "2026-10-24T12:05:58+00:00",
           "attempt": 14,
@@ -6618,9 +6687,24 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-24T16:47:22+00:00",
+          "attempt": 63,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-24T16:47:23+00:00",
+          "attempt": 63,
+          "error": "claimed_by_other_run",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-24T16:41:48+00:00",
+      "last_attempt_at": "2026-10-24T16:47:22+00:00",
       "last_result": {
         "error": "claimed_by_other_run",
         "success": false
@@ -6631,7 +6715,7 @@
       "remote_id": "",
       "slot": "morning",
       "status": "SKIPPED",
-      "updated_at": "2026-10-24T16:41:50+00:00",
+      "updated_at": "2026-10-24T16:47:23+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
