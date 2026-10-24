@@ -44,8 +44,10 @@ def enabled() -> bool:
     return os.getenv("GITHUB_ACTIONS") == "true" and not os.getenv("PYTEST_CURRENT_TEST")
 
 
-def ref_for(date: str, slot: str, platform: str) -> str:
+def ref_for(date: str, slot: str, platform: str, asset: str = "") -> str:
     safe = lambda s: re.sub(r"[^A-Za-z0-9._-]", "_", str(s))
+    if asset:
+        return f"refs/publish-claims/{safe(date)}/{safe(slot)}/{safe(platform)}/{safe(asset)}"
     return f"refs/publish-claims/{safe(date)}/{safe(slot)}/{safe(platform)}"
 
 
@@ -64,7 +66,7 @@ def _claim_commit() -> str:
     return out.stdout.strip()
 
 
-def _remote_posted(date: str, slot: str, platform: str) -> bool:
+def _remote_posted(date: str, slot: str, platform: str, asset: str = "") -> bool:
     if _git("fetch", "-q", "origin", "main").returncode != 0:
         return True  # cannot prove it is free: fail closed
     show = _git("show", f"origin/main:{_LEDGER}")
@@ -72,9 +74,27 @@ def _remote_posted(date: str, slot: str, platform: str) -> bool:
         recs = json.loads(show.stdout).get("records", {})
     except Exception:
         return True
-    return any(str(r.get("content_date", "")).startswith(date) and r.get("slot") == slot
-               and str(r.get("platform", "")).lower() == platform.lower()
-               and r.get("status") in _POSTED for r in recs.values() if isinstance(r, dict))
+    for r in recs.values():
+        if not isinstance(r, dict):
+            continue
+        if not str(r.get("content_date", "")).startswith(date):
+            continue
+        if r.get("slot") != slot:
+            continue
+        if str(r.get("platform", "")).lower() != platform.lower():
+            continue
+        if r.get("status") not in _POSTED:
+            continue
+        rec_asset = str(r.get("asset") or "").strip()
+        if asset:
+            if rec_asset:
+                if rec_asset != asset:
+                    continue
+            else:
+                if asset not in ("instagram_post", "reel_1"):
+                    continue
+        return True
+    return False
 
 
 def _claim_details(ref: str) -> tuple[float | None, str | None]:
@@ -89,13 +109,13 @@ def _claim_details(ref: str) -> tuple[float | None, str | None]:
     return ((time.time() - int(m.group(1))) / 60 if m else None, observed)
 
 
-def acquire(date: str, slot: str, platform: str) -> tuple[bool, str]:
+def acquire(date: str, slot: str, platform: str, asset: str = "") -> tuple[bool, str]:
     """(True, ref) when this run may publish; (False, reason) otherwise."""
     if not enabled():
         return True, ""
-    ref = ref_for(date, slot, platform)
+    ref = ref_for(date, slot, platform, asset=asset)
     try:
-        if _remote_posted(date, slot, platform):
+        if _remote_posted(date, slot, platform, asset=asset):
             return False, "already_published_remote"
         sha = _claim_commit()
         if not sha:
@@ -104,7 +124,7 @@ def acquire(date: str, slot: str, platform: str) -> tuple[bool, str]:
             _OWNED_CLAIMS[ref] = sha
             return True, ref
         age, observed_sha = _claim_details(ref)
-        if age is not None and observed_sha and age >= _STALE_MIN and not _remote_posted(date, slot, platform):
+        if age is not None and observed_sha and age >= _STALE_MIN and not _remote_posted(date, slot, platform, asset=asset):
             # Compare-and-swap: takeover succeeds only if the remote ref still
             # points at the exact stale SHA observed above. Never unconditional force-push.
             lease = f"--force-with-lease={ref}:{observed_sha}"

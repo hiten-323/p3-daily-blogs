@@ -130,3 +130,16 @@ def test_stale_claim_grace_exceeds_daily_job_timeout():
     workflow = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
     assert 'PUBLISH_CLAIM_STALE_MIN", "180"' in source
     assert "timeout-minutes: 120" in workflow
+
+
+def test_asset_scoped_claims_do_not_block_sibling_assets(clone):
+    led = clone / "output/learning/publishing_ledger.json"
+    led.write_text('{"version":1,"records":{"2026-10-24|morning|instagram|x|carousel":'
+                   '{"content_date":"2026-10-24","slot":"morning","platform":"instagram","status":"VERIFIED_LIVE","asset":"carousel"}}}')
+    _git(clone, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qam", "carousel posted")
+    _git(clone, "push", "-q", "origin", "main")
+    ok_car, why_car = publish_claim.acquire("2026-10-24", "morning", "instagram", asset="carousel")
+    assert not ok_car and why_car == "already_published_remote"
+    ok_post, ref_post = publish_claim.acquire("2026-10-24", "morning", "instagram", asset="instagram_post")
+    assert ok_post and "instagram_post" in ref_post
+    publish_claim.release(ref_post)

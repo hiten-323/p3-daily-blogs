@@ -363,7 +363,7 @@ def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int
     from content_generator.publisher import publish_claim
     key_parts = str(ticket.get("key", "")).split("|")
     claim_date = key_parts[0] if key_parts and key_parts[0] else str(content.get("date", ""))[:10]
-    ok, claim_ref = publish_claim.acquire(claim_date, slot, platform)
+    ok, claim_ref = publish_claim.acquire(claim_date, slot, platform, asset=named)
     if not ok:
         import logging
         logging.getLogger(__name__).warning("[publish-ledger] %s %s not published: %s", platform, slot, claim_ref)
