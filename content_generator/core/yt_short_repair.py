@@ -12,6 +12,15 @@ remain. Anything still empty is sent back to the model as a patch of only the
 failing fields. New prices, percentages, or numbers that are not already in
 the piece are refused. The 8.0 gates and the product-truth checks are not
 touched; they still run on whatever this returns.
+
+A scene-based Short that already has product and five complete scenes still
+fails the schema when tagline is absent (run 40060597663: the model returned
+product, hook, cta, and six scenes, and no tagline or script). featured_product
+is the day's jar key, not the schema's product field. Repair copies product
+from featured_product when product is blank, and copies tagline from hook,
+title, or the first scene line already on the piece. It does not read
+editorial_error or hold_reason, so a stored gate message cannot become the
+tagline.
 """
 from __future__ import annotations
 
@@ -22,6 +31,8 @@ import re
 logger = logging.getLogger(__name__)
 
 _TYPE_CYCLE = ("problem", "agitation", "product_reveal", "benefit", "cta")
+_PRODUCT_ALIASES = ("featured_product", "product_name")
+_TAGLINE_SOURCES = ("hook", "hook_text", "chosen_hook", "title")
 _SPOKEN_ALIASES = ("voiceover", "narration", "dialogue", "audio")
 _SCREEN_ALIASES = ("overlay", "text_overlay", "headline", "caption", "text")
 _VISUAL_ALIASES = ("visual", "shot", "direction", "camera")
@@ -35,9 +46,11 @@ def repair_yt_short(piece: dict, *, llm=None, allow_llm: bool = True) -> dict:
     """Mutate piece. Returns it. One LLM patch at most, and only for gaps that remain."""
     if not isinstance(piece, dict):
         return piece
+    _alias_product(piece)
     scenes = piece.get("scenes")
     if isinstance(scenes, list):
         piece["scenes"] = _repair_scene_list(scenes)
+    _fill_tagline(piece)
     if _schema_ok(piece) or not allow_llm:
         return piece
     gaps = _scene_gaps(piece)
@@ -51,7 +64,54 @@ def repair_yt_short(piece: dict, *, llm=None, allow_llm: bool = True) -> dict:
         return piece
     if isinstance(patch, dict):
         _apply_patch(piece, patch, gaps)
+        _alias_product(piece)
+        _fill_tagline(piece)
     return piece
+
+
+def _alias_product(piece: dict) -> None:
+    """The schema reads product. The pipeline and many drafts only set featured_product."""
+    if _text(piece.get("product")):
+        return
+    for key in _PRODUCT_ALIASES:
+        name = _text(piece.get(key))
+        if name:
+            piece["product"] = name
+            return
+
+
+def _fill_tagline(piece: dict) -> None:
+    """Format 2 still needs tagline. Copy one that is already written on the piece.
+
+    editorial_error and hold_reason are excluded: they store the gate's own
+    words, including the brand sentence that pydantic then shows inside the payload.
+    """
+    if _text(piece.get("tagline")) or not _text(piece.get("product")):
+        return
+    scenes = piece.get("scenes")
+    if not isinstance(scenes, list):
+        return
+    ready = [scene for scene in scenes if isinstance(scene, dict) and _scene_ready(scene)]
+    if len(ready) < 5:
+        return
+    for key in _TAGLINE_SOURCES:
+        line = _text(piece.get(key))
+        if line:
+            piece["tagline"] = line
+            return
+    on_screen = _text(ready[0].get("on_screen"))
+    if on_screen:
+        piece["tagline"] = on_screen
+
+
+def _scene_ready(scene: dict) -> bool:
+    return (
+        _present(scene.get("scene"), "scene")
+        and _text(scene.get("type"))
+        and _present(scene.get("duration_s"), "duration_s")
+        and _has_lines(scene)
+        and _text(scene.get("visual_direction"))
+    )
 
 
 def _repair_scene_list(scenes: list) -> list:

@@ -226,6 +226,75 @@ def test_schema_repair_does_not_burn_a_ladder_attempt(monkeypatch):
     assert not any(row.get("status") == "exhausted" for row in ladder.get("yt_short") or [])
 
 
+def test_scene_short_without_tagline_is_repaired_from_the_hook_already_on_the_piece():
+    """Run 40060597663 attempt 9/9. The model returned product, hook, cta, and
+    six complete scenes, and no tagline or script. featured_product was only
+    the first key. Schema rejected the shape before the judge could score it.
+    The stored schema/brand error must not be copied into the tagline.
+    """
+    hook = "At 6:47 AM, your milk coffee is already decided by one number on the jar: 70."
+    piece = {
+        "featured_product": "Ultra Blend 100g",
+        "product": "Ultra Blend 100g",
+        "hook": hook,
+        "cta": "Follow @purepantryprovisions | Shop p3online.in",
+        "share_trigger": "Share with someone who starts every morning with coffee.",
+        "editorial_error": (
+            "schema: missing tagline | brand: ['product truth: Per-cup price/yield is "
+            "verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+        ),
+        "scenes": _filled(1, 6),
+    }
+    assert not _schema_ok(piece)
+    called = {"n": 0}
+
+    def llm(*_args, **_kwargs):
+        called["n"] += 1
+        raise AssertionError("the hook already on the piece is the tagline")
+
+    repair_yt_short(piece, llm=llm)
+    assert called["n"] == 0
+    assert piece["tagline"] == hook
+    assert piece["product"] == "Ultra Blend 100g"
+    assert len(piece["scenes"]) == 6
+    assert "omit the figure" not in piece["tagline"]
+    assert "₹" not in piece["tagline"]
+    assert _schema_ok(piece)
+
+
+def test_featured_product_fills_product_when_the_scene_short_omits_it():
+    piece = _short(scenes=_filled(1, 5))
+    piece.pop("product")
+    assert piece["featured_product"] == "Bold"
+    assert not _schema_ok(piece)
+    repair_yt_short(piece, allow_llm=False)
+    assert piece["product"] == "Bold"
+    assert piece["tagline"] == "Read the jar"
+    assert _schema_ok(piece)
+
+
+def test_scratch_prompt_requires_product_and_tagline_when_the_draft_omits_them():
+    from content_generator.core.fallback_ladder import scratch_prompt
+
+    prompt = scratch_prompt(
+        "yt_short",
+        {
+            "featured_product": "Ultra Blend",
+            "hook": "At 6:47 AM the jar already decided the cup.",
+            "cta": "Shop p3online.in today",
+            "scenes": [],
+        },
+        "schema: missing tagline",
+        8.0,
+        "BRAND",
+    )
+    listed = prompt.split("Return ONE JSON object with these keys: ", 1)[1].split(".", 1)[0]
+    keys = json.loads(listed)
+    assert "product" in keys
+    assert "tagline" in keys
+    assert "scenes" in keys
+
+
 def test_hf_default_replaces_the_missing_qwen72():
     from pathlib import Path
 
