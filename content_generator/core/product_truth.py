@@ -491,9 +491,19 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
         if _RS18.search(s):
             findings.append(_finding(
                 s, "Wrong price: never claim Rs 18 / ₹18 a cup. Ultra Blend is " + _ultra_cup_phrase()))
-        elif _PER_CUP_FIGURE.search(s) and not re.search(r"ultra\s*blend", s, re.I):
-            findings.append(_finding(
-                s, "Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure"))
+        elif _PER_CUP_FIGURE.search(s):
+            has_ultra = bool(re.search(r"ultra\s*blend", s, re.I))
+            if not has_ultra:
+                idx = source.find(s)
+                preceding = source[:idx] if idx > 0 else ""
+                last_ultra = list(re.finditer(r"ultra\s*blend", preceding, re.I))
+                if last_ultra:
+                    after_ultra = preceding[last_ultra[-1].end():]
+                    if not _OTHER_SKU.search(after_ultra) and not _OTHER_THAN_ULTRA.search(s):
+                        has_ultra = True
+            if not has_ultra:
+                findings.append(_finding(
+                    s, "Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure"))
         if not _RS18.search(s):
             for issue in _price_findings(s):
                 findings.append(_finding(s, "Shopify price truth: " + issue))

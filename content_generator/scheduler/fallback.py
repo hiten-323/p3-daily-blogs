@@ -310,7 +310,7 @@ _EVERGREEN: list[dict] = [
     # ── Set 4 — how to keep it tasting like it should ─────────────────────────
     {
         "type": "reel",
-        "hook": "Most instant coffee goes stale in the jar, not in the shop.",
+        "hook": "Your expensive instant coffee is dying on your kitchen counter (and it's not the roast).",
         "hook_text": "Most instant coffee goes stale in the jar, not in the shop.",
         "hook_spoken": "The jar on your counter is doing more damage than the shelf ever did.",
         "hook_text_overlay": "SEAL IT",
@@ -340,8 +340,8 @@ _EVERGREEN: list[dict] = [
     },
     {
         "type": "carousel",
-        "hook": "Four things that stale your coffee at home",
-        "title": "Four things that stale your coffee at home",
+        "hook": "Why your coffee loses 40% of its aroma before you reach the bottom of the jar",
+        "title": "Why your coffee loses 40% of its aroma before you reach the bottom of the jar",
         "slides": [
             {"slide": 1, "heading": "An open lid",
              "body": "Aroma leaves the moment the jar is open. Close it between cups.",
@@ -372,7 +372,7 @@ _EVERGREEN: list[dict] = [
     },
     {
         "type": "instagram_post",
-        "hook": "A wet spoon will clump a whole jar of instant coffee.",
+        "hook": "Why a single drop of water on your spoon ruins the entire coffee jar.",
         "body": "Keep one dry spoon for coffee, close the lid between cups, and keep the jar off the shelf above the stove. Purity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
         "caption": "A wet spoon will clump a whole jar.\n\nOne dry spoon, lid closed between cups, and keep it off the shelf above the stove.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\np3online.in",
         "cta": "Store it right, then restock at p3online.in",
