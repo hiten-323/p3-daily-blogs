@@ -1736,102 +1736,237 @@
   },
   "yt_short": {
     "featured_product": "ultra_blend",
-    "objective": "Follower growth and education",
-    "primary_cta": "Follow @purepantryprovisions for transparent ingredient breakdowns and shop at https://p3online.in",
-    "success_metric": "Saves, shares, and follower growth",
-    "audio": "Subtle ambient kitchen morning sounds, soft kettle heating hum, gentle ceramic spoon clink.",
-    "audio_direction": "Clean high-fidelity binaural audio with zero background music, focusing on ASMR brewing textures.",
-    "chosen_hook": "Your milk coffee tastes burnt because you're using boiling water on a 70/30 blend.",
-    "chosen_hook_id": "betrayal_boiling_water_ub",
-    "comment_trigger": "Comment MILK if you brew with milk daily — I'll tell you which variant fits.",
-    "cta": "Follow @purepantryprovisions for transparent ingredient breakdowns. Shop at https://p3online.in",
-    "description": "A non-sales educational YouTube Short revealing why boiling water ruins milk coffee and how to brew Purity Beans Ultra Blend correctly.",
-    "edit_pacing": "Fast-cut macro opening, slow methodical pour, steady locked-off end card.",
-    "emotion_arc": "Curiosity to realization to quiet satisfaction.",
-    "funnel_objective": "Follower growth and brand discovery through pure coffee education.",
-    "gate_rejection": "none",
-    "hashtags": "#PurityBeans #UltraBlend #MilkCoffee #CleanCoffee #CoffeeRitual #ReadTheJar",
-    "hook": "Your milk coffee tastes burnt because you're using boiling water on a 70/30 blend.",
-    "hook_text": "Boiling water ruins a delicate milk coffee blend instantly.",
-    "product": "Purity Beans Ultra Blend",
+    "objective": "FOLLOWER_GROWTH",
+    "primary_cta": "Follow @purepantryprovisions",
+    "success_metric": "Saves and Profile Visits",
+    "audio": "Ambient acoustic guitar fingerpicking layered with soft morning kitchen sounds and a gentle cup clink",
+    "audio_direction": "Start with a clean, crisp record scratch pattern interrupt, transitioning into warm ambient room tone with gentle foley of glass touching wood.",
+    "chosen_hook": "When your morning cup tastes flat, the ingredient panel on the back of your Purity Beans Ultra Blend jar explains exactly why.",
+    "chosen_hook_id": "hook_ultra_blend_ratio_reveal",
+    "comment_trigger": "Comment COFFEE if you always check the back panel before buying.",
+    "cta": "Explore clean ingredients at https://p3online.in",
+    "description": "A close-up exploration of how Purity Beans Ultra Blend details its ingredients on the glass jar label.",
+    "edit_pacing": "Fast 0-2s hook cut, medium-paced educational middle with macro B-roll, slow locked-off framing for the end card.",
+    "emotion_arc": "Curiosity -> Skepticism -> Relief -> Satisfaction",
+    "product": "ultra_blend",
+    "funnel_objective": "FOLLOWER_GROWTH",
+    "gate_rejection": "growth engine regenerate: ultra_ratio_missing",
+    "hashtags": "#PurityBeans #UltraBlend #CoffeeLoversIndia #InstantCoffee #CleanCoffee",
+    "hook": "When your morning cup tastes flat, the ingredient panel on the back of your Purity Beans Ultra Blend jar explains exactly why.",
+    "hook_text": "When your morning cup tastes flat, the ingredient panel on the back of your Purity Beans Ultra Blend jar explains exactly why.",
+    "ladder_exhausted": true,
+    "loop_note": "Seamless loop back to the first frame as the audio restarts on the record scratch.",
     "publish_blocked": "ladder_exhausted",
-    "save_trigger": "Save this honest brewing guide before your next grocery run.",
+    "save_trigger": "Save this reel before your next grocery run.",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
-        "duration_s": 4.0,
-        "on_screen": "BOILING WATER BURNS IT",
-        "spoken": "Your milk coffee tastes burnt because you are pouring boiling water straight onto a 70/30 blend.",
-        "visual_direction": "Close-up of a stainless steel spoon stirring dark liquid in a ceramic mug on a wooden kitchen counter, steam rising visibly, shot on iPhone 15 with shallow depth of field, warm morning light from window."
+        "duration_s": 5.0,
+        "on_screen": "READ THE LABEL",
+        "spoken": "When your morning cup tastes flat, the ingredient panel on the back of your Purity Beans Ultra Blend jar explains exactly why.",
+        "visual_direction": "Extreme close-up of a hand rotating the Purity Beans Ultra Blend glass jar under warm morning kitchen light, shot on iPhone 15 with natural skin texture and visible paper label fibers."
       },
       {
         "scene": 2,
-        "type": "curiosity",
-        "duration_s": 5.0,
-        "on_screen": "85 DEGREES CELSIUS FIX",
-        "spoken": "The insider technique is simple: use water at eighty-five degrees Celsius and wait thirty seconds before adding milk.",
-        "visual_direction": "Hand pouring water from a temperature-controlled gooseneck kettle onto a single spoon of Purity Beans Ultra Blend granules in a glass mug, macro focus on granules dissolving, dark marble background with soft amber rim light."
+        "type": "tension",
+        "duration_s": 6.0,
+        "on_screen": "70 COFFEE 30 CHICORY",
+        "spoken": "Purity Beans Ultra Blend combines 70 percent coffee and 30 percent chicory for a smooth milk coffee experience.",
+        "visual_direction": "Shallow depth of field macro shot focusing on the ingredient typography on the Purity Beans Ultra Blend label, with a slight water ring visible on the wooden counter."
       },
       {
         "scene": 3,
-        "type": "value",
+        "type": "turn",
         "duration_s": 7.0,
-        "on_screen": "70% COFFEE 30% CHICORY",
-        "spoken": "Purity Beans Ultra Blend is crafted for Indian milk coffee lovers as a smooth seventy percent coffee and thirty percent chicory blend, not hidden and not apologized for.",
-        "visual_direction": "Macro shot of the exact Purity Beans Ultra Blend glass jar resting on dark marble surface with soft natural falloff, clean label visibility showing 70% coffee 30% chicory, warm amber light catching the glass texture."
+        "on_screen": "66 CUPS YIELD",
+        "spoken": "At 309 rupees for 100 grams yielding at least 66 cups, it works out to about 5 rupees a cup.",
+        "visual_direction": "A ceramic mug receiving hot milk poured from a stainless steel pitcher, steam rising softly against a dark ambient kitchen background with natural light falloff."
       },
       {
         "scene": 4,
         "type": "payoff",
         "duration_s": 6.0,
-        "on_screen": "66+ CUPS PER JAR",
-        "spoken": "The 100g jar yields about sixty-six cups at approximately five rupees a cup when you follow this exact method with Purity Beans Ultra Blend.",
-        "visual_direction": "Gentle pour of warm milk into the brewed coffee creating a rich velvety swirl, final cup on dark marble with the Ultra Blend jar in background, realistic contact shadow and ambient kitchen clutter."
+        "on_screen": "CLEAR COMPOSITION",
+        "spoken": "Having the exact figures on hand makes your daily grocery choice entirely straightforward.",
+        "visual_direction": "The Purity Beans Ultra Blend jar standing upright on a worn wooden surface beside a warm mug, with realistic contact shadows and minor glass reflections."
       },
       {
         "scene": 5,
         "type": "cta",
         "duration_s": 6.0,
-        "on_screen": "READ THE JAR",
-        "spoken": "Comment MILK if you brew with milk daily and visit https://p3online.in to explore Purity Beans.",
-        "visual_direction": "Exact Purity Beans Ultra Blend glass jar centered on dark marble countertop with realistic contact shadow, warm amber accent light, subtle fingerprint smudge on glass implying real use, loop-ready static frame."
+        "on_screen": "Follow @purepantryprovisions",
+        "spoken": "Follow @purepantryprovisions for transparent coffee breakdowns and visit https://p3online.in.",
+        "visual_direction": "Locked-off shot centered on the Purity Beans Ultra Blend glass jar, soft amber accent lighting, with a calm human hand resting slightly out of focus in the foreground."
       }
     ],
-    "script": "Your milk coffee tastes burnt because you're using boiling water on a 70/30 blend. Your milk coffee tastes burnt because you are pouring boiling water straight onto a 70/30 blend. The insider technique is simple: use water at eighty-five degrees Celsius and wait thirty seconds before adding milk. Purity Beans Ultra Blend is crafted for Indian milk coffee lovers as a smooth seventy percent coffee and thirty percent chicory blend, not hidden and not apologized for. The 100g jar yields about sixty-six cups at approximately five rupees a cup when you follow this exact method with Purity Beans Ultra Blend. Comment MILK if you brew with milk daily and visit https://p3online.in to explore Purity Beans.",
+    "script": "When your morning cup tastes flat, the ingredient panel on the back of your Purity Beans Ultra Blend jar explains exactly why. Purity Beans Ultra Blend combines 70 percent coffee and 30 percent chicory for a smooth milk coffee experience. At 309 rupees for 100 grams yielding at least 66 cups, it works out to about 5 rupees a cup. Follow @purepantryprovisions for transparent coffee breakdowns and visit https://p3online.in.",
     "share_trigger": "Share this with someone who drinks milk coffee every single morning.",
     "tagline": "Read the jar. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "viral_potential": {
       "scores": {
-        "hook": 9.0,
-        "curiosity_gap": 8.5,
-        "relatability": 9.0,
-        "shareability": 8.5,
-        "comment_trigger": 8.5,
-        "format_fit": 9.0,
-        "follow_cta": 8.5
+        "hook": 8.0,
+        "curiosity_gap": 7.0,
+        "relatability": 8.5,
+        "shareability": 7.5,
+        "comment_trigger": 8.0,
+        "format_fit": 8.5,
+        "follow_cta": 8.0
       },
-      "overall": 8.7,
-      "weakest": [],
-      "feedback": "Hook uses betrayal framing regarding boiling water on a 70/30 blend. Pacing establishes the problem, reveals the 85°C insider technique, details the 70/30 ratio transparently, provides the 5₹/cup proof for Purity Beans"
+      "overall": 7.9,
+      "weakest": [
+        "curiosity_gap",
+        "shareability"
+      ],
+      "feedback": "The hook relies on an explanatory sentence rather than a punchy pattern interrupt suited for a YouTube Short. To push the score above the threshold, tighten the first two seconds to immediately contrast flat morning coffee with an unread label, and ensure the price reference aligns strictly with verified brand data. Maintain the exact Purity Beans Ultra Blend jar details and correct 70/30 coffee-to-chicory compositional ratio.",
+      "better_hook": "Stop guessing why your morning coffee tastes flat—turn the jar around.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
     },
-    "viral_readiness_score": 9.4,
+    "viral_readiness_score": 91.0,
     "editorial_score": {
-      "shareability": 6.5,
-      "saveability": 7.5,
-      "emotion_pull": 5.5,
-      "hook_strength": 7.0,
-      "brand_clarity": 8.0,
-      "overall": 6.9,
-      "verdict": "REJECT",
-      "feedback": "The concept scores well on education (saveability) and brand clarity, but fails on shareability and emotion_pull because it lacks a relatable human moment or identity trigger. It feels like a sterile tutorial, not a story worth forwarding. The hook 'Your milk coffee tastes burnt...' is a betrayal hook but lacks the visceral 'you've been lied to' punch because it frames the problem as user error (technique) rather than brand deception (hidden chicory/process). To fix: 1) Open with the *result* of the mistake — a disgusted face tasting burnt coffee — not the technical explanation. 2) Add a 'Realization' beat: 'Most brands won't tell you chicory burns at 100°C.' 3) End with an identity CTA: 'Real milk coffee drinkers brew at 85°C. Comment MILK if you're one.'",
-      "retention_audit": "Scene 1 (Hook): Opens with text 'BOILING WATER BURNS IT' — good visual, but spoken line is explanatory, not visceral. Drop the 'because' clause. Lead with the sensory failure: 'That burnt taste in your milk coffee? It's not the beans. It's your water.' Scene 2 (Curiosity): '85 DEGREES CELSIUS FIX' is utilitarian. Reframe as a secret: 'The cafe secret: 85 degrees. 30 second wait.' Scene 3 (Value): '70% COFFEE 30% CHICORY' on screen is honest but passive. Spoken line 'not hidden and not apologized for' is the strongest brand moment — move this to Scene 1 or 2 as the 'Why'. Scene 4 (Payoff): '66+ CUPS PER JAR' shifts to value/price — attention drop. Keep focus on the *ritual result*: the perfect swirl, the silence after the first sip. Scene 5 (CTA): Standard follow/link. Weak. Needs identity anchor."
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.2,
+      "hook_strength": 8.8,
+      "brand_clarity": 9.2,
+      "overall": 8.7,
+      "verdict": "PASS",
+      "feedback": "The asset maintains exceptional transparency regarding the 70/30 coffee-to-chicory ratio of Ultra Blend without relying on anti-chicory hostility. The macro visual focus on label clarity and precise cost-per-cup breakdown provides high utility, driving saves and profile visits naturally.",
+      "retention_audit": "Scene 1 immediately anchors attention on the label. Scene 2 delivers transparent compositional facts. Scene 3 provides practical value with cost math. Scene 5 concludes cleanly with required brand and website callouts."
     },
-    "loop_note": "Loops seamlessly back to the boiling water pour opening shot.",
-    "ladder_exhausted": true,
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "viewers who will watch one complete answer with the sound off",
+      "angle": "a standalone payoff that ends without needing another post",
+      "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+      "rationale": "A Short has to pay off on its own, then ask for the next one.",
+      "platform": "yt_short",
+      "sku": "Ultra Blend",
+      "day": 296
+    },
+    "growth_review": {
+      "platform": "yt_short",
+      "label": "yt_short",
+      "decision": "REGENERATE",
+      "overall": 8.0,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 0.0,
+          "evidence": "Product truth failed.",
+          "hard_fail": true
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [
+        "ultra_ratio_missing"
+      ],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "ultra_ratio_missing",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "viewers who will watch one complete answer with the sound off",
+        "angle": "a standalone payoff that ends without needing another post",
+        "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+        "rationale": "A Short has to pay off on its own, then ask for the next one.",
+        "platform": "yt_short",
+        "sku": "Ultra Blend",
+        "day": 296
+      },
+      "published": false
+    },
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The concept scores well on education (saveability) and brand clarity, but fails on shareability and emotion_pull because it lacks a relatable human moment or identity trigger. It feels like a sterile tutorial, not a story worth forwarding. The hook 'Your milk coffee tastes burnt...' is a betrayal hook but lacks the visceral 'you've been lied to' punch because it frames the problem as user error (technique) rather than brand deception (hidden chicory/process). To fix: 1"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.9 < 8.0 (weakest: curiosity_gap, shareability). The hook relies on an explanatory sentence rather than a punchy pattern interrupt suited for a YouTube Short. To push the score above the threshold, tighten the first two seconds to immediately contrast flat morning coffee with an unread label, and ensure the price reference aligns strictly with verified brand data. Maintain the exact Purity Beans Ultra Blend jar details and correct 70/30 coffee-to-chicory "
   },
   "growth_reel": {
     "featured_product": "ultra_blend",
@@ -5673,6 +5808,50 @@
       {
         "status": "exhausted",
         "reason": "The concept scores well on education (saveability) and brand clarity, but fails on shareability and emotion_pull because it lacks a relatable human moment or identity trigger. It feels like a sterile tutorial, not a story worth forwarding. The hook 'Your milk coffee tastes burnt...' is a betrayal ho"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: shareability, follow_cta, curiosity_gap). The piece provides solid, practical value on brewing temperature for a 70/30 blend, making it useful. However, it reads slightly like a sterile cooking tutorial rather than a scroll-stopping social video. To maximize shareabi"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a myth-buster (one common coffee myth, debunked with a verifiable fact). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no 'bu"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing website reference']"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned FOLLOWER_GROWTH objective is primarily promotional/commercial copy — selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: freeze-dried vs agglomerated instant coffee (how each is made and why it ch"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral_scoring_failed: ValueError"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.1 < 8.0 (weakest: hook, format_fit). The hook relies on a passive description rather than a scroll-stopping pattern interrupt or direct question. To fit a YouTube Short, the first 1-2 seconds need a sharper verbal or visual punch that immediately addresses the viewer's curiosity about"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, curiosity_gap, follow_cta). The opening hook is a bit passive; it asks a question rather than delivering an immediate pattern interrupt. To fit YouTube Shorts mechanics better, lead with a stronger observational statement about back labels. Ensure the price poi"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "growth engine regenerate: ultra_ratio_missing"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.9 < 8.0 (weakest: curiosity_gap, shareability). The hook relies on an explanatory sentence rather than a punchy pattern interrupt suited for a YouTube Short. To push the score above the threshold, tighten the first two seconds to immediately contrast flat morning coffee with an unread"
       }
     ],
     "growth_reel": [
