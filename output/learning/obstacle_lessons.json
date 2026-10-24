@@ -5629,7 +5629,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 6,
+      "count": 8,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -13621,6 +13621,34 @@
       "reason": "viral: score 7.8 < 8.0 (weakest: hook, comment_trigger). The opening temperature hook is clever, but 'What's actually inside this jar? Let's read it' is a bit generic compared to the physical action described. Ensure the spoken hook matches the text overlay precisely for maximum initial retention. T",
       "stage": "generation",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-24",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:7.0; rain overlay effect is a bit generic and detracts from the premium coffee aesthetic; typography has four distinct styles/treatments competing for attention",
+      "label": "reel_1",
+      "last_seen": "2026-10-24",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:7.0; Rain overlay effect is a bit generic and detracts from the premium coffee aesthetic; Typography has four distinct styles/treatments competing for attention, weakening hierarchy; Product lighting could have more dramatic rim-lighting to make the jar pop further from the backg",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-24",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:5.0; the product packaging looks dated and cheap rather than premium d2c, hurting overall brand perception.; lighting on the coffee jar feels somewhat artificia",
+      "label": "reel_1",
+      "last_seen": "2026-10-24",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:5.0; The product packaging looks dated and cheap rather than premium D2C, hurting overall brand perception.; Lighting on the coffee jar feels somewhat artificial and lacks the tactile richness expected of top-tier food styling.; Too many competing pill-shaped badge elements ('REE",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
