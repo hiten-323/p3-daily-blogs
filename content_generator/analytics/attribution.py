@@ -34,7 +34,7 @@ from urllib.parse import urlencode, urljoin
 logger = logging.getLogger(__name__)
 
 _WEBSITE = os.getenv("WEBSITE_URL", "https://p3online.in")
-_CAMPAIGN = os.getenv("UTM_CAMPAIGN", "content_engine")
+_CAMPAIGN = os.getenv("UTM_CAMPAIGN", "202610")
 
 
 # ── UTM link generation ───────────────────────────────────────────────────────
@@ -59,7 +59,7 @@ def generate_tracking_url(
     """
     params = {
         "utm_source":   platform,
-        "utm_medium":   "social",
+        "utm_medium":   "post",
         "utm_campaign": _CAMPAIGN,
         "utm_content":  content_id,
     }

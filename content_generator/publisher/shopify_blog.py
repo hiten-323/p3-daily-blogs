@@ -252,6 +252,7 @@ def post_content(content: dict, day: int = 0) -> dict:
 
     website = os.getenv("WEBSITE_URL", "https://p3online.in").rstrip("/")
     if "p3online.in" not in body:
+        website = f"{website}?utm_source=blog&utm_medium=post&utm_campaign=202610"
         body += f'\n<p>Explore Purity Beans: <a href="{html.escape(website, quote=True)}">{html.escape(website)}</a></p>'
 
     handle = str(blog.get("slug") or "").strip()

@@ -164,7 +164,7 @@ def post_content(content: dict, day: int = 0,
     raw_token = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
     token = resolve_page_access_token(page_id, raw_token)
     message = message_override or _build_message(content)
-    link    = os.getenv("WEBSITE_URL", "https://p3online.in")
+    link    = os.getenv("WEBSITE_URL", "https://p3online.in").rstrip("/") + "/?utm_source=facebook&utm_medium=post&utm_campaign=202610"
     if not message_override:
         try:
             from content_generator.publisher.product_links import featured_slug, tracked_url, with_product_link
