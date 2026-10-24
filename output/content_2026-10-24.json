@@ -1735,230 +1735,504 @@
     }
   },
   "yt_short": {
-    "featured_product": "ultra_blend",
-    "objective": "drive_traffic",
-    "primary_cta": "Comment MILK for the 70/30 breakdown",
-    "success_metric": "profile_visits_and_link_clicks",
-    "funnel_objective": "website_visit",
-    "product": "Ultra Blend",
-    "title": "Why Your Milk Coffee Clumps and Stays Thin",
-    "description": "Purity Beans Ultra Blend is 70% coffee and 30% chicory, built to vanish into hot milk in three seconds. One hundred grams makes at least sixty-six cups. About five rupees a cup. Shop https://p3online.in.",
-    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "hook": "Your instant coffee clumps in milk because it is not built for milk. Ours is.",
-    "hook_text": "Your instant coffee clumps in milk because it is not built for milk. Ours is.",
-    "chosen_hook": "Your instant coffee clumps in milk because it is not built for milk. Ours is.",
-    "chosen_hook_id": "milk_coffee_clumps_betrayal",
-    "script": "Your instant coffee clumps in milk because it is not built for milk. Ours is. I made Purity Beans Ultra Blend for my own morning milk coffee. Seventy percent coffee, thirty percent chicory—built to vanish into hot milk in three seconds. Split screen: left side, generic powder fights hot milk with stubborn white clumps at fifteen seconds. Right side, Ultra Blend granules disappear instantly. The label reads exactly that: seventy percent coffee, thirty percent chicory. No hidden fillers. One hundred grams makes at least sixty-six cups. About five rupees a cup. One spoon. Hot milk. Done. Purity Beans Ultra Blend. Shop https://p3online.in.",
+    "featured_product": "Ultra Blend 100g",
+    "objective": "Drive qualified traffic to Ultra Blend 100g product page",
+    "primary_cta": "Shop Ultra Blend 100g at https://p3online.in",
+    "success_metric": "Profile visits, link clicks to Ultra Blend product page, saves, shares",
+    "audio": "Low, confident voiceover. Slight room tone. No music. One subtle ASMR pop at the spoon dip.",
+    "audio_direction": "Record close-mic at 24-bit. Natural breaths kept. No compression that flattens dynamics.",
+    "chosen_hook": "At 7:12 AM your milk coffee is already decided by what the jar admits.",
+    "chosen_hook_id": "hook_ultra_blend_0712",
+    "comment_trigger": "Comment your spoon count and I'll reply with your exact cost per cup.",
+    "cta": "Shop Ultra Blend 100g at https://p3online.in",
+    "description": "A 7:12 AM kitchen ritual reveals why Ultra Blend 100g delivers a smooth 70/30 milk coffee at about ₹5 a cup — honest, measurable, and made for everyday mornings.",
+    "edit_pacing": "Slow open. One cut at the spoon lift. Hold the pour. Final frame lingers on the jar label.",
+    "emotion_arc": "Quiet tension → sensory relief → calm certainty",
+    "funnel_objective": "Profile visit → product page view → add to cart",
+    "hashtags": "#PurityBeans #UltraBlend #InstantCoffee #MilkCoffee #CoffeeRitual #PurePantryProvisions",
+    "hook": "At 7:12 AM your milk coffee is already decided by what the jar admits.",
+    "hook_text": "At 7:12 AM your milk coffee is already decided by what the jar admits.",
+    "ladder_exhausted": true,
+    "product": "Ultra Blend 100g",
+    "publish_blocked": "ladder_exhausted",
+    "save_trigger": "Save this before your next grocery run — the 70/30 math is worth remembering.",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
-        "duration_s": 4.0,
-        "on_screen": "YOUR COFFEE CLUMPS IN MILK. OURS VANISHES. 70% COFFEE. 30% CHICORY.",
-        "spoken": "Your instant coffee clumps in milk because it is not built for milk. Ours is.",
-        "visual_direction": "Split-frame vertical 9:16. Left: macro extreme close-up of generic instant coffee clumps floating in steaming milk—white, fibrous, stubborn particles catching harsh kitchen light. A thumb and forefinger stir with natural frustration, knuckles tight. Steam fogs the frame. Right: Purity Beans Ultra Blend jar on dark marble, warm amber rim light tracing the exact glass curve and label texture from reference. Identical mug, identical milk. One measure drops. Granules vanish in 3 seconds. Milk surface mirror-smooth. Text overlay: '70% Coffee | 30% Chicory'. Shallow depth of field, 85mm equivalent. Background bokeh: charging cable, crumpled napkin, water ring on marble. Handheld phone POV, natural grain, 24fps feel. Contact shadow under jar base. Fingerprint smudge on label."
+        "duration_s": 4.5,
+        "on_screen": "7:12 AM. Steam rises from a mug. A hand hovers over a cluttered shelf of jars.",
+        "spoken": "At 7:12 AM your milk coffee is already decided by what the jar admits.",
+        "visual_direction": "Handheld iPhone 15, 4K, 24fps. Cold morning light from a window. Shallow depth of field. Shelf clutter real — used spoon, water ring, charging cable."
       },
       {
         "scene": 2,
-        "type": "turn",
-        "duration_s": 4.0,
-        "on_screen": "BUILT FOR MILK. 3 SECONDS. ~₹5 A CUP (100G = ₹309, 66+ CUPS).",
-        "spoken": "I made Purity Beans Ultra Blend for my own morning milk coffee. Seventy percent coffee, thirty percent chicory—built to vanish into hot milk in three seconds. One hundred grams makes at least sixty-six cups. About five rupees a cup.",
-        "visual_direction": "Cut to centered Ultra Blend jar on dark marble. Warm amber glow catches the exact glass curve and label texture—printed paper feel, not a flat decal. Single fingerprint smudge on label. Slow-motion steam rising. Spoon lifts away. Milk surface perfectly smooth. Quick math graphic appears beside jar: '100g = ₹309 → 66+ cups → ~₹5/cup'. Text overlay holds: '70% Coffee | 30% Chicory | ~₹5/cup'. Cinematic, documentary feel. Subtle handheld sway. Correct contact shadow. Environment reflections visible on glass."
+        "type": "tension",
+        "duration_s": 5.0,
+        "on_screen": "Fingers pick up a Purity Beans Ultra Blend 100g glass jar. Label catches the light: 70% coffee, 30% chicory.",
+        "spoken": "This one says 70 percent coffee, 30 percent chicory. Nothing hidden.",
+        "visual_direction": "Close-up, 85mm equivalent. Jar rotates slightly in hand. Fingerprint smudge on glass. Label texture visible. Warm amber glow on the cap."
       },
       {
         "scene": 3,
-        "type": "trust",
-        "duration_s": 4.0,
-        "on_screen": "70% COFFEE. 30% CHICORY. NOTHING HIDDEN.",
-        "spoken": "The label reads exactly that: seventy percent coffee, thirty percent chicory. No hidden fillers. No guessing.",
-        "visual_direction": "Extreme macro close-up of Ultra Blend ingredient panel. Label texture catches warm gold light—razor-sharp text '70% Coffee, 30% Chicory'. Thumb holds jar steady, nail slightly uneven, skin pores visible. Shallow depth of field blurs dark marble behind. Dust mote drifting in light beam. One believable light source, correct shadow direction. Realistic environment reflections on glass. Label paper texture catches light like real printed paper."
+        "type": "unexpected",
+        "duration_s": 5.0,
+        "on_screen": "A measured spoon dips. Granules fall. Hot water hits at 85°C. Immediate dissolution, no clumps.",
+        "spoken": "One spoon. Eighty-five degrees. It dissolves like it was made for milk.",
+        "visual_direction": "Macro slow-motion. Steam swirls. Granule detail sharp. No floating particles. Real physics."
       },
       {
         "scene": 4,
-        "type": "value",
-        "duration_s": 3.5,
-        "on_screen": "ONE SPOON. HOT MILK. THE FIRST SIP.",
-        "spoken": "One spoon. Hot milk. Done.",
-        "visual_direction": "Top-down: hand lifts spoon away. Milk surface perfectly smooth, steam rising in slow motion. Jar sits beside mug—condensation bead on glass. Hand brings mug to lips (frame cuts at chin). Real exhale visible in steam. Micro-expression of relief. Natural handheld sway. 24fps. Warm amber glow on jar. Lived-in kitchen: half-open sugar sachet, used spoon resting sticky on counter. Steam fog on cold jar surface."
+        "type": "payoff",
+        "duration_s": 7.0,
+        "on_screen": "Milk pours. Color deepens to a rich caramel. First sip. A slow exhale.",
+        "spoken": "Smooth. Lower caffeine. Most jars won't tell you the split. This one does. About five rupees a cup from the 100g Ultra Blend jar at three hundred nine rupees — sixty-six cups minimum. Ultra Blend does the math for you.",
+        "visual_direction": "Medium shot. Mug centered. Jar rests beside it, label readable. Natural hand tremor on the sip. Background kitchen sounds faint."
       },
       {
         "scene": 5,
-        "type": "cta",
+        "type": "trust",
         "duration_s": 4.0,
-        "on_screen": "COMMENT MILK FOR THE EXACT RATIO + WHERE TO GRAB IT | PURITY BEANS | SHOP HTTPS://P3ONLINE.IN",
-        "spoken": "Purity Beans Ultra Blend. Comment MILK — I will personally reply with the exact 70/30 breakdown and where to grab it. Shop https://p3online.in.",
-        "visual_direction": "Jar centered, mug beside it. Warm amber glow holds on glass. Text overlay fades in clean: 'Comment MILK for the exact ratio + where to grab it | Purity Beans'. Hold 2 seconds. End frame: 'Follow @purepantryprovisions | Shop https://p3online.in'. Subtle camera push-in. 24fps film feel. Contact shadow intact."
+        "on_screen": "Jar label fills frame: Ultra Blend — 70% coffee, 30% chicory. Purity Beans logo. Website below.",
+        "spoken": "Read the jar. Purity Beans Ultra Blend. Honest coffee for everyday milk drinkers.",
+        "visual_direction": "Static, locked-off. Label perfectly legible. Warm gold rim light. No glare."
+      },
+      {
+        "scene": 6,
+        "type": "buy",
+        "duration_s": 2.5,
+        "on_screen": "Ultra Blend 100g jar on a marble slab. Price tag graphic: ₹309. Free shipping above ₹399.",
+        "spoken": "One hundred grams. Three hundred nine rupees. Free shipping over three ninety-nine at https://p3online.in.",
+        "visual_direction": "Top-down. Marble texture. Subtle reflection. Price appears as a sticker, not a graphic."
       }
     ],
-    "cta": "Comment MILK — I will personally reply with the",
-    "audio_direction": "ASMR-first: spoon clink on ceramic, milk pour, steam hiss, granules hitting liquid — zero music. Subtle room tone: distant pressure cooker whistle, fridge hum. Voiceover: calm, close-mic, Indian English, deliberate pacing. Breath audible before final line. Split-frame scene: distinct stir sounds left (wet, sloppy, clumping) vs silent dissolve right. Annoyed exhale left. Relief exhale right.",
-    "audio": "spoon_clink milk_pour steam_hiss granules_dissolve stir_sound_left silent_dissolve_right annoyed_exhale relief_exhale voiceover room_tone",
-    "edit_pacing": "Split-frame scene: fast cuts 0.5s on clump macro, then slow hold on dissolve",
-    "emotion_arc": "annoyance -> surprise -> trust -> comfort -> identity",
-    "save_trigger": "Save this before your next milk coffee run.",
-    "share_trigger": "Tag the person who stirs their coffee for five minutes.",
-    "comment_trigger": "Comment MILK if",
-    "hashtags": "#PurityBeans #UltraBlend #InstantCoffee #MilkCoffee #CoffeeLovers #IndiaCoffee #Read",
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
+    "script": "At 7:12 AM your milk coffee is already decided by what the jar admits. This one says 70 percent coffee, 30 percent chicory. Nothing hidden. One spoon. Eighty-five degrees. It dissolves like it was made for milk. Smooth. Lower caffeine. Most jars won't tell you the split. This one does. About five rupees a cup from the 100g Ultra Blend jar at three hundred nine rupees — sixty-six cups minimum. Ultra Blend does the math for you. Read the jar. Purity Beans Ultra Blend. Honest coffee for everyday milk drinkers. Shop Ultra Blend 100g at https://p3online.in. One hundred grams. Three hundred nine rupees. Free shipping over three ninety-nine.",
+    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "tagline": "At 7:12 AM your milk coffee is already decided by what the jar admits.",
     "editorial_score": {
-      "shareability": 7.2,
-      "saveability": 7.5,
-      "emotion_pull": 6.8,
-      "hook_strength": 7.0,
-      "brand_clarity": 8.0,
-      "overall": 7.3,
+      "shareability": 7.5,
+      "saveability": 8.5,
+      "emotion_pull": 7.0,
+      "hook_strength": 8.0,
+      "brand_clarity": 8.5,
+      "overall": 7.9,
       "verdict": "REJECT",
-      "feedback": "The hook is functional but not visceral — 'clumps in milk' is a known pain point but the phrasing feels explanatory rather than accusatory. A betrayal hook ('Your coffee brand sells you powder that refuses to dissolve') would stop the scroll harder. Scene 1 visual direction is strong with the split-frame contrast, but the on-screen text 'YOUR COFFEE CLUMPS IN MILK. OURS VANISHES.' reads like a claim, not a revelation. Rewrite to show the problem first: 'Watch generic coffee fight milk for 15 seconds.' Scene 2 math graphic is save-worthy but needs to hold longer — add a beat where the spoon rests on the jar, steam rising, letting the ₹5/cup land. Scene 3 trust beat is the weakest: 'The label reads exactly that' is passive. Replace with founder POV: 'I put the breakdown on the jar because I got tired of guessing.' That builds authority and transparency simultaneously. The CTA 'Comment MILK for the 70/30 breakdown' is good intent-comment engineering but the payoff must be immediate in replies — ensure the founder replies with the exact 70/30 spec sheet link. Overall, the reel has the right architecture but lacks emotional teeth. Sharpen the hook, make the trust beat personal, and extend the value hold.",
-      "retention_audit": "Line 1 (Hook): 'Your instant coffee clumps in milk because it is not built for milk. Ours is.' — Functional but flat. No curiosity gap. Attention risk: medium. Rewrite: 'Your coffee brand knows their powder clumps in milk. They sell it anyway.'\nLine 2 (Problem): 'I made Purity Beans Ultra Blend for my own morning milk coffee.' — Good founder anchor, but buried. Move to front of Scene 2.\nLine 3 (Spec): 'Seventy percent coffee, thirty percent chicory—built to vanish into hot milk in three seconds.' — Strong spec, but 'vanish' is a claim. Show, don't tell. Visual already shows it. Keep.\nLine 4 (Value): 'One hundred grams makes at least sixty-six cups. About five rupees a cup.' — High saveability. Hold this frame 1s longer.\nLine 5 (Trust): 'The label reads exactly that: seventy percent coffee, thirty percent chicory. No hidden fillers. No guessing.' — Passive. Rewrite: 'I print 70% coffee / 30% chicory on the jar because you deserve to know what you're drinking.'\nLine 6 (CTA): 'One spoon. Hot milk. Done. Purity Beans Ultra Blend. Shop https://p3online.in.' — Clean, but 'Done' is weak. End with the CTA: 'Comment MILK — I'll send you the 70/30 breakdown.'"
+      "feedback": "Overall score 7.9 falls below the 8.0 threshold. Shareability is the primary drag: the reel feels like a polished product demo rather than a clip a consumer forwards to a friend. To lift shareability above 8, add a relatable friction moment — e.g., a quick cut of the same hand grimacing at a bitter sip from an unmarked jar before switching to Ultra Blend — so the payoff feels earned and share-worthy. Saveability is strong thanks to the explicit cost-per-cup math; keep that. Emotion_pull sits at 7; deepen the sensory relief beat (scene 4) by lingering 1-2 seconds longer on the exhale and adding a subtle \"this is what mornings should feel like\" micro-expression. Hook_strength is solid at 8 — the 7:12 AM specificity works — but the spoken line in scene 1 is identical to the on-screen text; offset them by 0.5s so the ear leads the eye. Brand_clarity is clear at 8.5; the 70/30 label close-up and honest pricing anchor the positioning.",
+      "retention_audit": "Scene 1 (0-4.5s): Hook lands, but spoken = on-screen text creates redundancy; stagger audio 0.5s ahead. Scene 2 (4.5-9.5s): Label reveal is clean; add a micro-beat of the thumb brushing the '70% coffee' text for tactile realism. Scene 3 (9.5-14.5s): Macro dissolution is satisfying; insert a 0.3s sound-design pop at granule impact (already in audio_direction) to cue re-watch. Scene 4 (14.5-21.5s): Payoff math is the save trigger; the ₹5/cup claim is specific and credible — hold the jar-in-frame 1s longer after the sip to cement association. Scene 5 (21.5-25.5s): Static label lock-up is correct for trust; ensure website URL is legible at phone scale. No hard attention drops, but the reel lacks a \"forward this to your flatmate\" moment — inject a micro-conflict beat early to create share impulse."
     },
+    "needs_regen": true,
+    "held": true,
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: Overall score 7.9 falls below the 8.0 threshold. Shareability is the primary drag: the reel feels like a polished product demo rather than a clip a consumer forwards to a friend. To lift shareability above 8, add a relatable friction moment — e.g., a quick cut of the same hand grimacing at a bitter sip from an unmarked jar before switching to Ultra Blend — so the payoff feels earned and share-worthy. Saveability is strong thanks to the explicit cost-per-cup math; keep "
+  },
+  "growth_reel": {
+    "featured_product": "ultra_blend",
+    "angle": "myth_busting",
+    "audio": "Acoustic room tone, subtle turntable vinyl crackle, gentle low ambient synth drone, crisp water kettle hiss rising at second six.",
+    "body": "The moment you stir hot milk into instant coffee, chemistry takes over. Most people blame the dairy or the temperature when a cup turns flat or bitter within minutes. The actual culprit is how the roast was finished before it ever touched your pantry shelf. Coffee soluble solids react instantly to heat shock when exposed to aggressive industrial processing. When you use a measured 70% coffee and 30% chicory blend like Ultra Blend from Purity Beans, the chicory root absorbs the hot water expansion differently than pure coffee beans, softening the upfront acidity and rounding out the body in milk. Understanding this interaction changes how you pour your morning cup forever. No heavy machinery or cafe barista training needed—just a clean spoon, steady water, and a glance at the back panel of your Purity Beans jar to see what is really in your mug. Read the jar. Follow @purepantryprovisions for more everyday coffee physics.",
+    "caption": "Your morning milk coffee behaves a specific way because of what happens when hot water meets roasted chicory root and coffee extract in the first five seconds. We broke down the exact science of how 70% coffee and 30% chicory interacts in your mug—no jargon, just the physics of your daily cup. Find Ultra Blend and our complete line at https://p3online.in. Follow @purepantryprovisions for more unvarnished coffee facts. #PurityBeans #UltraBlend #CoffeePhysics #CleanCoffee #CoffeeMyths #MorningRoutine #CoffeeCulture #ReadTheJar",
+    "chosen_hook": "Betrayal Hook",
+    "comment_trigger": "Comment COFFEE if you want to know what happens when you pour 80°C water over chicory versus pure coffee.",
+    "cta": "Follow @purepantryprovisions for more honest coffee insights.",
+    "frames": [
+      {
+        "on_screen": "Macro shot of steaming milk pouring into a dark ceramic mug over coarse granules",
+        "spoken": "That bitter edge in your morning milk coffee is not your fault. It happens in the first three seconds of the pour."
+      },
+      {
+        "on_screen": "Close up of a stainless steel spoon stirring dark liquid, small bubbles forming at the rim",
+        "spoken": "Most instant blends react to hot water with an abrupt temperature shock that flattens the aroma instantly."
+      },
+      {
+        "on_screen": "Camera pulls back to reveal a glass Purity Beans Ultra Blend jar sitting beside the mug on a warm wooden table",
+        "spoken": "When you use Ultra Blend, that 70% coffee and 30% chicory ratio changes the extraction curve entirely in milk."
+      },
+      {
+        "on_screen": "Finger pointing gently to the ingredient panel on the back of the Purity Beans glass jar",
+        "spoken": "Chicory root absorbs hot water differently than coffee solids, creating a smooth, rounded cup without harsh bitterness."
+      },
+      {
+        "on_screen": "Wide shot of the ceramic mug, steam rising softly in morning window light, text overlay: Follow @purepantryprovisions",
+        "spoken": "Read the jar, understand your brew, and follow @purepantryprovisions for more coffee truths."
+      }
+    ],
+    "hashtags": "#PurityBeans #UltraBlend #CoffeePhysics #CleanCoffee #CoffeeMyths #MorningRoutine #CoffeeCulture #ReadTheJar",
+    "hook": "That bitter edge in your morning milk coffee is not your fault. It happens in the first three seconds of the pour.",
+    "hook_spoken": "That bitter edge in your morning milk coffee is not your fault. It happens in the first three seconds of the pour.",
+    "hook_text": "The 3-Second Pour Secret",
+    "hook_text_overlay": "Why your milk coffee turns bitter instantly",
+    "loop_ending": "Seamless loop cutting back to the steaming milk pour as the narrator repeats the first line.",
+    "regen_round": 1,
+    "save_trigger": "Save this reel before you brew your next cup so you can check your ingredient label.",
+    "share_trigger": "Share this with the person who always complains about their morning milk coffee tasting flat.",
+    "source": "Purity Beans Editorial Board",
+    "type": "growth_reel",
     "viral_potential": {
       "scores": {
-        "hook": 6.0,
-        "curiosity_gap": 5.0,
-        "relatability": 8.0,
-        "shareability": 6.0,
-        "comment_trigger": 4.0,
-        "format_fit": 7.0,
-        "follow_cta": 3.0
+        "hook": 8.0,
+        "curiosity_gap": 8.0,
+        "relatability": 9.0,
+        "shareability": 8.0,
+        "comment_trigger": 7.0,
+        "format_fit": 8.0,
+        "follow_cta": 8.0
       },
-      "overall": 5.57,
+      "overall": 8.0,
       "weakest": [
         "comment_trigger",
-        "follow_cta",
         "curiosity_gap"
       ],
-      "feedback": "The hook is functional but flat — 'Ours is' is a weak payoff for a pattern interrupt. The curiosity gap opens ('why it clumps') but closes too fast; the split-screen proves the fix in seconds, leaving no open loop to carry the viewer to the end. The comment trigger ('Comment MILK for the exact ratio + where to grab it') asks for information already fully stated in the script (70/30, ₹309, 66+ cups, p3online.in) — zero intent gap, so comments will be low. The follow CTA is tacked on in the end frame with no reason to follow beyond 'buy this'; growth-track Reels/Shorts need a content reason (e.g",
-      "better_hook": "Your milk coffee clumps because your instant coffee wasn't made for milk. Ours was.",
-      "passed": false,
+      "feedback": "The piece effectively blends coffee science with everyday milk-coffee habits, maintaining strict adherence to product rules by explicitly identifying Ultra Blend as a 70% coffee and 30% chicory mix. To maximize growth potential, sharpen the comment trigger from a conditional statement to a direct, frictionless question ('Type 70 or 30 in the comments'), and ensure the curiosity gap in the opening seconds heightens the tension around industrial roast finish before revealing the chicory-milk interaction.",
+      "better_hook": "Your morning milk coffee turns bitter in the first three seconds—and it has nothing to do with your dairy.",
+      "passed": true,
       "honesty": [],
       "pass_mark": 8.0
     },
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The hook is functional but not visceral — 'clumps in milk' is a known pain point but the phrasing feels explanatory rather than accusatory. A betrayal hook ('Your coffee brand sells you powder that refuses to dissolve') would stop the scroll harder. Scene 1 visual direction is strong with the split-frame contrast, but the on-screen text 'YOUR COFFEE CLUMPS IN MILK. OURS VANISHES.' reads like a claim, not a revelation. Rewrite to show the problem first: 'Watch generic c"
-  },
-  "growth_reel": {
-    "type": "reel",
-    "hook": "Your Ultra Blend jar clumps less than the pure coffee jars — and nobody tells you why.",
-    "hook_text": "The 70/30 blend resists moisture differently than pure coffee granules.",
-    "hook_spoken": "The Ultra Blend jar on your counter stays flowable longer. The pure coffee jars clump faster. Same kitchen. Same lid. Different physics.",
-    "hook_text_overlay": "WHY ULTRA BLEND FLOWS",
-    "frames": [
-      {
-        "on_screen": "Extreme close-up: a human thumb and forefinger pinch the exact Purity Beans Ultra Blend glass jar lid, twisting it open. Shallow depth of field. Warm amber rim light catches the label texture. Dark marble countertop shows a faint contact shadow under the jar base.",
-        "spoken": "The Ultra Blend jar on your counter stays flowable longer. The pure coffee jars clump faster. Same kitchen. Same lid. Different physics."
-      },
-      {
-        "on_screen": "Side-by-side macro shot: left hand sprinkles Ultra Blend granules — they cascade like dry sand. Right hand sprinkles Bold agglomerated granules — they clump and fall in sticky chunks. Both jars sit on the same dark marble. A single droplet of condensation clings to the Bold jar neck.",
-        "spoken": "Chicory fiber absorbs moisture differently than pure coffee solids. The 30% chicory in Ultra Blend acts like a humidity buffer. Pure coffee granules — Bold, Purista, Purica — grab water vapor and lock together."
-      },
-      {
-        "on_screen": "Slow-motion pour: Ultra Blend streams into a matte black ceramic cup in a clean ribbon. Cut to: Bold granules tumble out in fractured clumps, bouncing on the rim. Steam rises identically from both cups. Background: blurred kitchen shelf, 85mm lens compression.",
-        "spoken": "This is not a defect. Freeze-dried Purica and Purista, agglomerated Bold — they are pure coffee. Zero filler. Zero buffer. They demand a dry spoon and a tight seal every single time."
-      },
-      {
-        "on_screen": "Human hand demonstrates: a dry stainless steel spoon taps the Ultra Blind jar rim — granules flow. Same hand, same spoon, wipes a wet fingertip on a towel, then taps the Bold jar — instant clump chain reaction. Label text '0% CHICORY' catches the rim light on the Bold jar.",
-        "spoken": "One wet spoon ruins a pure coffee jar in seconds. Ultra Blend gives you a wider margin. That is the only storage advantage the 70/30 blend has."
-      },
-      {
-        "on_screen": "Final frame: the Ultra Blend jar and Bold jar sit side by side, lids sealed. A single warm gold light paints both labels. Text overlay: 'Pure coffee demands respect. Ultra Blend forgives the rush.' Hand enters frame, lifts Ultra Blend jar, walks out of shot.",
-        "spoken": "Store pure coffee like it matters — because it does. Ultra Blend at p3online.in. Bold, Purista, Purica at p3online.in."
-      }
-    ],
-    "body": "Purity Beans — Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "caption": "Your Ultra Blend jar clumps less than the pure coffee jars — and nobody tells you why.\n\nChicory fiber absorbs moisture differently than pure coffee solids. The 30% chicory in Ultra Blend acts like a humidity buffer. Pure coffee granules — Bold, Purista, Purica — grab water vapor and lock together.\n\nThis is not a defect. Freeze-dried Purica and Purista, agglomerated Bold — they are pure coffee. Zero filler. Zero buffer. They demand a dry spoon and a tight seal every single time.\n\nPurity Beans — Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.\n\nhttps://p3online.in",
-    "cta": "Store pure coffee like it matters. Ultra Blend forgives the rush. Both at p3online.in",
-    "comment_trigger": "Which jar clumps faster in your kitchen — the pure coffee or the blend?",
-    "save_trigger": "Save this before your next spoonful.",
-    "share_trigger": "Send this to the person who leaves the lid loose.",
-    "hashtags": "#PurityBeans #UltraBlend #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia",
-    "audio": "ASMR-grade granular pour sounds — dry sand cascade vs sticky clump thuds. Subtle kitchen ambience: fridge hum, distant pressure cooker whistle. No music bed.",
-    "loop_ending": "Final frame (hand lifting Ultra Blend jar) matches opening frame (hand twisting Ultra Blend lid) — same jar, same hand, same amber light. The walk-out implies the ritual continues off-screen.",
-    "angle": "REVELATION",
-    "source": "evergreen_template",
-    "featured_product": "Ultra Blend",
-    "chosen_hook": "Your Ultra Blend jar clumps less than the pure coffee jars — and nobody tells you why.",
+    "viral_readiness_score": 90.0,
     "editorial_score": {
-      "shareability": 4.5,
-      "saveability": 4.0,
-      "emotion_pull": 2.0,
-      "hook_strength": 3.5,
-      "brand_clarity": 3.0,
-      "overall": 3.4,
-      "verdict": "REJECT",
-      "feedback": "The reel fails the Subject Test: 'how to store coffee' is not something everyone is curious about but nobody explains. It is generic kitchen advice applicable to any dry good. The hook blames the jar on the counter, but the frames pivot to generic storage tips (air, heat, wet spoon) with zero Purity Beans specificity. The featured product is Ultra Blend (70/30 coffee-chicory), yet the body copy leads with 'Bold, Purista, Purica, and Prima are pure coffee with no additives' — creating a product-message mismatch that confuses brand clarity. The visual plan lacks the required Viral Visual Hook patterns (Shock/Calm, Impossible Scene, Human Anchor, Before/After, Revelation Close-up). No human anchor, no Purity Beans jar in frame, no contact shadows or label reflections. The loop ending 'lid closing' is a generic transition, not a content loop. Audio 'quiet kitchen ambience' wastes the sound-on retention signal. To pass: reframe around a Purity Beans-specific revelation (e.g., 'Why our freeze-dried granules clump less than agglomerated' or 'The 70/30 blend stays smoother longer — here is why'), anchor every frame on the exact reference jar with a human hand, and use a Betrayal or Curiosity Gap hook tied to the product's actual differentiator.",
-      "retention_audit": "Frame 1 (SEAL IT): Hook speaks to 'jar on your counter' but visual is text-only — no product, no human, no stakes. Attention drops immediately. Frame 2 (AIR): Generic physics lesson. No brand presence. Frame 3 (HEAT): 'Above the stove' advice applies to spices, oil, anything. Zero differentiation. Frame 4 (DRY SPOON): Clumping demo opportunity wasted — could show Purity Beans agglomerated vs freeze-dried behavior difference. Frame 5 (TONIGHT): Generic 'try it' CTA. No reason to choose Purity Beans over any other jar. Body/Caption: Mentions all four pure variants while featuring Ultra Blend — cognitive dissonance. CTA 'restock at p3online.in' has no variant-specific link or offer. Hashtags are generic category tags, not community triggers."
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.0,
+      "overall": 8.8,
+      "verdict": "PASS",
+      "feedback": "The asset hits the right notes by explaining the functional physics of a 70/30 coffee-chicory blend without resorting to cheap anti-chicory bias. The copy maintains transparency about Ultra Blend while keeping retention high through micro-learning. No attention drops noted in the script flow.",
+      "retention_audit": "The transition from the milk pour to the 70/30 ratio explanation is smooth. The call to action is clear and naturally integrated."
     },
-    "editorial_error": "brand: [\"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory)\", 'product truth: Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: [\"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory)\", 'product truth: Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "people who buy instant coffee and have never turned the jar around",
+      "angle": "visual discovery of one label fact",
+      "follow_promise": "Follow for the next thing the label is hiding.",
+      "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+      "platform": "reel",
+      "sku": "Ultra Blend",
+      "day": 296
+    },
+    "growth_review": {
+      "platform": "reel",
+      "label": "growth_reel",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "people who buy instant coffee and have never turned the jar around",
+        "angle": "visual discovery of one label fact",
+        "follow_promise": "Follow for the next thing the label is hiding.",
+        "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+        "platform": "reel",
+        "sku": "Ultra Blend",
+        "day": 296
+      },
+      "published": false
+    }
   },
   "threads_post": {
-    "featured_product": "ultra_blend",
-    "objective": "Brand Awareness",
-    "primary_cta": "Comment RATIO and I'll send you the 70/30 breakdown vs. the top 3 brands.",
-    "success_metric": "Profile visits and link clicks to p3online.in/products/ultra-blend",
+    "featured_product": "Ultra Blend",
+    "objective": "Drive engagement and website traffic through a contrarian Thread about milk coffee habits and transparent ingredient labeling.",
+    "primary_cta": "Shop now: https://p3online.in",
+    "success_metric": "Profile visits, saves, and website clicks to https://p3online.in",
     "content_type": "threads_post",
-    "platform": "threads",
-    "angle": "revelation",
-    "buy_cta": "Shop p3online.in",
-    "caption": "99% of brands hide the chicory % on the back label. Purity Beans prints 70% coffee, 30% chicory right on the front of the Ultra Blend jar. No vague 'coffee blend'. No mystery filler. Just the ratio. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. India's Cleanest Instant Coffee. 100g jar makes at least 66 cups. Follow @purepantryprovisions. Shop p3online.in",
-    "chosen_hook": "99% of brands hide the chicory % on the back label. We print 70/30 on the front.",
-    "comment_trigger": "Comment RATIO and I'll send you the 70/30 breakdown vs. the top 3 brands.",
-    "follow_cta": "Follow @purepantryprovisions",
-    "hashtags": "#PurityBeans #PurePantryProvisions #UltraBlend #ReadTheJar #CoffeeTransparency #HonestCoffee #IndiaCleanestInstantCoffee",
-    "hook": "99% of brands hide the chicory % on the back label. We print 70/30 on the front.",
-    "hook_text": "99% of brands hide the chicory % on the back label. We print 70/30 on the front.",
-    "instagram_hashtags": "#PurityBeans #PurePantryProvisions #UltraBlend #ReadTheJar #CoffeeTransparency #HonestCoffee #IndiaCleanestInstantCoffee",
-    "loop_note": "Re-read the ingredient panel on your current jar. Compare. The difference is clarity.",
-    "psychology_frame": "revelation",
+    "platform": "Threads",
+    "angle": "Contrarian take on daily milk coffee routines and ingredient transparency.",
+    "caption": "Hot take: most people never taste their coffee, they just drink it out of pure habit. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee designed for everyday milk coffee drinkers. Priced at ₹309 for 100g, it yields at least 66 cups—about ₹5 a cup. Read the jar. Shop now: https://p3online.in. Follow @purepantryprovisions for honest coffee talk.",
+    "chosen_hook": "Hot take: most people never taste their coffee, they just drink it out of pure habit.",
+    "comment_trigger": "Comment BLEND if you prefer a smooth milk coffee in the morning.",
+    "follow_cta": "Follow @purepantryprovisions for honest coffee talk.",
+    "hashtags": "#PurityBeans #UltraBlend #CoffeeLoversIndia #CleanCoffee #InstantCoffee",
+    "hook": "Hot take: most people never taste their coffee, they just drink it out of pure habit.",
+    "hook_text": "Hot take: most people never taste their coffee, they just drink it out of pure habit.",
+    "instagram_hashtags": [
+      "#PurityBeans",
+      "#UltraBlend",
+      "#InstantCoffee"
+    ],
+    "loop_note": "Keep the reader engaged by contrasting habit with ingredient awareness.",
+    "psychology_frame": "accessible_premium",
     "reel_1": [
       {
-        "on_screen": "Split screen. Left: blurry, hard-to-read back label of a generic instant coffee jar — chicory % buried in tiny text. Right: crisp Purity Beans Ultra Blend jar in warm amber light, front label clearly reads '70% Coffee, 30% Chicory'. Hand enters frame, taps the front label.",
-        "spoken": "Most brands bury the chicory percentage on the back in 4-point font. We put 70/30 on the front where you can't miss it."
+        "on_screen": "Hot take: most people never taste their coffee, they just drink it.",
+        "spoken": "Hot take: most people never taste their coffee, they just drink it out of pure habit every single morning."
       },
       {
-        "on_screen": "Close-up: fingers twist open the Ultra Blend glass jar. Aroma rises — visible steam carries the scent. Spoon scoops granules. Cut to milk pouring, swirling into deep amber.",
-        "spoken": "70% coffee. 30% chicory. A smooth milk coffee. The 100g jar at ₹309 makes at least 66 cups."
+        "on_screen": "Try a simple brew test tomorrow morning.",
+        "spoken": "Try a simple brew test tomorrow: use water around eighty-five degrees, one level spoon, and a thirty-second pause."
       },
       {
-        "on_screen": "Extreme close-up of the Ultra Blend ingredient panel. Text is razor-sharp: 'Coffee (70%), Chicory (30%)'. Finger traces the line slowly. No other ingredients appear.",
-        "spoken": "No vague 'coffee blend'. No mystery filler. Just the ratio. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is 70% coffee, 30% chicory."
+        "on_screen": "Ultra Blend: 70% coffee, 30% chicory.",
+        "spoken": "With Ultra Blend, you get a smooth 70% coffee and 30% chicory milk coffee crafted specifically for everyday milk coffee drinkers."
       },
       {
-        "on_screen": "Real kitchen counter at dawn. Ultra Blend jar sits beside a steaming mug, a half-open laptop, and a notebook with handwritten to-dos. Morning light catches the glass. No styling props.",
-        "spoken": "India's Cleanest Instant Coffee means you always know exactly what you're drinking."
+        "on_screen": "₹309 for 100g | ~66 cups (~₹5 per cup)",
+        "spoken": "Priced at ₹309 for 100g, it yields at least 66 cups—about ₹5 a cup."
       },
       {
-        "on_screen": "Final frame: Purity Beans logo centered. Website URL p3online.in below. Clean type: 'Read the jar. Comment RATIO for the breakdown.'",
-        "spoken": "Read the jar. Comment RATIO and I'll send you the 70/30 breakdown vs. the top 3 brands. Shop p3online.in. Follow @purepantryprovisions."
+        "on_screen": "Shop now: https://p3online.in | Follow @purepantryprovisions",
+        "spoken": "Read the jar. Head to p3online.in to shop, and follow @purepantryprovisions for more honest coffee talk."
       }
     ],
-    "regen_round": 2,
-    "save_trigger": "Save this to compare your current jar's label tomorrow morning.",
-    "share_trigger": "Share with the friend who drinks instant coffee daily and deserves to know the ratio.",
-    "text": "99% of brands hide the chicory % on the back label.\n\nPurity Beans prints 70% coffee, 30% chicory right on the front of the Ultra Blend jar. No vague 'coffee blend'. No mystery filler. Just the ratio. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. India's Cleanest Instant Coffee. 100g jar makes at least 66 cups. Follow @purepantryprovisions. Shop p3online.in",
-    "editorial_score": {
-      "shareability": 7.2,
-      "saveability": 8.0,
-      "emotion_pull": 6.5,
-      "hook_strength": 6.8,
-      "brand_clarity": 8.5,
-      "overall": 7.4,
-      "verdict": "REJECT",
-      "feedback": "The asset scores below the 8.0 threshold because the hook and emotion_pull feel generic 'transparency' marketing rather than a specific betrayal revelation. The 99% claim is a borrowed statistic — replace with a verifiable, India-specific audit (e.g., 'We checked the top 5 instant coffees on Blinkit/Zepto — only 1 prints chicory % on the front'). Move the 66-cup yield and ₹309 price to the first 3 seconds to anchor value immediately. The caption buries the product difference: lead with 'Ultra Blend = 70% coffee, 30% chicory. Bold/Purista/Purica/Prima = pure coffee. You choose.' Cut the slogan 'India's Cleanest Instant Coffee' when Ultra Blend is featured — it creates a compliance risk next to a 30% chicory product. Re-write the comment trigger to be variant-specific: 'Comment MILK or BLACK and I'll tell you which jar fits.' Add a single line showing the competitor back-label vs. Ultra Blend front-label side-by-side in the carousel/reel to make the transparency visual, not just claimed.",
-      "retention_audit": "Line 1 (hook): '99% of brands hide...' — vague, unverifiable, used by every clean-label brand. Drop or prove.\nLine 2: 'We print 70/30 on the front' — good, but arrives after the weak claim.\nLine 3: 'No vague coffee blend...' — strong clarity, keep.\nLine 4: Product portfolio list — dense, low retention. Move to carousel slide 2.\nLine 5: 'India's Cleanest Instant Coffee' — compliance risk with Ultra Blend; remove or qualify.\nLine 6: '100g jar makes 66 cups' — high value, buried. Move to line 2.\nLine 7: Follow/Shop CTAs — standard, low conversion. Replace with variant qualifier CTA."
+    "regen_round": 4,
+    "save_trigger": "Save this thread for your next grocery restock.",
+    "share_trigger": "Share this with someone who drinks milk coffee every single morning.",
+    "text": "Hot take: most people never taste their coffee, they just drink it out of pure habit.\n\nTry a simple brew test tomorrow: water around eighty-five degrees, one level spoon, and a thirty-second pause. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. At ₹309 for 100g, it yields at least 66 cups—about ₹5 a cup. Read the jar. Shop now: https://p3online.in. Follow @purepantryprovisions",
+    "viral_potential": {
+      "scores": {
+        "hook": 8.0,
+        "curiosity_gap": 7.0,
+        "relatability": 9.0,
+        "shareability": 7.0,
+        "comment_trigger": 8.0,
+        "format_fit": 9.0,
+        "follow_cta": 8.0
+      },
+      "overall": 8.0,
+      "weakest": [
+        "curiosity_gap",
+        "shareability"
+      ],
+      "feedback": "The contrarian opener ('drinking out of pure habit') is strong and native to Threads, and transparency on pricing/ratio is excellent. To push past 8, sharpen the curiosity gap by asking a question about what else is hidden in grocery store jars, and make the share trigger more explicit for milk-coffee drinkers.",
+      "better_hook": "Most people think they love their morning coffee. They actually just love their milk and sugar.",
+      "passed": true,
+      "honesty": [],
+      "pass_mark": 8.0
     },
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The asset scores below the 8.0 threshold because the hook and emotion_pull feel generic 'transparency' marketing rather than a specific betrayal revelation. The 99% claim is a borrowed statistic — replace with a verifiable, India-specific audit (e.g., 'We checked the top 5 instant coffees on Blinkit/Zepto — only 1 prints chicory % on the front'). Move the 66-cup yield and ₹309 price to the first 3 seconds to anchor value immediately. The caption buries the product diff"
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.8,
+      "emotion_pull": 8.2,
+      "hook_strength": 8.9,
+      "brand_clarity": 9.0,
+      "overall": 8.7,
+      "verdict": "PASS",
+      "feedback": "The opening hook effectively stops the scroll by questioning everyday habits. The transition into clear product specifics, transparent 70/30 labeling, and actionable value metrics builds immediate trust and encourages saves.",
+      "retention_audit": "The initial hook creates an immediate pause. The practical brewing test and precise cost breakdown maintain attention smoothly through to the clear website CTA."
+    },
+    "viral_readiness_score": 76.0,
+    "growth_plan": {
+      "primary_objective": "earn qualified followers",
+      "secondary_objective": "reach new relevant coffee drinkers",
+      "audience": "people who will reply to one precise coffee question",
+      "angle": "one honest question, not a caption pasted short",
+      "follow_promise": "Follow for one honest coffee question a day.",
+      "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
+      "platform": "threads",
+      "sku": "Ultra Blend",
+      "day": 296
+    },
+    "growth_review": {
+      "platform": "threads",
+      "label": "threads_post",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "earn qualified followers",
+        "secondary_objective": "reach new relevant coffee drinkers",
+        "audience": "people who will reply to one precise coffee question",
+        "angle": "one honest question, not a caption pasted short",
+        "follow_promise": "Follow for one honest coffee question a day.",
+        "rationale": "Threads earns a reply. It does not carry the Instagram caption.",
+        "platform": "threads",
+        "sku": "Ultra Blend",
+        "day": 296
+      },
+      "published": false
+    }
   },
   "facebook_post": {
     "featured_product": "Ultra Blend",
@@ -4972,6 +5246,70 @@
       {
         "status": "exhausted",
         "reason": "The asset scores below the 8.0 threshold because the hook and emotion_pull feel generic 'transparency' marketing rather than a specific betrayal revelation. The 99% claim is a borrowed statistic — replace with a verifiable, India-specific audit (e.g., 'We checked the top 5 instant coffees on Blinkit"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a brew tip (exact water temperature, ratio or technique for a better instant cup). Every frame/slide must teach, debunk or show a ritual; no prices, no offe"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned FOLLOW AND DISCOVERY objective is primarily promotional/commercial copy — selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a myth-buster (one common coffee myth, debunked with a verifiable fact"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: shareability, hook, format_fit). The piece is honest and clearly states the product composition (70/30) and pricing without exaggerated claims. However, the hook is a bit generic for Threads. To perform better on Threads, it needs a sharper, more provocative opening "
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The opener is decent for Threads, but it shifts too quickly into a direct product pitch with pricing and specs. To boost virality and engagement, create a sharper curiosity gap about what people are actually paying for at cafes versus at"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.71 < 8.0 (weakest: curiosity_gap, shareability). The piece has a strong contrarian opening and clearly states the product specs (Ultra Blend, 70% coffee / 30% chicory, price per cup) without violating any brand rules. To push the score higher, make the curiosity gap sharper by teasing"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.86 < 8.0 (weakest: curiosity_gap, shareability). The opening line is a bit generic and relies on common knowledge rather than a sharp contrarian take. To make it punchier for Threads, start with an uncomfortable truth or hot take about hidden label practices before introducing the sol"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: curiosity_gap, shareability, comment_trigger). The hot take opener is strong and fits the Threads format well, but the transition into product specs and pricing is a bit too abrupt and reads like a traditional ad. To maximize viral potential on Threads, deepen the cu"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.0 < 8.0 (weakest: shareability, hook). The opening contrarian statement is strong and fits the Threads platform well, but it pivots too quickly into a product pitch in the same paragraph. To improve performance on Threads, keep the text punchy, separate the hot take from the product d"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The opening line is a strong contrarian take, but the pivot into the product features and exact price points happens too abruptly, killing the curiosity loop. To make it a top-tier Threads post, keep the hook sharp, create a genuine deba"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The opening line is a decent contrarian take, but it pivots too quickly into product specs and pricing, which weakens the curiosity loop. To drive higher saves and shares on Threads, make the opening statement sharper about milk coffee h"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The hook is decent and the platform fit is strong for Threads, but the curiosity gap falls flat because it immediately gives away the product details rather than building tension. To increase shareability and saves, frame the cost-per-cu"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, curiosity_gap, shareability). The current hook 'Things nobody tells you about instant coffee, a thread:' is overused and generic on Threads. To make it truly contrarian and stop the scroll, lead with a sharp observation about everyday milk coffee habits instead"
       }
     ],
     "yt_short": [
@@ -5238,6 +5576,50 @@
       {
         "status": "exhausted",
         "reason": "The hook is functional but not visceral — 'clumps in milk' is a known pain point but the phrasing feels explanatory rather than accusatory. A betrayal hook ('Your coffee brand sells you powder that refuses to dissolve') would stop the scroll harder. Scene 1 visual direction is strong with the split-"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.7 < 8.0 (weakest: curiosity_gap, shareability, follow_cta). The piece hits a very strong chord with Indian milk-coffee drinkers facing the clump problem. However, the curiosity gap could be sharper by withholding the exact coffee-to-chicory ratio until the middle beat rather than putt"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: shareability, hook). The hook is slightly generic and lacks an immediate pattern interrupt for the first 1-2 seconds of a YouTube Short. To boost shareability, frame the label reading tip around a common kitchen oversight that viewers will want to text to their morni"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 5.57 < 8.0 (weakest: hook, comment_trigger, follow_cta). The hook is a generic 'mistake' framing that doesn't create urgency or specificity — it sounds like clickbait, not a revelation. Curiosity gap opens ('what mistake?') but pays off with a factual label read, not an insight that cha"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', 'product truth: Shopify price truth: price ₹180 is not a live Shopify price', 'product truth: Shopify price truth: price ₹180 is not a live Shopify price']"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure']"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The hook 'At 7:12 AM your milk coffee is already decided by what the jar admits' is strong — specific, curiosity-driven, and unique to Purity Beans' transparency angle. However, the emotion_pull (6.5) drags the overall below 8 because the script stays in 'quiet functional' mode without a sharper ide"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing website reference']"
+      },
+      {
+        "status": "exhausted",
+        "reason": "Overall score 7.9 falls below the 8.0 threshold. Shareability is the primary drag: the reel feels like a polished product demo rather than a clip a consumer forwards to a friend. To lift shareability above 8, add a relatable friction moment — e.g., a quick cut of the same hand grimacing at a bitter "
       }
     ],
     "growth_reel": [
@@ -5646,6 +6028,16 @@
       {
         "status": "exhausted",
         "reason": "brand: [\"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory)\", 'product truth: Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: F"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: Never call Ultra Blend 'pure' (70% coffee, 30% chicory)\", 'product truth: Ultra Blend is 70% coffee and 30% chicory and is not a zero-chicory jar']"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a myth-buster (one common coffee myth, debunked with a verifiable fact). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no 'bu"
       }
     ]
   },
@@ -7818,12 +8210,12 @@
     "asset_count": 36
   },
   "mandatory_regen_rounds": {
-    "threads_post": 18,
+    "threads_post": 20,
     "instagram_post": 7,
     "carousel": 7,
     "facebook_post": 7,
     "reel_1": 4,
     "reel_2": 3,
-    "growth_reel": 10
+    "growth_reel": 11
   }
 }
