@@ -249,8 +249,8 @@ def product_url(slug: str, cfg: dict | None = None) -> str:
     utm = cfg.get("utm") or {}
     query = urlencode([
         ("utm_source", str(utm.get("utm_source") or "instagram")),
-        ("utm_medium", str(utm.get("utm_medium") or "organic")),
-        ("utm_campaign", str(utm.get("utm_campaign") or "trial_diwali_push")),
+        ("utm_medium", str(utm.get("utm_medium") or "post")),
+        ("utm_campaign", str(utm.get("utm_campaign") or "202610")),
     ])
     return f"https://p3online.in/products/{handle}?{query}"
 
@@ -346,7 +346,7 @@ def attach(content: dict, on, cfg: dict | None = None) -> dict:
         return content
     cfg = cfg or load_config()
     base = {
-        "campaign": str(cfg.get("id") or "trial_diwali_push"),
+        "campaign": str(cfg.get("id") or "202610"),
         "ends_on": str(cfg.get("end") or ""),
         "organic_only": True,
     }

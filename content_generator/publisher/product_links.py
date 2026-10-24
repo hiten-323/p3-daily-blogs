@@ -91,12 +91,12 @@ def product_name(slug: str) -> str:
     return _DISPLAY.get(slug, "Purity Beans")
 
 
-def tracked_url(slug: str, platform: str, campaign: str = "daily") -> str:
+def tracked_url(slug: str, platform: str, campaign: str = "202610") -> str:
     from content_generator.core.shopify_catalog import SHOPIFY_PRODUCTS, product_page_url
     base = product_page_url(SHOPIFY_PRODUCTS.get(slug) or {}) or SITE
     params = {
         "utm_source": _UTM_SOURCE.get(platform, platform),
-        "utm_medium": "social",
+        "utm_medium": "post",
         "utm_campaign": campaign,
     }
     if platform in _UTM_CONTENT:
@@ -116,7 +116,7 @@ def link_block(content: dict | None, platform: str, day: int | None = None) -> s
     if platform == "instagram":
         return (f"🛒 Shop {name}: link in bio (p3online.in)\n"
                 f"Comment TRY if you'd try it, or LINK for the product page 👇")
-    url = tracked_url(slug, platform) if slug else f"{SITE}?{urlencode({'utm_source': _UTM_SOURCE.get(platform, platform), 'utm_medium': 'social', 'utm_campaign': 'daily'})}"
+    url = tracked_url(slug, platform) if slug else f"{SITE}?{urlencode({'utm_source': _UTM_SOURCE.get(platform, platform), 'utm_medium': 'post', 'utm_campaign': '202610'})}"
     if platform == "threads":
         return f"🛒 {name}: {url}"
     return f"🛒 Shop {name}: {url}\nComment TRY if you'd try it 👇"

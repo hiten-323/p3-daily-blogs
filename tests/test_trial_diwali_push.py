@@ -16,7 +16,7 @@ from content_generator.creative.visual_gate import AESTHETIC_PASS, MIN_BG_MOTION
 START = dt.date(2026, 10, 21)
 END = dt.date(2026, 11, 20)
 ALLOWED = {"bold", "purista", "purica", "gourmet_duo_mini"}
-UTM = "utm_source=instagram&utm_medium=organic&utm_campaign=trial_diwali_push"
+UTM = "utm_source=instagram&utm_medium=post&utm_campaign=202610"
 HANDLES = {
     "bold": "purity-beans-bold-instant-coffee",
     "purista": "purity-beans-purista-gourmet-instant-coffee-granules",
