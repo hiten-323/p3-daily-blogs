@@ -534,7 +534,7 @@ def _append_follower_snapshot(now: datetime.datetime, follower_count: int | None
 
 
 def fetch_pending_insights() -> dict:
-    """Fetch the next due observation for each post; promote only 7d to learning."""
+    """Fetch one due observation and update the post-level learning sample idempotently."""
     if not os.getenv("INSTAGRAM_ACCESS_TOKEN"):
         logger.info("[insights] Instagram not configured — skipping insights fetch")
         return {"recorded": 0, "snapshots": 0, "pending": 0, "follower_count": None}
