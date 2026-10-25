@@ -18,7 +18,7 @@ _LOG_PATH = os.path.join(_LEARNING_DIR, "performance_log.json")
 
 METRIC_FIELDS = [
     "views", "reach", "impressions", "watch_time_s", "avg_view_duration_s",
-    "completion_rate", "shares", "saves", "comments", "profile_visits",
+    "completion_rate", "shares", "saves", "comments", "engaged_users", "profile_visits",
     "follows_gained", "website_clicks", "likes", "revenue", "orders",
 ]
 
