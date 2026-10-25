@@ -154,7 +154,7 @@ def _platform_learning(platform: str) -> str:
         "reel": "instagram", "carousel": "instagram", "ig_single": "instagram",
         "stories": "instagram", "instagram": "instagram", "instagram_post": "instagram",
         "facebook": "facebook", "threads": "threads", "linkedin": "linkedin",
-        "yt_short": "youtube", "youtube": "youtube",
+        "yt_short": "youtube", "youtube": "youtube", "blog": "shopify", "whatsapp": "whatsapp",
     }.get(str(platform or "").lower(), str(platform or "").lower())
     try:
         from content_generator.core.learning_engine import get_platform_learning_block
