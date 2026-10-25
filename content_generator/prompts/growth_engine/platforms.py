@@ -150,9 +150,15 @@ def prompt_block(label: str, sku: str = "", day: int = 0, *, variant: int = 0) -
 
 def _platform_learning(platform: str) -> str:
     """Inject measured lessons from this platform only; sparse evidence stays silent."""
+    platform_name = {
+        "reel": "instagram", "carousel": "instagram", "ig_single": "instagram",
+        "stories": "instagram", "instagram": "instagram", "instagram_post": "instagram",
+        "facebook": "facebook", "threads": "threads", "linkedin": "linkedin",
+        "yt_short": "youtube", "youtube": "youtube",
+    }.get(str(platform or "").lower(), str(platform or "").lower())
     try:
         from content_generator.core.learning_engine import get_platform_learning_block
-        return get_platform_learning_block(platform)
+        return get_platform_learning_block(platform_name)
     except Exception as exc:
         import logging
         logging.getLogger(__name__).debug("[learning] platform prompt block unavailable: %s", exc)
