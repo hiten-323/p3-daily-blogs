@@ -96,6 +96,11 @@ def reconcile_verified_publications() -> dict[str, int]:
     if not isinstance(posts, list):
         posts = []
     posts = [p for p in posts if isinstance(p, dict)]
+    # Migrate historical tracker rows whose platform was omitted by older runs.
+    for old_post in posts:
+        inferred = _platform(old_post.get("platform"), str(old_post.get("asset_id") or ""))
+        if inferred and not old_post.get("platform"):
+            old_post["platform"] = inferred
     by_id = {str(p.get("media_id")): p for p in posts if p.get("media_id")}
     added = enriched = skipped = 0
 
@@ -327,8 +332,8 @@ def _fetch_threads(media_id: str) -> dict | None:
 
 def _fetch_linkedin(media_id: str) -> dict | None:
     token = os.getenv("LINKEDIN_ACCESS_TOKEN") or os.getenv("LI_API_ACCESS")
-    version = os.getenv("LINKEDIN_VERSION")
-    if not token or not version:
+    version = os.getenv("LINKEDIN_VERSION") or os.getenv("LI_API_VERSION") or "202610"
+    if not token:
         return None
     encoded = urllib.parse.quote(media_id, safe=":")
     data = _request_json(
@@ -374,9 +379,17 @@ def _fetch_platform_metrics(post: dict) -> tuple[dict | None, str]:
             return None, "missing_linkedin_token_or_version"
         metrics = _fetch_linkedin(media_id)
     elif platform == "instagram_story":
-        # Stories have a short lifetime; their native insight window must be
-        # collected before expiry. Do not mislabel missing/expired data as zero.
-        return None, "story_metrics_not_available_after_expiry"
+        # A Story is short-lived; use the same native Meta media-insights adapter
+        # while it is still available, and never pretend a post-expiry absence is zero.
+        if not os.getenv("INSTAGRAM_ACCESS_TOKEN"):
+            return None, "missing_instagram_access_token"
+        try:
+            from content_generator.analytics.insights_fetcher import _fetch_media_insights
+            metrics = _fetch_media_insights(media_id)
+        except Exception as exc:
+            logger.debug("[platform-learning] Story measurement unavailable: %s", type(exc).__name__)
+            metrics = None
+        return (metrics, "measured") if metrics else (None, "story_metrics_not_available_after_expiry")
     elif platform == "shopify":
         return None, "shopify_blog_analytics_not_configured"
     elif platform == "instagram":
@@ -400,13 +413,17 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
             continue
         platform = _platform(post.get("platform"), post.get("asset_id"))
         post["platform"] = platform or post.get("platform") or "unknown"
-        if post.get("insights_recorded") or platform == "instagram":
+        if post.get("insights_recorded") or post.get("measurement_terminal") or platform == "instagram":
             continue
         age = _age_hours(post.get("published_at"), current)
         snapshots = post.setdefault("measurement_snapshots", [])
         completed = {str(s.get("window")) for s in snapshots if isinstance(s, dict)}
         abandoned = set(post.get("failed_windows") or [])
-        due = next(((name, hours) for name, hours in WINDOWS if name not in completed | abandoned and age >= hours), None)
+        due = next((
+            (name, hours) for name, hours in WINDOWS
+            if name not in completed | abandoned
+            and age >= (20 if platform == "instagram_story" and name == "24h" else hours)
+        ), None)
         if due is None:
             continue
         window, hours = due
@@ -420,6 +437,8 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
                 # platforms that have no configured/available native measurement.
                 post.setdefault("failed_windows", []).append(window)
                 post["failed_windows"] = sorted(set(post["failed_windows"]))
+                if platform == "instagram_story":
+                    post["measurement_terminal"] = True
                 continue
             attempts = post.setdefault("fetch_attempts_by_window", {})
             attempts[window] = int(attempts.get(window, 0)) + 1
@@ -427,6 +446,8 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
             if attempts[window] >= MAX_ATTEMPTS:
                 post.setdefault("failed_windows", []).append(window)
                 post["failed_windows"] = sorted(set(post["failed_windows"]))
+                if platform == "instagram_story":
+                    post["measurement_terminal"] = True
             else:
                 pending += 1
             continue
@@ -440,7 +461,8 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         }
         snapshots.append(snapshot)
         snapshots_written += 1
-        if window == "7d":
+        terminal_window = "24h" if platform == "instagram_story" else "7d"
+        if window == terminal_window:
             record_performance(
                 asset_id=str(post.get("asset_id") or post.get("media_id")),
                 track=str(post.get("track") or "brand"),
@@ -449,7 +471,7 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
                 format_used=str(post.get("format") or platform),
                 posted_at=str(post.get("published_at") or ""),
                 metrics=snapshot["metrics"],
-                notes=f"auto-recorded from 7d {platform} native API observation",
+                notes=f"auto-recorded from {window} {platform} native API observation",
                 kpi_at_creation=str(post.get("kpi_at_creation") or ""),
                 policy_version=str(post.get("policy_version") or ""),
                 attention_mechanism=str(post.get("attention_mechanism") or ""),
@@ -459,9 +481,11 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
                 scroller_state=str(post.get("scroller_state") or ""),
                 psychology_frame=str(post.get("psychology_frame") or ""),
                 platform=platform,
-                observation_window="7d",
+                observation_window=window,
             )
             post["insights_recorded"] = True
+            if platform == "instagram_story":
+                post["measurement_terminal"] = True
             recorded += 1
     _write_json(POSTS_PATH, posts)
     result = {
