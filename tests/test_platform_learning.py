@@ -136,3 +136,24 @@ def test_stale_publication_is_not_mislabeled_as_a_24h_observation(tmp_path, monk
     assert row["measurement_terminal"] is True
     assert row["measurement_status"] == "too_old_for_comparable_window"
     assert row["measurement_snapshots"] == []
+
+
+
+def test_single_measured_post_informs_next_day_without_claiming_a_winner(monkeypatch):
+    monkeypatch.setattr(learning_engine, "_load_log", lambda: [{
+        "asset_id": "threads_day300",
+        "publication_id": "threads-media-1",
+        "platform": "threads",
+        "observation_window": "24h",
+        "posted_at": "2026-10-25T10:00:00",
+        "hook": "A precise coffee question",
+        "topic": "conversation",
+        "format": "discussion",
+        "metrics": {"views": 100, "likes": 12, "comments": 4},
+    }])
+    monkeypatch.setattr(learning_engine, "is_teachable", lambda entry: True)
+
+    block = learning_engine.get_platform_learning_block("threads")
+    assert "PROVISIONAL THREADS SIGNALS" in block
+    assert "views=100" in block
+    assert "not enough evidence to declare winners" in block
