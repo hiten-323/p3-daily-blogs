@@ -422,7 +422,7 @@ def _fetch_platform_metrics(post: dict) -> tuple[dict | None, str]:
 
 
 def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, int]:
-    """Collect one due native-platform observation per post and learn from 7d only."""
+    """Collect one due native-platform observation and update the same post-level sample."""
     posts = _read_json(POSTS_PATH, [])
     if not isinstance(posts, list):
         posts = []
