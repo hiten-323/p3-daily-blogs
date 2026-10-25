@@ -295,8 +295,39 @@ def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
         key = str(entry.get("publication_id") or entry.get("asset_id") or "")
         unique[key] = entry
     eligible = list(unique.values())
-    if len(eligible) < _MIN_LEARNING_SAMPLES:
+    if not eligible:
         return ""
+    if len(eligible) < _MIN_LEARNING_SAMPLES:
+        # Do not wait a week or five posts before the next generation can react.
+        # Surface the actual observations immediately, but label them provisional
+        # and forbid winner/loser claims until the independent sample threshold.
+        recent = sorted(
+            eligible,
+            key=lambda e: str(e.get("posted_at") or e.get("recorded_at") or ""),
+            reverse=True,
+        )[:max_items]
+        lines = [
+            f"PROVISIONAL {target.upper()} SIGNALS ({len(eligible)} measured independent post(s); not enough evidence to declare winners):",
+            "Use these as diagnostic observations for tomorrow, not as proven rules. Test a controlled variation and keep exploring.",
+            "Recent measured posts:",
+        ]
+        metric_keys = (
+            "views", "reach", "impressions", "likes", "shares", "saves",
+            "comments", "follows_gained", "website_clicks", "orders", "revenue",
+        )
+        for entry in recent:
+            description = " | ".join(filter(None, [
+                entry.get("hook"), entry.get("topic"), entry.get("format")
+            ]))
+            observed = entry.get("metrics") or {}
+            summary = ", ".join(
+                f"{key}={observed[key]}" for key in metric_keys
+                if key in observed and observed[key] is not None
+            )
+            if description or summary:
+                lines.append("  - " + (description or "Published asset") + (f" — observed: {summary}" if summary else ""))
+        lines.append("Change one meaningful creative variable at a time; never infer causation from a single post.")
+        return "\n".join(lines)
     scored = sorted(((e, _weighted_score(e)) for e in eligible), key=lambda pair: pair[1], reverse=True)
     n = max(1, len(scored) // 5)
     winners = scored[:n]
