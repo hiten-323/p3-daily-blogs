@@ -144,6 +144,12 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
             topic="youtube_short",
             format_used="yt_short",
             hashtags=str(" ".join(yt_piece.get("tags") or [])),
+            kpi_at_creation=yt_piece.get("target_kpi_at_creation", ""),
+            policy_version=yt_piece.get("policy_version_at_creation", ""),
+            attention_mechanism=yt_piece.get("attention_mechanism", ""),
+            hook_strategy=yt_piece.get("hook_strategy", ""),
+            payoff_type=yt_piece.get("payoff_type", ""),
+            decision_version=yt_piece.get("decision_version", ""),
             platform="youtube",
         )
 
@@ -158,6 +164,12 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
             hook=str(fb_piece.get("hook") or "")[:120],
             topic="facebook_post",
             format_used="post",
+            kpi_at_creation=fb_piece.get("target_kpi_at_creation", ""),
+            policy_version=fb_piece.get("policy_version_at_creation", ""),
+            attention_mechanism=fb_piece.get("attention_mechanism", ""),
+            hook_strategy=fb_piece.get("hook_strategy", ""),
+            payoff_type=fb_piece.get("payoff_type", ""),
+            decision_version=fb_piece.get("decision_version", ""),
             platform="facebook",
         )
 
@@ -172,6 +184,12 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
             hook=str(li_piece.get("headline") or "")[:120],
             topic="linkedin_post",
             format_used="thought_leadership",
+            kpi_at_creation=li_piece.get("target_kpi_at_creation", ""),
+            policy_version=li_piece.get("policy_version_at_creation", ""),
+            attention_mechanism=li_piece.get("attention_mechanism", ""),
+            hook_strategy=li_piece.get("hook_strategy", ""),
+            payoff_type=li_piece.get("payoff_type", ""),
+            decision_version=li_piece.get("decision_version", ""),
             platform="linkedin",
         )
 
@@ -186,6 +204,12 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
             hook=str(th_piece.get("hook") or "")[:120],
             topic="threads_post",
             format_used="discussion",
+            kpi_at_creation=th_piece.get("target_kpi_at_creation", ""),
+            policy_version=th_piece.get("policy_version_at_creation", ""),
+            attention_mechanism=th_piece.get("attention_mechanism", ""),
+            hook_strategy=th_piece.get("hook_strategy", ""),
+            payoff_type=th_piece.get("payoff_type", ""),
+            decision_version=th_piece.get("decision_version", ""),
             platform="threads",
         )
 
