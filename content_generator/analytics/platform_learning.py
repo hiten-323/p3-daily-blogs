@@ -2,7 +2,8 @@
 
 Only confirmed-live ledger records are reconciled. Metrics are fetched from each
 platform's own API; missing permissions/data remain unknown and are never coerced
-to zero. The 7-day observation is the only one promoted as a learning sample.
+to zero. Every successful observation updates one post-level learning sample so
+24h data can improve tomorrow's generation without inflating the sample count.
 """
 from __future__ import annotations
 
@@ -508,32 +509,35 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         snapshots.append(snapshot)
         snapshots_written += 1
         terminal_window = "24h" if platform == "instagram_story" else "7d"
+        # Each observation updates one sample keyed by the publication ID. This
+        # makes the 24h signal available to tomorrow's prompts while keeping 72h
+        # and 7d refinements from masquerading as new independent posts.
+        record_performance(
+            asset_id=str(post.get("asset_id") or post.get("media_id")),
+            track=str(post.get("track") or "brand"),
+            hook=str(post.get("hook") or ""),
+            topic=str(post.get("topic") or ""),
+            format_used=str(post.get("format") or platform),
+            posted_at=str(post.get("published_at") or ""),
+            metrics=snapshot["metrics"],
+            notes=f"auto-recorded from {window} {platform} native API observation",
+            kpi_at_creation=str(post.get("kpi_at_creation") or ""),
+            policy_version=str(post.get("policy_version") or ""),
+            attention_mechanism=str(post.get("attention_mechanism") or ""),
+            hook_strategy=str(post.get("hook_strategy") or ""),
+            payoff_type=str(post.get("payoff_type") or ""),
+            decision_version=str(post.get("decision_version") or ""),
+            scroller_state=str(post.get("scroller_state") or ""),
+            psychology_frame=str(post.get("psychology_frame") or ""),
+            platform=platform,
+            observation_window=window,
+            publication_id=str(post.get("media_id") or ""),
+        )
+        recorded += 1
         if window == terminal_window:
-            record_performance(
-                asset_id=str(post.get("asset_id") or post.get("media_id")),
-                track=str(post.get("track") or "brand"),
-                hook=str(post.get("hook") or ""),
-                topic=str(post.get("topic") or ""),
-                format_used=str(post.get("format") or platform),
-                posted_at=str(post.get("published_at") or ""),
-                metrics=snapshot["metrics"],
-                notes=f"auto-recorded from {window} {platform} native API observation",
-                kpi_at_creation=str(post.get("kpi_at_creation") or ""),
-                policy_version=str(post.get("policy_version") or ""),
-                attention_mechanism=str(post.get("attention_mechanism") or ""),
-                hook_strategy=str(post.get("hook_strategy") or ""),
-                payoff_type=str(post.get("payoff_type") or ""),
-                decision_version=str(post.get("decision_version") or ""),
-                scroller_state=str(post.get("scroller_state") or ""),
-                psychology_frame=str(post.get("psychology_frame") or ""),
-                platform=platform,
-                observation_window=window,
-                publication_id=str(post.get("media_id") or ""),
-            )
             post["insights_recorded"] = True
             if platform == "instagram_story":
                 post["measurement_terminal"] = True
-            recorded += 1
     _write_json(POSTS_PATH, posts)
     result = {
         "snapshots": snapshots_written,
