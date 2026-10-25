@@ -112,3 +112,24 @@ def test_learning_record_upsert_is_idempotent_but_keeps_same_day_posts_distinct(
     rows = json.loads(log_path.read_text(encoding="utf-8"))
     assert len(rows) == 2
     assert next(row for row in rows if row["publication_id"] == "media-a")["metrics"]["views"] == 150
+
+
+
+def test_stale_publication_is_not_mislabeled_as_a_24h_observation(tmp_path, monkeypatch):
+    posts_path = tmp_path / "published_posts.json"
+    now = dt.datetime(2026, 10, 25, 12, 0, tzinfo=dt.timezone.utc)
+    posts_path.write_text(json.dumps([{
+        "media_id": "fb_old", "asset_id": "facebook_day1", "platform": "facebook",
+        "published_at": (now - dt.timedelta(days=30)).isoformat(),
+        "insights_recorded": False, "measurement_snapshots": [],
+        "fetch_attempts_by_window": {}, "failed_windows": [],
+    }]), encoding="utf-8")
+    monkeypatch.setattr(platform_learning, "POSTS_PATH", posts_path)
+    monkeypatch.setattr(platform_learning, "_fetch_platform_metrics", lambda post: (_ for _ in ()).throw(AssertionError("stale post must not be queried")))
+
+    result = platform_learning.fetch_pending_platform_metrics(now=now)
+    row = json.loads(posts_path.read_text(encoding="utf-8"))[0]
+    assert result["snapshots"] == 0
+    assert row["measurement_terminal"] is True
+    assert row["measurement_status"] == "too_old_for_comparable_window"
+    assert row["measurement_snapshots"] == []
