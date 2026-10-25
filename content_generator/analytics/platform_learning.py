@@ -105,7 +105,7 @@ def reconcile_verified_publications() -> dict[str, int]:
 
     for old_post in posts:
         inferred = _platform(old_post.get("platform"), str(old_post.get("asset_id") or ""))
-        if inferred and not old_post.get("platform"):
+        if inferred and str(old_post.get("platform") or "").lower() != inferred:
             old_post["platform"] = inferred
             migrated += 1
 
@@ -432,6 +432,11 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         platform = _platform(post.get("platform"), post.get("asset_id"))
         post["platform"] = platform or post.get("platform") or "unknown"
         if post.get("insights_recorded") or post.get("measurement_terminal") or platform == "instagram":
+            continue
+        if _parse_time(post.get("published_at")) is None:
+            post["measurement_status"] = "missing_or_invalid_publication_timestamp"
+            post["measurement_terminal"] = True
+            unsupported += 1
             continue
         age = _age_hours(post.get("published_at"), current)
         snapshots = post.setdefault("measurement_snapshots", [])
