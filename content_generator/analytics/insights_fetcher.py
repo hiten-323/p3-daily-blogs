@@ -597,6 +597,7 @@ def fetch_pending_insights() -> dict:
                 psychology_frame=post.get("psychology_frame", ""),
                 platform="instagram",
                 observation_window="7d",
+                publication_id=str(post.get("media_id") or ""),
             )
             post["insights_recorded"] = True
             recorded += 1
