@@ -93,3 +93,22 @@ def test_timezone_aware_publication_timestamp_is_measurable():
     from content_generator.analytics.insights_fetcher import _hours_since
     now = dt.datetime(2026, 10, 25, 12, 0)
     assert _hours_since("2026-10-25T00:00:00+00:00", now) > 0
+
+
+
+def test_learning_record_upsert_is_idempotent_but_keeps_same_day_posts_distinct(tmp_path, monkeypatch):
+    log_path = tmp_path / "performance_log.json"
+    monkeypatch.setattr(learning_engine, "_LOG_PATH", str(log_path))
+    base = {
+        "asset_id": "instagram_day300",
+        "track": "brand",
+        "platform": "instagram",
+        "observation_window": "7d",
+        "metrics": {"views": 100, "likes": 10, "comments": 2},
+    }
+    learning_engine.record_performance(**base, publication_id="media-a")
+    learning_engine.record_performance(**base, publication_id="media-a", metrics={"views": 150, "likes": 12, "comments": 3})
+    learning_engine.record_performance(**base, publication_id="media-b")
+    rows = json.loads(log_path.read_text(encoding="utf-8"))
+    assert len(rows) == 2
+    assert next(row for row in rows if row["publication_id"] == "media-a")["metrics"]["views"] == 150
