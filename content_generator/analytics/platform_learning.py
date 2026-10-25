@@ -410,7 +410,7 @@ def _fetch_platform_metrics(post: dict) -> tuple[dict | None, str]:
         except Exception as exc:
             logger.debug("[platform-learning] Story measurement unavailable: %s", type(exc).__name__)
             metrics = None
-        return (metrics, "measured") if metrics else (None, "story_metrics_not_available_after_expiry")
+        return (metrics, "measured") if metrics else (None, "api_returned_no_metrics")
     elif platform == "shopify":
         return None, "shopify_blog_analytics_not_configured"
     elif platform == "instagram":
@@ -443,6 +443,13 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
             continue
         age = _age_hours(post.get("published_at"), current)
         snapshots = post.setdefault("measurement_snapshots", [])
+        if platform == "instagram_story" and age > 24 and "24h" not in {
+            str(s.get("window")) for s in snapshots if isinstance(s, dict)
+        }:
+            post["measurement_status"] = "story_measurement_window_missed"
+            post["measurement_terminal"] = True
+            unsupported += 1
+            continue
         completed = {str(s.get("window")) for s in snapshots if isinstance(s, dict)}
         abandoned = set(post.get("failed_windows") or [])
         missed = post.setdefault("missed_windows", {})
@@ -475,7 +482,7 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
                 # platforms that have no configured/available native measurement.
                 post.setdefault("failed_windows", []).append(window)
                 post["failed_windows"] = sorted(set(post["failed_windows"]))
-                if platform == "instagram_story":
+                if platform in {"instagram_story", "shopify"} or status == "unsupported_platform":
                     post["measurement_terminal"] = True
                 continue
             attempts = post.setdefault("fetch_attempts_by_window", {})
