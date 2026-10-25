@@ -102,7 +102,13 @@ def reconcile_verified_publications() -> dict[str, int]:
         if inferred and not old_post.get("platform"):
             old_post["platform"] = inferred
     by_id = {str(p.get("media_id")): p for p in posts if p.get("media_id")}
-    added = enriched = skipped = 0
+    added = enriched = migrated = skipped = 0
+
+    for old_post in posts:
+        inferred = _platform(old_post.get("platform"), str(old_post.get("asset_id") or ""))
+        if inferred and not old_post.get("platform"):
+            old_post["platform"] = inferred
+            migrated += 1
 
     for key, rec in (records.items() if isinstance(records, dict) else []):
         if not isinstance(rec, dict) or rec.get("status") != "VERIFIED_LIVE":
@@ -167,9 +173,9 @@ def reconcile_verified_publications() -> dict[str, int]:
             if changed:
                 enriched += 1
 
-    if added or enriched:
+    if added or enriched or migrated:
         _write_json(POSTS_PATH, posts)
-    return {"added": added, "enriched": enriched, "skipped_unverified": skipped, "total": len(posts)}
+    return {"added": added, "enriched": enriched, "migrated_legacy": migrated, "skipped_unverified": skipped, "total": len(posts)}
 
 
 def _request_json(url: str, *, headers: dict[str, str] | None = None) -> dict | None:
