@@ -69,13 +69,14 @@ def record_performance(
     }
     # Retries, overlapping Actions runs and ledger replays must not inflate
     # the sample count. A platform/window observation is one independent sample.
-    key = (str(asset_id), normalized_platform, normalized_window or "legacy", str(publication_id or "").strip() or str(asset_id))
+    # One learning sample per published post; later 72h/7d observations update
+    # that same sample instead of counting one creative as multiple experiments.
+    key = (str(asset_id), normalized_platform, str(publication_id or "").strip() or str(asset_id))
     replaced = False
     for index, previous in enumerate(entries):
         previous_key = (
             str(previous.get("asset_id") or ""),
             str(previous.get("platform") or "").strip().lower(),
-            str(previous.get("observation_window") or "legacy").strip().lower(),
             str(previous.get("publication_id") or previous.get("asset_id") or ""),
         )
         if previous_key == key:
@@ -291,7 +292,7 @@ def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
     # Deduplicate by asset/window even if an old log was manually merged.
     unique: dict[tuple[str, str], dict] = {}
     for entry in entries:
-        key = (str(entry.get("publication_id") or entry.get("asset_id") or ""), str(entry.get("observation_window") or "legacy"))
+        key = str(entry.get("publication_id") or entry.get("asset_id") or "")
         unique[key] = entry
     eligible = list(unique.values())
     if len(eligible) < _MIN_LEARNING_SAMPLES:
