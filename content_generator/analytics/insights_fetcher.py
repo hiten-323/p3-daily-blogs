@@ -542,6 +542,12 @@ def fetch_pending_insights() -> dict:
             continue
         if not platform and not asset_id.startswith("instagram"):
             continue
+        try:
+            datetime.datetime.fromisoformat(str(post.get("published_at") or "").replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            post["measurement_terminal"] = True
+            post["measurement_status"] = "missing_or_invalid_publication_timestamp"
+            continue
 
         due = _next_due_window(post, now)
         if due is None:
