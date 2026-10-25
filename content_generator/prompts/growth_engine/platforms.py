@@ -144,7 +144,19 @@ def prompt_block(label: str, sku: str = "", day: int = 0, *, variant: int = 0) -
         _process_match_rule(),
         _viral_hooks(label),
         _obstacle_lessons(label),
+        _platform_learning(platform),
     ]).strip()
+
+
+def _platform_learning(platform: str) -> str:
+    """Inject measured lessons from this platform only; sparse evidence stays silent."""
+    try:
+        from content_generator.core.learning_engine import get_platform_learning_block
+        return get_platform_learning_block(platform)
+    except Exception as exc:
+        import logging
+        logging.getLogger(__name__).debug("[learning] platform prompt block unavailable: %s", exc)
+        return ""
 
 
 def _viral_hooks(label: str) -> str:
