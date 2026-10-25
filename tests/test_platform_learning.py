@@ -104,11 +104,10 @@ def test_learning_record_upsert_is_idempotent_but_keeps_same_day_posts_distinct(
         "track": "brand",
         "platform": "instagram",
         "observation_window": "7d",
-        "metrics": {"views": 100, "likes": 10, "comments": 2},
     }
-    learning_engine.record_performance(**base, publication_id="media-a")
+    learning_engine.record_performance(**base, publication_id="media-a", metrics={"views": 100, "likes": 10, "comments": 2})
     learning_engine.record_performance(**base, publication_id="media-a", metrics={"views": 150, "likes": 12, "comments": 3})
-    learning_engine.record_performance(**base, publication_id="media-b")
+    learning_engine.record_performance(**base, publication_id="media-b", metrics={"views": 100, "likes": 10, "comments": 2})
     rows = json.loads(log_path.read_text(encoding="utf-8"))
     assert len(rows) == 2
     assert next(row for row in rows if row["publication_id"] == "media-a")["metrics"]["views"] == 150
