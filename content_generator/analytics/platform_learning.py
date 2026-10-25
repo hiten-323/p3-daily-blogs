@@ -119,7 +119,20 @@ def reconcile_verified_publications() -> dict[str, int]:
         if not platform:
             skipped += 1
             continue
-        published_at = rec.get("verified_at") or rec.get("updated_at") or rec.get("last_verification_at") or ""
+        history = rec.get("history") or []
+        publish_events = [
+            event for event in history
+            if isinstance(event, dict)
+            and event.get("event") == "attempt_finished"
+            and event.get("remote_id")
+            and str(event.get("status") or "") in {"PUBLISHED_UNVERIFIED", "VERIFIED_LIVE"}
+        ]
+        # Prefer the actual successful publish event over a later readback
+        # timestamp; otherwise a delayed verification shifts the measurement age.
+        published_at = (
+            publish_events[-1].get("at") if publish_events
+            else rec.get("verified_at") or rec.get("updated_at") or rec.get("last_verification_at") or ""
+        )
         # Ledger timestamps are often UTC-aware; keep a normalized UTC value so
         # the measurement scheduler can compare them consistently.
         parsed = _parse_time(published_at)
