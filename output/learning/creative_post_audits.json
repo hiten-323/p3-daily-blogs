@@ -55703,5 +55703,929 @@
       "threads_post: Threads post needs an open-ended question to fuel reply ranking"
     ],
     "asset_count": 39
+  },
+  {
+    "ts": "2026-10-25T05:25:05.900671+00:00",
+    "day_number": 1,
+    "generation_id": "test_gen",
+    "image_assets": [
+      {
+        "path": "output/creative/ugc_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2306,
+          "contrast": 0.1837,
+          "edge_density": 0.0152,
+          "upper_activity": 0.1258,
+          "center_brightness_delta": 0.1038,
+          "lower_center_edge_ratio": 28.642,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "c4aac97f06ecee74"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_1_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7754,
+          "contrast": 0.2795,
+          "edge_density": 0.0258,
+          "upper_activity": 0.3068,
+          "center_brightness_delta": 0.146,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "faa4c26121c5b3b8"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene1_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2396,
+          "contrast": 0.1907,
+          "edge_density": 0.0222,
+          "upper_activity": 0.1564,
+          "center_brightness_delta": 0.1105,
+          "lower_center_edge_ratio": 24.467,
+          "lower_center_edge_density": 0.0411,
+          "visual_hash": "f277f1562fa8572d"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/ugc_day1_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2313,
+          "contrast": 0.184,
+          "edge_density": 0.0152,
+          "upper_activity": 0.1256,
+          "center_brightness_delta": 0.1026,
+          "lower_center_edge_ratio": 26.203,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "b97e95083af237af"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_hook_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2284,
+          "contrast": 0.1798,
+          "edge_density": 0.0139,
+          "upper_activity": 0.1057,
+          "center_brightness_delta": 0.0996,
+          "lower_center_edge_ratio": 28.642,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "720d30990c98e2e0"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene3_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2361,
+          "contrast": 0.1868,
+          "edge_density": 0.0199,
+          "upper_activity": 0.1385,
+          "center_brightness_delta": 0.1101,
+          "lower_center_edge_ratio": 23.311,
+          "lower_center_edge_density": 0.0411,
+          "visual_hash": "9fa7714d69572204"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/t_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1202,
+          "contrast": 0.1876,
+          "edge_density": 0.0231,
+          "upper_activity": 0.2202,
+          "center_brightness_delta": 0.0317,
+          "lower_center_edge_ratio": 18.341,
+          "lower_center_edge_density": 0.0239,
+          "visual_hash": "b8f1f6852cf234ab"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/test_reel_thumb_day1_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2293,
+          "contrast": 0.1803,
+          "edge_density": 0.0141,
+          "upper_activity": 0.107,
+          "center_brightness_delta": 0.0985,
+          "lower_center_edge_ratio": 26.203,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "b0b4237a5b03bd0d"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_4_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7764,
+          "contrast": 0.2802,
+          "edge_density": 0.0224,
+          "upper_activity": 0.3085,
+          "center_brightness_delta": 0.1451,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "58f52f34e7f53382"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_6_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1039,
+          "contrast": 0.11,
+          "edge_density": 0.0271,
+          "upper_activity": 0.1297,
+          "center_brightness_delta": 0.007,
+          "lower_center_edge_ratio": 1.529,
+          "lower_center_edge_density": 0.0316,
+          "visual_hash": "f414b45615b33d03"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "increase foreground/background contrast",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_7_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.78,
+          "contrast": 0.2767,
+          "edge_density": 0.0213,
+          "upper_activity": 0.2992,
+          "center_brightness_delta": 0.1486,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "d74620cb390b8e80"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/story_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2321,
+          "contrast": 0.1847,
+          "edge_density": 0.0163,
+          "upper_activity": 0.1284,
+          "center_brightness_delta": 0.1013,
+          "lower_center_edge_ratio": 23.405,
+          "lower_center_edge_density": 0.0414,
+          "visual_hash": "fb3980dcbd9bdcf9"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/avatar_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2306,
+          "contrast": 0.1837,
+          "edge_density": 0.0152,
+          "upper_activity": 0.1258,
+          "center_brightness_delta": 0.1038,
+          "lower_center_edge_ratio": 28.642,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "c4aac97f06ecee74"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/story_day1_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.232,
+          "contrast": 0.1827,
+          "edge_density": 0.0161,
+          "upper_activity": 0.1197,
+          "center_brightness_delta": 0.1011,
+          "lower_center_edge_ratio": 23.286,
+          "lower_center_edge_density": 0.0414,
+          "visual_hash": "4d5378560e4fcdb8"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_3_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7756,
+          "contrast": 0.2805,
+          "edge_density": 0.0235,
+          "upper_activity": 0.3095,
+          "center_brightness_delta": 0.1443,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "94aebdc8dc41c2e3"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/facebook_post_day1_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7762,
+          "contrast": 0.2807,
+          "edge_density": 0.0231,
+          "upper_activity": 0.3099,
+          "center_brightness_delta": 0.1448,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "4af4172d7b278d11"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat2_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2328,
+          "contrast": 0.1838,
+          "edge_density": 0.0174,
+          "upper_activity": 0.1259,
+          "center_brightness_delta": 0.1037,
+          "lower_center_edge_ratio": 26.777,
+          "lower_center_edge_density": 0.041,
+          "visual_hash": "cf75c8166a6e6323"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/facebook_post_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7713,
+          "contrast": 0.2835,
+          "edge_density": 0.0279,
+          "upper_activity": 0.317,
+          "center_brightness_delta": 0.1416,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "8cbc118d7243853d"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/c2_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7776,
+          "contrast": 0.2804,
+          "edge_density": 0.0211,
+          "upper_activity": 0.3092,
+          "center_brightness_delta": 0.1462,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "b7b2d782b831bfa7"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/avatar_day1_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2313,
+          "contrast": 0.184,
+          "edge_density": 0.0152,
+          "upper_activity": 0.1256,
+          "center_brightness_delta": 0.1026,
+          "lower_center_edge_ratio": 26.203,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "b97e95083af237af"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene0_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.238,
+          "contrast": 0.1899,
+          "edge_density": 0.0218,
+          "upper_activity": 0.153,
+          "center_brightness_delta": 0.1122,
+          "lower_center_edge_ratio": 24.888,
+          "lower_center_edge_density": 0.0411,
+          "visual_hash": "fa8d7ec6bd7c8401"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene4_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2399,
+          "contrast": 0.1907,
+          "edge_density": 0.0223,
+          "upper_activity": 0.1563,
+          "center_brightness_delta": 0.1122,
+          "lower_center_edge_ratio": 24.084,
+          "lower_center_edge_density": 0.0411,
+          "visual_hash": "35cb3328072177c7"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat3_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2337,
+          "contrast": 0.1846,
+          "edge_density": 0.0175,
+          "upper_activity": 0.1293,
+          "center_brightness_delta": 0.1041,
+          "lower_center_edge_ratio": 27.013,
+          "lower_center_edge_density": 0.0411,
+          "visual_hash": "b93ee65f393824b0"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/short_video_scene2_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2371,
+          "contrast": 0.1878,
+          "edge_density": 0.0206,
+          "upper_activity": 0.1437,
+          "center_brightness_delta": 0.1094,
+          "lower_center_edge_ratio": 23.134,
+          "lower_center_edge_density": 0.0411,
+          "visual_hash": "0b934d842fdf8c81"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat1_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2318,
+          "contrast": 0.1819,
+          "edge_density": 0.0161,
+          "upper_activity": 0.1182,
+          "center_brightness_delta": 0.1027,
+          "lower_center_edge_ratio": 28.585,
+          "lower_center_edge_density": 0.041,
+          "visual_hash": "6a31a52ff71e00ff"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_2_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7745,
+          "contrast": 0.2816,
+          "edge_density": 0.0235,
+          "upper_activity": 0.3123,
+          "center_brightness_delta": 0.1431,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "9ffb29869a22c422"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/adaptation_test_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 600,
+          "height": 600,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7796,
+          "contrast": 0.2771,
+          "edge_density": 0.0229,
+          "upper_activity": 0.3006,
+          "center_brightness_delta": 0.1487,
+          "lower_center_edge_ratio": 473.858,
+          "lower_center_edge_density": 0.0474,
+          "visual_hash": "cc576897ca91f839"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/instagram_post_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7719,
+          "contrast": 0.2832,
+          "edge_density": 0.0274,
+          "upper_activity": 0.3164,
+          "center_brightness_delta": 0.1421,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "53dc7b7e700eb62b"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/c1_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7776,
+          "contrast": 0.2804,
+          "edge_density": 0.0211,
+          "upper_activity": 0.3092,
+          "center_brightness_delta": 0.1462,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "b7b2d782b831bfa7"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat0_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2315,
+          "contrast": 0.1827,
+          "edge_density": 0.0157,
+          "upper_activity": 0.1335,
+          "center_brightness_delta": 0.1055,
+          "lower_center_edge_ratio": 23.365,
+          "lower_center_edge_density": 0.0329,
+          "visual_hash": "ea14fbd752f7eb83"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/carousel_slide_5_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7765,
+          "contrast": 0.2796,
+          "edge_density": 0.0236,
+          "upper_activity": 0.307,
+          "center_brightness_delta": 0.1451,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "8b031fdbf2ce21b3"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/yt_thumb_day1_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1280,
+          "height": 720,
+          "aspect_ratio": 1.778,
+          "brightness": 0.3281,
+          "contrast": 0.2281,
+          "edge_density": 0.0214,
+          "upper_activity": 0.2027,
+          "center_brightness_delta": 0.0522,
+          "lower_center_edge_ratio": 0.864,
+          "lower_center_edge_density": 0.0106,
+          "visual_hash": "9d0aeba6a51e62f4"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output/creative/c0_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7776,
+          "contrast": 0.2804,
+          "edge_density": 0.0211,
+          "upper_activity": 0.3092,
+          "center_brightness_delta": 0.1462,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "b7b2d782b831bfa7"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_thumb_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.6803,
+          "contrast": 0.3293,
+          "edge_density": 0.0267,
+          "upper_activity": 0.3594,
+          "center_brightness_delta": 0.2339,
+          "lower_center_edge_ratio": 2.69,
+          "lower_center_edge_density": 0.0518,
+          "visual_hash": "2fcc937fb81232a6"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_1_video_beat4_day297_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.233,
+          "contrast": 0.1838,
+          "edge_density": 0.0167,
+          "upper_activity": 0.1271,
+          "center_brightness_delta": 0.1018,
+          "lower_center_edge_ratio": 28.062,
+          "lower_center_edge_density": 0.041,
+          "visual_hash": "faa126d7ac0bc93d"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/reel_hook_day1_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2285,
+          "contrast": 0.179,
+          "edge_density": 0.0136,
+          "upper_activity": 0.0991,
+          "center_brightness_delta": 0.0989,
+          "lower_center_edge_ratio": 26.203,
+          "lower_center_edge_density": 0.0403,
+          "visual_hash": "5ea5baa8cf5665b1"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output/creative/instagram_post_day1_2026-10-25.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.775,
+          "contrast": 0.2821,
+          "edge_density": 0.0225,
+          "upper_activity": 0.3136,
+          "center_brightness_delta": 0.1436,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "14fdedf5bc7388f4"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      }
+    ],
+    "video_assets": [
+      {
+        "path": "output/creative/reel_1_video_day297_2026-10-25.mp4",
+        "platform": "video",
+        "frames_sampled": 8,
+        "frame_delta": 0.015,
+        "recommendations": [
+          "increase scene/motion change; video is visually static"
+        ],
+        "sample_strategy": "timeline_evenly_spaced",
+        "duration_s": 10.0,
+        "mean_brightness": 0.2246,
+        "mean_contrast": 0.2095
+      },
+      {
+        "path": "output/creative/short_video_day297_2026-10-25.mp4",
+        "platform": "video",
+        "frames_sampled": 8,
+        "frame_delta": 0.0193,
+        "recommendations": [
+          "increase scene/motion change; video is visually static"
+        ],
+        "sample_strategy": "timeline_evenly_spaced",
+        "duration_s": 10.0,
+        "mean_brightness": 0.2232,
+        "mean_contrast": 0.2205
+      }
+    ],
+    "copy_audit": [
+      {
+        "asset": "yt_short",
+        "hook_length": 26,
+        "recommendations": [
+          "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+          "yt_short: YouTube Short lacks subscribe/channel retention trigger"
+        ]
+      },
+      {
+        "asset": "carousel",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "carousel: carousel lacks an explicit save/share cue for algorithmic distribution"
+        ]
+      },
+      {
+        "asset": "threads_post",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "threads_post: community asset lacks a question/debate trigger",
+          "threads_post: Threads post needs an open-ended question to fuel reply ranking"
+        ]
+      },
+      {
+        "asset": "linkedin_post",
+        "hook_length": 150,
+        "recommendations": [
+          "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+        ]
+      }
+    ],
+    "vision_audit": {
+      "status": "skipped_no_api_key",
+      "model": "",
+      "assets": [],
+      "recommendations": []
+    },
+    "portfolio_diversity": 0.992,
+    "recommendations": [
+      "raise exposure/background separation; avoid another near-black frame",
+      "add visible action/texture such as pour, hand, steam, granules, or environment",
+      "lower-center focal composition dominates; vary into a contextual or off-center composition",
+      "increase foreground/background contrast",
+      "increase scene/motion change; video is visually static",
+      "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+      "yt_short: YouTube Short lacks subscribe/channel retention trigger",
+      "hook is too short to communicate a clear curiosity/problem",
+      "carousel: carousel lacks an explicit save/share cue for algorithmic distribution",
+      "threads_post: community asset lacks a question/debate trigger",
+      "threads_post: Threads post needs an open-ended question to fuel reply ranking",
+      "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+    ],
+    "asset_count": 39
   }
 ]
