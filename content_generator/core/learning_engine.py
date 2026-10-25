@@ -47,7 +47,7 @@ def record_performance(
     policy_version: str = "", attention_mechanism: str = "",
     scroller_state: str = "", psychology_frame: str = "",
     hook_strategy: str = "", payoff_type: str = "", decision_version: str = "",
-    platform: str = "", observation_window: str = "",
+    platform: str = "", observation_window: str = "", publication_id: str = "",
 ) -> dict:
     """Record performance idempotently and preserve the creation-time objective."""
     entries = _load_log()
@@ -55,7 +55,8 @@ def record_performance(
     normalized_window = str(observation_window or "").strip().lower()
     entry = {
         "asset_id": asset_id, "track": track, "platform": normalized_platform or None,
-        "observation_window": normalized_window or None, "kpi": kpi_at_creation,
+        "observation_window": normalized_window or None,
+        "publication_id": str(publication_id or "").strip() or None, "kpi": kpi_at_creation,
         "policy_version": policy_version, "hook": hook, "topic": topic,
         "format": format_used, "attention_mechanism": attention_mechanism or None,
         "scroller_state": scroller_state or None, "psychology_frame": psychology_frame or None,
@@ -68,13 +69,14 @@ def record_performance(
     }
     # Retries, overlapping Actions runs and ledger replays must not inflate
     # the sample count. A platform/window observation is one independent sample.
-    key = (str(asset_id), normalized_platform, normalized_window or "legacy")
+    key = (str(asset_id), normalized_platform, normalized_window or "legacy", str(publication_id or "").strip() or str(asset_id))
     replaced = False
     for index, previous in enumerate(entries):
         previous_key = (
             str(previous.get("asset_id") or ""),
             str(previous.get("platform") or "").strip().lower(),
             str(previous.get("observation_window") or "legacy").strip().lower(),
+            str(previous.get("publication_id") or previous.get("asset_id") or ""),
         )
         if previous_key == key:
             # Keep existing useful creative metadata if a replay lacks it.
@@ -289,7 +291,7 @@ def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
     # Deduplicate by asset/window even if an old log was manually merged.
     unique: dict[tuple[str, str], dict] = {}
     for entry in entries:
-        key = (str(entry.get("asset_id") or ""), str(entry.get("observation_window") or "legacy"))
+        key = (str(entry.get("publication_id") or entry.get("asset_id") or ""), str(entry.get("observation_window") or "legacy"))
         unique[key] = entry
     eligible = list(unique.values())
     if len(eligible) < _MIN_LEARNING_SAMPLES:
