@@ -26,6 +26,7 @@ _TIMEOUT = 30
 MIN_AGE_HOURS = 20
 MAX_FETCH_ATTEMPTS = 5
 MEASUREMENT_WINDOWS = (("24h", 24), ("72h", 72), ("7d", 168))
+_WINDOW_MAX_AGE_HOURS = {"24h": 48, "72h": 120, "7d": 240}
 
 
 def _load_posts() -> list[dict]:
@@ -458,8 +459,15 @@ def _next_due_window(post: dict, now: datetime.datetime) -> tuple[str, int] | No
     abandoned = {str(name) for name in (post.get("failed_windows") or [])}
     resolved = completed | abandoned
     age = _hours_since(str(post.get("published_at") or ""), now)
+    missed = post.setdefault("missed_windows", {})
     for name, hours in MEASUREMENT_WINDOWS:
-        if name not in resolved and age >= hours:
+        if name not in resolved and age > _WINDOW_MAX_AGE_HOURS[name]:
+            abandoned.add(name)
+            missed[name] = "outside_comparable_collection_window"
+    post["failed_windows"] = sorted(abandoned)
+    resolved = completed | abandoned
+    for name, hours in MEASUREMENT_WINDOWS:
+        if name not in resolved and hours <= age <= _WINDOW_MAX_AGE_HOURS[name]:
             return name, hours
     return None
 
@@ -523,7 +531,7 @@ def fetch_pending_insights() -> dict:
     _append_follower_snapshot(now, follower_count)
 
     for post in posts:
-        if post.get("insights_recorded"):
+        if post.get("insights_recorded") or post.get("measurement_terminal"):
             continue
         # Restrict Instagram insights fetching strictly to authentic Instagram records.
         # Non-Instagram media IDs (YouTube, LinkedIn, Threads, etc.) return HTTP 400
@@ -537,7 +545,12 @@ def fetch_pending_insights() -> dict:
 
         due = _next_due_window(post, now)
         if due is None:
-            pending += 1
+            age = _hours_since(str(post.get("published_at") or ""), now)
+            if age > _WINDOW_MAX_AGE_HOURS["7d"] and not post.get("insights_recorded"):
+                post["measurement_terminal"] = True
+                post["measurement_status"] = "too_old_for_comparable_window"
+            else:
+                pending += 1
             continue
         window, hours = due
         metrics = _fetch_media_insights(str(post.get("media_id") or ""))
