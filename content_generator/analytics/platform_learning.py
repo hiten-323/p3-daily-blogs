@@ -23,6 +23,9 @@ LEARNING_DIR = Path(os.getenv("LEARNING_DIR", "output/learning"))
 POSTS_PATH = LEARNING_DIR / "published_posts.json"
 LEDGER_PATH = LEARNING_DIR / "publishing_ledger.json"
 WINDOWS = (("24h", 24), ("72h", 72), ("7d", 168))
+# A window is only comparable within its collection grace period. Late API reads
+# must not be mislabeled as historical 24h/72h measurements.
+WINDOW_MAX_AGE_HOURS = {"24h": 48, "72h": 120, "7d": 240}
 MAX_ATTEMPTS = 5
 _TIMEOUT = 20
 
@@ -434,10 +437,22 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         snapshots = post.setdefault("measurement_snapshots", [])
         completed = {str(s.get("window")) for s in snapshots if isinstance(s, dict)}
         abandoned = set(post.get("failed_windows") or [])
+        missed = post.setdefault("missed_windows", {})
+        for name, hours in WINDOWS:
+            max_age = 24 if platform == "instagram_story" and name == "24h" else WINDOW_MAX_AGE_HOURS[name]
+            if name not in completed | abandoned and age > max_age:
+                abandoned.add(name)
+                missed[name] = "outside_comparable_collection_window"
+        post["failed_windows"] = sorted(abandoned)
+        if age > WINDOW_MAX_AGE_HOURS["7d"] and not post.get("insights_recorded"):
+            post["measurement_terminal"] = True
+            post["measurement_status"] = "too_old_for_comparable_window"
+            continue
         due = next((
             (name, hours) for name, hours in WINDOWS
             if name not in completed | abandoned
             and age >= (20 if platform == "instagram_story" and name == "24h" else hours)
+            and age <= (24 if platform == "instagram_story" and name == "24h" else WINDOW_MAX_AGE_HOURS[name])
         ), None)
         if due is None:
             continue
