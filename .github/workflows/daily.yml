@@ -219,6 +219,8 @@ jobs:
           WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
           WHATSAPP_PHONE_ID: ${{ secrets.WHATSAPP_PHONE_ID }}
           LI_API_ACCESS: ${{ secrets.LI_API_ACCESS }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LI_API_ACCESS }}
+          LINKEDIN_VERSION: ${{ secrets.LINKEDIN_VERSION }}
           LI_AUTHOR_URN: ${{ secrets.LI_AUTHOR_URN }}
           LI_CLIENT_ID: ${{ secrets.LI_CLIENT_ID }}
           LI_CLIENT_SECRET: ${{ secrets.LI_CLIENT_SECRET }}
