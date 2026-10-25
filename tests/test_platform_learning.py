@@ -50,8 +50,9 @@ def test_youtube_native_metrics_are_real_api_values(monkeypatch):
 
 def test_cross_platform_observations_progress_to_one_learning_sample(tmp_path, monkeypatch):
     posts_path = tmp_path / "published_posts.json"
-    now = dt.datetime(2026, 10, 25, 12, 0, tzinfo=dt.timezone.utc)
-    published = (now - dt.timedelta(hours=200)).isoformat()
+    published_dt = dt.datetime(2026, 10, 18, 12, 0, tzinfo=dt.timezone.utc)
+    published = published_dt.isoformat()
+    now = published_dt + dt.timedelta(hours=24)
     posts_path.write_text(json.dumps([{
         "media_id": "yt_1", "asset_id": "youtube_day1", "platform": "youtube",
         "published_at": published, "hook": "A specific hook", "topic": "buying guide",
@@ -66,8 +67,8 @@ def test_cross_platform_observations_progress_to_one_learning_sample(tmp_path, m
     monkeypatch.setattr(learning_engine, "record_performance", lambda **kwargs: calls.append(kwargs) or kwargs)
 
     first = platform_learning.fetch_pending_platform_metrics(now=now)
-    second = platform_learning.fetch_pending_platform_metrics(now=now)
-    third = platform_learning.fetch_pending_platform_metrics(now=now)
+    second = platform_learning.fetch_pending_platform_metrics(now=published_dt + dt.timedelta(hours=72))
+    third = platform_learning.fetch_pending_platform_metrics(now=published_dt + dt.timedelta(hours=168))
     row = json.loads(posts_path.read_text(encoding="utf-8"))[0]
 
     assert first["snapshots"] == 1
