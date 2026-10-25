@@ -501,6 +501,7 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
             "window": window,
             "target_hours": hours,
             "measured_at": current.isoformat(timespec="seconds"),
+            "actual_age_hours": round(age, 2),
             "metrics": {k: v for k, v in metrics.items() if v is not None},
             "source": platform + "_native_api",
         }
