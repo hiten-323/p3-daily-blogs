@@ -435,11 +435,19 @@ def _fetch_follower_count() -> int | None:
 
 
 def _hours_since(published_at: str, now: datetime.datetime) -> float:
+    """Compare timestamps safely whether the ledger timestamp is naive or timezone-aware."""
     try:
-        published = datetime.datetime.fromisoformat(published_at)
-    except Exception:
+        published = datetime.datetime.fromisoformat(str(published_at).replace("Z", "+00:00"))
+        current = now
+        if published.tzinfo is None:
+            published = published.astimezone()
+        if current.tzinfo is None:
+            current = current.astimezone()
+        published = published.astimezone(datetime.timezone.utc)
+        current = current.astimezone(datetime.timezone.utc)
+        return max(0.0, (current - published).total_seconds() / 3600.0)
+    except (TypeError, ValueError, OverflowError):
         return 0.0
-    return max(0.0, (now - published).total_seconds() / 3600.0)
 
 
 def _next_due_window(post: dict, now: datetime.datetime) -> tuple[str, int] | None:
