@@ -595,6 +595,8 @@ def fetch_pending_insights() -> dict:
                 decision_version=post.get("decision_version", ""),
                 scroller_state=post.get("scroller_state", ""),
                 psychology_frame=post.get("psychology_frame", ""),
+                platform="instagram",
+                observation_window="7d",
             )
             post["insights_recorded"] = True
             recorded += 1
