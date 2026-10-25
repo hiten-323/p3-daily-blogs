@@ -97,10 +97,6 @@ def reconcile_verified_publications() -> dict[str, int]:
         posts = []
     posts = [p for p in posts if isinstance(p, dict)]
     # Migrate historical tracker rows whose platform was omitted by older runs.
-    for old_post in posts:
-        inferred = _platform(old_post.get("platform"), str(old_post.get("asset_id") or ""))
-        if inferred and not old_post.get("platform"):
-            old_post["platform"] = inferred
     by_id = {str(p.get("media_id")): p for p in posts if p.get("media_id")}
     added = enriched = migrated = skipped = 0
 
