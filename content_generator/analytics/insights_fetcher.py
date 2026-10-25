@@ -1,10 +1,10 @@
 """Instagram Insights Fetcher — truthful, staged measurement for the learning loop.
 
-Every published media object can be observed at 24h, 72h and 7d. Intermediate
-snapshots are retained on the published-post record; only the 7d observation is
-promoted to the learning log so one post cannot count as three independent
-experiments. Account-level metrics remain account-level and are never fabricated
-into post-level attribution.
+Every published media object can be observed at 24h, 72h and 7d. Each successful
+observation updates one per-post learning record, so tomorrow can learn from the
+24h signal without counting the same post three times. Full snapshots remain on
+the published-post record. Account-level metrics are never fabricated into
+post-level attribution.
 """
 from __future__ import annotations
 
@@ -621,30 +621,29 @@ def fetch_pending_insights() -> dict:
         post.setdefault("measurement_snapshots", []).append(snapshot)
         snapshots_written += 1
 
-        # Only the terminal 7d observation enters the learning log. 24h/72h are
-        # preserved for diagnostics and trajectory analysis but do not multiply
-        # the apparent sample size of one creative.
+        # Every successful window updates the same publication's learning record.
+        # The upsert key is publication_id + platform, so 24h/72h/7d never count
+        # as three independent posts; the latest measured snapshot is used tomorrow.
+        record_performance(
+            asset_id=post["asset_id"], track=post.get("track", "brand"),
+            hook=post.get("hook", ""), topic=post.get("topic", ""),
+            format_used=post.get("format", ""), posted_at=post.get("published_at", ""),
+            metrics=metrics, notes=f"auto-recorded from {window} Instagram measurement window",
+            kpi_at_creation=post.get("kpi_at_creation", ""),
+            policy_version=post.get("policy_version", ""),
+            attention_mechanism=post.get("attention_mechanism", ""),
+            hook_strategy=post.get("hook_strategy", ""),
+            payoff_type=post.get("payoff_type", ""),
+            decision_version=post.get("decision_version", ""),
+            scroller_state=post.get("scroller_state", ""),
+            psychology_frame=post.get("psychology_frame", ""),
+            platform="instagram",
+            observation_window=window,
+            publication_id=str(post.get("media_id") or ""),
+        )
+        recorded += 1
         if window == "7d":
-            record_performance(
-                asset_id=post["asset_id"], track=post.get("track", "brand"),
-                hook=post.get("hook", ""), topic=post.get("topic", ""),
-                format_used=post.get("format", ""), posted_at=post.get("published_at", ""),
-                metrics=metrics, notes="auto-recorded from 7d Instagram measurement window",
-                kpi_at_creation=post.get("kpi_at_creation", ""),
-                policy_version=post.get("policy_version", ""),
-                attention_mechanism=post.get("attention_mechanism", ""),
-                hook_strategy=post.get("hook_strategy", ""),
-                payoff_type=post.get("payoff_type", ""),
-                decision_version=post.get("decision_version", ""),
-                scroller_state=post.get("scroller_state", ""),
-                psychology_frame=post.get("psychology_frame", ""),
-                platform="instagram",
-                observation_window="7d",
-                publication_id=str(post.get("media_id") or ""),
-            )
             post["insights_recorded"] = True
-            recorded += 1
-
             try:
                 from content_generator.analytics.hashtag_bank import record_post_hashtags
                 if post.get("hashtags"):
