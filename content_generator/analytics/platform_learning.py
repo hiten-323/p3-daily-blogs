@@ -484,6 +484,7 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
                 psychology_frame=str(post.get("psychology_frame") or ""),
                 platform=platform,
                 observation_window=window,
+                publication_id=str(post.get("media_id") or ""),
             )
             post["insights_recorded"] = True
             if platform == "instagram_story":
