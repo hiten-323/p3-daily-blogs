@@ -16,6 +16,8 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
+from config.api_versions import META_GRAPH_BASE
+
 logger = logging.getLogger(__name__)
 LEARNING_DIR = Path(os.getenv("LEARNING_DIR", "output/learning"))
 POSTS_PATH = LEARNING_DIR / "published_posts.json"
@@ -184,8 +186,7 @@ def _request_json(url: str, *, headers: dict[str, str] | None = None) -> dict | 
 
 
 def _meta_base() -> str:
-    base = os.getenv("META_GRAPH_BASE", "https://graph.facebook.com/v23.0")
-    return base.rstrip("/")
+    return str(META_GRAPH_BASE).rstrip("/")
 
 
 def _meta_get(object_id: str, token: str, fields: str) -> dict | None:
@@ -193,12 +194,59 @@ def _meta_get(object_id: str, token: str, fields: str) -> dict | None:
     return _request_json(f"{_meta_base()}/{urllib.parse.quote(object_id, safe='_') }?{params}")
 
 
+_YOUTUBE_TOKEN: str | None = None
+_YOUTUBE_TOKEN_EXPIRES_AT = 0.0
+
+
+def _youtube_access_token() -> str | None:
+    """Use the configured API key or refresh the repository's existing YouTube OAuth token."""
+    global _YOUTUBE_TOKEN, _YOUTUBE_TOKEN_EXPIRES_AT
+    key = os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    if key:
+        return None
+    import time
+    if _YOUTUBE_TOKEN and time.time() < _YOUTUBE_TOKEN_EXPIRES_AT - 60:
+        return _YOUTUBE_TOKEN
+    client_id = os.getenv("YOUTUBE_CLIENT_ID")
+    client_secret = os.getenv("YOUTUBE_CLIENT_SECRET")
+    refresh_token = os.getenv("YOUTUBE_REFRESH_TOKEN")
+    if not (client_id and client_secret and refresh_token):
+        return None
+    body = urllib.parse.urlencode({
+        "client_id": client_id,
+        "client_secret": client_secret,
+        "refresh_token": refresh_token,
+        "grant_type": "refresh_token",
+    }).encode("utf-8")
+    request = urllib.request.Request(
+        "https://oauth2.googleapis.com/token",
+        data=body,
+        headers={"Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=_TIMEOUT) as response:
+            payload = json.loads(response.read().decode("utf-8", "replace"))
+        token = payload.get("access_token")
+        if token:
+            _YOUTUBE_TOKEN = str(token)
+            _YOUTUBE_TOKEN_EXPIRES_AT = time.time() + int(payload.get("expires_in", 3600))
+            return _YOUTUBE_TOKEN
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, OSError) as exc:
+        logger.warning("[platform-learning] YouTube OAuth refresh failed: %s", type(exc).__name__)
+    return None
+
+
 def _fetch_youtube(media_id: str) -> dict | None:
     key = os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")
-    if not key:
+    access_token = None if key else _youtube_access_token()
+    if not key and not access_token:
         return None
-    params = urllib.parse.urlencode({"part": "statistics", "id": media_id, "key": key})
-    data = _request_json(f"https://www.googleapis.com/youtube/v3/videos?{params}")
+    params = urllib.parse.urlencode({"part": "statistics", "id": media_id, **({"key": key} if key else {})})
+    headers = {"Accept": "application/json"}
+    if access_token:
+        headers["Authorization"] = f"Bearer {access_token}"
+    data = _request_json(f"https://www.googleapis.com/youtube/v3/videos?{params}", headers=headers)
     items = (data or {}).get("items") or []
     if not items:
         return None
@@ -217,13 +265,19 @@ def _fetch_facebook(media_id: str) -> dict | None:
     token = os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("FACEBOOK_ACCESS_TOKEN")
     if not token:
         return None
-    data = _meta_get(
-        media_id, token,
-        "shares,likes.summary(true),comments.summary(true),insights.metric(post_impressions,post_engaged_users,post_video_views)",
-    )
+    # Keep engagement fields independent from Insights permissions: a missing
+    # insights scope must not discard otherwise valid like/comment/share counts.
+    data = _meta_get(media_id, token, "shares,likes.summary(true),comments.summary(true)")
     if not data:
         return None
     out: dict[str, Any] = {}
+    query = urllib.parse.urlencode({
+        "metric": "post_impressions,post_engaged_users,post_video_views",
+        "access_token": token,
+    })
+    insights = _request_json(
+        f"{_meta_base()}/{urllib.parse.quote(media_id, safe='_')}/insights?{query}"
+    )
     if isinstance(data.get("shares"), dict) and "count" in data["shares"]:
         out["shares"] = data["shares"]["count"]
     likes = (data.get("likes") or {}).get("summary") or {}
@@ -232,7 +286,7 @@ def _fetch_facebook(media_id: str) -> dict | None:
         out["likes"] = likes["total_count"]
     if "total_count" in comments:
         out["comments"] = comments["total_count"]
-    for item in ((data.get("insights") or {}).get("data") or []):
+    for item in ((insights or {}).get("data") or []):
         values = item.get("values") or []
         if not values:
             continue
@@ -272,7 +326,7 @@ def _fetch_threads(media_id: str) -> dict | None:
 
 
 def _fetch_linkedin(media_id: str) -> dict | None:
-    token = os.getenv("LINKEDIN_ACCESS_TOKEN")
+    token = os.getenv("LINKEDIN_ACCESS_TOKEN") or os.getenv("LI_API_ACCESS")
     version = os.getenv("LINKEDIN_VERSION")
     if not token or not version:
         return None
@@ -304,8 +358,8 @@ def _fetch_platform_metrics(post: dict) -> tuple[dict | None, str]:
     if not media_id:
         return None, "missing_media_id"
     if platform == "youtube":
-        if not (os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")):
-            return None, "missing_youtube_api_key"
+        if not ((os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")) or (os.getenv("YOUTUBE_CLIENT_ID") and os.getenv("YOUTUBE_CLIENT_SECRET") and os.getenv("YOUTUBE_REFRESH_TOKEN"))):
+            return None, "missing_youtube_credentials"
         metrics = _fetch_youtube(media_id)
     elif platform == "facebook":
         if not (os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("FACEBOOK_ACCESS_TOKEN")):
@@ -316,7 +370,7 @@ def _fetch_platform_metrics(post: dict) -> tuple[dict | None, str]:
             return None, "missing_threads_access_token"
         metrics = _fetch_threads(media_id)
     elif platform == "linkedin":
-        if not os.getenv("LINKEDIN_ACCESS_TOKEN") or not os.getenv("LINKEDIN_VERSION"):
+        if not (os.getenv("LINKEDIN_ACCESS_TOKEN") or os.getenv("LI_API_ACCESS")) or not os.getenv("LINKEDIN_VERSION"):
             return None, "missing_linkedin_token_or_version"
         metrics = _fetch_linkedin(media_id)
     elif platform == "instagram_story":
