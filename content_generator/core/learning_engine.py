@@ -315,4 +315,4 @@ def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
         if description:
             lines.append(f"  - {description}")
     lines.append("Use these as directional evidence; preserve brand policy and keep testing alternatives.")
-    return "\\n".join(lines)
+    return "\n".join(lines)
