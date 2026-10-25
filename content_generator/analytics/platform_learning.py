@@ -319,11 +319,10 @@ def _fetch_facebook(media_id: str) -> dict | None:
             continue
         if name == "post_impressions":
             out["impressions"] = value
-            out["views"] = value
         elif name == "post_video_views":
             out["views"] = value
         elif name == "post_engaged_users":
-            out["reach"] = value
+            out["engaged_users"] = value
     return out or None
 
 
@@ -335,16 +334,20 @@ def _fetch_threads(media_id: str) -> dict | None:
         "metric": "views,likes,replies,reposts,quotes",
         "access_token": token,
     })
-    data = _request_json(f"{_meta_base()}/{urllib.parse.quote(media_id, safe='_')}/insights?{params}")
+    base = os.getenv("THREADS_GRAPH_BASE", "https://graph.threads.net/v1.0").rstrip("/")
+    data = _request_json(f"{base}/{urllib.parse.quote(media_id, safe='_')}/insights?{params}")
     if not data or not isinstance(data.get("data"), list):
         return None
     out: dict[str, Any] = {}
-    aliases = {"views": "views", "likes": "likes", "replies": "comments", "reposts": "shares", "quotes": "quotes"}
+    aliases = {"views": "views", "likes": "likes", "replies": "comments"}
     for item in data["data"]:
-        name = aliases.get(str(item.get("name") or ""))
+        raw_name = str(item.get("name") or "")
+        name = aliases.get(raw_name)
         values = item.get("values") or []
         if name and values and values[0].get("value") is not None:
             out[name] = values[0]["value"]
+        elif raw_name in {"reposts", "quotes"} and values and values[0].get("value") is not None:
+            out["shares"] = int(out.get("shares") or 0) + int(values[0]["value"])
     return out or None
 
 
