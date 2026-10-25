@@ -47,11 +47,15 @@ def record_performance(
     policy_version: str = "", attention_mechanism: str = "",
     scroller_state: str = "", psychology_frame: str = "",
     hook_strategy: str = "", payoff_type: str = "", decision_version: str = "",
+    platform: str = "", observation_window: str = "",
 ) -> dict:
-    """Record performance and preserve the objective used at creation time."""
+    """Record performance idempotently and preserve the creation-time objective."""
     entries = _load_log()
+    normalized_platform = str(platform or "").strip().lower()
+    normalized_window = str(observation_window or "").strip().lower()
     entry = {
-        "asset_id": asset_id, "track": track, "kpi": kpi_at_creation,
+        "asset_id": asset_id, "track": track, "platform": normalized_platform or None,
+        "observation_window": normalized_window or None, "kpi": kpi_at_creation,
         "policy_version": policy_version, "hook": hook, "topic": topic,
         "format": format_used, "attention_mechanism": attention_mechanism or None,
         "scroller_state": scroller_state or None, "psychology_frame": psychology_frame or None,
@@ -62,9 +66,32 @@ def record_performance(
         "metrics": {k: v for k, v in (metrics or {}).items() if k in METRIC_FIELDS},
         "notes": notes,
     }
-    entries.append(entry)
+    # Retries, overlapping Actions runs and ledger replays must not inflate
+    # the sample count. A platform/window observation is one independent sample.
+    key = (str(asset_id), normalized_platform, normalized_window or "legacy")
+    replaced = False
+    for index, previous in enumerate(entries):
+        previous_key = (
+            str(previous.get("asset_id") or ""),
+            str(previous.get("platform") or "").strip().lower(),
+            str(previous.get("observation_window") or "legacy").strip().lower(),
+        )
+        if previous_key == key:
+            # Keep existing useful creative metadata if a replay lacks it.
+            for field in ("hook", "topic", "format", "kpi", "policy_version",
+                          "attention_mechanism", "hook_strategy", "payoff_type",
+                          "decision_version", "scroller_state", "psychology_frame"):
+                if not entry.get(field) and previous.get(field):
+                    entry[field] = previous[field]
+            entries[index] = entry
+            replaced = True
+            break
+    if not replaced:
+        entries.append(entry)
     _save_log(entries)
-    logger.info("[learning] Recorded performance for %s (%s)", asset_id, track)
+    logger.info("[learning] %s performance for %s (%s/%s)",
+                "Updated" if replaced else "Recorded", asset_id,
+                normalized_platform or "legacy", normalized_window or "legacy")
     return entry
 
 
@@ -246,3 +273,46 @@ def get_learning_block(max_items: int = 5) -> str:
         if desc:
             lines.append(f"  - {desc}")
     return "\n".join(lines)
+
+
+
+def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
+    """Return measured wins and cautions for one platform after 5 independent posts."""
+    target = str(platform or "").strip().lower()
+    if not target:
+        return ""
+    entries = [
+        e for e in _load_log()
+        if str(e.get("platform") or "").strip().lower() == target
+        and e.get("metrics") and is_teachable(e)
+    ]
+    # Deduplicate by asset/window even if an old log was manually merged.
+    unique: dict[tuple[str, str], dict] = {}
+    for entry in entries:
+        key = (str(entry.get("asset_id") or ""), str(entry.get("observation_window") or "legacy"))
+        unique[key] = entry
+    eligible = list(unique.values())
+    if len(eligible) < _MIN_LEARNING_SAMPLES:
+        return ""
+    scored = sorted(((e, _weighted_score(e)) for e in eligible), key=lambda pair: pair[1], reverse=True)
+    n = max(1, len(scored) // 5)
+    winners = scored[:n]
+    same_objective = [(e, score) for e, score in scored if _objective_factor(e) == 1.0]
+    cautions = same_objective[-n:] if same_objective else []
+    lines = [
+        f"MEASURED {target.upper()} LEARNING (only this platform's own observations; {len(eligible)} independent posts):",
+        "Reuse the winning structures as hypotheses, not guarantees. Do not copy wording verbatim.",
+        "Better-performing structures:",
+    ]
+    for entry, _score in winners[:max_items]:
+        description = " | ".join(filter(None, [entry.get("hook"), entry.get("topic"), entry.get("format")]))
+        reason = _infer_reason(entry)
+        if description:
+            lines.append(f"  + {description}" + (f" [observed signal: {reason}]" if reason else ""))
+    lines.append("Structures to rework or test differently:")
+    for entry, _score in cautions[:max_items]:
+        description = " | ".join(filter(None, [entry.get("hook"), entry.get("topic"), entry.get("format")]))
+        if description:
+            lines.append(f"  - {description}")
+    lines.append("Use these as directional evidence; preserve brand policy and keep testing alternatives.")
+    return "\\n".join(lines)
