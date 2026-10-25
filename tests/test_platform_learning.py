@@ -75,9 +75,10 @@ def test_cross_platform_observations_progress_to_one_learning_sample(tmp_path, m
     assert second["snapshots"] == 1
     assert third["snapshots"] == 1
     assert len(row["measurement_snapshots"]) == 3
-    assert len(calls) == 1
-    assert calls[0]["platform"] == "youtube"
-    assert calls[0]["observation_window"] == "7d"
+    assert len(calls) == 3
+    assert [call["observation_window"] for call in calls] == ["24h", "72h", "7d"]
+    assert all(call["publication_id"] == "yt_1" for call in calls)
+    assert calls[-1]["platform"] == "youtube"
     assert row["insights_recorded"] is True
 
 
@@ -111,7 +112,9 @@ def test_learning_record_upsert_is_idempotent_but_keeps_same_day_posts_distinct(
     learning_engine.record_performance(**base, publication_id="media-b", metrics={"views": 100, "likes": 10, "comments": 2})
     rows = json.loads(log_path.read_text(encoding="utf-8"))
     assert len(rows) == 2
-    assert next(row for row in rows if row["publication_id"] == "media-a")["metrics"]["views"] == 150
+    latest = next(row for row in rows if row["publication_id"] == "media-a")
+    assert latest["metrics"]["views"] == 150
+    assert latest["observation_window"] == "72h"
 
 
 
