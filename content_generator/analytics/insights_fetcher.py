@@ -26,6 +26,7 @@ _TIMEOUT = 30
 MIN_AGE_HOURS = 20
 MAX_FETCH_ATTEMPTS = 5
 MEASUREMENT_WINDOWS = (("24h", 24), ("72h", 72), ("7d", 168))
+MAX_MEDIA_FETCHES_PER_RUN = 8
 _WINDOW_MAX_AGE_HOURS = {"24h": 48, "72h": 120, "7d": 240}
 
 
@@ -34,16 +35,37 @@ def _load_posts() -> list[dict]:
         return []
     try:
         with open(_POSTS_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        logger.warning("[insights] Could not read published posts: %s", e)
-        return []
+            payload = json.load(f)
+    except (OSError, ValueError, TypeError) as exc:
+        logger.error("[insights] Refusing to replace unreadable published-post tracker: %s", exc)
+        raise ValueError(f"Cannot safely read published-post tracker: {_POSTS_PATH}") from exc
+    if not isinstance(payload, list) or any(not isinstance(row, dict) for row in payload):
+        raise ValueError(f"Invalid published-post tracker schema: {_POSTS_PATH}")
+    return payload
 
 
 def _save_posts(posts: list[dict]) -> None:
-    os.makedirs(_LEARNING_DIR, exist_ok=True)
-    with open(_POSTS_PATH, "w", encoding="utf-8") as f:
-        json.dump(posts, f, indent=2, ensure_ascii=False)
+    """Persist tracker atomically; never leave a truncated JSON file after a crash."""
+    parent = os.path.dirname(os.path.abspath(_POSTS_PATH))
+    os.makedirs(parent, exist_ok=True)
+    tmp_name = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=parent,
+            prefix=f".{os.path.basename(_POSTS_PATH)}.", suffix=".tmp", delete=False,
+        ) as handle:
+            tmp_name = handle.name
+            json.dump(posts, handle, indent=2, ensure_ascii=False)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_name, _POSTS_PATH)
+    finally:
+        if tmp_name and os.path.exists(tmp_name):
+            try:
+                os.unlink(tmp_name)
+            except OSError:
+                logger.warning("[insights] Could not clean temporary tracker file %s", tmp_name)
 
 
 def track_published_post(
@@ -554,7 +576,8 @@ def fetch_pending_insights() -> dict:
     _append_account_snapshot(now, follower_count, acct)
     _append_follower_snapshot(now, follower_count)
 
-    for post in posts:
+    media_fetches_this_run = 0
+    for post in sorted(posts, key=lambda row: _hours_since(str(row.get("published_at") or ""), now)):
         if post.get("insights_recorded") or post.get("measurement_terminal"):
             continue
         # Restrict Instagram insights fetching strictly to authentic Instagram records.
@@ -583,6 +606,10 @@ def fetch_pending_insights() -> dict:
                 pending += 1
             continue
         window, hours = due
+        if media_fetches_this_run >= MAX_MEDIA_FETCHES_PER_RUN:
+            pending += 1
+            continue
+        media_fetches_this_run += 1
         metrics = _fetch_media_insights(str(post.get("media_id") or ""))
         if metrics is None:
             if insight_failure_is_systemic(_last_failure_detail):
