@@ -5629,14 +5629,14 @@
       "status": "gate_holding"
     },
     {
-      "count": 9,
+      "count": 10,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "aesthetic",
       "id": "instagram|reel_1|aesthetic|weak_hierarchy:60/41",
       "label": "reel_1",
-      "last_seen": "2026-10-25",
+      "last_seen": "2026-10-26",
       "platform": "instagram",
       "reason": "weak_hierarchy:60/41",
       "stage": "render",
@@ -15359,7 +15359,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 2,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-26",
       "fix": "",
@@ -16253,6 +16253,34 @@
       "reason": "viral: score 7.5 < 8.0 (weakest: hook, curiosity_gap). The piece has strong technical production detail and accurate product positioning for Purista (freeze-dried Robusta, zero chicory). However, the hook relies on technical terms ('spray-dried powder') which can be softened into a more punchy, scro",
       "stage": "generation",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-26",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|weak_hierarchy:60/41; same_layout_as_last_tile:hero_center",
+      "label": "reel_1",
+      "last_seen": "2026-10-26",
+      "platform": "instagram",
+      "reason": "weak_hierarchy:60/41; same_layout_as_last_tile:hero_center",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-26",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:4.0; redundant url text: 'https://p3online.in' is written out as body text directly below the large 'shop at p3online.in' headline, which is poor typographic hi",
+      "label": "reel_1",
+      "last_seen": "2026-10-26",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:4.0; Redundant URL text: 'https://p3online.in' is written out as body text directly below the large 'SHOP AT P3ONLINE.IN' headline, which is poor typographic hierarchy.; Dated and cluttered design elements: Multiple pill-shaped outlines ('REEL \u2022 PURITY BEANS', 'PURE COFFEE \u2022 ZERO",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
