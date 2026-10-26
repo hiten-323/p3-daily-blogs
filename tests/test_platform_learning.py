@@ -322,3 +322,38 @@ def test_linkedin_native_social_actions_metrics(monkeypatch):
     assert platform_learning._fetch_linkedin("urn:li:share:123") == {
         "likes": 15, "comments": 3,
     }
+
+
+
+def test_credential_blocked_posts_do_not_starve_other_due_platform_posts(tmp_path, monkeypatch):
+    posts_path = tmp_path / "published_posts.json"
+    now = dt.datetime.now(dt.timezone.utc)
+    rows = [
+        {
+            "media_id": "noauth", "asset_id": "youtube_day1", "platform": "youtube",
+            "published_at": (now - dt.timedelta(hours=25)).isoformat(),
+            "measurement_snapshots": [], "fetch_attempts_by_window": {}, "failed_windows": [],
+        },
+        {
+            "media_id": "authorized", "asset_id": "facebook_day1", "platform": "facebook",
+            "published_at": (now - dt.timedelta(hours=26)).isoformat(),
+            "measurement_snapshots": [], "fetch_attempts_by_window": {}, "failed_windows": [],
+        },
+    ]
+    posts_path.write_text(json.dumps(rows), encoding="utf-8")
+    monkeypatch.setattr(platform_learning, "POSTS_PATH", posts_path)
+    monkeypatch.setattr(platform_learning, "MAX_API_FETCHES_PER_RUN", 1)
+    monkeypatch.setattr(
+        platform_learning, "_fetch_platform_metrics",
+        lambda post: (
+            (None, "missing_youtube_credentials") if post["media_id"] == "noauth"
+            else ({"views": 50, "likes": 5}, "measured")
+        ),
+    )
+    monkeypatch.setattr(learning_engine, "record_performance", lambda **kwargs: kwargs)
+
+    result = platform_learning.fetch_pending_platform_metrics(now=now)
+    persisted = json.loads(posts_path.read_text(encoding="utf-8"))
+    assert result["blocked"] == 1
+    assert result["snapshots"] == 1
+    assert next(row for row in persisted if row["media_id"] == "authorized")["measurement_snapshots"]
