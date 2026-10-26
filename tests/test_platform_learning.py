@@ -277,3 +277,48 @@ def test_cross_platform_fetch_budget_defers_excess_posts_without_spending_attemp
     deferred = next(row for row in persisted if row["media_id"] == "older")
     assert deferred["fetch_attempts_by_window"] == {}
     assert deferred["measurement_snapshots"] == []
+
+
+
+def test_facebook_keeps_engagement_metrics_when_insights_are_unavailable(monkeypatch):
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "test-token")
+    monkeypatch.setattr(platform_learning, "_meta_get", lambda *args: {
+        "shares": {"count": 3},
+        "likes": {"summary": {"total_count": 20}},
+        "comments": {"summary": {"total_count": 4}},
+    })
+    monkeypatch.setattr(platform_learning, "_request_json", lambda *args, **kwargs: None)
+
+    assert platform_learning._fetch_facebook("page_post_1") == {
+        "shares": 3, "likes": 20, "comments": 4,
+    }
+
+
+def test_threads_native_metrics_map_replies_and_reposts(monkeypatch):
+    monkeypatch.setenv("THREADS_ACCESS_TOKEN", "test-token")
+    monkeypatch.setattr(platform_learning, "_request_json", lambda *args, **kwargs: {
+        "data": [
+            {"name": "views", "values": [{"value": 120}]},
+            {"name": "likes", "values": [{"value": 10}]},
+            {"name": "replies", "values": [{"value": 5}]},
+            {"name": "reposts", "values": [{"value": 2}]},
+            {"name": "quotes", "values": [{"value": 1}]},
+        ]
+    })
+
+    assert platform_learning._fetch_threads("threads_post_1") == {
+        "views": 120, "likes": 10, "comments": 5, "shares": 3,
+    }
+
+
+def test_linkedin_native_social_actions_metrics(monkeypatch):
+    monkeypatch.setenv("LINKEDIN_ACCESS_TOKEN", "test-token")
+    monkeypatch.setenv("LINKEDIN_VERSION", "202610")
+    monkeypatch.setattr(platform_learning, "_request_json", lambda *args, **kwargs: {
+        "likesSummary": {"totalLikes": 15},
+        "commentsSummary": {"totalFirstLevelComments": 3},
+    })
+
+    assert platform_learning._fetch_linkedin("urn:li:share:123") == {
+        "likes": 15, "comments": 3,
+    }
