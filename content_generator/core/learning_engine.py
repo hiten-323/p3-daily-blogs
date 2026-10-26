@@ -95,11 +95,10 @@ def record_performance(
     # the sample count. A platform/window observation is one independent sample.
     # One learning sample per published post; later 72h/7d observations update
     # that same sample instead of counting one creative as multiple experiments.
-    key = (str(asset_id), normalized_platform, str(publication_id or "").strip() or str(asset_id))
+    key = (normalized_platform, str(publication_id or "").strip() or str(asset_id))
     replaced = False
     for index, previous in enumerate(entries):
         previous_key = (
-            str(previous.get("asset_id") or ""),
             str(previous.get("platform") or "").strip().lower(),
             str(previous.get("publication_id") or previous.get("asset_id") or ""),
         )
