@@ -207,8 +207,8 @@ def reconcile_verified_publications() -> dict[str, int]:
                 if value and not post.get(field):
                     post[field] = value
                     changed = True
-            # Backfill old tracker rows with a missing/incorrect platform label.
-            if post.get("platform") != platform and _platform(post.get("platform"), post.get("asset_id")) == platform:
+            # A verified publication ledger is authoritative for platform identity.
+            if str(post.get("platform") or "").lower() != platform:
                 post["platform"] = platform
                 changed = True
             if changed:
