@@ -4,6 +4,8 @@ from __future__ import annotations
 import datetime as dt
 import json
 
+import pytest
+
 from content_generator.analytics import platform_learning
 from content_generator.core import learning_engine
 from content_generator.prompts.growth_engine import platforms
@@ -168,3 +170,28 @@ def test_prompt_block_calls_platform_learning_without_breaking_generation(monkey
     block = platforms.prompt_block("threads", "Purica", 300)
     assert "PLATFORM MODULE (threads)." in block
     assert "INJECTED LESSON FOR threads" in block
+
+
+
+def test_corrupt_tracker_is_never_overwritten_by_reconciliation(tmp_path, monkeypatch):
+    posts_path = tmp_path / "published_posts.json"
+    ledger_path = tmp_path / "publishing_ledger.json"
+    original = '{"records": broken'
+    posts_path.write_text(original, encoding="utf-8")
+    ledger_path.write_text(json.dumps({"records": {}}), encoding="utf-8")
+    monkeypatch.setattr(platform_learning, "POSTS_PATH", posts_path)
+    monkeypatch.setattr(platform_learning, "LEDGER_PATH", ledger_path)
+
+    with pytest.raises(ValueError, match="Refusing to overwrite malformed JSON"):
+        platform_learning.reconcile_verified_publications()
+    assert posts_path.read_text(encoding="utf-8") == original
+
+
+def test_invalid_tracker_shape_is_not_replaced_with_an_empty_list(tmp_path, monkeypatch):
+    posts_path = tmp_path / "published_posts.json"
+    posts_path.write_text(json.dumps({"unexpected": "object"}), encoding="utf-8")
+    monkeypatch.setattr(platform_learning, "POSTS_PATH", posts_path)
+
+    with pytest.raises(ValueError, match="Invalid published-post tracker schema"):
+        platform_learning.fetch_pending_platform_metrics()
+    assert json.loads(posts_path.read_text(encoding="utf-8")) == {"unexpected": "object"}
