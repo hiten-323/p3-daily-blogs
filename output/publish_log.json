@@ -3183,5 +3183,74 @@
       ],
       "timestamp": "2026-10-25T05:40:28"
     }
+  },
+  {
+    "date": "2026-10-26",
+    "day_number": 298,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "urn:li:share:7520365302560288768",
+        "media_id": "urn:li:share:7520365302560288768",
+        "video_id": "urn:li:share:7520365302560288768",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7520365302560288768/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7520365302560288768/",
+        "duration_ms": 1
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": true,
+        "video_id": "vL1KDAXKjI4",
+        "url": "https://www.youtube.com/shorts/vL1KDAXKjI4",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 1,
+        "duration_ms": 3712
+      },
+      "threads": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "post_id": "",
+        "url": "",
+        "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+        "gate": {
+          "allowed": false,
+          "asset_key": "threads_post",
+          "reason": "native_asset_missing_passing_editorial_score",
+          "checks": {
+            "editorial": false
+          }
+        },
+        "ledger_status": "FAILED",
+        "ledger_attempt_count": 2,
+        "duration_ms": 2390
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Youtube | Held for slot: Instagram, Facebook | Skipped: Threads, Blog",
+      "published_platforms": [
+        "linkedin",
+        "youtube"
+      ],
+      "timestamp": "2026-10-26T06:56:45"
+    }
   }
 ]
