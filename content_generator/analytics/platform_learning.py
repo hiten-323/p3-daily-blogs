@@ -29,6 +29,7 @@ WINDOWS = (("24h", 24), ("72h", 72), ("7d", 168))
 # must not be mislabeled as historical 24h/72h measurements.
 WINDOW_MAX_AGE_HOURS = {"24h": 48, "72h": 120, "7d": 240}
 MAX_ATTEMPTS = 5
+MAX_API_FETCHES_PER_RUN = 12
 _TIMEOUT = 20
 
 # These aliases preserve the native platform for reporting while selecting the
@@ -457,7 +458,8 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
     snapshots_written = recorded = pending = failed = unsupported = blocked = 0
     from content_generator.core.learning_engine import record_performance
 
-    for post in posts:
+    api_fetches_this_run = 0
+    for post in sorted(posts, key=lambda row: _age_hours(row.get("published_at"), current)):
         if not isinstance(post, dict):
             continue
         platform = _platform(post.get("platform"), post.get("asset_id"))
@@ -500,6 +502,10 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         if due is None:
             continue
         window, hours = due
+        if api_fetches_this_run >= MAX_API_FETCHES_PER_RUN:
+            pending += 1
+            continue
+        api_fetches_this_run += 1
         metrics, status = _fetch_platform_metrics(post)
         post["measurement_status"] = status
         if not metrics:
