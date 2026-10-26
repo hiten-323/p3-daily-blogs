@@ -325,10 +325,10 @@ def _fetch_facebook(media_id: str) -> dict | None:
     out: dict[str, Any] = {}
     query = urllib.parse.urlencode({
         "metric": "post_impressions,post_engaged_users,post_video_views",
-        "access_token": token,
     })
     insights = _request_json(
-        f"{_meta_base()}/{urllib.parse.quote(media_id, safe='_')}/insights?{query}"
+        f"{_meta_base()}/{urllib.parse.quote(media_id, safe='_')}/insights?{query}",
+        headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
     )
     if isinstance(data.get("shares"), dict) and "count" in data["shares"]:
         out["shares"] = data["shares"]["count"]
@@ -361,10 +361,12 @@ def _fetch_threads(media_id: str) -> dict | None:
         return None
     params = urllib.parse.urlencode({
         "metric": "views,likes,replies,reposts,quotes",
-        "access_token": token,
     })
     base = os.getenv("THREADS_GRAPH_BASE", "https://graph.threads.net/v1.0").rstrip("/")
-    data = _request_json(f"{base}/{urllib.parse.quote(media_id, safe='_')}/insights?{params}")
+    data = _request_json(
+        f"{base}/{urllib.parse.quote(media_id, safe='_')}/insights?{params}",
+        headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+    )
     if not data or not isinstance(data.get("data"), list):
         return None
     out: dict[str, Any] = {}
