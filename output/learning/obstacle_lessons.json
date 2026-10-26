@@ -14365,7 +14365,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 3,
+      "count": 4,
       "feedback": "viral_scoring_failed: ValueError",
       "first_seen": "2026-10-25",
       "fix": "",
@@ -15163,7 +15163,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 2,
       "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: freeze-dried vs agglomerated instant coffee (how each is made and why it changes taste). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no 'buy', 'shop', 'order' or discount language in the body. The product appears ONLY as a",
       "first_seen": "2026-10-26",
       "fix": "",
@@ -16209,6 +16209,48 @@
       "last_seen": "2026-10-26",
       "platform": "youtube",
       "reason": "growth engine regenerate: wrong_handle:@PUREPANTRYPROVISIONS (use @purepantryprovisions)",
+      "stage": "generation",
+      "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.43 < 8.0 (weakest: follow_cta, relatability). The opening hook is strong and creates an instant curiosity gap about aroma loss. However, the thread structure in the PIECE JSON cuts off prematurely before the actual CTA and follow prompt are clearly delivered in the body text. Ensure the thread text field includes the full narrative arc ending with the explicit follow reason and webs",
+      "first_seen": "2026-10-26",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "threads|threads_post|llm_viral|viral: score 7.43 < 8.0 (weakest: follow_cta, relatability). the opening hook is strong and creates an instant curiosity gap about aroma loss. however, the thread structure in the ",
+      "label": "threads_post",
+      "last_seen": "2026-10-26",
+      "platform": "threads",
+      "reason": "viral: score 7.43 < 8.0 (weakest: follow_cta, relatability). The opening hook is strong and creates an instant curiosity gap about aroma loss. However, the thread structure in the PIECE JSON cuts off prematurely before the actual CTA and follow prompt are clearly delivered in the body text. Ensure t",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.7 < 8.0 (weakest: curiosity_gap, shareability, follow_cta). The hot take opener is strong and native to Threads, but the transition into the technical explanation of spray-drying loses a bit of emotional momentum. To push this past 8, bridge the gap directly into how Purista's freeze-drying locks in that aroma without needing a science lecture. Ensure the CTA explicitly mentions fol",
+      "first_seen": "2026-10-26",
+      "fix": "later draft passed the same gates",
+      "gate": "llm_viral",
+      "id": "threads|threads_post|llm_viral|viral: score 7.7 < 8.0 (weakest: curiosity_gap, shareability, follow_cta). the hot take opener is strong and native to threads, but the transition into the technical explanation of",
+      "label": "threads_post",
+      "last_seen": "2026-10-26",
+      "platform": "threads",
+      "reason": "viral: score 7.7 < 8.0 (weakest: curiosity_gap, shareability, follow_cta). The hot take opener is strong and native to Threads, but the transition into the technical explanation of spray-drying loses a bit of emotional momentum. To push this past 8, bridge the gap directly into how Purista's freeze-",
+      "stage": "generation",
+      "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.5 < 8.0 (weakest: hook, curiosity_gap). The piece has strong technical production detail and accurate product positioning for Purista (freeze-dried Robusta, zero chicory). However, the hook relies on technical terms ('spray-dried powder') which can be softened into a more punchy, scroll-stopping consumer realization. To hit an 8+ across the board, start with an observation about ins",
+      "first_seen": "2026-10-26",
+      "fix": "later draft passed the same gates",
+      "gate": "llm_viral",
+      "id": "instagram|growth_reel|llm_viral|viral: score 7.5 < 8.0 (weakest: hook, curiosity_gap). the piece has strong technical production detail and accurate product positioning for purista (freeze-dried robusta, zero chi",
+      "label": "growth_reel",
+      "last_seen": "2026-10-26",
+      "platform": "instagram",
+      "reason": "viral: score 7.5 < 8.0 (weakest: hook, curiosity_gap). The piece has strong technical production detail and accurate product positioning for Purista (freeze-dried Robusta, zero chicory). However, the hook relies on technical terms ('spray-dried powder') which can be softened into a more punchy, scro",
       "stage": "generation",
       "status": "fixed"
     }
