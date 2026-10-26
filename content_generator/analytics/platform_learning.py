@@ -11,6 +11,7 @@ import datetime as dt
 import json
 import logging
 import os
+import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -48,17 +49,42 @@ _ALIASES = {
 
 
 def _read_json(path: Path, fallback: Any) -> Any:
+    """Use a fallback only for an absent file; never silently reset corrupt state."""
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, ValueError, TypeError):
+        raw = path.read_text(encoding="utf-8")
+    except FileNotFoundError:
         return fallback
+    except OSError:
+        logger.exception("[platform-learning] cannot read state file %s", path)
+        raise
+    try:
+        return json.loads(raw)
+    except (ValueError, TypeError) as exc:
+        logger.error("[platform-learning] refusing corrupt state file %s: %s", path, exc)
+        raise ValueError(f"Refusing to overwrite malformed JSON state: {path}") from exc
 
 
 def _write_json(path: Path, value: Any) -> None:
+    """Atomically replace state with a unique same-directory temp file."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(path.suffix + ".tmp")
-    tmp.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    tmp.replace(path)
+    payload = json.dumps(value, indent=2, ensure_ascii=False) + "\n"
+    tmp_name = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=path.parent,
+            prefix=f".{path.name}.", suffix=".tmp", delete=False,
+        ) as handle:
+            tmp_name = handle.name
+            handle.write(payload)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_name, path)
+    finally:
+        if tmp_name and os.path.exists(tmp_name):
+            try:
+                os.unlink(tmp_name)
+            except OSError:
+                logger.warning("[platform-learning] could not clean temp state file %s", tmp_name)
 
 
 def _platform(raw: Any, asset_id: str = "") -> str:
@@ -95,11 +121,12 @@ def _age_hours(published_at: Any, now: dt.datetime) -> float:
 def reconcile_verified_publications() -> dict[str, int]:
     """Merge verified-live publication ledger records into the measurement tracker."""
     ledger = _read_json(LEDGER_PATH, {})
-    records = ledger.get("records", {}) if isinstance(ledger, dict) else {}
+    if not isinstance(ledger, dict) or not isinstance(ledger.get("records", {}), dict):
+        raise ValueError("Invalid publishing ledger schema; refusing reconciliation")
+    records = ledger.get("records", {})
     posts = _read_json(POSTS_PATH, [])
-    if not isinstance(posts, list):
-        posts = []
-    posts = [p for p in posts if isinstance(p, dict)]
+    if not isinstance(posts, list) or any(not isinstance(p, dict) for p in posts):
+        raise ValueError("Invalid published-post tracker schema; refusing to overwrite state")
     # Migrate historical tracker rows whose platform was omitted by older runs.
     by_id = {str(p.get("media_id")): p for p in posts if p.get("media_id")}
     added = enriched = migrated = skipped = 0
@@ -424,8 +451,8 @@ def _fetch_platform_metrics(post: dict) -> tuple[dict | None, str]:
 def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, int]:
     """Collect one due native-platform observation and update the same post-level sample."""
     posts = _read_json(POSTS_PATH, [])
-    if not isinstance(posts, list):
-        posts = []
+    if not isinstance(posts, list) or any(not isinstance(p, dict) for p in posts):
+        raise ValueError("Invalid published-post tracker schema; refusing to overwrite state")
     current = now or dt.datetime.now().astimezone()
     snapshots_written = recorded = pending = failed = unsupported = 0
     from content_generator.core.learning_engine import record_performance
