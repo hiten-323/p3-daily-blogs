@@ -11,6 +11,7 @@ import datetime
 import json
 import logging
 import os
+import tempfile
 
 logger = logging.getLogger(__name__)
 _LEARNING_DIR = os.getenv("LEARNING_DIR", os.path.join("output", "learning"))
@@ -23,21 +24,44 @@ METRIC_FIELDS = [
 ]
 
 
-def _load_log() -> list[dict]:
+def _load_log(*, strict: bool = False) -> list[dict]:
     if not os.path.exists(_LOG_PATH):
         return []
     try:
         with open(_LOG_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        logger.warning("[learning] Could not read log: %s", e)
+            payload = json.load(f)
+        if not isinstance(payload, list) or any(not isinstance(item, dict) for item in payload):
+            raise ValueError("performance log must be a JSON array of objects")
+        return payload
+    except (OSError, ValueError, TypeError) as exc:
+        logger.warning("[learning] Could not read log: %s", exc)
+        if strict:
+            raise ValueError(f"Refusing to overwrite invalid performance log: {_LOG_PATH}") from exc
         return []
 
 
 def _save_log(entries: list[dict]) -> None:
-    os.makedirs(_LEARNING_DIR, exist_ok=True)
-    with open(_LOG_PATH, "w", encoding="utf-8") as f:
-        json.dump(entries, f, indent=2, ensure_ascii=False)
+    """Write learning history atomically so a crash cannot truncate the log."""
+    parent = os.path.dirname(os.path.abspath(_LOG_PATH))
+    os.makedirs(parent, exist_ok=True)
+    tmp_name = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=parent,
+            prefix=f".{os.path.basename(_LOG_PATH)}.", suffix=".tmp", delete=False,
+        ) as handle:
+            tmp_name = handle.name
+            json.dump(entries, handle, indent=2, ensure_ascii=False)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_name, _LOG_PATH)
+    finally:
+        if tmp_name and os.path.exists(tmp_name):
+            try:
+                os.unlink(tmp_name)
+            except OSError:
+                logger.warning("[learning] Could not clean temp log file %s", tmp_name)
 
 
 def record_performance(
@@ -50,7 +74,7 @@ def record_performance(
     platform: str = "", observation_window: str = "", publication_id: str = "",
 ) -> dict:
     """Record performance idempotently and preserve the creation-time objective."""
-    entries = _load_log()
+    entries = _load_log(strict=True)
     normalized_platform = str(platform or "").strip().lower()
     normalized_window = str(observation_window or "").strip().lower()
     entry = {
