@@ -1801,7 +1801,28 @@ def _do_fetch_insights() -> dict:
     except Exception as e:
         logger.debug("[policy] version record skipped: %s", e)
     from content_generator.analytics.insights_fetcher import fetch_pending_insights
-    return fetch_pending_insights()
+    from content_generator.analytics.platform_learning import (
+        fetch_pending_platform_metrics, reconcile_verified_publications,
+    )
+    results = {}
+    # Ledger reconciliation is independent of the dispatcher so recovery-published
+    # posts also enter the measurement loop. Failures here must never block content.
+    try:
+        results["reconciliation"] = reconcile_verified_publications()
+    except Exception as e:
+        logger.warning("[learning] publication reconciliation failed: %s", e)
+        results["reconciliation"] = {"error": type(e).__name__}
+    try:
+        results["instagram"] = fetch_pending_insights()
+    except Exception as e:
+        logger.warning("[learning] Instagram measurement failed: %s", e)
+        results["instagram"] = {"error": type(e).__name__}
+    try:
+        results["other_platforms"] = fetch_pending_platform_metrics()
+    except Exception as e:
+        logger.warning("[learning] cross-platform measurement failed: %s", e)
+        results["other_platforms"] = {"error": type(e).__name__}
+    return results
 
 
 def _do_revenue_attribution() -> dict:

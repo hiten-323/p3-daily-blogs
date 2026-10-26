@@ -1,10 +1,10 @@
 """Instagram Insights Fetcher — truthful, staged measurement for the learning loop.
 
-Every published media object can be observed at 24h, 72h and 7d. Intermediate
-snapshots are retained on the published-post record; only the 7d observation is
-promoted to the learning log so one post cannot count as three independent
-experiments. Account-level metrics remain account-level and are never fabricated
-into post-level attribution.
+Every published media object can be observed at 24h, 72h and 7d. Each successful
+observation updates one per-post learning record, so tomorrow can learn from the
+24h signal without counting the same post three times. Full snapshots remain on
+the published-post record. Account-level metrics are never fabricated into
+post-level attribution.
 """
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ import datetime
 import json
 import logging
 import os
+import tempfile
 import urllib.parse
 import urllib.error
 import urllib.request
@@ -26,6 +27,8 @@ _TIMEOUT = 30
 MIN_AGE_HOURS = 20
 MAX_FETCH_ATTEMPTS = 5
 MEASUREMENT_WINDOWS = (("24h", 24), ("72h", 72), ("7d", 168))
+MAX_MEDIA_FETCHES_PER_RUN = 8
+_WINDOW_MAX_AGE_HOURS = {"24h": 48, "72h": 120, "7d": 240}
 
 
 def _load_posts() -> list[dict]:
@@ -33,16 +36,37 @@ def _load_posts() -> list[dict]:
         return []
     try:
         with open(_POSTS_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        logger.warning("[insights] Could not read published posts: %s", e)
-        return []
+            payload = json.load(f)
+    except (OSError, ValueError, TypeError) as exc:
+        logger.error("[insights] Refusing to replace unreadable published-post tracker: %s", exc)
+        raise ValueError(f"Cannot safely read published-post tracker: {_POSTS_PATH}") from exc
+    if not isinstance(payload, list) or any(not isinstance(row, dict) for row in payload):
+        raise ValueError(f"Invalid published-post tracker schema: {_POSTS_PATH}")
+    return payload
 
 
 def _save_posts(posts: list[dict]) -> None:
-    os.makedirs(_LEARNING_DIR, exist_ok=True)
-    with open(_POSTS_PATH, "w", encoding="utf-8") as f:
-        json.dump(posts, f, indent=2, ensure_ascii=False)
+    """Persist tracker atomically; never leave a truncated JSON file after a crash."""
+    parent = os.path.dirname(os.path.abspath(_POSTS_PATH))
+    os.makedirs(parent, exist_ok=True)
+    tmp_name = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=parent,
+            prefix=f".{os.path.basename(_POSTS_PATH)}.", suffix=".tmp", delete=False,
+        ) as handle:
+            tmp_name = handle.name
+            json.dump(posts, handle, indent=2, ensure_ascii=False)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_name, _POSTS_PATH)
+    finally:
+        if tmp_name and os.path.exists(tmp_name):
+            try:
+                os.unlink(tmp_name)
+            except OSError:
+                logger.warning("[insights] Could not clean temporary tracker file %s", tmp_name)
 
 
 def track_published_post(
@@ -143,6 +167,12 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
             topic="youtube_short",
             format_used="yt_short",
             hashtags=str(" ".join(yt_piece.get("tags") or [])),
+            kpi_at_creation=yt_piece.get("target_kpi_at_creation", ""),
+            policy_version=yt_piece.get("policy_version_at_creation", ""),
+            attention_mechanism=yt_piece.get("attention_mechanism", ""),
+            hook_strategy=yt_piece.get("hook_strategy", ""),
+            payoff_type=yt_piece.get("payoff_type", ""),
+            decision_version=yt_piece.get("decision_version", ""),
             platform="youtube",
         )
 
@@ -157,6 +187,12 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
             hook=str(fb_piece.get("hook") or "")[:120],
             topic="facebook_post",
             format_used="post",
+            kpi_at_creation=fb_piece.get("target_kpi_at_creation", ""),
+            policy_version=fb_piece.get("policy_version_at_creation", ""),
+            attention_mechanism=fb_piece.get("attention_mechanism", ""),
+            hook_strategy=fb_piece.get("hook_strategy", ""),
+            payoff_type=fb_piece.get("payoff_type", ""),
+            decision_version=fb_piece.get("decision_version", ""),
             platform="facebook",
         )
 
@@ -171,6 +207,12 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
             hook=str(li_piece.get("headline") or "")[:120],
             topic="linkedin_post",
             format_used="thought_leadership",
+            kpi_at_creation=li_piece.get("target_kpi_at_creation", ""),
+            policy_version=li_piece.get("policy_version_at_creation", ""),
+            attention_mechanism=li_piece.get("attention_mechanism", ""),
+            hook_strategy=li_piece.get("hook_strategy", ""),
+            payoff_type=li_piece.get("payoff_type", ""),
+            decision_version=li_piece.get("decision_version", ""),
             platform="linkedin",
         )
 
@@ -185,6 +227,12 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
             hook=str(th_piece.get("hook") or "")[:120],
             topic="threads_post",
             format_used="discussion",
+            kpi_at_creation=th_piece.get("target_kpi_at_creation", ""),
+            policy_version=th_piece.get("policy_version_at_creation", ""),
+            attention_mechanism=th_piece.get("attention_mechanism", ""),
+            hook_strategy=th_piece.get("hook_strategy", ""),
+            payoff_type=th_piece.get("payoff_type", ""),
+            decision_version=th_piece.get("decision_version", ""),
             platform="threads",
         )
 
@@ -435,11 +483,19 @@ def _fetch_follower_count() -> int | None:
 
 
 def _hours_since(published_at: str, now: datetime.datetime) -> float:
+    """Compare timestamps safely whether the ledger timestamp is naive or timezone-aware."""
     try:
-        published = datetime.datetime.fromisoformat(published_at)
-    except Exception:
+        published = datetime.datetime.fromisoformat(str(published_at).replace("Z", "+00:00"))
+        current = now
+        if published.tzinfo is None:
+            published = published.astimezone()
+        if current.tzinfo is None:
+            current = current.astimezone()
+        published = published.astimezone(datetime.timezone.utc)
+        current = current.astimezone(datetime.timezone.utc)
+        return max(0.0, (current - published).total_seconds() / 3600.0)
+    except (TypeError, ValueError, OverflowError):
         return 0.0
-    return max(0.0, (now - published).total_seconds() / 3600.0)
 
 
 def _next_due_window(post: dict, now: datetime.datetime) -> tuple[str, int] | None:
@@ -450,8 +506,15 @@ def _next_due_window(post: dict, now: datetime.datetime) -> tuple[str, int] | No
     abandoned = {str(name) for name in (post.get("failed_windows") or [])}
     resolved = completed | abandoned
     age = _hours_since(str(post.get("published_at") or ""), now)
+    missed = post.setdefault("missed_windows", {})
     for name, hours in MEASUREMENT_WINDOWS:
-        if name not in resolved and age >= hours:
+        if name not in resolved and age > _WINDOW_MAX_AGE_HOURS[name]:
+            abandoned.add(name)
+            missed[name] = "outside_comparable_collection_window"
+    post["failed_windows"] = sorted(abandoned)
+    resolved = completed | abandoned
+    for name, hours in MEASUREMENT_WINDOWS:
+        if name not in resolved and hours <= age <= _WINDOW_MAX_AGE_HOURS[name]:
             return name, hours
     return None
 
@@ -494,7 +557,7 @@ def _append_follower_snapshot(now: datetime.datetime, follower_count: int | None
 
 
 def fetch_pending_insights() -> dict:
-    """Fetch the next due observation for each post; promote only 7d to learning."""
+    """Fetch one due observation and update the post-level learning sample idempotently."""
     if not os.getenv("INSTAGRAM_ACCESS_TOKEN"):
         logger.info("[insights] Instagram not configured — skipping insights fetch")
         return {"recorded": 0, "snapshots": 0, "pending": 0, "follower_count": None}
@@ -514,8 +577,9 @@ def fetch_pending_insights() -> dict:
     _append_account_snapshot(now, follower_count, acct)
     _append_follower_snapshot(now, follower_count)
 
-    for post in posts:
-        if post.get("insights_recorded"):
+    media_fetches_this_run = 0
+    for post in sorted(posts, key=lambda row: _hours_since(str(row.get("published_at") or ""), now)):
+        if post.get("insights_recorded") or post.get("measurement_terminal"):
             continue
         # Restrict Instagram insights fetching strictly to authentic Instagram records.
         # Non-Instagram media IDs (YouTube, LinkedIn, Threads, etc.) return HTTP 400
@@ -526,12 +590,27 @@ def fetch_pending_insights() -> dict:
             continue
         if not platform and not asset_id.startswith("instagram"):
             continue
+        try:
+            datetime.datetime.fromisoformat(str(post.get("published_at") or "").replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            post["measurement_terminal"] = True
+            post["measurement_status"] = "missing_or_invalid_publication_timestamp"
+            continue
 
         due = _next_due_window(post, now)
         if due is None:
-            pending += 1
+            age = _hours_since(str(post.get("published_at") or ""), now)
+            if age > _WINDOW_MAX_AGE_HOURS["7d"] and not post.get("insights_recorded"):
+                post["measurement_terminal"] = True
+                post["measurement_status"] = "too_old_for_comparable_window"
+            else:
+                pending += 1
             continue
         window, hours = due
+        if media_fetches_this_run >= MAX_MEDIA_FETCHES_PER_RUN:
+            pending += 1
+            continue
+        media_fetches_this_run += 1
         metrics = _fetch_media_insights(str(post.get("media_id") or ""))
         if metrics is None:
             if insight_failure_is_systemic(_last_failure_detail):
@@ -570,27 +649,29 @@ def fetch_pending_insights() -> dict:
         post.setdefault("measurement_snapshots", []).append(snapshot)
         snapshots_written += 1
 
-        # Only the terminal 7d observation enters the learning log. 24h/72h are
-        # preserved for diagnostics and trajectory analysis but do not multiply
-        # the apparent sample size of one creative.
+        # Every successful window updates the same publication's learning record.
+        # The upsert key is publication_id + platform, so 24h/72h/7d never count
+        # as three independent posts; the latest measured snapshot is used tomorrow.
+        record_performance(
+            asset_id=post["asset_id"], track=post.get("track", "brand"),
+            hook=post.get("hook", ""), topic=post.get("topic", ""),
+            format_used=post.get("format", ""), posted_at=post.get("published_at", ""),
+            metrics=metrics, notes=f"auto-recorded from {window} Instagram measurement window",
+            kpi_at_creation=post.get("kpi_at_creation", ""),
+            policy_version=post.get("policy_version", ""),
+            attention_mechanism=post.get("attention_mechanism", ""),
+            hook_strategy=post.get("hook_strategy", ""),
+            payoff_type=post.get("payoff_type", ""),
+            decision_version=post.get("decision_version", ""),
+            scroller_state=post.get("scroller_state", ""),
+            psychology_frame=post.get("psychology_frame", ""),
+            platform="instagram",
+            observation_window=window,
+            publication_id=str(post.get("media_id") or ""),
+        )
+        recorded += 1
         if window == "7d":
-            record_performance(
-                asset_id=post["asset_id"], track=post.get("track", "brand"),
-                hook=post.get("hook", ""), topic=post.get("topic", ""),
-                format_used=post.get("format", ""), posted_at=post.get("published_at", ""),
-                metrics=metrics, notes="auto-recorded from 7d Instagram measurement window",
-                kpi_at_creation=post.get("kpi_at_creation", ""),
-                policy_version=post.get("policy_version", ""),
-                attention_mechanism=post.get("attention_mechanism", ""),
-                hook_strategy=post.get("hook_strategy", ""),
-                payoff_type=post.get("payoff_type", ""),
-                decision_version=post.get("decision_version", ""),
-                scroller_state=post.get("scroller_state", ""),
-                psychology_frame=post.get("psychology_frame", ""),
-            )
             post["insights_recorded"] = True
-            recorded += 1
-
             try:
                 from content_generator.analytics.hashtag_bank import record_post_hashtags
                 if post.get("hashtags"):
