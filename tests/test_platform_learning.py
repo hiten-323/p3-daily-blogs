@@ -6,7 +6,7 @@ import json
 
 import pytest
 
-from content_generator.analytics import platform_learning
+from content_generator.analytics import insights_fetcher, platform_learning
 from content_generator.core import learning_engine
 from content_generator.prompts.growth_engine import platforms
 
@@ -234,3 +234,42 @@ def test_corrupt_performance_log_is_not_overwritten(tmp_path, monkeypatch):
             metrics={"views": 100, "likes": 10},
         )
     assert log_path.read_text(encoding="utf-8") == original
+
+
+
+def test_instagram_tracker_does_not_replace_corrupt_json(tmp_path, monkeypatch):
+    posts_path = tmp_path / "published_posts.json"
+    original = "{broken tracker"
+    posts_path.write_text(original, encoding="utf-8")
+    monkeypatch.setattr(insights_fetcher, "_POSTS_PATH", str(posts_path))
+
+    with pytest.raises(ValueError, match="Cannot safely read published-post tracker"):
+        insights_fetcher._load_posts()
+    assert posts_path.read_text(encoding="utf-8") == original
+
+
+def test_cross_platform_fetch_budget_defers_excess_posts_without_spending_attempts(tmp_path, monkeypatch):
+    posts_path = tmp_path / "published_posts.json"
+    now = dt.datetime.now(dt.timezone.utc)
+    rows = []
+    for media_id, age in (("newest", 25), ("older", 26)):
+        rows.append({
+            "media_id": media_id, "asset_id": "youtube_day1", "platform": "youtube",
+            "published_at": (now - dt.timedelta(hours=age)).isoformat(),
+            "measurement_snapshots": [], "fetch_attempts_by_window": {}, "failed_windows": [],
+        })
+    posts_path.write_text(json.dumps(rows), encoding="utf-8")
+    monkeypatch.setattr(platform_learning, "POSTS_PATH", posts_path)
+    monkeypatch.setattr(platform_learning, "MAX_API_FETCHES_PER_RUN", 1)
+    monkeypatch.setattr(platform_learning, "_fetch_platform_metrics", lambda post: (
+        {"views": 100, "likes": 10}, "measured"
+    ))
+    monkeypatch.setattr(learning_engine, "record_performance", lambda **kwargs: kwargs)
+
+    result = platform_learning.fetch_pending_platform_metrics(now=now)
+    persisted = json.loads(posts_path.read_text(encoding="utf-8"))
+    assert result["snapshots"] == 1
+    assert result["pending"] == 1
+    deferred = next(row for row in persisted if row["media_id"] == "older")
+    assert deferred["fetch_attempts_by_window"] == {}
+    assert deferred["measurement_snapshots"] == []
