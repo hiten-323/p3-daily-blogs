@@ -454,7 +454,7 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
     if not isinstance(posts, list) or any(not isinstance(p, dict) for p in posts):
         raise ValueError("Invalid published-post tracker schema; refusing to overwrite state")
     current = now or dt.datetime.now().astimezone()
-    snapshots_written = recorded = pending = failed = unsupported = 0
+    snapshots_written = recorded = pending = failed = unsupported = blocked = 0
     from content_generator.core.learning_engine import record_performance
 
     for post in posts:
@@ -503,6 +503,12 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         metrics, status = _fetch_platform_metrics(post)
         post["measurement_status"] = status
         if not metrics:
+            if status.startswith("missing_"):
+                # Configuration may be repaired without a code deployment. Do not
+                # burn retry budgets for credentials that are absent right now.
+                post["measurement_status"] = status
+                blocked += 1
+                continue
             if status in {"story_metrics_not_available_after_expiry", "shopify_blog_analytics_not_configured", "unsupported_platform"}:
                 post["measurement_status"] = status
                 unsupported += 1
@@ -572,6 +578,7 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         "pending": pending,
         "failed": failed,
         "unsupported": unsupported,
+        "blocked": blocked,
         "posts": len(posts),
     }
     logger.info("[platform-learning] %s", result)
