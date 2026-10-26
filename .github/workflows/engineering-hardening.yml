@@ -9,6 +9,12 @@ on:
 permissions:
   contents: read
 
+# Only the latest validation for a given PR/branch needs to consume a runner.
+# This prevents stale test runs from delaying verification of the current head.
+concurrency:
+  group: engineering-hardening-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 env:
   PYTHONPATH: .
 
