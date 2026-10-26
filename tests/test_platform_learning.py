@@ -108,7 +108,7 @@ def test_learning_record_upsert_is_idempotent_but_keeps_same_day_posts_distinct(
         "observation_window": "7d",
     }
     learning_engine.record_performance(**base, publication_id="media-a", metrics={"views": 100, "likes": 10, "comments": 2})
-    learning_engine.record_performance(**base, publication_id="media-a", metrics={"views": 150, "likes": 12, "comments": 3})
+    learning_engine.record_performance(**{**base, "observation_window": "72h"}, publication_id="media-a", metrics={"views": 150, "likes": 12, "comments": 3})
     learning_engine.record_performance(**base, publication_id="media-b", metrics={"views": 100, "likes": 10, "comments": 2})
     rows = json.loads(log_path.read_text(encoding="utf-8"))
     assert len(rows) == 2
@@ -157,3 +157,14 @@ def test_single_measured_post_informs_next_day_without_claiming_a_winner(monkeyp
     assert "PROVISIONAL THREADS SIGNALS" in block
     assert "views=100" in block
     assert "not enough evidence to declare winners" in block
+
+
+
+def test_prompt_block_calls_platform_learning_without_breaking_generation(monkeypatch):
+    monkeypatch.setattr(
+        learning_engine, "get_platform_learning_block",
+        lambda platform: f"INJECTED LESSON FOR {platform}",
+    )
+    block = platforms.prompt_block("threads", "Purica", 300)
+    assert "PLATFORM MODULE (threads)." in block
+    assert "INJECTED LESSON FOR threads" in block
