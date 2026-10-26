@@ -24,6 +24,10 @@ def test_reconcile_only_verified_ledger_records(tmp_path, monkeypatch):
             "url": "https://youtube.com/shorts/yt_1", "verified_at": "2026-10-20T00:00:00+00:00",
             "day_number": 10, "content_id": "c1",
         },
+        "correct_existing": {
+            "status": "VERIFIED_LIVE", "platform": "youtube", "remote_id": "old_1",
+            "url": "https://youtube.com/shorts/old_1", "verified_at": "2026-10-20T00:00:00+00:00",
+        },
         "failed": {"status": "FAILED", "platform": "facebook", "remote_id": "fb_1"},
     }}), encoding="utf-8")
     monkeypatch.setattr(platform_learning, "POSTS_PATH", posts_path)
@@ -33,7 +37,7 @@ def test_reconcile_only_verified_ledger_records(tmp_path, monkeypatch):
     rows = json.loads(posts_path.read_text(encoding="utf-8"))
     assert result["added"] == 1
     assert result["skipped_unverified"] == 1
-    assert next(p for p in rows if p["media_id"] == "old_1")["platform"] == "threads"
+    assert next(p for p in rows if p["media_id"] == "old_1")["platform"] == "youtube"
     added = next(p for p in rows if p["media_id"] == "yt_1")
     assert added["platform"] == "youtube"
     assert added["publication_status"] == "VERIFIED_LIVE"
