@@ -195,3 +195,42 @@ def test_invalid_tracker_shape_is_not_replaced_with_an_empty_list(tmp_path, monk
     with pytest.raises(ValueError, match="Invalid published-post tracker schema"):
         platform_learning.fetch_pending_platform_metrics()
     assert json.loads(posts_path.read_text(encoding="utf-8")) == {"unexpected": "object"}
+
+
+
+def test_missing_platform_credentials_do_not_burn_retry_budget(tmp_path, monkeypatch):
+    posts_path = tmp_path / "published_posts.json"
+    published = dt.datetime.now(dt.timezone.utc) - dt.timedelta(hours=25)
+    posts_path.write_text(json.dumps([{
+        "media_id": "yt_missing_auth", "asset_id": "youtube_day1", "platform": "youtube",
+        "published_at": published.isoformat(), "measurement_snapshots": [],
+        "fetch_attempts_by_window": {}, "failed_windows": [],
+    }]), encoding="utf-8")
+    monkeypatch.setattr(platform_learning, "POSTS_PATH", posts_path)
+    monkeypatch.delenv("YOUTUBE_API_KEY", raising=False)
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    monkeypatch.delenv("YOUTUBE_CLIENT_ID", raising=False)
+    monkeypatch.delenv("YOUTUBE_CLIENT_SECRET", raising=False)
+    monkeypatch.delenv("YOUTUBE_REFRESH_TOKEN", raising=False)
+
+    result = platform_learning.fetch_pending_platform_metrics()
+    row = json.loads(posts_path.read_text(encoding="utf-8"))[0]
+    assert result["blocked"] == 1
+    assert row["measurement_status"] == "missing_youtube_credentials"
+    assert row["fetch_attempts_by_window"] == {}
+    assert row["failed_windows"] == []
+
+
+def test_corrupt_performance_log_is_not_overwritten(tmp_path, monkeypatch):
+    log_path = tmp_path / "performance_log.json"
+    original = '{"not": "an array"}'
+    log_path.write_text(original, encoding="utf-8")
+    monkeypatch.setattr(learning_engine, "_LOG_PATH", str(log_path))
+
+    with pytest.raises(ValueError, match="Refusing to overwrite invalid performance log"):
+        learning_engine.record_performance(
+            asset_id="threads_day300", track="brand", platform="threads",
+            publication_id="media-1", observation_window="24h",
+            metrics={"views": 100, "likes": 10},
+        )
+    assert log_path.read_text(encoding="utf-8") == original
