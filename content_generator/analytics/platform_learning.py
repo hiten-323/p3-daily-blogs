@@ -512,8 +512,9 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         post["measurement_status"] = status
         if not metrics:
             if status.startswith("missing_"):
-                # Configuration may be repaired without a code deployment. Do not
-                # burn retry budgets for credentials that are absent right now.
+                # No request was made for a missing credential/media ID, so it must
+                # not consume the API budget and starve other platforms' due posts.
+                api_fetches_this_run = max(0, api_fetches_this_run - 1)
                 post["measurement_status"] = status
                 blocked += 1
                 continue
