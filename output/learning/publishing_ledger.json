@@ -7774,6 +7774,132 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-26T06:57:49+00:00"
+    },
+    "2026-10-27|generate|linkedin|pb_234fcce97c": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-27",
+      "content_id": "pb_234fcce97c",
+      "day_number": 299,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-27T03:21:29+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-27T03:21:33+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7520686090865782785",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7520686090865782785/",
+          "verification_method": "linkedin_public_url"
+        }
+      ],
+      "last_attempt_at": "2026-10-27T03:21:29+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-27T03:21:33+00:00",
+      "next_retry_at": null,
+      "platform": "linkedin",
+      "published": true,
+      "remote_id": "urn:li:share:7520686090865782785",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-27T03:21:32+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7520686090865782785/",
+      "verification_detail": "public feed URL confirmed (200)",
+      "verification_method": "linkedin_public_url",
+      "verified_at": "2026-10-27T03:21:33+00:00"
+    },
+    "2026-10-27|generate|threads|pb_234fcce97c": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-27",
+      "content_id": "pb_234fcce97c",
+      "day_number": 299,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-27T03:21:36+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-27T03:21:49+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18576956095077193",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.threads.com/@hiten_jain323/post/De-4U9yli3j",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-27T03:21:36+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-27T03:21:49+00:00",
+      "next_retry_at": null,
+      "platform": "threads",
+      "published": true,
+      "remote_id": "18576956095077193",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-27T03:21:49+00:00",
+      "url": "https://www.threads.com/@hiten_jain323/post/De-4U9yli3j",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-27T03:21:49+00:00"
+    },
+    "2026-10-27|generate|youtube|pb_234fcce97c": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-27",
+      "content_id": "pb_234fcce97c",
+      "day_number": 299,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-27T03:21:33+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-27T03:21:36+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "A3APmiKCVww",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.youtube.com/shorts/A3APmiKCVww",
+          "verification_method": "youtube_oembed"
+        }
+      ],
+      "last_attempt_at": "2026-10-27T03:21:33+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-27T03:21:36+00:00",
+      "next_retry_at": null,
+      "platform": "youtube",
+      "published": true,
+      "remote_id": "A3APmiKCVww",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-27T03:21:36+00:00",
+      "url": "https://www.youtube.com/shorts/A3APmiKCVww",
+      "verification_detail": "public video confirmed by oEmbed",
+      "verification_method": "youtube_oembed",
+      "verified_at": "2026-10-27T03:21:36+00:00"
     }
   },
   "version": 1
