@@ -725,6 +725,52 @@ def _post_story_direct_binary(video_path: str) -> dict:
     )
 
 
+def _static_story_visual_hold(image_path: str) -> dict | None:
+    """Hold a still that misses the same 8.0 visual gate as a video story.
+
+    ``visual_gate.evaluate`` is the gate ``evaluate_video`` applies to the
+    scored frame, including ``AESTHETIC_PASS`` (8.0). A still has no renderer
+    jar box on the file, so a missing box is not a separate miss — the
+    aesthetic score still has to clear 8.0, and background heuristics still run.
+    None means the still passed and the caller may upload it.
+    """
+    from content_generator.creative import visual_gate
+
+    meta = {"path": image_path, "requires_jar": False}
+    try:
+        verdict = visual_gate.evaluate(meta, visual_gate.recent_layouts())
+    except Exception as exc:
+        logger.error("[visual-gate] static story gate failed closed: %s", type(exc).__name__)
+        verdict = {"passed": False, "reasons": [f"visual_gate_error:{type(exc).__name__}"]}
+    if isinstance(verdict, dict) and verdict.get("passed") is True:
+        return None
+    reasons = []
+    if isinstance(verdict, dict):
+        reasons = [str(item) for item in (verdict.get("reasons") or []) if str(item).strip()]
+    reason = "; ".join(reasons)[:300] or "visual gate failed"
+    logger.error("[visual-gate] static story held; not posting a failing story: %s", reason)
+    try:
+        from content_generator.core.obstacle_lessons import platform_for, record
+        record(
+            platform_for("stories"),
+            "stories",
+            "publish",
+            "aesthetic",
+            reason,
+            "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+        )
+    except Exception:
+        logger.debug("[visual-gate] story lesson not recorded")
+    return {
+        "success": False,
+        "media_id": "",
+        "attempted": False,
+        "skipped": True,
+        "held": True,
+        "error": "prepublish_gate:visual_gate:" + reason,
+    }
+
+
 def post_story(content: dict, day: int = 0) -> dict:
     """
     Publish an Instagram Story (image, 9:16, 24h ephemeral).
@@ -885,6 +931,13 @@ def post_story(content: dict, day: int = 0) -> dict:
             return res
         logger.warning("[instagram] video Story failed (%s) — falling back to static poster",
                        res.get("error"))
+
+    # Broken-render QA above is not the 8.0 aesthetic gate. A motion story
+    # that was held, and a poster used after a non-gate video failure, both
+    # stop here unless this still passes visual_gate.evaluate.
+    held = _static_story_visual_hold(image_path)
+    if held:
+        return held
 
     image_url = _upload_to_public_url(image_path)
     if not image_url:
@@ -1108,6 +1161,9 @@ def post_local_story(image_path: str) -> dict:
     if not prov.get("verified"):
         logger.error("[instagram] Refusing to publish unverified story image: %s (%s)", image_path, prov.get("reason"))
         return {"success": False, "media_id": "", "error": f"real_jar_unverified: {prov.get('reason')}"}
+    held = _static_story_visual_hold(image_path)
+    if held:
+        return held
     try:
         import requests  # noqa: F401
     except ImportError:
