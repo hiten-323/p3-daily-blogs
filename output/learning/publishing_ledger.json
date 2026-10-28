@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 16,
+      "attempt_count": 17,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel muddy and flat, lacking the rich depth and premium warmth expected of top-tier coffee brands.; The overall composition and pill-shaped badge elements look dated and template-driven rather than bespoke.; Typography hierarchy is weak, with sm",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and overall color grading feel flat and muddy rather than rich and dimensional.; Typographic hierarchy is weak; multiple small pill-shaped badges and varying font styles create clutter instead of clean focus.; The coffee jar placement looks pasted on rather ",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8659,20 +8659,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T11:22:56+00:00",
+          "attempt": 17,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T11:31:57+00:00",
+          "attempt": 17,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and overall color grading feel flat and muddy rather than rich and dimensional.; Typographic hierarchy is weak; multiple small pill-shaped badges and varying font styles create clutter instead of clean focus.; The coffee jar placement looks pasted on rather ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T11:10:03+00:00",
+      "last_attempt_at": "2026-10-28T11:22:56+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel muddy and flat, lacking the rich depth and premium warmth expected of top-tier coffee brands.; The overall composition and pill-shaped badge elements look dated and template-driven rather than bespoke.; Typography hierarchy is weak, with sm",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and overall color grading feel flat and muddy rather than rich and dimensional.; Typographic hierarchy is weak; multiple small pill-shaped badges and varying font styles create clutter instead of clean focus.; The coffee jar placement looks pasted on rather ",
         "success": false
       },
-      "next_retry_at": "2026-10-28T11:16:29+00:00",
+      "next_retry_at": "2026-10-28T11:31:57+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T11:16:29+00:00",
+      "updated_at": "2026-10-28T11:31:57+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
