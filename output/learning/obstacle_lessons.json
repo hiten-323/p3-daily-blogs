@@ -18075,7 +18075,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 2,
+      "count": 4,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-28",
       "fix": "",
@@ -18113,6 +18113,34 @@
       "last_seen": "2026-10-28",
       "platform": "instagram",
       "reason": "aesthetic_below_8.0:5.0; The giant URL dominates the visual hierarchy, giving a cheap, direct-response spam vibe rather than premium brand storytelling.; The radial golden ray background looks template-generated and visually noisy, lacking the sophisticated, moody depth of premium brand photography.",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:5.0; body copy uses low-contrast yellow/gold text on dark brown, hurting legibility; composition feels template-generated rather than art-directed; lacks premiu",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:5.0; Body copy uses low-contrast yellow/gold text on dark brown, hurting legibility; Composition feels template-generated rather than art-directed; lacks premium D2C polish; \"STORY \u2022 ULTRA BLEND\" badge looks like an unintegrated social sticker",
+      "stage": "publish",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:3.0; cluttered and messy typographic hierarchy with too many different text blocks competing for attention; inappropriate use of a raw url ('https://p3online.in",
+      "label": "reel_1",
+      "last_seen": "2026-10-28",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:3.0; Cluttered and messy typographic hierarchy with too many different text blocks competing for attention; Inappropriate use of a raw URL ('HTTPS://P3ONLINE.IN') as a headline, which screams low-quality direct-response rather than premium D2C brand building; Redundant copy repea",
       "stage": "render",
       "status": "gate_holding"
     }
