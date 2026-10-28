@@ -17597,6 +17597,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient looks muddy and lacks rich color depth or texture typical of premium D2C coffee brands.; Typographic hierarchy is weak and generic, using standard sans-serif fonts with uninspired pill-shaped tag pills.; Lighting on the product jar feels synthetic and",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product is floating awkwardly with an inconsistent grounding shadow relative to the horizon line.; typography lacks refined kerning and feels dated rather ",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product is floating awkwardly with an inconsistent grounding shadow relative to the horizon line.; Typography lacks refined kerning and feels dated rather than premium D2C.; Color palette is overly monochromatic and muddy, lacking rich contrast or appetizing warmth.",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
