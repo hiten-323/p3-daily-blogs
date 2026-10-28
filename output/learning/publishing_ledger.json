@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 32,
+      "attempt_count": 33,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks premium depth, looking more digital-airbrushed than photographic.; Typography at the top feels disjointed with too many competing elements (pill tag, headline, subhead with bullet).; The jar lacks realistic lighting, contact sha",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lack rich color depth and texture, feeling flat and overly digital/rendered.; Typography hierarchy is weak; multiple pill badges ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') clutter the layout.; The lighting and drop shadow on the jar feel un",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8899,20 +8899,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T15:01:17+00:00",
+          "attempt": 33,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T15:11:33+00:00",
+          "attempt": 33,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lack rich color depth and texture, feeling flat and overly digital/rendered.; Typography hierarchy is weak; multiple pill badges ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') clutter the layout.; The lighting and drop shadow on the jar feel un",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T14:46:55+00:00",
+      "last_attempt_at": "2026-10-28T15:01:17+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks premium depth, looking more digital-airbrushed than photographic.; Typography at the top feels disjointed with too many competing elements (pill tag, headline, subhead with bullet).; The jar lacks realistic lighting, contact sha",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lack rich color depth and texture, feeling flat and overly digital/rendered.; Typography hierarchy is weak; multiple pill badges ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') clutter the layout.; The lighting and drop shadow on the jar feel un",
         "success": false
       },
-      "next_retry_at": "2026-10-28T14:55:37+00:00",
+      "next_retry_at": "2026-10-28T15:11:33+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T14:55:37+00:00",
+      "updated_at": "2026-10-28T15:11:33+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null

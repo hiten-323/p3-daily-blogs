@@ -17989,6 +17989,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks premium depth, looking more digital-airbrushed than photographic.; Typography at the top feels disjointed with too many competing elements (pill tag, headline, subhead with bullet).; The jar lacks realistic lighting, contact sha",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background and surface lack rich color depth and texture, feeling flat and overly digital/rendered.; typography hierarchy is weak; multiple pill badges ('s",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background and surface lack rich color depth and texture, feeling flat and overly digital/rendered.; Typography hierarchy is weak; multiple pill badges ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') clutter the layout.; The lighting and drop shadow on the jar feel un",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
