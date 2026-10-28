@@ -4966,5 +4966,41 @@
     "rate_limit": {},
     "exception_type": "",
     "exception_msg": ""
+  },
+  {
+    "ts": "2026-10-28T07:10:44",
+    "day_number": 300,
+    "platform": "linkedin",
+    "content_id": "pb_a7c59d8632",
+    "generation_id": "gen_2026-10-28_317a9260",
+    "publisher_version": "2.3.0",
+    "status": "success",
+    "duration_ms": 4139,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "none",
+    "error": "",
+    "response": "{\"success\": true, \"post_id\": \"urn:li:share:7521106156157730816\", \"url\": \"https://www.linkedin.com/feed/update/urn:li:share:7521106156157730816/\", \"ledger_status\": \"VERIFIED_LIVE\", \"ledger_attempt_count\": 1}",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
+  },
+  {
+    "ts": "2026-10-28T07:10:47",
+    "day_number": 300,
+    "platform": "threads",
+    "content_id": "pb_a7c59d8632",
+    "generation_id": "gen_2026-10-28_317a9260",
+    "publisher_version": "2.3.0",
+    "status": "failure",
+    "duration_ms": 2626,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "auth",
+    "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token=<redacted> Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AbFHi778",
+    "response": "{\"success\": false, \"attempted\": true, \"skipped\": false, \"post_id\": \"\", \"url\": \"\", \"ledger_status\": \"FAILED\", \"ledger_attempt_count\": 1}",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
   }
 ]
