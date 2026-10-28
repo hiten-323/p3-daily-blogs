@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 8,
+      "attempt_count": 9,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Typography and hierarchy feel template-driven and dated rather than crafted by a senior designer; Excessive use of pills/badges (top tag, bottom ratio tag) clutters the composition; Background gradient and bokeh spots lack rich depth and feel digitally flat",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: the subheadline and pill tags use generic fonts and look cluttered rather than intentional.; The product drop-shadow beneath the jar i",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8539,20 +8539,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T09:33:13+00:00",
+          "attempt": 9,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T09:41:27+00:00",
+          "attempt": 9,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: the subheadline and pill tags use generic fonts and look cluttered rather than intentional.; The product drop-shadow beneath the jar i",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T09:17:41+00:00",
+      "last_attempt_at": "2026-10-28T09:33:13+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Typography and hierarchy feel template-driven and dated rather than crafted by a senior designer; Excessive use of pills/badges (top tag, bottom ratio tag) clutters the composition; Background gradient and bokeh spots lack rich depth and feel digitally flat",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: the subheadline and pill tags use generic fonts and look cluttered rather than intentional.; The product drop-shadow beneath the jar i",
         "success": false
       },
-      "next_retry_at": "2026-10-28T09:26:20+00:00",
+      "next_retry_at": "2026-10-28T09:41:27+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T09:26:20+00:00",
+      "updated_at": "2026-10-28T09:41:27+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
