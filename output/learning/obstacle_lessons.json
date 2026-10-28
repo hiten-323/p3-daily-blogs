@@ -17723,6 +17723,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background and surface lighting lacks rich contrast and depth, resulting in a slightly flat, dated digital mockup look.; Typographic hierarchy is cluttered with too many distinct elements (pill badges, small subheads, tracking variations) competing for attention.; Product pr",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and lacks rich, premium contrast or depth.; typography relies on basic web-safe fonts and generic pill badges that loo",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium contrast or depth.; Typography relies on basic web-safe fonts and generic pill badges that look dated rather than bespoke D2C.; The lighting on the jar feels flat and poorly composited against the background, lacki",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
