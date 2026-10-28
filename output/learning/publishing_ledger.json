@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 30,
+      "attempt_count": 31,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, looking flat rather than premium.; The typographic hierarchy feels dated with generic uppercase sans-serif fonts and heavy outlining effects on pill badges.; The lighting and drop shadow on the jar feel artificial ",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak and cluttered with too many distinct elements (pills, subheads, main text) fighting for attention.; The harsh horizontal surface divide",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8869,20 +8869,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T14:31:53+00:00",
+          "attempt": 31,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T14:41:09+00:00",
+          "attempt": 31,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak and cluttered with too many distinct elements (pills, subheads, main text) fighting for attention.; The harsh horizontal surface divide",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T14:18:19+00:00",
+      "last_attempt_at": "2026-10-28T14:31:53+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, looking flat rather than premium.; The typographic hierarchy feels dated with generic uppercase sans-serif fonts and heavy outlining effects on pill badges.; The lighting and drop shadow on the jar feel artificial ",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak and cluttered with too many distinct elements (pills, subheads, main text) fighting for attention.; The harsh horizontal surface divide",
         "success": false
       },
-      "next_retry_at": "2026-10-28T14:25:52+00:00",
+      "next_retry_at": "2026-10-28T14:41:09+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T14:25:52+00:00",
+      "updated_at": "2026-10-28T14:41:09+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
