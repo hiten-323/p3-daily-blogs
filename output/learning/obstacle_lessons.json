@@ -17625,6 +17625,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: too many competing small pill badges ('STORY \u2022 ULTRA BLEND', '70% COFFEE') clutter the layout.; The lighting and drop shadow on the co",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background and surface lack rich texture or material depth, resulting in a flat, dated digital-render look.; typography relies on generic sans-serif fonts ",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background and surface lack rich texture or material depth, resulting in a flat, dated digital-render look.; Typography relies on generic sans-serif fonts with rigid pill tags, lacking the bespoke, sophisticated feel expected of a premium D2C brand.; Lighting on the jar is h",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
