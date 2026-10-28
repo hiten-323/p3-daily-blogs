@@ -8111,13 +8111,38 @@
       "verification_method": "linkedin_public_url",
       "verified_at": "2026-10-28T07:10:44+00:00"
     },
+    "2026-10-28|generate|threads|credential_block": {
+      "asset": "credential_block",
+      "attempt_count": 0,
+      "content_date": "2026-10-28",
+      "content_id": "credential_block",
+      "credential_block": true,
+      "day_number": 0,
+      "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"Am4VN7wKwADFXgEzcHcyC2Q",
+      "history": [
+        {
+          "at": "2026-10-28T07:26:08+00:00",
+          "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"Am4VN7wKwADFXgEzcHcyC2Q",
+          "event": "credential_block"
+        }
+      ],
+      "last_attempt_at": "2026-10-28T07:26:08+00:00",
+      "next_retry_at": "2026-10-28T07:26:08+00:00",
+      "platform": "threads",
+      "published": false,
+      "remote_id": "",
+      "slot": "generate",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T07:26:08+00:00",
+      "url": ""
+    },
     "2026-10-28|generate|threads|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AbFHi778eONgv9XH0aT0JxA",
+      "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AXTnmsULw-Lg1f3nosb4ehD",
       "history": [
         {
           "at": "2026-10-28T07:10:44+00:00",
@@ -8133,20 +8158,197 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T07:35:40+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T07:35:43+00:00",
+          "attempt": 2,
+          "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AXTnmsULw-Lg1f3nosb4ehD",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T07:10:44+00:00",
+      "last_attempt_at": "2026-10-28T07:35:40+00:00",
       "last_result": {
-        "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AbFHi778eONgv9XH0aT0JxA",
+        "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AXTnmsULw-Lg1f3nosb4ehD",
         "success": false
       },
-      "next_retry_at": "2026-10-28T07:15:47+00:00",
+      "next_retry_at": "2026-10-28T07:45:43+00:00",
       "platform": "threads",
       "published": false,
       "remote_id": "",
       "slot": "generate",
       "status": "FAILED",
-      "updated_at": "2026-10-28T07:10:47+00:00",
+      "updated_at": "2026-10-28T07:35:43+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-28|morning|facebook|pb_a7c59d8632": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-28T07:36:06+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T07:36:16+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "494003270464484_122169060818655685",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/posts/122169060818655685",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-28T07:36:06+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-28T07:36:16+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": true,
+      "remote_id": "494003270464484_122169060818655685",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-28T07:36:15+00:00",
+      "url": "https://www.facebook.com/494003270464484/posts/122169060818655685",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-28T07:36:16+00:00"
+    },
+    "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background lighting is extremely flat and muddy, lacking rich color depth or textural interest expected from premium coffee brands.; The jar lacks natural ground shadows or realistic contact points, making it look poorly pasted onto the surface.; Typographic hierarchy feels ",
+      "history": [
+        {
+          "at": "2026-10-28T07:36:17+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T07:44:01+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background lighting is extremely flat and muddy, lacking rich color depth or textural interest expected from premium coffee brands.; The jar lacks natural ground shadows or realistic contact points, making it look poorly pasted onto the surface.; Typographic hierarchy feels ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-28T07:36:17+00:00",
+      "last_result": {
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background lighting is extremely flat and muddy, lacking rich color depth or textural interest expected from premium coffee brands.; The jar lacks natural ground shadows or realistic contact points, making it look poorly pasted onto the surface.; Typographic hierarchy feels ",
+        "success": false
+      },
+      "next_retry_at": "2026-10-28T07:44:01+00:00",
+      "platform": "instagram_story",
+      "published": false,
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T07:44:01+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-28|morning|instagram|pb_a7c59d8632|carousel": {
+      "asset": "carousel",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "carousel_children_failed",
+      "history": [
+        {
+          "at": "2026-10-28T07:35:43+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T07:36:01+00:00",
+          "attempt": 1,
+          "error": "carousel_children_failed",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-28T07:35:43+00:00",
+      "last_result": {
+        "error": "carousel_children_failed",
+        "success": false
+      },
+      "next_retry_at": "2026-10-28T07:41:01+00:00",
+      "platform": "instagram",
+      "published": false,
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T07:36:01+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-28|morning|instagram|pb_a7c59d8632|instagram_post": {
+      "asset": "instagram_post",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "User access is restricted",
+      "history": [
+        {
+          "at": "2026-10-28T07:36:01+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T07:36:06+00:00",
+          "attempt": 1,
+          "error": "User access is restricted",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-28T07:36:01+00:00",
+      "last_result": {
+        "error": "User access is restricted",
+        "success": false
+      },
+      "next_retry_at": "2026-10-28T07:41:06+00:00",
+      "platform": "instagram",
+      "published": false,
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T07:36:06+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
