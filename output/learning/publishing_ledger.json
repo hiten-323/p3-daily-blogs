@@ -8118,7 +8118,7 @@
       "content_id": "credential_block",
       "credential_block": true,
       "day_number": 0,
-      "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AfLueTtsoD4SkVGorxhFvlv",
+      "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AA0ze1srshX6G2pNmVdyBmj",
       "history": [
         {
           "at": "2026-10-28T07:26:08+00:00",
@@ -8139,25 +8139,30 @@
           "at": "2026-10-28T08:22:27+00:00",
           "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AfLueTtsoD4SkVGorxhFvlv",
           "event": "credential_block"
+        },
+        {
+          "at": "2026-10-28T08:36:42+00:00",
+          "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AA0ze1srshX6G2pNmVdyBmj",
+          "event": "credential_block"
         }
       ],
-      "last_attempt_at": "2026-10-28T08:22:27+00:00",
-      "next_retry_at": "2026-10-28T08:22:27+00:00",
+      "last_attempt_at": "2026-10-28T08:36:42+00:00",
+      "next_retry_at": "2026-10-28T08:36:42+00:00",
       "platform": "threads",
       "published": false,
       "remote_id": "",
       "slot": "generate",
       "status": "FAILED",
-      "updated_at": "2026-10-28T08:22:27+00:00",
+      "updated_at": "2026-10-28T08:36:42+00:00",
       "url": ""
     },
     "2026-10-28|generate|threads|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 5,
+      "attempt_count": 6,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"A9DQ86K5TlbDPSvXUVCEoh8",
+      "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AzDvBD0EJKu7cjpeC3jqe_m",
       "history": [
         {
           "at": "2026-10-28T07:10:44+00:00",
@@ -8233,11 +8238,26 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T08:36:44+00:00",
+          "attempt": 6,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T08:36:48+00:00",
+          "attempt": 6,
+          "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AzDvBD0EJKu7cjpeC3jqe_m",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T08:22:30+00:00",
+      "last_attempt_at": "2026-10-28T08:36:44+00:00",
       "last_result": {
-        "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"A9DQ86K5TlbDPSvXUVCEoh8",
+        "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AzDvBD0EJKu7cjpeC3jqe_m",
         "success": false
       },
       "next_retry_at": null,
@@ -8246,7 +8266,7 @@
       "remote_id": "",
       "slot": "generate",
       "status": "FAILED",
-      "updated_at": "2026-10-28T08:22:33+00:00",
+      "updated_at": "2026-10-28T08:36:48+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
@@ -8337,11 +8357,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 4,
+      "attempt_count": 5,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product is floating awkwardly with an inconsistent grounding shadow relative to the horizon line.; Typography lacks refined kerning and feels dated rather than premium D2C.; Color palette is overly monochromatic and muddy, lacking rich contrast or appetizing warmth.",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: too many competing small pill badges ('STORY \u2022 ULTRA BLEND', '70% COFFEE') clutter the layout.; The lighting and drop shadow on the co",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8402,20 +8422,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T08:36:48+00:00",
+          "attempt": 5,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T08:45:04+00:00",
+          "attempt": 5,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: too many competing small pill badges ('STORY \u2022 ULTRA BLEND', '70% COFFEE') clutter the layout.; The lighting and drop shadow on the co",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T08:22:33+00:00",
+      "last_attempt_at": "2026-10-28T08:36:48+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product is floating awkwardly with an inconsistent grounding shadow relative to the horizon line.; Typography lacks refined kerning and feels dated rather than premium D2C.; Color palette is overly monochromatic and muddy, lacking rich contrast or appetizing warmth.",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: too many competing small pill badges ('STORY \u2022 ULTRA BLEND', '70% COFFEE') clutter the layout.; The lighting and drop shadow on the co",
         "success": false
       },
-      "next_retry_at": "2026-10-28T08:29:46+00:00",
+      "next_retry_at": "2026-10-28T08:45:04+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T08:29:46+00:00",
+      "updated_at": "2026-10-28T08:45:04+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
