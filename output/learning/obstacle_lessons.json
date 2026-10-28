@@ -17653,6 +17653,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or vibrant contrast for a premium D2C aesthetic.; Too many disparate text elements and pill badges ('STORY \u2022 ULTRA BLEND', subheadline, CTA, lower badge) clutter the top and bottom.; The product presentation relies on",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; typography and hierarchy feel template-driven and dated rather than crafted by a senior designer; excessive use of pills/badges (top tag, bottom ratio tag)",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Typography and hierarchy feel template-driven and dated rather than crafted by a senior designer; Excessive use of pills/badges (top tag, bottom ratio tag) clutters the composition; Background gradient and bokeh spots lack rich depth and feel digitally flat",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
