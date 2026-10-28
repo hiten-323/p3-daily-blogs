@@ -8118,7 +8118,7 @@
       "content_id": "credential_block",
       "credential_block": true,
       "day_number": 0,
-      "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AtmUkQ4IVCGx97xemsMJLbY",
+      "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AfQOgVTGgk7iYPGxcC7oVsv",
       "history": [
         {
           "at": "2026-10-28T07:26:08+00:00",
@@ -8149,25 +8149,30 @@
           "at": "2026-10-28T08:50:52+00:00",
           "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AtmUkQ4IVCGx97xemsMJLbY",
           "event": "credential_block"
+        },
+        {
+          "at": "2026-10-28T09:03:10+00:00",
+          "error": "credential_block: Threads token check (HTTP 401): {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AfQOgVTGgk7iYPGxcC7oVsv",
+          "event": "credential_block"
         }
       ],
-      "last_attempt_at": "2026-10-28T08:50:52+00:00",
-      "next_retry_at": "2026-10-28T08:50:52+00:00",
+      "last_attempt_at": "2026-10-28T09:03:10+00:00",
+      "next_retry_at": "2026-10-28T09:03:10+00:00",
       "platform": "threads",
       "published": false,
       "remote_id": "",
       "slot": "generate",
       "status": "FAILED",
-      "updated_at": "2026-10-28T08:50:52+00:00",
+      "updated_at": "2026-10-28T09:03:10+00:00",
       "url": ""
     },
     "2026-10-28|generate|threads|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 7,
+      "attempt_count": 8,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AVSmC8ro3gn2CDpP-A0inKd",
+      "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AnwvpKPdoiZd32DjdvewdCs",
       "history": [
         {
           "at": "2026-10-28T07:10:44+00:00",
@@ -8273,11 +8278,26 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T09:03:13+00:00",
+          "attempt": 8,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T09:03:16+00:00",
+          "attempt": 8,
+          "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AnwvpKPdoiZd32DjdvewdCs",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T08:50:54+00:00",
+      "last_attempt_at": "2026-10-28T09:03:13+00:00",
       "last_result": {
-        "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AVSmC8ro3gn2CDpP-A0inKd",
+        "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AnwvpKPdoiZd32DjdvewdCs",
         "success": false
       },
       "next_retry_at": null,
@@ -8286,7 +8306,7 @@
       "remote_id": "",
       "slot": "generate",
       "status": "FAILED",
-      "updated_at": "2026-10-28T08:50:57+00:00",
+      "updated_at": "2026-10-28T09:03:16+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
@@ -8377,11 +8397,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 6,
+      "attempt_count": 7,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lack rich texture or material depth, resulting in a flat, dated digital-render look.; Typography relies on generic sans-serif fonts with rigid pill tags, lacking the bespoke, sophisticated feel expected of a premium D2C brand.; Lighting on the jar is h",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or vibrant contrast for a premium D2C aesthetic.; Too many disparate text elements and pill badges ('STORY \u2022 ULTRA BLEND', subheadline, CTA, lower badge) clutter the top and bottom.; The product presentation relies on",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8472,20 +8492,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T09:03:17+00:00",
+          "attempt": 7,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T09:11:34+00:00",
+          "attempt": 7,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or vibrant contrast for a premium D2C aesthetic.; Too many disparate text elements and pill badges ('STORY \u2022 ULTRA BLEND', subheadline, CTA, lower badge) clutter the top and bottom.; The product presentation relies on",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T08:50:57+00:00",
+      "last_attempt_at": "2026-10-28T09:03:17+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lack rich texture or material depth, resulting in a flat, dated digital-render look.; Typography relies on generic sans-serif fonts with rigid pill tags, lacking the bespoke, sophisticated feel expected of a premium D2C brand.; Lighting on the jar is h",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or vibrant contrast for a premium D2C aesthetic.; Too many disparate text elements and pill badges ('STORY \u2022 ULTRA BLEND', subheadline, CTA, lower badge) clutter the top and bottom.; The product presentation relies on",
         "success": false
       },
-      "next_retry_at": "2026-10-28T08:57:42+00:00",
+      "next_retry_at": "2026-10-28T09:11:34+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T08:57:42+00:00",
+      "updated_at": "2026-10-28T09:11:34+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null

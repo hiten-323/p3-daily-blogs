@@ -17639,6 +17639,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background and surface lack rich texture or material depth, resulting in a flat, dated digital-render look.; Typography relies on generic sans-serif fonts with rigid pill tags, lacking the bespoke, sophisticated feel expected of a premium D2C brand.; Lighting on the jar is h",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and lacks rich depth or vibrant contrast for a premium d2c aesthetic.; too many disparate text elements and pill badge",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or vibrant contrast for a premium D2C aesthetic.; Too many disparate text elements and pill badges ('STORY \u2022 ULTRA BLEND', subheadline, CTA, lower badge) clutter the top and bottom.; The product presentation relies on",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
