@@ -32,6 +32,7 @@ TARGETS = {
 PIECE_ASSET = {"carousel": "carousel", "reel_1": "reel_1", "reel_2": "reel_2", "growth_reel": "growth_reel"}
 LEGACY_BARE_ASSET = frozenset({"reel_1"})
 REEL_TARGETS = ("reel_1", "reel_2", "growth_reel")
+INSTAGRAM_TARGETS = frozenset({"ig_feed", "carousel", "ig_story", "reel_1", "reel_2", "growth_reel"})
 MANDATORY_SLOTS = ("morning", "evening")
 MANDATORY_BUDGET_S = int(os.getenv("MANDATORY_REGEN_BUDGET_S", "2400"))
 _RATE = re.compile(r"429|rate.?limit|too many|throttl|quota", re.I)
@@ -47,9 +48,13 @@ def _posted_states():
 def active_targets() -> dict:
     """TARGETS with blog removed when BLOG_ENABLED is off (Blogs bot owns it)."""
     from content_generator.core.blog_flags import blog_enabled
-    if blog_enabled():
-        return dict(TARGETS)
-    return {k: v for k, v in TARGETS.items() if k != "blog"}
+    from content_generator.core.instagram_pause import instagram_paused
+    targets = dict(TARGETS) if blog_enabled() else {k: v for k, v in TARGETS.items() if k != "blog"}
+    if instagram_paused():
+        # Owner kill switch: Instagram pieces are not due, not retried, and do
+        # not keep the self-resume chain alive. Facebook/LinkedIn/YouTube/Threads stay.
+        targets = {k: v for k, v in targets.items() if k not in INSTAGRAM_TARGETS}
+    return targets
 
 
 def records_for_date(date: str) -> list[dict]:

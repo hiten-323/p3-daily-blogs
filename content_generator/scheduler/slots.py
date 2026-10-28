@@ -370,6 +370,12 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
             return _held(slot, day, content, "canonical_validation_failed")
 
         feed_queue = _feed_assets_to_publish(approved, slot_date)
+        from content_generator.core.instagram_pause import instagram_paused
+        ig_paused = instagram_paused()
+        if ig_paused:
+            logger.warning("[slots] Instagram PAUSED (owner kill switch) — morning feed/carousel/story "
+                           "not published; Facebook mirror still runs")
+            feed_queue = []
         # Hand the publisher ONLY gate-approved objects. A rejected asset is
         # absent by construction, not by downstream cooperation.
         from content_generator.publisher.instagram import _find_carousel_images, post_content, post_story
@@ -402,11 +408,15 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
         fb_result = _mirror_to_facebook(content, day, slot)
         # Instagram Story (image, 24h) — separate method, same slot
         try:
+            if ig_paused:
+                raise _InstagramPaused()
             from content_generator.publisher.publishing_ledger import publish_with_ledger
             story_res = publish_with_ledger("instagram_story", content, slot, day,
                                             lambda: post_story(content, day=day))
             logger.info("[slots] instagram story: %s", story_res.get("success"))
             result["story"] = story_res
+        except _InstagramPaused:
+            logger.warning("[slots] instagram story: PAUSED (owner kill switch)")
         except Exception as e:
             logger.warning("[slots] instagram story failed: %s", e)
         logger.info("[slots] morning publish: %s", result.get("success"))
@@ -416,6 +426,8 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
         except Exception as e:
             logger.warning("[slots] sales push publish skipped: %s", e)
         asset = feed_queue[0] if feed_queue else ("carousel" if "carousel" in approved else "instagram_post")
+        if ig_paused:
+            return _contract(slot, day, content, {"facebook": fb_result}, {"facebook": [asset]})
         return _contract(slot, day, content, {"instagram": result, "facebook": fb_result},
                          {"instagram": [asset], "facebook": [asset]})
 
@@ -428,7 +440,12 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
             _post_single_image, _assemble_caption, is_configured, _post_reel_direct_binary,
             prepare_feed_image, post_local_story,
         )
-        if not is_configured():
+        from content_generator.core.instagram_pause import instagram_paused, paused_result
+        ig_paused = instagram_paused()
+        if ig_paused:
+            logger.warning("[slots] Instagram PAUSED (owner kill switch) — evening reels not published; "
+                           "Facebook mirror still runs")
+        elif not is_configured():
             return _held(slot, day, content, "instagram_not_configured")
 
         # Publish the OBJECT the canonical gate approved — never look the asset
@@ -458,6 +475,8 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
         #    the format that actually spreads), else the free motion reel.
         result = None
         try:
+            if ig_paused:
+                raise _InstagramPaused()
             hero = _find_hero_video()
             if hero:
                 video_path, is_hero = hero, True
@@ -481,6 +500,8 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
                 else:
                     logger.warning("[slots] reel video not published (%s) — falling back to image",
                                    result.get("error"))
+        except _InstagramPaused:
+            result = None
         except Exception as e:
             logger.warning("[slots] reel video path failed (%s) — falling back to image", e)
 
@@ -508,9 +529,9 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
                         "visual_qa_failed — " + "; ".join(visual.get("issues") or ["broken_render"]),
                     )
                 from content_generator.publisher.publishing_ledger import publish_with_ledger
-                result = publish_with_ledger("instagram", content, slot, day,
-                                             lambda: _post_single_image(feed, caption),
-                                             asset=chosen)
+                result = paused_result() if ig_paused else publish_with_ledger(
+                    "instagram", content, slot, day,
+                    lambda: _post_single_image(feed, caption), asset=chosen)
                 fb_result = _mirror_to_facebook(
                     content, day, slot, image=feed, message=caption,
                     mirror_piece=reel, mirror_label=chosen,
@@ -518,9 +539,9 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
             else:
                 logger.warning("[slots] reel thumbnail is not a feed aspect — posting as Story")
                 from content_generator.publisher.publishing_ledger import publish_with_ledger
-                result = publish_with_ledger("instagram_story", content, slot, day,
-                                             lambda: post_local_story(image),
-                                             asset=chosen)
+                result = paused_result() if ig_paused else publish_with_ledger(
+                    "instagram_story", content, slot, day,
+                    lambda: post_local_story(image), asset=chosen)
                 fb_result = _mirror_to_facebook(
                     content, day, slot, message=caption,
                     mirror_piece=reel, mirror_label=chosen,
@@ -539,6 +560,8 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
             result["sales_push"] = publish_for_slot(content, slot, day)
         except Exception as e:
             logger.warning("[slots] sales push publish skipped: %s", e)
+        if ig_paused:
+            return _contract(slot, day, content, {"facebook": fb_result}, {"facebook": [chosen]})
         return _contract(slot, day, content,
                          {"instagram": result, "facebook": fb_result},
                          {"instagram": [chosen], "facebook": [chosen]})
@@ -618,6 +641,10 @@ def _mirror_to_facebook(content: dict, day: int, slot: str,
     except Exception as e:
         logger.warning("[slots] facebook mirror failed (%s): %s", slot, e)
         return {"success": False, "error": str(e)[:200]}
+
+
+class _InstagramPaused(Exception):
+    """Internal: owner kill switch skips an Instagram step (not an error)."""
 
 
 def _contract(slot: str, day: int, content: dict,

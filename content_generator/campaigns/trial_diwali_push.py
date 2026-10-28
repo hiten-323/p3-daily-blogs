@@ -504,6 +504,10 @@ def publish_for_slot(content: dict, slot: str, day: int) -> dict:
             logger.debug("[sales-push] lesson not recorded")
         return {"skipped": True, "reason": reason_code(block)}
     platform = "instagram_sales_story" if surface == "story" else "instagram_sales_reel"
+    from content_generator.core.instagram_pause import instagram_paused
+    if instagram_paused():
+        logger.warning("[sales-push] Instagram PAUSED (owner kill switch) — %s not published", platform)
+        return {"skipped": True, "reason": "instagram_paused"}
 
     def _publish() -> dict:
         if surface == "reel":

@@ -244,7 +244,7 @@ def publish_all(content: dict, day_number: int = 0) -> dict:
     _SKIP_ERRORS = (
         "not_configured", "no_blog_content", "no_content", "no_video", "no_image",
         "not_attempted", "blog_disabled", "shopify_error", "missing_secrets",
-        "duplicate_handle", "duplicate_title", "blog_quality",
+        "duplicate_handle", "duplicate_title", "blog_quality", "instagram_paused",
     )
     def _cat(r):
         if r.get("success"):
