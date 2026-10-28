@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 9,
+      "attempt_count": 10,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: the subheadline and pill tags use generic fonts and look cluttered rather than intentional.; The product drop-shadow beneath the jar i",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or premium warmth; Generic placeholder typography and layout structure look amateur rather than high-end D2C; Jar lacks realistic integration with the surface, casting a very basic artificial drop shadow",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8554,20 +8554,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T09:48:40+00:00",
+          "attempt": 10,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T09:57:11+00:00",
+          "attempt": 10,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or premium warmth; Generic placeholder typography and layout structure look amateur rather than high-end D2C; Jar lacks realistic integration with the surface, casting a very basic artificial drop shadow",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T09:33:13+00:00",
+      "last_attempt_at": "2026-10-28T09:48:40+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: the subheadline and pill tags use generic fonts and look cluttered rather than intentional.; The product drop-shadow beneath the jar i",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or premium warmth; Generic placeholder typography and layout structure look amateur rather than high-end D2C; Jar lacks realistic integration with the surface, casting a very basic artificial drop shadow",
         "success": false
       },
-      "next_retry_at": "2026-10-28T09:41:27+00:00",
+      "next_retry_at": "2026-10-28T09:57:11+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T09:41:27+00:00",
+      "updated_at": "2026-10-28T09:57:11+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
