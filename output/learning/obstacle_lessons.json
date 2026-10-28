@@ -17835,6 +17835,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium contrast or depth.; Typography hierarchy is weak; multiple pill-shaped badges and varying font sizes clutter the top and bottom.; The lighting on the coffee jar feels flat and lacks realistic shadow interaction wit",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient is muddy and lacks rich color depth, feeling flat rather than premium.; typography is generic; the tracking on 'milk coffee habits'",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat rather than premium.; Typography is generic; the tracking on 'MILK COFFEE HABITS' is too tight and the small subtext is weak.; The lighting and drop shadow on the product jar look artificially rendered",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
