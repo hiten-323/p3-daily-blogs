@@ -17751,6 +17751,20 @@
       "reason": "aesthetic_below_8.0:4.0; Overall background color palette is a flat, muddy brown lacking rich depth and premium D2C warmth.; Typography feels dated and overly generic, lacking strong editorial hierarchy or modern bespoke styling.; The lighting and drop shadow on the product render look artificial an",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient is muddy and lacks rich color depth or texture, looking like a default digital gradient rather than a professional studio setup.; t",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth or texture, looking like a default digital gradient rather than a professional studio setup.; Typography feels amateurish with generic pill badges and standard system fonts lacking refined kerning and hierarchy.; Th",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
