@@ -24,3 +24,9 @@ def _legacy_video_path_in_tests(monkeypatch):
     """Legacy reel/short/story tests assert the frame-based path; cinematic has its own tests."""
     monkeypatch.setenv("CINEMATIC_VIDEO", "0")
     monkeypatch.setenv("LLM_MODEL_DISCOVERY", "0")  # no live /models calls in tests
+
+
+@pytest.fixture(autouse=True)
+def _instagram_not_paused_by_default(monkeypatch):
+    """The committed owner kill switch must not change unrelated tests' behaviour."""
+    monkeypatch.setenv("INSTAGRAM_PUBLISH_PAUSED", "false")

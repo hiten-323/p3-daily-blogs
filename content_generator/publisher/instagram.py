@@ -118,6 +118,9 @@ def post_content(content: dict, day: int = 0) -> dict:
     Returns:
         {"success": bool, "media_id": str, "permalink": str, "error": str|None}
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         logger.info("[instagram] Not configured — INSTAGRAM_ACCOUNT_ID or INSTAGRAM_ACCESS_TOKEN missing")
         return {"success": False, "media_id": "", "permalink": "", "error": "not_configured"}
@@ -451,6 +454,9 @@ def _find_carousel_images(content: dict) -> list[str]:
 
 def _post_single_image(image_path: str, caption: str) -> dict:
     """Upload and publish a single image to Instagram."""
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     try:
         import requests
     except ImportError:
@@ -507,6 +513,9 @@ def _post_single_image(image_path: str, caption: str) -> dict:
 
 def _post_carousel(image_paths: list[str], caption: str) -> dict:
     """Upload and publish a carousel (multi-image) post to Instagram."""
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     try:
         import requests
     except ImportError:
@@ -594,6 +603,9 @@ def post_reel_video(video_url: str, caption: str) -> dict:
     Publish an actual Instagram REEL from a public video URL.
     Video processing is async, so we poll the container until FINISHED.
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         return {"success": False, "media_id": "", "error": "not_configured"}
     try:
@@ -651,6 +663,9 @@ def _post_direct_binary(video_path: str, init_params: dict, *, label: str) -> di
     Graph returns an upload URI. The file bytes go there, then the container
     is published once FINISHED. Provider response bodies are not logged.
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     acct_id = os.getenv("INSTAGRAM_ACCOUNT_ID", "").strip()
     token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
     if not acct_id or not token or not os.path.isfile(video_path):
@@ -780,6 +795,9 @@ def post_story(content: dict, day: int = 0) -> dict:
     cannot be set via the API — those stay manual; this keeps a daily story
     presence and can carry a swipe-up/link on eligible accounts.
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         return {"success": False, "media_id": "", "error": "not_configured"}
 
@@ -950,6 +968,9 @@ def post_story(content: dict, day: int = 0) -> dict:
 
 def _publish_container(container_id: str, acct_id: str, token: str) -> dict:
     """Publish a ready media container."""
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     try:
         from content_generator.publisher.meta_graph import MetaRequestError, graph_request
         data = graph_request(
@@ -1151,6 +1172,9 @@ def prepare_feed_image(path: str) -> str | None:
 
 def post_local_story(image_path: str) -> dict:
     """Publish an existing image as an Instagram Story (9:16 is valid here)."""
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         return {"success": False, "media_id": "", "error": "not_configured"}
     if not image_path or not os.path.exists(image_path):
@@ -1203,6 +1227,9 @@ def post_prepared_story(poster_path: str, video_path: str | None = None) -> dict
     Tries the motion file as a STORIES video, then the verified poster.
     Does not rebuild a story from a caption.
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         return {"success": False, "media_id": "", "error": "not_configured"}
     if not poster_path or not os.path.exists(poster_path):
