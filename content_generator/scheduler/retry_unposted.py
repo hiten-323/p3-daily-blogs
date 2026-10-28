@@ -158,6 +158,19 @@ NO_PACK = "no_pack"
 CHAIN_FROM_HOUR = 7
 
 
+def threads_only_auth_block(unresolved: list[str], records: list[dict]) -> bool:
+    """True when the only thing still unposted is a Threads credential block.
+
+    Other platforms already had their chance. The block stays in the ledger
+    so the next retry tries Threads again, and this job does not go red.
+    """
+    if list(unresolved) != ["threads"]:
+        return False
+    from content_generator.publisher.publishing_ledger import threads_auth_block
+    rows = _target_rows(records, "threads")
+    return bool(rows) and all(threads_auth_block(row) for row in rows)
+
+
 def target_refuses_retry(records: list[dict], target: str) -> bool:
     """True when every real attempt for this target is past the ledger retry cap.
 
@@ -508,6 +521,12 @@ def main() -> int:
     remaining = [t for t in checked_todo if t in unposted_targets(after_records, ist_hour)]
     unresolved = sorted(set(blocked + remaining))
     if unresolved:
+        if threads_only_auth_block(unresolved, after_records):
+            log.warning(
+                "Threads credential block is retryable and does not fail this job: %s",
+                unresolved,
+            )
+            return 0
         refused = [t for t in unresolved if target_refuses_retry(after_records, t)]
         retryable = [t for t in unresolved if t not in refused]
         if refused and not retryable:

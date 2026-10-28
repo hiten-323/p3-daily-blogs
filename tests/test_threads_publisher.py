@@ -94,6 +94,71 @@ def test_media_id_to_shortcode():
     assert threads._media_id_to_shortcode("invalid_non_numeric") == ""
 
 
+def test_threads_checkpoint_returns_failure_without_raising(monkeypatch):
+    import io
+    import urllib.error
+
+    monkeypatch.setenv("THREADS_USER_ID", "th_user_999")
+    monkeypatch.setenv("THREADS_ACCESS_TOKEN", "th_tok_123")
+    monkeypatch.setattr(
+        "content_generator.publisher.prepublish_gate.authorize_publish",
+        lambda content, platform: {"allowed": True, "reason": "test-approved"},
+    )
+    body = (
+        b'{"error":{"message":"This Threads account needs to complete a checkpoint '
+        b'before it can access this app.","type":"OAuthException","code":190}}'
+    )
+
+    def urlopen(req, timeout=25):
+        raise urllib.error.HTTPError(req.full_url, 401, "Unauthorized", None, io.BytesIO(body))
+
+    monkeypatch.setattr(threads.urllib.request, "urlopen", urlopen)
+    res = threads.post_content({"threads_post": {"text": "Purity Beans checkpoint"}}, day=3)
+    assert res["success"] is False
+    assert res["attempted"] is True
+    assert res["skipped"] is False
+    assert "401" in res["error"]
+    assert "checkpoint" in res["error"].lower()
+
+
+def test_threads_exception_does_not_drop_other_platforms(monkeypatch, tmp_path):
+    from content_generator.publisher import dispatcher
+    from content_generator.publisher import publishing_ledger as ledger
+
+    monkeypatch.setenv("ENABLE_TIMED_SLOTS", "true")
+    monkeypatch.setenv("BLOG_ENABLED", "false")
+    monkeypatch.setenv("THREADS_ACCESS_TOKEN", "th_tok_123")
+    monkeypatch.setenv("THREADS_USER_ID", "th_user_999")
+    monkeypatch.setattr(dispatcher, "_PUBLISH_LOG", str(tmp_path / "publish_log.json"))
+    monkeypatch.setattr(ledger, "_PATH", tmp_path / "ledger.json")
+    monkeypatch.setattr(
+        "content_generator.publisher.platform_verification.verify_remote_post",
+        lambda platform, record: {"state": "unknown", "method": "test", "detail": "skipped"},
+    )
+    monkeypatch.setattr(
+        "content_generator.core.editorial_engine.approved_assets",
+        lambda content: {"linkedin_post": content.get("linkedin_post") or {}},
+    )
+    monkeypatch.setattr(
+        "content_generator.publisher.linkedin.post_content",
+        lambda content, day=0: {"success": True, "post_id": "li-1", "url": "https://linkedin.example/li-1"},
+    )
+
+    def boom(content, day=0):
+        raise RuntimeError("Threads checkpoint crashed the publisher")
+
+    monkeypatch.setattr("content_generator.publisher.threads.post_content", boom)
+    result = dispatcher.publish_all(
+        {"linkedin_post": {"text": "label check"}, "threads_post": {"text": "hot take"}},
+        day_number=4,
+    )
+    assert result["linkedin"]["success"] is True
+    assert result["threads"]["success"] is False
+    assert "checkpoint" in result["threads"]["error"]
+    assert "instagram" in result
+    assert "facebook" in result
+
+
 def test_threads_numeric_id_uses_shortcode_url(monkeypatch):
     monkeypatch.setenv("THREADS_USER_ID", "th_user_999")
     monkeypatch.setenv("THREADS_ACCESS_TOKEN", "th_tok_123")
