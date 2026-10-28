@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 27,
+      "attempt_count": 28,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks premium depth or rich tonal contrast.; Typographic hierarchy is weak; multiple pill tags ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') clutter the composition and distract from the brand.; The lighting and drop shadow o",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: the sub-headline and top pill tag are cramped and use generic font pairings.; The lighting and drop shadow on the jar feel artificial ",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8824,20 +8824,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T13:49:23+00:00",
+          "attempt": 28,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T13:59:48+00:00",
+          "attempt": 28,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: the sub-headline and top pill tag are cramped and use generic font pairings.; The lighting and drop shadow on the jar feel artificial ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T13:34:57+00:00",
+      "last_attempt_at": "2026-10-28T13:49:23+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks premium depth or rich tonal contrast.; Typographic hierarchy is weak; multiple pill tags ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') clutter the composition and distract from the brand.; The lighting and drop shadow o",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; Typographic hierarchy is weak: the sub-headline and top pill tag are cramped and use generic font pairings.; The lighting and drop shadow on the jar feel artificial ",
         "success": false
       },
-      "next_retry_at": "2026-10-28T13:43:39+00:00",
+      "next_retry_at": "2026-10-28T13:59:48+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T13:43:39+00:00",
+      "updated_at": "2026-10-28T13:59:48+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
