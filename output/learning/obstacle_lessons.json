@@ -17947,6 +17947,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product is floating awkwardly with an unconvincing and inconsistent drop shadow rather than resting naturally on a distinct surface.; Background color palette feels muddy, flat, and lacks the rich, dynamic depth expected from a premium D2C brand.; Typography feels cluttered",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient is muddy and lacks rich color depth, looking flat rather than premium.; the typographic hierarchy feels dated with generic uppercas",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, looking flat rather than premium.; The typographic hierarchy feels dated with generic uppercase sans-serif fonts and heavy outlining effects on pill badges.; The lighting and drop shadow on the jar feel artificial",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
