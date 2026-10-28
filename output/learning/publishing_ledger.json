@@ -8113,11 +8113,11 @@
     },
     "2026-10-28|evening|instagram_video|pb_a7c59d8632|growth_reel": {
       "asset": "growth_reel",
-      "attempt_count": 2,
+      "attempt_count": 3,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "resumable_init_failed User access is restricted",
+      "error": "",
       "history": [
         {
           "at": "2026-10-28T16:40:05+00:00",
@@ -8148,31 +8148,48 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T18:05:46+00:00",
+          "attempt": 3,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T18:06:18+00:00",
+          "attempt": 3,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "17996056250841953",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/reel/DfDCT6skna7/",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-10-28T17:15:05+00:00",
+      "last_attempt_at": "2026-10-28T18:05:46+00:00",
       "last_result": {
-        "error": "resumable_init_failed User access is restricted",
-        "success": false
+        "error": "",
+        "success": true
       },
-      "next_retry_at": "2026-10-28T17:25:11+00:00",
+      "last_verification_at": "2026-10-28T18:06:18+00:00",
+      "next_retry_at": null,
       "platform": "instagram_video",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "17996056250841953",
       "slot": "evening",
-      "status": "FAILED",
-      "updated_at": "2026-10-28T17:15:11+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-28T18:06:17+00:00",
+      "url": "https://www.instagram.com/reel/DfDCT6skna7/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-28T18:06:18+00:00"
     },
     "2026-10-28|evening|instagram_video|pb_a7c59d8632|reel_1": {
       "asset": "reel_1",
-      "attempt_count": 2,
+      "attempt_count": 3,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "resumable_init_failed User access is restricted",
+      "error": "",
       "history": [
         {
           "at": "2026-10-28T16:48:36+00:00",
@@ -8203,31 +8220,48 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T18:12:18+00:00",
+          "attempt": 3,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T18:12:51+00:00",
+          "attempt": 3,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18025970849921239",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/reel/DfDDEKmkj-K/",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-10-28T17:20:28+00:00",
+      "last_attempt_at": "2026-10-28T18:12:18+00:00",
       "last_result": {
-        "error": "resumable_init_failed User access is restricted",
-        "success": false
+        "error": "",
+        "success": true
       },
-      "next_retry_at": "2026-10-28T17:30:33+00:00",
+      "last_verification_at": "2026-10-28T18:12:51+00:00",
+      "next_retry_at": null,
       "platform": "instagram_video",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "18025970849921239",
       "slot": "evening",
-      "status": "FAILED",
-      "updated_at": "2026-10-28T17:20:33+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-28T18:12:51+00:00",
+      "url": "https://www.instagram.com/reel/DfDDEKmkj-K/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-28T18:12:51+00:00"
     },
     "2026-10-28|evening|instagram_video|pb_a7c59d8632|reel_2": {
       "asset": "reel_2",
-      "attempt_count": 2,
+      "attempt_count": 3,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "resumable_init_failed User access is restricted",
+      "error": "",
       "history": [
         {
           "at": "2026-10-28T16:49:39+00:00",
@@ -8258,23 +8292,40 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T18:14:01+00:00",
+          "attempt": 3,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T18:14:31+00:00",
+          "attempt": 3,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18105470999457906",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/reel/DfDDQpAEpnb/",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-10-28T17:21:37+00:00",
+      "last_attempt_at": "2026-10-28T18:14:01+00:00",
       "last_result": {
-        "error": "resumable_init_failed User access is restricted",
-        "success": false
+        "error": "",
+        "success": true
       },
-      "next_retry_at": "2026-10-28T17:31:42+00:00",
+      "last_verification_at": "2026-10-28T18:14:31+00:00",
+      "next_retry_at": null,
       "platform": "instagram_video",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "18105470999457906",
       "slot": "evening",
-      "status": "FAILED",
-      "updated_at": "2026-10-28T17:21:42+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-28T18:14:31+00:00",
+      "url": "https://www.instagram.com/reel/DfDDQpAEpnb/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-28T18:14:31+00:00"
     },
     "2026-10-28|evening|instagram|pb_a7c59d8632|growth_reel": {
       "asset": "growth_reel",
@@ -8786,11 +8837,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 39,
+      "attempt_count": 40,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Body copy uses low-contrast yellow/gold text on dark brown, hurting legibility; Composition feels template-generated rather than art-directed; lacks premium D2C polish; \"STORY \u2022 ULTRA BLEND\" badge looks like an unintegrated social sticker",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background lacks depth and feels like a generic gradient rather than a rich, textured environment.; Composition is static and centered; lacks dynamic energy or unique angle expected from a top agency.; Typography is clean but the headline 'MILK COFFEE HABITS' is generic and ",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -9376,20 +9427,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T17:46:36+00:00",
+          "attempt": 40,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T17:56:43+00:00",
+          "attempt": 40,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background lacks depth and feels like a generic gradient rather than a rich, textured environment.; Composition is static and centered; lacks dynamic energy or unique angle expected from a top agency.; Typography is clean but the headline 'MILK COFFEE HABITS' is generic and ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T16:58:48+00:00",
+      "last_attempt_at": "2026-10-28T17:46:36+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Body copy uses low-contrast yellow/gold text on dark brown, hurting legibility; Composition feels template-generated rather than art-directed; lacks premium D2C polish; \"STORY \u2022 ULTRA BLEND\" badge looks like an unintegrated social sticker",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background lacks depth and feels like a generic gradient rather than a rich, textured environment.; Composition is static and centered; lacks dynamic energy or unique angle expected from a top agency.; Typography is clean but the headline 'MILK COFFEE HABITS' is generic and ",
         "success": false
       },
-      "next_retry_at": "2026-10-28T17:07:35+00:00",
+      "next_retry_at": "2026-10-28T17:56:43+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T17:07:35+00:00",
+      "updated_at": "2026-10-28T17:56:43+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null

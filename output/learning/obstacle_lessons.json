@@ -18075,7 +18075,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 4,
+      "count": 6,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-28",
       "fix": "",
@@ -18141,6 +18141,34 @@
       "last_seen": "2026-10-28",
       "platform": "instagram",
       "reason": "aesthetic_below_8.0:3.0; Cluttered and messy typographic hierarchy with too many different text blocks competing for attention; Inappropriate use of a raw URL ('HTTPS://P3ONLINE.IN') as a headline, which screams low-quality direct-response rather than premium D2C brand building; Redundant copy repea",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; background lacks depth and feels like a generic gradient rather than a rich, textured environment.; composition is static and centered; lacks dynamic energ",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Background lacks depth and feels like a generic gradient rather than a rich, textured environment.; Composition is static and centered; lacks dynamic energy or unique angle expected from a top agency.; Typography is clean but the headline 'MILK COFFEE HABITS' is generic and",
+      "stage": "publish",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:4.0; placing a raw url ('https://p3online.in') prominently in the headline is dated and harms the premium d2c aesthetic.; the body copy repeats the url and call",
+      "label": "reel_1",
+      "last_seen": "2026-10-28",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:4.0; Placing a raw URL ('HTTPS://P3ONLINE.IN') prominently in the headline is dated and harms the premium D2C aesthetic.; The body copy repeats the URL and call-to-action verbatim immediately below the main headline, causing redundant clutter.; Typography lacks refined hierarchy;",
       "stage": "render",
       "status": "gate_holding"
     }
