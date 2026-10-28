@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 13,
+      "attempt_count": 14,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium contrast or depth.; Typography relies on basic web-safe fonts and generic pill badges that look dated rather than bespoke D2C.; The lighting on the jar feels flat and poorly composited against the background, lacki",
+      "error": "claimed_by_other_run",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8614,20 +8614,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T10:47:16+00:00",
+          "attempt": 14,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T10:47:17+00:00",
+          "attempt": 14,
+          "error": "claimed_by_other_run",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T10:27:55+00:00",
+      "last_attempt_at": "2026-10-28T10:47:16+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium contrast or depth.; Typography relies on basic web-safe fonts and generic pill badges that look dated rather than bespoke D2C.; The lighting on the jar feels flat and poorly composited against the background, lacki",
+        "error": "claimed_by_other_run",
         "success": false
       },
-      "next_retry_at": "2026-10-28T10:36:39+00:00",
+      "next_retry_at": null,
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
-      "status": "FAILED",
-      "updated_at": "2026-10-28T10:36:39+00:00",
+      "status": "SKIPPED",
+      "updated_at": "2026-10-28T10:47:17+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
