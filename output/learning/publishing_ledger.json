@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 19,
+      "attempt_count": 20,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background is muddy and lacks rich color depth, looking flat and generic.; Typography feels dated and template-driven, especially the pill badges like 'STORY \u2022 ULTRA BLEND'.; The lighting and drop shadow on the jar feel artificial and poorly integrated with the surface l",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium contrast or depth.; Typography hierarchy is weak; multiple pill-shaped badges and varying font sizes clutter the top and bottom.; The lighting on the coffee jar feels flat and lacks realistic shadow interaction wit",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8704,20 +8704,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T12:04:33+00:00",
+          "attempt": 20,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T12:13:46+00:00",
+          "attempt": 20,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium contrast or depth.; Typography hierarchy is weak; multiple pill-shaped badges and varying font sizes clutter the top and bottom.; The lighting on the coffee jar feels flat and lacks realistic shadow interaction wit",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T11:52:00+00:00",
+      "last_attempt_at": "2026-10-28T12:04:33+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background is muddy and lacks rich color depth, looking flat and generic.; Typography feels dated and template-driven, especially the pill badges like 'STORY \u2022 ULTRA BLEND'.; The lighting and drop shadow on the jar feel artificial and poorly integrated with the surface l",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium contrast or depth.; Typography hierarchy is weak; multiple pill-shaped badges and varying font sizes clutter the top and bottom.; The lighting on the coffee jar feels flat and lacks realistic shadow interaction wit",
         "success": false
       },
-      "next_retry_at": "2026-10-28T11:57:11+00:00",
+      "next_retry_at": "2026-10-28T12:13:46+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T11:57:11+00:00",
+      "updated_at": "2026-10-28T12:13:46+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
