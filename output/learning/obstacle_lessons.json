@@ -17905,6 +17905,20 @@
       "reason": "aesthetic_below_8.0:4.0; Overall background is flat and muddy brown with generic bokeh, lacking rich depth, texture, or premium lighting typical of top D2C coffee brands.; Typographic hierarchy feels cluttered and dated, with too many disparate font styles and pill badges ('STORY \u2022 ULTRA BLEND' and",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and lacks premium depth or rich tonal contrast.; typographic hierarchy is weak; multiple pill tags ('story \u2022 ultra ble",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks premium depth or rich tonal contrast.; Typographic hierarchy is weak; multiple pill tags ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') clutter the composition and distract from the brand.; The lighting and drop shadow o",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
