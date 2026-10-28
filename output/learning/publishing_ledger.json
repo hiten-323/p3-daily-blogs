@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 25,
+      "attempt_count": 26,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Overall background color palette is dull and muddy, lacking rich, modern D2C depth and vibrancy.; Typography feels dated and generic, lacking refined kerning and hierarchy typical of top-tier coffee brands.; The layout relies on generic pill-shaped badges ('STORY \u2022 ULTRA BLE",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Overall background is flat and muddy brown with generic bokeh, lacking rich depth, texture, or premium lighting typical of top D2C coffee brands.; Typographic hierarchy feels cluttered and dated, with too many disparate font styles and pill badges ('STORY \u2022 ULTRA BLEND' and ",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8794,20 +8794,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T13:20:25+00:00",
+          "attempt": 26,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T13:29:19+00:00",
+          "attempt": 26,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Overall background is flat and muddy brown with generic bokeh, lacking rich depth, texture, or premium lighting typical of top D2C coffee brands.; Typographic hierarchy feels cluttered and dated, with too many disparate font styles and pill badges ('STORY \u2022 ULTRA BLEND' and ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T13:06:03+00:00",
+      "last_attempt_at": "2026-10-28T13:20:25+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Overall background color palette is dull and muddy, lacking rich, modern D2C depth and vibrancy.; Typography feels dated and generic, lacking refined kerning and hierarchy typical of top-tier coffee brands.; The layout relies on generic pill-shaped badges ('STORY \u2022 ULTRA BLE",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Overall background is flat and muddy brown with generic bokeh, lacking rich depth, texture, or premium lighting typical of top D2C coffee brands.; Typographic hierarchy feels cluttered and dated, with too many disparate font styles and pill badges ('STORY \u2022 ULTRA BLEND' and ",
         "success": false
       },
-      "next_retry_at": "2026-10-28T13:14:54+00:00",
+      "next_retry_at": "2026-10-28T13:29:19+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T13:14:54+00:00",
+      "updated_at": "2026-10-28T13:29:19+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
