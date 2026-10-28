@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 35,
+      "attempt_count": 36,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lighting lacks rich texture, looking muddy and flat rather than premium.; Typographic hierarchy is weak; multiple small badge elements ('STORY \u2022 ULTRA BLEND' and bottom ratio badge) feel cluttered and amateur.; The jar lacks natural integration with th",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting lack rich depth, feeling muddy and dated rather than premium D2C; Product placement looks heavily composited with harsh shadow work underneath the jar; Typography has weak hierarchy with uninspired pill-shaped badges that look generic",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8944,20 +8944,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T15:49:09+00:00",
+          "attempt": 36,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T15:57:23+00:00",
+          "attempt": 36,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting lack rich depth, feeling muddy and dated rather than premium D2C; Product placement looks heavily composited with harsh shadow work underneath the jar; Typography has weak hierarchy with uninspired pill-shaped badges that look generic",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T15:33:07+00:00",
+      "last_attempt_at": "2026-10-28T15:49:09+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lighting lacks rich texture, looking muddy and flat rather than premium.; Typographic hierarchy is weak; multiple small badge elements ('STORY \u2022 ULTRA BLEND' and bottom ratio badge) feel cluttered and amateur.; The jar lacks natural integration with th",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting lack rich depth, feeling muddy and dated rather than premium D2C; Product placement looks heavily composited with harsh shadow work underneath the jar; Typography has weak hierarchy with uninspired pill-shaped badges that look generic",
         "success": false
       },
-      "next_retry_at": "2026-10-28T15:43:18+00:00",
+      "next_retry_at": "2026-10-28T15:57:23+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T15:43:18+00:00",
+      "updated_at": "2026-10-28T15:57:23+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
