@@ -8069,6 +8069,288 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-27T05:49:34+00:00"
     },
+    "2026-10-28|evening|facebook|pb_a7c59d8632": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-28T16:40:19+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T16:40:26+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "494003270464484_122169087740655685",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/posts/122169087740655685",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-10-28T16:40:19+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-28T16:40:26+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": true,
+      "remote_id": "494003270464484_122169087740655685",
+      "slot": "evening",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-28T16:40:26+00:00",
+      "url": "https://www.facebook.com/494003270464484/posts/122169087740655685",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-10-28T16:40:26+00:00"
+    },
+    "2026-10-28|evening|instagram_video|pb_a7c59d8632|growth_reel": {
+      "asset": "growth_reel",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "resumable_init_failed User access is restricted",
+      "history": [
+        {
+          "at": "2026-10-28T16:40:05+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T16:40:12+00:00",
+          "attempt": 1,
+          "error": "resumable_init_failed User access is restricted",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-28T16:40:05+00:00",
+      "last_result": {
+        "error": "resumable_init_failed User access is restricted",
+        "success": false
+      },
+      "next_retry_at": "2026-10-28T16:45:12+00:00",
+      "platform": "instagram_video",
+      "published": false,
+      "remote_id": "",
+      "slot": "evening",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T16:40:12+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-28|evening|instagram_video|pb_a7c59d8632|reel_1": {
+      "asset": "reel_1",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "resumable_init_failed User access is restricted",
+      "history": [
+        {
+          "at": "2026-10-28T16:48:36+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T16:48:42+00:00",
+          "attempt": 1,
+          "error": "resumable_init_failed User access is restricted",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-28T16:48:36+00:00",
+      "last_result": {
+        "error": "resumable_init_failed User access is restricted",
+        "success": false
+      },
+      "next_retry_at": "2026-10-28T16:53:42+00:00",
+      "platform": "instagram_video",
+      "published": false,
+      "remote_id": "",
+      "slot": "evening",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T16:48:42+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-28|evening|instagram_video|pb_a7c59d8632|reel_2": {
+      "asset": "reel_2",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "resumable_init_failed User access is restricted",
+      "history": [
+        {
+          "at": "2026-10-28T16:49:39+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T16:49:44+00:00",
+          "attempt": 1,
+          "error": "resumable_init_failed User access is restricted",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-28T16:49:39+00:00",
+      "last_result": {
+        "error": "resumable_init_failed User access is restricted",
+        "success": false
+      },
+      "next_retry_at": "2026-10-28T16:54:44+00:00",
+      "platform": "instagram_video",
+      "published": false,
+      "remote_id": "",
+      "slot": "evening",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T16:49:44+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-28|evening|instagram|pb_a7c59d8632|growth_reel": {
+      "asset": "growth_reel",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "User access is restricted",
+      "history": [
+        {
+          "at": "2026-10-28T16:40:13+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T16:40:19+00:00",
+          "attempt": 1,
+          "error": "User access is restricted",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-28T16:40:13+00:00",
+      "last_result": {
+        "error": "User access is restricted",
+        "success": false
+      },
+      "next_retry_at": "2026-10-28T16:45:19+00:00",
+      "platform": "instagram",
+      "published": false,
+      "remote_id": "",
+      "slot": "evening",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T16:40:19+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-28|evening|instagram|pb_a7c59d8632|reel_1": {
+      "asset": "reel_1",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "User access is restricted",
+      "history": [
+        {
+          "at": "2026-10-28T16:48:42+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T16:48:48+00:00",
+          "attempt": 1,
+          "error": "User access is restricted",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-28T16:48:42+00:00",
+      "last_result": {
+        "error": "User access is restricted",
+        "success": false
+      },
+      "next_retry_at": "2026-10-28T16:53:48+00:00",
+      "platform": "instagram",
+      "published": false,
+      "remote_id": "",
+      "slot": "evening",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T16:48:48+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-28|evening|instagram|pb_a7c59d8632|reel_2": {
+      "asset": "reel_2",
+      "attempt_count": 1,
+      "content_date": "2026-10-28",
+      "content_id": "pb_a7c59d8632",
+      "day_number": 300,
+      "error": "User access is restricted",
+      "history": [
+        {
+          "at": "2026-10-28T16:49:44+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T16:49:51+00:00",
+          "attempt": 1,
+          "error": "User access is restricted",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-28T16:49:44+00:00",
+      "last_result": {
+        "error": "User access is restricted",
+        "success": false
+      },
+      "next_retry_at": "2026-10-28T16:54:51+00:00",
+      "platform": "instagram",
+      "published": false,
+      "remote_id": "",
+      "slot": "evening",
+      "status": "FAILED",
+      "updated_at": "2026-10-28T16:49:51+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
     "2026-10-28|generate|linkedin|pb_a7c59d8632": {
       "asset": "",
       "attempt_count": 1,
@@ -8414,11 +8696,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 37,
+      "attempt_count": 38,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Overall background color palette is muddy and flat, lacking rich tones or atmospheric depth expected from a premium D2C brand; Product placement is too low, creating dead space above and making the jar feel uncomfortably close to the bottom edge; Typographic hierarchy feels ",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product is floating awkwardly near the horizon line with an unconvincing drop shadow, failing to sit naturally on a defined surface.; The background gradient looks muddy and flat rather than rich and dimensional, lacking premium D2C warmth and texture.; Typographic hierarchy",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8974,20 +9256,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T16:28:03+00:00",
+          "attempt": 38,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T16:34:34+00:00",
+          "attempt": 38,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product is floating awkwardly near the horizon line with an unconvincing drop shadow, failing to sit naturally on a defined surface.; The background gradient looks muddy and flat rather than rich and dimensional, lacking premium D2C warmth and texture.; Typographic hierarchy",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T16:07:09+00:00",
+      "last_attempt_at": "2026-10-28T16:28:03+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Overall background color palette is muddy and flat, lacking rich tones or atmospheric depth expected from a premium D2C brand; Product placement is too low, creating dead space above and making the jar feel uncomfortably close to the bottom edge; Typographic hierarchy feels ",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product is floating awkwardly near the horizon line with an unconvincing drop shadow, failing to sit naturally on a defined surface.; The background gradient looks muddy and flat rather than rich and dimensional, lacking premium D2C warmth and texture.; Typographic hierarchy",
         "success": false
       },
-      "next_retry_at": "2026-10-28T16:17:29+00:00",
+      "next_retry_at": "2026-10-28T16:34:34+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T16:17:29+00:00",
+      "updated_at": "2026-10-28T16:34:34+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null

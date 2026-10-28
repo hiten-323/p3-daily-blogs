@@ -18059,6 +18059,62 @@
       "reason": "aesthetic_below_8.0:4.0; Overall background color palette is muddy and flat, lacking rich tones or atmospheric depth expected from a premium D2C brand; Product placement is too low, creating dead space above and making the jar feel uncomfortably close to the bottom edge; Typographic hierarchy feels",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product is floating awkwardly near the horizon line with an unconvincing drop shadow, failing to sit naturally on a defined surface.; the background gradie",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product is floating awkwardly near the horizon line with an unconvincing drop shadow, failing to sit naturally on a defined surface.; The background gradient looks muddy and flat rather than rich and dimensional, lacking premium D2C warmth and texture.; Typographic hierarchy",
+      "stage": "publish",
+      "status": "gate_holding"
+    },
+    {
+      "count": 2,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|weak_hierarchy:62/41",
+      "label": "reel_1",
+      "last_seen": "2026-10-28",
+      "platform": "instagram",
+      "reason": "weak_hierarchy:62/41",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:4.0; flat, monochromatic background lacks premium depth, texture, and scroll-stopping polish.; typographic hierarchy is weak; the long url dominates the composi",
+      "label": "reel_1",
+      "last_seen": "2026-10-28",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:4.0; Flat, monochromatic background lacks premium depth, texture, and scroll-stopping polish.; Typographic hierarchy is weak; the long URL dominates the composition and feels cluttered.; Brand consistency is confused by mismatched identities: Purity Beans, @purepantryprovisions,",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:5.0; the giant url dominates the visual hierarchy, giving a cheap, direct-response spam vibe rather than premium brand storytelling.; the radial golden ray back",
+      "label": "reel_1",
+      "last_seen": "2026-10-28",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:5.0; The giant URL dominates the visual hierarchy, giving a cheap, direct-response spam vibe rather than premium brand storytelling.; The radial golden ray background looks template-generated and visually noisy, lacking the sophisticated, moody depth of premium brand photography.",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
