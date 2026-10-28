@@ -52,6 +52,23 @@ def normalize_handle(obj):
     return obj
 
 
+def outcome_fails_recovery(platform: str, outcome: dict) -> bool:
+    """True when this platform result should fail the recovery job.
+
+    A Threads credential/auth failure is already alerted and ledgered. It must
+    not turn a run that published the other platforms into a failed job.
+    """
+    if not isinstance(outcome, dict):
+        return False
+    if outcome.get("success") or outcome.get("skipped") or outcome.get("held"):
+        return False
+    from content_generator.publisher.publishing_ledger import threads_auth_block
+    if threads_auth_block({"platform": platform, "status": "FAILED", "error": outcome.get("error") or ""}):
+        log.warning("Threads credential block stays retryable: %s", outcome.get("error"))
+        return False
+    return True
+
+
 def main() -> int:
     groups = due_retry_groups()
     if not groups:
@@ -80,7 +97,7 @@ def main() -> int:
             for platform, outcome in result.items():
                 if platform in ("summary", "published_platforms", "timestamp") or not isinstance(outcome, dict):
                     continue
-                if not outcome.get("success") and not outcome.get("skipped") and not outcome.get("held"):
+                if outcome_fails_recovery(platform, outcome):
                     failures.append(f"{platform}: {outcome.get('error') or 'not published'}")
             log.info("Generate-slot recovery: %s", result.get("summary", "completed"))
         elif slot in ("morning", "evening"):

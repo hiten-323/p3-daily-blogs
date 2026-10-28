@@ -17,6 +17,12 @@ instagram_content_publish is missing, or when the token is expired. Soft mode
 FACEBOOK_PAGE_ACCESS_TOKEN is required for strict publish preflight and must
 include pages_manage_posts. Missing credentials, lookup errors, missing scope,
 or expiry fail strict mode; generate's soft mode emits warnings and continues.
+
+A Threads-only credential failure (missing token or user id, identity
+mismatch, or an HTTP error such as an account checkpoint) is a warning plus
+an alert. Publish preflight records it on the publishing ledger as a
+retryable failure and still exits 0, so Instagram, Facebook, LinkedIn, and
+YouTube continue. Instagram and Facebook preflight failures stay fatal.
 """
 from __future__ import annotations
 
@@ -307,6 +313,23 @@ def format_facebook(report: dict) -> str:
     )
 
 
+def _warn_threads(messages: list[tuple[str, str]], text: str, *, preflight: bool, secrets: list[str]) -> None:
+    """Surface a Threads auth problem without failing the publish job.
+
+    Instagram and Facebook failures above this still set failed. Threads is
+    one platform: warn, alert, and ledger the block so retries keep trying it.
+    """
+    messages.append(("warning", text))
+    if not preflight:
+        return
+    _alert(text, secrets)
+    try:
+        from content_generator.publisher.publishing_ledger import record_credential_block
+        record_credential_block("threads", text)
+    except Exception as exc:
+        print(f"::warning::Threads credential block was not recorded: {type(exc).__name__}")
+
+
 def _finish(messages: list[tuple[str, str]], secrets: list[str], failed: bool) -> int:
     for level, message in messages:
         _emit(level, message, secrets)
@@ -423,10 +446,12 @@ def run_checks(now: int | None = None) -> int:
     threads_uid = os.environ.get("THREADS_USER_ID", "").strip()
     if not threads_tok or not threads_uid:
         missing = "THREADS_ACCESS_TOKEN" if not threads_tok else "THREADS_USER_ID"
-        level = "error" if publish_preflight else "warning"
-        messages.append((level, f"Threads publishing credentials unavailable — {missing} is not configured."))
-        if publish_preflight:
-            failed = True
+        _warn_threads(
+            messages,
+            f"Threads publishing credentials unavailable — {missing} is not configured.",
+            preflight=publish_preflight,
+            secrets=secrets,
+        )
     else:
         secrets.append(threads_tok)
         try:
@@ -435,23 +460,29 @@ def run_checks(now: int | None = None) -> int:
             th_user = str(th_res.get("username") or "")
             th_id = str(th_res.get("id") or "")
             if not th_id or th_id != threads_uid or not th_user:
-                level = "error" if publish_preflight else "warning"
-                messages.append((level, f"Threads account identity mismatch: configured ID={threads_uid}, returned ID={th_id or '(none)'}, username={th_user or '(none)'}"))
-                if publish_preflight:
-                    failed = True
+                _warn_threads(
+                    messages,
+                    f"Threads account identity mismatch: configured ID={threads_uid}, returned ID={th_id or '(none)'}, username={th_user or '(none)'}",
+                    preflight=publish_preflight,
+                    secrets=secrets,
+                )
             else:
                 messages.append(("notice", f"Threads token valid: username={th_user} id={th_id}"))
         except TokenHttpError as exc:
             detail = _redact(exc.body, secrets)[:300]
-            level = "error" if publish_preflight else "warning"
-            messages.append((level, f"Threads token check (HTTP {exc.code}): {detail}"))
-            if publish_preflight:
-                failed = True
+            _warn_threads(
+                messages,
+                f"Threads token check (HTTP {exc.code}): {detail}",
+                preflight=publish_preflight,
+                secrets=secrets,
+            )
         except Exception as exc:
-            level = "error" if publish_preflight else "warning"
-            messages.append((level, f"Threads token check: {type(exc).__name__}"))
-            if publish_preflight:
-                failed = True
+            _warn_threads(
+                messages,
+                f"Threads token check: {type(exc).__name__}",
+                preflight=publish_preflight,
+                secrets=secrets,
+            )
 
     # LinkedIn credentials check
     li_refresh = os.environ.get("LI_REFRESH_TOKEN", "").strip()

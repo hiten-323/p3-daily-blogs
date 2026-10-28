@@ -101,17 +101,89 @@ def _preflight_miss(record: dict) -> bool:
     return err.split(":", 1)[0].strip() in _PREFLIGHT_MISSES
 
 
+# Threads auth never created a post. The checkpoint is cleared by the account
+# owner, so these rows must stay retryable past the normal attempt cap.
+_THREADS_AUTH_MARKERS = (
+    "credential_block:", "checkpoint", "http 401", "http 403",
+    "identity mismatch", "oauth", "not_configured",
+    "threads publishing credentials unavailable",
+)
+
+
+def threads_auth_block(record: dict) -> bool:
+    """True when a Threads row failed on credentials, not on the post itself."""
+    if str((record or {}).get("platform") or "").lower() != "threads":
+        return False
+    if (record or {}).get("credential_block") is True:
+        return True
+    err = str((record or {}).get("error") or "").lower()
+    return any(token in err for token in _THREADS_AUTH_MARKERS)
+
+
 def attempt_budget_exhausted(record: dict) -> bool:
     """True when another automatic publish of this row would be a duplicate risk."""
     if str((record or {}).get("status") or "") != "FAILED":
         return False
-    if _preflight_miss(record):
+    if _preflight_miss(record) or threads_auth_block(record):
         return False
     try:
         attempts = int((record or {}).get("attempt_count") or 0)
     except (TypeError, ValueError):
         attempts = 0
     return attempts >= _MAX_ATTEMPTS
+
+
+def record_credential_block(platform: str, reason: str, slot: str = "generate") -> dict:
+    """Ledger one auth block. attempt_count stays 0 so retries keep trying it.
+
+    A later verified publish for the same day and slot removes the row. Writing
+    another block after that post is a no-op so recovery does not spin forever.
+    """
+    from content_generator.core.ist_dates import today_ist
+    platform = str(platform or "").strip().lower()
+    slot = str(slot or "").strip() or "generate"
+    reason = " ".join(str(reason or "").split())
+    error = reason if reason.lower().startswith("credential_block:") else f"credential_block: {reason}"
+    error = error[:1000]
+    content_date = today_ist().isoformat()
+    key = "|".join((content_date, slot, platform, "credential_block"))
+    now = _iso()
+    with _LOCK:
+        data = _load()
+        posted = any(
+            str(row.get("platform") or "").lower() == platform
+            and str(row.get("content_date") or "")[:10] == content_date
+            and row.get("slot") == slot
+            and row.get("status") in POSTED_STATES
+            and not row.get("credential_block")
+            for row in data["records"].values()
+        )
+        if posted:
+            return {}
+        history = list((data["records"].get(key) or {}).get("history") or [])
+        history.append({"event": "credential_block", "at": now, "error": error})
+        record = {
+            "content_date": content_date, "content_id": "credential_block",
+            "platform": platform, "slot": slot, "day_number": 0, "asset": "credential_block",
+            "status": "FAILED", "attempt_count": 0, "updated_at": now, "last_attempt_at": now,
+            "next_retry_at": now, "error": error, "remote_id": "", "url": "",
+            "credential_block": True, "published": False, "history": history[-20:],
+        }
+        data["records"][key] = record
+        _save(data)
+        return record
+
+
+def _clear_threads_credential_blocks(data: dict, content_date: str) -> None:
+    day = str(content_date or "")[:10]
+    drop = [
+        key for key, row in data["records"].items()
+        if str(row.get("platform") or "").lower() == "threads"
+        and str(row.get("content_date") or "")[:10] == day
+        and (row.get("credential_block") or str(row.get("asset") or "") == "credential_block")
+    ]
+    for key in drop:
+        data["records"].pop(key, None)
 
 
 def _recoverable_instagram_account_mismatch(old: dict, platform: str) -> bool:
@@ -327,6 +399,8 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
             "verification_method": str(record.get("verification_method") or ""),
         })
         record["history"] = history[-100:]
+        if success and str(record.get("platform") or "").lower() == "threads":
+            _clear_threads_credential_blocks(data, record.get("content_date", ""))
         data["records"][key] = record
         _save(data)
         return record

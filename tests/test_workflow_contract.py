@@ -345,6 +345,35 @@ def test_unattended_publishing_requires_a_configured_failure_alert_channel():
     assert "os.environ.get(\"ALERT_WEBHOOK_URL\")" not in step["run"]
 
 
+def test_threads_preflight_failure_does_not_skip_later_publish_steps():
+    """Publish steps run when preflight exits 0. Threads auth must not be a separate gate."""
+    import yaml
+
+    root = ROOT / ".github" / "workflows"
+    specs = (
+        ("daily.yml", "run-pipeline", "Verify Meta publishing access", "Run autonomous pipeline"),
+        ("publish-recovery.yml", "recover", "Resolve Meta publishing account", "Retry due publishing failures"),
+        ("retry-unposted.yml", "recover", "Resolve Meta publishing account", "Retry unposted platforms/types"),
+    )
+    for name, job, preflight_name, publish_name in specs:
+        data = yaml.safe_load((root / name).read_text(encoding="utf-8"))
+        steps = data["jobs"][job]["steps"]
+        names = [step["name"] for step in steps]
+        assert names.index(preflight_name) < names.index(publish_name), name
+        preflight = steps[names.index(preflight_name)]
+        publish = steps[names.index(publish_name)]
+        assert preflight["env"]["META_TOKEN_MODE"] == "strict"
+        assert preflight["env"]["META_PUBLISH_PREFLIGHT"] == "true"
+        assert "ALERT_WEBHOOK_URL" in preflight["env"], name
+        condition = str(publish.get("if") or "success()")
+        assert "success()" in condition, name
+        assert "threads" not in condition.lower(), name
+    retry = yaml.safe_load((root / "retry-unposted.yml").read_text(encoding="utf-8"))
+    resume = {step["name"]: step for step in retry["jobs"]["recover"]["steps"]}
+    resume_if = str(resume["Self-resume if today still has unposted pieces (cron backstop)"]["if"])
+    assert "steps.meta_preflight.conclusion == 'success'" in resume_if
+
+
 def test_recovery_workflows_enforce_strict_meta_preflight_and_alert_channel():
     import yaml
 

@@ -242,33 +242,162 @@ def test_publish_workflows_resolve_tokens_through_the_shared_health_check():
         assert "python -m content_generator.ops.meta_token_health" in text
 
 
-def test_strict_meta_preflight_fails_when_threads_identity_mismatches(monkeypatch, capsys):
-    monkeypatch.setenv("META_TOKEN_MODE", "strict")
-    monkeypatch.setenv("META_PUBLISH_PREFLIGHT", "true")
-    monkeypatch.setenv("INSTAGRAM_ACCOUNT_ID", "ig-123")
-    monkeypatch.setenv("INSTAGRAM_ACCESS_TOKEN", "ig-token")
-    monkeypatch.setenv("FACEBOOK_PAGE_ID", "fb-123")
-    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "fb-token")
-    monkeypatch.setenv("THREADS_ACCESS_TOKEN", "threads-token")
-    monkeypatch.setenv("THREADS_USER_ID", "threads-expected")
-    monkeypatch.delenv("LI_REFRESH_TOKEN", raising=False)
-    monkeypatch.delenv("LI_CLIENT_ID", raising=False)
-    monkeypatch.delenv("LI_CLIENT_SECRET", raising=False)
-    monkeypatch.delenv("LI_API_ACCESS", raising=False)
-    monkeypatch.delenv("YOUTUBE_CLIENT_ID", raising=False)
-    monkeypatch.delenv("YOUTUBE_CLIENT_SECRET", raising=False)
-    monkeypatch.delenv("YOUTUBE_REFRESH_TOKEN", raising=False)
+_CHECKPOINT = (
+    '{"error":{"message":"Error validating access token: This Threads account '
+    'needs to complete a checkpoint before it can access this app.","type":"OAuthException","code":190}}'
+)
 
+
+def _ig_fb_ok(monkeypatch):
     monkeypatch.setattr(health, "inspect_instagram", lambda *a, **k: {
         "ok": True, "problems": [], "scopes": list(health.IG_SCOPES),
         "type": "USER", "expires": "never", "username": "puritybeans",
         "resolved_account_id": "",
     })
     monkeypatch.setattr(health, "inspect_token", lambda token, **k: {
-        "type": "PAGE", "expires": "never", "scopes": list(health.FB_SCOPES), "expired": False,
+        "type": "PAGE", "expires": "never", "scopes": list(health.FB_SCOPES),
+        "expired": False, "valid": True,
     })
-    monkeypatch.setattr(health, "_fetch", lambda *a, **k: {"id": "threads-other", "username": "someone-else"})
 
+
+def _ledger_path(monkeypatch, tmp_path):
+    from content_generator.publisher import publishing_ledger as ledger
+    monkeypatch.setattr(ledger, "_PATH", tmp_path / "publishing_ledger.json")
+    return ledger
+
+
+def _capture_alerts(monkeypatch):
+    sent = []
+
+    def urlopen(req, timeout=10):
+        sent.append(req.data.decode())
+
+        class _Resp:
+            def read(self):
+                return b"ok"
+
+        return _Resp()
+
+    monkeypatch.setattr(health.urllib.request, "urlopen", urlopen)
+    return sent
+
+
+def test_threads_checkpoint_does_not_fail_publish_preflight(monkeypatch, tmp_path, capsys):
+    """HTTP 401 checkpoint blocks Threads only. Instagram and Facebook stay publishable."""
+    _passing_preflight(monkeypatch)
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "fb-token")
+    monkeypatch.setenv("ALERT_WEBHOOK_URL", "https://alerts.example/hook")
+    _ig_fb_ok(monkeypatch)
+    ledger = _ledger_path(monkeypatch, tmp_path)
+    alerts = _capture_alerts(monkeypatch)
+
+    def fetch(url, headers, timeout=15):
+        if "graph.threads.net" in url:
+            raise health.TokenHttpError(401, _CHECKPOINT)
+        raise AssertionError(url)
+
+    monkeypatch.setattr(health, "_fetch", fetch)
+    assert health.run_checks(now=100) == 0
+    out = capsys.readouterr().out
+    assert "::warning::Threads token check (HTTP 401):" in out
+    assert "checkpoint" in out
+    assert "::error::" not in out
+    assert alerts and "checkpoint" in alerts[0]
+    assert "threads-token" not in alerts[0]
+    row = next(iter(ledger._load()["records"].values()))
+    assert row["platform"] == "threads"
+    assert row["status"] == "FAILED"
+    assert row["slot"] == "generate"
+    assert row["credential_block"] is True
+    assert row["attempt_count"] == 0
+    assert "checkpoint" in row["error"]
+    assert ledger.attempt_budget_exhausted(row) is False
+    assert any(item["slot"] == "generate" for item in ledger.due_retry_groups())
+
+
+def test_threads_missing_credentials_do_not_fail_publish_preflight(monkeypatch, tmp_path, capsys):
+    _passing_preflight(monkeypatch)
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "fb-token")
+    monkeypatch.delenv("THREADS_ACCESS_TOKEN", raising=False)
+    monkeypatch.setenv("ALERT_WEBHOOK_URL", "https://alerts.example/hook")
+    _ig_fb_ok(monkeypatch)
+    ledger = _ledger_path(monkeypatch, tmp_path)
+    alerts = _capture_alerts(monkeypatch)
+    assert health.run_checks(now=100) == 0
+    out = capsys.readouterr().out
+    assert "::warning::Threads publishing credentials unavailable — THREADS_ACCESS_TOKEN is not configured." in out
+    assert "::error::" not in out
+    assert alerts and "THREADS_ACCESS_TOKEN" in alerts[0]
+    row = next(iter(ledger._load()["records"].values()))
+    assert row["credential_block"] is True
+    assert "THREADS_ACCESS_TOKEN" in row["error"]
+    assert ledger.threads_auth_block(row) is True
+
+
+def test_threads_identity_mismatch_does_not_fail_publish_preflight(monkeypatch, tmp_path, capsys):
+    _passing_preflight(monkeypatch)
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "fb-token")
+    monkeypatch.setenv("THREADS_USER_ID", "threads-expected")
+    monkeypatch.setenv("ALERT_WEBHOOK_URL", "https://alerts.example/hook")
+    _ig_fb_ok(monkeypatch)
+    ledger = _ledger_path(monkeypatch, tmp_path)
+    alerts = _capture_alerts(monkeypatch)
+    monkeypatch.setattr(health, "_fetch", lambda *a, **k: {"id": "threads-other", "username": "someone-else"})
+    assert health.run_checks(now=100) == 0
+    out = capsys.readouterr().out
+    assert "::warning::Threads account identity mismatch" in out
+    assert "::error::" not in out
+    assert alerts and "identity mismatch" in alerts[0]
+    row = next(iter(ledger._load()["records"].values()))
+    assert "identity mismatch" in row["error"]
+    assert ledger.attempt_budget_exhausted({**row, "attempt_count": 9}) is False
+
+
+def test_facebook_preflight_stays_fatal_when_threads_checkpoint_also_fails(monkeypatch, tmp_path, capsys):
+    _passing_preflight(monkeypatch)
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "fb-token")
+    monkeypatch.setenv("ALERT_WEBHOOK_URL", "https://alerts.example/hook")
+    _ledger_path(monkeypatch, tmp_path)
+    _capture_alerts(monkeypatch)
+    monkeypatch.setattr(health, "inspect_instagram", lambda *a, **k: {
+        "ok": True, "problems": [], "scopes": list(health.IG_SCOPES),
+        "type": "USER", "expires": "never", "username": "puritybeans",
+        "resolved_account_id": "",
+    })
+    monkeypatch.setattr(health, "inspect_token", lambda token, **k: {
+        "type": "PAGE", "expires": "never", "scopes": [], "expired": False, "valid": True,
+    })
+
+    def fetch(url, headers, timeout=15):
+        if "graph.threads.net" in url:
+            raise health.TokenHttpError(401, _CHECKPOINT)
+        raise AssertionError(url)
+
+    monkeypatch.setattr(health, "_fetch", fetch)
     assert health.run_checks(now=100) == 1
     out = capsys.readouterr().out
-    assert "::error::Threads account identity mismatch" in out
+    assert "::error::Facebook page token: missing pages_manage_posts" in out
+    assert "::warning::Threads token check (HTTP 401):" in out
+
+
+def test_soft_threads_checkpoint_warns_without_ledger_or_alert(monkeypatch, tmp_path, capsys):
+    _passing_preflight(monkeypatch)
+    monkeypatch.setenv("META_TOKEN_MODE", "soft")
+    monkeypatch.delenv("META_PUBLISH_PREFLIGHT", raising=False)
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "fb-token")
+    monkeypatch.setenv("ALERT_WEBHOOK_URL", "https://alerts.example/hook")
+    _ig_fb_ok(monkeypatch)
+    ledger = _ledger_path(monkeypatch, tmp_path)
+    alerts = _capture_alerts(monkeypatch)
+
+    def fetch(url, headers, timeout=15):
+        if "graph.threads.net" in url:
+            raise health.TokenHttpError(401, _CHECKPOINT)
+        raise AssertionError(url)
+
+    monkeypatch.setattr(health, "_fetch", fetch)
+    assert health.run_checks(now=100) == 0
+    out = capsys.readouterr().out
+    assert "::warning::Threads token check (HTTP 401):" in out
+    assert alerts == []
+    assert not ledger._PATH.exists()
