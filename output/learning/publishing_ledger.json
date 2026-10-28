@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 11,
+      "attempt_count": 12,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and flat rather than rich and dimensional, lacking premium D2C warmth.; Generic typography and amateurish pill-shaped badge styling cheapen the overall aesthetic.; Lighting on the product jar appears synthetic and poorly integrated into t",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lighting lacks rich contrast and depth, resulting in a slightly flat, dated digital mockup look.; Typographic hierarchy is cluttered with too many distinct elements (pill badges, small subheads, tracking variations) competing for attention.; Product pr",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8584,20 +8584,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T10:17:14+00:00",
+          "attempt": 12,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T10:22:19+00:00",
+          "attempt": 12,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lighting lacks rich contrast and depth, resulting in a slightly flat, dated digital mockup look.; Typographic hierarchy is cluttered with too many distinct elements (pill badges, small subheads, tracking variations) competing for attention.; Product pr",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T10:02:41+00:00",
+      "last_attempt_at": "2026-10-28T10:17:14+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and flat rather than rich and dimensional, lacking premium D2C warmth.; Generic typography and amateurish pill-shaped badge styling cheapen the overall aesthetic.; Lighting on the product jar appears synthetic and poorly integrated into t",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background and surface lighting lacks rich contrast and depth, resulting in a slightly flat, dated digital mockup look.; Typographic hierarchy is cluttered with too many distinct elements (pill badges, small subheads, tracking variations) competing for attention.; Product pr",
         "success": false
       },
-      "next_retry_at": "2026-10-28T10:11:33+00:00",
+      "next_retry_at": "2026-10-28T10:22:19+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T10:11:33+00:00",
+      "updated_at": "2026-10-28T10:22:19+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
