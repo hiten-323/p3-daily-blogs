@@ -17695,6 +17695,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or premium warmth; Generic placeholder typography and layout structure look amateur rather than high-end D2C; Jar lacks realistic integration with the surface, casting a very basic artificial drop shadow",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and flat rather than rich and dimensional, lacking premium d2c warmth.; generic typography and amateurish pill-shaped ",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and flat rather than rich and dimensional, lacking premium D2C warmth.; Generic typography and amateurish pill-shaped badge styling cheapen the overall aesthetic.; Lighting on the product jar appears synthetic and poorly integrated into t",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
