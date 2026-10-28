@@ -18045,6 +18045,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color and lighting lack rich depth, feeling muddy and dated rather than premium D2C; Product placement looks heavily composited with harsh shadow work underneath the jar; Typography has weak hierarchy with uninspired pill-shaped badges that look generic",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; overall background color palette is muddy and flat, lacking rich tones or atmospheric depth expected from a premium d2c brand; product placement is too low",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Overall background color palette is muddy and flat, lacking rich tones or atmospheric depth expected from a premium D2C brand; Product placement is too low, creating dead space above and making the jar feel uncomfortably close to the bottom edge; Typographic hierarchy feels",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
