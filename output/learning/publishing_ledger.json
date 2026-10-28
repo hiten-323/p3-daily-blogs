@@ -8414,11 +8414,11 @@
     },
     "2026-10-28|morning|instagram_story|pb_a7c59d8632": {
       "asset": "",
-      "attempt_count": 23,
+      "attempt_count": 24,
       "content_date": "2026-10-28",
       "content_id": "pb_a7c59d8632",
       "day_number": 300,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich color depth or textural interest expected from a premium D2C brand.; Typographic hierarchy is weak; multiple pill-shaped outlines and varied font weights create visual clutter rather than a clean, modern aesthetic.; The",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, luxurious depth, looking more digital and flat than appetizing.; Typographic hierarchy is weak: multiple pill badges and text styles ('STORY \u2022 ULTRA BLEND', 'MILK COFFEE HABITS', subheadline) clutter the upper third withou",
       "history": [
         {
           "at": "2026-10-28T07:36:17+00:00",
@@ -8764,20 +8764,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-10-28T12:53:27+00:00",
+          "attempt": 24,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-28T13:00:29+00:00",
+          "attempt": 24,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, luxurious depth, looking more digital and flat than appetizing.; Typographic hierarchy is weak: multiple pill badges and text styles ('STORY \u2022 ULTRA BLEND', 'MILK COFFEE HABITS', subheadline) clutter the upper third withou",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-10-28T12:42:38+00:00",
+      "last_attempt_at": "2026-10-28T12:53:27+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich color depth or textural interest expected from a premium D2C brand.; Typographic hierarchy is weak; multiple pill-shaped outlines and varied font weights create visual clutter rather than a clean, modern aesthetic.; The",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, luxurious depth, looking more digital and flat than appetizing.; Typographic hierarchy is weak: multiple pill badges and text styles ('STORY \u2022 ULTRA BLEND', 'MILK COFFEE HABITS', subheadline) clutter the upper third withou",
         "success": false
       },
-      "next_retry_at": "2026-10-28T12:48:04+00:00",
+      "next_retry_at": "2026-10-28T13:00:29+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-10-28T12:48:04+00:00",
+      "updated_at": "2026-10-28T13:00:29+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
