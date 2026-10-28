@@ -3832,5 +3832,73 @@
       ],
       "timestamp": "2026-10-28T09:17:40"
     }
+  },
+  {
+    "date": "2026-10-29",
+    "day_number": 300,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "urn:li:share:7521106156157730816",
+        "media_id": "urn:li:share:7521106156157730816",
+        "video_id": "urn:li:share:7521106156157730816",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7521106156157730816/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7521106156157730816/",
+        "duration_ms": 1
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "AqM_I1LLJyM",
+        "media_id": "AqM_I1LLJyM",
+        "video_id": "AqM_I1LLJyM",
+        "permalink": "https://www.youtube.com/shorts/AqM_I1LLJyM",
+        "url": "https://www.youtube.com/shorts/AqM_I1LLJyM",
+        "duration_ms": 0
+      },
+      "threads": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "18139525735653054",
+        "media_id": "18139525735653054",
+        "video_id": "18139525735653054",
+        "permalink": "https://www.threads.com/@hiten_jain323/post/DfCF2JfG_So",
+        "url": "https://www.threads.com/@hiten_jain323/post/DfCF2JfG_So",
+        "duration_ms": 2
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Youtube, Threads | Held for slot: Instagram, Facebook | Skipped: Blog",
+      "published_platforms": [
+        "linkedin",
+        "youtube",
+        "threads"
+      ],
+      "timestamp": "2026-10-28T21:41:04"
+    }
   }
 ]
