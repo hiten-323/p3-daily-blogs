@@ -17583,6 +17583,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium depth or dynamic lighting.; Typography at the top ('MILK COFFEE HABITS') uses basic sans-serif styling that feels generic rather than crafted.; The layout relies on standard center-aligned stacked badges ('STORY \u2022",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-10-28",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient looks muddy and lacks rich color depth or texture typical of premium d2c coffee brands.; typographic hierarchy is weak and generic,",
+      "label": "stories",
+      "last_seen": "2026-10-28",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient looks muddy and lacks rich color depth or texture typical of premium D2C coffee brands.; Typographic hierarchy is weak and generic, using standard sans-serif fonts with uninspired pill-shaped tag pills.; Lighting on the product jar feels synthetic and",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
