@@ -1971,81 +1971,234 @@
   },
   "yt_short": {
     "featured_product": "Ultra Blend",
-    "objective": "Brand Awareness",
-    "primary_cta": "Follow @purepantryprovisions. Shop p3online.in",
-    "success_metric": "Shorts completion rate > 70%, link clicks > 2%",
-    "hook": "Your milk coffee turned grey before you could taste it.",
-    "script": "That grey swirl isn't the coffee. It's the 30% chicory surrendering to milk. Pure coffee holds its color. Purity Beans Ultra Blend uses 70% coffee so the caramel depth survives the pour. 100 grams is Rs 309. At least 66 cups. About Rs 5 a cup for Ultra Blend. The front label prints the split: 70% Coffee, 30% Chicory. No guesswork. Read the jar.",
-    "cta": "Follow @purepantryprovisions. Shop p3online.in",
+    "objective": "Brand awareness and follower growth through myth-busting education.",
+    "primary_cta": "Follow @purepantryprovisions",
+    "success_metric": "Saves and Profile Follows",
+    "audio": "A quiet kitchen morning. Soft water simmering in a steel kettle, the clink of a ceramic spoon, and distant street birds.",
+    "audio_direction": "ASMR-style room sound with no background music. Focus on the physical texture of water pouring into a mug.",
+    "caption": "The coffee mistake almost every kitchen makes when pouring milk. Purity Beans Ultra Blend lists 70% coffee and 30% chicory right on the panel. At ₹309 for 100g, it makes at least 66 cups—about ₹5 a cup. Follow @purepantryprovisions for honest ingredient breakdowns. Shop at https://p3online.in",
+    "chosen_hook": "The coffee mistake almost every Indian kitchen makes",
+    "coffee": "Ultra Blend",
+    "comment_trigger": "Do you check ingredient panels before buying? Comment BELOW.",
+    "cta": "Follow @purepantryprovisions for honest ingredient breakdowns. Shop at https://p3online.in",
+    "edit_pacing": "Rapid 3-beat flow. Fast cuts between the curiosity of the label and the reality of the cup.",
+    "emotion_arc": "Curiosity → Dissonance → Realization → Trust.",
+    "funnel_objective": "Follow / Discovery",
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "viewers who will watch one complete answer with the sound off",
+      "angle": "a standalone payoff that ends without needing another post",
+      "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+      "rationale": "A Short has to pay off on its own, then ask for the next one.",
+      "platform": "yt_short",
+      "sku": "Ultra Blend",
+      "day": 300
+    },
+    "growth_review": {
+      "platform": "yt_short",
+      "label": "yt_short",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "viewers who will watch one complete answer with the sound off",
+        "angle": "a standalone payoff that ends without needing another post",
+        "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+        "rationale": "A Short has to pay off on its own, then ask for the next one.",
+        "platform": "yt_short",
+        "sku": "Ultra Blend",
+        "day": 300
+      },
+      "published": false
+    },
+    "hashtags": "#PurityBeans #UltraBlend #CoffeeRoutine #ReadTheJar #PurePantryProvisions #CoffeeEducation",
+    "hook": "The coffee mistake almost every Indian kitchen makes",
+    "hook_text": "The coffee mistake almost every Indian kitchen makes",
+    "jar": "Ultra Blend glass jar",
+    "light": "Mixed color temperature: cool blue daylight from an office window hitting the desk, warm yellow lamp light on the jar.",
+    "overlay": "70% COFFEE | 30% CHICORY",
     "product": "Ultra Blend",
-    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "publish_blocked": false,
+    "save_trigger": "Save this reel so you remember to check the ingredient label on your next grocery run.",
     "scenes": [
       {
         "scene": 1,
-        "type": "hook",
-        "duration_s": 6.0,
-        "on_screen": "MACRO: Dark liquid blooms in milk. Caramel ribbons hold, then a grey veil swallows the cup in 3 seconds.",
-        "spoken": "MACRO: Dark liquid blooms in milk. Caramel ribbons hold, then a grey veil swallows the cup in 3 seconds.",
-        "visual_direction": "85mm macro, 240fps slow motion. Side light catches steam. No VO. ASMR pour sound only. Purity Beans Ultra Blend jar rests in background, label readable."
+        "type": "stop",
+        "duration_s": 4.0,
+        "on_screen": "THE KITCHEN MISTAKE",
+        "spoken": "The coffee mistake almost every Indian kitchen makes.",
+        "visual_direction": "Handheld iPhone 15 shot of a Purity Beans Ultra Blend glass jar resting on a warm wooden kitchen counter next to a ceramic spoon. Soft morning window light catches skin texture on the hand."
       },
       {
         "scene": 2,
-        "type": "problem",
-        "duration_s": 4.0,
-        "on_screen": "TEXT: GREY = CHICORY SURRENDER",
-        "spoken": "That grey swirl isn't the coffee. It's the 30% chicory surrendering to milk.",
-        "visual_direction": "Cut to real-time. Hand lifts cup. Grey ring at liquid edge. Jar label catches warm light. Shallow depth of field."
+        "type": "curiosity",
+        "duration_s": 5.0,
+        "on_screen": "READ THE BACK PANEL",
+        "spoken": "Most morning cups hide behind vague labels and unverified descriptions.",
+        "visual_direction": "Macro close-up shot of the back ingredient panel on the Purity Beans Ultra Blend jar. Shallow depth of field with natural window light illuminating the printed text clearly."
       },
       {
         "scene": 3,
-        "type": "turn",
-        "duration_s": 4.0,
-        "on_screen": "TEXT: 70% COFFEE HOLDS COLOR",
-        "spoken": "Pure coffee holds its color. Purity Beans Ultra Blend uses 70% coffee so the caramel depth survives the pour.",
-        "visual_direction": "Fresh pour into new cup. Caramel ribbons stay intact. Milk integrates without greying. Steam rises. Jar front label visible: 70% Coffee, 30% Chicory."
+        "type": "value",
+        "duration_s": 5.0,
+        "on_screen": "70% COFFEE | 30% CHICORY",
+        "spoken": "Purity Beans Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+        "visual_direction": "A ceramic spoon leveling one measure of Purity Beans Ultra Blend over a clean white mug. Lived-in kitchen counter with subtle water rings and a used spoon."
       },
       {
         "scene": 4,
-        "type": "payoff",
-        "duration_s": 4.0,
-        "on_screen": "TEXT: Rs 309 / 100g = 66+ CUPS = ~Rs 5 A CUP (ULTRA BLEND)",
-        "spoken": "100 grams is Rs 309. At least 66 cups. About Rs 5 a cup for Ultra Blend.",
-        "visual_direction": "Top-down. 100g jar, teaspoon, 66 faint cup outlines etched on surface. Warm amber light. Price text burns in."
+        "type": "trust",
+        "duration_s": 5.0,
+        "on_screen": "AT LEAST 66 CUPS",
+        "spoken": "At ₹309 for 100g, it makes at least 66 cups—about ₹5 a cup.",
+        "visual_direction": "Extreme close-up on the Purity Beans Ultra Blend glass jar. Reflected warm light catches the edge of the glass, showing authentic product texture without digital overlays."
       },
       {
         "scene": 5,
-        "type": "trust",
-        "duration_s": 3.0,
-        "on_screen": "CLOSE-UP: Front label. Bold text: 70% COFFEE, 30% CHICORY.",
-        "spoken": "The front label prints the split: 70% Coffee, 30% Chicory. No guesswork. Read the jar.",
-        "visual_direction": "Label fills frame. Finger traces the line. Glass texture, foil catch-light. Cut to black."
+        "type": "follow",
+        "duration_s": 4.0,
+        "on_screen": "FOLLOW @purepantryprovisions",
+        "spoken": "Follow @purepantryprovisions for honest ingredient breakdowns. Shop at https://p3online.in",
+        "visual_direction": "A steaming mug sitting next to the Purity Beans Ultra Blend jar. A hand gently enters frame to pull the jar slightly closer. Seamless loop back to the first frame."
       }
     ],
-    "caption": "Your milk coffee turned grey before you could taste it. That grey swirl isn't the coffee — it's the 30% chicory surrendering to milk. Purity Beans Ultra Blend uses 70% coffee so the caramel depth survives the pour. 100g at Rs 309 makes 66+ cups. About Rs 5 a cup for Ultra Blend. The front label prints the split honestly: 70% Coffee, 30% Chicory. No guesswork. Read the jar. https://p3online.in",
-    "hashtags": "#PurityBeans #UltraBlend #ReadTheJar #MilkCoffee #CoffeeTruth #PurePantryProvisions",
-    "funnel_objective": "Top of Funnel",
-    "viral_potential": "High",
-    "emotion_arc": "Tension -> Surprise -> Relief -> Trust",
-    "hook_text": "Your milk coffee turned grey before you could taste it.",
-    "chosen_hook": "Your milk coffee turned grey before you could taste it.",
-    "share_trigger": "Tag someone whose milk coffee turns grey every morning.",
-    "save_trigger": "Save this before your next coffee run.",
-    "comment_trigger": "Does your coffee hold color or turn grey? Comment HOLD or GREY.",
-    "edit_pacing": "Fast open (6s macro ASMR), hard cut to problem, steady turn, payoff with numbers, trust close on label.",
-    "audio_direction": "Scene 1: ASMR pour, steam hiss, liquid bloom — no music. Scenes 2-5: Low drones under VO, subtle cup clink on scene 4. End: silence.",
-    "audio": "ASMR pour, steam hiss, low drone, cup clink, silence",
-    "growth_plan": "Post 7-9 AM IST. Pin comment with Rs 5/cup math. Reply to first 50 comments personally. Duet top UGC reaction.",
-    "growth_review": "Track: completion rate > 70%, shares > 2%, saves > 3%, profile visits > 1.5%. Iterate hook if completion < 60% at 3s.",
-    "overlay": "Scene 1: none. Scene 2: GREY = CHICORY SURRENDER. Scene 3: 70% COFFEE HOLDS COLOR. Scene 4: Rs 309/100g = 66+ CUPS = ~Rs 5/CUP (ULTRA BLEND). Scene 5: READ THE JAR.",
-    "light": "Warm amber key light, cool fill from window side. Macro ring light for scene 1.",
-    "jar": "Purity Beans Ultra Blend 100g glass jar. Exact label from brand assets. Cap on. Fingerprint smudge on shoulder.",
-    "coffee": "70% coffee",
-    "editorial_error": "brand: ['Missing website reference']",
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: ['Missing website reference']"
+    "script": "The coffee mistake almost every Indian kitchen makes. Purity Beans Ultra Blend lists 70% coffee and 30% chicory right on the panel. At ₹309 for 100g, it makes at least 66 cups—about ₹5 a cup. Follow @purepantryprovisions for honest ingredient breakdowns. Shop at https://p3online.in",
+    "share_trigger": "Share this with someone who reads ingredient labels before buying groceries.",
+    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "viral_potential": {
+      "scores": {
+        "hook": 7.0,
+        "curiosity_gap": 8.0,
+        "relatability": 9.0,
+        "shareability": 8.0,
+        "comment_trigger": 7.0,
+        "format_fit": 8.0,
+        "follow_cta": 9.0
+      },
+      "overall": 8.0,
+      "weakest": [
+        "hook",
+        "comment_trigger"
+      ],
+      "feedback": "The hook is slightly too generic ('The coffee mistake almost every Indian kitchen makes') and could be sharper by focusing directly on label reading or chicory blends. The comment trigger asks a straightforward question, but could be framed as a controversial choice or a direct preference poll to drive higher engagement.",
+      "better_hook": "Stop buying coffee without checking the back panel first.",
+      "passed": true,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "viral_readiness_score": 87.0,
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.9,
+      "verdict": "PASS",
+      "feedback": "The asset successfully leverages transparent value education by explicitly stating the 70/30 coffee-to-chicory ratio of Ultra Blend without falling into anti-chicory hostility. The pricing breakdown (₹309 for 100g, ~₹5 a cup) offers high practical utility, making it exceptionally save-worthy for budget-conscious urban coffee drinkers. The visual and audio cues maintain a calm, grounded, highly realistic UGC feel.",
+      "retention_audit": "Scene 1 successfully stops the scroll with a direct, relatable query about morning coffee mistakes. Scene 2 and 3 build trust rapidly via transparent labeling close-ups. Scene 4 delivers concrete quantitative value (cost per cup). Scene 5 transitions smoothly into a clear follow and purchase CTA without feeling overly promotional."
+    },
+    "loop_note": "The final frame ends with the hand resting near the jar, smoothly cutting back to the kettle steam in scene 1.",
+    "audio_direction_note": "Keep ambient room noise prominent over any synthetic sound effects."
   },
   "growth_reel": {
     "type": "reel",
@@ -3519,6 +3672,46 @@
       {
         "status": "exhausted",
         "reason": "brand: ['Missing website reference']"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing website reference']"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a myth-buster (one common coffee myth, debunked with a verifiable fact). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no 'bu"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: relatability, comment_trigger, format_fit). The hook is decent but not a strong pattern‑interrupt for Indian viewers; tie it to a daily ritual (e.g., the morning office cup). The relatability score suffers because the script never references typical Indian coffee mom"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, format_fit, shareability). The opening hook 'What is actually inside this jar? Let's read it.' is a bit generic and overused. To capture immediate attention in under 2 seconds on YouTube Shorts, it needs a stronger contrarian angle or a sharper direct question "
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.86 < 8.0 (weakest: hook, shareability). The current hook relies on a negative command that feels a bit generic. To elevate it, frame the hook around a surprising personal realization or an insider secret about office coffee habits. Ensure the shareability factor triggers an immediate "
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). The piece provides solid, honest value and correctly describes Ultra Blend as 70% coffee and 30% chicory without any anti-chicory contradiction. However, the hook 'The coffee mistake almost every Indian kitchen makes with its morning"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.7 < 8.0 (weakest: hook, shareability, comment_trigger). The hook relies on a generic question that doesn't instantly shock or stop a YouTube Shorts scroll. Shareability and comment triggers are functional but lack an emotional spark that makes someone immediately forward it to a frien"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, format_fit). The hook relies on a slightly long descriptive sentence rather than an immediate, punchy pattern interrupt. For a YouTube Short, start with the exact ratio or an immediate visual question before explaining the mechanics. Ensure the first second for"
       }
     ]
   },

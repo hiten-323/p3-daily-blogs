@@ -3380,5 +3380,66 @@
       ],
       "timestamp": "2026-10-28T07:35:43"
     }
+  },
+  {
+    "date": "2026-10-28",
+    "day_number": 300,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "urn:li:share:7521106156157730816",
+        "media_id": "urn:li:share:7521106156157730816",
+        "video_id": "urn:li:share:7521106156157730816",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7521106156157730816/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7521106156157730816/",
+        "duration_ms": 1
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": true,
+        "video_id": "AqM_I1LLJyM",
+        "url": "https://www.youtube.com/shorts/AqM_I1LLJyM",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 1,
+        "duration_ms": 4019
+      },
+      "threads": {
+        "success": false,
+        "attempted": true,
+        "skipped": false,
+        "post_id": "",
+        "url": "",
+        "error": "HTTP 400: {\"error\":{\"message\":\"Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.\",\"type\":\"OAuthException\",\"code\":190,\"error_subcode\":0,\"fbtrace_id\":\"AoyTEvjuNG84Ujpac5weryK",
+        "ledger_status": "FAILED",
+        "ledger_attempt_count": 3,
+        "duration_ms": 2686
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Youtube | Held for slot: Instagram, Facebook | Skipped: Blog | Failed: Threads",
+      "published_platforms": [
+        "linkedin",
+        "youtube"
+      ],
+      "timestamp": "2026-10-28T07:51:27"
+    }
   }
 ]
