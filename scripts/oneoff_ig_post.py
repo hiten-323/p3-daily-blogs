@@ -8,6 +8,8 @@ tokens. Usage (CI only): python scripts/oneoff_ig_post.py --confirm BOLD50-20261
 from __future__ import annotations
 import argparse, json, os, sys, time
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 CONFIRM = "BOLD50-20261029"
 IMAGE_URL = ("https://raw.githubusercontent.com/hiten-323/p3-daily-blogs/main/"
              "brand_assets/oneoff/bold50_ig_20261029.jpg")
