@@ -1,0 +1,59 @@
+# One-off owner-approved Instagram post (Hiten, 2026-10-29). Manual dispatch only.
+# Does NOT touch config/instagram_pause.json; the pipeline pause stays on.
+name: One-off IG post (Bold 50g, owner-approved)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type BOLD50-20261029 to publish once'
+        required: true
+      dry_run:
+        description: 'Precheck only, no post'
+        required: false
+        default: 'false'
+
+concurrency:
+  group: oneoff-ig-post
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install --no-cache-dir -r requirements.txt
+      - name: Resolve Meta publishing account
+        id: meta_preflight
+        env:
+          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          META_TOKEN_MODE: strict
+          META_PUBLISH_PREFLIGHT: "true"
+        run: python -m content_generator.ops.meta_token_health
+      - name: Publish once (no retry)
+        env:
+          INSTAGRAM_ACCOUNT_ID: ${{ steps.meta_preflight.outputs.instagram_account_id || secrets.INSTAGRAM_ACCOUNT_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          CONFIRM: ${{ github.event.inputs.confirm }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            python scripts/oneoff_ig_post.py --confirm "$CONFIRM" --dry-run
+          else
+            python scripts/oneoff_ig_post.py --confirm "$CONFIRM"
+          fi
