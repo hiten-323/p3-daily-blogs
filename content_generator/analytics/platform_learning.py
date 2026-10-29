@@ -21,7 +21,17 @@ from typing import Any
 from config.api_versions import META_GRAPH_BASE
 
 logger = logging.getLogger(__name__)
-LEARNING_DIR = Path(os.getenv("LEARNING_DIR", "output/learning"))
+def _resolve_learning_dir() -> Path:
+    """Resolve state paths from repo root, not the service/cron working directory."""
+    project_root = Path(__file__).resolve().parents[2]
+    configured = os.getenv("LEARNING_DIR")
+    if not configured:
+        return project_root / "output" / "learning"
+    path = Path(configured).expanduser()
+    return path if path.is_absolute() else project_root / path
+
+
+LEARNING_DIR = _resolve_learning_dir()
 POSTS_PATH = LEARNING_DIR / "published_posts.json"
 LEDGER_PATH = LEARNING_DIR / "publishing_ledger.json"
 WINDOWS = (("24h", 24), ("72h", 72), ("7d", 168))

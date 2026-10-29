@@ -12,9 +12,24 @@ import json
 import logging
 import os
 import tempfile
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
-_LEARNING_DIR = os.getenv("LEARNING_DIR", os.path.join("output", "learning"))
+def _resolve_learning_dir() -> Path:
+    """Resolve state paths independently of cron/systemd's working directory.
+
+    Relative LEARNING_DIR values are interpreted from the repository root;
+    absolute values are preserved for explicit production deployments.
+    """
+    project_root = Path(__file__).resolve().parents[2]
+    configured = os.getenv("LEARNING_DIR")
+    if not configured:
+        return project_root / "output" / "learning"
+    path = Path(configured).expanduser()
+    return path if path.is_absolute() else project_root / path
+
+
+_LEARNING_DIR = str(_resolve_learning_dir())
 _LOG_PATH = os.path.join(_LEARNING_DIR, "performance_log.json")
 
 METRIC_FIELDS = [
