@@ -4163,5 +4163,69 @@
       ],
       "timestamp": "2026-10-30T06:39:29"
     }
+  },
+  {
+    "date": "2026-10-30",
+    "day_number": 302,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "post_id": "urn:li:share:7521824780841353216",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7521824780841353216/",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 1,
+        "duration_ms": 3678
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "nr-m7KLbGrU",
+        "media_id": "nr-m7KLbGrU",
+        "video_id": "nr-m7KLbGrU",
+        "permalink": "https://www.youtube.com/shorts/nr-m7KLbGrU",
+        "url": "https://www.youtube.com/shorts/nr-m7KLbGrU",
+        "duration_ms": 1
+      },
+      "threads": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "18094929965666271",
+        "media_id": "18094929965666271",
+        "video_id": "18094929965666271",
+        "permalink": "https://www.threads.com/@hiten_jain323/post/DfG9Vb1HM_R",
+        "url": "https://www.threads.com/@hiten_jain323/post/DfG9Vb1HM_R",
+        "duration_ms": 1
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Youtube, Threads | Held for slot: Instagram, Facebook | Skipped: Blog",
+      "published_platforms": [
+        "linkedin",
+        "youtube",
+        "threads"
+      ],
+      "timestamp": "2026-10-30T06:46:17"
+    }
   }
 ]
