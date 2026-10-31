@@ -5826,7 +5826,8 @@
     "published_at": "2026-10-31T03:27:02",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {}
+    "fetch_attempts_by_window": {},
+    "failed_windows": []
   },
   {
     "media_id": "urn:li:share:7522136997105258496",
@@ -5846,6 +5847,29 @@
     "format": "thought_leadership",
     "hashtags": "",
     "published_at": "2026-10-31T03:27:02",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {},
+    "failed_windows": []
+  },
+  {
+    "media_id": "17916738654547308",
+    "asset_id": "threads_day303",
+    "platform": "threads",
+    "track": "conversation",
+    "hook": "Hot take: most people never actually taste their morning coffee, they just drink it out of routine.",
+    "topic": "threads_post",
+    "kpi_at_creation": "",
+    "policy_version": "",
+    "attention_mechanism": "",
+    "scroller_state": "",
+    "psychology_frame": "",
+    "hook_strategy": "",
+    "payoff_type": "",
+    "decision_version": "",
+    "format": "discussion",
+    "hashtags": "",
+    "published_at": "2026-10-31T03:32:49",
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {}

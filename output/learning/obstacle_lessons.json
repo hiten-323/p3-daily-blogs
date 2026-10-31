@@ -20047,6 +20047,20 @@
       "reason": "pale_background:sat=0.10; no_tonal_depth:range=89; pale_background:sat=0.20; pale_background:sat=0.20; same_layout_as_last_tile:hero_center",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.0 < 8.0 (weakest: shareability, curiosity_gap, hook). The piece mentions Purica in the metadata, but the text and hook discuss Ultra Blend (70/30 coffee-chicory), causing a product mismatch. The hook is informative ('Read the jar...') rather than a sharp contrarian or hot-take opener suited for Threads. Make the hook bolder about everyday milk coffee habits without breaking brand ru",
+      "first_seen": "2026-10-31",
+      "fix": "later draft passed the same gates",
+      "gate": "llm_viral",
+      "id": "threads|threads_post|llm_viral|viral: score 7.0 < 8.0 (weakest: shareability, curiosity_gap, hook). the piece mentions purica in the metadata, but the text and hook discuss ultra blend (70/30 coffee-chicory), ca",
+      "label": "threads_post",
+      "last_seen": "2026-10-31",
+      "platform": "threads",
+      "reason": "viral: score 7.0 < 8.0 (weakest: shareability, curiosity_gap, hook). The piece mentions Purica in the metadata, but the text and hook discuss Ultra Blend (70/30 coffee-chicory), causing a product mismatch. The hook is informative ('Read the jar...') rather than a sharp contrarian or hot-take opener",
+      "stage": "generation",
+      "status": "fixed"
     }
   ],
   "version": 1
