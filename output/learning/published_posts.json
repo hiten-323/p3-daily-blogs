@@ -2344,7 +2344,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -2370,7 +2371,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -2396,7 +2398,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -2424,7 +2427,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -2452,7 +2456,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -2811,7 +2816,7 @@
     "format": "discussion",
     "hashtags": "",
     "published_at": "2026-10-23T07:37:05",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
@@ -2820,6 +2825,19 @@
         "actual_age_hours": 91.09,
         "metrics": {
           "views": 4,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-10-31T02:37:48+00:00",
+        "actual_age_hours": 187.01,
+        "metrics": {
+          "views": 5,
           "likes": 0,
           "comments": 0,
           "shares": 0
@@ -2883,7 +2901,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 1
+      "72h": 1,
+      "7d": 1
     },
     "failed_windows": [
       "24h",
@@ -3187,7 +3206,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -3267,7 +3287,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -3295,7 +3316,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -3323,7 +3345,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -3351,7 +3374,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -3379,7 +3403,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -4416,7 +4441,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {
@@ -4441,7 +4467,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {
@@ -4554,7 +4581,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "72h": 2
+      "72h": 2,
+      "7d": 1
     },
     "failed_windows": [
       "24h",
@@ -4625,7 +4653,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "72h": 1
+      "72h": 1,
+      "7d": 1
     },
     "failed_windows": [
       "24h",
@@ -4651,7 +4680,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "72h": 1
+      "72h": 1,
+      "7d": 1
     },
     "failed_windows": [
       "24h",
@@ -4769,7 +4799,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -4793,7 +4824,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -4865,7 +4897,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 1,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -4893,7 +4926,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -4921,7 +4954,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -4990,7 +5023,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -5018,7 +5051,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -5046,7 +5079,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -5068,7 +5101,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -5092,7 +5125,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -5141,7 +5174,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 2,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -5245,7 +5278,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 2
+      "24h": 2,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -5272,7 +5306,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 2
+      "24h": 2,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -5293,7 +5328,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 2
+      "24h": 2,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -5341,7 +5377,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "AqM_I1LLJyM",
@@ -5366,7 +5404,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18139525735653054",
@@ -5428,7 +5468,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18025970849921239",
@@ -5453,7 +5495,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18105470999457906",
@@ -5478,7 +5522,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "494003270464484_122169087740655685",
@@ -5497,7 +5543,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -5518,7 +5566,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -5603,7 +5653,7 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 2
     },
     "failed_windows": []
   },
@@ -5621,7 +5671,9 @@
     "publication_status": "VERIFIED_LIVE",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": [],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -5641,7 +5693,7 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 2
     },
     "failed_windows": [],
     "measurement_status": "api_returned_no_metrics",
@@ -5715,5 +5767,87 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": []
+  },
+  {
+    "media_id": "494003270464484_122169243758655685",
+    "asset_id": "facebook_day302",
+    "platform": "facebook",
+    "track": "brand",
+    "hook": "",
+    "topic": "",
+    "format": "evening",
+    "published_at": "2026-10-30T20:57:51+00:00",
+    "permalink": "https://www.facebook.com/494003270464484/posts/122169243758655685",
+    "ledger_key": "2026-10-30|evening|facebook|pb_7c5180f908",
+    "publication_status": "VERIFIED_LIVE",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {},
+    "failed_windows": [],
+    "measurement_status": "pending",
+    "missed_windows": {}
+  },
+  {
+    "media_id": "494003270464484_122169200678655685",
+    "asset_id": "facebook_day302",
+    "platform": "facebook",
+    "track": "brand",
+    "hook": "",
+    "topic": "",
+    "format": "morning",
+    "published_at": "2026-10-30T06:39:36+00:00",
+    "permalink": "https://www.facebook.com/494003270464484/posts/122169200678655685",
+    "ledger_key": "2026-10-30|morning|facebook|pb_7c5180f908",
+    "publication_status": "VERIFIED_LIVE",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {},
+    "failed_windows": [],
+    "measurement_status": "pending",
+    "missed_windows": {}
+  },
+  {
+    "media_id": "RQXIK6P68SE",
+    "asset_id": "youtube_day303",
+    "platform": "youtube",
+    "track": "discovery",
+    "hook": "Two instant coffee jars received 85°C water at the exact same second. One smelled like a campfire. The other bloomed.",
+    "topic": "youtube_short",
+    "kpi_at_creation": "",
+    "policy_version": "",
+    "attention_mechanism": "",
+    "scroller_state": "",
+    "psychology_frame": "",
+    "hook_strategy": "",
+    "payoff_type": "",
+    "decision_version": "",
+    "format": "yt_short",
+    "hashtags": "purity beans premium instant coffee freeze dried coffee instant coffee pure instant coffee india gourmet instant coffee indian coffee brand coffee without preservatives arabica coffee pure arabica",
+    "published_at": "2026-10-31T03:27:02",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {}
+  },
+  {
+    "media_id": "urn:li:share:7522136997105258496",
+    "asset_id": "linkedin_day303",
+    "platform": "linkedin",
+    "track": "authority",
+    "hook": "",
+    "topic": "linkedin_post",
+    "kpi_at_creation": "",
+    "policy_version": "",
+    "attention_mechanism": "",
+    "scroller_state": "",
+    "psychology_frame": "",
+    "hook_strategy": "",
+    "payoff_type": "",
+    "decision_version": "",
+    "format": "thought_leadership",
+    "hashtags": "",
+    "published_at": "2026-10-31T03:27:02",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {}
   }
 ]

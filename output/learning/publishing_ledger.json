@@ -10034,6 +10034,130 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-10-30T06:39:36+00:00"
+    },
+    "2026-10-31|generate|linkedin|pb_e1920f1ebe": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-31",
+      "content_id": "pb_e1920f1ebe",
+      "day_number": 303,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-31T03:26:51+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-31T03:26:55+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7522136997105258496",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7522136997105258496/",
+          "verification_method": "linkedin_public_url"
+        }
+      ],
+      "last_attempt_at": "2026-10-31T03:26:51+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-31T03:26:55+00:00",
+      "next_retry_at": null,
+      "platform": "linkedin",
+      "published": true,
+      "remote_id": "urn:li:share:7522136997105258496",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-31T03:26:55+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7522136997105258496/",
+      "verification_detail": "public feed URL confirmed (200)",
+      "verification_method": "linkedin_public_url",
+      "verified_at": "2026-10-31T03:26:55+00:00"
+    },
+    "2026-10-31|generate|threads|pb_e1920f1ebe": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-31",
+      "content_id": "pb_e1920f1ebe",
+      "day_number": 303,
+      "error": "prepublish_gate:ladder_exhausted",
+      "history": [
+        {
+          "at": "2026-10-31T03:27:00+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-31T03:27:02+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:ladder_exhausted",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-10-31T03:27:00+00:00",
+      "last_result": {
+        "error": "prepublish_gate:ladder_exhausted",
+        "success": false
+      },
+      "next_retry_at": "2026-10-31T03:27:02+00:00",
+      "platform": "threads",
+      "published": false,
+      "remote_id": "",
+      "slot": "generate",
+      "status": "FAILED",
+      "updated_at": "2026-10-31T03:27:02+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-10-31|generate|youtube|pb_e1920f1ebe": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-10-31",
+      "content_id": "pb_e1920f1ebe",
+      "day_number": 303,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-10-31T03:26:55+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-10-31T03:27:00+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "RQXIK6P68SE",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.youtube.com/shorts/RQXIK6P68SE",
+          "verification_method": "youtube_oembed"
+        }
+      ],
+      "last_attempt_at": "2026-10-31T03:26:55+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-10-31T03:27:00+00:00",
+      "next_retry_at": null,
+      "platform": "youtube",
+      "published": true,
+      "remote_id": "RQXIK6P68SE",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-10-31T03:26:59+00:00",
+      "url": "https://www.youtube.com/shorts/RQXIK6P68SE",
+      "verification_detail": "public video confirmed by oEmbed",
+      "verification_method": "youtube_oembed",
+      "verified_at": "2026-10-31T03:27:00+00:00"
     }
   },
   "version": 1
