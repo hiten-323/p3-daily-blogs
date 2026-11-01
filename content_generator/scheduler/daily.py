@@ -1694,6 +1694,29 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
             format_type="story",
             on_date=story_day,
         )
+        if story_frame and os.path.exists(story_frame):
+            try:
+                from content_generator.creative.rendered_asset_qa import audit_rendered_images
+                qa_check = audit_rendered_images([story_frame])
+                if not qa_check.get("ok"):
+                    logger.info("[images] Story frame audit flagged %s; re-rendering with exposure boost", qa_check.get("issues"))
+                    boosted = compose_cinematic_frame(
+                        headline=story_copy["headline"],
+                        sub=story_copy["sub"],
+                        day=day_number,
+                        idx=9,
+                        product=story_product,
+                        width=1080,
+                        height=1920,
+                        label=f"story_day{day_number}",
+                        format_type="story",
+                        on_date=story_day,
+                        exposure_boost=True,
+                    )
+                    if boosted and os.path.exists(boosted):
+                        story_frame = boosted
+            except Exception as gate_exc:
+                logger.debug("[images] Story frame pre-audit skipped: %s", gate_exc)
         results["story_frame"] = story_frame
         if story_frame:
             results["story_video"] = build_story_video(
