@@ -1961,14 +1961,14 @@
       "status": "gate_holding"
     },
     {
-      "count": 10,
+      "count": 12,
       "feedback": "brand: ['Missing website reference']",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "brand",
       "id": "youtube|yt_short|brand|brand: ['missing website reference']",
       "label": "yt_short",
-      "last_seen": "2026-10-28",
+      "last_seen": "2026-11-01",
       "platform": "youtube",
       "reason": "brand: ['Missing website reference']",
       "stage": "generation",
@@ -22245,6 +22245,48 @@
       "reason": "viral: score 7.8 < 8.0 (weakest: hook, curiosity_gap). The script handles the Ultra Blend 70/30 ratio honestly and accurately without violating anti-chicory claims, and the everyday milk coffee angle is highly relatable for Indian households. However, the opening hook is slightly generic and relies",
       "stage": "generation",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.8 < 8.0 (weakest: hook, curiosity_gap). The hook relies slightly too much on a general observation rather than an immediate, sharp pattern interrupt. Strengthen the opening line to directly target the everyday milk coffee habit in Indian households without being alarmist or breaking honesty rules. Ensure the visual cue of the 70/30 ingredient panel is explicitly featured in the firs",
+      "first_seen": "2026-11-01",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.8 < 8.0 (weakest: hook, curiosity_gap). the hook relies slightly too much on a general observation rather than an immediate, sharp pattern interrupt. strengthen the ",
+      "label": "yt_short",
+      "last_seen": "2026-11-01",
+      "platform": "youtube",
+      "reason": "viral: score 7.8 < 8.0 (weakest: hook, curiosity_gap). The hook relies slightly too much on a general observation rather than an immediate, sharp pattern interrupt. Strengthen the opening line to directly target the everyday milk coffee habit in Indian households without being alarmist or breaking h",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.8 < 8.0 (weakest: hook, shareability). The opening instruction ('One teaspoon, 85\u00b0C milk...') reads more like a recipe step than a thumb-stopping pattern interrupt. To hit an 8+ on YouTube Shorts, open with a direct question or counter-intuitive truth about morning milk coffee habits before showing the jar. Ensure the loop transition ties the final frame directly back to the very fi",
+      "first_seen": "2026-11-01",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 6.8 < 8.0 (weakest: hook, shareability). the opening instruction ('one teaspoon, 85\u00b0c milk...') reads more like a recipe step than a thumb-stopping pattern interrupt. ",
+      "label": "yt_short",
+      "last_seen": "2026-11-01",
+      "platform": "youtube",
+      "reason": "viral: score 6.8 < 8.0 (weakest: hook, shareability). The opening instruction ('One teaspoon, 85\u00b0C milk...') reads more like a recipe step than a thumb-stopping pattern interrupt. To hit an 8+ on YouTube Shorts, open with a direct question or counter-intuitive truth about morning milk coffee habits",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.7 < 8.0 (weakest: curiosity_gap, shareability, comment_trigger). The hook is strong and grounds the video instantly in Indian milk-coffee behavior while introducing the price point. To push scores higher across the board, tighten the curiosity gap in the first 3 seconds by addressing the hidden confusion around milk coffee ratios directly, and make the comment trigger more interacti",
+      "first_seen": "2026-11-01",
+      "fix": "later draft passed the same gates",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.7 < 8.0 (weakest: curiosity_gap, shareability, comment_trigger). the hook is strong and grounds the video instantly in indian milk-coffee behavior while introducing ",
+      "label": "yt_short",
+      "last_seen": "2026-11-01",
+      "platform": "youtube",
+      "reason": "viral: score 7.7 < 8.0 (weakest: curiosity_gap, shareability, comment_trigger). The hook is strong and grounds the video instantly in Indian milk-coffee behavior while introducing the price point. To push scores higher across the board, tighten the curiosity gap in the first 3 seconds by addressing",
+      "stage": "generation",
+      "status": "fixed"
     }
   ],
   "version": 1
