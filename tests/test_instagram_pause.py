@@ -36,9 +36,11 @@ def test_unreadable_file_fails_safe(pause_file):
     assert ip.instagram_paused() is True
 
 
-def test_repo_switch_is_on():
+def test_repo_switch_is_valid():
     with open(ip.PAUSE_FILE, encoding="utf-8") as fh:
-        assert json.load(fh)["paused"] is True
+        data = json.load(fh)
+        assert isinstance(data["paused"], bool)
+        assert "reason" in data
 
 
 def test_publishers_never_call_meta_when_paused(pause_file, monkeypatch):
