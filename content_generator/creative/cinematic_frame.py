@@ -98,15 +98,15 @@ def _gradient_bg(width, height, exposure_boost=False, is_tall=False, seed=0):
     draw = ImageDraw.Draw(bg)
 
     if exposure_boost:
-        wall_top = (44, 26, 18)
-        wall_mid = (122, 75, 40)
-        table_edge = (72, 45, 26)
-        table_bot = (32, 20, 12)
+        wall_top = (38, 22, 16)
+        wall_mid = (142, 86, 44)
+        table_edge = (88, 54, 30)
+        table_bot = (36, 22, 14)
     else:
-        wall_top = (36, 21, 14)
-        wall_mid = (105, 64, 32)
-        table_edge = (62, 38, 22)
-        table_bot = (28, 17, 10)
+        wall_top = (28, 16, 12)
+        wall_mid = (124, 76, 38)
+        table_edge = (76, 46, 26)
+        table_bot = (32, 18, 12)
 
     if is_tall:
         table_y = int(height * 0.64)
@@ -173,18 +173,32 @@ def _radial_glow(canvas, cx, cy, size, color=(165, 110, 48)):
     canvas.paste(glow, (cx - size // 2, cy - size // 2), mask=mask)
 
 
-def _font(size, bold=True):
+def _font(size, bold=True, kind="sans"):
     from PIL import ImageFont
-    cands = (["arialbd.ttf", "segoeuib.ttf", "georgiab.ttf"] if bold
-             else ["segoeui.ttf", "arial.ttf"])
+    if kind == "serif":
+        cands = [
+            "brand_assets/fonts/IBMPlexSerif-Bold.ttf" if bold else "brand_assets/fonts/IBMPlexSerif-Regular.ttf",
+            "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf" if bold else "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
+            "georgiab.ttf" if bold else "georgia.ttf",
+        ]
+    else:
+        cands = (["arialbd.ttf", "segoeuib.ttf", "georgiab.ttf"] if bold
+                 else ["segoeui.ttf", "arial.ttf"])
     ext = []
     for c in cands:
         ext.append(c)
         if os.name == "nt":
             ext.append(os.path.join("C:\\Windows\\Fonts", c))
         else:
-            ext += [os.path.join("/usr/share/fonts/truetype/dejavu",
-                                 "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf")]
+            if kind == "serif":
+                ext += [
+                    "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf" if bold else "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
+                    "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
+                ]
+            else:
+                ext += [os.path.join("/usr/share/fonts/truetype/dejavu",
+                                     "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf")]
     for c in ext:
         try:
             return ImageFont.truetype(c, size)
@@ -219,7 +233,7 @@ def _wrap(draw, text, font, max_w):
 def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
                             width=1080, height=1920, label="cine_frame",
                             format_type="reel", scene_idx=0, total_scenes=0,
-                            badge="", cta_text=None, on_date=None):
+                            badge="", cta_text=None, on_date=None, exposure_boost=False):
     """
     Real jar (white knocked out) on a grounded cinematic backdrop + safe-zone copy.
     Supports distinct visual styles for YouTube Shorts ('short'), Instagram Reels ('reel'),
@@ -263,7 +277,7 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
     except Exception:
         dirs = {}
 
-    boost_exposure = dirs.get("boost_exposure", False)
+    boost_exposure = bool(exposure_boost or dirs.get("boost_exposure", False))
     is_tall = height > width * 1.4
 
     canvas = _gradient_bg(width, height, exposure_boost=boost_exposure, is_tall=is_tall, seed=day + idx)
@@ -291,12 +305,23 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
             headline_color = (255, 252, 245)
             sub_color = (255, 222, 115)
 
-        hf = _font(hf_size, bold=True)
-        h_lines = _wrap(draw, headline.upper(), hf, max_w)[:2]
-
-        sf_size = max(26, min(32, width // 34))
-        sf = _font(sf_size, bold=True)
-        s_lines = _wrap(draw, sub, sf, max_w)[:3] if sub else []
+        # For stories and reels, use dignified editorial serif with natural title casing
+        if format_type in ("story", "reel"):
+            hf = _font(hf_size, bold=True, kind="serif")
+            clean_head = headline.strip()
+            if clean_head.isupper() and len(clean_head.split()) > 1:
+                clean_head = clean_head.title()
+            h_lines = _wrap(draw, clean_head, hf, max_w)[:2]
+            sf_size = max(26, min(32, width // 34))
+            sf = _font(sf_size, bold=False, kind="serif")
+            clean_sub = sub.strip()
+            s_lines = _wrap(draw, clean_sub, sf, max_w)[:3] if clean_sub else []
+        else:
+            hf = _font(hf_size, bold=True, kind="sans")
+            h_lines = _wrap(draw, headline.upper(), hf, max_w)[:2]
+            sf_size = max(26, min(32, width // 34))
+            sf = _font(sf_size, bold=True, kind="sans")
+            s_lines = _wrap(draw, sub, sf, max_w)[:3] if sub else []
 
         text_cursor = 345
         text_cursor += len(h_lines) * int(hf.size * 1.15)
@@ -344,28 +369,30 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
             except Exception as re:
                 logger.debug("[cine] Table reflection skipped: %s", re)
 
-            # Ground Contact Shadow + Ambient Occlusion (physics grounding)
+            # Ground Contact Shadow + Ambient Occlusion (two-stage physics grounding)
             try:
                 from PIL import ImageFilter
-                shadow_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-                sdraw = ImageDraw.Draw(shadow_layer)
-
-                # Diffuse cast shadow
-                s_w = int(jar.width * 1.35)
-                s_h = int(jar.height * 0.10)
+                # Stage 1: Soft diffuse ambient cast shadow
+                diffuse_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+                ddraw = ImageDraw.Draw(diffuse_layer)
+                s_w = int(jar.width * 1.30)
+                s_h = int(jar.height * 0.12)
                 s_x = jx + (jar.width - s_w) // 2
-                s_y = jy + jar.height - int(s_h * 0.50)
-                sdraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(6, 4, 2, 140))
+                s_y = jy + jar.height - int(s_h * 0.40)
+                ddraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(8, 5, 3, 160))
+                diffuse_layer = diffuse_layer.filter(ImageFilter.GaussianBlur(14))
+                canvas = Image.alpha_composite(canvas.convert("RGBA"), diffuse_layer).convert("RGB")
 
-                # Deep contact occlusion shadow directly under jar base
-                c_w = int(jar.width * 0.94)
-                c_h = int(jar.height * 0.04)
+                # Stage 2: Sharp physical contact occlusion line directly under jar rim
+                contact_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+                cdraw = ImageDraw.Draw(contact_layer)
+                c_w = int(jar.width * 0.96)
+                c_h = max(8, int(jar.height * 0.035))
                 c_x = jx + (jar.width - c_w) // 2
-                c_y = jy + jar.height - int(c_h * 0.70)
-                sdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 240))
-
-                shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(10))
-                canvas = Image.alpha_composite(canvas.convert("RGBA"), shadow_layer).convert("RGB")
+                c_y = jy + jar.height - int(c_h * 0.50)
+                cdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 250))
+                contact_layer = contact_layer.filter(ImageFilter.GaussianBlur(2.5))
+                canvas = Image.alpha_composite(canvas.convert("RGBA"), contact_layer).convert("RGB")
             except Exception as se:
                 logger.debug("[cine] Shadow compositing skipped: %s", se)
 
