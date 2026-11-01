@@ -95,10 +95,9 @@ def build_story_video(
                     visual_gate.remember_layout(layout, label)
                     return out
                 logger.warning("[visual-gate] story try %d failed: %s", attempt + 1, verdict["reasons"][:4])
-                if visual_gate.is_vision_hold(verdict):
+                if visual_gate.vision_outage():
                     break
-            logger.error("[visual-gate] premium story held after re-renders; not posting a failing story")
-            return None
+            logger.warning("[visual-gate] premium story held after re-renders; falling back to motion story")
         except Exception as exc:
             logger.warning("[story_video] premium story path failed: %s", exc)
 
