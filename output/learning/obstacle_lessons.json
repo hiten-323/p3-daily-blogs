@@ -15359,14 +15359,14 @@
       "status": "gate_holding"
     },
     {
-      "count": 3,
+      "count": 5,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-26",
       "fix": "",
       "gate": "aesthetic",
       "id": "instagram|reel_1|aesthetic|same_layout_as_last_tile:hero_center",
       "label": "reel_1",
-      "last_seen": "2026-10-31",
+      "last_seen": "2026-11-01",
       "platform": "instagram",
       "reason": "same_layout_as_last_tile:hero_center",
       "stage": "render",
@@ -18075,7 +18075,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 11,
+      "count": 13,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-28",
       "fix": "",
@@ -22426,6 +22426,34 @@
       "platform": "instagram_story",
       "reason": "aesthetic_below_8.0:4.0; Product label design appears dated and low-resolution with generic clipart graphics, undermining premium D2C positioning; Background has a harsh horizontal division line that cuts awkwardly behind the product, lacking sophisticated lighting and atmosphere; Typographic hierar",
       "stage": "publish",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-01",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:4.0; redundant call-to-action messaging ('follow for more coffee craft', 'save this...', and bottom pill button all repeating the same follow intent); product l",
+      "label": "reel_1",
+      "last_seen": "2026-11-01",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:4.0; Redundant call-to-action messaging ('FOLLOW FOR MORE COFFEE CRAFT', 'Save this...', and bottom pill button all repeating the same follow intent); Product label design lacks premium D2C minimalism, feeling slightly cluttered and dated; Top background element looks like a low-",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-01",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:4.0; repetitive copywriting: 'try it tomorrow' appears as the main headline and immediately repeated verbatim in the body text.; dated background treatment: the",
+      "label": "reel_1",
+      "last_seen": "2026-11-01",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:4.0; Repetitive copywriting: 'Try it tomorrow' appears as the main headline and immediately repeated verbatim in the body text.; Dated background treatment: The radial light-ray effect against dark purple looks like a 2000s PowerPoint template rather than modern D2C aesthetic.; C",
+      "stage": "render",
       "status": "gate_holding"
     }
   ],
