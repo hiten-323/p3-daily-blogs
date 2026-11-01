@@ -22413,6 +22413,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product label design looks dated, pixelated, and cheap, failing premium D2C standards.; Unnatural and muddy compositing around the base of the jar, lacking a realistic shadow and surface interaction.; Generic background gradient and bokeh spots look like basic stock template",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-01",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product label design appears dated and low-resolution with generic clipart graphics, undermining premium d2c positioning; background has a harsh horizontal",
+      "label": "stories",
+      "last_seen": "2026-11-01",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product label design appears dated and low-resolution with generic clipart graphics, undermining premium D2C positioning; Background has a harsh horizontal division line that cuts awkwardly behind the product, lacking sophisticated lighting and atmosphere; Typographic hierar",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
