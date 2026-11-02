@@ -23323,6 +23323,20 @@
       "reason": "aesthetic_below_8.0:4.0; Unclickable, long raw URL ('https://p3online.in') included instead of standard Instagram CTA or clean handle; Noticeable vertical seam/artifact in the background texture on the mid-left side; Crowded layout with too many competing typographic pills, lines, and badges stacked",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Do not plan or publish a third daily reel. growth_reel posts in the morning slot (09:53 IST), reel_1 in the evening slot (21:53 IST); reel_2 is retired.",
+      "first_seen": "2026-11-02",
+      "fix": "core/reel_schedule.py owns reel->slot; slots, retry-unposted, publish-recovery and the after-midnight backstop follow it; max 2 reels/day, >=3h apart; sales-push reel never published.",
+      "gate": "owner_schedule",
+      "id": "instagram|reel_2|owner_schedule|owner: three reels a day is too much; two reels, spread across the day (hiten, 2026-11-02 23:04 ist)",
+      "label": "reel_2",
+      "last_seen": "2026-11-02",
+      "platform": "instagram",
+      "reason": "owner: three reels a day is too much; two reels, spread across the day (Hiten, 2026-11-02 23:04 IST)",
+      "stage": "schedule",
+      "status": "fixed"
     }
   ],
   "version": 1

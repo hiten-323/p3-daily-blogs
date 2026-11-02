@@ -9,7 +9,7 @@ from content_generator.scheduler import retry_unposted as ru
 def test_exhausted_reel_regens_even_when_another_reel_passed():
     approved = {"growth_reel": {"hook": "passed"}}
     queued = ru.labels_to_regen(["reel_1", "reel_2", "growth_reel"], approved, records=[])
-    assert queued == ["reel_1", "reel_2"]
+    assert queued == ["reel_1"]  # reel_2 is retired (two reels a day)
 
 
 def test_mark_fresh_clears_ladder_hold_and_asks_for_a_new_draft():
