@@ -41,7 +41,7 @@ from content_generator.creative import render_claims as rc
 logger = logging.getLogger(__name__)
 
 W, H = 1080, 1920
-BW, BH = 540, 960  # background render resolution (upscaled; bg is soft by design)
+BW, BH = 1080, 1920  # Native Full HD 1080x1920 for cinematic movie clip definition
 FPS = 30
 LAYOUTS = ("cinematic_hero", "cinematic_low", "cinematic_offset")
 
@@ -63,16 +63,16 @@ class _Backdrop:
         self.xx, self.yy = xx, yy
         self.steam = [_smooth_noise(BH * 2, BW, s, self.rng) for s in (60, 28)]
         self.grain = [self.rng.normal(0, 6.0, (BH, BW, 1)).astype(np.float32) for _ in range(4)]
-        n = 26
+        n = 32
         self.bokeh = [dict(x=self.rng.uniform(0, BW), y=self.rng.uniform(0, BH * 0.72),
-                           r=self.rng.uniform(10, 42), a=self.rng.uniform(0.10, 0.32),
+                           r=self.rng.uniform(18, 68), a=self.rng.uniform(0.12, 0.36),
                            vx=self.rng.uniform(-4, 4), vy=self.rng.uniform(-7, -1),
                            depth=self.rng.uniform(0.3, 1.0), ph=self.rng.uniform(0, 6.28))
                       for _ in range(n)]
-        m = 170
+        m = 190
         self.parts = dict(x=self.rng.uniform(0, BW, m), y=self.rng.uniform(-BH, BH, m),
-                          s=self.rng.uniform(0.6, 2.4, m), v=self.rng.uniform(18, 60, m),
-                          sw=self.rng.uniform(4, 22, m), ph=self.rng.uniform(0, 6.28, m),
+                          s=self.rng.uniform(1.2, 4.8, m), v=self.rng.uniform(22, 75, m),
+                          sw=self.rng.uniform(6, 32, m), ph=self.rng.uniform(0, 6.28, m),
                           amber=self.rng.random(m) < 0.35, depth=self.rng.uniform(0.4, 1.4, m))
         v = 1 - 0.6 * np.clip(np.sqrt(((xx - BW / 2) / (BW / 1.25)) ** 2 + ((yy - BH / 2) / (BH / 1.25)) ** 2), 0, 1) ** 2.0
         self.vig = v[..., None]
@@ -156,7 +156,10 @@ class _Backdrop:
         # 7. grain + vignette
         arr = np.asarray(canvas.convert("RGB"), np.float32)
         arr = (arr + self.grain[int(t * FPS) % 4]) * self.vig
-        return Image.fromarray(np.clip(arr, 0, 255).astype("uint8")).resize((W, H), Image.BILINEAR).convert("RGBA")
+        im = Image.fromarray(np.clip(arr, 0, 255).astype("uint8"))
+        if im.size != (W, H):
+            im = im.resize((W, H), Image.LANCZOS)
+        return im.convert("RGBA")
 
 
 def _word_layout(d, lines, font, y0, cx):
@@ -343,7 +346,7 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
         tmpv = out_path + ".noaudio.mp4"
         os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
         proc = subprocess.Popen([ff, "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
-                                 "-i", "-", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
+                                 "-i", "-", "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-pix_fmt", "yuv420p",
                                  tmpv], stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         last_meta = None
         poster_frame = None
