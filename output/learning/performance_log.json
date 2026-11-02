@@ -171,7 +171,7 @@
     "asset_id": "threads_day301",
     "track": "conversation",
     "platform": "threads",
-    "observation_window": "24h",
+    "observation_window": "72h",
     "publication_id": "18109046714217089",
     "kpi": "",
     "policy_version": "",
@@ -186,14 +186,14 @@
     "decision_version": null,
     "audio_category": "",
     "posted_at": "2026-10-29T03:17:52",
-    "recorded_at": "2026-10-30T05:39:16",
+    "recorded_at": "2026-11-02T06:00:55",
     "metrics": {
       "views": 3,
       "likes": 0,
       "comments": 0,
       "shares": 0
     },
-    "notes": "auto-recorded from 24h threads native API observation"
+    "notes": "auto-recorded from 72h threads native API observation"
   },
   {
     "asset_id": "threads_day300",
@@ -273,6 +273,34 @@
     "recorded_at": "2026-11-01T02:42:07",
     "metrics": {
       "views": 4,
+      "likes": 0,
+      "comments": 0,
+      "shares": 0
+    },
+    "notes": "auto-recorded from 24h threads native API observation"
+  },
+  {
+    "asset_id": "threads_day304",
+    "track": "conversation",
+    "platform": "threads",
+    "observation_window": "24h",
+    "publication_id": "18132991648811987",
+    "kpi": "",
+    "policy_version": "",
+    "hook": "Unpopular opinion: your instant coffee label is the only nutrition label you never read.",
+    "topic": "threads_post",
+    "format": "discussion",
+    "attention_mechanism": null,
+    "scroller_state": null,
+    "psychology_frame": null,
+    "hook_strategy": null,
+    "payoff_type": null,
+    "decision_version": null,
+    "audio_category": "",
+    "posted_at": "2026-11-01T04:43:59",
+    "recorded_at": "2026-11-02T06:00:53",
+    "metrics": {
+      "views": 5,
       "likes": 0,
       "comments": 0,
       "shares": 0
