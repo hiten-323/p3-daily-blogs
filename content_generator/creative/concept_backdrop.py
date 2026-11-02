@@ -11,7 +11,7 @@ import math
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-BW, BH = 540, 960
+BW, BH = 1080, 1920  # Native Full HD 1080x1920 for cinematic clarity
 
 _TONES = {
     "rich":   dict(),
@@ -271,4 +271,7 @@ class ConceptBackdrop:
             canvas = canvas.filter(ImageFilter.GaussianBlur(blur))
         arr = np.asarray(canvas.convert("RGB"), np.float32)
         arr = (arr + self.grain[int(t * 30) % 4]) * self.vig
-        return Image.fromarray(np.clip(arr, 0, 255).astype("uint8")).resize(out_size, Image.BILINEAR).convert("RGBA")
+        im = Image.fromarray(np.clip(arr, 0, 255).astype("uint8"))
+        if im.size != out_size:
+            im = im.resize(out_size, Image.LANCZOS)
+        return im.convert("RGBA")
