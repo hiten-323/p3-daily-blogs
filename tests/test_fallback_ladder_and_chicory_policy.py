@@ -127,7 +127,8 @@ def test_unposted_respects_timed_slots(monkeypatch):
     assert "carousel" not in RU.unposted_targets([], 8)
     assert "reel_1" in RU.unposted_targets([], 10)
     assert "carousel" in RU.unposted_targets([], 10)
-    assert "reel_2" in RU.unposted_targets([], 22)
+    assert "reel_1" in RU.unposted_targets([], 22)
+    assert "reel_2" not in RU.unposted_targets([], 22)  # retired: two reels a day
     monkeypatch.setenv("BLOG_ENABLED", "true")
     assert "blog" in RU.unposted_targets([], 8)
 
@@ -138,7 +139,7 @@ def test_posted_and_uncertain_are_not_retried():
             _rec("evening", "instagram_video", "UNCERTAIN")]
     todo = RU.unposted_targets(recs, 23)
     assert "ig_feed" not in todo and "linkedin" not in todo and "reel_1" not in todo
-    assert "reel_2" in todo and "carousel" in todo
+    assert "reel_2" not in todo and "carousel" in todo  # reel_2 retired
     assert "facebook" in todo
 
 
