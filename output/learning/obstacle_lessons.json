@@ -15359,7 +15359,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 6,
+      "count": 8,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-26",
       "fix": "",
@@ -23295,6 +23295,34 @@
       "reason": "viral: score 7.5 < 8.0 (weakest: hook, format_fit). The piece has strong educational value and good transparency angles, but the opening hook is slightly too long and academic for a high-retention 1-2 second window. Shorten the hook to immediately address the viewer's hidden habit of skipping ingred",
       "stage": "generation",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-02",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:3.0; cheap, dated composite design with unconvincing lighting and drop shadows on the jar and coffee splash.; muted, muddy purple color palette lacks the rich, ",
+      "label": "reel_1",
+      "last_seen": "2026-11-02",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:3.0; Cheap, dated composite design with unconvincing lighting and drop shadows on the jar and coffee splash.; Muted, muddy purple color palette lacks the rich, appetizing depth expected from a premium D2C coffee brand.; Poor typographic hierarchy and execution: generic serif font",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-02",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:4.0; unclickable, long raw url ('https://p3online.in') included instead of standard instagram cta or clean handle; noticeable vertical seam/artifact in the back",
+      "label": "reel_1",
+      "last_seen": "2026-11-02",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:4.0; Unclickable, long raw URL ('https://p3online.in') included instead of standard Instagram CTA or clean handle; Noticeable vertical seam/artifact in the background texture on the mid-left side; Crowded layout with too many competing typographic pills, lines, and badges stacked",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
