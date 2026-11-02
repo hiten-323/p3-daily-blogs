@@ -1,8 +1,13 @@
 """Self-resuming retry. Each reel, the carousel, and the YouTube Short are separate targets.
 
+Two reels a day, spread across the day (owner, 2 Nov 2026; core/reel_schedule):
+growth_reel is a MORNING target (due 10:00-18:00 IST), reel_1 is the EVENING
+target (regenerates from 10:00 IST, publishes once the 21:53 slot has passed),
+and reel_2 is retired, so it is never due, regenerated or published. A run
+never publishes both reels.
+
 A legacy ledger row with no asset still clears single-platform targets and reel_1.
-It does not clear carousel, reel_2, or growth_reel. Reels regenerate from 10:00 IST
-and each one publishes once the evening slot time has passed. The 8.0 gates stay.
+It does not clear carousel or growth_reel. The 8.0 gates stay.
 Blog stays off unless BLOG_ENABLED.
 """
 from __future__ import annotations
@@ -15,24 +20,28 @@ import re
 log = logging.getLogger(__name__)
 
 # target -> (slot, ledger platforms, labels, earliest IST hour)
-_EVENING_PLATFORMS = ("instagram_reel", "instagram_video", "instagram")
+from content_generator.core.reel_schedule import (  # noqa: E402
+    REEL_PLATFORMS as _REEL_PLATFORMS, REEL_SLOT, reel_window_open,
+)
+_EVENING_PLATFORMS = _REEL_PLATFORMS
 TARGETS = {
     "ig_feed":     ("morning", ("instagram",), ("instagram_post",), 10),
     "carousel":    ("morning", ("instagram",), ("carousel",), 10),
     "ig_story":    ("morning", ("instagram_story",), ("carousel", "instagram_post"), 10),
     "facebook":    ("morning", ("facebook",), ("facebook_post",), 10),
-    "reel_1":      ("evening", _EVENING_PLATFORMS, ("reel_1",), 10),
-    "reel_2":      ("evening", _EVENING_PLATFORMS, ("reel_2",), 10),
-    "growth_reel": ("evening", _EVENING_PLATFORMS, ("growth_reel",), 10),
+    "reel_1":      (REEL_SLOT["reel_1"], _REEL_PLATFORMS, ("reel_1",), 10),
+    "growth_reel": (REEL_SLOT["growth_reel"], _REEL_PLATFORMS, ("growth_reel",), 10),
     "linkedin":    ("generate", ("linkedin",), ("linkedin_post",), 6),
     "youtube":     ("generate", ("youtube",), ("yt_short",), 6),
     "threads":     ("generate", ("threads",), ("threads_post",), 6),
     "blog":        ("generate", ("blog",), ("blog_post",), 6),
 }
-PIECE_ASSET = {"carousel": "carousel", "reel_1": "reel_1", "reel_2": "reel_2", "growth_reel": "growth_reel"}
+PIECE_ASSET = {"carousel": "carousel", "reel_1": "reel_1", "growth_reel": "growth_reel"}
 LEGACY_BARE_ASSET = frozenset({"reel_1"})
-REEL_TARGETS = ("reel_1", "reel_2", "growth_reel")
-INSTAGRAM_TARGETS = frozenset({"ig_feed", "carousel", "ig_story", "reel_1", "reel_2", "growth_reel"})
+REEL_TARGETS = ("growth_reel", "reel_1")
+# Reels owned by the evening slot: prewarmed before it, backstopped after midnight.
+EVENING_REEL_TARGETS = tuple(t for t in REEL_TARGETS if REEL_SLOT.get(t) == "evening")
+INSTAGRAM_TARGETS = frozenset({"ig_feed", "carousel", "ig_story", "reel_1", "growth_reel"})
 MANDATORY_SLOTS = ("morning", "evening")
 MANDATORY_BUDGET_S = int(os.getenv("MANDATORY_REGEN_BUDGET_S", "2400"))
 _RATE = re.compile(r"429|rate.?limit|too many|throttl|quota", re.I)
@@ -89,7 +98,7 @@ def prewarm_targets(missing: list[str], ist_hour: int, ist_minute: int, *,
     hour, minute = _evening_clock()
     if (ist_hour, ist_minute) >= (hour, minute):
         return set()
-    return {t for t in missing if t in REEL_TARGETS}
+    return {t for t in missing if t in EVENING_REEL_TARGETS}
 
 
 def slots_for_targets(todo: list[str], prewarm: set[str], approved: dict) -> set[str]:
@@ -101,8 +110,8 @@ def slots_for_targets(todo: list[str], prewarm: set[str], approved: dict) -> set
 
 
 def evening_assets_due(todo: list[str], prewarm: set[str]) -> list[str]:
-    """Same preference as the evening slot, one entry per unposted reel."""
-    return [name for name in ("growth_reel", "reel_1", "reel_2") if name in todo and name not in prewarm]
+    """The evening slot's own reel (reel_1) when due. growth_reel is a morning target."""
+    return [name for name in EVENING_REEL_TARGETS if name in todo and name not in prewarm]
 
 
 def publish_plan(todo: list[str], approved: dict, ist_hour: int, ist_minute: int, *,
@@ -112,11 +121,13 @@ def publish_plan(todo: list[str], approved: dict, ist_hour: int, ist_minute: int
     prewarm = prewarm_targets(
         list(missing if missing is not None else todo), ist_hour, ist_minute,
         override=override, only=only)
-    return {
-        "prewarm": prewarm,
-        "slots": slots_for_targets(todo, prewarm, approved),
-        "reels": evening_assets_due(todo, prewarm),
-    }
+    slots = slots_for_targets(todo, prewarm, approved)
+    reels = evening_assets_due(todo, prewarm)
+    if "morning" in slots and "growth_reel" in todo and "growth_reel" not in prewarm and reels:
+        # Never both reels in one run: the morning reel goes now, the evening
+        # reel waits for the next retry (the slot gap check also holds it).
+        reels = []
+    return {"prewarm": prewarm, "slots": slots, "reels": reels}
 
 
 def _asset_matches(record: dict, target: str) -> bool:
@@ -124,6 +135,9 @@ def _asset_matches(record: dict, target: str) -> bool:
     if target == "ig_feed":
         # A carousel row is not the feed post. A bare legacy row is.
         return recorded in ("", "instagram_post")
+    if recorded in REEL_SLOT or recorded == "reel_2":
+        # A reel row (e.g. growth_reel in the morning slot) only ever covers its own reel.
+        return PIECE_ASSET.get(target) == recorded
     asset = PIECE_ASSET.get(target)
     if not asset:
         return True
@@ -153,6 +167,9 @@ def unposted_targets(records: list[dict], now_hour: int) -> list[str]:
     out = []
     for name, (slot, platforms, _labels, hour) in active_targets().items():
         if now_hour < hour:
+            continue
+        if name in REEL_SLOT and not reel_window_open(name, now_hour):
+            # growth_reel is not chased past its morning window (never next to reel_1).
             continue
         if not any(_row_covers(r, name, slot, platforms) for r in records):
             out.append(name)
@@ -442,7 +459,7 @@ def main() -> int:
         # Evening backstop across midnight: a dropped 21:53 cron (or a crash)
         # must not lose yesterday's mandatory evening reel.
         y = (dt.date.fromisoformat(date) - dt.timedelta(days=1)).isoformat()
-        due = [t for t in REEL_TARGETS if t in unposted_targets(records_for_date(y), 23)]
+        due = [t for t in EVENING_REEL_TARGETS if t in unposted_targets(records_for_date(y), 23)]
         if due:
             log.warning("Evening backstop: %s still missing %s; publishing them now.", y, due)
             date, ist_hour, only = y, 23, set(due)

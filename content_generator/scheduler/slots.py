@@ -11,9 +11,12 @@ So instead of publishing everything at 06:00 IST, the day is split:
   generate   43 0 * * *  06:13   Full pipeline: insights, revenue, generate,
                                  editorial, images, LinkedIn/YouTube (blog off by default).
                                  Instagram + Facebook HELD for their windows.
-  morning    23 4 * * *  09:53   IG carousel + FB mirror (owner-chosen time)
-  evening    23 16 * * * 21:53   IG reel-style post + FB mirror
-                                 (owner-chosen time)
+  morning    23 4 * * *  09:53   IG carousel + feed post + Story + growth_reel
+                                 + FB mirror (owner-chosen time)
+  evening    23 16 * * * 21:53   IG reel_1 + FB mirror (owner-chosen time)
+
+Two reels a day, spread across the day (owner, 2 Nov 2026): growth_reel in
+the morning, reel_1 in the evening, reel_2 never. See core/reel_schedule.
 
 Content + images are committed to the repo by the generate run, so the
 later stateless CI runs can load and publish them.
@@ -100,52 +103,43 @@ def _find_reel_thumbnail(date_str: str | None = None) -> str | None:
     return None
 
 
-def _select_evening_reel(approved: dict, skip: set | None = None, only: str = "") -> tuple[str, dict] | None:
-    """Prefer growth_reel, then reel_1, then any other approved reel not already posted.
+def _select_slot_reel(approved: dict, slot: str, skip: set | None = None,
+                      only: str = "") -> tuple[str, dict] | None:
+    """The one reel this slot owns (core/reel_schedule), if approved and not yet live.
 
-    ``only`` publishes that asset and no substitute. Retry uses it so a held
-    growth reel cannot skip reel_1 and reel_2.
+    No substitution: the evening slot never publishes growth_reel or reel_2,
+    and the morning slot never publishes reel_1. ``only`` must name the slot's
+    own reel, otherwise nothing is selected.
     """
-    posted = skip or set()
-    if only:
-        if only in posted or not isinstance(approved, dict):
-            return None
-        piece = approved.get(only)
-        if isinstance(piece, dict) and piece:
-            return only, piece
+    from content_generator.core.reel_schedule import reel_for_slot
+    name = reel_for_slot(slot)
+    if not name or not isinstance(approved, dict):
         return None
-    if not isinstance(approved, dict):
+    if only and only != name:
         return None
-    for key in ("growth_reel", "reel_1", "reel_2"):
-        if key in posted:
-            continue
-        piece = approved.get(key)
-        if isinstance(piece, dict) and piece:
-            return key, piece
-    for key, piece in approved.items():
-        if key in posted or not isinstance(piece, dict) or not piece:
-            continue
-        kind = f"{key} {piece.get('type') or ''} {piece.get('id') or ''}".lower()
-        if "reel" in kind or str(piece.get("track") or "").lower() == "growth":
-            return key, piece
+    if name in (skip or set()):
+        return None
+    piece = approved.get(name)
+    if isinstance(piece, dict) and piece:
+        return name, piece
     return None
 
 
-def _evening_assets_posted(on_date) -> set[str]:
-    """Assets already live for this evening. A legacy row with no asset is reel_1."""
-    from content_generator.publisher.publishing_ledger import POSTED_STATES
+def _select_evening_reel(approved: dict, skip: set | None = None, only: str = "") -> tuple[str, dict] | None:
+    """Evening reel: reel_1 only. growth_reel moved to the morning; reel_2 is retired."""
+    return _select_slot_reel(approved, "evening", skip, only)
+
+
+def _reel_records(on_date) -> list[dict]:
     from content_generator.scheduler.retry_unposted import records_for_date
-    posted = set()
-    for record in records_for_date(on_date.isoformat()):
-        if record.get("slot") != "evening":
-            continue
-        if str(record.get("platform") or "").lower() not in ("instagram_reel", "instagram_video", "instagram"):
-            continue
-        if record.get("status") not in POSTED_STATES:
-            continue
-        asset = str(record.get("asset") or "").strip()
-        posted.add(asset or "reel_1")
-    return posted
+    return records_for_date(on_date.isoformat())
+
+
+def _evening_assets_posted(on_date) -> set[str]:
+    """Reels already live for this content day, in any slot. A legacy evening row with no asset is reel_1."""
+    from content_generator.core.reel_schedule import posted_reels
+    from content_generator.publisher.publishing_ledger import POSTED_STATES
+    return set(posted_reels(_reel_records(on_date), POSTED_STATES))
 
 
 def _feed_assets_to_publish(approved: dict, on_date) -> list[str]:
@@ -366,8 +360,14 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
         from content_generator.core.editorial_engine import approved_assets
         approved = approved_assets(content)
 
+        def _hold_feed(reason: str) -> dict:
+            # A held feed does not hold the morning reel, which has its own target.
+            logger.info("[slots] morning growth_reel (feed held): %s",
+                        _morning_reel(content, day, slot_date, only_asset))
+            return _held(slot, day, content, reason)
+
         if "carousel" not in approved and "instagram_post" not in approved:
-            return _held(slot, day, content, "canonical_validation_failed")
+            return _hold_feed("canonical_validation_failed")
 
         feed_queue = _feed_assets_to_publish(approved, slot_date)
         from content_generator.core.instagram_pause import instagram_paused
@@ -387,7 +387,7 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
             from content_generator.creative.jar_provenance import verify_creative_suite
             ok, issues = verify_creative_suite(imgs)
             if not ok:
-                return _held(slot, day, content, f"real_jar_unverified — {'; '.join(issues)}")
+                return _hold_feed(f"real_jar_unverified — {'; '.join(issues)}")
 
         from content_generator.publisher.publishing_ledger import publish_with_ledger
         result = {"success": True, "skipped": True, "error": ""}
@@ -419,6 +419,10 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
             logger.warning("[slots] instagram story: PAUSED (owner kill switch)")
         except Exception as e:
             logger.warning("[slots] instagram story failed: %s", e)
+        # growth_reel — the day's first reel (two reels a day, owner 2 Nov 2026).
+        # Its own ledger row and retry target; it never holds the feed contract.
+        result["growth_reel"] = _morning_reel(content, day, slot_date, only_asset)
+        logger.info("[slots] morning growth_reel: %s", result["growth_reel"])
         logger.info("[slots] morning publish: %s", result.get("success"))
         try:
             from content_generator.campaigns.trial_diwali_push import publish_for_slot
@@ -432,129 +436,13 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
                          {"instagram": [asset], "facebook": [asset]})
 
     if slot == "evening":
-        # Reel video (free motion reel) with image fallback — 22:00 IST
+        # reel_1 only — 21:53 IST. growth_reel posts in the morning; reel_2 is retired.
         from content_generator.core.editorial_engine import approved_assets
         approved = approved_assets(content)
-
-        from content_generator.publisher.instagram import (
-            _post_single_image, _assemble_caption, is_configured, _post_reel_direct_binary,
-            prepare_feed_image, post_local_story,
-        )
-        from content_generator.core.instagram_pause import instagram_paused, paused_result
-        ig_paused = instagram_paused()
-        if ig_paused:
-            logger.warning("[slots] Instagram PAUSED (owner kill switch) — evening reels not published; "
-                           "Facebook mirror still runs")
-        elif not is_configured():
-            return _held(slot, day, content, "instagram_not_configured")
-
-        # Publish the OBJECT the canonical gate approved — never look the asset
-        # up again separately. Any approved reel can fill the evening slot;
-        # growth_reel and reel_1 are preferred, then reel_2 and anything else
-        # the gate returned. A valid reel_2 used to be ignored, so the slot
-        # held even when an approved reel was sitting in the file.
-        picked = _select_evening_reel(approved, _evening_assets_posted(slot_date), only=only_asset)
-        if not picked:
-            logger.error("[slots] evening slot: no reel passed the canonical gate "
-                         "(approved=%s)", sorted(approved))
-            return _held(slot, day, content, "canonical_validation_failed")
-        chosen, reel = picked
-        logger.info("[slots] evening slot publishing gate-approved asset: %s", chosen)
-        from content_generator.core.publish_bar import quality_block, reason_code
-        reel_block = quality_block(reel, chosen)
-        if reel_block:
-            return _held(slot, day, content, reason_code(reel_block) + " — " + reel_block)
-
-        body = str(reel.get("caption") or reel.get("hook_text") or reel.get("chosen_hook") or reel.get("hook") or "").strip()
-        cta  = str(reel.get("cta") or "").strip()
-        if cta and cta.lower() not in body.lower():
-            body = f"{body}\n\n{cta}"
-        caption = _assemble_caption(body, reel, day)
-
-        # 1. Try an actual REEL VIDEO — HERO video first (founder-produced,
-        #    the format that actually spreads), else the free motion reel.
-        result = None
-        try:
-            if ig_paused:
-                raise _InstagramPaused()
-            hero = _find_hero_video()
-            if hero:
-                video_path, is_hero = hero, True
-                logger.info("[slots] using HERO video: %s", os.path.basename(hero))
-            else:
-                from content_generator.creative.reel_video import build_reel_video
-                video_path, is_hero = build_reel_video(reel, day, label=chosen, on_date=slot_date), False
-            if video_path:
-                logger.info("[slots] publishing reel via Meta resumable upload")
-                from content_generator.publisher.publishing_ledger import publish_with_ledger
-                result = publish_with_ledger(
-                    "instagram_video", content, slot, day,
-                    lambda: _post_reel_direct_binary(video_path, caption),
-                    asset=chosen,
-                )
-                if result.get("success"):
-                    logger.info("[slots] evening published as %s REEL VIDEO",
-                                "HERO" if is_hero else "motion")
-                    if is_hero:
-                        _mark_hero_posted(video_path)
-                else:
-                    logger.warning("[slots] reel video not published (%s) — falling back to image",
-                                   result.get("error"))
-        except _InstagramPaused:
-            result = None
-        except Exception as e:
-            logger.warning("[slots] reel video path failed (%s) — falling back to image", e)
-
-        # 2. Fallback image. Reel thumbnails are 1080x1920 (9:16). Instagram
-        #    feed posts must be between 4:5 and 1.91:1, so a raw thumbnail is
-        #    rendered to 4:5. If that render fails, it goes out as a Story
-        #    instead of a feed image the API will reject.
-        if not result or not result.get("success"):
-            image = _find_reel_thumbnail(slot_date.isoformat())
-            if not image:
-                return _held(slot, day, content, "no_image")
-
-            from content_generator.creative.jar_provenance import verify_jar_provenance
-            prov = verify_jar_provenance(image)
-            if not prov.get("verified"):
-                return _held(slot, day, content, f"real_jar_unverified — {prov.get('reason')}")
-
-            feed = prepare_feed_image(image)
-            if feed:
-                from content_generator.creative.rendered_asset_qa import audit_rendered_images
-                visual = audit_rendered_images([feed])
-                if not visual.get("ok"):
-                    return _held(
-                        slot, day, content,
-                        "visual_qa_failed — " + "; ".join(visual.get("issues") or ["broken_render"]),
-                    )
-                from content_generator.publisher.publishing_ledger import publish_with_ledger
-                result = paused_result() if ig_paused else publish_with_ledger(
-                    "instagram", content, slot, day,
-                    lambda: _post_single_image(feed, caption), asset=chosen)
-                fb_result = _mirror_to_facebook(
-                    content, day, slot, image=feed, message=caption,
-                    mirror_piece=reel, mirror_label=chosen,
-                )
-            else:
-                logger.warning("[slots] reel thumbnail is not a feed aspect — posting as Story")
-                from content_generator.publisher.publishing_ledger import publish_with_ledger
-                result = paused_result() if ig_paused else publish_with_ledger(
-                    "instagram_story", content, slot, day,
-                    lambda: post_local_story(image), asset=chosen)
-                fb_result = _mirror_to_facebook(
-                    content, day, slot, message=caption,
-                    mirror_piece=reel, mirror_label=chosen,
-                )
-        else:
-            fb_result = _mirror_to_facebook(
-                content, day, slot, message=caption,
-                mirror_piece=reel, mirror_label=chosen,
-            )
-
-        result["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
-        _track(result, content, slot, reel)
-        logger.info("[slots] evening publish: %s", result.get("success"))
+        out = _publish_slot_reel(slot, day, content, approved, slot_date, only_asset)
+        if out.get("contract"):
+            return out["contract"]
+        chosen, result, fb_result, ig_paused = out["chosen"], out["result"], out["fb_result"], out["ig_paused"]
         try:
             from content_generator.campaigns.trial_diwali_push import publish_for_slot
             result["sales_push"] = publish_for_slot(content, slot, day)
@@ -567,6 +455,182 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
                          {"instagram": [chosen], "facebook": [chosen]})
 
     return {"slot": slot, "success": False, "error": f"unknown_slot_{slot}"}
+
+
+def _morning_reel(content: dict, day: int, slot_date, only_asset: str = "") -> dict:
+    """growth_reel in the morning slot. Never holds or fails the feed contract.
+
+    Video only: the image/Story fallbacks belong to the evening reel, and a
+    morning Story row would read as the day's Instagram Story to the ledger.
+    """
+    from content_generator.core.reel_schedule import GROWTH_REEL_CUTOFF_IST, reel_for_slot
+    name = reel_for_slot("morning")
+    if not name or (only_asset and only_asset != name):
+        return {"skipped": True, "reason": "not_this_reel"}
+    from content_generator.core.instagram_pause import instagram_paused
+    if instagram_paused():
+        logger.warning("[slots] Instagram PAUSED (owner kill switch) — morning %s not published", name)
+        return {"skipped": True, "reason": "instagram_paused"}
+    from content_generator.core.ist_dates import today_ist
+    now_ist = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=5, minutes=30)
+    if slot_date != today_ist() or (now_ist.hour, now_ist.minute) >= GROWTH_REEL_CUTOFF_IST:
+        logger.info("[slots] morning reel %s not posted: window closed for %s", name, slot_date)
+        return {"skipped": True, "reason": "morning_reel_window_closed"}
+    try:
+        from content_generator.core.editorial_engine import approved_assets
+        out = _publish_slot_reel("morning", day, content, approved_assets(content), slot_date,
+                                 only_asset, allow_image_fallback=False, mirror_facebook=False)
+    except Exception as e:
+        logger.warning("[slots] morning reel failed: %s", e)
+        return {"success": False, "error": str(e)[:200]}
+    if out.get("contract"):
+        c = out["contract"]
+        return {"success": False, "held": True, "reason": c.get("reason") or c.get("status")}
+    res = out["result"] or {}
+    res["asset"] = out["chosen"]
+    return res
+
+
+def _publish_slot_reel(slot: str, day: int, content: dict, approved: dict, slot_date,
+                       only_asset: str = "", *, allow_image_fallback: bool = True,
+                       mirror_facebook: bool = True) -> dict:
+    """Publish the slot's own reel. Returns {"contract": held} or the publish results."""
+    from content_generator.publisher.instagram import (
+        _post_single_image, _assemble_caption, is_configured, _post_reel_direct_binary,
+        prepare_feed_image, post_local_story,
+    )
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    ig_paused = instagram_paused()
+    if ig_paused:
+        logger.warning("[slots] Instagram PAUSED (owner kill switch) — %s reel not published; "
+                       "Facebook mirror still runs", slot)
+    elif not is_configured():
+        return {"contract": _held(slot, day, content, "instagram_not_configured")}
+
+    # Publish the OBJECT the canonical gate approved — never look the asset
+    # up again separately. Each slot owns exactly one reel (core/reel_schedule):
+    # growth_reel in the morning, reel_1 in the evening. reel_2 is retired and
+    # no reel substitutes for another, so the day never carries more than two.
+    from content_generator.core.reel_schedule import reel_for_slot
+    live = _evening_assets_posted(slot_date)
+    if reel_for_slot(slot) in live and (not only_asset or only_asset == reel_for_slot(slot)):
+        return {"contract": _held(slot, day, content, f"already_published — {reel_for_slot(slot)} is live")}
+    picked = _select_slot_reel(approved, slot, live, only=only_asset)
+    if not picked:
+        logger.error("[slots] %s slot: its reel did not pass the canonical gate or is already "
+                     "live (approved=%s)", slot, sorted(approved))
+        return {"contract": _held(slot, day, content, "canonical_validation_failed")}
+    chosen, reel = picked
+    if not ig_paused:
+        from content_generator.core.reel_schedule import reel_block_reason
+        from content_generator.publisher.publishing_ledger import POSTED_STATES
+        why = reel_block_reason(chosen, _reel_records(slot_date), POSTED_STATES)
+        if why:
+            return {"contract": _held(slot, day, content, why)}
+    logger.info("[slots] %s slot publishing gate-approved asset: %s", slot, chosen)
+    from content_generator.core.publish_bar import quality_block, reason_code
+    reel_block = quality_block(reel, chosen)
+    if reel_block:
+        return {"contract": _held(slot, day, content, reason_code(reel_block) + " — " + reel_block)}
+    body = str(reel.get("caption") or reel.get("hook_text") or reel.get("chosen_hook") or reel.get("hook") or "").strip()
+    cta  = str(reel.get("cta") or "").strip()
+    if cta and cta.lower() not in body.lower():
+        body = f"{body}\n\n{cta}"
+    caption = _assemble_caption(body, reel, day)
+
+    # 1. Try an actual REEL VIDEO — HERO video first (founder-produced,
+    #    the format that actually spreads), else the free motion reel.
+    result = None
+    try:
+        if ig_paused:
+            raise _InstagramPaused()
+        # Founder hero videos stay in the prime evening slot.
+        hero = _find_hero_video() if slot == "evening" else None
+        if hero:
+            video_path, is_hero = hero, True
+            logger.info("[slots] using HERO video: %s", os.path.basename(hero))
+        else:
+            from content_generator.creative.reel_video import build_reel_video
+            video_path, is_hero = build_reel_video(reel, day, label=chosen, on_date=slot_date), False
+        if video_path:
+            logger.info("[slots] publishing reel via Meta resumable upload")
+            from content_generator.publisher.publishing_ledger import publish_with_ledger
+            result = publish_with_ledger(
+                "instagram_video", content, slot, day,
+                lambda: _post_reel_direct_binary(video_path, caption),
+                asset=chosen,
+            )
+            if result.get("success"):
+                logger.info("[slots] %s published %s as %s REEL VIDEO", slot, chosen,
+                            "HERO" if is_hero else "motion")
+                if is_hero:
+                    _mark_hero_posted(video_path)
+            else:
+                logger.warning("[slots] reel video not published (%s) — falling back to image",
+                               result.get("error"))
+    except _InstagramPaused:
+        result = None
+    except Exception as e:
+        logger.warning("[slots] reel video path failed (%s) — falling back to image", e)
+
+    # 2. Fallback image. Reel thumbnails are 1080x1920 (9:16). Instagram
+    #    feed posts must be between 4:5 and 1.91:1, so a raw thumbnail is
+    #    rendered to 4:5. If that render fails, it goes out as a Story
+    #    instead of a feed image the API will reject.
+    if (not result or not result.get("success")) and not allow_image_fallback:
+        if ig_paused:
+            result = paused_result()
+        result = result or {"success": False, "error": "reel_video_not_built"}
+        fb_result = {"success": True, "skipped": True, "error": ""}
+    elif not result or not result.get("success"):
+        image = _find_reel_thumbnail(slot_date.isoformat())
+        if not image:
+            return {"contract": _held(slot, day, content, "no_image")}
+
+        from content_generator.creative.jar_provenance import verify_jar_provenance
+        prov = verify_jar_provenance(image)
+        if not prov.get("verified"):
+            return {"contract": _held(slot, day, content, f"real_jar_unverified — {prov.get('reason')}")}
+
+        feed = prepare_feed_image(image)
+        if feed:
+            from content_generator.creative.rendered_asset_qa import audit_rendered_images
+            visual = audit_rendered_images([feed])
+            if not visual.get("ok"):
+                return {"contract": _held(
+                    slot, day, content,
+                    "visual_qa_failed — " + "; ".join(visual.get("issues") or ["broken_render"]),
+                )}
+            from content_generator.publisher.publishing_ledger import publish_with_ledger
+            result = paused_result() if ig_paused else publish_with_ledger(
+                "instagram", content, slot, day,
+                lambda: _post_single_image(feed, caption), asset=chosen)
+            fb_result = _mirror_to_facebook(
+                content, day, slot, image=feed, message=caption,
+                mirror_piece=reel, mirror_label=chosen,
+            )
+        else:
+            logger.warning("[slots] reel thumbnail is not a feed aspect — posting as Story")
+            from content_generator.publisher.publishing_ledger import publish_with_ledger
+            result = paused_result() if ig_paused else publish_with_ledger(
+                "instagram_story", content, slot, day,
+                lambda: post_local_story(image), asset=chosen)
+            fb_result = _mirror_to_facebook(
+                content, day, slot, message=caption,
+                mirror_piece=reel, mirror_label=chosen,
+            )
+    elif mirror_facebook:
+        fb_result = _mirror_to_facebook(
+            content, day, slot, message=caption,
+            mirror_piece=reel, mirror_label=chosen,
+        )
+    else:
+        fb_result = {"success": True, "skipped": True, "error": ""}
+
+    result["hashtags_used"] = " ".join(w for w in caption.split() if w.startswith("#"))
+    _track(result, content, slot, reel)
+    logger.info("[slots] %s reel publish (%s): %s", slot, chosen, result.get("success"))
+    return {"chosen": chosen, "result": result, "fb_result": fb_result, "ig_paused": ig_paused}
 
 
 _HERO_DIR    = os.getenv("HERO_VIDEO_DIR", "hero_videos")

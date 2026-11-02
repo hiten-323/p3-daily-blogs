@@ -185,9 +185,9 @@ def _instagram_publish_checks():
     from content_generator.scheduler.slots import _select_evening_reel
     only_two = {"reel_2": {"hook": "Check the label"}}
     picked = _select_evening_reel(only_two)
-    check("evening can publish reel_2", picked and picked[0] == "reel_2")
+    check("evening never publishes retired reel_2", picked is None)
     both = {"growth_reel": {"hook": "g"}, "reel_1": {"hook": "a"}, "reel_2": {"hook": "b"}}
-    check("evening still prefers growth_reel", _select_evening_reel(both)[0] == "growth_reel")
+    check("evening publishes reel_1 only", _select_evening_reel(both)[0] == "reel_1")
 
     # 3. Hashtag cap and the correct piece
     print("\nCaption uses the carousel and stays inside Instagram limits:")

@@ -481,6 +481,11 @@ def publish_for_slot(content: dict, slot: str, day: int) -> dict:
     surface = {"morning": "story", "evening": "reel"}.get(slot)
     if not surface:
         return {"skipped": True, "reason": "slot"}
+    if surface == "reel":
+        # Two reels a day, spread across the day (owner, 2 Nov 2026): the
+        # day's reels are growth_reel (morning) and reel_1 (evening). A sales
+        # reel on top would be a third reel, so it is never published.
+        return {"skipped": True, "reason": "two_reels_per_day"}
     piece = block.get(surface) if isinstance(block.get(surface), dict) else {}
     video = str(piece.get("video_path") or "")
     poster = str(piece.get("poster_path") or "")
