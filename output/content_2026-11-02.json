@@ -55,42 +55,6 @@
       "source": "evergreen_template",
       "featured_product": "Bold",
       "chosen_hook": "I read the label so you don't have to: one of these jars hides what is actually inside.",
-      "editorial_score": {
-        "shareability": 8.5,
-        "saveability": 9.0,
-        "emotion_pull": 8.0,
-        "hook_strength": 8.5,
-        "brand_clarity": 8.5,
-        "overall": 8.5,
-        "verdict": "PASS",
-        "feedback": "The asset hits high scores due to clear product transparency, adherence to brand rules (correctly calling Bold agglomerated pure coffee with zero chicory), and engaging audience prompts. Retention remains high through the concise desk-routine narrative.",
-        "retention_audit": "Strong opening hook stops the scroll immediately. Pacing moves smoothly from label reading to the physical pour without dead air."
-      },
-      "viral_potential": {
-        "scores": {
-          "hook": 8.0,
-          "curiosity_gap": 7.0,
-          "relatability": 8.0,
-          "shareability": 8.0,
-          "comment_trigger": 8.0,
-          "format_fit": 8.0,
-          "follow_cta": 8.0
-        },
-        "overall": 7.86,
-        "weakest": [
-          "curiosity_gap"
-        ],
-        "feedback": "The piece is structurally solid and adheres strictly to brand rules regarding Bold (agglomerated pure coffee, zero chicory), featuring the exact required reference jar, website link, and engagement triggers. To push the curiosity gap higher, tease the exact hidden ingredient or filler type before revealing the Purity Beans label.",
-        "better_hook": "Most coffee labels hide something in plain sight. Let's check what's actually in your jar.",
-        "passed": false,
-        "honesty": [],
-        "pass_mark": 8.0
-      },
-      "ladder_exhausted": true,
-      "publish_blocked": "ladder_exhausted",
-      "needs_regen": true,
-      "held": true,
-      "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.86 < 8.0 (weakest: curiosity_gap). The piece is structurally solid and adheres strictly to brand rules regarding Bold (agglomerated pure coffee, zero chicory), featuring the exact required reference jar, website link, and engagement triggers. To push the curiosity gap higher, tease the exact hidden ingredient or filler type before revealing the Purity Beans label. Suggested hook: Most coffee labels hide something in plain sight. Let's check what's actual",
       "funnel_objective": "DISCOVERY",
       "objective": "Engagement Growth",
       "primary_cta": "Send this to someone who drinks instant coffee",
@@ -254,92 +218,117 @@
           }
         ],
         "audio_note": "The reference file's audio track is digital silence and is not copied. Viral or in-app audio stays a manual audio_director choice."
-      }
-    },
-    {
-      "type": "reel",
-      "hook": "9:40 AM. The coffee you just poured is actually good.",
-      "hook_text": "9:40 AM. The coffee you just poured is actually good.",
-      "hook_spoken": "9:40 AM. The coffee you just poured is actually good.",
-      "hook_text_overlay": "9:40 AM. The coffee you just poured is actually good.",
-      "frames": [
-        {
-          "on_screen": "9:40 AM – Desk Check",
-          "spoken": "It's 9:40 AM at the office, and this cup actually tastes smooth, not burnt."
-        },
-        {
-          "on_screen": "LOOK AT THE JAR DATE",
-          "spoken": "Most pantry jars sit untouched, but the packed‑to‑best‑before gap reveals how fresh the coffee really is."
-        },
-        {
-          "on_screen": "PURITY BEANS BOLD",
-          "spoken": "Purity Beans Bold sits on the desk, an agglomerated pure coffee jar with zero chicory."
-        },
-        {
-          "on_screen": "READ THE BACK PANEL",
-          "spoken": "Flip the glass jar and you’ll see a single ingredient – pure coffee – no fillers."
-        },
-        {
-          "on_screen": "SHOP AT P3ONLINE.IN",
-          "spoken": "Skip the office dust and bring home real pure coffee. Visit https://p3online.in and order Bold today."
-        }
-      ],
-      "body": "Purity Beans Bold is agglomerated pure coffee with zero chicory. It comes in 50g for ₹239 and 100g for ₹369, delivering a strong, honest kick for your morning brew.",
-      "caption": "Your office coffee might be older than your lunch. Let the label do the talking. Purity Beans Bold is agglomerated pure coffee with zero chicory, giving you a strong, honest kick in every cup. Shop now at https://p3online.in and follow @purepantryprovisions for more label revelations.",
-      "cta": "Check your jar, follow @purepantryprovisions, and shop at https://p3online.in",
-      "comment_trigger": "Comment DATE if you checked your jar today.",
-      "save_trigger": "Save this before your next pantry restock.",
-      "share_trigger": "Share this with your office coffee buddy.",
-      "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #ReadTheLabel #CoffeeIndia #AgglomeratedCoffee",
-      "audio": "Subtle office background murmurs, a ceramic spoon clinking against a glass Purity Beans jar, no music bed.",
-      "loop_ending": "Ends on the 9:40 AM – Desk Check frame in close up, looping back to the opening hook.",
-      "angle": "REVELATION",
-      "source": "evergreen",
-      "featured_product": "Bold",
-      "chosen_hook": "POV: it's 9:40 at the office and the cup actually tastes good",
+      },
+      "regen_round": 1,
       "editorial_score": {
         "shareability": 8.5,
-        "saveability": 9.0,
-        "emotion_pull": 8.0,
-        "hook_strength": 8.5,
-        "brand_clarity": 8.5,
-        "overall": 8.5,
+        "saveability": 8.8,
+        "emotion_pull": 8.2,
+        "hook_strength": 9.0,
+        "brand_clarity": 9.2,
+        "overall": 8.7,
         "verdict": "PASS",
-        "feedback": "The asset hits home with a strong, highly relatable office setting and immediately engages the viewer through practical label transparency. The focus on jar dates creates high saveability and a natural curiosity gap. The product is correctly framed as agglomerated pure coffee with zero chicory, maintaining strict brand and factual alignment.",
-        "retention_audit": ""
+        "feedback": "The asset effectively leverages the label-reading curiosity gap to stop the scroll, clearly positioning Purity Beans Bold as agglomerated pure coffee with zero chicory. The progression from the hook to the jar reveal maintains strong retention, and the inclusion of the official website link with explicit buying CTAs ensures direct conversion potential.",
+        "retention_audit": "The transition from the generic jar comparison to flipping the Purity Beans Bold jar creates a natural attention lock. Pacing of spoken and on-screen text keeps the viewer engaged through the final call-to-action."
       },
       "viral_potential": {
         "scores": {
-          "hook": 5.0,
-          "curiosity_gap": 6.0,
-          "relatability": 7.0,
-          "shareability": 6.0,
-          "comment_trigger": 6.0,
-          "format_fit": 7.0,
-          "follow_cta": 7.0
+          "hook": 8.5,
+          "curiosity_gap": 8.0,
+          "relatability": 9.0,
+          "shareability": 8.0,
+          "comment_trigger": 8.5,
+          "format_fit": 8.0,
+          "follow_cta": 8.5
         },
-        "overall": 6.0,
+        "overall": 8.35,
         "weakest": [
-          "hook",
-          "curiosity_gap"
+          "curiosity_gap",
+          "format_fit"
         ],
-        "feedback": "The opening line is too bland for the first 1‑2 seconds; it needs a stronger pattern‑interrupt that instantly triggers curiosity or an emotional reaction. The curiosity gap could be tightened – instead of a generic ‘check the jar date’, tease a surprising fact about how most office coffee is actually stale or filled with fillers. The comment prompt is functional but could be more conversational (e.g., ask a poll or a this‑or‑that). Add a quick visual cue for saving early in the reel. Ensure each 1‑2 second cut includes a clear visual change (e.g., close‑up of a dusty jar, a clock ticking, a ha",
-        "better_hook": "You've been sipping stale, burnt office coffee all morning—until you discover what's really inside the jar.",
-        "passed": false,
+        "feedback": "The opening hook is strong and clear, but the visual progression needs to emphasize the jar label test even faster within the first second to maximize mobile retention. Ensure the text-to-speech timing locks tightly with the on-screen card transitions.",
+        "better_hook": "Stop scrolling and check the back of your coffee jar right now.",
+        "passed": true,
         "honesty": [],
         "pass_mark": 8.0
       },
-      "editorial_error": "brand: [\"Reel caption error: ['Missing website reference']\"]",
-      "ladder_exhausted": true,
-      "publish_blocked": "ladder_exhausted",
-      "needs_regen": true,
-      "held": true,
-      "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: [\"Reel caption error: ['Missing website reference']\"]",
-      "funnel_objective": "COMMUNITY",
-      "objective": "Engagement Growth",
-      "primary_cta": "Which one would you choose? Comment below",
-      "success_metric": "comments",
-      "target": 150,
+      "viral_readiness_score": 94.0
+    },
+    {
+      "featured_product": "bold",
+      "angle": "ritual",
+      "audio": "Ambient sound of a quiet kitchen at sunrise, a kettle switch clicking off, and the dry, crisp rattle of coffee granules hitting a ceramic mug.",
+      "body": "When hot water hits your morning cup at a rolling boil, the sudden thermal shock scorches delicate bean notes before the extraction even begins. With Purity Beans Bold, letting your boiled water sit for thirty seconds to drop near eighty-five degrees preserves the deep, full-bodied character of agglomerated pure coffee without extracting harsh bitterness. One level spoon, precise water temperature, and a thirty-second pause change the entire cup. Visit https://p3online.in to explore Purity Beans Bold, read the transparent ingredient panel, and follow @purepantryprovisions for daily coffee craft tips.",
+      "caption": "A boiling kettle destroys the subtle notes of your morning brew before it even starts. Try letting your water rest for thirty seconds to reach eighty-five degrees before pouring it over a level spoon of Purity Beans Bold. Pure coffee requires precise temperature control, not boiling stress. Read the back panel for complete ingredient clarity and shop now at https://p3online.in.\n\n#puritybeans #boldcoffee #purecoffee #zerochicory #coffeetips #morningritual #cleancoffee #p3online",
+      "chosen_hook": "Boiling water is actively ruining your morning black coffee.",
+      "comment_trigger": "Comment WATER to get our full temperature brewing guide sent to your DMs.",
+      "cta": "Shop now at https://p3online.in",
+      "frames": [
+        {
+          "on_screen": "A steaming kettle resting on a wooden kitchen counter in morning daylight, captured on iPhone 15 with shallow depth of field.",
+          "spoken": "Boiling water is actively ruining your morning black coffee."
+        },
+        {
+          "on_screen": "A kitchen thermometer dipped into a ceramic mug showing eighty-five degrees Celsius as steam softly rises.",
+          "spoken": "Pouring water straight off the boil scalds the beans and creates harsh bitterness."
+        },
+        {
+          "on_screen": "A dry teaspoon measuring dark, uniform agglomerated granules from the authentic Purity Beans Bold glass jar.",
+          "spoken": "Measure one level spoon of Purity Beans Bold pure coffee into your mug."
+        },
+        {
+          "on_screen": "Water cooled for thirty seconds pouring slowly over the dark agglomerated coffee crystals in a ceramic mug.",
+          "spoken": "Give your boiled water thirty seconds to settle near eighty-five degrees before the pour."
+        },
+        {
+          "on_screen": "A calm hand lifting the warm ceramic mug, taking a slow sip in soft morning light while the Purity Beans Bold jar sits nearby.",
+          "spoken": "Try this temperature shift tomorrow, read the jar at https://p3online.in, and follow @purepantryprovisions for daily coffee tips."
+        }
+      ],
+      "hashtags": "#puritybeans #boldcoffee #purecoffee #zerochicory #coffeetips #morningritual #cleancoffee #p3online",
+      "hook": "Boiling water is actively ruining your morning black coffee.",
+      "hook_spoken": "Boiling water is actively ruining your morning black coffee.",
+      "hook_text": "The boiling water brewing mistake",
+      "hook_text_overlay": "Wait 30 seconds before pouring",
+      "loop_ending": "End the video with the Purity Beans Bold jar resting on the wooden counter, looping seamlessly back to the steaming kettle.",
+      "regen_round": 3,
+      "save_trigger": "Save this reel so you remember the eighty-five degree rule tomorrow morning.",
+      "share_trigger": "Share this with someone who pours boiling water straight onto their coffee.",
+      "source": "Purity Beans Editorial Board",
+      "type": "growth_reel",
+      "viral_potential": {
+        "scores": {
+          "hook": 8.0,
+          "curiosity_gap": 8.0,
+          "relatability": 9.0,
+          "shareability": 8.0,
+          "comment_trigger": 9.0,
+          "format_fit": 8.0,
+          "follow_cta": 8.0
+        },
+        "overall": 8.0,
+        "weakest": [
+          "hook",
+          "format_fit"
+        ],
+        "feedback": "The piece has strong practical value and great relatability for morning coffee rituals. To push it higher, make the visual pacing in the first frame even sharper to instantly halt the scroll, and ensure the loop transition ties the final frame directly back to the initial kettle click without any dead air.",
+        "better_hook": "Your morning coffee tastes bitter because of one simple pouring mistake.",
+        "passed": true,
+        "honesty": [],
+        "pass_mark": 8.0
+      },
+      "editorial_score": {
+        "shareability": 8.5,
+        "saveability": 9.0,
+        "emotion_pull": 8.2,
+        "hook_strength": 8.5,
+        "brand_clarity": 9.0,
+        "overall": 8.6,
+        "verdict": "PASS",
+        "feedback": "The content effectively targets an everyday brewing mistake and delivers actionable technical value. The hook cuts through morning routines cleanly, and the step-by-step brewing advice provides high save-value. Brand placement and website links are correctly integrated.",
+        "retention_audit": "The transition from the boiling water warning to the 85-degree fix maintains high engagement without lag. Purity Beans Bold and the reference link are seamlessly woven into the closing frame."
+      },
+      "viral_readiness_score": 90.0,
       "growth_plan": {
         "primary_objective": "reach new relevant coffee drinkers",
         "secondary_objective": "earn qualified followers",
@@ -450,7 +439,7 @@
           }
         ],
         "hard_fails": [],
-        "attempts": 2,
+        "attempts": 1,
         "retry_limit": 8,
         "feedback": "",
         "plan": {
@@ -465,8 +454,7 @@
           "day": 305
         },
         "published": false
-      },
-      "_growth_attempts": 2
+      }
     }
   ],
   "instagram_post": {
@@ -575,7 +563,7 @@
       "pass_mark": 8.0
     },
     "asset_type": "instagram_post",
-    "viral_readiness_score": 85.0,
+    "viral_readiness_score": 82.0,
     "growth_plan": {
       "primary_objective": "repeat purchase/recall",
       "secondary_objective": "drive product-page visits/purchases",
@@ -822,7 +810,7 @@
       "honesty": [],
       "pass_mark": 8.0
     },
-    "viral_readiness_score": 82.0,
+    "viral_readiness_score": 79.0,
     "growth_plan": {
       "primary_objective": "drive product-page visits/purchases",
       "secondary_objective": "earn qualified followers",
@@ -963,7 +951,7 @@
     "chosen_hook": "Contrarian Statement",
     "closing_question": "What is the biggest compromise you refuse to make in your daily routine? Let us discuss in the comments.",
     "comment_trigger": "Comment COFFEE if you brew your morning cup at home using Purity Beans.",
-    "cta": "Shop Bold starting at ₹239 for 50g at https://p3online.in",
+    "cta": "Follow @purepantryprovisions for one buying check you can save Shop Bold starting at ₹239 for 50g at https://p3online.in",
     "hashtags": "#PurityBeans #PremiumInstantCoffee #PureCoffee #ZeroChicory #CoffeeLoversIndia #CoffeeWithoutPreservatives",
     "hook": "Contrarian Statement",
     "hook_text": "The ingredient list is the only slide deck a coffee drinker actually needs to read.",
@@ -1003,7 +991,7 @@
       "honesty": [],
       "pass_mark": 8.0
     },
-    "viral_readiness_score": 89.0,
+    "viral_readiness_score": 86.0,
     "growth_plan": {
       "primary_objective": "B2B inquiries (retailer, cafe, office, wholesale, distributor)",
       "secondary_objective": "earn qualified followers",
@@ -2699,7 +2687,7 @@
     "hook": "Your weekend guests notice right away when your instant coffee smells like a stale pantry jar instead of a proper cafe brew.",
     "body": "When friends drop by unannounced on a lazy Sunday afternoon, you want a hosting ritual that feels genuine without spending an hour at the stove. That is why keeping a jar of Purity Beans Bold on your kitchen counter changes the entire afternoon. The moment you scoop that agglomerated pure coffee into hot water, a deep, full-bodied aroma fills the room, offering a strong, honest kick that keeps everyone talking.\n\nThere is a quiet pride in turning the glass jar around and showing the back ingredient panel. Your friends see zero chicory and zero fillers, just pure coffee beans crafted into rich agglomerated granules. Bold is agglomerated pure coffee with 0% chicory, so you get a clean, deep-bodied cup every single time without any bitter aftertaste or mystery fillers. It answers every question before they even ask it, turning a casual drop-in visit into a proper conversation about what is actually in our mugs.\n\nInstead of paying a cafe price for a diluted brew, you share something authentic right from your own kitchen. The deep aroma does the talking, and the conversation flows naturally until the evening settles in. Grab your own jar of Bold for 100g at ₹369 and upgrade your weekend hosting routine.",
     "community_question": "Do you serve strong black coffee or milky coffee when friends drop by on a Sunday?",
-    "cta": "Follow @purepantryprovisions for honest ingredient checks and discover Bold at https://p3online.in",
+    "cta": "Which one would you choose? Comment below. Follow @purepantryprovisions for honest ingredient checks and discover Bold at https://p3online.in",
     "hashtags": "#PurityBeans #BoldCoffee #PureCoffee #IndianCoffee",
     "comment_trigger": "Do you serve strong black coffee or milky coffee when friends drop by on a Sunday?",
     "hook_text": "Your weekend guests notice right away when your instant coffee smells like a stale pantry jar instead of a proper cafe brew.",
@@ -3539,6 +3527,11 @@
       {
         "status": "exhausted",
         "reason": "viral: score 7.86 < 8.0 (weakest: curiosity_gap). The piece is structurally solid and adheres strictly to brand rules regarding Bold (agglomerated pure coffee, zero chicory), featuring the exact required reference jar, website link, and engagement triggers. To push the curiosity gap higher, tease th"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The reel has a decent concept but the hook isn’t punchy enough to guarantee an instant stop. Strengthen the opening by using a"
       }
     ],
     "reel_2": [
@@ -3585,6 +3578,119 @@
       {
         "status": "exhausted",
         "reason": "brand: [\"Reel caption error: ['Missing website reference']\"]"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "HOOK/PAYOFF MISMATCH (hook decomposition: hook channels are identical (on_screen, spoken) — on-screen, spoken and visual must each do different work). The hook makes a promise the body never settles. Either rewrite the hook so it promises exactly what the body delivers, or rewrite the body so it exp"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.79 < 8.0 (weakest: hook, curiosity_gap, format_fit). The hook channels (on_screen, spoken) are currently identical, violating the multi-channel decomposition rule. The opening line needs to hit the viewer with a stronger pattern interrupt regarding office coffee quality before reveali"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.86 < 8.0 (weakest: hook, format_fit). Separate the on-screen text, spoken script, and visual framing so they perform different narrative functions instead of repeating the exact same words. Introduce a stronger pattern interrupt in the first 1.5 seconds. Suggested hook: Most office co"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "HOOK/PAYOFF MISMATCH (hook decomposition: hook channels are identical (on_screen, spoken) — on-screen, spoken and visual must each do different work). The hook makes a promise the body never settles. Either rewrite the hook so it promises exactly what the body delivers, or rewrite the body so it exp"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "The hook '9:40 AM. The coffee you just poured is actually good' is vague and brand-agnostic — it could apply to any coffee. It fails the betrayal/curiosity gap patterns required for Purity Beans. The reel reveals the jar at frame 3 (too late for a branded asset) and frames 1-2 waste attention on gen"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "HOOK/PAYOFF MISMATCH (hook decomposition: hook channels are identical (on_screen, spoken) — on-screen, spoken and visual must each do different work). The hook makes a promise the body never settles. Either rewrite the hook so it promises exactly what the body delivers, or rewrite the body so it exp"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.71 < 8.0 (weakest: curiosity_gap, shareability, comment_trigger). The hook is clear and educational, but it reads slightly like a lecture rather than an urgent realization. To push this past 8, open with a direct counter-intuitive statement about what people usually throw away or misr"
+      },
+      {
+        "attempt": 8,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory', 'product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the so"
+      },
+      {
+        "status": "exhausted",
+        "reason": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, curiosity_gap). The hook relies on an ambient sound description rather than an immediate visual or conversational punch that stops the scroll within the first 1-2 seconds. Strengthen the opening by directly addressing the common morning frustration of empty or "
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory']"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"Reel caption error: ['Missing brand mention']\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.86 < 8.0 (weakest: shareability). The piece hits a strong, honest chord by targeting hidden ingredients and label opacity. To boost shareability, lean into a slightly sharper contrast between common supermarket brands and transparent labeling. Ensure the visual cuts happen every 1-2 s"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 5.71 < 8.0 (weakest: hook, shareability, follow_cta). The original hook is too conversational and polite; it reads like a standard tip rather than an instant scroll-stopper. To drive real retention and platform performance, the opening needs a stronger pattern interrupt or a sharper con"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a ritual (a calm, relatable daily coffee moment the viewer will recognise). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no "
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, format_fit). The concept is educational and save-worthy, but the opening line is slightly dry and reads like a warning label rather than a scroll-stopper. To make it perform better on Reels, speed up the pacing with a punchier frame 1 visual and a sharper contr"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 6.71 < 8.0 (weakest: curiosity_gap, shareability, follow_cta). The POV hook is relatable for office workers, but it leans a bit generic. To elevate this reel, sharpen the curiosity gap in the first 2 seconds by focusing on the hidden truth of office instant coffee vs real pure coffee. M"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.4 < 8.0 (weakest: curiosity_gap, shareability, follow_cta). The hook is strong and taps into a very relatable office pain point. However, the curiosity gap could be sharper by teasing a specific hidden ingredient found in the pantry jars before revealing the clean alternative. The fol"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.8 < 8.0 (weakest: comment_trigger, follow_cta). The hook is strong and taps into relatable office curiosity, and the script flows logically into the product. To push past the threshold, make the comment trigger more provocative or specific (e.g., asking what percentage of chicory thei"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "viral: score 6.71 < 8.0 (weakest: curiosity_gap, format_fit, comment_trigger). The hook is solid and relatable for office workers, but the curiosity gap fades too quickly once Bold is introduced directly. To boost format fit for a fast-paced reel, shorten the spoken delivery so on-screen beats cut e"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 6.8 < 8.0 (weakest: curiosity_gap, shareability). The piece establishes a strong, relatable morning mood and accurately highlights Purity Beans Bold with zero chicory. However, the hook leans slightly poetic rather than sharp or scroll-stopping, and the curiosity gap could be tighter by"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook 'I read the label so you don't have to' is slightly passive and does not create an immediate emotional spike or contrarian curiosity gap. While the transparency angle fits Purity Beans well, it lacks the aggressive pattern interrupt needed to cross the 8.0 overall threshold. Rewrite the hoo"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, format_fit). The piece has strong educational value and good transparency angles, but the opening hook is slightly too long and academic for a high-retention 1-2 second window. Shorten the hook to immediately address the viewer's hidden habit of skipping ingred"
       }
     ],
     "instagram_post": [
@@ -5979,5 +6085,9 @@
       "hook is too short to communicate a clear curiosity/problem"
     ],
     "asset_count": 42
+  },
+  "mandatory_regen_rounds": {
+    "reel_1": 1,
+    "reel_2": 3
   }
 }

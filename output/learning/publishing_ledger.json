@@ -10907,6 +10907,174 @@
       "verification_detail": "public video confirmed by oEmbed",
       "verification_method": "youtube_oembed",
       "verified_at": "2026-11-02T06:48:46+00:00"
+    },
+    "2026-11-02|morning|facebook|pb_29a3a5e33d": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-02",
+      "content_id": "pb_29a3a5e33d",
+      "day_number": 305,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-02T07:05:41+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-02T07:05:48+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "494003270464484_122169412904655685",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/posts/122169412904655685",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-02T07:05:41+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-02T07:05:48+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": true,
+      "remote_id": "494003270464484_122169412904655685",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-02T07:05:47+00:00",
+      "url": "https://www.facebook.com/494003270464484/posts/122169412904655685",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-02T07:05:48+00:00"
+    },
+    "2026-11-02|morning|instagram_story|pb_29a3a5e33d": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-02",
+      "content_id": "pb_29a3a5e33d",
+      "day_number": 305,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-02T07:05:48+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-02T07:16:34+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "17914353099507855",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/stories/purepantryprovisions/4021362214485308026",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-02T07:05:48+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-02T07:16:34+00:00",
+      "next_retry_at": null,
+      "platform": "instagram_story",
+      "published": true,
+      "remote_id": "17914353099507855",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-02T07:16:34+00:00",
+      "url": "https://www.instagram.com/stories/purepantryprovisions/4021362214485308026",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-02T07:16:34+00:00"
+    },
+    "2026-11-02|morning|instagram|pb_29a3a5e33d|carousel": {
+      "asset": "carousel",
+      "attempt_count": 1,
+      "content_date": "2026-11-02",
+      "content_id": "pb_29a3a5e33d",
+      "day_number": 305,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-02T07:04:31+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-02T07:05:23+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18032124038883891",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DfOurkOlJNL/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-02T07:04:31+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-02T07:05:23+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "18032124038883891",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-02T07:05:23+00:00",
+      "url": "https://www.instagram.com/p/DfOurkOlJNL/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-02T07:05:23+00:00"
+    },
+    "2026-11-02|morning|instagram|pb_29a3a5e33d|instagram_post": {
+      "asset": "instagram_post",
+      "attempt_count": 1,
+      "content_date": "2026-11-02",
+      "content_id": "pb_29a3a5e33d",
+      "day_number": 305,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-02T07:05:23+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-02T07:05:41+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18098774543398797",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DfOutsFlF7U/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-02T07:05:23+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-02T07:05:41+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "18098774543398797",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-02T07:05:41+00:00",
+      "url": "https://www.instagram.com/p/DfOutsFlF7U/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-02T07:05:41+00:00"
     }
   },
   "version": 1
