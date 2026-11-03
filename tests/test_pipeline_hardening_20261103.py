@@ -76,24 +76,21 @@ def test_approved_photos_priority_studio_cutouts():
 
 
 def test_story_copy_normalization_and_process_match():
-    from content_generator.publisher.story_copy import resolve_story_copy
+    from content_generator.prompts import stories
     from content_generator.core.process_match import process_match_findings
 
-    content = {
-        "featured_product": "Purista",
-        "stories": {
-            "story_1": {
-                "headline": "FREEZE-DRIED VS AGGLOMERATED",
-                "subtext": "Which process makes a cleaner cup?",
-            }
-        }
-    }
-    copy = resolve_story_copy(content, day=1)
-    assert copy["headline"] == "PURISTA: FREEZE-DRIED VS BOLD: AGGLOMERATED"
+    prompt = stories.build(day=1)
+    assert "Purista: freeze-dried vs Bold: agglomerated" in prompt
+    assert "Always name the product with each process" in prompt
 
-    # process_match check on resolved headline
-    findings = process_match_findings(copy["headline"], featured="Purista")
-    assert findings == []
+    # An untied comparison on Purista day fails process match
+    untied = process_match_findings("FREEZE-DRIED VS AGGLOMERATED\nWhich process makes a cleaner cup?", featured="Purista")
+    assert untied
+    assert "agglomerated mention must match Bold" in untied[0]["reason"]
+
+    # A comparison naming the product with each process passes process match cleanly
+    tied = process_match_findings("PURISTA: FREEZE-DRIED VS BOLD: AGGLOMERATED\nWhich process makes a cleaner cup?", featured="Purista")
+    assert tied == []
 
 
 def test_story_exposure_check_present():

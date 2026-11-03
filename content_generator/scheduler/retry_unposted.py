@@ -345,6 +345,29 @@ def mark_fresh(content: dict, labels) -> list[str]:
     return marked
 
 
+
+
+def recover_blocked_stories(content: dict, todo: list[str]) -> bool:
+    """Replace a claim-blocked Instagram Story so the next publish can succeed.
+
+    Reel targets are not rewritten. The process-match check is unchanged: the
+    replacement has to pass it. A Story that already carries an editorial or
+    viral score is left in place so an unscored line cannot skip the 8.0 bar.
+    """
+    if "ig_story" not in (todo or []) or not isinstance(content, dict):
+        return False
+    from content_generator.publisher.story_copy import recover_claim_blocked_story
+
+    installed = recover_claim_blocked_story(content, int(content.get("day_number") or 0))
+    if not installed:
+        return False
+    log.warning(
+        "[retry] ig_story claim block replaced from %s headline=%r",
+        installed.get("source"), installed.get("headline"),
+    )
+    return True
+
+
 def backoff_ok(records: list[dict], target: str, now: dt.datetime) -> bool:
     """Exponential backoff on rate limits: 30, 60, 120, 240 min (capped)."""
     fails = [r for r in _target_rows(records, target) if r.get("status") == "FAILED"]
@@ -518,6 +541,11 @@ def main() -> int:
         _do_editorial(content, only=set(need))
         save_content(content)
         approved = _approved(content)
+
+    # A claim-blocked Story otherwise republishes the same story_1 forever.
+    # Save before the slot reloads the pack from disk.
+    if recover_blocked_stories(content, todo):
+        save_content(content)
 
     # 2. Publish through the normal paths; the ledger dedupes by date+slot+platform+asset.
     failures = []

@@ -19,14 +19,14 @@ IMPORTANT: This concept is deliberately DIFFERENT from today's Instagram Reels.
 Do not reuse the reels' hooks or angles.
 
 {{
-  "story_1": {
+  "story_1": {{
     "type": "poll",
     "headline": "2-4 WORDS ALL CAPS — pattern interrupt. E.g. THIS OR THAT / HOT TAKE / REAL TALK. If comparing processes, MUST name the product with each process: e.g. 'PURISTA: FREEZE-DRIED VS BOLD: AGGLOMERATED'. Never mention agglomerated without naming Bold, or freeze-dried without naming Purica/Purista.",
     "subtext": "Context line — max 8 words",
     "poll_question": "Max 10 words — polarising, instantly answerable. Always name the product with each process if asking about methods (e.g. 'Purista: freeze-dried vs Bold: agglomerated').",
     "option_a": "Max 4 words — e.g. 'Bold: Agglomerated'",
     "option_b": "Max 4 words — e.g. 'Purista: Freeze-dried'"
-  },
+  }},
   "story_2": {{
     "type": "bts",
     "badge": "BEHIND THE SCENES",
