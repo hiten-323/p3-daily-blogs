@@ -13469,14 +13469,14 @@
       "status": "gate_holding"
     },
     {
-      "id": "story_process_match_agglomerated_tie_20261103",
       "date": "2026-11-03",
-      "platform": "instagram_story",
+      "feedback": "Process claims in Story polls and headlines must explicitly name the product with each process: Purista: freeze-dried vs Bold: agglomerated. Retry-unposted must recognize permanent claim rejections and mark skipped instead of looping red.",
+      "fix": "Updated stories prompt to require naming product per process, added story_copy normalization, updated process_match tokenizer, and configured retry_unposted target_refuses_retry.",
       "gate": "process_match",
+      "id": "story_process_match_agglomerated_tie_20261103",
       "lesson_type": "claim_truth",
       "obstacle": "Story poll compared FREEZE-DRIED VS AGGLOMERATED without tying agglomerated to Bold, triggering process_match_failed rejection.",
-      "feedback": "Process claims in Story polls and headlines must explicitly name the product with each process: Purista: freeze-dried vs Bold: agglomerated. Retry-unposted must recognize permanent claim rejections and mark skipped instead of looping red.",
-      "fix": "Updated stories prompt to require naming product per process, added story_copy normalization, updated process_match tokenizer, and configured retry_unposted target_refuses_retry."
+      "platform": "instagram_story"
     }
   ],
   "version": 1
