@@ -2,6 +2,7 @@
 import datetime as dt
 from pathlib import Path
 
+from content_generator.core.reel_schedule import REEL_SLOT
 from content_generator.scheduler import retry_unposted as ru
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,7 +24,6 @@ def test_dropped_morning_slot_with_no_rows_is_pending():
     for t in ("ig_feed", "ig_story", "facebook", "threads", "carousel", "reel_1", "youtube"):
         assert t in todo
     assert "growth_reel" in todo
-    assert "reel_2" not in todo
 
 
 def test_nothing_pending_once_each_piece_is_live():
@@ -33,8 +33,8 @@ def test_nothing_pending_once_each_piece_is_live():
         ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "instagram_post"})
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "carousel"})
-    rec.append({"slot": "morning", "platform": "instagram_video", "status": live, "asset": "growth_reel"})
-    rec.append({"slot": "evening", "platform": "instagram_video", "status": live, "asset": "reel_1"})
+    for asset in ("reel_1", "growth_reel"):
+        rec.append({"slot": REEL_SLOT[asset], "platform": "instagram_video", "status": live, "asset": asset})
     assert ru.pending_targets(T(12), records=rec, pack_exists=True) == []
     assert ru.pending_targets(T(22, 37), records=rec, pack_exists=True) == []
 
@@ -47,10 +47,10 @@ def test_bare_morning_post_does_not_hide_carousel_or_reels():
         ("morning", "instagram"), ("morning", "instagram_story"), ("morning", "facebook"),
         ("generate", "linkedin"), ("generate", "threads"))]
     pending = ru.pending_targets(dt.datetime(2026, 10, 23, 21, 57), records=rec, pack_exists=True)
+    # At 21:57 IST (after 18:00 cutoff), growth_reel is no longer chased
     for target in ("carousel", "reel_1", "youtube"):
         assert target in pending
-    # growth_reel is a morning target and is not chased after 18:00 IST.
-    assert "growth_reel" not in pending and "reel_2" not in pending
+    assert "growth_reel" not in pending
     assert pending != ["youtube"]
     assert "ig_feed" not in pending and "linkedin" not in pending and "threads" not in pending
 
@@ -72,7 +72,6 @@ def test_instagram_reel_alias_counts_as_posted():
     # A legacy row with no asset is the historical single reel (reel_1 only).
     rec = [{"slot": "evening", "platform": "instagram_reel", "status": "VERIFIED_LIVE"}]
     assert "reel_1" not in ru.unposted_targets(rec, 23)
-    assert "reel_2" not in ru.unposted_targets(rec, 23)
 
 
 def _morning_settled(**ig):

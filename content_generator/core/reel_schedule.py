@@ -25,8 +25,8 @@ from __future__ import annotations
 import datetime as dt
 
 REEL_SLOT: dict[str, str] = {
-    "growth_reel": "evening",
-    "reel_1": "morning",
+    "growth_reel": "morning",
+    "reel_1": "evening",
 }
 PUBLISHED_REELS: tuple[str, ...] = ("growth_reel", "reel_1")
 RETIRED_REELS: frozenset[str] = frozenset({"reel_2"})

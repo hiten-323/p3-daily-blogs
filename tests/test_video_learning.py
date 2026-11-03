@@ -38,6 +38,8 @@ def test_video_outcomes_extraction(tmp_path, monkeypatch):
 
 def test_build_video_learning_directive_categorizes_winners_and_losers(tmp_path, monkeypatch):
     monkeypatch.setattr(vl, "_DEFAULT_OUTPUT_DIR", str(tmp_path))
+    monkeypatch.setattr(vl, "_LEARNING_DIR", str(tmp_path / "learning"))
+    (tmp_path / "learning").mkdir(parents=True, exist_ok=True)
     
     f1 = tmp_path / "content_2026-11-01.json"
     f1.write_text(json.dumps({
@@ -63,6 +65,40 @@ def test_build_video_learning_directive_categorizes_winners_and_losers(tmp_path,
     assert "INSTAGRAM" in directive
     assert "FACEBOOK" in directive
     assert "YOUTUBE SHORTS" in directive
+    assert "single-origin" not in directive
+    assert "sludge" not in directive
+
+
+def test_real_platform_metrics_integration(tmp_path, monkeypatch):
+    learn_dir = tmp_path / "learning"
+    learn_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(vl, "_LEARNING_DIR", str(learn_dir))
+    monkeypatch.setattr(vl, "_DEFAULT_OUTPUT_DIR", str(tmp_path))
+    
+    # Write mock follower_snapshots.json
+    (learn_dir / "follower_snapshots.json").write_text(json.dumps([
+        {"date": "2026-10-27T00:00:00", "count": 100},
+        {"date": "2026-11-03T00:00:00", "count": 125},
+    ]), encoding="utf-8")
+    
+    # Write mock performance_log.json
+    (learn_dir / "performance_log.json").write_text(json.dumps([
+        {
+            "hook": "Real coffee has zero chicory.",
+            "platform": "instagram",
+            "metrics": {"views": 1500, "shares": 30, "comments": 15}
+        }
+    ]), encoding="utf-8")
+    
+    metrics = vl.get_real_platform_metrics()
+    assert metrics["follower_count"] == 125
+    assert metrics["follower_delta_7d"] == 25
+    assert len(metrics["top_posts_by_reach"]) == 1
+    assert metrics["top_posts_by_reach"][0]["views"] == 1500
+
+    directive = vl.build_video_learning_directive(platform="instagram")
+    assert "LIVE FOLLOWER DATA: 125 followers" in directive
+    assert "Real coffee has zero chicory." in directive
 
 
 def test_strategy_brief_includes_video_learning():
