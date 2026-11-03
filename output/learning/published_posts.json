@@ -2804,7 +2804,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -2885,7 +2886,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -2915,7 +2917,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -4680,7 +4683,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {
@@ -4707,7 +4711,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {
@@ -5050,7 +5055,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 2
+      "72h": 2,
+      "7d": 1
     },
     "failed_windows": [
       "24h",
@@ -5079,7 +5085,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 2
+      "72h": 2,
+      "7d": 1
     },
     "failed_windows": [
       "24h",
@@ -5108,7 +5115,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 2
+      "72h": 2,
+      "7d": 1
     },
     "failed_windows": [
       "24h",
@@ -5206,7 +5214,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 2,
-      "72h": 3
+      "72h": 3,
+      "7d": 1
     },
     "failed_windows": [
       "24h",
@@ -5257,7 +5266,7 @@
     "format": "discussion",
     "hashtags": "",
     "published_at": "2026-10-27T03:21:49",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "24h",
@@ -5277,6 +5286,19 @@
         "target_hours": 72,
         "measured_at": "2026-10-30T05:39:15+00:00",
         "actual_age_hours": 74.29,
+        "metrics": {
+          "views": 2,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-03T05:36:22+00:00",
+        "actual_age_hours": 170.24,
         "metrics": {
           "views": 2,
           "likes": 0,
@@ -5415,7 +5437,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -5443,7 +5466,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -5521,7 +5545,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -5549,7 +5574,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -5577,7 +5603,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -5599,7 +5626,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -5623,7 +5651,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -5650,7 +5679,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -5728,7 +5758,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -5747,7 +5778,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 1,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -5771,7 +5802,7 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
       "24h": 2,
-      "72h": 1
+      "72h": 2
     },
     "failed_windows": [
       "24h"
@@ -5800,7 +5831,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 1,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -5831,6 +5863,19 @@
         "target_hours": 24,
         "measured_at": "2026-11-01T02:42:07+00:00",
         "actual_age_hours": 44.04,
+        "metrics": {
+          "views": 4,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      },
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-03T05:36:22+00:00",
+        "actual_age_hours": 94.95,
         "metrics": {
           "views": 4,
           "likes": 0,
@@ -5883,7 +5928,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 1,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -5906,7 +5952,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 1,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -5934,7 +5981,9 @@
     "published_at": "2026-10-31T03:27:02",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "72h": 1
+    },
     "failed_windows": [
       "24h"
     ]
@@ -5983,7 +6032,21 @@
     "hashtags": "",
     "published_at": "2026-10-31T03:32:49",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-03T05:36:22+00:00",
+        "actual_age_hours": 74.06,
+        "metrics": {
+          "views": 2,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h"
@@ -6006,7 +6069,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -6027,7 +6092,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -6052,7 +6119,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18132991648811987",
@@ -6114,7 +6183,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "17910590727576278",
@@ -6136,7 +6207,9 @@
     "published_at": "2026-11-01T08:38:04",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -6159,7 +6232,9 @@
     "published_at": "2026-11-01T08:38:20",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -6182,7 +6257,9 @@
     "published_at": "2026-11-01T16:34:02",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -6205,7 +6282,9 @@
     "published_at": "2026-11-01T16:39:54",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -6228,7 +6307,9 @@
     "published_at": "2026-11-01T16:47:09",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -6245,7 +6326,9 @@
     "publication_status": "VERIFIED_LIVE",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": [],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -6267,7 +6350,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "api_returned_no_metrics",
     "missed_windows": {}
   },
@@ -6475,5 +6560,108 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": []
+  },
+  {
+    "media_id": "494003270464484_122169437282655685",
+    "asset_id": "facebook_day305",
+    "platform": "facebook",
+    "track": "brand",
+    "hook": "",
+    "topic": "",
+    "format": "evening",
+    "published_at": "2026-11-02T16:35:06+00:00",
+    "permalink": "https://www.facebook.com/494003270464484/posts/122169437282655685",
+    "ledger_key": "2026-11-02|evening|facebook|pb_29a3a5e33d",
+    "publication_status": "VERIFIED_LIVE",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {},
+    "failed_windows": [],
+    "measurement_status": "pending",
+    "missed_windows": {}
+  },
+  {
+    "media_id": "494003270464484_122169412904655685",
+    "asset_id": "facebook_day305",
+    "platform": "facebook",
+    "track": "brand",
+    "hook": "",
+    "topic": "",
+    "format": "morning",
+    "published_at": "2026-11-02T07:05:48+00:00",
+    "permalink": "https://www.facebook.com/494003270464484/posts/122169412904655685",
+    "ledger_key": "2026-11-02|morning|facebook|pb_29a3a5e33d",
+    "publication_status": "VERIFIED_LIVE",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {},
+    "failed_windows": [],
+    "measurement_status": "pending",
+    "missed_windows": {}
+  },
+  {
+    "media_id": "17914353099507855",
+    "asset_id": "instagram_story_day305",
+    "platform": "instagram_story",
+    "track": "brand",
+    "hook": "",
+    "topic": "",
+    "format": "morning",
+    "published_at": "2026-11-02T07:16:34+00:00",
+    "permalink": "https://www.instagram.com/stories/purepantryprovisions/4021362214485308026",
+    "ledger_key": "2026-11-02|morning|instagram_story|pb_29a3a5e33d",
+    "publication_status": "VERIFIED_LIVE",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
+    "failed_windows": [],
+    "measurement_status": "api_returned_no_metrics",
+    "missed_windows": {}
+  },
+  {
+    "media_id": "urn:li:share:7523266977272991746",
+    "asset_id": "linkedin_day306",
+    "platform": "linkedin",
+    "track": "authority",
+    "hook": "",
+    "topic": "linkedin_post",
+    "kpi_at_creation": "",
+    "policy_version": "",
+    "attention_mechanism": "",
+    "scroller_state": "",
+    "psychology_frame": "",
+    "hook_strategy": "",
+    "payoff_type": "",
+    "decision_version": "",
+    "format": "thought_leadership",
+    "hashtags": "",
+    "published_at": "2026-11-03T06:17:16",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {}
+  },
+  {
+    "media_id": "17936234307141914",
+    "asset_id": "threads_day306",
+    "platform": "threads",
+    "track": "conversation",
+    "hook": "",
+    "topic": "threads_post",
+    "kpi_at_creation": "",
+    "policy_version": "",
+    "attention_mechanism": "",
+    "scroller_state": "",
+    "psychology_frame": "",
+    "hook_strategy": "",
+    "payoff_type": "",
+    "decision_version": "",
+    "format": "discussion",
+    "hashtags": "",
+    "published_at": "2026-11-03T06:17:16",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {}
   }
 ]
