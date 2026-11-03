@@ -498,3 +498,37 @@ def test_hashtag_typo_is_gone():
     assert "NoCicory" not in daily
     assert "NoCicory" not in brand
     assert "NoChicory" in daily
+
+
+def test_product_truth_catches_single_origin_sludge_and_range_wide_pure():
+    from content_generator.core.product_truth import product_truth_findings
+
+    # 1. Plain single-origin
+    res_so = product_truth_findings("We source pure single-origin beans.")
+    assert any("invented product claim" in f["reason"] for f in res_so)
+
+    # 2. Sludge (competitor-bashing)
+    res_sludge = product_truth_findings("Compare real crystals vs sludge in other brands.")
+    assert any("invented product claim" in f["reason"] for f in res_sludge)
+
+    # 3. Range-wide "pure instant coffee"
+    res_shop = product_truth_findings("Shop pure instant coffee at https://p3online.in")
+    assert any("range-wide 'pure instant coffee'" in f["reason"] for f in res_shop)
+
+    res_brand = product_truth_findings("Our entire collection is pure instant coffee.")
+    assert any("range-wide 'pure instant coffee'" in f["reason"] for f in res_brand)
+
+    # 4. Legit jar claims for Bold/Purista still pass
+    assert product_truth_findings("Bold is pure coffee.") == []
+    assert product_truth_findings("Purista is pure Robusta.") == []
+
+
+def test_seo_keywords_exclude_range_wide_pure_instant_coffee():
+    from content_generator.prompts import reels, yt_short
+    reels_src = reels.build("reel_1", ("arch_name", "arch_desc"), "evening", "HASHTAG_25", "avoid", 0)
+    assert '"pure instant coffee"' not in reels_src
+    assert '"instant coffee"' in reels_src
+
+    yt_src = yt_short.build("Purista", 0)
+    assert '"pure instant coffee india"' not in yt_src
+    assert '"instant coffee india"' in yt_src
