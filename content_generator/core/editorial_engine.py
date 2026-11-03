@@ -227,23 +227,7 @@ def get_valid_assets(content: dict) -> list[str]:
         except Exception as e:
             logger.warning("[editorial] reel_1 validation failed: %s", e)
         
-    # 2. reel_2
-    if "reel_2" in REQUIRED_DAILY_ASSETS:
-        try:
-            reels = content.get("reels") or []
-            reel_2 = reels[1] if len(reels) > 1 else {}
-            if isinstance(reel_2, dict) and reel_2:
-                ensure_structural_fields(reel_2, "reel_2")
-            if has_copy(reel_2, "hook", "hook_text", "headline", "title", "chosen_hook"):
-                validate_or_fail(ReelSchema, reel_2)
-                is_brand_ok, _brand_errs = validate_asset("reel_2", reel_2, _governance)
-                if is_brand_ok:
-                    _editorial_ok("reel_2", reel_2)
-                    valid.append("reel_2")
-                else:
-                    logger.warning("[editorial] %s REJECTED by brand validation: %s", "reel_2", _brand_errs)
-        except Exception as e:
-            logger.warning("[editorial] reel_2 validation failed: %s", e)
+    # reel_2 is retired (PR #105 / #108); two reels per day only
 
     # 2b. growth_reel — prompt shape (chosen_hook/script), not the brand reel schema.
     #     It was never passed through this gate, so the evening slot could not
