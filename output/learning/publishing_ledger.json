@@ -11414,7 +11414,7 @@
     },
     "2026-11-03|morning|instagram_story|pb_7bc80ef835": {
       "asset": "",
-      "attempt_count": 38,
+      "attempt_count": 39,
       "content_date": "2026-11-03",
       "content_id": "pb_7bc80ef835",
       "day_number": 306,
@@ -11989,9 +11989,24 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-03T10:56:31+00:00",
+          "attempt": 39,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-03T10:56:34+00:00",
+          "attempt": 39,
+          "error": "process_match_failed",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-03T10:50:49+00:00",
+      "last_attempt_at": "2026-11-03T10:56:31+00:00",
       "last_result": {
         "error": "process_match_failed",
         "success": false
@@ -12002,7 +12017,7 @@
       "remote_id": "",
       "slot": "morning",
       "status": "SKIPPED",
-      "updated_at": "2026-11-03T10:50:52+00:00",
+      "updated_at": "2026-11-03T10:56:34+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
