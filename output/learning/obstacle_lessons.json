@@ -13477,6 +13477,34 @@
       "lesson_type": "claim_truth",
       "obstacle": "Story poll compared FREEZE-DRIED VS AGGLOMERATED without tying agglomerated to Bold, triggering process_match_failed rejection.",
       "platform": "instagram_story"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-03",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:3.0; cluttered and amateurish composition with overlapping visual elements (jar placed awkwardly over a giant shadow/ghost jar); poor typographic hierarchy feat",
+      "label": "reel_1",
+      "last_seen": "2026-11-03",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:3.0; Cluttered and amateurish composition with overlapping visual elements (jar placed awkwardly over a giant shadow/ghost jar); Poor typographic hierarchy featuring inconsistent font styles, drop shadows, and awkward inline URLs; Lack of premium D2C aesthetic; looks like a low-e",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-03",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:6.0; background texture is noisy and competes with the product for attention.; typography feels generic and template-like rather than premium editorial.; produc",
+      "label": "reel_1",
+      "last_seen": "2026-11-03",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:6.0; Background texture is noisy and competes with the product for attention.; Typography feels generic and template-like rather than premium editorial.; Product lighting is flat; lacks dramatic depth or luxury sheen expected from a top agency.",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
