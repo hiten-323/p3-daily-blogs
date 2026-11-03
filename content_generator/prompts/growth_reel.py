@@ -144,8 +144,14 @@ HARD RULES:
   "story_version": "How to cut this into a 15s Instagram Story with a poll or slider",
   "shorts_version": "What changes for YouTube Shorts (title with search keyword, tighter cut)"
 }}"""
+    video_learning = ""
+    try:
+        from content_generator.core.video_learning import build_video_learning_directive
+        video_learning = "\n\n" + build_video_learning_directive("instagram")
+    except Exception:
+        pass
     from content_generator.prompts.piece_craft import craft_block
-    return text + "\n\n" + craft_block("growth_reel")
+    return text + video_learning + "\n\n" + craft_block("growth_reel")
 
 
 # Instagram-native V2 rules (shared growth/creative contract)

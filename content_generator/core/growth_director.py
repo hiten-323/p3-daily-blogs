@@ -260,6 +260,13 @@ def get_strategy_brief(day: int) -> str:
             "Do not attack chicory and do not compare zero-chicory jars with Ultra Blend."
         )
 
+    video_learning_block = ""
+    try:
+        from content_generator.core.video_learning import build_video_learning_directive
+        video_learning_block = "\n\n" + build_video_learning_directive("all")
+    except Exception as _e:
+        logger.debug("[growth_director] video learning injection failed: %s", _e)
+
     return f"""{policy_line}GROWTH DIRECTOR — TODAY'S STRATEGY (this overrides generic instincts):
 
 CURRENT STAGE: {stage['name']} — {stage['followers']} followers
@@ -296,7 +303,6 @@ the BODY; amplify the framing; attach strong emotion. Hedging kills comments.
 TODAY'S FUNNEL OBJECTIVES (one per asset — NEVER mix objectives in one asset):
 - growth_reel    -> [{objs['growth_reel'][0]}] {objs['growth_reel'][1]}
 - reel_1         -> [{objs['reel_1'][0]}] {objs['reel_1'][1]}
-- reel_2         -> [{objs['reel_2'][0]}] {objs['reel_2'][1]}
 - carousel       -> [{objs['carousel'][0]}] {objs['carousel'][1]}
 - instagram_post -> [{objs['instagram_post'][0]}] {objs['instagram_post'][1]}
 - yt_short       -> [{objs['yt_short'][0]}] {objs['yt_short'][1]}
@@ -320,4 +326,4 @@ Every single platform must pair high viral reach with an explicit FOLLOWER CONVE
 4. THREADS: Ranked by REPLIES & QUOTES. Short, punchy truth-bombs (<480 chars); share a specific brewing or taste insight; prompt quick replies; end with "Follow @purepantryprovisions for daily coffee know-how."
 
 THE ONLY QUESTION THAT MATTERS TODAY:
-What is the fastest way to gain followers tomorrow? Generate for that."""
+What is the fastest way to gain followers tomorrow? Generate for that.{video_learning_block}"""
