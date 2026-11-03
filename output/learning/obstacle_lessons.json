@@ -24415,6 +24415,20 @@
       "reason": "viral: score 6.0 < 8.0 (weakest: hook, curiosity_gap, shareability). The hook relies heavily on generic instruction ('One spoon... wait 30 seconds. Watch') rather than an immediate visual or psychological pattern interrupt. To hit an 8+, the first 1.5 seconds need a stronger observational statement",
       "stage": "generation",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "Replace a process-match block with a compliant Story variant. Do not republish the same claim.",
+      "first_seen": "2026-11-03",
+      "fix": "",
+      "gate": "process_match",
+      "id": "instagram_story|stories|process_match|an agglomerated mention must match bold (prima is agglomerated and out of stock \u2014 do not promote it)",
+      "label": "stories",
+      "last_seen": "2026-11-03",
+      "platform": "instagram_story",
+      "reason": "an agglomerated mention must match Bold (Prima is agglomerated and out of stock \u2014 do not promote it)",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
