@@ -23337,6 +23337,20 @@
       "reason": "owner: three reels a day is too much; two reels, spread across the day (Hiten, 2026-11-02 23:04 IST)",
       "stage": "schedule",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "first_seen": "2026-11-03",
+      "last_seen": "2026-11-03",
+      "platform": "instagram",
+      "label": "oneoff_feed_story_20261103",
+      "stage": "visual_gate",
+      "gate": "visual_gate_8.0",
+      "status": "open",
+      "id": "instagram|oneoff_feed_story_20261103|visual_gate_8.0|owner-approved bold+purista feed post and story skipped: no composed card from approved cutouts reached 8.0",
+      "reason": "Owner-approved Bold+Purista feed post (and the Story that follows it) skipped on 2026-11-03: five honest card designs from approved cutouts (bold_100g_cutout_hires, purista_100g_cutout_front, pipeline split_left single-jar) scored 5.0-6.0 on the visual gate (nvidia scorer; gemini key not available outside daily/retry-unposted CI, groq had no live vision model). Gate not lowered, no re-scoring for luck.",
+      "feedback": "Recurring critiques hit fixed inputs: cutouts on gradient cards read as catalog/e-commerce, two-jar frames dilute focus, p3online.in vs Purity Beans vs @purepantryprovisions naming, no in-situ lighting.",
+      "fix": "Real in-situ photo shoot of Bold and Purista jars (drop into approved_photos/<sku>/real/), single-jar frames; one-off route should score with the same provider order as CI (needs GEMINI_API_KEY in oneoff-ig-post.yml, workflow scope)."
     }
   ],
   "version": 1
