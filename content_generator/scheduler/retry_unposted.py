@@ -123,7 +123,8 @@ def publish_plan(todo: list[str], approved: dict, ist_hour: int, ist_minute: int
         override=override, only=only)
     slots = slots_for_targets(todo, prewarm, approved)
     reels = evening_assets_due(todo, prewarm)
-    if "morning" in slots and "growth_reel" in todo and "growth_reel" not in prewarm and reels:
+    morning_reel = [k for k, v in REEL_SLOT.items() if v == "morning"][0]
+    if "morning" in slots and morning_reel in todo and morning_reel not in prewarm and reels:
         # Never both reels in one run: the morning reel goes now, the evening
         # reel waits for the next retry (the slot gap check also holds it).
         reels = []

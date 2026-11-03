@@ -38,9 +38,9 @@ def _row(asset, slot, at, platform="instagram_video", status="VERIFIED_LIVE"):
 # ── schedule ────────────────────────────────────────────────────────────────
 
 def test_schedule_is_growth_morning_reel_1_evening_reel_2_retired():
-    assert rs.REEL_SLOT == {"growth_reel": "morning", "reel_1": "evening"}
-    assert rs.reel_for_slot("morning") == "growth_reel"
-    assert rs.reel_for_slot("evening") == "reel_1"
+    assert rs.REEL_SLOT == {"growth_reel": "evening", "reel_1": "morning"}
+    assert rs.reel_for_slot("morning") == "reel_1"
+    assert rs.reel_for_slot("evening") == "growth_reel"
     assert rs.reel_for_slot("generate") is None
     assert "reel_2" in rs.RETIRED_REELS
     assert rs.MAX_REELS_PER_DAY == 2
@@ -78,11 +78,11 @@ def test_failed_rows_do_not_count_as_live_reels():
 
 
 def test_growth_reel_window_closes_before_the_evening_reel():
-    assert rs.reel_window_open("growth_reel", 10, 7)
-    assert rs.reel_window_open("growth_reel", 17, 59)
-    assert not rs.reel_window_open("growth_reel", 18, 0)
-    assert not rs.reel_window_open("growth_reel", 22, 7)
-    assert rs.reel_window_open("reel_1", 23, 0)
+    assert rs.reel_window_open("reel_1", 10, 7)
+    assert rs.reel_window_open("reel_1", 17, 59)
+    assert not rs.reel_window_open("reel_1", 18, 0)
+    assert not rs.reel_window_open("reel_1", 22, 7)
+    assert rs.reel_window_open("growth_reel", 23, 0)
     assert not rs.reel_window_open("reel_2", 12, 0)
 
 
@@ -90,9 +90,9 @@ def test_growth_reel_window_closes_before_the_evening_reel():
 
 def test_retry_targets_follow_the_new_slots():
     assert "reel_2" not in ru.TARGETS
-    assert ru.TARGETS["growth_reel"][0] == "morning"
-    assert ru.TARGETS["reel_1"][0] == "evening"
-    assert ru.EVENING_REEL_TARGETS == ("reel_1",)
+    assert ru.TARGETS["growth_reel"][0] == "evening"
+    assert ru.TARGETS["reel_1"][0] == "morning"
+    assert ru.EVENING_REEL_TARGETS == ("growth_reel",)
     assert "reel_2" not in ru.INSTAGRAM_TARGETS
 
 
@@ -103,24 +103,24 @@ def test_reel_2_is_never_due_or_regenerated():
 
 
 def test_growth_reel_due_in_the_morning_only():
-    assert "growth_reel" in ru.unposted_targets([], 10)
-    assert "growth_reel" in ru.unposted_targets([], 17)
-    assert "growth_reel" not in ru.unposted_targets([], 18)
-    assert "growth_reel" not in ru.unposted_targets([], 23)
+    assert "reel_1" in ru.unposted_targets([], 10)
+    assert "reel_1" in ru.unposted_targets([], 17)
+    assert "reel_1" not in ru.unposted_targets([], 18)
+    assert "reel_1" not in ru.unposted_targets([], 23)
 
 
 def test_morning_growth_reel_row_covers_growth_reel_only():
     at = dt.datetime(2026, 11, 3, 4, 30, tzinfo=UTC)
-    rows = [_row("growth_reel", "morning", at)]
+    rows = [_row("reel_1", "morning", at)]
     todo = ru.unposted_targets(rows, 12)
-    assert "growth_reel" not in todo
+    assert "reel_1" not in todo
     assert "ig_feed" in todo and "carousel" in todo and "ig_story" in todo
-    rows.append(_row("growth_reel", "morning", at, platform="instagram_story"))
+    rows.append(_row("reel_1", "morning", at, platform="instagram_story"))
     assert "ig_story" in ru.unposted_targets(rows, 12)
 
 
 def test_backstop_after_midnight_never_includes_the_growth_reel():
-    assert ru.EVENING_REEL_TARGETS == ("reel_1",)
+    assert ru.EVENING_REEL_TARGETS == ("growth_reel",)
     src = (ROOT / "content_generator/scheduler/retry_unposted.py").read_text(encoding="utf-8")
     assert "for t in EVENING_REEL_TARGETS if t in unposted_targets(records_for_date(y), 23)" in src
 
@@ -128,8 +128,8 @@ def test_backstop_after_midnight_never_includes_the_growth_reel():
 def test_retry_plan_never_runs_both_reels():
     plan = ru.publish_plan(["growth_reel", "reel_1"], _pack(), 23, 0, override=True)
     assert plan["reels"] == []
-    plan = ru.publish_plan(["reel_1"], _pack(), 22, 7)
-    assert plan["reels"] == ["reel_1"]
+    plan = ru.publish_plan(["growth_reel"], _pack(), 22, 7)
+    assert plan["reels"] == ["growth_reel"]
     plan = ru.publish_plan(["growth_reel", "reel_1"], _pack(), 11, 7)
     assert plan["slots"] == {"morning"} and plan["reels"] == []
 
@@ -150,11 +150,11 @@ def test_pause_switch_value_is_untouched():
 
 def test_slots_select_only_their_own_reel():
     pack = _pack()
-    assert sl._select_slot_reel(pack, "morning")[0] == "growth_reel"
-    assert sl._select_slot_reel(pack, "evening")[0] == "reel_1"
+    assert sl._select_slot_reel(pack, "morning")[0] == "reel_1"
+    assert sl._select_slot_reel(pack, "evening")[0] == "growth_reel"
     assert sl._select_slot_reel({"reel_2": pack["reel_2"]}, "evening") is None
-    assert sl._select_slot_reel({"growth_reel": pack["growth_reel"]}, "evening") is None
-    assert sl._select_slot_reel({"reel_1": pack["reel_1"]}, "morning") is None
+    assert sl._select_slot_reel({"reel_1": pack["reel_1"]}, "evening") is None
+    assert sl._select_slot_reel({"growth_reel": pack["growth_reel"]}, "morning") is None
 
 
 @pytest.fixture
@@ -188,13 +188,13 @@ def publish_env(monkeypatch):
 
 def test_evening_slot_posts_reel_1_only_with_facebook_mirror(publish_env):
     out = sl._publish_slot_reel("evening", 307, {"day_number": 307}, _pack(), DAY)
-    assert out["chosen"] == "reel_1"
-    assert publish_env["calls"] == [("instagram_video", "evening", "reel_1")]
-    assert publish_env["fb"] == [("evening", "reel_1")]
+    assert out["chosen"] == "growth_reel"
+    assert publish_env["calls"] == [("instagram_video", "evening", "growth_reel")]
+    assert publish_env["fb"] == [("evening", "growth_reel")]
 
 
 def test_evening_slot_holds_once_reel_1_is_live(publish_env):
-    publish_env["records"].append(_row("reel_1", "evening", dt.datetime.now(UTC)))
+    publish_env["records"].append(_row("growth_reel", "evening", dt.datetime.now(UTC)))
     out = sl._publish_slot_reel("evening", 307, {"day_number": 307}, _pack(), DAY)
     assert out["contract"]["status"] == "held"
     assert "already_published" in out["contract"]["reason"]
@@ -202,7 +202,7 @@ def test_evening_slot_holds_once_reel_1_is_live(publish_env):
 
 
 def test_evening_slot_holds_reel_1_next_to_a_fresh_growth_reel(publish_env):
-    publish_env["records"].append(_row("growth_reel", "morning", dt.datetime.now(UTC)))
+    publish_env["records"].append(_row("reel_1", "morning", dt.datetime.now(UTC)))
     out = sl._publish_slot_reel("evening", 307, {"day_number": 307}, _pack(), DAY)
     assert out["contract"]["reason"].startswith("reel_gap")
     assert publish_env["calls"] == []
@@ -223,8 +223,8 @@ def test_morning_reel_posts_growth_reel_without_a_second_facebook_post(publish_e
 
     monkeypatch.setattr(sl.datetime, "datetime", _Clock)
     res = sl._morning_reel({"day_number": 307}, 307, DAY)
-    assert res.get("success") is True and res.get("asset") == "growth_reel"
-    assert publish_env["calls"] == [("instagram_video", "morning", "growth_reel")]
+    assert res.get("success") is True and res.get("asset") == "reel_1"
+    assert publish_env["calls"] == [("instagram_video", "morning", "reel_1")]
     assert publish_env["fb"] == []  # the morning feed mirror is the day's morning FB post
 
 
@@ -266,9 +266,9 @@ def test_paused_evening_still_mirrors_facebook_and_posts_no_reel(publish_env, mo
     import content_generator.creative.jar_provenance as jp
     monkeypatch.setattr(jp, "verify_jar_provenance", lambda path: {"verified": True})
     out = sl._publish_slot_reel("evening", 307, {"day_number": 307}, _pack(), DAY)
-    assert out["chosen"] == "reel_1" and out["ig_paused"] is True
+    assert out["chosen"] == "growth_reel" and out["ig_paused"] is True
     assert publish_env["calls"] == []
-    assert publish_env["fb"] == [("evening", "reel_1")]
+    assert publish_env["fb"] == [("evening", "growth_reel")]
 
 
 # ── no third reel anywhere else ────────────────────────────────────────────

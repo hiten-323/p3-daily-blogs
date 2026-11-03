@@ -25,8 +25,8 @@ from __future__ import annotations
 import datetime as dt
 
 REEL_SLOT: dict[str, str] = {
-    "growth_reel": "morning",
-    "reel_1": "evening",
+    "growth_reel": "evening",
+    "reel_1": "morning",
 }
 PUBLISHED_REELS: tuple[str, ...] = ("growth_reel", "reel_1")
 RETIRED_REELS: frozenset[str] = frozenset({"reel_2"})
@@ -34,6 +34,7 @@ ALL_REEL_LABELS: frozenset[str] = frozenset(PUBLISHED_REELS) | RETIRED_REELS
 MAX_REELS_PER_DAY = 2
 MIN_REEL_GAP_HOURS = 3
 # The morning reel is due from the morning slot until this IST time.
+MORNING_REEL_CUTOFF_IST = (18, 0)
 GROWTH_REEL_CUTOFF_IST = (18, 0)
 REEL_PLATFORMS: tuple[str, ...] = ("instagram_reel", "instagram_video", "instagram")
 
@@ -53,7 +54,7 @@ def slot_for_reel(name: str) -> str | None:
 def reel_window_open(name: str, ist_hour: int, ist_minute: int = 0) -> bool:
     """False once a morning reel is past its cutoff for the day."""
     if REEL_SLOT.get(name) == "morning":
-        return (ist_hour, ist_minute) < GROWTH_REEL_CUTOFF_IST
+        return (ist_hour, ist_minute) < MORNING_REEL_CUTOFF_IST
     return name in REEL_SLOT
 
 

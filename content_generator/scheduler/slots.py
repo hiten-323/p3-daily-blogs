@@ -623,6 +623,7 @@ def _publish_slot_reel(slot: str, day: int, content: dict, approved: dict, slot_
         fb_result = _mirror_to_facebook(
             content, day, slot, message=caption,
             mirror_piece=reel, mirror_label=chosen,
+            video_path=video_path if 'video_path' in locals() else None,
         )
     else:
         fb_result = {"success": True, "skipped": True, "error": ""}
@@ -676,7 +677,8 @@ def _mark_hero_posted(path: str) -> None:
 def _mirror_to_facebook(content: dict, day: int, slot: str,
                         image: str | None = None, message: str | None = None,
                         mirror_piece: dict | None = None,
-                        mirror_label: str | None = None) -> dict:
+                        mirror_label: str | None = None,
+                        video_path: str | None = None) -> dict:
     """
     Facebook copies Instagram's timing: same slot, same image, same text.
 
@@ -692,6 +694,7 @@ def _mirror_to_facebook(content: dict, day: int, slot: str,
             lambda: fb_post(
                 content, day=day, preferred_image=image, message_override=message,
                 mirror_piece=mirror_piece, mirror_label=mirror_label,
+                video_path=video_path,
             ),
         ) or {}
         if r.get("success"):
