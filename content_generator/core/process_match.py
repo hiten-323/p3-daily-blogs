@@ -140,19 +140,23 @@ def _owner(clause: str, match: re.Match) -> str:
     if not hits:
         return ""
     start, end = match.start(), match.end()
+    # Check tokens before the match if strongly connected (e.g. "Purista: freeze-dried", "Bold is agglomerated")
+    before = [hit for hit in hits if hit[1] <= start and start - hit[1] <= 48]
+    if before:
+        before.sort(key=lambda hit: hit[1], reverse=True)
+        gap = clause[before[0][1]:start]
+        if re.match(r"\s*(?:is|are|uses|using|,|:|–|—|-)\s*$", gap, re.I):
+            return before[0][2]
+
     later = [other.start() for _, other in _spans(clause) if other.start() > start]
     limit = min(later) if later else len(clause)
     after = [hit for hit in hits if end <= hit[0] < limit and hit[0] - end <= 40]
+    # Disregard tokens after comparison separators like 'vs', 'versus', 'or'
+    after = [hit for hit in after if not re.search(r"\b(?:vs\.?|versus|or)\b", clause[end:hit[0]], re.I)]
     if after:
         after.sort()
         return after[0][2]
-    before = [hit for hit in hits if hit[1] <= start and start - hit[1] <= 48]
-    if not before:
-        return ""
-    before.sort(key=lambda hit: hit[1], reverse=True)
-    gap = clause[before[0][1]:start]
-    if re.match(r"\s*(?:is|are|uses|using|,|:|–|—|-)\s*$", gap, re.I):
-        return before[0][2]
+
     return ""
 
 

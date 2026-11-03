@@ -14,8 +14,6 @@ This module resolves a headline + reply line from today's approved copy
 """
 from __future__ import annotations
 
-import re
-
 STORY_COPY_BANK: list[tuple[str, str]] = [
     ("READ THE BACK", "Commercial jars often hide root fillers. Demand pure bean."),
     ("ONE INGREDIENT", "Pure Coffee. Zero fillers, zero compromise."),
@@ -56,6 +54,23 @@ def _primary_piece(content: dict) -> tuple[dict, str]:
     if isinstance(post, dict) and (post.get("hook") or post.get("caption")):
         return post, "instagram_post"
     return {}, ""
+
+
+def _normalize_story_copy(headline: str, sub: str) -> tuple[str, str]:
+    import re
+    h = headline or ""
+    s = sub or ""
+    # Tie freeze-dried vs agglomerated comparisons to their products
+    if re.search(r"\bfreeze[\s-]?dr\w*", h, re.I) and re.search(r"\bagglomerat\w*", h, re.I):
+        if not re.search(r"\b(?:bold|prima)\b", h, re.I) and not re.search(r"\b(?:purista|purica)\b", h, re.I):
+            h = "PURISTA: FREEZE-DRIED VS BOLD: AGGLOMERATED"
+    elif re.search(r"\bagglomerat\w*", h, re.I) and not re.search(r"\b(?:bold|prima)\b", h, re.I):
+        h = f"BOLD: {h}"
+
+    if re.search(r"\bfreeze[\s-]?dr\w*", s, re.I) and re.search(r"\bagglomerat\w*", s, re.I):
+        if not re.search(r"\b(?:bold|prima)\b", s, re.I) and not re.search(r"\b(?:purista|purica)\b", s, re.I):
+            s = "Can you taste the difference between Purista and Bold?"
+    return h, s
 
 
 def resolve_story_copy(content: dict | None, day: int = 0) -> dict:
@@ -125,6 +140,7 @@ def resolve_story_copy(content: dict | None, day: int = 0) -> dict:
         headline, sub = STORY_COPY_BANK[int(day or 0) % len(STORY_COPY_BANK)]
         source = "story_bank"
 
+    headline, sub = _normalize_story_copy(headline, sub)
     return {"headline": headline, "sub": sub, "source": source}
 
 
@@ -136,136 +152,6 @@ def _is_recycled(content: dict) -> bool:
     if content.get("_recycled"):
         return True
     return str(content.get("_source") or "").startswith("emergency_fallback")
-
-
-_BRAND = re.compile(r"purity\s+beans", re.I)
-_BEAN = re.compile(r"\bbeans?\b", re.I)
-_SINGLE_ORIGIN = re.compile(r"single[\s-]?origin", re.I)
-_FRESH = re.compile(r"\bfresh\b", re.I)
-_FREE_SAMPLE = re.compile(r"\bfree\s+(?:samples?|cups?|trials?)\b", re.I)
-_KNOCK = re.compile(
-    r"\bcompetitors?\b|\brival\s+brands?\b|commercial jars|root filler|stop drinking",
-    re.I,
-)
-_PRIMA = re.compile(r"\bprima\b|premium\s+agglomerate", re.I)
-
-
-def record_story_claim_lesson(reason: str) -> None:
-    """Remember a process-match block so the next Story is not the same claim."""
-    text = " ".join(str(reason or "").split())
-    if not text:
-        return
-    try:
-        from content_generator.core.obstacle_lessons import platform_for, record
-
-        record(
-            platform_for("stories"),
-            "stories",
-            "publish",
-            "process_match",
-            text,
-            "Replace a process-match block with a compliant Story variant. Do not republish the same claim.",
-        )
-    except Exception:
-        return
-
-
-def _story_measured(piece: dict) -> bool:
-    """True when this frame is already under the editorial / viral bar."""
-    if not isinstance(piece, dict):
-        return False
-    if piece.get("ladder_exhausted"):
-        return True
-    return isinstance(piece.get("editorial_score"), dict) or isinstance(piece.get("viral_potential"), dict)
-
-
-def _story_copy_allowed(headline: str, sub: str) -> bool:
-    """Content rules for a replacement line. The brand name is not bean-wording."""
-    text = f"{headline}\n{sub}"
-    if _SINGLE_ORIGIN.search(text) or _FRESH.search(text) or _FREE_SAMPLE.search(text):
-        return False
-    if _KNOCK.search(text) or _PRIMA.search(text):
-        return False
-    return _BEAN.search(_BRAND.sub("", text)) is None
-
-
-def _frame_copy(piece: dict) -> tuple[str, str]:
-    """A story_1 line is capped at 6 words. Do not chop a longer frame into a fragment."""
-    raw = " ".join(str(piece.get("headline") or piece.get("badge") or "").replace("\n", " ").split())
-    if not raw or len(raw.split()) > 6:
-        return "", ""
-    headline = _clean_line(raw, max_words=6)
-    sub = _clean_line(
-        piece.get("subtext") or piece.get("body") or piece.get("fact") or piece.get("offer") or "",
-        max_words=12,
-    )
-    return headline, sub
-
-
-def _replacement_candidates(content: dict, day: int) -> list[tuple[str, str, str]]:
-    stories = content.get("stories") if isinstance(content.get("stories"), dict) else {}
-    found: list[tuple[str, str, str]] = []
-    for key in ("story_2", "story_3", "story_4"):
-        piece = stories.get(key)
-        if not isinstance(piece, dict):
-            continue
-        headline, sub = _frame_copy(piece)
-        if headline and sub:
-            found.append((headline, sub, f"stories.{key}"))
-    start = int(day or 0) % len(STORY_COPY_BANK)
-    for offset in range(len(STORY_COPY_BANK)):
-        headline, sub = STORY_COPY_BANK[(start + offset) % len(STORY_COPY_BANK)]
-        found.append((headline, sub, "story_bank"))
-    return found
-
-
-def recover_claim_blocked_story(content: dict, day: int = 0) -> dict | None:
-    """Swap a process-match-blocked story_1 for another line that passes the same check.
-
-    Returns the installed copy, or None when the current line is already clear,
-    when no compliant variant exists, or when story_1 is already scored. A scored
-    frame is not replaced with an unscored line: that would skip the 8.0 bar.
-    The process-match check is not modified.
-    """
-    if not isinstance(content, dict):
-        return None
-    from content_generator.core.process_match import process_match_findings
-    from content_generator.core.product_truth import featured_product_name
-    from content_generator.publisher.product_links import story_link_line
-
-    featured = featured_product_name(content)
-    current = resolve_story_copy(content, day)
-    blocked = f"{current['headline']}\n{story_link_line(current['sub'])}"
-    hits = process_match_findings(blocked, featured=featured)
-    if not hits:
-        return None
-    record_story_claim_lesson(str(hits[0].get("reason") or "process match"))
-    stories = content.get("stories") if isinstance(content.get("stories"), dict) else {}
-    story_1 = stories.get("story_1") if isinstance(stories.get("story_1"), dict) else {}
-    if _story_measured(story_1):
-        return None
-    blocked_headline = _clean_line(current.get("headline"), max_words=6).upper()
-    for headline, sub, source in _replacement_candidates(content, day):
-        if headline.upper() == blocked_headline:
-            continue
-        if not _story_copy_allowed(headline, sub):
-            continue
-        published = f"{headline}\n{story_link_line(sub)}"
-        if process_match_findings(published, featured=featured):
-            continue
-        installed = dict(story_1)
-        installed.pop("editorial_score", None)
-        installed.pop("viral_potential", None)
-        installed.pop("editorial_error", None)
-        installed["headline"] = headline
-        installed["subtext"] = sub
-        installed["poll_question"] = sub
-        installed["claim_recovered_from"] = source
-        if not isinstance(content.get("stories"), dict):
-            content["stories"] = {}
-        content["stories"]["story_1"] = installed
-        return {"headline": headline, "sub": sub, "source": source}
-    return None
 
 
 def stories_block_from_content(content: dict, day: int = 0) -> dict:
