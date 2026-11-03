@@ -7,8 +7,9 @@ and tomorrow's video generation across all platforms (Instagram, Facebook, YouTu
 Extracts:
 1. Winning hook archetypes & structures from recent high-performing videos (score >= 8.5).
 2. Failure patterns to strictly avoid (score < 8.0 or rejected by viral gate).
-3. Visual & sensory retention drivers (in-situ lighting, crystal dissolution, label proof).
-4. Platform-specific follower conversion requirements.
+3. Real platform metrics (views, shares, comments, net follower growth) from learning logs.
+4. Visual & sensory retention drivers (in-situ lighting, crystal dissolution, label proof).
+5. Platform-specific follower conversion requirements.
 """
 from __future__ import annotations
 
@@ -22,6 +23,58 @@ logger = logging.getLogger(__name__)
 
 _DEFAULT_OUTPUT_DIR = os.getenv("OUTPUT_DIR", "output")
 _LEARNING_DIR = os.getenv("LEARNING_DIR", os.path.join(_DEFAULT_OUTPUT_DIR, "learning"))
+
+
+def get_real_platform_metrics() -> dict[str, Any]:
+    """Load real measured follower growth and top-performing post metrics from learning storage."""
+    perf_file = os.path.join(_LEARNING_DIR, "performance_log.json")
+    snap_file = os.path.join(_LEARNING_DIR, "follower_snapshots.json")
+    
+    real_data = {
+        "follower_count": 0,
+        "follower_delta_7d": 0,
+        "top_posts_by_reach": [],
+    }
+    
+    if os.path.exists(snap_file):
+        try:
+            with open(snap_file, "r", encoding="utf-8") as fh:
+                snaps = json.load(fh)
+            if isinstance(snaps, list) and snaps:
+                real_data["follower_count"] = snaps[-1].get("count", 0)
+                if len(snaps) > 1:
+                    first_count = snaps[max(0, len(snaps) - 7)].get("count", 0)
+                    real_data["follower_delta_7d"] = real_data["follower_count"] - first_count
+        except Exception as e:
+            logger.debug("[video_learning] follower snapshot load error: %s", e)
+            
+    if os.path.exists(perf_file):
+        try:
+            with open(perf_file, "r", encoding="utf-8") as fh:
+                logs = json.load(fh)
+            if isinstance(logs, list):
+                scored_posts = []
+                for p in logs:
+                    hook = str(p.get("hook") or "").strip()
+                    m = p.get("metrics") or {}
+                    views = int(m.get("views") or 0)
+                    shares = int(m.get("shares") or 0)
+                    comments = int(m.get("comments") or 0)
+                    if hook and (views > 0 or shares > 0 or comments > 0):
+                        scored_posts.append({
+                            "hook": hook,
+                            "platform": p.get("platform", "unknown"),
+                            "views": views,
+                            "shares": shares,
+                            "comments": comments,
+                            "score": views + (shares * 5) + (comments * 3),
+                        })
+                scored_posts.sort(key=lambda x: x["score"], reverse=True)
+                real_data["top_posts_by_reach"] = scored_posts[:5]
+        except Exception as e:
+            logger.debug("[video_learning] performance log load error: %s", e)
+            
+    return real_data
 
 
 def get_recent_video_outcomes(max_days: int = 7) -> list[dict[str, Any]]:
@@ -66,10 +119,11 @@ def get_recent_video_outcomes(max_days: int = 7) -> list[dict[str, Any]]:
 
 def build_video_learning_directive(platform: str = "", max_days: int = 7) -> str:
     """
-    Synthesize measured previous outcomes into an actionable learning directive
-    for tomorrow's video generation.
+    Synthesize measured previous outcomes and live audience metrics into an actionable
+    learning directive for tomorrow's video generation.
     """
     outcomes = get_recent_video_outcomes(max_days=max_days)
+    real_metrics = get_real_platform_metrics()
     
     winning_hooks: list[tuple[str, float, str]] = []
     losing_hooks: list[tuple[str, float, str]] = []
@@ -96,11 +150,19 @@ def build_video_learning_directive(platform: str = "", max_days: int = 7) -> str
         "Every video generated must be scroll-stopping, cinematic, and actively compel viewers to follow."
     ]
 
+    if real_metrics["follower_count"] > 0:
+        lines.append(f"\nLIVE FOLLOWER DATA: {real_metrics['follower_count']} followers (7-day change: {real_metrics['follower_delta_7d']:+d})")
+    
+    if real_metrics["top_posts_by_reach"]:
+        lines.append("TOP HOOKS BY ACTUAL AUDIENCE REACH & ENGAGEMENT:")
+        for post in real_metrics["top_posts_by_reach"][:3]:
+            lines.append(f'  ★ [{post["platform"].upper()} - {post["views"]} views, {post["shares"]} shares, {post["comments"]} comments] "{post["hook"]}"')
+
     if winning_hooks:
         lines.append("\nHIGH-RETENTION PROVEN HOOKS (Clearing >= 8.5 Visual & Viral Gates):")
         for hook, score, fmt in winning_hooks[:4]:
             lines.append(f'  ✓ [{fmt.upper()} - Score {score:.1f}] "{hook}"')
-        lines.append("  ↳ LEARNING: Open with active investigation, specific label proof, or sensory contrast (crystals vs sludge).")
+        lines.append("  ↳ LEARNING: Open with active investigation, specific label proof, sensory brewing details, or honest jar labels.")
 
     if losing_hooks:
         lines.append("\nFAILED / REJECTED HOOK PATTERNS (Scored < 8.0 - STRICTLY BANNED):")
@@ -116,7 +178,7 @@ def build_video_learning_directive(platform: str = "", max_days: int = 7) -> str
         lines.append("- INSTAGRAM (Reels):")
         lines.append("  • Hook in first 1.5 seconds with high-tension question or unexpected visual contrast.")
         lines.append("  • Cinematic 1080x1920 pacing with rich studio lighting; single jar in-situ context.")
-        lines.append("  • Compelling follow CTA: 'Follow @purepantryprovisions for daily single-origin brew truths.'")
+        lines.append("  • Compelling follow CTA: 'Follow @purepantryprovisions for daily honest coffee craft.'")
 
     if "face" in plat_lower or plat_lower in ("", "all"):
         lines.append("- FACEBOOK (Watch & Reels):")
