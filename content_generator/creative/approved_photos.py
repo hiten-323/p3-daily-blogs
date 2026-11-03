@@ -109,6 +109,10 @@ def pick(surface: str, day: int, idx: int = 0, product=None,
         pool = clean or pool
     if not pool:
         return None
+    # Real lifestyle/in-situ photos take auto-priority over cutouts (founder requirement)
+    reals = [i for i in pool if i.get("type") == "real_photo"]
+    if reals:
+        return reals[(day * 3 + idx) % len(reals)]
     return pool[(day * 3 + idx) % len(pool)]
 
 

@@ -122,7 +122,8 @@ def post_content(content: dict, day: int = 0,
                  preferred_image: str | None = None,
                  message_override: str | None = None,
                  mirror_piece: dict | None = None,
-                 mirror_label: str | None = None) -> dict:
+                 mirror_label: str | None = None,
+                 video_path: str | None = None) -> dict:
     """
     Post today's content to Facebook Page.
 
@@ -174,6 +175,16 @@ def post_content(content: dict, day: int = 0,
                 link = tracked_url(_slug, "facebook")
         except Exception as e:
             logger.debug("[facebook] product link skipped: %s", e)
+
+    # 1. Video upload if provided (e.g. evening growth_reel mirror)
+    target_video = video_path or (mirror_piece.get("video_path") if isinstance(mirror_piece, dict) else None)
+    if target_video and os.path.exists(target_video):
+        hook_title = str((mirror_piece or {}).get("hook") or (mirror_piece or {}).get("hook_text") or "Pure Coffee")
+        result = _post_video_to_page(page_id, token, message, target_video, title=hook_title)
+        if result["success"]:
+            logger.info("[facebook] Day %d video posted | id=%s", day, result["post_id"])
+            return result
+        logger.warning("[facebook] Video upload failed (%s); attempting image fallback", result.get("error"))
 
     # Find an image to attach
     image_path = preferred_image or _find_image(content)
@@ -265,6 +276,55 @@ def _find_image(content: dict) -> str | None:
     # Returning the unverified candidate keeps the explicit refusal (and its
     # reason) in _post_to_page instead of silently degrading to a link post.
     return first_existing
+
+
+def _post_video_to_page(
+    page_id: str, token: str, message: str,
+    video_path: str, title: str = "",
+) -> dict:
+    """Post high-retention native video (.mp4) to Facebook Page via Graph API /{page_id}/videos."""
+    try:
+        import requests
+    except ImportError:
+        return {"success": False, "post_id": "", "url": "", "error": "requests_not_installed"}
+
+    try:
+        if not os.path.exists(video_path) or os.path.getsize(video_path) == 0:
+            return {"success": False, "post_id": "", "url": "", "error": "video_missing_or_empty"}
+
+        # Enhance message with follower CTA and shop link if missing
+        full_message = message
+        if "follow" not in full_message.lower():
+            full_message = f"{full_message}\n\n👉 Follow @purepantryprovisions for daily honest roasts & coffee truths."
+        if "p3online.in" not in full_message:
+            full_message = f"{full_message}\n🛒 Shop pure single-origin beans: https://p3online.in?utm_source=facebook&utm_medium=video"
+
+        with open(video_path, "rb") as f:
+            resp = requests.post(
+                f"{_GRAPH_API}/{page_id}/videos",
+                data={
+                    "description": full_message,
+                    "title": title or "Pure Pantry Provisions — Pure Coffee",
+                },
+                files={"source": (os.path.basename(video_path), f, "video/mp4")},
+                headers={"Authorization": f"Bearer {token}"},
+                timeout=180,
+            )
+
+        data = resp.json()
+        video_id = data.get("id")
+        if video_id:
+            url = f"https://www.facebook.com/{page_id}/videos/{video_id}"
+            logger.info("[facebook] Video published successfully: %s", url)
+            return {"success": True, "post_id": str(video_id), "url": url, "error": None}
+        else:
+            err = data.get("error", {}).get("message", str(data)[:200])
+            logger.warning("[facebook] Video upload failed: %s", err)
+            return {"success": False, "post_id": "", "url": "", "error": err}
+
+    except Exception as e:
+        logger.warning("[facebook] Video upload request error: %s", e)
+        return {"success": False, "post_id": "", "url": "", "error": str(e)}
 
 
 def _post_to_page(
