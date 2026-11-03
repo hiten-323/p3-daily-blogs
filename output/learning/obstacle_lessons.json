@@ -771,7 +771,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 22,
+      "count": 23,
       "feedback": "brand: ['Missing brand mention']",
       "first_seen": "2026-10-04",
       "fix": "Fix the cited gate before the next draft.",
@@ -13175,14 +13175,14 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 2,
       "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a brew tip (exact water temperature, ratio or technique for a better instant cup). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no 'buy', 'shop', 'order' or discount language in the body. The product appears ONLY as a soft e",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "salesy_follow",
       "id": "youtube|yt_short|salesy_follow|rejected as sales-led (portfolio gate: sales-led asset not allowed at this growth stage). build a brand-new non-sales value piece from scratch: a brew tip (exact water temperature,",
       "label": "yt_short",
-      "last_seen": "2026-10-24",
+      "last_seen": "2026-11-03",
       "platform": "youtube",
       "reason": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a brew tip (exact water temperature, ratio or technique for a better instant cup). Every frame/slide must teach, debunk or show a ritual; no prices, no offe",
       "stage": "generation",
@@ -17221,14 +17221,14 @@
       "status": "gate_holding"
     },
     {
-      "count": 1,
+      "count": 2,
       "feedback": "brand: ['product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory']",
       "first_seen": "2026-10-28",
       "fix": "",
       "gate": "product_truth",
       "id": "youtube|yt_short|product_truth|brand: ['product truth: anti-chicory attack is not allowed when ultra blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory']",
       "label": "yt_short",
-      "last_seen": "2026-10-28",
+      "last_seen": "2026-11-03",
       "platform": "youtube",
       "reason": "brand: ['product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory']",
       "stage": "generation",
@@ -24123,7 +24123,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 4,
+      "count": 5,
       "feedback": "schema: 1 validation error for YoutubeShortSchema script Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/string_type",
       "first_seen": "2026-11-03",
       "fix": "",
@@ -24147,6 +24147,76 @@
       "last_seen": "2026-11-03",
       "platform": "youtube",
       "reason": "schema: 1 validation error for YoutubeShortSchema script Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/string_type",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.7 < 8.0 (weakest: hook, shareability). The hook is a bit dry and intellectual; it needs a sharper pattern interrupt to stop the scroll immediately on YouTube Shorts. To boost shareability, lean into the contrast between what most people drink versus pure robusta. Suggested hook: Most people have never tasted pure Robusta without hidden chicory. Use a DIFFERENT hook and angle from th",
+      "first_seen": "2026-11-03",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.7 < 8.0 (weakest: hook, shareability). the hook is a bit dry and intellectual; it needs a sharper pattern interrupt to stop the scroll immediately on youtube shorts.",
+      "label": "yt_short",
+      "last_seen": "2026-11-03",
+      "platform": "youtube",
+      "reason": "viral: score 7.7 < 8.0 (weakest: hook, shareability). The hook is a bit dry and intellectual; it needs a sharper pattern interrupt to stop the scroll immediately on YouTube Shorts. To boost shareability, lean into the contrast between what most people drink versus pure robusta. Suggested hook: Most",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "The hook is decent but could be more arresting. Consider opening with a visual shock\u2011contrast (e.g., Purista jar calm while a swirl of generic filler powders erupts around it) and a one\u2011line hook like \"You've been brewing with filler dust all this time.\" This will boost scroll\u2011stop power and shareability. tighten the tension script \u2013 replace \"When a jar contains pure gourmet Robusta with zero chic",
+      "first_seen": "2026-11-03",
+      "fix": "",
+      "gate": "generic_hook",
+      "id": "youtube|yt_short|generic_hook|the hook is decent but could be more arresting. consider opening with a visual shock\u2011contrast (e.g., purista jar calm while a swirl of generic filler powders erupts around it) and ",
+      "label": "yt_short",
+      "last_seen": "2026-11-03",
+      "platform": "youtube",
+      "reason": "The hook is decent but could be more arresting. Consider opening with a visual shock\u2011contrast (e.g., Purista jar calm while a swirl of generic filler powders erupts around it) and a one\u2011line hook like \"You've been brewing with filler dust all this time.\" This will boost scroll\u2011stop power and shareab",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.8 < 8.0 (weakest: hook, shareability). The hook focuses on a technical water temperature detail rather than an immediate consumer pain point or pattern interrupt. To increase shareability and hook strength, start with an identity challenge or a direct contrast against typical morning coffee routines. Ensure the title opens a sharper loop. Suggested hook: Stop pouring boiling water s",
+      "first_seen": "2026-11-03",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 6.8 < 8.0 (weakest: hook, shareability). the hook focuses on a technical water temperature detail rather than an immediate consumer pain point or pattern interrupt. to",
+      "label": "yt_short",
+      "last_seen": "2026-11-03",
+      "platform": "youtube",
+      "reason": "viral: score 6.8 < 8.0 (weakest: hook, shareability). The hook focuses on a technical water temperature detail rather than an immediate consumer pain point or pattern interrupt. To increase shareability and hook strength, start with an identity challenge or a direct contrast against typical morning",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, comment_trigger). The piece establishes a strong, honest premise by pointing viewers to check back labels, which builds immediate trust. However, the opening hook can be sharper and punchier for a YouTube Short to stop the scroll instantly in under two seconds. Make the comment trigger more provocative by directly addressing a common misconcept",
+      "first_seen": "2026-11-03",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, comment_trigger). the piece establishes a strong, honest premise by pointing viewers to check back labels, which builds immedi",
+      "label": "yt_short",
+      "last_seen": "2026-11-03",
+      "platform": "youtube",
+      "reason": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, comment_trigger). The piece establishes a strong, honest premise by pointing viewers to check back labels, which builds immediate trust. However, the opening hook can be sharper and punchier for a YouTube Short to stop the scroll instantly in und",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove '100%' is not allowed (FSSAI). Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"What's actually inside this jar? Let's read it\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trigger and a clear 'Follow @pur",
+      "first_seen": "2026-11-03",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|viral: score 0.0 < 8.0 (weakest: n/a). honesty: remove '100%' is not allowed (fssai). earn attention with a true, specific hook instead. use a different hook and angle from the las",
+      "label": "yt_short",
+      "last_seen": "2026-11-03",
+      "platform": "youtube",
+      "reason": "viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove '100%' is not allowed (FSSAI). Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"What's actually inside this jar? Let's read it\". Format rules: hook in the first second, 3",
       "stage": "generation",
       "status": "gate_holding"
     }

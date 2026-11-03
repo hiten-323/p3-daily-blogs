@@ -2018,112 +2018,106 @@
     }
   },
   "yt_short": {
-    "featured_product": "maybe not needed; but schema expects product field. We'll include product.",
-    "objective": "Drive traffic to product page while establishing uncompromising process transparency.",
-    "primary_cta": "Shop p3online.in",
-    "success_metric": "Watch time percentage and direct website click-through rate.",
-    "audio": "Low ambient kitchen hum combined with the physical clink of a glass jar resting on solid walnut wood.",
-    "audio_direction": "Keep room sound present for the first two seconds, then bring in an understated low electronic pulse under the spoken voiceover.",
-    "chosen_hook": "Look closely at the back of your coffee jar. Does it list anything besides coffee beans?",
-    "comment_trigger": "Comment LABEL if you want a direct link to the transparent ingredient breakdown.",
-    "cta": "Explore Purity Beans Purista at https://p3online.in",
-    "description": "An intimate, documentary-grade look at the Purity Beans Purista Gourmet Robusta Granules glass jar label, revealing pure gourmet robusta with zero chicory. Visit https://p3online.in to explore more.",
-    "edit_pacing": "Deliberate, slow cuts focusing on the physical texture of the glass jar and the crisp typography of the label.",
-    "emotion_arc": "Curiosity -> Realization -> Trust -> Action",
-    "funnel_objective": "Brand Education and Product Consideration",
+    "featured_product": "Purista Gourmet Robusta Granules",
+    "objective": "Follower growth and brand discovery through high-value coffee education.",
+    "primary_cta": "Follow @purepantryprovisions",
+    "success_metric": "Saves and profile visits per 1,000 reach.",
+    "audio": "Ambient kitchen tones, kettle steam, slow acoustic guitar strum, gentle pour sound, cinematic hum",
+    "audio_direction": "Start with a sharp kettle whistle click, transition to warm acoustic strings and soft room tone, clear voiceover recorded close to mic with no reverb.",
+    "caption": "Your kettle stops whistling, but pouring boiling water straight onto your coffee is the exact reason your morning cup turns bitter. The secret is letting the water rest for sixty seconds so the temperature drops to eighty-five degrees Celsius. Read the jar. Purity Beans Purista Gourmet Robusta Granules is pure coffee with zero chicory. Follow @purepantryprovisions for more. Shop https://p3online.in",
+    "chosen_hook": "Your kettle stops whistling, but pouring boiling water straight onto your coffee is the exact reason your morning cup turns bitter.",
+    "comment_trigger": "Comment WATER below if you let your kettle rest before pouring.",
+    "cta": "Follow @purepantryprovisions for more daily coffee education. Shop https://p3online.in",
+    "description": "A non-sales educational YouTube Short teaching the eighty-five degree Celsius water temperature rule for brewing instant coffee without bitterness, featuring Purity Beans Purista Gourmet Robusta Granules.",
+    "edit_pacing": "Fast cuts every 3 seconds for the first 10 seconds, then steady medium pacing with macro close-ups and smooth fades.",
+    "emotion_arc": "Surprise at the boiling water mistake -> Curiosity about the exact temperature -> Satisfaction seeing the smooth pour -> Belonging to the pure coffee ritual.",
+    "funnel_objective": "Follow / Discovery",
     "gate_rejection": "none",
-    "growth_plan": "Distribute on YouTube Shorts and Instagram Reels using transparent ingredient and coffee label education keywords.",
-    "growth_review": "Focusing purely on the back-of-pack",
-    "hashtags": "#PurityBeans #FreezeDriedCoffee #Purista #PureRobusta #CoffeeScience",
-    "hook": "Your kettle hits 100 degrees. Your Purity Beans Purista deserves 85. That fifteen-degree gap is the difference between scorched bitterness and locked-in crema.",
-    "hook_text": "THE INGREDIENT PANEL",
+    "growth_plan": "Optimize for shares and saves among urban coffee drinkers who want a better home brewing technique without buying new hardware.",
+    "growth_review": "Previous asset focused on sales too early. This asset is 100% value-first education with zero sales language in the core script.",
+    "hashtags": "#CoffeeEducation #PureCoffee #InstantCoffee #CoffeeLoversIndia #PurityBeans #Robusta",
+    "hook": "Your kettle stops whistling, but pouring boiling water straight onto your coffee is the exact reason your morning cup turns bitter.",
+    "hook_text": "YOUR KETTLE STOPS WHISTLING, BUT POURING BOILING WATER STRAIGHT ONTO YOUR COFFEE IS THE EXACT REASON YOUR MORNING CUP TURNS BITTER.",
     "ladder_exhausted": true,
-    "loop_note": "The final frame holds the jar centered with the URL overlay, mirroring the opening macro shot of the thermometer — creating a seamless visual loop back to the temperature hook.",
-    "product": "Purista",
+    "loop_note": "Ends on the steam rising from the cup, looping seamlessly back to the kettle whistle in the first frame.",
+    "premium": true,
+    "product": "Purista Gourmet Robusta Granules",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "...",
-    "save_trigger": "Save this short to check your own kitchen cabinet labels tomorrow morning.",
+    "reel_inspiration": "Chef's Table macro documentary style paired with modern coffee lab precision.",
+    "save_trigger": "Save this reel before your next morning brew.",
     "scenes": [
       {
         "scene": 1,
-        "type": "problem",
+        "type": "hook",
         "duration_s": 5.0,
-        "on_screen": "WATER TEMPERATURE",
-        "spoken": "Your kettle hits 100 degrees. Your Purity Beans Purista deserves 85. That fifteen-degree gap is the difference between scorched bitterness and locked-in crema.",
-        "visual_direction": "Extreme macro close-up of a digital kettle thermometer resting at eighty-five degrees, with warm morning light hitting a dark kitchen counter. Steam rises gently from the spout."
+        "on_screen": "BOILING WATER DESTROYS THE AROMA",
+        "spoken": "Your kettle stops whistling, but pouring boiling water straight onto your coffee is the exact reason your morning cup turns bitter.",
+        "visual_direction": "Close-up of a stainless steel kettle nozzle releasing a heavy plume of steam against a dark moody kitchen background, filmed with an 85mm lens at f/1.8."
       },
       {
         "scene": 2,
         "type": "tension",
-        "duration_s": 7.0,
-        "on_screen": "READ THE LABEL",
-        "spoken": "Purity Beans Purista prints only one ingredient on the back of its lead-free glass jar: pure gourmet robusta.",
-        "visual_direction": "A hand gently turns the authentic Purity Beans Purista jar (puritybeans_purista.png) to reveal the clear, printed ingredient panel under warm amber light. Label texture catches the light like real printed paper."
+        "duration_s": 6.0,
+        "on_screen": "THE SIXTY-SECOND WAIT",
+        "spoken": "The secret is letting the water rest for sixty seconds so the temperature drops to eighty-five degrees Celsius.",
+        "visual_direction": "Handheld shot of a kitchen clock ticking past sixty seconds while warm amber sunlight streams through a window, illuminating floating dust motes in the air."
       },
       {
         "scene": 3,
-        "type": "turn",
-        "duration_s": 8.0,
-        "on_screen": "ZERO FILLERS",
-        "spoken": "No hidden fillers, no ambiguous terms, and zero chicory.",
-        "visual_direction": "Close-up of the typography on the jar label, with shallow depth of field highlighting the absence of additives. A single fingerprint smudge on the glass catches the light — proving it is a real jar, not a render."
+        "type": "value",
+        "duration_s": 7.0,
+        "on_screen": "READ THE JAR",
+        "spoken": "When you use Purity Beans Purista Gourmet Robusta Granules, that precise temperature protects the locked-in aroma instead of scorching the granules.",
+        "visual_direction": "Macro shot of the exact Purity Beans glass jar sitting on a dark wooden counter, catching a warm edge light on the label."
       },
       {
         "scene": 4,
         "type": "payoff",
-        "duration_s": 6.0,
-        "on_screen": "FREEZE-DRIED PURISTA",
-        "spoken": "Freeze-dried to lock in aroma, the granules wait for your water.",
-        "visual_direction": "The Purista jar resting on a dark wooden kitchen counter next to a ceramic spoon, reflecting soft morning light. A few granules sit on the counter beside the jar, catching the light with crystalline texture."
+        "duration_s": 7.0,
+        "on_screen": "SMOOTH EXTRACTION",
+        "spoken": "Notice how the granules bloom instantly without clumping, releasing a deep, bold scent that fills the room.",
+        "visual_direction": "Slow-motion top-down shot of hot water pouring gently over dark freeze-dried coffee granules in a ceramic mug, creating a rich crema."
       },
       {
         "scene": 5,
         "type": "cta",
-        "duration_s": 4.0,
-        "on_screen": "p3online.in",
-        "spoken": "Visit https://p3online.in to read the full ingredient story.",
-        "visual_direction": "The glass jar centered in the frame with the website URL clearly overlaid in clean white typography. Subtle lens flare from the window catches the jar cap."
+        "duration_s": 5.0,
+        "on_screen": "FOLLOW @purepantryprovisions",
+        "spoken": "Follow @purepantryprovisions for more daily coffee education. Shop https://p3online.in",
+        "visual_direction": "The exact Purity Beans jar centered in a minimalist warm studio setting with soft shadows, clean typography overlay at the bottom."
       }
     ],
-    "share_trigger": "Share this with someone who reads ingredient labels before buying groceries.",
+    "script": "Your kettle stops whistling, but pouring boiling water straight onto your coffee is the exact reason your morning cup turns bitter. The secret is letting the water rest for sixty seconds so the temperature drops to eighty-five degrees Celsius. When you use Purity Beans Purista Gourmet Robusta Granules, that precise temperature protects the locked-in aroma instead of scorching the granules. Notice how the granules bloom instantly without clumping, releasing a deep, bold scent that fills the room. Follow @purepantryprovisions for more daily coffee education. Shop https://p3online.in",
+    "share_trigger": "Share this with someone who pours boiling water directly onto their coffee.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "tags": [
-      "freeze dried coffee",
-      "pure instant coffee",
-      "Purity Beans",
-      "gourmet coffee India"
+      "coffee education",
+      "pure coffee"
     ],
-    "target": "Coffee enthusiasts who value ingredient transparency and brew precision",
-    "title": "The 15-Degree Rule: Why Your Purista Deserves 85°C Water",
-    "viral_potential": {
-      "script": "One spoon of Purity Beans Purista meets water held at eighty-five degrees Celsius, not a rolling boil. Notice how the freeze-dried robusta granules dissolve without scorching the natural aroma. Waiting thirty seconds lets the crema settle into a dense, balanced layer before your first sip. Read the label on the jar: pure gourmet robusta, zero chicory, transparent ingredients. Visit https://p3online.in to explore Purity Beans Purista and follow @purepantryprovisions for daily brewing guides."
-    },
     "editorial_score": {
       "shareability": 8.5,
       "saveability": 9.0,
-      "emotion_pull": 8.8,
+      "emotion_pull": 8.0,
       "hook_strength": 9.2,
-      "brand_clarity": 9.5,
-      "overall": 9.0,
+      "brand_clarity": 8.8,
+      "overall": 8.7,
       "verdict": "PASS",
-      "feedback": "The asset maintains a high standard of documentary-style precision while clearly anchoring the product to a specific technical differentiator (freeze-drying Purista Gourmet Robusta). The curiosity gap in the first 2 seconds combined with visible product transparency drives high save and share intent among coffee enthusiasts.",
-      "retention_audit": ""
+      "feedback": "The educational angle regarding water temperature directly targets a common home-brewing mistake, driving high saveability for practical value. The transition from the brewing tip to the specific product (Purista) is seamless and maintains trust.",
+      "retention_audit": "Scene 1 immediately arrests attention with the boiling water mistake. Scene 2 maintains curiosity with the 60-second rule. The pacing matches the audio direction well."
     },
-    "script": [
-      "One spoon of Purity Beans Purista meets water held at eighty-five degrees celsius, not a rolling boil.",
-      "Notice how the freeze-dried robusta granules dissolve without scorching the natural aroma.",
-      "Waiting thirty seconds lets the crema settle into a dense, balanced layer before your first sip.",
-      "Read the label on the jar: pure gourmet robusta, zero chicory, transparent ingredients.",
-      "Visit https://p3online.in to explore Purity Beans Purista and follow @purepantryprovisions for daily brewing guides."
-    ],
-    "editorial_error": "schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type",
-    "caption": "Pure transparency in a glass jar – Purity Beans Purista Gourmet Rob",
-    "words": "fresh\" not present. \"premium\" appears? Not in required? We have \"premium\"? tagline includes \"pure coffee\". In caption we have \"Pure transparency",
-    "premium": "Avoid banned phrases.\n\nCheck per-cup price: none.\n\nCheck process: freeze-dried mentioned for Purista, correct.\n\nCheck we didn't mention Ultra Blend.\n\nCheck we didn't mention Prima.\n\nAll good.\n\nNow ensure scenes each have all fields non-empty.\n\nLet's create scenes:\n\nScene1 problem: water temperature.\n\nScene2 tension: reading label.\n\nScene3 tension? maybe",
-    "FILLERS": "Keep as turn maybe.\n\nBut need type values: problem, tension, turn, payoff, cta.\n\nWe'll keep as earlier.\n\nMake sure visual_direction strings non-empty.\n\nNow produce final JSON.\n{",
+    "viral_potential": {
+      "passed": false,
+      "overall": 0.0,
+      "scores": {},
+      "honesty": [
+        "'100%' is not allowed (FSSAI)"
+      ],
+      "pass_mark": 8.0,
+      "feedback": "HONESTY: remove '100%' is not allowed (FSSAI). Earn attention with a true, specific hook instead."
+    },
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove '100%' is not allowed (FSSAI). Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"What's actually inside this jar? Let's read it\". Format rules: hook in the first second, 3-beat pace, loopable ending, title that opens a loop. Add a comment trigger and a clear 'Follow @purepantryprovisions' reason. Never invent urgency, reviews, metrics, health"
   },
   "growth_reel": {
     "type": "growth_reel",
@@ -3610,6 +3604,50 @@
       {
         "status": "exhausted",
         "reason": "schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory']"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 7.7 < 8.0 (weakest: hook, shareability). The hook is a bit dry and intellectual; it needs a sharper pattern interrupt to stop the scroll immediately on YouTube Shorts. To boost shareability, lean into the contrast between what most people drink versus pure robusta. Suggested hook: Most "
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook is decent but could be more arresting. Consider opening with a visual shock‑contrast (e.g., Purista jar calm while a swirl of generic filler powders erupts around it) and a one‑line hook like \"You've been brewing with filler dust all this time.\" This will boost scroll‑stop power and shareab"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.8 < 8.0 (weakest: hook, shareability). The hook focuses on a technical water temperature detail rather than an immediate consumer pain point or pattern interrupt. To increase shareability and hook strength, start with an identity challenge or a direct contrast against typical morning "
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, comment_trigger). The piece establishes a strong, honest premise by pointing viewers to check back labels, which builds immediate trust. However, the opening hook can be sharper and punchier for a YouTube Short to stop the scroll instantly in und"
+      },
+      {
+        "attempt": 7,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a brew tip (exact water temperature, ratio or technique for a better instant cup). Every frame/slide must teach, debunk or show a ritual; no prices, no offe"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove '100%' is not allowed (FSSAI). Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"What's actually inside this jar? Let's read it\". Format rules: hook in the first second, 3"
       }
     ]
   },
