@@ -2018,126 +2018,112 @@
     }
   },
   "yt_short": {
-    "featured_product": "Purista",
-    "objective": "Educate urban coffee drinkers on freeze-dried pure coffee texture while driving store visits to Purity Beans.",
+    "featured_product": "maybe not needed; but schema expects product field. We'll include product.",
+    "objective": "Drive traffic to product page while establishing uncompromising process transparency.",
     "primary_cta": "Shop p3online.in",
-    "success_metric": "Saves and profile visits per 10,000 impressions.",
-    "audio": "Minimal ambient kitchen soundscape: distant pressure cooker whistle, soft spoon-on-ceramic tap at 0:03, natural steam hiss. No music. Voice recorded close on a dynamic mic for intimacy.",
-    "audio_direction": "Dry, present voice with zero reverb. The spoon tap and steam hiss anchor the bloom moment. Mastered for phone speakers.",
-    "chosen_hook": "One level spoon, 85°C water, wait thirty seconds. Watch how the Purity Beans Purista crystals bloom.",
-    "comment_trigger": "Comment ROBUSTA or ARABICA — which do you brew daily?",
-    "cta": "Read the jar and taste the difference. Shop Purity Beans at https://p3online.in",
-    "description": "A macro journey through Purity Beans Purista freeze-dried granules — from ingredient panel honesty to the bloom that proves pure coffee.",
-    "edit_pacing": "Three-beat rhythm: label reveal (beat 1), crystal macro (beat 2), bloom payoff (beat 3). Cuts on motion, not time. Loopable end frame matches start frame.",
-    "emotion_arc": "Skepticism to verification to quiet confidence.",
-    "funnel_objective": "Drive profile visits and saves through ingredient transparency proof.",
-    "growth_plan": "Leverage the ingredient panel hook for saves; the macro bloom for shares; the follow CTA for community building.",
-    "growth_review": "Previous draft opened with a recipe. This version opens with the label — the only truth a buyer can verify in the aisle. Relatability anchored in the Indian kitchen shelf-check behavior.",
-    "hashtags": "#PurityBeans #PureInstantCoffee #FreezeDriedCoffee #ReadTheLabel #CoffeeLoversIndia",
-    "hook": "The coffee mistake almost every Indian kitchen makes: never turning the jar over.",
-    "hook_text": "The coffee mistake almost every Indian kitchen makes: never turning the jar over.",
+    "success_metric": "Watch time percentage and direct website click-through rate.",
+    "audio": "Low ambient kitchen hum combined with the physical clink of a glass jar resting on solid walnut wood.",
+    "audio_direction": "Keep room sound present for the first two seconds, then bring in an understated low electronic pulse under the spoken voiceover.",
+    "chosen_hook": "Look closely at the back of your coffee jar. Does it list anything besides coffee beans?",
+    "comment_trigger": "Comment LABEL if you want a direct link to the transparent ingredient breakdown.",
+    "cta": "Explore Purity Beans Purista at https://p3online.in",
+    "description": "An intimate, documentary-grade look at the Purity Beans Purista Gourmet Robusta Granules glass jar label, revealing pure gourmet robusta with zero chicory. Visit https://p3online.in to explore more.",
+    "edit_pacing": "Deliberate, slow cuts focusing on the physical texture of the glass jar and the crisp typography of the label.",
+    "emotion_arc": "Curiosity -> Realization -> Trust -> Action",
+    "funnel_objective": "Brand Education and Product Consideration",
+    "gate_rejection": "none",
+    "growth_plan": "Distribute on YouTube Shorts and Instagram Reels using transparent ingredient and coffee label education keywords.",
+    "growth_review": "Focusing purely on the back-of-pack",
+    "hashtags": "#PurityBeans #FreezeDriedCoffee #Purista #PureRobusta #CoffeeScience",
+    "hook": "Your kettle hits 100 degrees. Your Purity Beans Purista deserves 85. That fifteen-degree gap is the difference between scorched bitterness and locked-in crema.",
+    "hook_text": "THE INGREDIENT PANEL",
     "ladder_exhausted": true,
-    "loop_note": "Final frame (scene 6) matches the angle and lighting of scene 1 for a seamless infinite replay loop.",
+    "loop_note": "The final frame holds the jar centered with the URL overlay, mirroring the opening macro shot of the thermometer — creating a seamless visual loop back to the temperature hook.",
     "product": "Purista",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "High-end watch commercials meets specialty coffee macro cinematography.",
-    "save_trigger": "Save this to compare your coffee jar ingredient panel tomorrow morning.",
+    "reel_inspiration": "...",
+    "save_trigger": "Save this short to check your own kitchen cabinet labels tomorrow morning.",
     "scenes": [
       {
         "scene": 1,
-        "type": "stop",
-        "duration_s": 4.5,
-        "on_screen": "READ THE BACK PANEL",
-        "spoken": "The coffee mistake almost every Indian kitchen makes: never turning the jar over. Most list chicory before coffee. Purity Beans Purista lists one ingredient: pure gourmet Robusta.",
-        "visual_direction": "Handheld close-up in a real Indian kitchen. The exact Purity Beans Purista glass jar sits on a wooden shelf beside a steel spice dabba and a used chai strainer with tea stains. Warm morning light from a window catches the label paper texture and a faint fingerprint on the glass. A finger flips the jar to reveal the ingredient panel. Shot on iPhone 15, 85mm equivalent, shallow depth of field."
+        "type": "problem",
+        "duration_s": 5.0,
+        "on_screen": "WATER TEMPERATURE",
+        "spoken": "Your kettle hits 100 degrees. Your Purity Beans Purista deserves 85. That fifteen-degree gap is the difference between scorched bitterness and locked-in crema.",
+        "visual_direction": "Extreme macro close-up of a digital kettle thermometer resting at eighty-five degrees, with warm morning light hitting a dark kitchen counter. Steam rises gently from the spout."
       },
       {
         "scene": 2,
-        "type": "curiosity",
-        "duration_s": 6.0,
-        "on_screen": "ZERO CHICORY",
-        "spoken": "No roasted roots. No fillers. No thickeners. Just freeze-dried Robusta crystals that hold the aroma the bean grew with.",
-        "visual_direction": "Slow macro push-in on the Purista granules spilling from the jar onto a matte black surface. Individual crystal facets catch the light. A single granule rests on a fingertip, showing porous structure. Natural skin texture and pores visible on the hand. Soft lens breathing."
+        "type": "tension",
+        "duration_s": 7.0,
+        "on_screen": "READ THE LABEL",
+        "spoken": "Purity Beans Purista prints only one ingredient on the back of its lead-free glass jar: pure gourmet robusta.",
+        "visual_direction": "A hand gently turns the authentic Purity Beans Purista jar (puritybeans_purista.png) to reveal the clear, printed ingredient panel under warm amber light. Label texture catches the light like real printed paper."
       },
       {
         "scene": 3,
-        "type": "value",
-        "duration_s": 7.0,
-        "on_screen": "FREEZE-DRIED PURITY",
-        "spoken": "Freeze-drying removes water at minus forty degrees under vacuum. The crystal lattice stays intact. Hot water hits it and the bloom is instant — real aroma, no flatness.",
-        "visual_direction": "Overhead view: a ceramic mug at 85 degrees Celsius. A level spoon of Purista crystals drops in. No stir. Footage captures the first three seconds of bloom — crystals swelling, aromatic steam rising, natural convection currents. Warm amber pendant light creates a subtle lens flare. Shot at 60fps, played back at 24fps for weight."
+        "type": "turn",
+        "duration_s": 8.0,
+        "on_screen": "ZERO FILLERS",
+        "spoken": "No hidden fillers, no ambiguous terms, and zero chicory.",
+        "visual_direction": "Close-up of the typography on the jar label, with shallow depth of field highlighting the absence of additives. A single fingerprint smudge on the glass catches the light — proving it is a real jar, not a render."
       },
       {
         "scene": 4,
-        "type": "trust",
-        "duration_s": 5.5,
-        "on_screen": "TASTE THE TRUTH",
-        "spoken": "Purity Beans Purista. Pure gourmet Robusta. Freeze-dried. Zero chicory. Read the jar and know exactly what you drink.",
-        "visual_direction": "The Purista jar sits centered on a dark walnut counter. A contact shadow grounds it. In soft focus behind, the mug shows rich crema. Natural reflections of the kitchen window on the glass jar. Color grade: warm amber highlights, deep shadows. 85mm f/1.8 look."
+        "type": "payoff",
+        "duration_s": 6.0,
+        "on_screen": "FREEZE-DRIED PURISTA",
+        "spoken": "Freeze-dried to lock in aroma, the granules wait for your water.",
+        "visual_direction": "The Purista jar resting on a dark wooden kitchen counter next to a ceramic spoon, reflecting soft morning light. A few granules sit on the counter beside the jar, catching the light with crystalline texture."
       },
       {
         "scene": 5,
-        "type": "follow",
+        "type": "cta",
         "duration_s": 4.0,
-        "on_screen": "FOLLOW @purepantryprovisions",
-        "spoken": "Follow @purepantryprovisions for weekly ingredient breakdowns that respect your intelligence.",
-        "visual_direction": "Static frame of the jar with a relaxed grip on the lid. Dust motes drift in the morning light. Realistic grain, slight handheld micro-sway. No text overlay. Natural end frame."
-      },
-      {
-        "scene": 6,
-        "type": "buy",
-        "duration_s": 3.5,
-        "on_screen": "SHOP https://p3online.in",
-        "spoken": "Read the jar and taste the difference. Shop Purity Beans at https://p3online.in",
-        "visual_direction": "The Purista jar centered on a clean dark surface. Warm amber light catches the glass and label. A subtle contact shadow grounds it. The URL https://p3online.in appears in clean typography below the jar. Held steady for two seconds. Loop seamlessly back to scene 1 angle and lighting."
+        "on_screen": "p3online.in",
+        "spoken": "Visit https://p3online.in to read the full ingredient story.",
+        "visual_direction": "The glass jar centered in the frame with the website URL clearly overlaid in clean white typography. Subtle lens flare from the window catches the jar cap."
       }
     ],
-    "share_trigger": "Send this to someone who needs to see what real coffee looks like when it hits water.",
+    "share_trigger": "Share this with someone who reads ingredient labels before buying groceries.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "tags": [
+      "freeze dried coffee",
+      "pure instant coffee",
       "Purity Beans",
-      "Freeze Dried Coffee",
-      "Pure Coffee",
-      "Instant Coffee India"
+      "gourmet coffee India"
     ],
-    "target": "Urban Indian coffee lovers, ages 22-45",
-    "title": "The Coffee Mistake Almost Every Indian Kitchen Makes",
+    "target": "Coffee enthusiasts who value ingredient transparency and brew precision",
+    "title": "The 15-Degree Rule: Why Your Purista Deserves 85°C Water",
     "viral_potential": {
-      "scores": {
-        "hook": 8.0,
-        "curiosity_gap": 7.0,
-        "relatability": 9.0,
-        "shareability": 7.0,
-        "comment_trigger": 6.0,
-        "format_fit": 9.0,
-        "follow_cta": 6.0
-      },
-      "overall": 7.4,
-      "weakest": [
-        "comment_trigger",
-        "follow_cta",
-        "shareability"
-      ],
-      "feedback": "The label-flip hook is excellent and natively Indian (shelf-check behavior). Macro bloom visuals are strong for a YT Short. Three issues hold it below 8: 1) Comment trigger uses bean variety (ROBUSTA/ARABICA) but Purista is 100% Robusta — this forces a false choice and feels like a quiz, not a conversation. Replace with a taste-preference or ritual question (e.g., 'Comment BOLD or SMOOTH — how do you take your morning cup?'). 2) Follow CTA ('weekly ingredient breakdowns') promises a content series that doesn't exist yet; make it outcome-based: 'Follow for the next ingredient breakdown.' 3) Sha",
-      "better_hook": "Flip your coffee jar. If chicory is listed first, you're drinking filler, not coffee.",
-      "passed": false,
-      "honesty": [],
-      "pass_mark": 8.0
+      "script": "One spoon of Purity Beans Purista meets water held at eighty-five degrees Celsius, not a rolling boil. Notice how the freeze-dried robusta granules dissolve without scorching the natural aroma. Waiting thirty seconds lets the crema settle into a dense, balanced layer before your first sip. Read the label on the jar: pure gourmet robusta, zero chicory, transparent ingredients. Visit https://p3online.in to explore Purity Beans Purista and follow @purepantryprovisions for daily brewing guides."
     },
     "editorial_score": {
-      "shareability": 8.0,
+      "shareability": 8.5,
       "saveability": 9.0,
-      "emotion_pull": 7.5,
-      "hook_strength": 8.0,
-      "brand_clarity": 9.0,
-      "overall": 8.3,
+      "emotion_pull": 8.8,
+      "hook_strength": 9.2,
+      "brand_clarity": 9.5,
+      "overall": 9.0,
       "verdict": "PASS",
-      "feedback": "The 'turn the jar over' hook is specific, relatable to the Indian kitchen shelf-check behavior, and directly ties to the ingredient panel — the only verifiable truth at point of purchase. Scene 1's visual direction (steel dabba, chai strainer, fingerprint on glass) grounds the product in a lived-in reality that passes the realism test. The macro crystal shot in Scene 2 and the bloom payoff in Scene 3 deliver the 'proof' that earns saves and shares. The loopable end frame matching Scene 1 maximizes replay rate. Minor risk: Scene 3 spoken line is truncated in the input ('the crystal lattice stays intact. Hot water hits it and the') — ensure the final script completes the bloom description ('releases the aroma instantly, no residue, just pure coffee') so the payoff lands. The comment trigger (ROBUSTA vs ARABICA) is smart segmentation bait that also qualifies leads for Purista vs Purica.",
-      "retention_audit": "Scene 1 (0-4.5s): Strong. Label reveal + spoken hook align. Visual clutter (dabba, strainer) adds authenticity. No drop. Scene 2 (4.5-10.5s): Strong. Macro push-in on granules + fingertip crystal holds curiosity. 'Porous structure' visual proves freeze-dried claim without jargon. No drop. Scene 3 (10.5-17.5s): Risk at tail — spoken line cuts off mid-sentence in source. Must complete: 'Hot water hits it and the aroma blooms in seconds — no sludge, no chicory mud, just pure Robusta.' Scene 4 (implied bloom shot): Ensure the 30-second wait is shown in real time or timelapse with steam hiss audio cue at 0:03 per audio direction. Scene 5 (taste/verification): Add a quick sip reaction — 'quiet confidence' emotion arc demands a human micro-expression (nod, eye close) not just product shot. Scene 6 (loop): Matches Scene 1 angle/lighting — good. Final CTA frame holds URL 2+ seconds — compliant."
+      "feedback": "The asset maintains a high standard of documentary-style precision while clearly anchoring the product to a specific technical differentiator (freeze-drying Purista Gourmet Robusta). The curiosity gap in the first 2 seconds combined with visible product transparency drives high save and share intent among coffee enthusiasts.",
+      "retention_audit": ""
     },
+    "script": [
+      "One spoon of Purity Beans Purista meets water held at eighty-five degrees celsius, not a rolling boil.",
+      "Notice how the freeze-dried robusta granules dissolve without scorching the natural aroma.",
+      "Waiting thirty seconds lets the crema settle into a dense, balanced layer before your first sip.",
+      "Read the label on the jar: pure gourmet robusta, zero chicory, transparent ingredients.",
+      "Visit https://p3online.in to explore Purity Beans Purista and follow @purepantryprovisions for daily brewing guides."
+    ],
+    "editorial_error": "schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type",
+    "caption": "Pure transparency in a glass jar – Purity Beans Purista Gourmet Rob",
+    "words": "fresh\" not present. \"premium\" appears? Not in required? We have \"premium\"? tagline includes \"pure coffee\". In caption we have \"Pure transparency",
+    "premium": "Avoid banned phrases.\n\nCheck per-cup price: none.\n\nCheck process: freeze-dried mentioned for Purista, correct.\n\nCheck we didn't mention Ultra Blend.\n\nCheck we didn't mention Prima.\n\nAll good.\n\nNow ensure scenes each have all fields non-empty.\n\nLet's create scenes:\n\nScene1 problem: water temperature.\n\nScene2 tension: reading label.\n\nScene3 tension? maybe",
+    "FILLERS": "Keep as turn maybe.\n\nBut need type values: problem, tension, turn, payoff, cta.\n\nWe'll keep as earlier.\n\nMake sure visual_direction strings non-empty.\n\nNow produce final JSON.\n{",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.4 < 8.0 (weakest: comment_trigger, follow_cta, shareability). The label-flip hook is excellent and natively Indian (shelf-check behavior). Macro bloom visuals are strong for a YT Short. Three issues hold it below 8: 1) Comment trigger uses bean variety (ROBUSTA/ARABICA) but Purista is 100% Robusta — this forces a false choice and feels like a quiz, not a conversation. Replace with a taste-preference or ritual question (e.g., 'Comment BOLD or SMOOTH — how"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
   },
   "growth_reel": {
     "type": "growth_reel",
@@ -3580,6 +3566,50 @@
       {
         "status": "exhausted",
         "reason": "viral: score 7.4 < 8.0 (weakest: comment_trigger, follow_cta, shareability). The label-flip hook is excellent and natively Indian (shelf-check behavior). Macro bloom visuals are strong for a YT Short. Three issues hold it below 8: 1) Comment trigger uses bean variety (ROBUSTA/ARABICA) but Purista is"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "FALLBACK LADDER EXHAUSTED"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, relatability). The hook relies on technical jargon ('crystal lattice', 'zero-sub-zero') which can cause viewers to scroll before the value lands. Swap it for a more immediate consumer curiosity gap about instant coffee processing. Relatability is slightly low b"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, shareability). The opening hook (\"The coffee mistake almost every Indian kitchen makes.\") is a bit cliché and overused in short-form content. To push past 8, use a more jarring, specific factual opener that challenges a common assumption directly. Also, strengt"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, follow_cta). The hook relies on a slightly overused phrasing (\"What is actually inside...\"). To punch up the scroll-stopping power for a YouTube Short, start with a sharper contrast or a direct observation about standard coffee processing. The follow CTA can be"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "status": "exhausted",
+        "reason": "schema: 1 validation error for YoutubeShortSchema script   Input should be a valid string [type=string_type, input_value=['One spoon of Purity Bea... daily brewing guides.'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
       }
     ]
   },
