@@ -2018,120 +2018,239 @@
     }
   },
   "yt_short": {
-    "featured_product": "Purista Gourmet Robusta Granules",
-    "objective": "Brand awareness and direct website traffic",
-    "primary_cta": "Shop https://p3online.in",
-    "success_metric": "Saves and profile visits",
-    "audio": "Ambient kitchen morning hum with a soft kettle whistle fade and warm acoustic guitar notes",
-    "audio_direction": "Start with sharp acoustic pluck on the hook, then warm instrumental rhythm matching the cut speed",
-    "caption": "Take a closer look at your kitchen counter. Purity Beans Purista gourmet Robusta granules deliver pure coffee with zero chicory in every glass jar. Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Follow @purepantryprovisions for daily brewing guides. Shop https://p3online.in",
-    "chosen_hook": "Your kitchen shelf holds a jar you have never actually inspected.",
-    "comment_trigger": "Comment JAR if you read your ingredient panel.",
-    "cta": "Shop https://p3online.in",
-    "description": "A focused 35-second YouTube Short exploring the tactile reality of label transparency and freeze-dried pure Robusta by Purity Beans.",
-    "edit_pacing": "Fast cut at 2 seconds, rhythmic medium cuts every 4 seconds, slow lingering macro close-up on the last frame",
-    "emotion_arc": "Curiosity about label transparency to confidence in pure ingredients",
-    "funnel_objective": "Conversion and education",
-    "gate_rejection": false,
-    "growth_plan": "Drive high saves and shares via educational clarity on reading jar labels and freeze-drying pure coffee",
-    "growth_review": "Passed all previous obstruction checks; strictly avoiding banned words.",
-    "hashtags": "#PurityBeans #Purista #FreezeDriedCoffee #PureCoffee #InstantCoffeeIndia",
-    "hook": "Your kitchen shelf holds a jar you have never actually inspected.",
-    "hook_text": "Your kitchen shelf holds a jar you have never actually inspected.",
-    "ladder_exhausted": true,
-    "loop_note": "Ends on the closed Purity Beans jar, seamlessly resetting to the opening crystal macro shot",
+    "featured_product": "purista",
+    "objective": "Follower growth and brand discovery through ritual education.",
+    "primary_cta": "Follow @purepantryprovisions",
+    "success_metric": "Profile visits and saves per reach.",
+    "audio": "Ambient morning kitchen sounds with the soft click of a kettle switch and a deep, low-frequency resonance on the reveal.",
+    "audio_direction": "Start with a quiet, grounded ambient tone. Add a warm, subtle hum that builds tension during the middle frames and resolves cleanly into a gentle acoustic note.",
+    "caption": "Your kettle stops whistling, but pouring boiling water straight onto your coffee grounds ruins the bloom. Watch how Purity Beans Purista Gourmet Robusta Granules react to precise 85°C water. Read the jar to discover pure gourmet Robusta with zero chicory. Follow @purepantryprovisions for daily coffee education. Shop https://p3online.in",
+    "chosen_hook": "Pouring boiling water straight onto your coffee grounds is the exact reason your morning cup tastes harsh.",
+    "comment_trigger": "Comment COFFEE if you always check your water temperature.",
+    "cta": "Follow @purepantryprovisions for more pure coffee rituals. Shop https://p3online.in",
+    "description": "A non-sales educational YouTube Short exploring the thermal dissolve and bloom of Purista Gourmet Robusta Granules.",
+    "edit_pacing": "Deliberate and calm. Slow pans and steady macro shots with cuts every four seconds.",
+    "emotion_arc": "Moves from quiet curiosity during the initial thermal test to a sense of satisfaction and clarity by the final frame.",
+    "funnel_objective": "follower_growth",
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "viewers who will watch one complete answer with the sound off",
+      "angle": "a standalone payoff that ends without needing another post",
+      "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+      "rationale": "A Short has to pay off on its own, then ask for the next one.",
+      "platform": "yt_short",
+      "sku": "Purista",
+      "day": 306
+    },
+    "growth_review": {
+      "platform": "yt_short",
+      "label": "yt_short",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "viewers who will watch one complete answer with the sound off",
+        "angle": "a standalone payoff that ends without needing another post",
+        "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+        "rationale": "A Short has to pay off on its own, then ask for the next one.",
+        "platform": "yt_short",
+        "sku": "Purista",
+        "day": 306
+      },
+      "published": false
+    },
+    "hashtags": "#PurityBeans #Purista #PureCoffee #ZeroChicory #CoffeeRitual #CoffeeLoversIndia",
+    "hook": "Pouring boiling water straight onto your coffee grounds is the exact reason your morning cup tastes harsh.",
+    "hook_text": "Pouring boiling water straight onto your coffee grounds is the exact reason your morning cup tastes harsh.",
+    "ladder_exhausted": false,
+    "loop_note": "Ends on a calm visual of the closed Purity Beans glass jar that matches the opening frame for a seamless loop.",
     "premium": true,
-    "product": "Purista Gourmet Robusta Granules",
-    "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Macro food science meets high-end coffee documentation",
-    "save_trigger": "Save this before your next pantry restock.",
+    "product": "purista",
+    "publish_blocked": false,
+    "reel_inspiration": "Chef's Table macro documentary style combined with calm morning light.",
+    "save_trigger": "Save this video for your next morning brew temperature guide.",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
-        "duration_s": 5.0,
-        "on_screen": "CHECK THE SHELF",
-        "spoken": "Your kitchen shelf holds a jar you have never actually inspected.",
-        "visual_direction": "Extreme macro lens, shot on iPhone 15, showing a hand pointing toward a clear glass jar under warm window light with natural skin texture and slight reflection."
+        "duration_s": 6.0,
+        "on_screen": "CHECK THE WATER TEMPERATURE",
+        "spoken": "Pouring boiling water straight onto your coffee grounds is the exact reason your morning cup tastes harsh.",
+        "visual_direction": "Shot on iPhone 15, close-up of a glass mug under soft morning window light. Visible water condensation and natural skin texture on fingers holding a stainless steel thermometer."
       },
       {
         "scene": 2,
-        "type": "tension",
-        "duration_s": 6.0,
-        "on_screen": "ZERO CHICORY",
-        "spoken": "When you check the back of a Purity Beans jar, you see pure coffee with zero chicory listed plainly.",
-        "visual_direction": "Sunlight hitting the exact Purity Beans jar from the reference image, golden amber rim light, visible dust motes in the air, handheld slight motion."
+        "type": "curiosity",
+        "duration_s": 7.0,
+        "on_screen": "WATCH THE GRANULES EXPAND",
+        "spoken": "When 85°C water meets freeze-dried pure Robusta from Purity Beans, the crystals expand slowly rather than dissolving instantly.",
+        "visual_direction": "Macro lens view of Purity Beans Purista Gourmet Robusta Granules meeting hot water. Slow-motion capture of freeze-dried granules slowly opening up."
       },
       {
         "scene": 3,
-        "type": "turn",
-        "duration_s": 7.0,
-        "on_screen": "PURE ROBUSTA",
-        "spoken": "Purista delivers freeze-dried pure Robusta granules engineered to protect natural coffee oils without industrial heat damage.",
-        "visual_direction": "Close-up hand turning the jar slightly, showing the clean label and crisp glass reflections, fingerprint smudge on glass for realism."
+        "type": "value",
+        "duration_s": 8.0,
+        "on_screen": "READ THE INGREDIENT PANEL",
+        "spoken": "The back ingredient panel from Purity Beans lists pure Robusta with zero chicory.",
+        "visual_direction": "Hand turning the Purity Beans glass jar around to show the clean ingredient label under warm amber kitchen lighting."
       },
       {
         "scene": 4,
-        "type": "payoff",
+        "type": "unexpected_insight",
         "duration_s": 8.0,
-        "on_screen": "CLEAR TRANSPARENCY",
-        "spoken": "No hidden terms, just pure ingredients in a lead-free glass jar. Follow @purepantryprovisions for daily brewing guides.",
-        "visual_direction": "Hot water pouring from a glass kettle into a mug containing Purista granules, rising steam, warm and cool mixed room lighting."
+        "on_screen": "COMPLETE TRANSPARENCY",
+        "spoken": "Every jar from Purity Beans is produced with complete transparency for your morning routine.",
+        "visual_direction": "Overhead shot of a steaming black coffee cup next to the Purity Beans Purista jar on a dark wooden countertop with a used ceramic spoon."
       },
       {
         "scene": 5,
-        "type": "cta",
-        "duration_s": 9.0,
-        "on_screen": "SHOP P3ONLINE.IN",
-        "spoken": "Shop https://p3online.in.",
-        "visual_direction": "The exact Purity Beans jar centered on a dark walnut table with a water ring, clean text overlay, shallow depth of field."
+        "type": "payoff",
+        "duration_s": 6.0,
+        "on_screen": "FOLLOW FOR MORE",
+        "spoken": "Follow @purepantryprovisions for more pure coffee rituals. Shop https://p3online.in",
+        "visual_direction": "Clean studio shot of the Purity Beans jar resting on a dark surface with soft lens flare from a side window."
       }
     ],
-    "script": "Your kitchen shelf holds a jar you have never actually inspected. When you check the back of a Purity Beans jar, you see pure coffee with zero chicory listed plainly. Purista delivers freeze-dried pure Robusta granules engineered to protect natural coffee oils without industrial heat damage. No hidden terms, just pure ingredients in a lead-free glass jar. Follow @purepantryprovisions for daily brewing guides. Shop https://p3online.in.",
-    "share_trigger": "Share this with a coffee lover who checks labels.",
+    "script": "Pouring boiling water straight onto your coffee grounds is the exact reason your morning cup tastes harsh. When 85°C water meets freeze-dried pure Robusta from Purity Beans, the crystals expand slowly rather than dissolving instantly. The back ingredient panel from Purity Beans lists pure Robusta with zero chicory. Every jar from Purity Beans is produced with complete transparency for your morning routine. Follow @purepantryprovisions for more pure coffee rituals. Shop https://p3online.in",
+    "share_trigger": "Share this with someone who appreciates pure black coffee.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee.",
     "tags": [
-      "purity beans",
-      "purista",
+      "pure instant coffee",
       "freeze dried coffee",
-      "pure robusta",
-      "instant coffee"
+      "coffee ritual",
+      "clean coffee"
     ],
     "viral_potential": {
       "scores": {
-        "hook": 7.0,
-        "curiosity_gap": 7.0,
-        "relatability": 8.0,
-        "shareability": 7.0,
+        "hook": 8.0,
+        "curiosity_gap": 8.0,
+        "relatability": 9.0,
+        "shareability": 8.0,
         "comment_trigger": 7.0,
-        "format_fit": 8.0,
-        "follow_cta": 7.0
+        "format_fit": 9.0,
+        "follow_cta": 8.0
       },
-      "overall": 7.29,
+      "overall": 8.1,
       "weakest": [
-        "hook",
-        "curiosity_gap"
+        "comment_trigger"
       ],
-      "feedback": "The opening hook is slightly generic and descriptive rather than an urgent pattern interrupt. To make it punchier for YouTube Shorts, ground it in a sensory or relatable moment immediately. The pacing and product details follow guidelines well, but the hook needs to instantly stop the thumb.",
-      "better_hook": "Stop pouring your morning coffee without reading the back of the jar first.",
-      "passed": false,
+      "feedback": "The piece has a strong, educational hook and excellent sensory details that fit YouTube Shorts natively. To push the score higher, make the comment trigger more interactive by asking viewers to state their current brewing mistake or coffee preference rather than a passive confirmation.",
+      "better_hook": "Stop pouring boiling water directly onto your coffee unless you want a burnt taste.",
+      "passed": true,
       "honesty": [],
       "pass_mark": 8.0
     },
+    "viral_readiness_score": 87.0,
     "editorial_score": {
       "shareability": 8.5,
       "saveability": 9.0,
-      "emotion_pull": 8.5,
-      "hook_strength": 9.0,
+      "emotion_pull": 8.2,
+      "hook_strength": 9.2,
       "brand_clarity": 9.5,
       "overall": 8.9,
       "verdict": "PASS",
-      "feedback": "The asset effectively leverages inspection curiosity and direct ingredient transparency without relying on generic tropes. The focus on Purista and the exact Purity Beans reference jar maintains strong brand integrity. The CTA and website link are explicit and well-integrated.",
-      "retention_audit": "Scene 1 successfully stops the scroll with an immediate inspection trigger. Scenes 2 through 4 maintain momentum via clear product attributes and tactile visual cues. The final scene ties the education directly into a frictionless conversion action."
-    },
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.29 < 8.0 (weakest: hook, curiosity_gap). The opening hook is slightly generic and descriptive rather than an urgent pattern interrupt. To make it punchier for YouTube Shorts, ground it in a sensory or relatable moment immediately. The pacing and product details follow guidelines well, but the hook needs to instantly stop the thumb. Suggested hook: Stop pouring your morning coffee without reading the back of the jar first. Use a DIFFERENT hook and angle f"
+      "feedback": "The asset hits a high standard by combining practical, save-worthy coffee brewing education with absolute product transparency. The hook successfully targets a common morning mistake, instantly capturing attention. The mention of freeze-dried Purista granules and the clear zero-chicory ingredient panel establishes strong brand authority without relying on generic fluff. The call-to-action seamlessly connects the ritual lesson to the official website and social handle.",
+      "retention_audit": "Scene 1 creates an immediate pattern interrupt with the water temperature warning. Scene 2 maintains attention through high-contrast macro visuals of the granule bloom. Scene 3 reinforces trust via direct label visibility. Pacing remains steady and aligned with the 30-second retention curve."
+    }
   },
   "growth_reel": {
     "type": "growth_reel",
@@ -3706,6 +3825,46 @@
       {
         "status": "exhausted",
         "reason": "viral: score 7.29 < 8.0 (weakest: hook, curiosity_gap). The opening hook is slightly generic and descriptive rather than an urgent pattern interrupt. To make it punchier for YouTube Shorts, ground it in a sensory or relatable moment immediately. The pacing and product details follow guidelines well,"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.33 < 8.0 (weakest: hook, curiosity_gap). The opening line is a bit too observational rather than delivering an immediate, punchy pattern interrupt for a YouTube Short. To push the score past 8.0, ground the hook in an active consumer habit or minor shock, and tighten the curiosity loo"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: anti-chicory attack is not allowed when Ultra Blend or another chicory blend is featured or named as the solution; disclose 70% coffee and 30% chicory']"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: relatability, follow_cta, hook). The opening line is informative but not a punchy pattern‑interrupt; add a stronger surprise or bold claim. Relatability suffers because the script mentions coffee in a generic way—inject a familiar Indian morning scene (e.g., a busy M"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, format_fit). The opening hook is slightly generic and slow for a YouTube Short; replace it with a sharper, more visceral question. Ensure the 3-beat narrative pacing moves faster in the first 5 seconds to hold retention on mobile. Suggested hook: Your instant c"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a ritual (a calm, relatable daily coffee moment the viewer will recognise). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no "
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "brand: ['Missing brand mention', 'Missing website reference']"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, format_fit). The opening line is too long and reads like a product description rather than an immediate pattern-interrupt. For a YouTube Short, the first second needs an instant visual or spoken hook under 5 words that grabs attention before diving into the tem"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, curiosity_gap, shareability). The hook relies heavily on generic instruction ('One spoon... wait 30 seconds. Watch') rather than an immediate visual or psychological pattern interrupt. To hit an 8+, the first 1.5 seconds need a stronger observational statement "
       }
     ]
   },

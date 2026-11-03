@@ -11328,6 +11328,48 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-03T06:17:16+00:00"
     },
+    "2026-11-03|generate|youtube|pb_7bc80ef835": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-03",
+      "content_id": "pb_7bc80ef835",
+      "day_number": 306,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-03T07:32:55+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-03T07:32:59+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "-EDkaE8S5us",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.youtube.com/shorts/-EDkaE8S5us",
+          "verification_method": "youtube_oembed"
+        }
+      ],
+      "last_attempt_at": "2026-11-03T07:32:55+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-03T07:32:59+00:00",
+      "next_retry_at": null,
+      "platform": "youtube",
+      "published": true,
+      "remote_id": "-EDkaE8S5us",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-03T07:32:59+00:00",
+      "url": "https://www.youtube.com/shorts/-EDkaE8S5us",
+      "verification_detail": "public video confirmed by oEmbed",
+      "verification_method": "youtube_oembed",
+      "verified_at": "2026-11-03T07:32:59+00:00"
+    },
     "2026-11-03|morning|facebook|pb_7bc80ef835": {
       "asset": "",
       "attempt_count": 1,
@@ -11372,7 +11414,7 @@
     },
     "2026-11-03|morning|instagram_story|pb_7bc80ef835": {
       "asset": "",
-      "attempt_count": 4,
+      "attempt_count": 5,
       "content_date": "2026-11-03",
       "content_id": "pb_7bc80ef835",
       "day_number": 306,
@@ -11437,9 +11479,24 @@
           "status": "SKIPPED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-03T07:33:00+00:00",
+          "attempt": 5,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-03T07:33:02+00:00",
+          "attempt": 5,
+          "error": "process_match_failed",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "SKIPPED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-03T07:24:28+00:00",
+      "last_attempt_at": "2026-11-03T07:33:00+00:00",
       "last_result": {
         "error": "process_match_failed",
         "success": false
@@ -11450,7 +11507,7 @@
       "remote_id": "",
       "slot": "morning",
       "status": "SKIPPED",
-      "updated_at": "2026-11-03T07:24:31+00:00",
+      "updated_at": "2026-11-03T07:33:02+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
