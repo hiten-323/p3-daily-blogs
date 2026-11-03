@@ -105,7 +105,7 @@ def slots_for_targets(todo: list[str], prewarm: set[str], approved: dict) -> set
     approved = approved or {}
     return {
         TARGETS[t][0] for t in todo
-        if t not in prewarm and any(label in approved for label in TARGETS[t][2])
+        if t in TARGETS and t not in prewarm and any(label in approved for label in TARGETS[t][2])
     }
 
 
