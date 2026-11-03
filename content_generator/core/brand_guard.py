@@ -148,7 +148,6 @@ MIN_REQUIRED_ASSETS = 2
 # editorial_engine / generation / retry when the flag is off (default).
 REQUIRED_DAILY_ASSETS = [
     "reel_1",
-    "reel_2",
     "carousel",
     "instagram_post",
     "linkedin_post",

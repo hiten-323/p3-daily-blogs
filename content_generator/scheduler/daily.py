@@ -440,7 +440,6 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
     """
     TEXT_FIELDS = {
         "reel_1":         ["caption", "cta"],
-        "reel_2":         ["caption", "cta"],
         "carousel":       ["caption", "cta"],
         "instagram_post": ["caption", "cta"],
         "linkedin_post":  ["cta"],
@@ -466,7 +465,7 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
             piece[field] = val.rstrip() + " Shop: https://p3online.in"
 
     # CTA field is mandatory on brand-track assets — create it if the LLM skipped it
-    if label in ("reel_1", "reel_2", "carousel", "instagram_post") and not str(piece.get("cta", "")).strip():
+    if label in ("reel_1", "carousel", "instagram_post") and not str(piece.get("cta", "")).strip():
         piece["cta"] = f"{_brand_tagline(str(piece))} Shop Purity Beans: https://p3online.in"
 
     # Carousel: the schema requires the FINAL SLIDE to carry brand + website.
@@ -851,7 +850,7 @@ def _inject_brand_into_content(content: dict, day: int = 0) -> None:
         logger.warning("[creative] audio director skipped: %s", e)
 
     reels = content.get("reels") or []
-    for i, label in enumerate(["reel_1", "reel_2"]):
+    for i, label in enumerate(["reel_1"]):
         if i < len(reels) and isinstance(reels[i], dict):
             _ensure_engagement_fields(reels[i])
             _inject_brand_into_piece(label, reels[i])
@@ -1069,8 +1068,7 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
     from content_generator.core.blog_flags import blog_enabled
     review_targets = [
         ("reel_1",         "reels",         0),
-        ("reel_2",         "reels",         1),
-        ("carousel",       "carousel",      None),
+                ("carousel",       "carousel",      None),
         ("instagram_post", "instagram_post", None),
         ("linkedin_post",  "linkedin_post",  None),
         ("facebook_post",  "facebook_post",  None),
@@ -1500,7 +1498,7 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
         if from_scratch:
             from content_generator.core.fallback_ladder import scratch_prompt
             regen_prompt = scratch_prompt(label, piece, feedback, threshold, brand_block())
-        elif label in ("yt_short", "reel_1", "reel_2", "growth_reel", "instagram_post", "carousel"):
+        elif label in ("yt_short", "reel_1", "growth_reel", "instagram_post", "carousel"):
             from content_generator.prompts.piece_craft import craft_block
             regen_prompt += "\n\nJUDGE CRITIQUE TO FIX:\n" + str(feedback or "") + "\n\n" + craft_block(label)
         if label == "yt_short":
@@ -1694,29 +1692,6 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
             format_type="story",
             on_date=story_day,
         )
-        if story_frame and os.path.exists(story_frame):
-            try:
-                from content_generator.creative.rendered_asset_qa import audit_rendered_images
-                qa_check = audit_rendered_images([story_frame])
-                if not qa_check.get("ok"):
-                    logger.info("[images] Story frame audit flagged %s; re-rendering with exposure boost", qa_check.get("issues"))
-                    boosted = compose_cinematic_frame(
-                        headline=story_copy["headline"],
-                        sub=story_copy["sub"],
-                        day=day_number,
-                        idx=9,
-                        product=story_product,
-                        width=1080,
-                        height=1920,
-                        label=f"story_day{day_number}",
-                        format_type="story",
-                        on_date=story_day,
-                        exposure_boost=True,
-                    )
-                    if boosted and os.path.exists(boosted):
-                        story_frame = boosted
-            except Exception as gate_exc:
-                logger.debug("[images] Story frame pre-audit skipped: %s", gate_exc)
         results["story_frame"] = story_frame
         if story_frame:
             results["story_video"] = build_story_video(
@@ -1892,9 +1867,6 @@ def _do_publish(content: dict, day_number: int) -> dict:
     if "reel_1" not in valid_assets:
         if filtered_content.get("reels"):
             filtered_content["reels"][0] = {}
-    if "reel_2" not in valid_assets:
-        if filtered_content.get("reels") and len(filtered_content["reels"]) > 1:
-            filtered_content["reels"][1] = {}
     if "carousel" not in valid_assets:
         filtered_content["carousel"] = {}
     if "instagram_post" not in valid_assets:

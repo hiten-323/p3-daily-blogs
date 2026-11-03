@@ -46,35 +46,35 @@ def test_reel_1_publishes_once_the_evening_slot_has_started():
     Two reels a day (owner, 2 Nov 2026): reel_2 is retired and growth_reel is a
     morning target, so the evening plan is reel_1 alone.
     """
-    todo = ["ig_feed", "reel_1"]
+    todo = ["ig_feed", "growth_reel"]
     plan = ru.publish_plan(todo, _approved_pack(), 21, 54)
     assert plan["prewarm"] == set()
     assert plan["slots"] == {"morning", "evening"}
-    assert plan["reels"] == ["reel_1"]
+    assert plan["reels"] == ["growth_reel"]
 
 
 def test_reel_1_stays_prewarm_before_the_evening_slot():
-    todo = ["ig_feed", "reel_1"]
+    todo = ["ig_feed", "growth_reel"]
     plan = ru.publish_plan(todo, _approved_pack(), 21, 52)
-    assert plan["prewarm"] == {"reel_1"}
+    assert plan["prewarm"] == {"growth_reel"}
     assert plan["slots"] == {"morning"}
     assert plan["reels"] == []
 
 
-def test_growth_reel_is_a_morning_target_and_never_prewarmed():
+def test_growth_reel_is_an_evening_target_and_prewarmed_before_evening():
     todo = ["growth_reel", "reel_1"]
     plan = ru.publish_plan(todo, _approved_pack(), 10, 7)
-    assert plan["prewarm"] == {"reel_1"}
+    assert plan["prewarm"] == {"growth_reel"}
     assert plan["slots"] == {"morning"}
     assert plan["reels"] == []
 
 
-def test_backstop_window_still_publishes_reel_1():
+def test_backstop_window_still_publishes_growth_reel():
     """22:07 used to delete every reel target so the cron could own them."""
-    todo = ["ig_feed", "reel_1"]
+    todo = ["ig_feed", "growth_reel"]
     plan = ru.publish_plan(todo, _approved_pack(), 22, 7)
     assert "evening" in plan["slots"]
-    assert plan["reels"] == ["reel_1"]
+    assert plan["reels"] == ["growth_reel"]
 
 
 def test_publish_plan_never_puts_both_reels_in_one_run():
@@ -86,17 +86,17 @@ def test_publish_plan_never_puts_both_reels_in_one_run():
 def test_publish_only_asset_does_not_substitute_another_reel():
     from content_generator.scheduler.slots import _select_evening_reel, _select_slot_reel
     approved = _approved_pack()
-    assert _select_evening_reel(approved, only="reel_1")[0] == "reel_1"
-    assert _select_evening_reel(approved, {"reel_1"}, only="reel_1") is None
-    assert _select_evening_reel(approved)[0] == "reel_1"
+    assert _select_evening_reel(approved, only="growth_reel")[0] == "growth_reel"
+    assert _select_evening_reel(approved, {"growth_reel"}, only="growth_reel") is None
+    assert _select_evening_reel(approved)[0] == "growth_reel"
     assert _select_evening_reel(approved, only="reel_2") is None
-    assert _select_evening_reel(approved, only="growth_reel") is None
-    assert _select_slot_reel(approved, "morning")[0] == "growth_reel"
-    assert _select_slot_reel(approved, "morning", only="reel_1") is None
+    assert _select_evening_reel(approved, only="reel_1") is None
+    assert _select_slot_reel(approved, "morning")[0] == "reel_1"
+    assert _select_slot_reel(approved, "morning", only="growth_reel") is None
 
 
 def test_reel_counted_missing_without_evening_records():
-    assert "reel_1" in ru.unposted_targets([], 23)
+    assert "growth_reel" in ru.unposted_targets([], 23)
     assert "reel_2" not in ru.unposted_targets([], 23)
-    rec = [{"slot": "evening", "platform": "instagram", "status": "VERIFIED_LIVE"}]
-    assert "reel_1" not in ru.unposted_targets(rec, 23)
+    rec = [{"slot": "evening", "platform": "instagram_video", "asset": "growth_reel", "status": "VERIFIED_LIVE"}]
+    assert "growth_reel" not in ru.unposted_targets(rec, 23)
