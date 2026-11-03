@@ -836,6 +836,11 @@ def post_story(content: dict, day: int = 0) -> dict:
         story_hits = process_match_findings(f"{headline}\n{sub}", featured=story_featured)
         if story_hits:
             logger.warning("[instagram] story blocked by process match: %s", story_hits[0].get("reason"))
+            try:
+                from content_generator.publisher.story_copy import record_story_claim_lesson
+                record_story_claim_lesson(str(story_hits[0].get("reason") or "process match"))
+            except Exception:
+                logger.debug("[instagram] story process-match lesson not recorded")
             return {
                 "success": False, "media_id": "", "attempted": False, "skipped": True,
                 "error": "process_match_failed",
