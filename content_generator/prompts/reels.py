@@ -110,8 +110,14 @@ ABSOLUTE RULES:
     {{"concept": "3 different thumbnail concepts for this reel. Each: a one-line visual concept + a paste-ready image prompt (9:16, photographic, realism rules apply, NO text in image). Vary the psychological angle: one shock-based, one curiosity-based, one product-hero.", "image_prompt": "...", "predicted_ctr_reason": "one sentence: why this stops the scroll in a 2cm feed tile"}}
   ]
 }}"""
+    video_learning = ""
+    try:
+        from content_generator.core.video_learning import build_video_learning_directive
+        video_learning = "\n\n" + build_video_learning_directive("instagram")
+    except Exception:
+        pass
     from content_generator.prompts.piece_craft import craft_block
-    return prompt + "\n\n" + craft_block(reel_id)
+    return prompt + video_learning + "\n\n" + craft_block(reel_id)
 
 
 # Instagram-native V2 rules (shared growth/creative contract)

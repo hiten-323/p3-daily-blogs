@@ -79,5 +79,11 @@ ABSOLUTE RULES:
   "audio_direction": "Music bed genre + tempo + voiceover tone (Indian accent, gender, age). Sound design cues.",
   "edit_pacing": "Cut timing per scene — tension scenes cut faster, hold the payoff before the CTA"
 }}"""
+    video_learning = ""
+    try:
+        from content_generator.core.video_learning import build_video_learning_directive
+        video_learning = "\n\n" + build_video_learning_directive("youtube")
+    except Exception:
+        pass
     from content_generator.prompts.piece_craft import craft_block
-    return prompt + "\n\n" + craft_block("yt_short")
+    return prompt + video_learning + "\n\n" + craft_block("yt_short")
