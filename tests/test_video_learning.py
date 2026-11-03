@@ -107,18 +107,89 @@ def test_strategy_brief_includes_video_learning():
     assert "HIGH-RETENTION" in brief or "CRITICAL OWNER MANDATE" in brief
 
 
-def test_video_prompts_include_video_learning():
-    # 1. Growth Reel
+def test_video_learning_injected_once_via_growth_director_not_duplicated():
+    # Injected once via growth_director
+    brief = gd.get_strategy_brief(1)
+    assert "VIDEO LEARNING & OUTCOMES FEEDBACK" in brief
+
+    # Prompt files do NOT duplicate it (Task 3: inject once)
     gr = gr_prompt.build(1)
-    assert "VIDEO LEARNING & OUTCOMES FEEDBACK" in gr
-    assert "INSTAGRAM" in gr
+    assert gr.count("VIDEO LEARNING & OUTCOMES FEEDBACK") == 0
 
-    # 2. Reel 1
     r1 = reels_prompt.build("reel_1", ("tension", "Tension hook"), "09:53", "HASHTAG_25", "", 1)
-    assert "VIDEO LEARNING & OUTCOMES FEEDBACK" in r1
-    assert "INSTAGRAM" in r1
+    assert r1.count("VIDEO LEARNING & OUTCOMES FEEDBACK") == 0
 
-    # 3. YouTube Short
     yt = yt_prompt.build("Bold", 1)
-    assert "VIDEO LEARNING & OUTCOMES FEEDBACK" in yt
-    assert "YOUTUBE SHORTS" in yt
+    assert yt.count("VIDEO LEARNING & OUTCOMES FEEDBACK") == 0
+
+
+def test_hook_deduplication_14_days(tmp_path, monkeypatch):
+    monkeypatch.setattr(vl, "_DEFAULT_OUTPUT_DIR", str(tmp_path))
+    f = tmp_path / "content_2026-10-28.json"
+    f.write_text(json.dumps({
+        "date": "2026-10-28",
+        "growth_reel": {"hook": "What baristas actually think when you order instant coffee", "editorial_score": {"overall": 8.5}},
+    }), encoding="utf-8")
+
+    assert vl.is_duplicate_hook("What baristas actually think when you order instant coffee", days=14)
+    assert vl.is_duplicate_hook("what baristas actually think when you order instant coffee!", days=14)
+    assert not vl.is_duplicate_hook("A completely unique hook about coffee craft", days=14)
+
+
+def test_sparse_data_handling_honest_log(tmp_path, monkeypatch):
+    learn_dir = tmp_path / "learning"
+    learn_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(vl, "_LEARNING_DIR", str(learn_dir))
+    monkeypatch.setattr(vl, "_DEFAULT_OUTPUT_DIR", str(tmp_path))
+
+    directive = vl.build_video_learning_directive()
+    assert "Sparse/insufficient performance data" in directive
+    assert "No trend fabricated" in directive
+
+
+def test_failed_patterns_populated_from_lessons(tmp_path, monkeypatch):
+    learn_dir = tmp_path / "learning"
+    learn_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(vl, "_LEARNING_DIR", str(learn_dir))
+    monkeypatch.setattr(vl, "_DEFAULT_OUTPUT_DIR", str(tmp_path))
+
+    lessons_file = learn_dir / "obstacle_lessons.json"
+    lessons_file.write_text(json.dumps({
+        "lessons": [
+            {
+                "id": "1",
+                "gate": "visual",
+                "platform": "instagram_reel",
+                "feedback": "Plain product cutouts look like a catalog. Requires real in-use lifestyle shot.",
+            }
+        ]
+    }), encoding="utf-8")
+
+    directive = vl.build_video_learning_directive()
+    assert "FAILED / REJECTED HOOK PATTERNS" in directive
+    assert "Plain product cutouts look like a catalog" in directive
+
+
+def test_record_platform_video_metrics(tmp_path, monkeypatch):
+    learn_dir = tmp_path / "learning"
+    learn_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(vl, "_LEARNING_DIR", str(learn_dir))
+
+    rec = vl.record_platform_video_metrics(
+        platform="instagram_reel",
+        asset_id="growth_reel",
+        publication_id="pub_123",
+        hook="Crystals test",
+        views=2500,
+        likes=120,
+        comments=45,
+        shares=18,
+    )
+    assert rec["metrics"]["views"] == 2500
+
+    # Read back and verify persisted
+    with open(learn_dir / "performance_log.json", "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    assert len(data) == 1
+    assert data[0]["publication_id"] == "pub_123"
+    assert data[0]["metrics"]["views"] == 2500
