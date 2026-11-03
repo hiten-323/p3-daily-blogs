@@ -98,7 +98,7 @@ def test_committed_2026_10_12_yt_short_scene_is_honest():
     # rules (2026-10-14); this test only guards its chicory honesty.
     later_rules = (
         "FSSAI", "Bold is pure coffee", "not Robusta", "Never call Ultra Blend 'pure'",
-        "Rs 18", "Per-cup", "freeze-dry", "agglomerat", "granule process", "no process claim",
+        "Rs 18", "Per-cup", "freeze-dry", "agglomerat", "granule process", "no process claim", "single-origin",
     )
     assert [f for f in remaining_findings(data)
             if not any(r in str(f) for r in later_rules)] == []
