@@ -297,7 +297,7 @@ def _post_video_to_page(
         if "follow" not in full_message.lower():
             full_message = f"{full_message}\n\n👉 Follow @purepantryprovisions for daily honest roasts & coffee truths."
         if "p3online.in" not in full_message:
-            full_message = f"{full_message}\n🛒 Shop Purity Beans: https://p3online.in?utm_source=facebook&utm_medium=video"
+            full_message = f"{full_message}\n🛒 Shop Purity Beans: https://p3online.in/?utm_source=facebook&utm_medium=video&utm_campaign=202610"
 
         with open(video_path, "rb") as f:
             resp = requests.post(

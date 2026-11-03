@@ -317,8 +317,8 @@ def generate_daily_content(
         logger.debug("[pipeline] reel style reference unavailable: %s", e)
 
     logger.info(
-        "[pipeline] Day #%d (%s) | product=%s | Reel1=%s | Reel2=%s | Carousel=%s | LinkedIn=%s",
-        day_number, todays_date, product, arch_1[0], arch_2[0], mech[0], angle[0],
+        "[pipeline] Day #%d (%s) | product=%s | Reel1=%s | Carousel=%s | LinkedIn=%s",
+        day_number, todays_date, product, arch_1[0], mech[0], angle[0],
     )
 
     # ── Phase 1: core tasks (always run) ─────────────────────────────────────
