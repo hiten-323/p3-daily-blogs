@@ -118,6 +118,9 @@ def post_content(content: dict, day: int = 0) -> dict:
     Returns:
         {"success": bool, "media_id": str, "permalink": str, "error": str|None}
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         logger.info("[instagram] Not configured — INSTAGRAM_ACCOUNT_ID or INSTAGRAM_ACCESS_TOKEN missing")
         return {"success": False, "media_id": "", "permalink": "", "error": "not_configured"}
@@ -451,6 +454,9 @@ def _find_carousel_images(content: dict) -> list[str]:
 
 def _post_single_image(image_path: str, caption: str) -> dict:
     """Upload and publish a single image to Instagram."""
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     try:
         import requests
     except ImportError:
@@ -507,6 +513,9 @@ def _post_single_image(image_path: str, caption: str) -> dict:
 
 def _post_carousel(image_paths: list[str], caption: str) -> dict:
     """Upload and publish a carousel (multi-image) post to Instagram."""
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     try:
         import requests
     except ImportError:
@@ -594,6 +603,9 @@ def post_reel_video(video_url: str, caption: str) -> dict:
     Publish an actual Instagram REEL from a public video URL.
     Video processing is async, so we poll the container until FINISHED.
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         return {"success": False, "media_id": "", "error": "not_configured"}
     try:
@@ -651,6 +663,9 @@ def _post_direct_binary(video_path: str, init_params: dict, *, label: str) -> di
     Graph returns an upload URI. The file bytes go there, then the container
     is published once FINISHED. Provider response bodies are not logged.
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     acct_id = os.getenv("INSTAGRAM_ACCOUNT_ID", "").strip()
     token = os.getenv("INSTAGRAM_ACCESS_TOKEN", "").strip()
     if not acct_id or not token or not os.path.isfile(video_path):
@@ -725,6 +740,52 @@ def _post_story_direct_binary(video_path: str) -> dict:
     )
 
 
+def _static_story_visual_hold(image_path: str) -> dict | None:
+    """Hold a still that misses the same 8.0 visual gate as a video story.
+
+    ``visual_gate.evaluate`` is the gate ``evaluate_video`` applies to the
+    scored frame, including ``AESTHETIC_PASS`` (8.0). A still has no renderer
+    jar box on the file, so a missing box is not a separate miss — the
+    aesthetic score still has to clear 8.0, and background heuristics still run.
+    None means the still passed and the caller may upload it.
+    """
+    from content_generator.creative import visual_gate
+
+    meta = {"path": image_path, "requires_jar": False}
+    try:
+        verdict = visual_gate.evaluate(meta, visual_gate.recent_layouts())
+    except Exception as exc:
+        logger.error("[visual-gate] static story gate failed closed: %s", type(exc).__name__)
+        verdict = {"passed": False, "reasons": [f"visual_gate_error:{type(exc).__name__}"]}
+    if isinstance(verdict, dict) and verdict.get("passed") is True:
+        return None
+    reasons = []
+    if isinstance(verdict, dict):
+        reasons = [str(item) for item in (verdict.get("reasons") or []) if str(item).strip()]
+    reason = "; ".join(reasons)[:300] or "visual gate failed"
+    logger.error("[visual-gate] static story held; not posting a failing story: %s", reason)
+    try:
+        from content_generator.core.obstacle_lessons import platform_for, record
+        record(
+            platform_for("stories"),
+            "stories",
+            "publish",
+            "aesthetic",
+            reason,
+            "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+        )
+    except Exception:
+        logger.debug("[visual-gate] story lesson not recorded")
+    return {
+        "success": False,
+        "media_id": "",
+        "attempted": False,
+        "skipped": True,
+        "held": True,
+        "error": "prepublish_gate:visual_gate:" + reason,
+    }
+
+
 def post_story(content: dict, day: int = 0) -> dict:
     """
     Publish an Instagram Story (image, 9:16, 24h ephemeral).
@@ -734,6 +795,9 @@ def post_story(content: dict, day: int = 0) -> dict:
     cannot be set via the API — those stay manual; this keeps a daily story
     presence and can carry a swipe-up/link on eligible accounts.
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         return {"success": False, "media_id": "", "error": "not_configured"}
 
@@ -891,6 +955,13 @@ def post_story(content: dict, day: int = 0) -> dict:
         logger.warning("[instagram] video Story failed (%s) — falling back to static poster",
                        res.get("error"))
 
+    # Broken-render QA above is not the 8.0 aesthetic gate. A motion story
+    # that was held, and a poster used after a non-gate video failure, both
+    # stop here unless this still passes visual_gate.evaluate.
+    held = _static_story_visual_hold(image_path)
+    if held:
+        return held
+
     image_url = _upload_to_public_url(image_path)
     if not image_url:
         return {"success": False, "media_id": "", "error": "media_upload_failed"}
@@ -902,6 +973,9 @@ def post_story(content: dict, day: int = 0) -> dict:
 
 def _publish_container(container_id: str, acct_id: str, token: str) -> dict:
     """Publish a ready media container."""
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     try:
         from content_generator.publisher.meta_graph import MetaRequestError, graph_request
         data = graph_request(
@@ -1103,6 +1177,9 @@ def prepare_feed_image(path: str) -> str | None:
 
 def post_local_story(image_path: str) -> dict:
     """Publish an existing image as an Instagram Story (9:16 is valid here)."""
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         return {"success": False, "media_id": "", "error": "not_configured"}
     if not image_path or not os.path.exists(image_path):
@@ -1113,6 +1190,9 @@ def post_local_story(image_path: str) -> dict:
     if not prov.get("verified"):
         logger.error("[instagram] Refusing to publish unverified story image: %s (%s)", image_path, prov.get("reason"))
         return {"success": False, "media_id": "", "error": f"real_jar_unverified: {prov.get('reason')}"}
+    held = _static_story_visual_hold(image_path)
+    if held:
+        return held
     try:
         import requests  # noqa: F401
     except ImportError:
@@ -1152,6 +1232,9 @@ def post_prepared_story(poster_path: str, video_path: str | None = None) -> dict
     Tries the motion file as a STORIES video, then the verified poster.
     Does not rebuild a story from a caption.
     """
+    from content_generator.core.instagram_pause import instagram_paused, paused_result
+    if instagram_paused():
+        return paused_result()
     if not is_configured():
         return {"success": False, "media_id": "", "error": "not_configured"}
     if not poster_path or not os.path.exists(poster_path):
