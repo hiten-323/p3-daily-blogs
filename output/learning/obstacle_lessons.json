@@ -13505,6 +13505,48 @@
       "reason": "aesthetic_below_8.0:6.0; Background texture is noisy and competes with the product for attention.; Typography feels generic and template-like rather than premium editorial.; Product lighting is flat; lacks dramatic depth or luxury sheen expected from a top agency.",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "",
+      "first_seen": "2026-11-04",
+      "fix": "Shoot or approve a real Bold 50g jar photo in brand_assets/approved_photos/bold/real/",
+      "gate": "asset",
+      "id": "instagram|stories|asset|no approved bold 50g real photo: bold_50g_cutout_front is blocked (superseded), so the owner-approved bold 50g + purica 50g extra story (2026-11-04) could only show the bold 100g h",
+      "label": "stories",
+      "last_seen": "2026-11-04",
+      "platform": "instagram",
+      "reason": "No approved Bold 50g real photo: bold_50g_cutout_front is blocked (superseded), so the owner-approved Bold 50g + Purica 50g extra Story (2026-11-04) could only show the Bold 100g hi-res cutout",
+      "stage": "compose",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "",
+      "first_seen": "2026-11-04",
+      "fix": "Hiten pushes a workflow-scoped change giving oneoff-ig-post.yml the vision keys (GEMINI/GROQ/OPENROUTER/NVIDIA, models: read) and a story route",
+      "gate": "workflow",
+      "id": "instagram|stories|workflow|oneoff-ig-post.yml passes no vision-scorer secrets, so a one-off story cannot run the 8.0 visual gate in ci; the agent token lacks the workflow scope to add them (push refused)",
+      "label": "stories",
+      "last_seen": "2026-11-04",
+      "platform": "instagram",
+      "reason": "oneoff-ig-post.yml passes no vision-scorer secrets, so a one-off Story cannot run the 8.0 visual gate in CI; the agent token lacks the workflow scope to add them (push refused)",
+      "stage": "publish",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "",
+      "first_seen": "2026-11-04",
+      "fix": "Real in-situ photo shoot of the Bold 50g and Purica 50g jars together; composited cutouts on rendered backdrops do not clear 8.0",
+      "gate": "aesthetic",
+      "id": "instagram|stories|aesthetic|bold + purica two-jar extra story (2026-11-04) scored 5.0-6.0 on the 8.0 visual gate across 6 honest redesigns (nvidia scorer): flat or template-like composited lighting, split foc",
+      "label": "stories",
+      "last_seen": "2026-11-04",
+      "platform": "instagram",
+      "reason": "Bold + Purica two-jar extra Story (2026-11-04) scored 5.0-6.0 on the 8.0 visual gate across 6 honest redesigns (nvidia scorer): flat or template-like composited lighting, split focus between two jars, generic typography; gate not lowered, Story not posted",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
