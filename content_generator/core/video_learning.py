@@ -72,9 +72,11 @@ def get_real_platform_metrics() -> dict[str, Any]:
                         scored_posts.append({
                             "hook": hook,
                             "platform": p.get("platform", "unknown"),
+                            "format": str(p.get("format") or ""),
                             "views": views,
                             "shares": shares,
                             "comments": comments,
+                            "follows": int(m.get("follows_gained") or 0),
                             "score": views + (shares * 5) + (comments * 3),
                         })
                 scored_posts.sort(key=lambda x: x["score"], reverse=True)
@@ -121,7 +123,12 @@ def get_recent_video_outcomes(max_days: int = 14) -> list[dict[str, Any]]:
             
             outcomes.append({
                 "date": date,
-                "growth_reel": {"hook": gr_hook, "score": gr_score, "format": "growth_reel"},
+                "growth_reel": {
+                    "hook": gr_hook,
+                    "score": gr_score,
+                    "format": "growth_reel",
+                    "template": str(gr.get("growth_template_id") or ""),
+                },
                 "reel_1": {"hook": r1_hook, "score": r1_score, "format": "reel_1"},
                 "yt_short": {"hook": yt_hook, "score": yt_score, "format": "yt_short"},
             })
@@ -252,6 +259,38 @@ def record_platform_video_metrics(
     return record
 
 
+def measured_template_posts(template_id: str = "fast_cut_curiosity") -> list[dict[str, Any]]:
+    """Real view, comment, and follow counts for one template. Empty when unmeasured."""
+    perf_file = os.path.join(_LEARNING_DIR, "performance_log.json")
+    if not os.path.exists(perf_file):
+        return []
+    rows: list[dict[str, Any]] = []
+    try:
+        with open(perf_file, "r", encoding="utf-8") as fh:
+            logs = json.load(fh)
+    except Exception:
+        return []
+    if not isinstance(logs, list):
+        return []
+    for item in logs:
+        if not isinstance(item, dict) or str(item.get("format") or "") != template_id:
+            continue
+        metrics = item.get("metrics") or {}
+        views = int(metrics.get("views") or 0)
+        comments = int(metrics.get("comments") or 0)
+        follows = int(metrics.get("follows_gained") or 0)
+        if views <= 0 and comments <= 0 and follows <= 0:
+            continue
+        rows.append({
+            "platform": item.get("platform") or "unknown",
+            "views": views,
+            "comments": comments,
+            "follows": follows,
+            "hook": str(item.get("hook") or ""),
+        })
+    return rows
+
+
 def build_video_learning_directive(platform: str = "", max_days: int = 14) -> str:
     """
     Synthesize measured previous outcomes, gate lessons, and audience metrics into an actionable
@@ -343,5 +382,24 @@ def build_video_learning_directive(platform: str = "", max_days: int = 14) -> st
         lines.append("  * Fast cuts (scene changes every 2.5-4s), tension-then-payoff structure.")
         lines.append("  * Subscribe CTA: 'Subscribe for the honest breakdown on what is in your coffee.'")
 
+    measured = measured_template_posts("fast_cut_curiosity")
+    lines.append("\nFAST CUT CURIOSITY — MEASURED VIEWS AND FOLLOWERS:")
+    if measured:
+        lines.append(
+            f"Account followers right now: {real_metrics['follower_count']} "
+            f"(7-day change {real_metrics['follower_delta_7d']:+d}). "
+            "That change is the account, not a score invented for one template."
+        )
+        for post in measured[:3]:
+            lines.append(
+                f"  * fast_cut_curiosity on {post['platform']}: {post['views']} views, "
+                f"{post['comments']} comments, {post.get('follows', 0)} follows gained."
+            )
+        lines.append("  -> Prefer the structure that produced these measured views. Do not copy another account's counts.")
+    else:
+        lines.append(
+            "No measured views yet for fast_cut_curiosity. "
+            "Do not treat a reference reel's public counts as our views or our follower change."
+        )
     lines.append("==========================================================================")
     return "\n".join(lines)
