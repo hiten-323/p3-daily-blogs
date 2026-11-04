@@ -1626,97 +1626,120 @@
     }
   },
   "yt_short": {
-    "featured_product": "purica",
-    "objective": "conversion",
-    "primary_cta": "Shop p3online.in",
-    "success_metric": "Website clicks and product page visits to p3online.in",
-    "audio": "Warm acoustic guitar fingerpicking with soft kitchen ambient hum and a kettle heating up in the background.",
-    "audio_direction": "Start with a quiet room tone, then layer a crisp spoon tap and the sound of hot water hitting coffee crystals at second three.",
-    "chosen_hook": "When you pour hot water over Purica Gourmet Arabica Granules, notice how the aroma lifts before you even stir.",
-    "comment_trigger": "Comment ARABICA if you check the back panel before buying your coffee.",
-    "cta": "Shop p3online.in",
-    "description": "Discover why freeze-dried pure Arabica changes your morning cup. Read the jar, inspect the granules, and taste pure coffee with zero chicory by Purity Beans. Visit https://p3online.in to explore Purica.",
-    "edit_pacing": "Fast cuts every 3 seconds for the first 12 seconds, slowing down to a calm, deliberate macro shot of the jar and granules.",
-    "emotion_arc": "Curiosity about freeze-drying transitions into satisfaction and pride in a pure coffee morning routine.",
-    "funnel_objective": "conversion",
-    "growth_plan": "Drive website visits through educational sensory comparison of freeze-dried Arabica granules.",
-    "growth_review": "Tested previous hooks for clarity; ensuring strict adherence to pure coffee and freeze-dried process without forbidden words.",
-    "hashtags": "#PurityBeans #PureCoffee #FreezeDriedCoffee #CoffeeLoversIndia #InstantCoffee",
-    "hook": "When you pour hot water over Purica Gourmet Arabica Granules, notice how the aroma lifts before you even stir.",
-    "hook_text": "THE AROMA LIFT",
-    "ladder_exhausted": true,
-    "product": "purica",
+    "featured_product": "Purica Gourmet Arabica Granules",
+    "objective": "Drive product awareness and sales for Purica Gourmet Arabica Granules via freeze-drying education.",
+    "primary_cta": "Shop now at https://p3online.in",
+    "success_metric": "Saves and website visits to https://p3online.in",
+    "audio": "Warm acoustic guitar fingerpicking with soft, realistic kitchen ambient sound: kettle water simmering gently in the background.",
+    "audio_direction": "Subtle, non-intrusive instrumental background track paired with real kitchen textures.",
+    "chosen_hook": "When pure Arabica is freeze-dried at sub-zero temperatures, something fascinating happens to the aroma crystals.",
+    "comment_trigger": "Comment ARABICA to receive our quick guide on brewing freeze-dried pure coffee at home.",
+    "cta": "Shop Purica Gourmet Arabica Granules at https://p3online.in. Follow @purepantryprovisions.",
+    "description": "A close-up cinematic YouTube Short exploring the freeze-drying process of Purity Beans Purica Gourmet Arabica Granules, highlighting pure coffee with zero chicory.",
+    "edit_pacing": "Fast retention-focused cuts every 3 to 4 seconds, matching the visual rhythm of pouring and dissolving.",
+    "emotion_arc": "Curiosity about freeze-drying to awe at crystal retention, ending with satisfied confidence in a pure ingredient panel.",
+    "funnel_objective": "Conversion and education",
+    "gate_rejection": "None",
+    "growth_plan": "Distribute across YouTube Shorts and Instagram Reels with keyword tags for coffee connoisseurs.",
+    "growth_review": "Optimized for high watch time, saves, and comments by focusing on the freeze-drying transformation.",
+    "hashtags": "#PurityBeans #FreezeDriedCoffee #PureCoffee #ArabicaCoffee #InstantCoffeeIndia",
+    "hook": "The coffee mistake almost every Indian kitchen makes before boiling water.",
+    "hook_text": "THE FREEZE-DRIED ARABICA CRYSTAL REVEAL",
+    "product": "Purica Gourmet Arabica Granules",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Macro slow-motion shot of hot water hitting freeze-dried coffee crystals, blooming instantly.",
-    "save_trigger": "Save this guide to understand why freeze-dried coffee dissolves differently.",
+    "reel_inspiration": "Macro cinematic documentary style focusing on ingredient transparency and texture.",
+    "save_trigger": "Save this short before your next grocery run.",
     "scenes": [
       {
         "scene": 1,
-        "type": "STOP",
+        "type": "problem",
         "duration_s": 5.0,
-        "on_screen": "THE AROMA LIFT",
-        "spoken": "When you pour hot water over Purity Beans Purica Gourmet Arabica Granules, notice how the aroma lifts before you even stir.",
-        "visual_direction": "Macro close-up of the glass Purity Beans jar resting on a dark walnut kitchen counter with warm morning sunlight streaming in."
+        "on_screen": "THE BOILING WATER ERROR",
+        "spoken": "The coffee mistake almost every Indian kitchen makes before boiling water is pouring it straight onto the granules while it is still boiling hot.",
+        "visual_direction": "A close-up shot on iPhone 15 of a stainless steel kettle bubbling on a gas stove in a warm kitchen, steam rising into soft window light."
       },
       {
         "scene": 2,
-        "type": "CURIOSITY",
+        "type": "tension",
         "duration_s": 6.0,
-        "on_screen": "READ THE BACK PANEL",
-        "spoken": "Look closely at the ingredient list on the back of the Purity Beans Purica jar. Pure Arabica. Zero chicory added.",
-        "visual_direction": "A hand turns the Purity Beans jar to show the clear ingredient label under warm kitchen spotlight."
+        "on_screen": "SUB-ZERO FREEZE DRYING",
+        "spoken": "Purity Beans Purica Gourmet Arabica Granules are freeze-dried at sub-zero temperatures to lock in delicate aroma without industrial heat.",
+        "visual_direction": "Macro shot of the exact Purity Beans Purica glass jar resting on a dark slate counter, amber light catching the glass edges."
       },
       {
         "scene": 3,
-        "type": "VALUE",
-        "duration_s": 7.0,
-        "on_screen": "FREEZE-DRIED PURITY",
-        "spoken": "Unlike standard instant coffee, Purity Beans Purica uses freeze-drying to lock in natural aroma and smooth flavor.",
-        "visual_direction": "Extreme close-up of dry Purity Beans Purica freeze-dried crystals catching the light, then hot water pouring over them."
+        "type": "turn",
+        "duration_s": 6.0,
+        "on_screen": "READ THE BACK LABEL",
+        "spoken": "Look closely at the back label: pure Arabica, zero chicory, nothing else added.",
+        "visual_direction": "A hand turning the Purity Beans jar around to reveal the ingredient panel clearly printed on the back paper label."
       },
       {
         "scene": 4,
-        "type": "TRUST",
-        "duration_s": 6.0,
-        "on_screen": "ZERO CHICORY",
-        "spoken": "What you taste is pure coffee, crafted for people who care about transparency in every single jar.",
-        "visual_direction": "A clear glass mug showing rich dark coffee liquid with a natural crema layer forming on top."
+        "type": "payoff",
+        "duration_s": 7.0,
+        "on_screen": "THE CARAMEL BLOOM",
+        "spoken": "When water cools just slightly below boiling, watch the crystals dissolve and release natural caramel notes.",
+        "visual_direction": "Hot water pouring from a ceramic spout into a clear glass mug containing Purity Beans Purica granules, creating a rich amber swirl."
       },
       {
         "scene": 5,
-        "type": "FOLLOW",
-        "duration_s": 5.0,
+        "type": "cta",
+        "duration_s": 6.0,
         "on_screen": "SHOP P3ONLINE.IN",
-        "spoken": "Experience the clean taste of Purity Beans. Follow @purepantryprovisions and shop p3online.in today.",
-        "visual_direction": "The Purity Beans Purica jar centered on the counter with the website URL clearly overlaid in clean typography."
+        "spoken": "Visit https://p3online.in to get yours, and follow @purepantryprovisions for more honest coffee breakdowns.",
+        "visual_direction": "The Purity Beans Purica jar sitting beside a warm ceramic mug on a wooden kitchen table, softly lit by a side lamp."
       }
     ],
-    "script": "When you pour hot water over Purity Beans Purica Gourmet Arabica Granules, notice how the aroma lifts before you even stir. Look closely at the ingredient list on the back of the Purity Beans Purica jar. Pure Arabica. Zero chicory added. Unlike standard instant coffee, Purity Beans Purica uses freeze-drying to lock in natural aroma and smooth flavor. What you taste is pure coffee, crafted for people who care about transparency in every single jar. Experience the clean taste of Purity Beans. Follow @purepantryprovisions and shop p3online.in today.",
-    "share_trigger": "Share this with someone who appreciates the science of freeze-dried coffee.",
+    "script": "The coffee mistake almost every Indian kitchen makes before boiling water is pouring it straight onto the granules while it is still boiling hot. Purity Beans Purica Gourmet Arabica Granules are freeze-dried at sub-zero temperatures to lock in delicate aroma without industrial heat. Look closely at the back label: pure Arabica, zero chicory, nothing else added. When water cools just slightly below boiling, watch the crystals dissolve and release natural caramel notes. Visit https://p3online.in to get yours, and follow @purepantryprovisions for more honest coffee breakdowns.",
+    "share_trigger": "Share this with someone who appreciates gourmet instant coffee.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee.",
     "tags": [
-      "purity beans",
-      "pure coffee",
       "freeze dried coffee",
-      "purica"
+      "pure instant coffee",
+      "purity beans",
+      "arabica coffee",
+      "gourmet coffee India"
     ],
-    "target": "Urban coffee drinkers looking for pure Arabica instant coffee without chicory fillers.",
-    "title": "Why Freeze-Dried Pure Arabica Changes Your Morning Cup",
-    "viral_potential": "High shareability due to clear visual contrast and transparent ingredient education.",
-    "editorial_score": {
-      "shareability": 6.0,
-      "saveability": 6.5,
-      "emotion_pull": 5.0,
-      "hook_strength": 5.5,
-      "brand_clarity": 8.0,
-      "overall": 6.2,
-      "verdict": "REJECT",
-      "feedback": "The script relies on passive observation ('notice how', 'look closely') instead of active revelation. The hook describes a sensory moment but lacks a curiosity gap or betrayal trigger — it feels like a product demo, not a story worth sharing. Scene 3 claims freeze-drying 'locks in' aroma without explaining the mechanism (ice sublimation vs heat evaporation), missing the education that drives saves. Scene 4's 'crafted for people who care about transparency' is generic brand language; replace with a specific proof point (e.g., 'Every jar shows the exact roast date and origin estate'). The CTA bundles follow and shop — split them: Reel ends with 'Comment ARABICA', bio/link handles the shop. Add a pattern interrupt at second 3: a split-frame showing a chicory-heavy competitor granule dissolving into murky sludge vs Purica's clean bloom.",
-      "retention_audit": "Scene 1 (0-5s): Hook is descriptive, not disruptive. No visual conflict. 'Aroma lifts before you stir' is true for any decent coffee — not unique to Purica. | Scene 2 (5-11s): 'Read the back panel' is a command, not a revelation. Show the label with '0g Chicory' called out in red text overlay. | Scene 3 (11-18s): Freeze-dried explanation is vague. Say: 'Freeze-drying removes ice at -40°C — no heat, no burnt notes.' | Scene 4 (18-24s): 'Crafted for transparency' = filler. Replace with: 'Scan the QR on the jar — it takes you to the farm lot number.' | Scene 5 (24-29s): Dual CTA dilutes action. End on single identity trigger: 'Comment ARABICA if your jar says 100% Arabica and means it.'"
+    "target": "Urban Indian coffee lovers, working professionals, and home-brewers seeking pure coffee without fillers.",
+    "title": "Why Pure Arabica Granules Belong in Your Morning Routine",
+    "viral_potential": {
+      "scores": {
+        "hook": 7.0,
+        "curiosity_gap": 7.0,
+        "relatability": 8.0,
+        "shareability": 6.0,
+        "comment_trigger": 6.0,
+        "format_fit": 7.0,
+        "follow_cta": 7.0
+      },
+      "overall": 6.8,
+      "weakest": [
+        "shareability",
+        "comment_trigger"
+      ],
+      "feedback": "The hook addresses a common kitchen habit well, but bridges into product features a bit too fast rather than sustaining the curiosity gap. To push shareability and comments higher, provoke a stronger peer-to-peer realization about what is actually in instant coffee jars.",
+      "better_hook": "Most people ruin pure Arabica coffee the second the kettle hits a boil.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
     },
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.9,
+      "verdict": "PASS",
+      "feedback": "The asset effectively targets home brewers by addressing a common kitchen mistake (water temperature) and immediately pivots to the freeze-drying science of Purica Gourmet Arabica Granules. The visual direction emphasizes product realism, and the explicit inclusion of the exact Purity Beans jar and website link (https://p3online.in) meets all compliance guidelines. Zero chicory is accurately attributed solely to the pure coffee variant.",
+      "retention_audit": "Scene 1 uses a strong contrarian opening hook. Scene 2 transitions smoothly into scientific transparency. Scene 3 provides proof via the ingredient label. Scene 4 delivers a satisfying sensory payoff. Scene 5 closes with a clear conversion call to action."
+    },
+    "caption": "The coffee mistake almost every Indian kitchen makes before boiling water. Purity Beans Purica Gourmet Arabica Granules are freeze-dried at sub-zero temperatures to preserve natural aroma. Check the ingredient panel on the glass jar: pure Arabica, zero chicory. Visit https://p3online.in to order your jar today and follow @purepantryprovisions for more honest coffee insights.",
+    "ladder_exhausted": true,
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The script relies on passive observation ('notice how', 'look closely') instead of active revelation. The hook describes a sensory moment but lacks a curiosity gap or betrayal trigger — it feels like a product demo, not a story worth sharing. Scene 3 claims freeze-drying 'locks in' aroma without explaining the mechanism (ice sublimation vs heat evaporation), missing the education that drives saves. Scene 4's 'crafted for people who care about transparency' is generic b"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 6.8 < 8.0 (weakest: shareability, comment_trigger). The hook addresses a common kitchen habit well, but bridges into product features a bit too fast rather than sustaining the curiosity gap. To push shareability and comments higher, provoke a stronger peer-to-peer realization about what is actually in instant coffee jars. Suggested hook: Most people ruin pure Arabica coffee the second the kettle hits a boil. Use a DIFFERENT hook and angle from the last dra"
   },
   "growth_reel": {
     "id": "growth_reel",
@@ -3488,6 +3511,50 @@
       {
         "status": "exhausted",
         "reason": "The script relies on passive observation ('notice how', 'look closely') instead of active revelation. The hook describes a sensory moment but lacks a curiosity gap or betrayal trigger — it feels like a product demo, not a story worth sharing. Scene 3 claims freeze-drying 'locks in' aroma without exp"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 5.1 < 8.0 (weakest: hook, curiosity_gap, shareability). The hook relies on a gentle descriptive observation ('notice how the aroma lifts') instead of creating immediate psychological tension, a contrarian fact, or an open loop. For a YouTube Short, the first 1.5 seconds must break a pat"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 0.0 < 8.0 (weakest: n/a). HONESTY: remove '100%' is not allowed (FSSAI). Earn attention with a true, specific hook instead. Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"The coffee mistake almost every Indian kitchen makes\". Format rules: hook in the first sec"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The hook is interesting but still feels generic – the \"unexpected comma\" line could apply to any coffee brand, weakening its instant stop power. Strengthen the opening by directly naming the Purica jar and the single‑ingredient claim within the first 2 seconds (e.g., \"Look at this Purica jar – one i"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, curiosity_gap, format_fit). The opening hook mentions the brand name and product immediately ('Look at this Purity Beans Purica jar'), which weakens the cold-start retention for a YouTube Short. Viewers scroll past branded product shots in the first second. To "
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "HOOK/PAYOFF MISMATCH (payoff gate: hook promises 'method' but the content delivers verified_discovery — the promise is never settled). The hook makes a promise the body never settles. Either rewrite the hook so it promises exactly what the body delivers, or rewrite the body so it explicitly delivers"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: invented product claim']"
+      },
+      {
+        "attempt": 7,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: invented product claim']"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, shareability). The opening hook is a bit academic ('When pure Arabica is freeze-dried...') and lacks immediate thumb-stopping friction. To improve, lead with a direct sensory or comparative realization rather than a technical process description. The shareabili"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 6.8 < 8.0 (weakest: shareability, comment_trigger). The hook addresses a common kitchen habit well, but bridges into product features a bit too fast rather than sustaining the curiosity gap. To push shareability and comments higher, provoke a stronger peer-to-peer realization about what"
       }
     ]
   },
