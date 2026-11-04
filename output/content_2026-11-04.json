@@ -1626,113 +1626,233 @@
     }
   },
   "yt_short": {
-    "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "Increase brand awareness and product education for Purity Beans Purica",
-    "primary_cta": "Shop p3online.in",
-    "success_metric": "Profile visits and website clicks to https://p3online.in",
-    "audio": "Ambient room tone with a sharp porcelain spoon tap",
-    "audio_direction": "Subtle kitchen acoustic layer, no distracting music",
-    "caption": "Purica Gourmet Arabica Granules from Purity Beans uses freeze-dried technology to lock in natural coffee aroma. Read the jar. Discover more at https://p3online.in",
-    "chosen_hook": "Two ceramic cups sat side by side on a walnut kitchen counter.",
-    "comment_trigger": "Comment GRANULE to learn how freeze-drying works.",
-    "cta": "Shop Purica at https://p3online.in",
-    "description": "A close-up look at freeze-dried pure Arabica granules from Purity Beans compared to standard powders.",
-    "edit_pacing": "Deliberate slow macro shots, 4-5 seconds per scene",
-    "emotion_arc": "Curiosity → Observation → Understanding → Clarity",
-    "funnel_objective": "Drive educational traffic to product page",
-    "gate_rejection": "None",
-    "growth_plan": "Focus on high-retention macro visuals and educational contrast",
-    "growth_review": "Watch time >85%, high save rate on granule comparison",
-    "hashtags": "#PurityBeans #FreezeDriedCoffee #Purica #CoffeeLovers #PureCoffee",
-    "hook": "The coffee mistake almost every Indian kitchen makes",
-    "hook_text": "The coffee mistake almost every Indian kitchen makes",
-    "product": "Purica",
-    "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Macro cinematography of coffee extraction and granule dissolution",
-    "save_trigger": "Save this to know how freeze-drying preserves natural coffee aroma.",
-    "share_trigger": "Share with someone who drinks instant coffee every morning.",
-    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee.",
-    "loop_note": "Loops back to the crystal hitting the glass jar.",
+    "featured_product": "Purica",
+    "objective": "FOLLOWER GROWTH, EDUCATIONAL RETENTION, AND BRAND AUTHORITY",
+    "primary_cta": "Follow @purepantryprovisions",
+    "success_metric": "Watch completion rate > 85%, saves per view ratio, and follower conversion.",
+    "audio": "Warm acoustic guitar fingerpicking with soft ambient kitchen sounds and a kettle gently clicking off in the background.",
+    "audio_direction": "Start with a quiet, sharp click of a kettle switch, then drop into calm organic rhythm. No synthetic beat drops or loud transitional stingers.",
+    "caption": "Your kettle clicks off, you pour immediately, and your morning coffee turns instantly bitter. The water temperature is the silent variable in your cup. Pure coffee extraction depends entirely on giving the granules thirty seconds to breathe after the boil. Read the jar. Purity Beans Purica uses pure Arabica beans. Shop https://p3online.in",
+    "chosen_hook": "Your kettle reaches a rolling boil, but pouring water straight off the coil ruins the coffee bean's natural aromatics.",
+    "comment_trigger": "Comment WATER and tell me if you wait after your kettle boils or pour straight away.",
+    "cta": "Follow @purepantryprovisions for coffee science without the jargon. Shop https://p3online.in",
+    "description": "A quiet, highly educational non-sales YouTube Short teaching the water-temperature rule for brewing freeze-dried pure coffee without bitterness.",
+    "edit_pacing": "Deliberate and slow-paced. Zero fast cuts, zero jump scares, zero aggressive zoom transitions. Each scene holds long enough for the viewer to watch the physics of steam and water settle.",
+    "emotion_arc": "Begins with familiar frustration at a bitter morning taste, shifts into quiet curiosity about water temperature, resolves into an empowering realization about extraction timing.",
+    "funnel_objective": "TOP OF FUNNEL DISCOVERY, WATCH TIME OPTIMIZATION, AND DIRECT WEBSITE TRAFFIC ACQUISITION",
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "viewers who will watch one complete answer with the sound off",
+      "angle": "a standalone payoff that ends without needing another post",
+      "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+      "rationale": "A Short has to pay off on its own, then ask for the next one.",
+      "platform": "yt_short",
+      "sku": "Purica",
+      "day": 307
+    },
+    "growth_review": {
+      "platform": "yt_short",
+      "label": "yt_short",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "viewers who will watch one complete answer with the sound off",
+        "angle": "a standalone payoff that ends without needing another post",
+        "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+        "rationale": "A Short has to pay off on its own, then ask for the next one.",
+        "platform": "yt_short",
+        "sku": "Purica",
+        "day": 307
+      },
+      "published": false
+    },
+    "hashtags": "#PurityBeans #CoffeeScience #FreezeDriedCoffee #PureCoffee #CoffeeBrewing #InstantCoffee #CoffeeLoversIndia #MorningRitual",
+    "hook": "Your kettle reaches a rolling boil, but pouring water straight off the coil ruins the coffee bean's natural aromatics.",
+    "hook_text": "THE BOILING WATER MISTAKE",
+    "ladder_exhausted": false,
+    "loop_note": "Ends on the quiet steam rising from the mug, looping seamlessly back to the kettle click at second zero.",
+    "product": "purica",
+    "publish_blocked": false,
+    "reel_inspiration": "Specialty barista technique adapted for home instant coffee brewing, focusing on pure Arabica extraction chemistry.",
+    "save_trigger": "Save this short before your next morning brew so you remember the thirty-second wait.",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
         "duration_s": 5.0,
-        "on_screen": "THE WATER TEMPERATURE",
-        "spoken": "Pouring boiling water straight onto instant coffee granules destroys the natural aroma before you even take a sip.",
-        "visual_direction": "Macro shot of steaming kettle hovering above the exact Purity Beans Purica glass jar on a dark wooden counter under warm amber light."
+        "on_screen": "THE 100°C TRAP",
+        "spoken": "Your kettle reaches a rolling boil, but pouring water straight off the coil ruins the coffee bean's natural aromatics.",
+        "visual_direction": "Shot on iPhone 15, handheld close-up of a steel kettle spout emitting dense steam against a soft, lived-in kitchen background with a warm counter surface."
       },
       {
         "scene": 2,
-        "type": "tension",
+        "type": "curiosity",
         "duration_s": 6.0,
-        "on_screen": "THE GRANULE",
-        "spoken": "Freeze-dried pure Arabica from Purity Beans retains natural aroma without industrial heat damage.",
-        "visual_direction": "Extreme close-up of textured Purica freeze-dried pure Arabica crystals resting on a small ceramic saucer."
+        "on_screen": "WHAT HAPPENS TO THE AROMA?",
+        "spoken": "When boiling water hits delicate freeze-dried granules instantly, it scorches the fine notes before they can bloom in your cup.",
+        "visual_direction": "85mm lens macro shot of water hitting a spoon of dark freeze-dried granules, creating a sudden cloud of steam with shallow depth of field."
       },
       {
         "scene": 3,
-        "type": "turning_point",
-        "duration_s": 6.0,
-        "on_screen": "AROMA RELEASE",
-        "spoken": "Warm water meets the granules, releasing caramel and chocolate notes instantly.",
-        "visual_direction": "A single crystal dropping into a clear glass of warm water, slowly expanding and releasing fine amber trails."
+        "type": "value",
+        "duration_s": 8.0,
+        "on_screen": "THE THIRTY-SECOND RULE",
+        "spoken": "Turn the kettle off and wait thirty seconds. Let the water drop slightly below the boil so the pure coffee releases its true character instead of bitterness.",
+        "visual_direction": "Lived-in kitchen counter view showing a digital kitchen timer clicking from 00:00 to 00:30 next to a ceramic mug and a water ring on the wood surface."
       },
       {
         "scene": 4,
-        "type": "value",
-        "duration_s": 6.0,
-        "on_screen": "READ THE JAR",
-        "spoken": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee with zero chicory added.",
-        "visual_direction": "Hand gently turning the Purica jar to show the clean ingredient panel in clear focus."
+        "type": "trust",
+        "duration_s": 8.0,
+        "on_screen": "PURE ARABICA EXTRACTION",
+        "spoken": "Purity Beans Purica uses freeze-dried pure Arabica beans. When the water temperature is right, the natural caramel notes come forward smoothly.",
+        "visual_direction": "Side angle shot of the exact Purity Beans Purica glass jar sitting naturally on the counter, with warm window light catching the printed label and realistic glass texture."
       },
       {
         "scene": 5,
-        "type": "payoff_cta",
-        "duration_s": 7.0,
-        "on_screen": "VISIT P3ONLINE.IN",
-        "spoken": "Follow @purepantryprovisions and shop Purica at https://p3online.in",
-        "visual_direction": "The exact Purity Beans Purica jar standing centered with soft backlighting and visible glass reflection."
+        "type": "follow",
+        "duration_s": 8.0,
+        "on_screen": "FOLLOW FOR BETTER BREWS",
+        "spoken": "Follow @purepantryprovisions for more daily coffee insights. Read the jar, choose clean, and shop https://p3online.in",
+        "visual_direction": "Gently locked-off camera framing the Purity Beans jar next to a clean ceramic cup of black coffee, showing realistic contact shadows and natural amber reflection."
       }
     ],
-    "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 9.0,
-      "emotion_pull": 8.8,
-      "hook_strength": 9.2,
-      "brand_clarity": 9.5,
-      "overall": 9.0,
-      "verdict": "PASS",
-      "feedback": "The asset maintains high educational value with precise distinctions regarding freeze-dried Arabica granules. The visual direction clearly incorporates the exact reference jar without violating brand rules. Retention remains strong through macro cinematography and a clear narrative arc from problem to resolution.",
-      "retention_audit": "Scene 1 successfully captures attention with a common brewing mistake. Scene 2 and 3 provide sensory macro visuals that prevent drop-off. Scene 4 delivers clear ingredient transparency. Scene 5 closes with a direct call to action and website link."
-    },
+    "share_trigger": "Share this with someone who pours boiling water straight onto their morning coffee without waiting.",
+    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "title": "Why Boiling Water Ruins Your Instant Coffee",
     "viral_potential": {
       "scores": {
-        "hook": 6.0,
-        "curiosity_gap": 7.0,
-        "relatability": 7.0,
-        "shareability": 6.0,
+        "hook": 8.0,
+        "curiosity_gap": 9.0,
+        "relatability": 9.0,
+        "shareability": 8.0,
         "comment_trigger": 8.0,
-        "format_fit": 6.0,
-        "follow_cta": 7.0
+        "format_fit": 9.0,
+        "follow_cta": 9.0
       },
-      "overall": 6.7,
+      "overall": 8.5,
       "weakest": [
         "hook",
-        "format_fit",
         "shareability"
       ],
-      "feedback": "The hook 'The coffee mistake almost every Indian kitchen makes' is a bit cliché and overused in food reels. To elevate this for a YouTube Short, the first second needs a sharper, more tactile or visual pattern interrupt rather than a general statement. Format pacing is a bit slow for Shorts (4-5 seconds per scene is better suited for standard reels; Shorts need visual beats every 2-3 seconds to prevent drop-off). Ensure the visual description explicitly references the exact Purity Beans Purica jar with pristine label fidelity as mandated.",
-      "better_hook": "Stop pouring boiling water directly onto your instant coffee.",
-      "passed": false,
+      "feedback": "The piece is exceptionally well-structured for educational retention and honors all brand guidelines with absolute precision. To push the hook into the 9-10 tier for YouTube Shorts, ground the opening line even closer to the physical sensation of the viewer's immediate morning routine. The loop setup is solid, and the pacing respects the 3-beat rule.",
+      "better_hook": "Stop pouring boiling water straight onto your morning coffee.",
+      "passed": true,
       "honesty": [],
       "pass_mark": 8.0
     },
-    "title": "Why Freeze-Dried Pure Arabica Changes the Bloom",
-    "ladder_exhausted": true,
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 6.7 < 8.0 (weakest: hook, format_fit, shareability). The hook 'The coffee mistake almost every Indian kitchen makes' is a bit cliché and overused in food reels. To elevate this for a YouTube Short, the first second needs a sharper, more tactile or visual pattern interrupt rather than a general statement. Format pacing is a bit slow for Shorts (4-5 seconds per scene is better suited for standard reels; Shorts need visual beats every 2-3 seconds to prevent d"
+    "viral_readiness_score": 94.0,
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.0,
+      "hook_strength": 9.0,
+      "brand_clarity": 8.5,
+      "overall": 8.6,
+      "verdict": "PASS",
+      "feedback": "The asset leverages high-value coffee science that urban home brewers actively want to save for daily execution. The educational angle builds organic authority without relying on aggressive sales talk. Transition into the Purica jar mention and website CTA is smooth and organic.",
+      "retention_audit": "Scene 1 uses a strong sensory hook ('100°C trap') that immediately halts the scroll. Scene 2 effectively introduces the visual problem (water temperature scorching the granules) with realistic macro physics. Pacing holds the viewer's attention through accurate sensory details and practical brewing advice."
+    }
   },
   "growth_reel": {
     "id": "growth_reel",
@@ -3557,7 +3677,7 @@
       {
         "attempt": 2,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 3,
@@ -3567,7 +3687,7 @@
       {
         "attempt": 4,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 5,
@@ -3592,6 +3712,16 @@
       {
         "status": "exhausted",
         "reason": "viral: score 6.7 < 8.0 (weakest: hook, format_fit, shareability). The hook 'The coffee mistake almost every Indian kitchen makes' is a bit cliché and overused in food reels. To elevate this for a YouTube Short, the first second needs a sharper, more tactile or visual pattern interrupt rather than a "
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 6.7 < 8.0 (weakest: hook, format_fit, shareability). The opening hook relies on a tired internet trope ('The coffee mistake...'). For a YouTube Short, speed up the edit pacing so scene durations are 2-3 seconds max, ensuring a visual or audio pattern interrupt happens immediately in the"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned TOP OF FUNNEL DISCOVERY, WATCH TIME OPTIMIZATION, AND DIRECT WEBSITE TRAFFIC ACQUISITION. objective is primarily promotional/commercial copy — selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a"
       }
     ]
   },

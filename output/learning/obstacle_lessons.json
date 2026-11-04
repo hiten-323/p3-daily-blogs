@@ -14723,6 +14723,34 @@
       "reason": "viral: score 6.7 < 8.0 (weakest: hook, format_fit, shareability). The hook 'The coffee mistake almost every Indian kitchen makes' is a bit clich\u00e9 and overused in food reels. To elevate this for a YouTube Short, the first second needs a sharper, more tactile or visual pattern interrupt rather than a",
       "stage": "generation",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.7 < 8.0 (weakest: hook, format_fit, shareability). The opening hook relies on a tired internet trope ('The coffee mistake...'). For a YouTube Short, speed up the edit pacing so scene durations are 2-3 seconds max, ensuring a visual or audio pattern interrupt happens immediately in the first frame. Enhance shareability by making the granule-dissolving mechanism feel more surprising o",
+      "first_seen": "2026-11-04",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 6.7 < 8.0 (weakest: hook, format_fit, shareability). the opening hook relies on a tired internet trope ('the coffee mistake...'). for a youtube short, speed up the edi",
+      "label": "yt_short",
+      "last_seen": "2026-11-04",
+      "platform": "youtube",
+      "reason": "viral: score 6.7 < 8.0 (weakest: hook, format_fit, shareability). The opening hook relies on a tired internet trope ('The coffee mistake...'). For a YouTube Short, speed up the edit pacing so scene durations are 2-3 seconds max, ensuring a visual or audio pattern interrupt happens immediately in the",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "REJECTED AS SALES-LED (objective compliance: Asset assigned TOP OF FUNNEL DISCOVERY, WATCH TIME OPTIMIZATION, AND DIRECT WEBSITE TRAFFIC ACQUISITION. objective is primarily promotional/commercial copy \u2014 selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a brew tip (exact water temperature, ratio or technique for a better instant cup). Every frame/slide",
+      "first_seen": "2026-11-04",
+      "fix": "later draft passed the same gates",
+      "gate": "salesy_follow",
+      "id": "youtube|yt_short|salesy_follow|rejected as sales-led (objective compliance: asset assigned top of funnel discovery, watch time optimization, and direct website traffic acquisition. objective is primarily promoti",
+      "label": "yt_short",
+      "last_seen": "2026-11-04",
+      "platform": "youtube",
+      "reason": "REJECTED AS SALES-LED (objective compliance: Asset assigned TOP OF FUNNEL DISCOVERY, WATCH TIME OPTIMIZATION, AND DIRECT WEBSITE TRAFFIC ACQUISITION. objective is primarily promotional/commercial copy \u2014 selling to strangers wastes viral reach). Build a brand-new NON-SALES value piece from scratch: a",
+      "stage": "generation",
+      "status": "fixed"
     }
   ],
   "version": 1
