@@ -12216,5 +12216,771 @@
       }
     ],
     "emergency": false
+  },
+  {
+    "ts": "2026-11-04T06:27:31",
+    "date": "2026-11-04",
+    "day_number": 307,
+    "generation_ms": 2746657,
+    "validation_ms": 0,
+    "publish_ms": 13043,
+    "assets_generated": 7,
+    "assets_valid": 5,
+    "throughput": 7,
+    "avg_editorial_score": 8.6,
+    "min_editorial_score": 7.8,
+    "max_editorial_score": 9.0,
+    "avg_confidence": 0.5,
+    "schema_failure_rate": 0.0,
+    "brand_failure_rate": 0.0,
+    "editorial_reject_rate": 0.143,
+    "retry_count": 0,
+    "providers_used": [
+      {
+        "label": "carousel",
+        "provider": "gemini",
+        "prompt_tokens": 18182,
+        "completion_tokens": 1027
+      },
+      {
+        "label": "reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 18697,
+        "completion_tokens": 1426
+      },
+      {
+        "label": "linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 17195,
+        "completion_tokens": 516
+      },
+      {
+        "label": "instagram_post",
+        "provider": "gemini",
+        "prompt_tokens": 17663,
+        "completion_tokens": 575
+      },
+      {
+        "label": "stories",
+        "provider": "gemini",
+        "prompt_tokens": 15472,
+        "completion_tokens": 419
+      },
+      {
+        "label": "yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 16802,
+        "completion_tokens": 868
+      },
+      {
+        "label": "threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 16862,
+        "completion_tokens": 194
+      },
+      {
+        "label": "facebook_post",
+        "provider": "groq",
+        "prompt_tokens": 7074,
+        "completion_tokens": 800
+      },
+      {
+        "label": "growth_reel",
+        "provider": "gemini",
+        "prompt_tokens": 14799,
+        "completion_tokens": 2202
+      },
+      {
+        "label": "video_prompts",
+        "provider": "groq",
+        "prompt_tokens": 4409,
+        "completion_tokens": 3500
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7609,
+        "completion_tokens": 173
+      },
+      {
+        "label": "viral_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7749,
+        "completion_tokens": 187
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 12708,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7596,
+        "completion_tokens": 148
+      },
+      {
+        "label": "viral_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7726,
+        "completion_tokens": 186
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 12711,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7631,
+        "completion_tokens": 164
+      },
+      {
+        "label": "viral_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7752,
+        "completion_tokens": 180
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 12311,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7603,
+        "completion_tokens": 173
+      },
+      {
+        "label": "viral_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7699,
+        "completion_tokens": 164
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 12682,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7580,
+        "completion_tokens": 222
+      },
+      {
+        "label": "viral_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 7681,
+        "completion_tokens": 179
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "gemini",
+        "prompt_tokens": 12620,
+        "completion_tokens": 1493
+      },
+      {
+        "label": "editorial_reel_1",
+        "provider": "groq",
+        "prompt_tokens": 6688,
+        "completion_tokens": 800
+      },
+      {
+        "label": "viral_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 7929,
+        "completion_tokens": 327
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "groq",
+        "prompt_tokens": 6361,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "fresh_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 11027,
+        "completion_tokens": 937
+      },
+      {
+        "label": "editorial_carousel",
+        "provider": "gemini",
+        "prompt_tokens": 7583,
+        "completion_tokens": 196
+      },
+      {
+        "label": "viral_carousel",
+        "provider": "gemini",
+        "prompt_tokens": 7422,
+        "completion_tokens": 192
+      },
+      {
+        "label": "regen_carousel",
+        "provider": "gemini",
+        "prompt_tokens": 12738,
+        "completion_tokens": 1493
+      },
+      {
+        "label": "editorial_carousel",
+        "provider": "gemini",
+        "prompt_tokens": 7566,
+        "completion_tokens": 202
+      },
+      {
+        "label": "viral_carousel",
+        "provider": "gemini",
+        "prompt_tokens": 7464,
+        "completion_tokens": 219
+      },
+      {
+        "label": "editorial_instagram_post",
+        "provider": "gemini",
+        "prompt_tokens": 7616,
+        "completion_tokens": 196
+      },
+      {
+        "label": "viral_instagram_post",
+        "provider": "gemini",
+        "prompt_tokens": 7422,
+        "completion_tokens": 190
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 7182,
+        "completion_tokens": 148
+      },
+      {
+        "label": "viral_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 6879,
+        "completion_tokens": 212
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 11199,
+        "completion_tokens": 687
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 7523,
+        "completion_tokens": 148
+      },
+      {
+        "label": "viral_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 6862,
+        "completion_tokens": 226
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 11234,
+        "completion_tokens": 853
+      },
+      {
+        "label": "fresh_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 9995,
+        "completion_tokens": 522
+      },
+      {
+        "label": "fresh_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 9995,
+        "completion_tokens": 464
+      },
+      {
+        "label": "fresh_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 9995,
+        "completion_tokens": 467
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "groq",
+        "prompt_tokens": 6587,
+        "completion_tokens": 800
+      },
+      {
+        "label": "regen_linkedin_post",
+        "provider": "groq",
+        "prompt_tokens": 6353,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7748,
+        "completion_tokens": 374
+      },
+      {
+        "label": "editorial_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 7655,
+        "completion_tokens": 129
+      },
+      {
+        "label": "viral_linkedin_post",
+        "provider": "gemini",
+        "prompt_tokens": 6953,
+        "completion_tokens": 276
+      },
+      {
+        "label": "editorial_facebook_post",
+        "provider": "gemini",
+        "prompt_tokens": 7071,
+        "completion_tokens": 229
+      },
+      {
+        "label": "regen_facebook_post",
+        "provider": "gemini",
+        "prompt_tokens": 10299,
+        "completion_tokens": 363
+      },
+      {
+        "label": "editorial_facebook_post",
+        "provider": "gemini",
+        "prompt_tokens": 7079,
+        "completion_tokens": 226
+      },
+      {
+        "label": "viral_facebook_post",
+        "provider": "gemini",
+        "prompt_tokens": 6774,
+        "completion_tokens": 153
+      },
+      {
+        "label": "fresh_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 9977,
+        "completion_tokens": 325
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 6879,
+        "completion_tokens": 199
+      },
+      {
+        "label": "viral_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 6566,
+        "completion_tokens": 206
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 10965,
+        "completion_tokens": 514
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 7289,
+        "completion_tokens": 212
+      },
+      {
+        "label": "viral_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 6562,
+        "completion_tokens": 207
+      },
+      {
+        "label": "fresh_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 10127,
+        "completion_tokens": 389
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 6900,
+        "completion_tokens": 211
+      },
+      {
+        "label": "viral_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 6563,
+        "completion_tokens": 214
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 10971,
+        "completion_tokens": 607
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 7431,
+        "completion_tokens": 213
+      },
+      {
+        "label": "viral_threads_post",
+        "provider": "groq",
+        "prompt_tokens": 6419,
+        "completion_tokens": 700
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "groq",
+        "prompt_tokens": 6408,
+        "completion_tokens": 1409
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7386,
+        "completion_tokens": 457
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 11714,
+        "completion_tokens": 644
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7767,
+        "completion_tokens": 413
+      },
+      {
+        "label": "viral_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 6902,
+        "completion_tokens": 299
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 11845,
+        "completion_tokens": 634
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 7159,
+        "completion_tokens": 357
+      },
+      {
+        "label": "viral_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 6875,
+        "completion_tokens": 366
+      },
+      {
+        "label": "regen_threads_post",
+        "provider": "nvidia",
+        "prompt_tokens": 11725,
+        "completion_tokens": 1213
+      },
+      {
+        "label": "editorial_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 7624,
+        "completion_tokens": 255
+      },
+      {
+        "label": "viral_threads_post",
+        "provider": "gemini",
+        "prompt_tokens": 6764,
+        "completion_tokens": 223
+      },
+      {
+        "label": "editorial_growth_reel",
+        "provider": "gemini",
+        "prompt_tokens": 7566,
+        "completion_tokens": 142
+      },
+      {
+        "label": "viral_growth_reel",
+        "provider": "gemini",
+        "prompt_tokens": 7680,
+        "completion_tokens": 207
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7740,
+        "completion_tokens": 216
+      },
+      {
+        "label": "viral_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7771,
+        "completion_tokens": 168
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 13150,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7730,
+        "completion_tokens": 126
+      },
+      {
+        "label": "viral_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7770,
+        "completion_tokens": 180
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 13166,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7704,
+        "completion_tokens": 135
+      },
+      {
+        "label": "viral_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7780,
+        "completion_tokens": 191
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 12981,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7723,
+        "completion_tokens": 214
+      },
+      {
+        "label": "viral_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7743,
+        "completion_tokens": 195
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 13181,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7720,
+        "completion_tokens": 191
+      },
+      {
+        "label": "viral_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7737,
+        "completion_tokens": 219
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 13206,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7709,
+        "completion_tokens": 172
+      },
+      {
+        "label": "viral_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7734,
+        "completion_tokens": 216
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 13292,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "yt_short_schema_repair",
+        "provider": "gemini",
+        "prompt_tokens": 7424,
+        "completion_tokens": 586
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7727,
+        "completion_tokens": 174
+      },
+      {
+        "label": "viral_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7674,
+        "completion_tokens": 221
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 13191,
+        "completion_tokens": 1496
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7728,
+        "completion_tokens": 150
+      },
+      {
+        "label": "viral_yt_short",
+        "provider": "gemini",
+        "prompt_tokens": 7694,
+        "completion_tokens": 206
+      },
+      {
+        "label": "regen_yt_short",
+        "provider": "groq",
+        "prompt_tokens": 6507,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "editorial_yt_short",
+        "provider": "groq",
+        "prompt_tokens": 6790,
+        "completion_tokens": 800
+      },
+      {
+        "label": "editorial_sales_story",
+        "provider": "nvidia",
+        "prompt_tokens": 7032,
+        "completion_tokens": 518
+      },
+      {
+        "label": "viral_sales_story",
+        "provider": "nvidia",
+        "prompt_tokens": 6738,
+        "completion_tokens": 392
+      },
+      {
+        "label": "editorial_sales_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 7057,
+        "completion_tokens": 382
+      },
+      {
+        "label": "viral_sales_reel",
+        "provider": "nvidia",
+        "prompt_tokens": 6763,
+        "completion_tokens": 381
+      },
+      {
+        "label": "regen_reel_1",
+        "provider": "nvidia",
+        "prompt_tokens": 12910,
+        "completion_tokens": 1500
+      },
+      {
+        "label": "blog_outline",
+        "provider": "nvidia",
+        "prompt_tokens": 6175,
+        "completion_tokens": 173
+      },
+      {
+        "label": "blog_section_s0",
+        "provider": "nvidia",
+        "prompt_tokens": 8233,
+        "completion_tokens": 207
+      },
+      {
+        "label": "blog_section_s0",
+        "provider": "nvidia",
+        "prompt_tokens": 8284,
+        "completion_tokens": 349
+      },
+      {
+        "label": "blog_section_s0",
+        "provider": "nvidia",
+        "prompt_tokens": 8284,
+        "completion_tokens": 309
+      },
+      {
+        "label": "blog_section_s1",
+        "provider": "nvidia",
+        "prompt_tokens": 8233,
+        "completion_tokens": 201
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "nvidia",
+        "prompt_tokens": 8230,
+        "completion_tokens": 234
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "gemini",
+        "prompt_tokens": 8060,
+        "completion_tokens": 358
+      },
+      {
+        "label": "blog_section_s2",
+        "provider": "gemini",
+        "prompt_tokens": 8060,
+        "completion_tokens": 466
+      },
+      {
+        "label": "blog_section_s3",
+        "provider": "gemini",
+        "prompt_tokens": 8010,
+        "completion_tokens": 522
+      },
+      {
+        "label": "blog_section_s3",
+        "provider": "gemini",
+        "prompt_tokens": 8059,
+        "completion_tokens": 301
+      },
+      {
+        "label": "blog_section_s3",
+        "provider": "gemini",
+        "prompt_tokens": 8059,
+        "completion_tokens": 264
+      },
+      {
+        "label": "blog_section_s4",
+        "provider": "gemini",
+        "prompt_tokens": 8012,
+        "completion_tokens": 329
+      },
+      {
+        "label": "blog_section_s5",
+        "provider": "gemini",
+        "prompt_tokens": 8012,
+        "completion_tokens": 387
+      },
+      {
+        "label": "blog_section_s5",
+        "provider": "gemini",
+        "prompt_tokens": 8061,
+        "completion_tokens": 409
+      }
+    ],
+    "emergency": false
   }
 ]
