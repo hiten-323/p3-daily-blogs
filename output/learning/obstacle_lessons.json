@@ -2437,14 +2437,14 @@
       "status": "gate_holding"
     },
     {
-      "count": 5,
+      "count": 6,
       "feedback": "viral_scoring_failed: ValueError",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "provider",
       "id": "youtube|yt_short|provider|viral_scoring_failed: valueerror",
       "label": "yt_short",
-      "last_seen": "2026-11-04",
+      "last_seen": "2026-11-05",
       "platform": "youtube",
       "reason": "viral_scoring_failed: ValueError",
       "stage": "generation",
@@ -16907,6 +16907,34 @@
       "reason": "The concept is strong and the 'honest label' angle differentiates well, but the reel fails the 8.0 overall threshold due to three specific execution gaps. 1) Hook Conflict: The chosen_hook is 'revelation' but the spoken hook attacks a brewing mistake ('boiling water on milk coffee') that the reel ne",
       "stage": "generation",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). The piece is remarkably grounded and avoids all banned health/100% claims, correctly identifying Ultra Blend as 70/30 coffee and chicory. However, the first line of the hook ('The coffee mistake almost every Indian kitchen makes: boiling water on milk coffee') is slightly mismatched with the spoken audio line ('Your Rs180 cafe milk",
+      "first_seen": "2026-11-05",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). the piece is remarkably grounded and avoids all banned health/100% claims, correctly identifying ultra blend as 7",
+      "label": "yt_short",
+      "last_seen": "2026-11-05",
+      "platform": "youtube",
+      "reason": "viral: score 7.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). The piece is remarkably grounded and avoids all banned health/100% claims, correctly identifying Ultra Blend as 70/30 coffee and chicory. However, the first line of the hook ('The coffee mistake almost every Indian kitchen makes: boi",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.8 < 8.0 (weakest: hook, format_fit). The hook '8:15 AM office milk coffee vs home savings' is a bit too analytical for the first 1-2 seconds of a YouTube Short. It needs a punchier, conversational line that immediately stops the thumb. The 3-beat pacing can be sharpened in the opening second by cutting straight to the price contrast rather than the time stamp. Suggested hook: You ar",
+      "first_seen": "2026-11-05",
+      "fix": "later draft passed the same gates",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.8 < 8.0 (weakest: hook, format_fit). the hook '8:15 am office milk coffee vs home savings' is a bit too analytical for the first 1-2 seconds of a youtube short. it n",
+      "label": "yt_short",
+      "last_seen": "2026-11-05",
+      "platform": "youtube",
+      "reason": "viral: score 7.8 < 8.0 (weakest: hook, format_fit). The hook '8:15 AM office milk coffee vs home savings' is a bit too analytical for the first 1-2 seconds of a YouTube Short. It needs a punchier, conversational line that immediately stops the thumb. The 3-beat pacing can be sharpened in the opening",
+      "stage": "generation",
+      "status": "fixed"
     }
   ],
   "version": 1
