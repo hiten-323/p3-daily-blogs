@@ -16935,6 +16935,34 @@
       "reason": "viral: score 7.8 < 8.0 (weakest: hook, format_fit). The hook '8:15 AM office milk coffee vs home savings' is a bit too analytical for the first 1-2 seconds of a YouTube Short. It needs a punchier, conversational line that immediately stops the thumb. The 3-beat pacing can be sharpened in the opening",
       "stage": "generation",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-05",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:6.0; cluttered typographic hierarchy with too many competing font styles (bold serif, cursive script, and rounded capsule text) reducing premium legibility.; th",
+      "label": "reel_1",
+      "last_seen": "2026-11-05",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:6.0; Cluttered typographic hierarchy with too many competing font styles (bold serif, cursive script, and rounded capsule text) reducing premium legibility.; The full URL written out in small, italicized text in the center looks unpolished and is not standard for top-tier agency",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-05",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:6.0; background lacks premium depth and feels like generic stock imagery; typography is functional but not distinctive or high-end; product lighting is flat; la",
+      "label": "reel_1",
+      "last_seen": "2026-11-05",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:6.0; Background lacks premium depth and feels like generic stock imagery; Typography is functional but not distinctive or high-end; Product lighting is flat; lacks dramatic highlights for premium appeal; static_background:motion=9.0",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
