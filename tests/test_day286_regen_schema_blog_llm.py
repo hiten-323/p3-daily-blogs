@@ -142,6 +142,7 @@ def test_github_models_assembles_sse_instead_of_calling_it_malformed(monkeypatch
             )
         return Resp("")
 
+    github_models._state["retired"] = False
     monkeypatch.setattr(openai_compat._http, "post", post)
     monkeypatch.setenv("GITHUB_MODELS_TOKEN", "ghs_test")
     monkeypatch.setattr(github_models, "MODELS", ["meta/Llama-3.3-70B-Instruct"])
@@ -153,6 +154,43 @@ def test_github_models_assembles_sse_instead_of_calling_it_malformed(monkeypatch
     empty, failure = github_models.call("score", 700)
     assert empty is None
     assert "empty success body" in failure["error"]
+
+
+def test_github_models_plaintext_ok_is_retired_and_not_retried(monkeypatch):
+    """GitHub Models was retired on 2026-07-30. The host still answers HTTP 200
+    with a plaintext OK body. That is not a score, and it must not be recorded
+    as a provider failure that opens the circuit breaker. Later calls skip it."""
+    from content_generator.providers import github_models, openai_compat
+
+    class Resp:
+        status_code = 200
+        text = "OK\r\n"
+
+        def json(self):
+            raise ValueError("Expecting value: line 1 column 1 (char 0)")
+
+    posts = {"n": 0}
+
+    def post(url, headers=None, json=None, timeout=None):
+        posts["n"] += 1
+        return Resp()
+
+    github_models._state["retired"] = False
+    monkeypatch.setattr(openai_compat._http, "post", post)
+    monkeypatch.setenv("GITHUB_MODELS_TOKEN", "ghs_test")
+    monkeypatch.setattr(github_models, "MODELS", ["openai/gpt-4.1-mini", "meta/Llama-3.3-70B-Instruct"])
+
+    try:
+        text, usage = github_models.call("score this piece", 700)
+        assert text is None
+        assert usage == {}
+        assert posts["n"] == 1
+
+        again, again_usage = github_models.call("score this piece", 700)
+        assert again is None and again_usage == {}
+        assert posts["n"] == 1
+    finally:
+        github_models._state["retired"] = False
 
 
 def test_openrouter_only_free_models():

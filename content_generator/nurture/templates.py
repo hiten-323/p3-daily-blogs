@@ -60,8 +60,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
             "Great speaking with you! As discussed, we're sending across a sample pack so your team "
             "can experience Purity Beans firsthand.\n\n"
             "What's the best delivery address?\n\n"
-            "Also attaching our distributor margin sheet — you'll see why our partners in Mumbai and Pune "
-            "reordered within 45 days of their first stock.\n\n"
+            "Also attaching our distributor margin sheet.\n\n"
             "Looking forward to a long partnership,\nPurity Beans Team"
         ),
         "cta": "Reply with your delivery address",
@@ -76,7 +75,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
             "It should have reached you by now!\n\n"
             "Would love to hear what you and your team think of the taste. "
             "Any feedback on the packaging too?\n\n"
-            "Once you've tried it, let's talk numbers — we have 3 territory options still open in {region}."
+            "Once you've tried it, let's talk about the territory in {region}."
         ),
         "cta": "Reply with your feedback",
     },
@@ -217,9 +216,8 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "body": (
             "Hi {name}, Purity Beans here!\n\n"
             "Your sample pack is on its way — should reach {shop_name} by {eta}.\n\n"
-            "Try a cup yourself — you'll see why our retailers in {city} reordered within a month.\n\n"
-            "Once you've tried it, I'll share our wholesale pricing. The margins are the best you'll see "
-            "in this category."
+            "Try a cup yourself.\n\n"
+            "Once you've tried it, I'll share the wholesale prices for the jars you stock."
         ),
         "cta": "Reply 'TRIED' once you've had a cup",
     },
@@ -231,23 +229,25 @@ TEMPLATES: dict[tuple[str, str], dict] = {
             "Hi {name}!\n\n"
             "It's been 2 weeks since Purity Beans went on your shelf. "
             "How is it moving?\n\n"
-            "Tip: customers who ask for 'coffee without chicory' are your best buyers — "
-            "they'll become regulars once they find Purity Beans.\n\n"
+            "Tip: Bold, Purista, Purica, and Prima are the zero-chicory jars. "
+            "Ultra Blend is 70% coffee and 30% chicory, so do not sell that jar as no chicory.\n\n"
             "Let me know if you need a top-up or want the 200g pack added."
         ),
         "cta": "Reply to place a reorder",
     },
 
     ("retailer", "reordering"): {
-        "subject": "New SKU available — Purity Beans Cold Brew",
+        "subject": "Reorder the Purity Beans jars you already stock",
         "channel": "whatsapp",
         "body": (
-            "Hi {name}, great news!\n\n"
-            "We're launching Purity Beans Cold Brew concentrate — your summer bestseller candidate!\n\n"
-            "As an existing retail partner, you get first access at introductory pricing.\n\n"
-            "Interested in trying a case?"
+            "Hi {name},\n\n"
+            "The jars on the site are Bold, Purista, Purica, Prima, Ultra Blend, and the Variety Box. "
+            "Reorder one of those. Do not offer a product that is not on p3online.in.\n\n"
+            "Bold, Purista, Purica, and Prima are pure coffee with zero chicory. "
+            "Ultra Blend is 70% coffee and 30% chicory.\n\n"
+            "Reply with the sizes you want reordered and I'll send the wholesale sheet."
         ),
-        "cta": "Reply YES to get introductory pricing",
+        "cta": "Reply with the jars and sizes to reorder",
     },
 
     # ── CONSUMER ──────────────────────────────────────────────────────────────
@@ -268,11 +268,11 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "channel": "whatsapp",
         "body": (
             "Hi {name}!\n\n"
-            "Hope you enjoyed your first cup of Purity Beans!\n\n"
-            "If you loved it (we think you will), here's a 10% off code for your next order: PURE10\n\n"
-            "Valid for 7 days. Order at: {website}/shop"
+            "Hope you enjoyed your first cup of Purity Beans.\n\n"
+            "The same jars are at {website}. Bold, Purista, Purica, and Prima are pure coffee with zero chicory. "
+            "Ultra Blend is 70% coffee and 30% chicory."
         ),
-        "cta": "Use code PURE10 for 10% off",
+        "cta": "Reorder at p3online.in",
     },
 
     ("consumer", "repeat_customer"): {
@@ -280,12 +280,11 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "channel": "whatsapp",
         "body": (
             "Hi {name}!\n\n"
-            "You've now ordered Purity Beans 3 times — you're officially part of the pure coffee movement!\n\n"
-            "As a thank-you, here's free shipping on your next order (no minimum). Use code: PURE_FAN\n\n"
-            "Also — would you be open to leaving us a quick Google review? It helps other coffee lovers "
-            "find us. {review_link}"
+            "You've now ordered Purity Beans 3 times.\n\n"
+            "The shop is {website}. Bold, Purista, Purica, and Prima are pure coffee with zero chicory. "
+            "Ultra Blend is 70% coffee and 30% chicory."
         ),
-        "cta": "Leave a review + use PURE_FAN for free shipping",
+        "cta": "Reorder at p3online.in",
     },
 
     ("consumer", "loyal"): {
@@ -293,12 +292,12 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "channel": "whatsapp",
         "body": (
             "Hi {name}!\n\n"
-            "As one of our most loyal customers, you get first access to our new variant "
-            "before it goes live on the website.\n\n"
-            "We're calling it Purity Beans Dark Roast — 20% stronger, same zero-chicory promise.\n\n"
-            "Shall I reserve a pack for you?"
+            "The range on the site is Bold, Purista, Purica, Prima, Ultra Blend, and the Variety Box. "
+            f"The 50g set is {_VARIETY_BOX_URL}.\n\n"
+            "Bold, Purista, Purica, and Prima are pure coffee with zero chicory. "
+            "Ultra Blend is 70% coffee and 30% chicory."
         ),
-        "cta": "Reply YES to reserve your pack",
+        "cta": "Order a jar you have not tried yet",
     },
 }
 

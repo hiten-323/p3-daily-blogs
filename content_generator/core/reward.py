@@ -43,7 +43,8 @@ WEIGHT_PROFILES: dict[str, dict[str, float]] = {
 # ORDERS get the prefix; ATTRIBUTED REVENUE does not. They are different kinds
 # of evidence and the repo's own tests encode the distinction:
 #
-#   test_learning_evidence_guard  1 order must outrank 10,000 follows
+#   test_learning_evidence_guard  1 order must outrank 10,000 follows,
+#       and Rs 1 of attributed revenue must not
 #   test_reward_objective_integrity  100 follows must outrank Rs 1 of revenue
 #
 # Both hold once you notice what each number means. An order is a discrete,
