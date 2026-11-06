@@ -155,6 +155,54 @@ def test_github_models_assembles_sse_instead_of_calling_it_malformed(monkeypatch
     assert "empty success body" in failure["error"]
 
 
+def test_github_models_ok_body_skips_the_provider(monkeypatch):
+    """A retired catalog answers HTTP 200 with plaintext OK. That must not
+    look like a malformed success that opens the circuit breaker."""
+    from content_generator.providers import github_models, openai_compat
+
+    class Resp:
+        status_code = 200
+        text = "OK"
+
+        def json(self):
+            raise ValueError("Expecting value")
+
+    monkeypatch.setattr(openai_compat._http, "post", lambda *a, **k: Resp())
+    monkeypatch.setenv("GITHUB_MODELS_TOKEN", "ghs_test")
+    monkeypatch.setattr(github_models, "MODELS", ["openai/gpt-4.1-mini"])
+    assert github_models.call("score", 20) == (None, {})
+
+
+def test_openrouter_empty_body_tries_the_next_model(monkeypatch):
+    from content_generator.providers import openrouter
+
+    seen = []
+
+    class Resp:
+        status_code = 200
+        text = ""
+
+        def __init__(self, content):
+            self.content = content
+
+        def json(self):
+            return {"choices": [{"message": {"content": self.content}}], "usage": {}}
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen.append(json["model"])
+        return Resp("" if len(seen) == 1 else '{"ok": 1}')
+
+    monkeypatch.setattr(openrouter._http, "post", post)
+    monkeypatch.setattr(openrouter, "models", lambda: ["first:free", "second:free"])
+    monkeypatch.setenv("OPENROUTER_API_KEY", "k")
+    text, usage = openrouter.call("p", 10)
+    assert text == '{"ok": 1}'
+    assert seen == ["first:free", "second:free"]
+    assert usage["model"] == "second:free"
+
+
 def test_openrouter_only_free_models():
     from content_generator.providers import openrouter
     assert openrouter.MODELS and all(m.endswith(":free") for m in openrouter.MODELS)
+    assert "nemotron-3-super" not in openrouter._DEFAULT_FREE
+    assert "gemma-4-31b-it:free" in openrouter._DEFAULT_FREE

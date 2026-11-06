@@ -301,7 +301,8 @@ def test_hf_default_replaces_the_missing_qwen72():
     text = Path("content_generator/providers/huggingface.py").read_text(encoding="utf-8")
     default = text.split("HF_MODELS", 1)[1].split(")", 1)[0]
     assert "Qwen/Qwen2.5-72B-Instruct" not in default
-    assert "Qwen/Qwen3-8B" in default
+    assert "Qwen/Qwen3-8B" not in default
+    assert "Qwen/Qwen3-32B" in default
     assert "meta-llama/Llama-3.3-70B-Instruct" in default
 
 

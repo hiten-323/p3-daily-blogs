@@ -41,7 +41,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "channel": "both",
         "body": (
             "Hi {name},\n\n"
-            "Thank you for your interest in Purity Beans. Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee.\n\n"
+            "Thank you for your interest in Purity Beans. Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory.\n\n"
             "We're currently expanding our distribution network in {region} and your profile looks like a strong fit.\n\n"
             "Purity Beans is positioned between commodity instant coffee and premium cafes, "
             "which means high velocity AND healthy margins for our partners.\n\n"
@@ -60,8 +60,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
             "Great speaking with you! As discussed, we're sending across a sample pack so your team "
             "can experience Purity Beans firsthand.\n\n"
             "What's the best delivery address?\n\n"
-            "Also attaching our distributor margin sheet — you'll see why our partners in Mumbai and Pune "
-            "reordered within 45 days of their first stock.\n\n"
+            "Also attaching our distributor margin sheet.\n\n"
             "Looking forward to a long partnership,\nPurity Beans Team"
         ),
         "cta": "Reply with your delivery address",
@@ -87,9 +86,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "body": (
             "Hi {name},\n\n"
             "It's been 2 weeks since your trial order went out. "
-            "How's it moving off the shelves?\n\n"
-            "Our partners typically see 60-70% sell-through in the first 3 weeks — "
-            "consumers repurchase once they realise it's pure coffee for the same price as chicory blends.\n\n"
+            "How is it moving off the shelves?\n\n"
             "Ready to talk about a full stocking agreement? I can get the paperwork started this week."
         ),
         "cta": "Reply YES to schedule the agreement call",
@@ -123,11 +120,10 @@ TEMPLATES: dict[tuple[str, str], dict] = {
             "  - Units sold: {units_sold}\n"
             "  - Revenue: Rs {revenue}\n"
             "  - Top SKU: {top_sku}\n\n"
-            "Next month we're launching a new variant — we'd love for you to be in the first batch.\n\n"
-            "Your account manager will reach out with the pre-order details.\n\n"
+            "Your account manager will reach out if you want to restock.\n\n"
             "Thank you for being a Purity Beans partner!\nPurity Beans Team"
         ),
-        "cta": "Reply to pre-order the new variant",
+        "cta": "Reply if you want to restock",
     },
 
     # ── MODERN TRADE ──────────────────────────────────────────────────────────
@@ -137,7 +133,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "body": (
             "Dear {name},\n\n"
             "I'm reaching out regarding a listing opportunity for Purity Beans, "
-            "Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee.\n\n"
+            "Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory.\n\n"
             "We believe Purity Beans can meaningfully grow your hot beverages category by capturing "
             "the consumer who has been choosing between commodity instant coffee and expensive cafe visits.\n\n"
             "I'd like to share our category deck and discuss a pilot listing in select stores.\n\n"
@@ -154,8 +150,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
             "Dear {name},\n\n"
             "Sharing a quick follow-up on the category proposal sent earlier.\n\n"
             "Key highlights for {chain}:\n"
-            f"  - Ultra Blend: at least {_PT.ultra('cups')} cups per 100g jar (about ₹{_PT.ultra('per_cup')} a cup)\n"
-            "  - 40% repeat purchase rate in pilot stores (Pune, Q1 2026)\n"
+            f"  - Ultra Blend: at least {_PT.ultra('cups')} cups per 100g jar (about ₹{_PT.ultra('per_cup')} a cup). It is 70% coffee and 30% chicory.\n"
             "  - Full in-store activation kit provided at no cost\n\n"
             "We're keen to move to a buyer meeting — please let me know your availability.\n\n"
             "Best regards,\nPurity Beans Trade Team"
@@ -204,7 +199,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
             "Hi {name},\n\n"
             "Namaste! This is Purity Beans team.\n\n"
             "We noticed your inquiry about stocking pure instant coffee. "
-            "Purity Beans — Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee.\n\n"
+            "Purity Beans — Bold, Purista, Purica, and Prima are pure coffee with zero chicory. Ultra Blend is 70% coffee and 30% chicory.\n\n"
             "Your customers who ask for 'good coffee' will love it, and your margins will too.\n\n"
             "Can I send across a sample pack this week?"
         ),
@@ -217,7 +212,7 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "body": (
             "Hi {name}, Purity Beans here!\n\n"
             "Your sample pack is on its way — should reach {shop_name} by {eta}.\n\n"
-            "Try a cup yourself — you'll see why our retailers in {city} reordered within a month.\n\n"
+            "Try a cup yourself. Once you have, I'll share the wholesale pricing.\n\n"
             "Once you've tried it, I'll share our wholesale pricing. The margins are the best you'll see "
             "in this category."
         ),
@@ -239,15 +234,15 @@ TEMPLATES: dict[tuple[str, str], dict] = {
     },
 
     ("retailer", "reordering"): {
-        "subject": "New SKU available — Purity Beans Cold Brew",
+        "subject": "Ready for the next Purity Beans order?",
         "channel": "whatsapp",
         "body": (
-            "Hi {name}, great news!\n\n"
-            "We're launching Purity Beans Cold Brew concentrate — your summer bestseller candidate!\n\n"
-            "As an existing retail partner, you get first access at introductory pricing.\n\n"
-            "Interested in trying a case?"
+            "Hi {name},\n\n"
+            "The jars you already stock are ready to reorder: Bold, Purista, Purica, Prima, and Ultra Blend.\n\n"
+            "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee and 30% chicory.\n\n"
+            "Reply with the jars and sizes you want."
         ),
-        "cta": "Reply YES to get introductory pricing",
+        "cta": "Reply with the jars and sizes you want",
     },
 
     # ── CONSUMER ──────────────────────────────────────────────────────────────
@@ -269,10 +264,9 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "body": (
             "Hi {name}!\n\n"
             "Hope you enjoyed your first cup of Purity Beans!\n\n"
-            "If you loved it (we think you will), here's a 10% off code for your next order: PURE10\n\n"
-            "Valid for 7 days. Order at: {website}/shop"
+            "When you want the next jar, the shop is {website}/shop."
         ),
-        "cta": "Use code PURE10 for 10% off",
+        "cta": "Order the next jar",
     },
 
     ("consumer", "repeat_customer"): {
@@ -280,12 +274,9 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "channel": "whatsapp",
         "body": (
             "Hi {name}!\n\n"
-            "You've now ordered Purity Beans 3 times — you're officially part of the pure coffee movement!\n\n"
-            "As a thank-you, here's free shipping on your next order (no minimum). Use code: PURE_FAN\n\n"
-            "Also — would you be open to leaving us a quick Google review? It helps other coffee lovers "
-            "find us. {review_link}"
+            "A short Google review helps the next person find the jar: {review_link}"
         ),
-        "cta": "Leave a review + use PURE_FAN for free shipping",
+        "cta": "Leave a review",
     },
 
     ("consumer", "loyal"): {
@@ -293,12 +284,10 @@ TEMPLATES: dict[tuple[str, str], dict] = {
         "channel": "whatsapp",
         "body": (
             "Hi {name}!\n\n"
-            "As one of our most loyal customers, you get first access to our new variant "
-            "before it goes live on the website.\n\n"
-            "We're calling it Purity Beans Dark Roast — 20% stronger, same zero-chicory promise.\n\n"
-            "Shall I reserve a pack for you?"
+            "The range on the shop is Bold, Purista, Purica, Prima, and Ultra Blend.\n\n"
+            "Bold, Purista, Purica, and Prima are 100% coffee. Ultra Blend is 70% coffee and 30% chicory."
         ),
-        "cta": "Reply YES to reserve your pack",
+        "cta": "See the range on the shop",
     },
 }
 

@@ -21,11 +21,11 @@ _URL = "https://openrouter.ai/api/v1/chat/completions"
 # routed to a classifier and to reasoning models. Every one of those parsed to
 # nothing and the day fell through to fallback.
 #
-# These four are instruct-tuned and advertise JSON support; nemotron-3-super
-# additionally supports strict structured_outputs.
+# Instruct models that were on the free catalog on 2026-11-06. The
+# nemotron-3-super :free id is gone. Vision and omni ids stay out.
 _DEFAULT_FREE = (
     "google/gemma-4-31b-it:free,google/gemma-4-26b-a4b-it:free,"
-    "nvidia/nemotron-3-super-120b-a12b:free"
+    "nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free"
 )
 # Only ':free' models are ever called, so OpenRouter never bills. A configured
 # model without the suffix is dropped.
@@ -105,6 +105,10 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
                 logger.warning("OpenRouter %s returned malformed success payload: %s", model, e)
                 last_failure = {"status_code": 200, "model": model,
                                 "error": f"malformed success payload: {e}"}
+                continue
+            if not str(text or "").strip():
+                logger.warning("OpenRouter %s HTTP 200 with 0 chars — trying next model", model)
+                last_failure = {"status_code": 200, "model": model, "error": "empty content"}
                 continue
             u = body.get("usage", {})
             return text, {
