@@ -82,9 +82,12 @@ def test_workflows_chain_on_due_targets_not_ledger_rows():
     assert "retry_unposted --pending" in retry
     assert "gh workflow run retry-unposted.yml" in retry
     assert "gh workflow run daily.yml" in retry and "slot=generate" in retry
+    assert "dispatch_with_retry gh workflow run daily.yml" in retry
+    assert "dispatch_with_retry gh workflow run retry-unposted.yml" in retry
     assert "DAILY_ACTIVE" in retry and 'status == \\"in_progress\\"' in retry
     assert "actions: write" in daily
     assert "gh workflow run retry-unposted.yml" in daily
+    assert "dispatch_with_retry gh workflow run retry-unposted.yml" in daily
 
 
 def test_instagram_reel_alias_counts_as_posted():

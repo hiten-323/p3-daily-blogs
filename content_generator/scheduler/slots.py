@@ -243,6 +243,15 @@ def _track(result: dict, content: dict, slot: str, piece: dict) -> None:
         logger.warning("[slots] tracking failed: %s", e)
 
 
+def _attach_sales_push(result: dict, content: dict, slot: str, day: int) -> None:
+    """The campaign story posts on its own contract, including when the feed is held."""
+    try:
+        from content_generator.campaigns.trial_diwali_push import publish_for_slot
+        result["sales_push"] = publish_for_slot(content, slot, day)
+    except Exception as e:
+        logger.warning("[slots] sales push publish skipped: %s", e)
+
+
 def _held(slot: str, day: int, content: dict, reason: str) -> dict:
     """
     A deliberate decision NOT to publish, reported as such.
@@ -361,10 +370,12 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
         approved = approved_assets(content)
 
         def _hold_feed(reason: str) -> dict:
-            # A held feed does not hold the morning reel, which has its own target.
+            # A held feed does not hold the morning reel or the sales story.
             logger.info("[slots] morning growth_reel (feed held): %s",
                         _morning_reel(content, day, slot_date, only_asset))
-            return _held(slot, day, content, reason)
+            held = _held(slot, day, content, reason)
+            _attach_sales_push(held, content, slot, day)
+            return held
 
         if "carousel" not in approved and "instagram_post" not in approved:
             return _hold_feed("canonical_validation_failed")
@@ -424,11 +435,7 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
         result["growth_reel"] = _morning_reel(content, day, slot_date, only_asset)
         logger.info("[slots] morning growth_reel: %s", result["growth_reel"])
         logger.info("[slots] morning publish: %s", result.get("success"))
-        try:
-            from content_generator.campaigns.trial_diwali_push import publish_for_slot
-            result["sales_push"] = publish_for_slot(content, slot, day)
-        except Exception as e:
-            logger.warning("[slots] sales push publish skipped: %s", e)
+        _attach_sales_push(result, content, slot, day)
         asset = feed_queue[0] if feed_queue else ("carousel" if "carousel" in approved else "instagram_post")
         if ig_paused:
             return _contract(slot, day, content, {"facebook": fb_result}, {"facebook": [asset]})
@@ -443,11 +450,7 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
         if out.get("contract"):
             return out["contract"]
         chosen, result, fb_result, ig_paused = out["chosen"], out["result"], out["fb_result"], out["ig_paused"]
-        try:
-            from content_generator.campaigns.trial_diwali_push import publish_for_slot
-            result["sales_push"] = publish_for_slot(content, slot, day)
-        except Exception as e:
-            logger.warning("[slots] sales push publish skipped: %s", e)
+        _attach_sales_push(result, content, slot, day)
         if ig_paused:
             return _contract(slot, day, content, {"facebook": fb_result}, {"facebook": [chosen]})
         return _contract(slot, day, content,

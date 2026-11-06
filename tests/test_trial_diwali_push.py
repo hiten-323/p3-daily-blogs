@@ -296,6 +296,30 @@ def test_existing_gates_are_unchanged():
     assert PHASH_MIN_DISTANCE == 12
 
 
+def test_held_morning_feed_still_offers_the_sales_story(monkeypatch):
+    import datetime as dt
+    from content_generator.scheduler import slots as slotmod
+
+    day = dt.date(2026, 11, 6)
+    content = {"date": "2026-11-06", "day_number": 12, "sales_push": {"active": True}}
+    monkeypatch.setattr(slotmod, "_load_slot_content", lambda on_date: content)
+    monkeypatch.setattr(slotmod, "_morning_reel", lambda *args, **kwargs: {"skipped": True, "reason": "test"})
+    seen = {}
+
+    def _publish(payload, slot, day_number):
+        seen["slot"] = slot
+        seen["day"] = day_number
+        return {"success": True, "media_id": "sales-story"}
+
+    monkeypatch.setattr("content_generator.campaigns.trial_diwali_push.publish_for_slot", _publish)
+    monkeypatch.setattr("content_generator.core.editorial_engine.approved_assets", lambda payload: {})
+    held = slotmod._execute_publish_slot("morning", on_date=day)
+    assert held.get("status") == "held"
+    assert "canonical_validation_failed" in str(held.get("reason"))
+    assert seen == {"slot": "morning", "day": 12}
+    assert held["sales_push"]["media_id"] == "sales-story"
+
+
 def test_pipeline_hooks_are_wired():
     daily = Path("content_generator/scheduler/daily.py").read_text(encoding="utf-8")
     slots = Path("content_generator/scheduler/slots.py").read_text(encoding="utf-8")
