@@ -61,7 +61,7 @@ def test_pipeline_selects_the_template_for_the_mini_sku_only():
     assert mini["template_id"] == TEMPLATE_ID
     assert mini["sku"] == "PB-GOURMET-DUO-50"
     assert mini["price_inr"] == 570
-    assert mini["compare_at_inr"] == 648
+    assert mini["compare_at_inr"] == 588
     sku = select_product_reel(text="PB-GOURMET-DUO-50 on p3online.in")
     assert sku["path"] == mini["path"]
     assert select_product_reel(product="Gourmet Duo") is None
@@ -141,7 +141,7 @@ def test_claims_allow_zero_chicory_on_the_duo_and_reject_it_on_ultra_blend():
     assert "lead-free" in text.lower()
     assert "food grade" in text.lower()
     assert "₹570" in text
-    assert "₹648" in text
+    assert "₹588" in text
     assert "https://p3online.in" in text
     assert "12% off" not in text
     assert "Ultra Blend" not in text

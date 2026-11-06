@@ -256,6 +256,49 @@ def _apply_shopify_prices(products: dict[str, dict[str, Any]]) -> None:
             match = [r for r in rows if abs(r["grams"] - g) < 0.5] or (rows if len(rows) == 1 else [])
             if match:
                 v["price"] = int(round(match[0]["price"]))
+                if "available" in match[0]:
+                    v["available"] = bool(match[0]["available"])
+        flags = [v.get("available") for v in p.get("variants", []) if "available" in v]
+        if flags:
+            p["in_stock"] = any(flags)
+    _sync_bundle_savings(products)
+
+
+def _variant_price(products: dict[str, dict[str, Any]], slug: str, weight: str) -> int:
+    for variant in products[slug]["variants"]:
+        if variant.get("weight") == weight:
+            return int(variant["price"])
+    raise KeyError((slug, weight))
+
+
+def _sync_bundle_savings(products: dict[str, dict[str, Any]]) -> None:
+    """Bundle savings follow the current jar prices, not a stale handwritten percent."""
+
+    def offer(price: int, separate: int) -> tuple[str, int, int]:
+        saved = separate - price
+        pct = (saved * 100) // separate if separate else 0
+        text = f"Save ₹{saved:,} ({pct}% off vs ₹{separate:,} buying separately)"
+        return text, saved, pct
+
+    variety_separate = (
+        _variant_price(products, "ultra_blend", "50g")
+        + _variant_price(products, "bold", "50g")
+        + _variant_price(products, "purista", "50g")
+        + _variant_price(products, "purica", "50g")
+    )
+    text, saved, _pct = offer(_variant_price(products, "variety_box", "4 × 50g"), variety_separate)
+    products["variety_box"]["savings"] = text
+    products["variety_box"]["highlights"][1] = f"Best value — save ₹{saved:,} vs buying jars separately"
+
+    duo_separate = _variant_price(products, "purista", "100g") + _variant_price(products, "purica", "100g")
+    text, _saved, pct = offer(_variant_price(products, "gourmet_duo", "2 × 100g"), duo_separate)
+    products["gourmet_duo"]["savings"] = text
+    products["gourmet_duo"]["highlights"][1] = f"Extra {pct}% off versus the two jars bought separately"
+
+    mini_separate = _variant_price(products, "purista", "50g") + _variant_price(products, "purica", "50g")
+    text, _saved, pct = offer(_variant_price(products, "gourmet_duo_mini", "2 × 50g"), mini_separate)
+    products["gourmet_duo_mini"]["savings"] = text
+    products["gourmet_duo_mini"]["highlights"][1] = f"Extra {pct}% off versus the two jars bought separately"
 
 
 _apply_shopify_prices(SHOPIFY_PRODUCTS)
@@ -317,7 +360,13 @@ def format_catalog_for_prompt() -> str:
         "PRODUCTS:",
     ]
     for slug, p in SHOPIFY_PRODUCTS.items():
-        v_str = ", ".join(f"{v['weight']} (₹{v['price']})" for v in p.get("variants", []))
+        def _size(v: dict) -> str:
+            label = f"{v['weight']} (₹{v['price']})"
+            if v.get("available") is False:
+                return label + " — do not feature this size"
+            return label
+
+        v_str = ", ".join(_size(v) for v in p.get("variants", []))
         stock = "promote" if p.get("in_stock", True) else "do not feature or tell people to buy it"
         lines.append(f"• {p['short_name']} [{slug}] — {stock}:")
         lines.append(f"  - Bean / Blend: {p['bean_type']} | Chicory: {p['chicory']}")

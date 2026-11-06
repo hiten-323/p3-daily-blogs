@@ -76,9 +76,9 @@ def test_rotation_only_promotes_the_four_allowed_skus():
 
 def test_prices_match_the_shopify_snapshot():
     prices = {push.offer_for(_day(i))["slug"]: push.offer_for(_day(i))["price"] for i in range(6)}
-    assert prices["bold"] == 239
-    assert prices["purista"] == 319
-    assert prices["purica"] == 329
+    assert prices["bold"] == 215
+    assert prices["purista"] == 289
+    assert prices["purica"] == 299
     assert prices["gourmet_duo_mini"] == 570
 
 
@@ -89,7 +89,7 @@ def test_captions_pass_claim_gates_and_end_on_the_cta():
     assert story["caption"].splitlines()[-1] == push.STORY_CTA
     assert f"https://p3online.in/products/{HANDLES['bold']}?{UTM}" in reel["caption"]
     assert f"https://p3online.in/products/{HANDLES['gourmet_duo_mini']}?{UTM}" in story["caption"]
-    assert "Trial jars from Rs239." in reel["caption"]
+    assert "Trial jars from Rs215." in reel["caption"]
     assert "Use code FREESHIP." in reel["caption"]
     assert "Use code BUNDLE10." in reel["caption"]
     assert "order by" not in reel["caption"].lower()

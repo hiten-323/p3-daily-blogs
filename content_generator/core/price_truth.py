@@ -81,8 +81,11 @@ def _normalise(products: list[dict]) -> dict:
             grams = _grams(title, (v.get("grams") or 0))
             price = float(v.get("price") or 0)
             cmp_ = v.get("compare_at_price")
-            rows.append({"title": title, "grams": grams, "price": round(price, 2),
-                         "compare_at": round(float(cmp_), 2) if cmp_ else None})
+            row = {"title": title, "grams": grams, "price": round(price, 2),
+                   "compare_at": round(float(cmp_), 2) if cmp_ else None}
+            if "available" in v and v.get("available") is not None:
+                row["available"] = bool(v.get("available"))
+            rows.append(row)
         out[slug] = {"handle": p.get("handle"), "title": p.get("title"), "variants": rows}
     return out
 

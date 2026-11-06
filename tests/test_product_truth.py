@@ -93,10 +93,14 @@ def test_catalog_prices_and_prima_stock_stay_as_confirmed():
     def prices(slug):
         return [variant["price"] for variant in SHOPIFY_PRODUCTS[slug]["variants"]]
 
-    assert prices("bold") == [239, 369]
+    assert prices("bold") == [215, 329]
+    assert prices("purista") == [289, 459]
+    assert prices("purica") == [299, 559]
     assert prices("prima") == [269, 449]
     assert prices("ultra_blend") == [209, 309]
     assert SHOPIFY_PRODUCTS["prima"]["in_stock"] is False
+    assert SHOPIFY_PRODUCTS["gourmet_duo"]["in_stock"] is False
+    assert SHOPIFY_PRODUCTS["variety_box"]["savings"].startswith("Save ₹135")
 
 
 def test_ultra_blend_roasted_root_filler_fails():

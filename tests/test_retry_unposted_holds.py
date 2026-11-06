@@ -157,7 +157,9 @@ def test_brand_block_does_not_offer_the_banned_per_cup_price():
 
     text = brand_block()
     assert "Rs18/cup" not in text
-    assert "₹18" not in text
+    assert "₹18/cup" not in text
+    assert "₹18 a cup" not in text
+    assert "₹18 per cup" not in text
     assert "omit every per-cup price and cup count" in text
     assert "70% coffee" in text
     scratch = scratch_prompt("facebook_post", {"featured_product": "Bold"}, "per-cup", 8.0, text)

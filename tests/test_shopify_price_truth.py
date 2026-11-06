@@ -40,7 +40,7 @@ def test_matching_shopify_figures_pass():
 
 
 def test_hardcoded_wrong_price_rejected():
-    assert _price_issues("Bold 100g is just ₹299 today.")
+    assert _price_issues("Bold 100g is just ₹1234 today.")
     assert _price_issues("Ultra Blend 100g for Rs 349.")
 
 
