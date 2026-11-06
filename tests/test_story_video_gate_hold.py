@@ -8,7 +8,9 @@ from datetime import date
 
 
 def _patch_common(monkeypatch, tmp_path):
-    from content_generator.creative import story_video
+    from content_generator.creative import story_video, visual_gate
+
+    visual_gate._OUTAGE["n"] = 0
 
     monkeypatch.setenv("CINEMATIC_VIDEO", "0")
     monkeypatch.setenv("PREMIUM_CARDS", "1")
@@ -44,6 +46,7 @@ def _patch_common(monkeypatch, tmp_path):
 
 def test_rejected_story_does_not_fall_through_to_ungated_video(monkeypatch, tmp_path):
     story_video, calls = _patch_common(monkeypatch, tmp_path)
+    monkeypatch.setattr("content_generator.creative.visual_gate.vision_outage", lambda: False)
     monkeypatch.setattr(
         "content_generator.creative.visual_gate.evaluate_video",
         lambda *args, **kwargs: {"passed": False, "reasons": ["aesthetic_below_8.0:4.0"]},
