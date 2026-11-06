@@ -33,7 +33,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install Kaggle client
-        run: python -m pip install --no-cache-dir 'kaggle>=2.2.4'
+        run: python -m pip install --no-cache-dir 'kaggle>=2.2.4' 'six>=1.16'
 
       - name: Kaggle auth
         env:
