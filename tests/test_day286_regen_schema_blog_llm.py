@@ -155,6 +155,26 @@ def test_github_models_assembles_sse_instead_of_calling_it_malformed(monkeypatch
     assert "empty success body" in failure["error"]
 
 
+def test_github_models_retired_ok_is_a_skip_not_a_circuit_failure(monkeypatch):
+    """The retired host answers HTTP 200 with a plaintext OK. That is not a score
+    and must not open the circuit breaker for later viral calls."""
+    from content_generator.providers import github_models, openai_compat
+
+    class Resp:
+        status_code = 200
+        text = "OK\r\n"
+
+        def json(self):
+            raise ValueError("Expecting value: line 1 column 1 (char 0)")
+
+    monkeypatch.setattr(openai_compat._http, "post", lambda *a, **k: Resp())
+    monkeypatch.setenv("GITHUB_MODELS_TOKEN", "ghs_test")
+    monkeypatch.setattr(github_models, "MODELS", ["meta/Llama-3.3-70B-Instruct"])
+    text, usage = github_models.call("score", 40)
+    assert text is None
+    assert usage == {}
+
+
 def test_openrouter_only_free_models():
     from content_generator.providers import openrouter
     assert openrouter.MODELS and all(m.endswith(":free") for m in openrouter.MODELS)
