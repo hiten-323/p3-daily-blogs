@@ -450,7 +450,23 @@ jobs:
         if: ${{ always() && github.event.inputs.dry_run != 'true' && (env.FORCE_SLOT == 'generate' || env.FORCE_SLOT == 'morning') }}
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::retry-unposted dispatch failed"; exit 1; }
+        run: |
+          dispatch_with_retry() {
+            local attempt=1
+            local max=4
+            while true; do
+              if "$@"; then
+                return 0
+              fi
+              if [ "$attempt" -ge "$max" ]; then
+                return 1
+              fi
+              echo "::warning::workflow dispatch failed (attempt ${attempt}/${max}); retrying"
+              sleep $((10 * attempt))
+              attempt=$((attempt + 1))
+            done
+          }
+          dispatch_with_retry gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::retry-unposted dispatch failed"; exit 1; }
 
       - name: Alert on failure
         if: ${{ failure() && github.event.inputs.dry_run != 'true' }}
