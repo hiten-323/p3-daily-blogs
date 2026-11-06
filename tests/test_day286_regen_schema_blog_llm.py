@@ -143,6 +143,7 @@ def test_github_models_assembles_sse_instead_of_calling_it_malformed(monkeypatch
         return Resp("")
 
     monkeypatch.setattr(openai_compat._http, "post", post)
+    monkeypatch.setenv("GITHUB_MODELS_ENABLED", "true")
     monkeypatch.setenv("GITHUB_MODELS_TOKEN", "ghs_test")
     monkeypatch.setattr(github_models, "MODELS", ["meta/Llama-3.3-70B-Instruct"])
     text, usage = github_models.call("score", 700)
@@ -153,6 +154,49 @@ def test_github_models_assembles_sse_instead_of_calling_it_malformed(monkeypatch
     empty, failure = github_models.call("score", 700)
     assert empty is None
     assert "empty success body" in failure["error"]
+
+
+def test_retired_github_models_is_not_called(monkeypatch):
+    """The host still returns HTTP 200 plaintext OK. That must not be a score
+    and must not be posted at all while the provider stays retired."""
+    from content_generator.providers import github_models, openai_compat
+
+    def post(*_args, **_kwargs):
+        raise AssertionError("retired GitHub Models was called")
+
+    monkeypatch.delenv("GITHUB_MODELS_ENABLED", raising=False)
+    monkeypatch.setenv("GITHUB_MODELS_TOKEN", "ghs_secretvalue")
+    monkeypatch.setattr(openai_compat._http, "post", post)
+    github_models._logged = False
+    assert github_models.get_key() == ""
+    assert github_models.call("score this piece", 700) == (None, {})
+    assert github_models.call("score this piece", 700) == (None, {})
+    assert "ghs_secretvalue" not in github_models.retired_notice()
+
+
+def test_enabled_github_models_ok_placeholder_is_not_a_failure(monkeypatch):
+    from content_generator.providers import github_models, openai_compat
+
+    class Resp:
+        status_code = 200
+        text = "OK\r\n"
+
+        def json(self):
+            raise ValueError("Expecting value: line 1 column 1 (char 0)")
+
+    posts = {"n": 0}
+
+    def post(*_args, **_kwargs):
+        posts["n"] += 1
+        return Resp()
+
+    monkeypatch.setenv("GITHUB_MODELS_ENABLED", "true")
+    monkeypatch.setenv("GITHUB_MODELS_TOKEN", "ghs_test")
+    monkeypatch.setattr(github_models, "MODELS", ["openai/gpt-4.1-mini", "meta/Llama-3.3-70B-Instruct"])
+    monkeypatch.setattr(openai_compat._http, "post", post)
+    text, usage = github_models.call("score this piece", 700)
+    assert text is None and usage == {}
+    assert posts["n"] == 1
 
 
 def test_openrouter_only_free_models():

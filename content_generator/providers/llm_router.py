@@ -1,14 +1,17 @@
 """
 LLM router — circuit breaker, rate limiter, retry, cost tracking.
 
-Call order: Gemini → Groq → Cerebras → OpenRouter(:free) → GitHub Models →
+Call order: Gemini → Groq → Cerebras → OpenRouter(:free) →
 Mistral → Cloudflare Workers AI → Hugging Face → DeepSeek → NVIDIA (last).
+GitHub Models is omitted: the inference API was retired on 2026-07-30.
+Set GITHUB_MODELS_ENABLED=true to put it back in this order.
 LLM_PROVIDER_ORDER overrides. Missing keys are skipped; failover is quick.
 Each provider has an independent circuit breaker: after 3 consecutive failures
 it is disabled for 15 minutes before being retried.
 A threading.Semaphore(2) limits concurrent outbound API calls to prevent
 burst rate-limiting when the pipeline runs tasks in parallel.
 """
+import os
 import re
 import time
 import logging
@@ -180,6 +183,8 @@ def _provider_order() -> list:
     for n in _DEFAULT_ORDER:
         if n not in names:
             names.append(n)
+    if not github_models.enabled():
+        names = [n for n in names if n != "github_models"]
     return [(n, _ALL_PROVIDERS[n]) for n in names]
 
 
@@ -219,6 +224,12 @@ def log_provider_status() -> None:
         logger.info("[llm] NVIDIA health check: %s", nvidia.health_check())
     else:
         logger.info("[llm] NVIDIA health check: skipped (no key)")
+    token_set = bool(
+        os.environ.get("GITHUB_MODELS_TOKEN", "").strip()
+        or os.environ.get("GH_MODELS_TOKEN", "").strip()
+    )
+    if token_set and not github_models.enabled():
+        logger.info("[llm] %s", github_models.retired_notice())
 
 
 def _try_provider(
