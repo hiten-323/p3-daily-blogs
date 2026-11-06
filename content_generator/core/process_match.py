@@ -470,6 +470,10 @@ def align_process_piece(piece: dict, featured: str | None = None) -> dict:
     """Rewrite process labels on one asset before the gate runs."""
     if not isinstance(piece, dict):
         return piece
+    from content_generator.core.product_truth import separate_ultra_from_pure
+
+    def comply(value: str) -> str:
+        return separate_ultra_from_pure(comply_process_text(value, featured))
 
     def walk(node):
         if isinstance(node, dict):
@@ -477,13 +481,13 @@ def align_process_piece(piece: dict, featured: str | None = None) -> dict:
                 if key in _SCORE_KEYS:
                     continue
                 if isinstance(value, str):
-                    node[key] = comply_process_text(value, featured)
+                    node[key] = comply(value)
                 elif isinstance(value, (dict, list)):
                     walk(value)
         elif isinstance(node, list):
             for index, item in enumerate(node):
                 if isinstance(item, str):
-                    node[index] = comply_process_text(item, featured)
+                    node[index] = comply(item)
                 else:
                     walk(item)
 

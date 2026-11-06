@@ -136,6 +136,7 @@ _COPY_KEYS = (
     "cta", "primary_cta", "on_screen", "spoken", "text", "content",
     "description", "tagline", "product", "product_slug", "subtext",
     "comment_trigger", "save_trigger", "share_trigger", "hashtags",
+    "brand_bridge", "closing_question",
 )
 _REPAIR_SUBS = (
     (re.compile(r"You might be drinking hidden chicory fillers\.?", re.I),
@@ -334,10 +335,60 @@ def fssai_rewrite(text: str) -> str:
     return t
 
 
+
+def separate_ultra_from_pure(text: str) -> str:
+    """Keep the word pure off the same clause as Ultra Blend.
+
+    "pure coffee variants or our balanced Ultra Blend" is one clause, so the
+    blend is called pure. A comma leaves the pure jars in their own clause.
+    A clause that calls Ultra Blend itself pure becomes the 70/30 line.
+    "Never call Ultra Blend pure" stays, because the pure word is negated.
+    """
+    if not isinstance(text, str) or not text or not _ULTRA.search(text):
+        return text
+
+    def mixes(segment: str) -> bool:
+        if not segment or not _ULTRA.search(segment):
+            return False
+        pure = re.search(r"\bpure\b", segment, re.I)
+        return bool(pure) and not _locally_negated(segment, pure.start())
+
+    def fix_segment(segment: str) -> str:
+        updated = segment
+        for _ in range(4):
+            if not mixes(updated):
+                return updated
+            parts = re.split(r"\s+\b(or|and)\b\s+", updated, maxsplit=1, flags=re.I)
+            if len(parts) != 3:
+                break
+            left, conj, right = parts
+            if mixes(left):
+                left = fix_segment(left)
+            if mixes(right):
+                right = fix_segment(right)
+            updated = f"{left}, {conj} {right}"
+            if not mixes(left) and not mixes(right):
+                return updated
+        return "Ultra Blend is 70% coffee and 30% chicory" if mixes(updated) else updated
+
+    chunks = re.split(r"((?<=[.!?])\s+|\n+)", text)
+    out = []
+    for index, chunk in enumerate(chunks):
+        if index % 2 == 1 or not mixes(chunk):
+            out.append(chunk)
+            continue
+        bits = re.split(r"([,;:]|\s[-–—]\s)", chunk)
+        for bit_index in range(0, len(bits), 2):
+            if mixes(bits[bit_index]):
+                bits[bit_index] = fix_segment(bits[bit_index])
+        out.append("".join(bits))
+    return "".join(out)
+
+
 def repair_text(text: str, *, chicory_scope: bool) -> str:
     """Replace anti-chicory attacks with honest 70/30 wording, then apply the
     FSSAI '100%' rewrite."""
-    return fssai_rewrite(_repair_chicory(text, chicory_scope=chicory_scope))
+    return separate_ultra_from_pure(fssai_rewrite(_repair_chicory(text, chicory_scope=chicory_scope)))
 
 
 def _repair_chicory(text: str, *, chicory_scope: bool) -> str:

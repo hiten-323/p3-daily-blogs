@@ -209,9 +209,9 @@ def target_refuses_retry(records: list[dict], target: str) -> bool:
         status = str(r.get("status") or "").upper()
         err = str(r.get("error") or "").lower()
         if status in ("SKIPPED", "REJECTED"):
-            if any(p in err for p in ("process_match", "product_truth", "prepublish_gate", "claim_gate", "banned")):
+            if any(p in err for p in ("process_match", "prepublish_gate", "claim_gate", "banned")):
                 return True
-        if any(p in err for p in ("process_match_failed", "product_truth_failed")):
+        if "process_match_failed" in err:
             return True
     return all(attempt_budget_exhausted(r) for r in rows)
 
@@ -249,7 +249,10 @@ def labels_to_regen(todo: list[str], approved: dict | None, records: list[dict] 
         gate = any(
             r.get("slot") == slot and str(r.get("platform") or "").lower() in platforms
             and str(r.get("status") or "") in ("SKIPPED", "FAILED")
-            and str(r.get("error") or "").startswith("prepublish_gate:")
+            and (
+                str(r.get("error") or "").startswith("prepublish_gate:")
+                or str(r.get("error") or "") in ("product_truth_failed", "process_match_failed")
+            )
             for r in records or [])
         if not mandatory and not gate:
             continue

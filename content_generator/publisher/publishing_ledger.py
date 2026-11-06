@@ -94,9 +94,17 @@ def _due(record: dict, now: dt.datetime) -> bool:
 _PREFLIGHT_MISSES = ("no_images", "no_video", "no_content")
 
 
+_TRUTH_HOLD_ERRORS = {"product_truth_failed", "process_match_failed"}
+
+
+def _gate_hold_error(error: str) -> bool:
+    err = str(error or "").strip().lower()
+    return err.startswith("prepublish_gate:") or err in _TRUTH_HOLD_ERRORS
+
+
 def _preflight_miss(record: dict) -> bool:
     err = str((record or {}).get("error") or "").strip().lower()
-    if err.startswith("prepublish_gate:"):
+    if _gate_hold_error(err):
         return True
     return err.split(":", 1)[0].strip() in _PREFLIGHT_MISSES
 
@@ -335,7 +343,7 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
         error = str(result.get("error") or result.get("message") or "")
         success = bool(result.get("success"))
         not_attempted = bool(result.get("skipped") or result.get("held") or result.get("attempted") is False)
-        gate_hold = error.lower().startswith("prepublish_gate:")
+        gate_hold = _gate_hold_error(error)
         if gate_hold and not success:
             # The platform was never called. Record a due failure so
             # retry-unposted regenerates the piece. A terminal SKIPPED row
