@@ -1377,14 +1377,20 @@ def _retry_sales_story_opening(piece: dict) -> None:
 
     if not any_provider_available():
         return
+    feedback = str(piece.get("quality_hold") or "")
+    viral = piece.get("viral_potential")
+    if isinstance(viral, dict) and viral.get("feedback"):
+        feedback = f"{feedback}\n{viral.get('feedback')}"
     prompt = (
         "Rewrite only the opening of this Instagram story. Return JSON "
-        '{"opening": "..."} with at most two sentences. Open on the jar itself, '
-        "not on the price. Do not include a price, a discount code, a date, a URL, "
-        "a health claim, or the words fresh, limited, or hurry.\n\n"
+        '{"opening": "..."} with at most two sentences. Open on a real moment '
+        "with the jar, not on the price and not on a category label. Do not "
+        "include a price, a discount code, a date, a URL, a health claim, or "
+        "the words fresh, limited, or hurry.\n\n"
+        f"WHY THE LAST DRAFT FAILED:\n{feedback[:500]}\n\n"
         f"CAPTION:\n{piece.get('caption')}"
     )
-    for _ in range(2):
+    for _ in range(4):
         try:
             raw = llm_call(prompt, "sales_story_opening", 200)
         except Exception as exc:
