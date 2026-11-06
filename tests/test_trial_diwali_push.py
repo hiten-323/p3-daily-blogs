@@ -195,11 +195,12 @@ def test_render_uses_distinct_formats_and_holds_on_failure(prov, tmp_path, monke
     )
     monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(tmp_path))
     rendered = push.render_assets(content, 1, START)
-    assert [c["format_type"] for c in calls] == ["push_reel", "push_story"]
-    assert all(c["concepts"] is True for c in calls)
+    assert [c["format_type"] for c in calls] == ["push_story"]
+    assert calls[0]["concepts"] is True
     assert calls[0]["jar_source"].endswith("bold_50g_cutout_front.png")
-    assert calls[0]["end_cta"] == push.REEL_CTA
-    assert "reel" in rendered
+    assert calls[0]["end_cta"] == push.STORY_CTA
+    assert "reel" not in rendered
+    assert content["sales_push"]["reel"]["skipped"] == "two_reels_per_day"
     assert content["sales_push"]["story"]["held"] == "visual_or_variety_gate"
     assert push.render_assets({}, 1, START) == {}
 
@@ -277,6 +278,18 @@ def test_confirmed_codes_and_deadline_match_the_honesty_gate():
     assert "fabricated urgency" in honesty_issues({**open_day, "caption": "Order by 2 Nov. Hurry, limited stock."})
 
 
+def test_opening_rewrite_keeps_the_offer():
+    piece = push.build_piece(START, "story")
+    assert push.apply_opening(piece, "Read the jar before the big one.")
+    assert piece["caption"].startswith("Read the jar before the big one.")
+    assert "Rs239" in piece["caption"]
+    assert piece["product_url"] in piece["caption"]
+    assert piece["caption"].endswith(push.STORY_CTA)
+    assert push.copy_problems(piece["caption"], piece["slug"], piece["date"]) == []
+    assert push.apply_opening(piece, "Now Rs99. Hurry.") is False
+    assert "Rs99" not in piece["caption"]
+
+
 def test_existing_gates_are_unchanged():
     assert AESTHETIC_PASS == 8.0
     assert MIN_BG_MOTION == 12.0
@@ -287,7 +300,10 @@ def test_pipeline_hooks_are_wired():
     daily = Path("content_generator/scheduler/daily.py").read_text(encoding="utf-8")
     slots = Path("content_generator/scheduler/slots.py").read_text(encoding="utf-8")
     assert "attach(content, asset_date(content))" in daily
-    assert "render_assets(content, day_number, asset_date(content))" in daily
+    render_at = daily.find("render_assets(content, day_number, asset_date(content))")
+    carousel_at = daily.find("compose_carousel_slides(")
+    assert 0 <= render_at < carousel_at
+    assert daily.find("render_assets(content, day_number, asset_date(content))", render_at + 1) == -1
     assert "publish_for_slot(content, slot, day)" in slots
 
 

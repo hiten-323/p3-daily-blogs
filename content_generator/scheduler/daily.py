@@ -1337,45 +1337,78 @@ def _remember_fixed(label: str, fix: str) -> None:
         logger.debug("[lessons] mark_fixed skipped for %s: %s", label, exc)
 
 
-def _score_sales_push(content: dict) -> None:
-    """Score campaign templates once. Do not rewrite offer codes or deadlines."""
-    block = content.get("sales_push") if isinstance(content, dict) else None
-    if not isinstance(block, dict) or not block.get("active"):
-        return
+def _score_one_sales_piece(piece: dict, label: str) -> str:
+    """Score one campaign piece. Returns the publish-bar reason, or ""."""
     from content_generator.agents.editorial import EditorialScoreError, review_content
     from content_generator.core import viral_gate
     from content_generator.core.editorial_engine import normalize_editorial_result
     from content_generator.core.publish_bar import quality_block
 
+    try:
+        review = normalize_editorial_result(review_content(piece, label=label))
+    except EditorialScoreError as exc:
+        if piece.get("held") not in ("visual_or_variety_gate", "provenance", "render_error"):
+            piece["held"] = "editorial_gate"
+        _remember_obstacle(label, f"scoring_failed: {exc}", "generation", gate="provider")
+        return "editorial_gate"
+    piece["editorial_score"] = review
+    if viral_gate.enabled():
+        piece["viral_potential"] = viral_gate.evaluate(label, piece)
+    reason = quality_block(piece, label)
+    if reason:
+        if piece.get("held") not in ("visual_or_variety_gate", "provenance", "render_error"):
+            piece["held"] = "quality_gate"
+        piece["quality_hold"] = reason[:300]
+        feedback = ""
+        viral = piece.get("viral_potential")
+        if isinstance(viral, dict):
+            feedback = str(viral.get("feedback") or "")
+        _remember_obstacle(label, feedback or reason, "generation")
+    elif piece.get("held") in ("quality_gate", "editorial_gate", "viral_gate"):
+        piece.pop("held", None)
+        piece.pop("quality_hold", None)
+    return reason
+
+
+def _retry_sales_story_opening(piece: dict) -> None:
+    """One or two new openings. The price, URL, codes, and CTA are not rewritten."""
+    from content_generator.campaigns.trial_diwali_push import apply_opening
+    from content_generator.providers.llm_router import any_provider_available, call as llm_call
+
+    if not any_provider_available():
+        return
+    prompt = (
+        "Rewrite only the opening of this Instagram story. Return JSON "
+        '{"opening": "..."} with at most two sentences. Open on the jar itself, '
+        "not on the price. Do not include a price, a discount code, a date, a URL, "
+        "a health claim, or the words fresh, limited, or hurry.\n\n"
+        f"CAPTION:\n{piece.get('caption')}"
+    )
+    for _ in range(2):
+        try:
+            raw = llm_call(prompt, "sales_story_opening", 200)
+        except Exception as exc:
+            logger.warning("[sales-push] opening rewrite skipped: %s", type(exc).__name__)
+            return
+        opening = raw.get("opening") if isinstance(raw, dict) else ""
+        if not apply_opening(piece, str(opening or "")):
+            continue
+        if not _score_one_sales_piece(piece, "sales_story"):
+            return
+
+
+def _score_sales_push(content: dict) -> None:
+    """Score the campaign story. A failed bar may replace the opening only."""
+    block = content.get("sales_push") if isinstance(content, dict) else None
+    if not isinstance(block, dict) or not block.get("active"):
+        return
     for surface in ("story", "reel"):
         piece = block.get(surface)
         if not isinstance(piece, dict) or not piece:
             continue
-        label = f"sales_{surface}"
-        try:
-            review = normalize_editorial_result(review_content(piece, label=label))
-        except EditorialScoreError as exc:
-            if piece.get("held") not in ("visual_or_variety_gate", "provenance", "render_error"):
-                piece["held"] = "editorial_gate"
-            _remember_obstacle(label, f"scoring_failed: {exc}", "generation", gate="provider")
-            continue
-        piece["editorial_score"] = review
-        if viral_gate.enabled():
-            vg = viral_gate.evaluate(label, piece)
-            piece["viral_potential"] = vg
-        reason = quality_block(piece, label)
-        if reason:
-            if piece.get("held") not in ("visual_or_variety_gate", "provenance", "render_error"):
-                piece["held"] = "quality_gate"
-            piece["quality_hold"] = reason[:300]
-            feedback = ""
-            viral = piece.get("viral_potential")
-            if isinstance(viral, dict):
-                feedback = str(viral.get("feedback") or "")
-            _remember_obstacle(label, feedback or reason, "generation")
-        elif piece.get("held") in ("quality_gate", "editorial_gate", "viral_gate"):
-            piece.pop("held", None)
-            piece.pop("quality_hold", None)
+        reason = _score_one_sales_piece(piece, f"sales_{surface}")
+        if surface == "story" and reason and reason != "editorial_gate":
+            _retry_sales_story_opening(piece)
 
 
 def _growth_gate_reason(content: dict, label: str, piece: dict) -> str:
@@ -1582,6 +1615,16 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     )
 
     results = {"carousel": [], "reel": None, "instagram_post": None, "facebook_post": None}
+
+    # The sales story has to render before the daily reel and short spend
+    # CINEMATIC_TOTAL_BUDGET_S. At the end of this function the budget is
+    # already below one estimated render, and the story was held without a try.
+    try:
+        from content_generator.campaigns.trial_diwali_push import render_assets
+        from content_generator.core.ist_dates import asset_date
+        results["sales_push"] = render_assets(content, day_number, asset_date(content))
+    except Exception as e:
+        logger.warning("[images] sales push render skipped: %s", e)
 
     # Carousel slides — one real jar photo per slide, rotating daily
     carousel = content.get("carousel") or {}
@@ -1814,13 +1857,6 @@ def _do_generate_images(content: dict, day_number: int) -> dict:
     except Exception as e:
         logger.warning("[images] UGC generation failed (non-blocking): %s", e)
         results["ugc_package"] = None
-
-    try:
-        from content_generator.campaigns.trial_diwali_push import render_assets
-        from content_generator.core.ist_dates import asset_date
-        results["sales_push"] = render_assets(content, day_number, asset_date(content))
-    except Exception as e:
-        logger.warning("[images] sales push render skipped: %s", e)
 
     return results
 

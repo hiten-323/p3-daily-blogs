@@ -214,13 +214,15 @@ def _body(offer: dict, cfg: dict) -> str:
             return ""
         fact = template.format(price=price)
         entry = _entry_price(cfg)
+        hook = "The big jar can wait."
         if entry is None:
-            return fact
-        return f"{fact}\n\nTrial jars from Rs{entry}."
+            return f"{hook}\n\n{fact}"
+        return f"{hook}\n\n{fact}\n\nTrial jars from Rs{entry}."
     if slug != "gourmet_duo_mini":
         return ""
     angle = " A Diwali gift pack." if offer.get("diwali_angle") else ""
     return (
+        "Two small jars, before the big ones. "
         "Gourmet Duo Mini. Purista 50g and Purica 50g. "
         f"Freeze-dried pure Robusta and pure Arabica.{angle} Rs{price}."
     )
@@ -259,16 +261,16 @@ def _frames(offer: dict, cta: str, entry: int | None) -> list[dict]:
     if offer.get("role") == "gift":
         head = "DIWALI GIFT" if offer.get("diwali_angle") else "GIFT PACK"
         return [
+            {"on": "TWO SMALL JARS", "sub": "Before the big ones"},
             {"on": head, "sub": "Gourmet Duo Mini"},
-            {"on": "TWO 50g JARS", "sub": "Purista and Purica"},
             {"on": f"Rs{offer['price']}", "sub": cta},
         ]
     slug = offer["slug"]
     from_line = f"Trial jars from Rs{entry}" if entry is not None else "Trial jar"
     return [
-        {"on": _TRIAL_ON[slug], "sub": _TRIAL_SUB[slug]},
-        {"on": f"Rs{offer['price']}", "sub": from_line},
-        {"on": "ORDER", "sub": cta},
+        {"on": "THE BIG JAR CAN WAIT", "sub": _TRIAL_SUB[slug]},
+        {"on": _TRIAL_ON[slug], "sub": from_line},
+        {"on": f"Rs{offer['price']}", "sub": cta},
     ]
 
 
@@ -303,6 +305,35 @@ def copy_problems(text: str, slug: str | None = None, on=None) -> list[str]:
     except Exception as exc:
         reasons.append(f"honesty:{type(exc).__name__}")
     return reasons
+
+
+def apply_opening(piece: dict, opening: str) -> bool:
+    """Replace the first paragraph only. Price, URL, codes, and CTA stay put."""
+    text = " ".join(str(opening or "").split())
+    if not text or len(text) > 180:
+        return False
+    if re.search(
+        r"https?://|\brs\.?\s*\d|\buse code\b|\border by\b|100\s*%|\bfresh\b|limited stock|%",
+        text, re.I,
+    ):
+        return False
+    parts = str(piece.get("caption") or "").split("\n\n", 1)
+    if len(parts) != 2 or not parts[1].strip():
+        return False
+    updated = f"{text}\n\n{parts[1]}"
+    if copy_problems(updated, piece.get("slug"), piece.get("date")):
+        return False
+    price = piece.get("price")
+    required = [piece.get("product_url"), piece.get("cta")]
+    if price is not None:
+        required.append(f"Rs{int(price)}")
+    if any(item and str(item) not in updated for item in required):
+        return False
+    piece["caption"] = updated
+    frames = piece.get("frames")
+    if isinstance(frames, list) and frames and isinstance(frames[0], dict):
+        frames[0]["on"] = text.rstrip(".").upper()[:42]
+    return True
 
 
 def build_piece(on, surface: str, cfg: dict | None = None) -> dict | None:
@@ -429,7 +460,13 @@ def render_assets(content: dict, day_number: int, on_date) -> dict:
     os.makedirs(out_dir, exist_ok=True)
     day = on_date.isoformat() if hasattr(on_date, "isoformat") else str(on_date)[:10]
     rendered = {}
-    for surface, fmt in (("reel", "push_reel"), ("story", "push_story")):
+    # The sales reel is not published (two reels a day). Rendering it last
+    # also used to start after the shared cinematic budget was already gone,
+    # so the story — the piece that does publish — never got a render attempt.
+    reel = block.get("reel")
+    if isinstance(reel, dict):
+        reel["skipped"] = "two_reels_per_day"
+    for surface, fmt in (("story", "push_story"),):
         piece = block.get(surface) if isinstance(block.get(surface), dict) else None
         if not piece:
             continue
