@@ -100,6 +100,7 @@ def test_groq_200_with_zero_chars_is_a_failure_and_tries_the_next_model(monkeypa
 
     def post(*_args, **kwargs):
         calls.append(kwargs["json"]["model"])
+        assert kwargs["json"]["reasoning_effort"] == "low"
         return _Response(200, next(bodies))
 
     monkeypatch.setattr(groq._http, "post", post)
@@ -107,6 +108,24 @@ def test_groq_200_with_zero_chars_is_a_failure_and_tries_the_next_model(monkeypa
     assert text == '{"ok": true}'
     assert usage["model"] == "openai/gpt-oss-20b"
     assert calls == ["openai/gpt-oss-120b", "openai/gpt-oss-20b"]
+
+
+def test_openrouter_empty_content_tries_the_next_free_model(monkeypatch):
+    monkeypatch.setattr(openrouter, "MODELS", ["empty/one:free", "good/two:free"])
+    monkeypatch.setattr(openrouter, "_DISCOVERED", [])
+    monkeypatch.setenv("OPENROUTER_API_KEY", "sk-or-test")
+    calls = []
+
+    def post(*_args, **kwargs):
+        calls.append(kwargs["json"]["model"])
+        content = "" if kwargs["json"]["model"].startswith("empty") else '{"ok": true}'
+        return _Response(200, {"choices": [{"message": {"content": content}}], "usage": {}})
+
+    monkeypatch.setattr(openrouter._http, "post", post)
+    text, usage = openrouter.call("prompt", 40)
+    assert text == '{"ok": true}'
+    assert usage["model"] == "good/two:free"
+    assert calls == ["empty/one:free", "good/two:free"]
 
 
 def test_groq_reads_reasoning_json_when_content_is_empty(monkeypatch):

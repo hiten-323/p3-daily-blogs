@@ -3,6 +3,7 @@ import os
 import logging
 import requests as _http
 
+from content_generator.providers.openai_compat import message_text
 from content_generator.rotation import WEBSITE_URL
 
 logger = logging.getLogger(__name__)
@@ -21,11 +22,13 @@ _URL = "https://openrouter.ai/api/v1/chat/completions"
 # routed to a classifier and to reasoning models. Every one of those parsed to
 # nothing and the day fell through to fallback.
 #
-# These four are instruct-tuned and advertise JSON support; nemotron-3-super
-# additionally supports strict structured_outputs.
+# Pinned to :free instruct models that were on GET /api/v1/models on 2026-11-06.
+# nvidia/nemotron-3-super-120b-a12b:free is no longer in that free catalog.
+# nemotron-3.5-super-vl and the nano omni reasoning id are listed, and skipped:
+# one is vision, the other spends the reply on a trace.
 _DEFAULT_FREE = (
     "google/gemma-4-31b-it:free,google/gemma-4-26b-a4b-it:free,"
-    "nvidia/nemotron-3-super-120b-a12b:free"
+    "nvidia/nemotron-3-ultra-550b-a55b:free,nvidia/nemotron-3.5-lightning:free"
 )
 # Only ':free' models are ever called, so OpenRouter never bills. A configured
 # model without the suffix is dropped.
@@ -37,7 +40,7 @@ MODELS: list[str] = [
 
 _DISCOVERED: list[str] | None = None
 _TEXT_HINTS = ("instruct", "-it", "chat", "nemotron-3", "deepseek", "qwen3", "llama-4", "gpt-oss", "kimi", "glm")
-_TEXT_SKIP = ("safety", "guard", "coder", "embed", "vl", "vision", "audio")
+_TEXT_SKIP = ("safety", "guard", "coder", "embed", "vl", "vision", "audio", "omni")
 
 
 def models() -> list[str]:
@@ -100,11 +103,16 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
         if resp.status_code == 200:
             try:
                 body = resp.json()
-                text = body["choices"][0]["message"]["content"]
+                msg = body["choices"][0].get("message") or {}
+                text = message_text(msg) if isinstance(msg, dict) else ""
             except (KeyError, IndexError, TypeError, ValueError) as e:
                 logger.warning("OpenRouter %s returned malformed success payload: %s", model, e)
                 last_failure = {"status_code": 200, "model": model,
                                 "error": f"malformed success payload: {e}"}
+                continue
+            if not str(text or "").strip():
+                logger.warning("OpenRouter %s returned empty content", model)
+                last_failure = {"status_code": 200, "model": model, "error": "empty content"}
                 continue
             u = body.get("usage", {})
             return text, {
