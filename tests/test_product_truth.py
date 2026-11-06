@@ -66,6 +66,26 @@ def test_consumer_samples_are_flagged_and_b2b_samples_are_not():
     assert url in lead["body"]
     assert "sample" not in (lead["subject"] + lead["body"] + lead["cta"]).lower()
 
+    banned = (
+        "cold brew",
+        "dark roast",
+        "pure10",
+        "pure_fan",
+        "10% off",
+        "free shipping",
+        "20% stronger",
+    )
+    for (segment, stage), template in TEMPLATES.items():
+        blob = " ".join(
+            str(template.get(key) or "") for key in ("subject", "body", "cta")
+        ).lower()
+        for phrase in banned:
+            assert phrase not in blob, f"{segment}/{stage} still says {phrase}"
+        if segment == "consumer":
+            rendered = render_template(segment, stage, name="Asha")
+            text = " ".join(rendered[key] for key in ("subject", "body", "cta"))
+            assert not any(item["type"] == "offer" for item in verify_claims(text))
+
 
 def test_catalog_prices_and_prima_stock_stay_as_confirmed():
     from content_generator.core.shopify_catalog import SHOPIFY_PRODUCTS
