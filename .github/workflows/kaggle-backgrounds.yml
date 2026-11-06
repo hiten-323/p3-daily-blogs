@@ -33,7 +33,9 @@ jobs:
           python-version: '3.11'
 
       - name: Install Kaggle client
-        run: python -m pip install --no-cache-dir 'kaggle>=2.2.4'
+        # kaggle 2.2.5 imports six at startup and does not declare it, so the CLI
+        # dies with ModuleNotFoundError before status or push can run.
+        run: python -m pip install --no-cache-dir 'kaggle>=2.2.4' 'six>=1.16'
 
       - name: Kaggle auth
         env:
