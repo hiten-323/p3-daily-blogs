@@ -110,6 +110,18 @@ def test_topic_plan_skips_slugs_already_in_output(tmp_path):
     assert chosen["slug"] != first["slug"]
 
 
+def test_exhausted_plan_repeats_under_a_new_slug(tmp_path):
+    for index, topic in enumerate(TOPICS):
+        payload = {"blog_post": {"slug": topic["slug"], "topic_id": topic["id"], "primary_keyword": topic["primary"]}}
+        (tmp_path / f"content_2026-08-{index + 1:02d}.json").write_text(json.dumps(payload), encoding="utf-8")
+    chosen = choose_topic(309, output_dir=str(tmp_path), on_date="2026-11-06")
+    prior = {topic["slug"] for topic in TOPICS}
+    assert chosen["slug"] not in prior
+    assert chosen["slug"].endswith("20261106")
+    from content_generator.core.blog_quality import duplicate_slug_issue
+    assert duplicate_slug_issue(chosen["slug"], on_date="2026-11-06", output_dir=str(tmp_path)) is None
+
+
 def test_partial_draft_is_saved_and_a_later_run_resumes(tmp_path):
     def failing(prompt, label="", max_tokens=900):
         if "outline" in str(label):
