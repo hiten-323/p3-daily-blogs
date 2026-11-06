@@ -216,9 +216,45 @@ def target_refuses_retry(records: list[dict], target: str) -> bool:
     return all(attempt_budget_exhausted(r) for r in rows)
 
 
+def _waiting_on_evening_clock(name: str, now_ist: dt.datetime) -> bool:
+    """An evening reel that the publish plan will only prewarm, not post."""
+    if name not in EVENING_REEL_TARGETS:
+        return False
+    hour, minute = _evening_clock()
+    return (now_ist.hour, now_ist.minute) < (hour, minute)
+
+
+def _evening_copy_ready(date: str, names: list[str]) -> bool:
+    """True when each waiting reel already clears the same editorial gate the retry uses.
+
+    The 8.0 bar is unchanged. A missing or unapproved reel stays on the chain so
+    regeneration continues. A lookup error stays on the chain too.
+    """
+    if not names:
+        return False
+    try:
+        from content_generator.scheduler.publish_recovery import _load_content
+        content, _why = _load_content(date)
+        if not isinstance(content, dict):
+            return False
+        approved = _approved(content)
+    except Exception:
+        log.debug("[retry] evening-ready check failed", exc_info=True)
+        return False
+    return all(any(label in approved for label in TARGETS[name][2]) for name in names)
+
+
 def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | None = None,
-                    pack_exists: bool | None = None) -> list[str]:
-    """Due targets plus a missing pack. A dropped cron writes no rows and must stay pending."""
+                    pack_exists: bool | None = None, evening_ready: bool | None = None) -> list[str]:
+    """Due targets plus a missing pack. A dropped cron writes no rows and must stay pending.
+
+    An approved evening reel that cannot publish until 21:53 IST is not due yet.
+    Counting it kept retry-unposted re-dispatching itself every few minutes
+    (6 Nov 2026: PENDING stayed reel_1 from the afternoon until the slot).
+    An unapproved reel stays pending so regeneration still runs. Once the
+    evening clock has passed, a missing reel stays pending so a dropped cron
+    is backstopped. The 8.0 bar is unchanged.
+    """
     if now_ist is None:
         now_ist = dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=5, minutes=30)
     if now_ist.hour < CHAIN_FROM_HOUR:
@@ -231,7 +267,13 @@ def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | No
         return [NO_PACK]
     if records is None:
         records = records_for_date(date)
-    return [t for t in unposted_targets(records, now_ist.hour) if not target_refuses_retry(records, t)]
+    due = [t for t in unposted_targets(records, now_ist.hour) if not target_refuses_retry(records, t)]
+    waiting = [t for t in due if _waiting_on_evening_clock(t, now_ist)]
+    if due and len(waiting) == len(due):
+        ready = evening_ready if evening_ready is not None else _evening_copy_ready(date, waiting)
+        if ready:
+            return []
+    return due
 
 
 def is_mandatory(target: str) -> bool:
