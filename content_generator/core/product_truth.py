@@ -136,7 +136,7 @@ _COPY_KEYS = (
     "cta", "primary_cta", "on_screen", "spoken", "text", "content",
     "description", "tagline", "product", "product_slug", "subtext",
     "comment_trigger", "save_trigger", "share_trigger", "hashtags",
-    "brand_bridge", "closing_question",
+    "brand_bridge", "closing_question", "script",
 )
 _REPAIR_SUBS = (
     (re.compile(r"You might be drinking hidden chicory fillers\.?", re.I),
@@ -306,7 +306,13 @@ def piece_copy_text(piece: dict) -> str:
     for key in _COPY_KEYS:
         add(piece.get(key))
     for list_key in ("slides", "frames", "script", "scenes", "hook_options"):
-        for item in piece.get(list_key) or []:
+        value = piece.get(list_key)
+        # A YouTube script is one string. Iterating it checked each letter
+        # and never the sentence, so a false claim in the script was invisible.
+        if isinstance(value, str):
+            add(value)
+            continue
+        for item in value or []:
             if isinstance(item, str):
                 add(item)
             elif isinstance(item, dict):
