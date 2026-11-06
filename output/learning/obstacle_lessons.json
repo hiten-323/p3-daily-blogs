@@ -18321,6 +18321,34 @@
       "reason": "The opening hook, while specific, is still generic enough to fit any instant coffee brand and lacks the instant scroll\u2011stop power of a betrayal or curiosity gap hook. Strengthen it with a bolder statement like \"You've been brewing your coffee wrong for years\" or visually shock the viewer (e.g., a ja",
       "stage": "generation",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-06",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:3.0; product presentation flaw: the primary product jar is awkwardly placed directly on top of another blurry jar, violating the rule of a clean surface without",
+      "label": "reel_1",
+      "last_seen": "2026-11-06",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:3.0; Product presentation flaw: the primary product jar is awkwardly placed directly on top of another blurry jar, violating the rule of a clean surface without overlapping distractions.; Low production value: the background looks like a low-res radial gradient asset rather than",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-06",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:3.0; cluttered typographic hierarchy with too many conflicting fonts, sizes, and badge styles competing for attention.; the label design on the jar looks amateu",
+      "label": "reel_1",
+      "last_seen": "2026-11-06",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:3.0; Cluttered typographic hierarchy with too many conflicting fonts, sizes, and badge styles competing for attention.; The label design on the jar looks amateurish and heavily pixelated/low-res.; Unnatural background lighting with harsh gradient shifts that lack premium depth an",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
