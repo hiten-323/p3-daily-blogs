@@ -259,10 +259,9 @@ def product_url(slug: str, cfg: dict | None = None) -> str:
 
 def _frames(offer: dict, cta: str, entry: int | None) -> list[dict]:
     if offer.get("role") == "gift":
-        head = "DIWALI GIFT" if offer.get("diwali_angle") else "GIFT PACK"
         return [
-            {"on": "TWO SMALL JARS", "sub": "Before the big ones"},
-            {"on": head, "sub": "Gourmet Duo Mini"},
+            {"on": "A JAR EACH", "sub": "Purista and Purica"},
+            {"on": "FREEZE DRIED", "sub": "Pure Robusta and pure Arabica"},
             {"on": f"Rs{offer['price']}", "sub": cta},
         ]
     slug = offer["slug"]
@@ -487,7 +486,14 @@ def render_assets(content: dict, day_number: int, on_date) -> dict:
         poster = (meta or {}).get("poster")
         if not meta or not verdict.get("passed") or not variety.get("passed") or not poster:
             piece["held"] = "visual_or_variety_gate"
-            _note_campaign_obstacle(surface, "aesthetic", "visual_or_variety_gate")
+            if verdict:
+                piece["visual_gate"] = verdict
+            if variety:
+                piece["variety_gate"] = variety
+            why = "; ".join(
+                list(verdict.get("reasons") or [])[:3] + list(variety.get("reasons") or [])[:2]
+            ) or "visual_or_variety_gate"
+            _note_campaign_obstacle(surface, "aesthetic", why[:300])
             continue
         record_jar_provenance(poster, jar_asset_id=asset, render_source="cinematic_real_jar")
         if not verify_jar_provenance(poster).get("verified"):

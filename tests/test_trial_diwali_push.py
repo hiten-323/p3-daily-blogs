@@ -307,6 +307,29 @@ def test_pipeline_hooks_are_wired():
     assert "publish_for_slot(content, slot, day)" in slots
 
 
+def test_held_morning_feed_still_offers_the_sales_story(monkeypatch):
+    import content_generator.core.editorial_engine as ee
+    import content_generator.core.ist_dates as ist
+    import content_generator.scheduler.slots as sl
+
+    day = dt.date(2026, 11, 6)
+    content = {"date": day.isoformat(), "day_number": 309, "sales_push": {"active": True}}
+    monkeypatch.setattr(sl, "_load_slot_content", lambda _day: content)
+    monkeypatch.setattr(sl, "_morning_reel", lambda *_a, **_k: {"skipped": True})
+    monkeypatch.setattr(ist, "content_date_for_slot", lambda _slot: day)
+    monkeypatch.setattr(ist, "content_matches_today", lambda _content, today=None: (True, ""))
+    monkeypatch.setattr(ee, "approved_assets", lambda _content: {})
+    calls = []
+    monkeypatch.setattr(
+        push, "publish_for_slot",
+        lambda _content, slot, _day: calls.append(slot) or {"skipped": True, "reason": "not_rendered"},
+    )
+    out = sl._execute_publish_slot("morning", day)
+    assert out["status"] == "held"
+    assert calls == ["morning"]
+    assert out["sales_push"]["reason"] == "not_rendered"
+
+
 def test_push_reel_does_not_reuse_the_daily_reel_concept():
     assert scn.format_key("push_reel") != "reel"
     reel = scn.pick("2026-10-21", "reel", sku="bold", history=[])

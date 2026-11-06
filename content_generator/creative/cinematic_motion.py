@@ -434,14 +434,17 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             tl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
             tldraw = ImageDraw.Draw(tl)
 
-            # Draw Platform Eyebrow Badge
-            badge_w = tldraw.textlength(eyebrow_badge, font=badge_font)
-            bp_w = int(badge_w + 32)
-            bp_x = (W - bp_w) // 2
-            bp_y = int(H * 0.09)
-            tldraw.rounded_rectangle([(bp_x, bp_y), (bp_x + bp_w, bp_y + 36)], radius=12,
-                                     fill=(16, 10, 6, 220), outline=badge_border, width=1)
-            tldraw.text((W // 2, bp_y + 18), eyebrow_badge, font=badge_font, fill=badge_text_col, anchor="mm")
+            # The sales story already has one wordmark and one CTA. A second
+            # badge, a shop sticker, and a second pill are what the vision gate
+            # scores as clutter. Daily reel and story chrome is unchanged.
+            if not end_cta:
+                badge_w = tldraw.textlength(eyebrow_badge, font=badge_font)
+                bp_w = int(badge_w + 32)
+                bp_x = (W - bp_w) // 2
+                bp_y = int(H * 0.09)
+                tldraw.rounded_rectangle([(bp_x, bp_y), (bp_x + bp_w, bp_y + 36)], radius=12,
+                                         fill=(16, 10, 6, 220), outline=badge_border, width=1)
+                tldraw.text((W // 2, bp_y + 18), eyebrow_badge, font=badge_font, fill=badge_text_col, anchor="mm")
 
             # Draw YouTube Shorts Scene / Part Pill
             if surf == "short" and num_plans > 1:
@@ -492,7 +495,7 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             boxes.append(chip)
 
             # Simulated Instagram Native Link Sticker for Story format
-            if surf == "story" and t >= 1.5:
+            if surf == "story" and t >= 1.5 and not end_cta:
                 sta = min(1.0, (t - 1.5) / 0.4)
                 sticker_text = "🔗 TAP TO SHOP · p3online.in"
                 st_w = tldraw.textlength(sticker_text, font=sticker_font)
@@ -518,7 +521,7 @@ def render_cinematic_video(sku: str, beats: list[dict] | str, out_path: str, *, 
             if show_cta:
                 ca = min(1.0, (t - cta_at) / 0.35)
                 cl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-                pc.brand_frame(cl, pal, cta=cta)
+                pc.brand_frame(cl, pal, cta=None if end_cta else cta)
                 if ca < 1:
                     cl.putalpha(cl.getchannel("A").point(lambda v: int(v * ca)))
                 fr.alpha_composite(cl)
