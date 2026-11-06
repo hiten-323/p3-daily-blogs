@@ -218,12 +218,24 @@ def evaluate(label: str, piece: dict, *, call=None) -> dict:
     if call is None:
         from content_generator.providers.llm_router import call as _call
         call = _call
-    try:
-        res = normalize(call(build_prompt(label, piece), label=f"viral_{label}", max_tokens=700))
-    except Exception as e:
-        logger.warning("[viral] %s scoring failed: %s", label, e)
+    prompt = build_prompt(label, piece)
+    last_error: Exception | None = None
+    res = None
+    # A truncated judge response is not a verdict on the draft. Retry once,
+    # the same way editorial scoring does, before failing closed.
+    for _attempt in range(2):
+        try:
+            res = normalize(call(prompt, label=f"viral_{label}", max_tokens=700))
+            break
+        except Exception as e:
+            last_error = e
+            logger.warning("[viral] %s scoring failed: %s", label, e)
+            res = None
+    if res is None:
+        detail = str(last_error or "unknown").strip()[:180]
+        message = f"viral_scoring_failed: {type(last_error).__name__}: {detail}" if last_error else "viral_scoring_failed"
         return {"passed": False, "overall": None, "scores": {}, "honesty": [], "pass_mark": PASS_MARK,
-                "error": f"viral_scoring_failed: {type(e).__name__}", "feedback": ""}
+                "error": message, "feedback": message}
     res.update(passed=res["overall"] >= PASS_MARK, honesty=[], pass_mark=PASS_MARK)
     return res
 
