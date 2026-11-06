@@ -94,6 +94,37 @@ def test_pending_keeps_preflight_no_images_retryable():
     assert "ig_feed" in ru.pending_targets(T(12), records=rec, pack_exists=True)
 
 
+def _day_waiting_on_reel_1():
+    live = "VERIFIED_LIVE"
+    rec = [{"slot": s, "platform": p, "status": live} for s, p in (
+        ("morning", "instagram_story"), ("morning", "facebook"),
+        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
+    rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "instagram_post"})
+    rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "carousel"})
+    rec.append({"slot": "morning", "platform": "instagram_video", "status": live, "asset": "growth_reel"})
+    return rec
+
+
+def test_approved_evening_reel_does_not_chain_before_its_slot(monkeypatch):
+    """6 Nov: reel_1 was already at 8.0 and the chain still re-dispatched every few minutes."""
+    monkeypatch.setattr(ru, "_approved_labels", lambda _content: {"reel_1"})
+    rec = _day_waiting_on_reel_1()
+    before = ru.pending_targets(dt.datetime(2026, 11, 6, 19, 40), records=rec, pack_exists=True,
+                                content={"reels": [{"hook": "ready"}]})
+    assert "reel_1" not in before
+    after = ru.pending_targets(dt.datetime(2026, 11, 6, 21, 54), records=rec, pack_exists=True,
+                               content={"reels": [{"hook": "ready"}]})
+    assert after == ["reel_1"]
+
+
+def test_unapproved_evening_reel_stays_pending_so_it_can_regenerate(monkeypatch):
+    monkeypatch.setattr(ru, "_approved_labels", lambda _content: set())
+    rec = _day_waiting_on_reel_1()
+    pending = ru.pending_targets(dt.datetime(2026, 11, 6, 19, 40), records=rec, pack_exists=True,
+                                 content={"reels": []})
+    assert "reel_1" in pending
+
+
 def test_pending_probe_error_returns_nonzero(monkeypatch, capsys):
     import sys
     monkeypatch.setattr(ru, "pending_targets", lambda: (_ for _ in ()).throw(RuntimeError("probe broke")))

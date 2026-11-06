@@ -4,7 +4,8 @@ Two reels a day, spread across the day (owner, 2 Nov 2026; core/reel_schedule):
 growth_reel is a MORNING target (due 10:00-18:00 IST), reel_1 is the EVENING
 target (regenerates from 10:00 IST, publishes once the 21:53 slot has passed),
 and reel_2 is retired, so it is never due, regenerated or published. A run
-never publishes both reels.
+never publishes both reels. An evening reel that has already cleared the gate
+does not keep the self-resume chain awake before 21:53.
 
 A legacy ledger row with no asset still clears single-platform targets and reel_1.
 It does not clear carousel or growth_reel. The 8.0 gates stay.
@@ -216,22 +217,60 @@ def target_refuses_retry(records: list[dict], target: str) -> bool:
     return all(attempt_budget_exhausted(r) for r in rows)
 
 
+def _approved_labels(content: dict | None) -> set[str]:
+    """Labels the editorial gate has already passed. Empty when the pack can't be read."""
+    if not isinstance(content, dict):
+        return set()
+    try:
+        from content_generator.core.editorial_engine import approved_assets
+        approved = approved_assets(content)
+    except Exception as exc:
+        log.warning("[retry] approval check failed (%s) — leaving the chain as-is", type(exc).__name__)
+        return set()
+    return set(approved) if isinstance(approved, dict) else set()
+
+
+def _drop_ready_prewarm(due: list[str], now_ist: dt.datetime, content: dict | None) -> list[str]:
+    """An approved evening reel is not due work until its slot. Keep regenerating one that is not."""
+    prewarm = prewarm_targets(due, now_ist.hour, now_ist.minute)
+    if not prewarm:
+        return due
+    approved = _approved_labels(content)
+    if not approved:
+        return due
+    return [name for name in due
+            if name not in prewarm or not any(label in approved for label in TARGETS[name][2])]
+
+
 def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | None = None,
-                    pack_exists: bool | None = None) -> list[str]:
-    """Due targets plus a missing pack. A dropped cron writes no rows and must stay pending."""
+                    pack_exists: bool | None = None, content: dict | None = None) -> list[str]:
+    """Due targets plus a missing pack. A dropped cron writes no rows and must stay pending.
+
+    The live probe (no records passed in) also drops an evening reel that has
+    already cleared the gate and is only waiting for 21:53 IST. That reel used
+    to keep the self-resume chain dispatching every few minutes.
+    """
     if now_ist is None:
         now_ist = dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=5, minutes=30)
     if now_ist.hour < CHAIN_FROM_HOUR:
         return []
     date = now_ist.date().isoformat()
-    if pack_exists is None:
+    supplied_records = records is not None
+    loaded = None
+    if pack_exists is None or (content is None and not supplied_records):
         from content_generator.scheduler.publish_recovery import _load_content
-        pack_exists = _load_content(date)[0] is not None
+        loaded = _load_content(date)[0]
+        if pack_exists is None:
+            pack_exists = loaded is not None
     if not pack_exists:
         return [NO_PACK]
     if records is None:
         records = records_for_date(date)
-    return [t for t in unposted_targets(records, now_ist.hour) if not target_refuses_retry(records, t)]
+    due = [t for t in unposted_targets(records, now_ist.hour) if not target_refuses_retry(records, t)]
+    # Record fixtures stay clock-only unless the caller passes the pack.
+    if content is None and supplied_records:
+        return due
+    return _drop_ready_prewarm(due, now_ist, content if content is not None else loaded)
 
 
 def is_mandatory(target: str) -> bool:
