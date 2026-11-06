@@ -162,6 +162,35 @@ def test_youtube_holds_without_video_file(monkeypatch):
     assert res.get("error") == "held_no_native_video"
 
 
+def test_youtube_does_not_call_google_when_the_script_is_false(monkeypatch):
+    monkeypatch.setattr(youtube, "is_configured", lambda: True)
+    monkeypatch.setattr(youtube, "_find_video", lambda _content: "/tmp/short.mp4")
+
+    def boom(*_args, **_kwargs):
+        raise AssertionError("Google must not be called for a false Short")
+
+    monkeypatch.setattr(youtube, "_refresh_access_token", boom)
+    monkeypatch.setattr(youtube, "_upload_video", boom)
+    monkeypatch.setattr(
+        "content_generator.core.editorial_engine.approved_assets",
+        lambda content: {"yt_short": content.get("yt_short")},
+    )
+    res = youtube.post_content({
+        "featured_product": "Ultra Blend",
+        "yt_short": {
+            "title": "What the label says",
+            "description": "Ultra Blend is 70% coffee and 30% chicory.",
+            "hook": "Read the jar before you brew.",
+            "script": "Ultra Blend is organic single-origin coffee.",
+            "cta": "Shop at p3online.in",
+            "editorial_score": {"overall": 8.8, "verdict": "PASS"},
+        },
+    }, day=1)
+    assert res.get("attempted") is False
+    assert res.get("success") is False
+    assert res.get("error") == "product_truth_failed"
+
+
 def test_creative_viral_readiness_evaluation():
     from content_generator.core.viral_readiness import evaluate_viral_readiness
 
