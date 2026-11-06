@@ -357,3 +357,28 @@ def test_credential_blocked_posts_do_not_starve_other_due_platform_posts(tmp_pat
     assert result["blocked"] == 1
     assert result["snapshots"] == 1
     assert next(row for row in persisted if row["media_id"] == "authorized")["measurement_snapshots"]
+
+
+
+def test_learning_state_paths_do_not_depend_on_current_working_directory(monkeypatch, tmp_path):
+    from pathlib import Path
+    monkeypatch.delenv("LEARNING_DIR", raising=False)
+    monkeypatch.chdir(tmp_path)
+    expected_root = Path(learning_engine.__file__).resolve().parents[2]
+    assert learning_engine._resolve_learning_dir() == expected_root / "output" / "learning"
+    assert platform_learning._resolve_learning_dir() == expected_root / "output" / "learning"
+
+
+def test_relative_learning_dir_is_resolved_from_project_root(monkeypatch, tmp_path):
+    from pathlib import Path
+    monkeypatch.setenv("LEARNING_DIR", "var/state/learning")
+    monkeypatch.chdir(tmp_path)
+    expected_root = Path(learning_engine.__file__).resolve().parents[2]
+    assert learning_engine._resolve_learning_dir() == expected_root / "var" / "state" / "learning"
+    assert platform_learning._resolve_learning_dir() == expected_root / "var" / "state" / "learning"
+
+
+def test_absolute_learning_dir_is_preserved(monkeypatch, tmp_path):
+    monkeypatch.setenv("LEARNING_DIR", str(tmp_path / "persistent-learning"))
+    assert learning_engine._resolve_learning_dir() == tmp_path / "persistent-learning"
+    assert platform_learning._resolve_learning_dir() == tmp_path / "persistent-learning"
