@@ -49,6 +49,14 @@ def test_no_classifier_or_guard_model_is_configured() -> None:
             )
 
 
+def test_openrouter_pins_live_free_models() -> None:
+    """nemotron-3-super:free left the OpenRouter free catalog by 2026-11-06."""
+    assert "nvidia/nemotron-3-super-120b-a12b:free" not in openrouter.MODELS
+    assert "google/gemma-4-31b-it:free" in openrouter.MODELS
+    assert "nvidia/nemotron-3-ultra-550b-a55b:free" in openrouter.MODELS
+    assert all(model.endswith(":free") for model in openrouter.MODELS)
+
+
 def test_openrouter_does_not_use_the_auto_router() -> None:
     """
     openrouter/free routes across the entire free pool, including a content

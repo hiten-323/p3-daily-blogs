@@ -295,14 +295,17 @@ def test_scratch_prompt_requires_product_and_tagline_when_the_draft_omits_them()
     assert "scenes" in keys
 
 
-def test_hf_default_replaces_the_missing_qwen72():
+def test_hf_default_replaces_unsupported_models():
     from pathlib import Path
 
     text = Path("content_generator/providers/huggingface.py").read_text(encoding="utf-8")
     default = text.split("HF_MODELS", 1)[1].split(")", 1)[0]
     assert "Qwen/Qwen2.5-72B-Instruct" not in default
-    assert "Qwen/Qwen3-8B" in default
+    assert "Qwen/Qwen3-8B" not in default
     assert "meta-llama/Llama-3.3-70B-Instruct" in default
+    assert "Qwen/Qwen3-32B" in default
+    assert "meta-llama/Llama-3.1-8B-Instruct" in default
+    assert default.count(",") >= 2
 
 
 def _filled(start: int, end: int) -> list[dict]:

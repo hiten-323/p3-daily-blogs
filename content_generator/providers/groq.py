@@ -125,15 +125,22 @@ def call(prompt: str, max_tokens: int) -> tuple[str | None, dict]:
 
     for model in (m.strip() for m in MODELS if m.strip()):
         try:
+            payload = {
+                "model": model,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.92,
+                "max_tokens": max_tokens,
+            }
+            # gpt-oss spends the completion on a hidden trace and returns
+            # HTTP 200 with an empty content field (run 42175027407). Low
+            # effort leaves the answer in content; message_text still reads
+            # a JSON object that lands in reasoning.
+            if "gpt-oss" in model:
+                payload["reasoning_effort"] = "low"
             resp = _http.post(
                 _URL,
                 headers=headers,
-                json={
-                    "model": model,
-                    "messages": [{"role": "user", "content": prompt}],
-                    "temperature": 0.92,
-                    "max_tokens": max_tokens,
-                },
+                json=payload,
                 timeout=120,
             )
         except Exception as e:

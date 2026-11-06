@@ -146,6 +146,12 @@ def chat(name: str, url: str, key: str, models: list[str], prompt: str, max_toke
             last = {"status_code": 0, "model": model, "error": type(e).__name__}
             continue
         if resp.status_code == 200:
+            # models.github.ai has answered HTTP 200 with the body "OK" in
+            # about 0.1s (run 42175027407). That is not a completion.
+            if (resp.text or "").strip().upper() == "OK":
+                logger.warning("%s %s HTTP 200 with a non-completion body", name, model)
+                last = {"status_code": 200, "model": model, "error": "non-completion body"}
+                continue
             try:
                 body = completion_body(resp)
                 msg = body["choices"][0].get("message") or {}

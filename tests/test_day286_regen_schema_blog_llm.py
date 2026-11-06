@@ -155,6 +155,40 @@ def test_github_models_assembles_sse_instead_of_calling_it_malformed(monkeypatch
     assert "empty success body" in failure["error"]
 
 
+def test_github_models_ok_body_tries_the_next_model(monkeypatch):
+    """Run 42175027407: models.github.ai returned HTTP 200 and the body OK."""
+    import json as _json
+    from content_generator.providers import github_models, openai_compat
+
+    class Resp:
+        def __init__(self, text):
+            self.status_code = 200
+            self.text = text
+
+        def json(self):
+            return _json.loads(self.text)
+
+    seen = []
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen.append(json["model"])
+        assert headers.get("Accept") == "application/json"
+        if json["model"] == "dead":
+            return Resp("OK\r\n")
+        return Resp(_json.dumps({
+            "choices": [{"message": {"content": '{"ok": true}'}}],
+            "usage": {},
+        }))
+
+    monkeypatch.setattr(openai_compat._http, "post", post)
+    monkeypatch.setenv("GITHUB_MODELS_TOKEN", "ghs_test")
+    monkeypatch.setattr(github_models, "MODELS", ["dead", "meta/Llama-3.3-70B-Instruct"])
+    text, usage = github_models.call("score", 40)
+    assert text == '{"ok": true}'
+    assert usage["model"] == "meta/Llama-3.3-70B-Instruct"
+    assert seen == ["dead", "meta/Llama-3.3-70B-Instruct"]
+
+
 def test_openrouter_only_free_models():
     from content_generator.providers import openrouter
     assert openrouter.MODELS and all(m.endswith(":free") for m in openrouter.MODELS)

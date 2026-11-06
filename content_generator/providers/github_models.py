@@ -16,4 +16,5 @@ def call(prompt: str, max_tokens: int):
     # The hosted inference API can answer HTTP 200 with an SSE body. Ask for a
     # single JSON object; completion_body still reassembles a stream if one arrives.
     return chat("GitHubModels", _URL, get_key(), MODELS, prompt, max_tokens,
+                extra_headers={"Accept": "application/json"},
                 extra_body={"stream": False})
