@@ -193,13 +193,11 @@ def resolve_psychology_governance(content: dict) -> dict | None:
 
 
 def _repair_publish_copy(content: dict) -> None:
-    """
-    Apply the mechanical copy repair editorial already uses, before any gate.
+    """Rewrite a false jar clause before the gate reads the piece.
 
-    A saved piece can still say "pure coffee variants or our balanced Ultra
-    Blend" in a field the scorer never read. Every platform asks
-    approved_assets, so repairing here is what stops that clause from being
-    rejected on LinkedIn and then uploaded unchanged on YouTube.
+    A saved script can still say "pure coffee variants or our balanced Ultra
+    Blend" in a field the scorer never walked. Repair does not lower the
+    gate: a clause that cannot be rewritten still fails product truth.
     """
     if not isinstance(content, dict):
         return
@@ -210,7 +208,6 @@ def _repair_publish_copy(content: dict) -> None:
     except Exception as e:
         logger.debug("[editorial] copy repair unavailable: %s", e)
         return
-
     pieces: list[dict] = []
     for key in (
         "carousel", "instagram_post", "linkedin_post", "blog_post", "yt_short",

@@ -73,7 +73,7 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.info("[youtube] Not configured — YOUTUBE_CLIENT_ID/SECRET/REFRESH_TOKEN missing")
         return {"success": False, "video_id": "", "url": "", "error": "not_configured"}
 
-    # Find video file before any Google call. A missing file or a false claim
+    # Find the file before any Google call. A missing file or a false claim
     # must not refresh an OAuth token or open an upload.
     video_path = _find_video(content)
     if not video_path:
