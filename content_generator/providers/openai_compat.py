@@ -104,11 +104,17 @@ def _sse_completion(raw: str) -> dict | None:
     return None
 
 
+def _retired_placeholder(raw: str) -> bool:
+    """GitHub Models, retired 2026-07-30, still answers HTTP 200 with plaintext OK."""
+    return str(raw or "").strip().lower() == "ok"
+
+
 def completion_body(resp) -> dict:
     """Chat-completion JSON, including an SSE body that resp.json() cannot read.
 
     An empty HTTP 200 is still a failure. 'Expecting value' from json.loads('')
-    is that empty body, not a score we failed to find.
+    is that empty body, not a score we failed to find. A plaintext OK body is
+    the retired-endpoint placeholder, not a completion either.
     """
     raw = getattr(resp, "text", "") or ""
     try:
@@ -118,6 +124,8 @@ def completion_body(resp) -> dict:
         if body is None:
             if not str(raw).strip():
                 raise ValueError("empty success body")
+            if _retired_placeholder(raw):
+                raise ValueError("retired endpoint placeholder")
             raise ValueError(f"unreadable success body: {str(raw)[:80]!r}")
     if not isinstance(body, dict):
         raise ValueError("success payload was not an object")
@@ -146,17 +154,17 @@ def chat(name: str, url: str, key: str, models: list[str], prompt: str, max_toke
             last = {"status_code": 0, "model": model, "error": type(e).__name__}
             continue
         if resp.status_code == 200:
-            # models.github.ai has answered HTTP 200 with the body "OK" in
-            # about 0.1s (run 42175027407). That is not a completion.
-            if (resp.text or "").strip().upper() == "OK":
-                logger.warning("%s %s HTTP 200 with a non-completion body", name, model)
-                last = {"status_code": 200, "model": model, "error": "non-completion body"}
-                continue
             try:
                 body = completion_body(resp)
                 msg = body["choices"][0].get("message") or {}
                 text = message_text(msg) or _as_text((body["choices"][0].get("delta") or {}).get("content"))
             except (KeyError, IndexError, TypeError, ValueError) as e:
+                if "retired endpoint placeholder" in str(e):
+                    return None, {
+                        "status_code": 200,
+                        "model": model,
+                        "error": "retired endpoint placeholder",
+                    }
                 last = {"status_code": 200, "model": model, "error": f"malformed success payload: {e}"}
                 continue
             if not str(text).strip():
