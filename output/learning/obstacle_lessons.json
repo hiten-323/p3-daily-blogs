@@ -18293,6 +18293,34 @@
       "reason": "aesthetic_below_8.0:4.0; Background imagery feels muddy, low-res, and lacks rich color depth or professional lighting.; Typography suffers from inconsistent styling (mixing serif headers with italicized serif body copy and harsh pill badges).; Product jar cutout has a harsh, unrefined drop shadow an",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.0 < 8.0 (weakest: shareability, comment_trigger, relatability). The hook relies on an exaggerated claim ('hits the bin') about boiling water temperature which undermines brand authority among savvy black coffee drinkers. To push past 8, focus on taste science without dramatic hyperbole. Strengthen the comment trigger by asking a specific preference question instead of a generic temp",
+      "first_seen": "2026-11-06",
+      "fix": "",
+      "gate": "generic_hook",
+      "id": "youtube|yt_short|generic_hook|viral: score 7.0 < 8.0 (weakest: shareability, comment_trigger, relatability). the hook relies on an exaggerated claim ('hits the bin') about boiling water temperature which underm",
+      "label": "yt_short",
+      "last_seen": "2026-11-06",
+      "platform": "youtube",
+      "reason": "viral: score 7.0 < 8.0 (weakest: shareability, comment_trigger, relatability). The hook relies on an exaggerated claim ('hits the bin') about boiling water temperature which undermines brand authority among savvy black coffee drinkers. To push past 8, focus on taste science without dramatic hyperbol",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "The opening hook, while specific, is still generic enough to fit any instant coffee brand and lacks the instant scroll\u2011stop power of a betrayal or curiosity gap hook. Strengthen it with a bolder statement like \"You've been brewing your coffee wrong for years\" or visually shock the viewer (e.g., a jar of Bold standing still while chaotic chicory dust swirls around). Add a stronger pattern\u2011interrupt",
+      "first_seen": "2026-11-06",
+      "fix": "later draft passed the same gates",
+      "gate": "generic_hook",
+      "id": "youtube|yt_short|generic_hook|the opening hook, while specific, is still generic enough to fit any instant coffee brand and lacks the instant scroll\u2011stop power of a betrayal or curiosity gap hook. strengthen it",
+      "label": "yt_short",
+      "last_seen": "2026-11-06",
+      "platform": "youtube",
+      "reason": "The opening hook, while specific, is still generic enough to fit any instant coffee brand and lacks the instant scroll\u2011stop power of a betrayal or curiosity gap hook. Strengthen it with a bolder statement like \"You've been brewing your coffee wrong for years\" or visually shock the viewer (e.g., a ja",
+      "stage": "generation",
+      "status": "fixed"
     }
   ],
   "version": 1
