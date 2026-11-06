@@ -769,6 +769,7 @@ def test_workflows_wire_probe_and_do_not_dispatch_publish():
     assert "GH_TOKEN: ${{ github.token }}" in daily
     assert "python -m content_generator.creative.kaggle_bank" in weekly
     assert "kaggle>=2.2.4" in weekly
+    assert "'kaggle>=2.2.4' 'six'" in weekly
     assert 'print("kaggle auth: "' in weekly
     assert "KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}" in weekly
     for label, text in (("daily", daily), ("weekly", weekly)):
