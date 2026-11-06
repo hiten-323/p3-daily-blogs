@@ -129,6 +129,80 @@ def test_reasoning_only_truncated_response_is_held(monkeypatch):
     assert str(result.get("error", "")).startswith("viral_scoring_failed")
 
 
+def test_incomplete_judge_is_retried_once_then_can_pass():
+    calls = {"n": 0}
+
+    def call(prompt, label, max_tokens):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            return {"scores": {"hook": 9}, "overall": 9, "feedback": "truncated"}
+        return {"scores": dict(GOOD), "overall": 8.4, "feedback": "specific", "weakest": ["hook"]}
+
+    result = vg.evaluate("threads_post", {"text": "The jar lists the process."}, call=call)
+    assert calls["n"] == 2
+    assert result["passed"] is True
+    assert result["overall"] == 8.4
+    assert vg.PASS_MARK == 8.0
+
+
+def test_scoring_failure_keeps_the_draft(monkeypatch):
+    """A 9.1 draft must not be rewritten when the judge returns no dimensions."""
+    from content_generator.agents import editorial
+    from content_generator.providers import llm_router
+    from content_generator.scheduler import daily
+
+    body = (
+        "Purity Beans Bold is agglomerated pure coffee. "
+        "The back panel names the process. https://p3online.in"
+    )
+    reviews = {"n": 0}
+    scores = {"n": 0}
+    regens = {"n": 0}
+
+    def review(piece, label="content"):
+        reviews["n"] += 1
+        return {
+            "shareability": 9.1, "saveability": 9.1, "emotion_pull": 9.1,
+            "hook_strength": 9.1, "brand_clarity": 9.1,
+            "overall": 9.1, "verdict": "PASS", "feedback": "holds",
+        }
+
+    def evaluate(label, piece, call=None):
+        scores["n"] += 1
+        if scores["n"] == 1:
+            return {"passed": False, "overall": None, "scores": {}, "honesty": [],
+                    "pass_mark": 8.0, "error": "viral_scoring_failed: ValueError: missing dimensions",
+                    "feedback": "viral_scoring_failed: ValueError: missing dimensions"}
+        return {"passed": True, "overall": 8.4, "scores": dict(GOOD), "honesty": [],
+                "pass_mark": 8.0, "feedback": "specific"}
+
+    def regenerate(*args, **kwargs):
+        regens["n"] += 1
+        raise AssertionError("scoring failure must not rewrite the draft")
+
+    monkeypatch.setattr(llm_router, "any_provider_available", lambda: True)
+    monkeypatch.setattr(editorial, "review_content", review)
+    monkeypatch.setattr("content_generator.core.viral_gate.evaluate", evaluate)
+    monkeypatch.setattr("content_generator.core.viral_gate.enabled", lambda: True)
+    monkeypatch.setattr(daily, "_regenerate_piece", regenerate)
+    monkeypatch.setattr(daily, "_growth_gate_reason", lambda *a, **k: "")
+    monkeypatch.setitem(daily._EDITORIAL_DEADLINE, "at", None)
+    monkeypatch.setenv("QUALITY_MAX_REGEN", "2")
+    monkeypatch.setenv("QUALITY_LADDER_MAX", "2")
+
+    content = {
+        "day_number": 309,
+        "featured_product": "Bold",
+        "threads_post": {"text": body},
+    }
+    daily._do_editorial(content, only={"threads_post"})
+    assert "back panel names the process" in content["threads_post"]["text"]
+    assert regens["n"] == 0
+    assert scores["n"] == 2
+    assert content["threads_post"]["viral_potential"]["overall"] == 8.4
+    assert content["threads_post"]["editorial_score"]["overall"] == 9.1
+
+
 def test_trailing_fragment_does_not_replace_the_score(monkeypatch):
     """A reasoning model often emits the score and then a small closing object.
     The fragment must not become the parse, or normalize raises ValueError and

@@ -21,9 +21,13 @@ def test_dropped_morning_slot_with_no_rows_is_pending():
     # Oct 17: only a generate|threads SKIPPED row, morning never ran.
     rec = [{"slot": "generate", "platform": "threads", "status": "SKIPPED"}]
     todo = ru.pending_targets(T(11, 37), records=rec, pack_exists=True)
-    for t in ("ig_feed", "ig_story", "facebook", "threads", "carousel", "reel_1", "youtube"):
+    for t in ("ig_feed", "ig_story", "facebook", "threads", "carousel", "youtube"):
         assert t in todo
     assert "growth_reel" in todo
+    # reel_1 is unposted so the cron can regenerate it, but the self-resume
+    # chain must not spin on it before the 21:53 publish slot.
+    assert "reel_1" not in todo
+    assert "reel_1" in ru.unposted_targets(rec, 11)
 
 
 def test_nothing_pending_once_each_piece_is_live():
@@ -53,6 +57,22 @@ def test_bare_morning_post_does_not_hide_carousel_or_reels():
     assert "growth_reel" not in pending
     assert pending != ["youtube"]
     assert "ig_feed" not in pending and "linkedin" not in pending and "threads" not in pending
+
+
+def test_approved_evening_reel_waits_until_its_slot():
+    # 6 Nov 19:28 IST: everything else was live, reel_1 had already passed 8.0,
+    # and the chain still re-dispatched because PENDING listed reel_1.
+    live = "VERIFIED_LIVE"
+    rec = [{"slot": s, "platform": p, "status": live} for s, p in (
+        ("morning", "instagram_story"), ("morning", "facebook"),
+        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
+    rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "instagram_post"})
+    rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "carousel"})
+    rec.append({"slot": "morning", "platform": "instagram_video", "status": live, "asset": "growth_reel"})
+    assert ru.pending_targets(dt.datetime(2026, 11, 6, 19, 28), records=rec, pack_exists=True) == []
+    assert ru.pending_targets(dt.datetime(2026, 11, 6, 21, 52), records=rec, pack_exists=True) == []
+    assert ru.pending_targets(dt.datetime(2026, 11, 6, 21, 54), records=rec, pack_exists=True) == ["reel_1"]
+    assert "reel_1" in ru.unposted_targets(rec, 19)
 
 
 def test_workflows_chain_on_due_targets_not_ledger_rows():
