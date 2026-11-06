@@ -4924,7 +4924,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -4953,7 +4954,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -4982,7 +4984,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -5011,7 +5014,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -5052,7 +5056,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "7d"
     ]
   },
   {
@@ -5082,7 +5087,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -5112,7 +5118,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -5142,7 +5149,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -5165,7 +5173,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -5190,7 +5199,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -5241,7 +5251,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -5267,7 +5278,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -5362,7 +5374,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -5392,7 +5405,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -5415,7 +5429,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "api_returned_no_metrics",
     "missed_windows": {}
@@ -6029,7 +6044,8 @@
       "72h": 3
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -6054,7 +6070,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -6115,7 +6132,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -6139,7 +6157,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -6166,7 +6185,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -6244,7 +6264,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -6429,7 +6450,8 @@
       "72h": 2
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "api_returned_no_metrics",
     "missed_windows": {}
@@ -6476,7 +6498,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 1,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -6534,6 +6557,19 @@
         "actual_age_hours": 46.88,
         "metrics": {
           "views": 8,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      },
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-06T06:42:14+00:00",
+        "actual_age_hours": 95.89,
+        "metrics": {
+          "views": 9,
           "likes": 0,
           "comments": 0,
           "shares": 0
@@ -6694,7 +6730,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 1,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -6717,7 +6754,8 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 1,
+      "72h": 1
     },
     "failed_windows": [
       "24h"
@@ -6767,7 +6805,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "17936234307141914",
@@ -6794,6 +6834,19 @@
         "target_hours": 24,
         "measured_at": "2026-11-05T02:52:27+00:00",
         "actual_age_hours": 44.59,
+        "metrics": {
+          "views": 2,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      },
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-06T06:42:14+00:00",
+        "actual_age_hours": 72.42,
         "metrics": {
           "views": 2,
           "likes": 0,
@@ -6829,7 +6882,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "17882114787547806",
@@ -6854,7 +6909,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "17966375469215003",
@@ -6877,9 +6934,12 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 1,
+      "72h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "-EDkaE8S5us",
@@ -6904,7 +6964,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18001378404033476",
@@ -6929,7 +6991,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "1179277684670431",
@@ -6948,7 +7012,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -6967,9 +7033,12 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {
-      "24h": 1
+      "24h": 1,
+      "72h": 1
     },
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -7013,7 +7082,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "17911602426588887",
@@ -7035,7 +7106,9 @@
     "published_at": "2026-11-04T06:58:44",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -7058,7 +7131,9 @@
     "published_at": "2026-11-04T06:59:01",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -7081,7 +7156,9 @@
     "published_at": "2026-11-04T07:23:58",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -7127,7 +7204,9 @@
     "published_at": "2026-11-04T08:06:07",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -7150,7 +7229,9 @@
     "published_at": "2026-11-04T16:33:10",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -7167,7 +7248,9 @@
     "publication_status": "VERIFIED_LIVE",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": [],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -7186,7 +7269,9 @@
     "publication_status": "VERIFIED_LIVE",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": [],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -7229,7 +7314,21 @@
     "hashtags": "",
     "published_at": "2026-11-05T05:16:34",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "24h",
+        "target_hours": 24,
+        "measured_at": "2026-11-06T06:42:14+00:00",
+        "actual_age_hours": 25.43,
+        "metrics": {
+          "views": 1,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {},
     "failed_windows": []
   },
@@ -7253,7 +7352,9 @@
     "published_at": "2026-11-05T05:17:24",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -7276,7 +7377,9 @@
     "published_at": "2026-11-05T05:17:39",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -7299,7 +7402,9 @@
     "published_at": "2026-11-05T05:36:40",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -7322,7 +7427,9 @@
     "published_at": "2026-11-05T05:44:09",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {},
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
     "failed_windows": []
   },
   {
@@ -7347,5 +7454,86 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": []
+  },
+  {
+    "media_id": "3212905882238276",
+    "asset_id": "facebook_day308",
+    "platform": "facebook",
+    "track": "brand",
+    "hook": "",
+    "topic": "",
+    "format": "evening",
+    "published_at": "2026-11-05T16:38:02+00:00",
+    "permalink": "https://www.facebook.com/494003270464484/videos/3212905882238276",
+    "ledger_key": "2026-11-05|evening|facebook|pb_e089f08e52",
+    "publication_status": "VERIFIED_LIVE",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {},
+    "failed_windows": [],
+    "measurement_status": "pending",
+    "missed_windows": {}
+  },
+  {
+    "media_id": "494003270464484_122169651758655685",
+    "asset_id": "facebook_day308",
+    "platform": "facebook",
+    "track": "brand",
+    "hook": "",
+    "topic": "",
+    "format": "morning",
+    "published_at": "2026-11-05T05:17:48+00:00",
+    "permalink": "https://www.facebook.com/494003270464484/posts/122169651758655685",
+    "ledger_key": "2026-11-05|morning|facebook|pb_e089f08e52",
+    "publication_status": "VERIFIED_LIVE",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {
+      "24h": 1
+    },
+    "failed_windows": [],
+    "measurement_status": "api_returned_no_metrics",
+    "missed_windows": {}
+  },
+  {
+    "media_id": "18218725186358021",
+    "asset_id": "instagram_story_day308",
+    "platform": "instagram_story",
+    "track": "brand",
+    "hook": "",
+    "topic": "",
+    "format": "morning",
+    "published_at": "2026-11-05T05:28:14+00:00",
+    "permalink": "https://www.instagram.com/stories/purepantryprovisions/4023482033711528170",
+    "ledger_key": "2026-11-05|morning|instagram_story|pb_e089f08e52",
+    "publication_status": "VERIFIED_LIVE",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {},
+    "failed_windows": [],
+    "measurement_status": "story_measurement_window_missed",
+    "measurement_terminal": true
+  },
+  {
+    "media_id": "urn:li:share:7524371786373988352",
+    "asset_id": "linkedin_day309",
+    "platform": "linkedin",
+    "track": "authority",
+    "hook": "",
+    "topic": "linkedin_post",
+    "kpi_at_creation": "",
+    "policy_version": "",
+    "attention_mechanism": "",
+    "scroller_state": "",
+    "psychology_frame": "",
+    "hook_strategy": "",
+    "payoff_type": "",
+    "decision_version": "",
+    "format": "thought_leadership",
+    "hashtags": "",
+    "published_at": "2026-11-06T07:27:13",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {}
   }
 ]

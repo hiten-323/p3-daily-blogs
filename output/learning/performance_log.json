@@ -339,7 +339,7 @@
     "asset_id": "threads_day305",
     "track": "conversation",
     "platform": "threads",
-    "observation_window": "24h",
+    "observation_window": "72h",
     "publication_id": "18231756730329704",
     "kpi": "",
     "policy_version": "",
@@ -354,20 +354,20 @@
     "decision_version": null,
     "audio_category": "",
     "posted_at": "2026-11-02T06:48:57",
-    "recorded_at": "2026-11-04T05:41:37",
+    "recorded_at": "2026-11-06T06:42:16",
     "metrics": {
-      "views": 8,
+      "views": 9,
       "likes": 0,
       "comments": 0,
       "shares": 0
     },
-    "notes": "auto-recorded from 24h threads native API observation"
+    "notes": "auto-recorded from 72h threads native API observation"
   },
   {
     "asset_id": "threads_day306",
     "track": "conversation",
     "platform": "threads",
-    "observation_window": "24h",
+    "observation_window": "72h",
     "publication_id": "17936234307141914",
     "kpi": "",
     "policy_version": "",
@@ -382,9 +382,37 @@
     "decision_version": null,
     "audio_category": "",
     "posted_at": "2026-11-03T06:17:16",
-    "recorded_at": "2026-11-05T02:52:29",
+    "recorded_at": "2026-11-06T06:42:16",
     "metrics": {
       "views": 2,
+      "likes": 0,
+      "comments": 0,
+      "shares": 0
+    },
+    "notes": "auto-recorded from 72h threads native API observation"
+  },
+  {
+    "asset_id": "threads_day308",
+    "track": "conversation",
+    "platform": "threads",
+    "observation_window": "24h",
+    "publication_id": "17913368538561567",
+    "kpi": "",
+    "policy_version": "",
+    "hook": "",
+    "topic": "threads_post",
+    "format": "discussion",
+    "attention_mechanism": null,
+    "scroller_state": null,
+    "psychology_frame": null,
+    "hook_strategy": null,
+    "payoff_type": null,
+    "decision_version": null,
+    "audio_category": "",
+    "posted_at": "2026-11-05T05:16:34",
+    "recorded_at": "2026-11-06T06:42:15",
+    "metrics": {
+      "views": 1,
       "likes": 0,
       "comments": 0,
       "shares": 0
