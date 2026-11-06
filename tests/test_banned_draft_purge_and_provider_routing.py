@@ -65,7 +65,7 @@ def test_each_platform_starts_on_its_own_provider():
     assert provider_budget.order_for("reel_1", BASE)[0] == "groq"
     assert provider_budget.order_for("stories", BASE)[0] == "gemini"
     assert provider_budget.order_for("carousel", BASE)[0] == "cerebras"
-    assert provider_budget.order_for("linkedin_post", BASE)[0] == "github_models"
+    assert provider_budget.order_for("linkedin_post", BASE)[0] == "huggingface"
     assert provider_budget.order_for("threads_post", BASE)[0] == "openrouter"
     assert provider_budget.order_for("facebook_post", BASE)[0] == "mistral"
     for label in ("reel_1", "blog_post", "yt_short"):

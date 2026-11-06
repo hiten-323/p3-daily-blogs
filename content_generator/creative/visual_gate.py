@@ -321,7 +321,10 @@ def _groq(b64):
 
 
 def _github_models(b64):
-    """Free GitHub Models vision fallback (gpt-4.1-mini / gpt-4o-mini accept images)."""
+    """GitHub Models vision. The inference API was retired on 2026-07-30."""
+    from content_generator.providers.github_models import enabled
+    if not enabled():
+        return None
     key = (os.getenv("GITHUB_MODELS_TOKEN", "") or os.getenv("GH_MODELS_TOKEN", "")).strip()
     if not key:
         return None

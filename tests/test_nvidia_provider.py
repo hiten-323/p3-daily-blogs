@@ -37,14 +37,15 @@ def _clean_router():
 
 def test_provider_order_free_first_nvidia_last():
     names = [name for name, _fn in router._PROVIDERS]
-    assert names == ["gemini", "groq", "cerebras", "openrouter", "github_models",
+    assert names == ["gemini", "groq", "cerebras", "openrouter",
                      "mistral", "cloudflare", "huggingface", "deepseek", "nvidia"]
+    assert "github_models" not in names
 
 
 def test_provider_order_env_override(monkeypatch):
     monkeypatch.setenv("LLM_PROVIDER_ORDER", "nvidia, gemini")
     names = [name for name, _fn in router._provider_order()]
-    assert names[:2] == ["nvidia", "gemini"] and len(names) == 10
+    assert names[:2] == ["nvidia", "gemini"] and "github_models" not in names and len(names) == 9
 
 
 def test_empty_model_env_keeps_the_default(monkeypatch):
