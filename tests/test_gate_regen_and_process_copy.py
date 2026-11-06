@@ -236,3 +236,54 @@ def test_stale_pass_is_replaced_after_a_process_rewrite(monkeypatch):
     piece = content["facebook_post"]
     assert _reasons(piece["body"], featured="Bold") == []
     assert piece["editorial_score"]["overall"] == 8.4
+
+def test_ultra_pure_clause_is_rewritten_and_linkedin_skip_retries(tmp_path, monkeypatch):
+    """5 Nov LinkedIn called Ultra Blend pure in the brand bridge, then skipped forever."""
+    from content_generator.core.ist_dates import today_ist
+    from content_generator.core.product_truth import product_truth_findings, separate_ultra_from_pure
+    from content_generator.core.process_match import align_process_piece
+    from content_generator.publisher import publishing_ledger as ledger
+    from content_generator.scheduler.retry_unposted import labels_to_regen, target_refuses_retry
+
+    monkeypatch.setattr(ledger, "_PATH", tmp_path / "ledger.json")
+
+    raw = (
+        "Whether you choose our pure coffee variants or our balanced Ultra Blend, "
+        "you always know the exact ingredients in your kitchen."
+    )
+    assert product_truth_findings(raw)
+    fixed = separate_ultra_from_pure(raw)
+    assert product_truth_findings(fixed) == []
+    assert "pure coffee" in fixed.lower()
+    assert separate_ultra_from_pure("Never call Ultra Blend pure.") == "Never call Ultra Blend pure."
+    assert "70% coffee" in separate_ultra_from_pure("Ultra Blend is pure coffee.")
+
+    piece = {
+        "asset_type": "linkedin_post",
+        "hook": "The ratio is on the jar.",
+        "body": "Ultra Blend is 70% coffee and 30% chicory.",
+        "brand_bridge": raw,
+        "editorial_score": {"overall": 8.8, "verdict": "PASS"},
+    }
+    align_process_piece(piece, "Ultra Blend")
+    assert product_truth_findings(piece["brand_bridge"]) == []
+
+    records = [{
+        "slot": "generate",
+        "platform": "linkedin",
+        "status": "SKIPPED",
+        "error": "product_truth_failed",
+    }]
+    assert target_refuses_retry(records, "linkedin") is False
+    assert "linkedin_post" in labels_to_regen(["linkedin"], approved={}, records=records)
+    # A passing score is kept. The publisher rewrites the bridge; it is not thrown away.
+    assert labels_to_regen(["linkedin"], approved={"linkedin_post": piece}, records=records) == []
+
+    content = {"date": today_ist().isoformat(), "generation_id": "li-truth"}
+    record = ledger.finish_attempt(
+        ledger.begin_attempt(content, "linkedin", "generate", 1),
+        {"success": False, "attempted": False, "skipped": True, "error": "product_truth_failed"},
+    )
+    assert record["status"] == "FAILED"
+    assert record["next_retry_at"]
+    assert ledger.attempt_budget_exhausted(record) is False

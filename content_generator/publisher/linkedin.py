@@ -126,17 +126,23 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.info("[linkedin] Not configured — LI_API_ACCESS or LI_AUTHOR_URN missing")
         return {"success": False, "post_id": "", "url": "", "error": "not_configured"}
 
+    from content_generator.core.product_truth import product_truth_findings, separate_ultra_from_pure
+    piece = content.get("linkedin_post")
+    if isinstance(piece, dict):
+        for field in ("hook", "body", "brand_bridge", "closing_question", "cta", "comment_trigger", "hashtags"):
+            if isinstance(piece.get(field), str):
+                piece[field] = separate_ultra_from_pure(piece[field])
     post_text = _extract_post_text(content)
     try:
         from content_generator.publisher.product_links import with_product_link
         post_text = with_product_link(post_text, content, "linkedin", day=day, limit=3000)
     except Exception as e:
         logger.debug("[linkedin] product link skipped: %s", e)
+    post_text = separate_ultra_from_pure(post_text)
     if not post_text:
         logger.warning("[linkedin] No linkedin_post in content — skipping")
         return {"success": False, "post_id": "", "url": "", "error": "no_content"}
 
-    from content_generator.core.product_truth import product_truth_findings
     if product_truth_findings(post_text):
         logger.error("[linkedin] Refusing copy that contradicts the jar")
         return {"success": False, "attempted": False, "skipped": True,

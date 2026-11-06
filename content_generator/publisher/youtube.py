@@ -103,7 +103,9 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.debug("[youtube] product link skipped: %s", e)
     tags        = _build_tags(content)
 
-    from content_generator.core.product_truth import product_truth_findings
+    from content_generator.core.product_truth import product_truth_findings, separate_ultra_from_pure
+    title = separate_ultra_from_pure(title)
+    description = separate_ultra_from_pure(description)
     if product_truth_findings(f"{title}\n{description}"):
         logger.error("[youtube] Refusing a Short whose title or description contradicts the jar")
         return {"success": False, "attempted": False, "skipped": True,
