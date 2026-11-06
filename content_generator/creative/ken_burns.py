@@ -10,6 +10,7 @@ import logging
 import os
 import shutil
 import subprocess
+import tempfile
 
 logger = logging.getLogger(__name__)
 
@@ -84,7 +85,11 @@ def shot_plan(duration: float, n_photos: int, *, split: bool) -> list[dict]:
 
 
 def _esc(text: str) -> str:
-    return str(text or "").replace("\\", " ").replace(":", " ").replace("'", "").replace("%", "")
+    """Keep drawtext from seeing commas, quotes, or percent signs."""
+    cleaned = []
+    for ch in str(text or ""):
+        cleaned.append(ch if ch.isalnum() or ch in " -" else " ")
+    return " ".join("".join(cleaned).split())
 
 
 def _caption_filters(words: list[str], seconds: float, font: str | None) -> str:
@@ -123,21 +128,91 @@ def filtergraph(n_inputs: int, shots: list[dict], words: list[str], font: str | 
         caps = _caption_filters(line, seconds, font)
         if shot.get("split") and n_inputs >= 2:
             chains.append(
-                f"[{cursor}:v]scale={W}:{H // 2}:force_original_aspect_ratio=increase,crop={W}:{H // 2}[top];"
-                f"[{cursor + 1}:v]scale={W}:{H // 2}:force_original_aspect_ratio=increase,crop={W}:{H // 2}[bot];"
+                f"[{cursor}:v]scale={W}:{H // 2}:force_original_aspect_ratio=increase,"
+                f"crop={W}:{H // 2}:(in_w-{W})/2:(in_h-{H // 2})/2[top];"
+                f"[{cursor + 1}:v]scale={W}:{H // 2}:force_original_aspect_ratio=increase,"
+                f"crop={W}:{H // 2}:(in_w-{W})/2:(in_h-{H // 2})/2[bot];"
                 f"[top][bot]vstack,{zoom},setsar=1,format=yuv420p{caps}[v{shot_i}]"
             )
             cursor += 2
         else:
             src = min(cursor, n_inputs - 1)
             chains.append(
-                f"[{src}:v]scale={int(W * 1.2)}:{int(H * 1.2)}:force_original_aspect_ratio=increase,"
-                f"crop={int(W * 1.2)}:{int(H * 1.2)},{zoom},setsar=1,format=yuv420p{caps}[v{shot_i}]"
+                f"[{src}:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
+                f"crop={W}:{H}:(in_w-{W})/2:(in_h-{H})/2,{zoom},setsar=1,format=yuv420p{caps}[v{shot_i}]"
             )
             cursor += 1
         labels.append(f"[v{shot_i}]")
     join = "".join(labels) + f"concat=n={len(shots)}:v=1:a=0[v]"
     return ";".join(chains) + ";" + join
+
+
+def _allow_broll() -> bool:
+    """Production tries the video chain. Pytest stays on photos unless a test opts in."""
+    flag = os.getenv("FAST_CUT_BROLL", "").strip()
+    if flag == "0":
+        return False
+    if flag == "1":
+        return True
+    return not os.getenv("PYTEST_CURRENT_TEST")
+
+
+def _cover(path: str, size: tuple[int, int], dest: str) -> str:
+    """Center-crop a real photo onto an exact canvas so ffmpeg never crops short."""
+    from PIL import Image
+    image = Image.open(path).convert("RGB")
+    tw, th = size
+    scale = max(tw / image.width, th / image.height)
+    resized = image.resize((max(tw, int(image.width * scale)), max(th, int(image.height * scale))), Image.LANCZOS)
+    left = max(0, (resized.width - tw) // 2)
+    top = max(0, (resized.height - th) // 2)
+    resized.crop((left, top, left + tw, top + th)).save(dest, quality=85)
+    return dest
+
+
+def _stack(top: str, bottom: str, dest: str) -> str:
+    """Top half is b-roll or a second photo. Bottom half is the real jar."""
+    from PIL import Image
+    upper = Image.open(top).convert("RGB").resize((W, H // 2), Image.LANCZOS)
+    lower = Image.open(bottom).convert("RGB").resize((W, H // 2), Image.LANCZOS)
+    frame = Image.new("RGB", (W, H))
+    frame.paste(upper, (0, 0))
+    frame.paste(lower, (0, H // 2))
+    frame.save(dest, quality=85)
+    return dest
+
+
+def broll_stills(label: str, dest_dir: str, on_date: str) -> list[str]:
+    """Non-product plates from the provider chain. A miss returns no files."""
+    if not _allow_broll():
+        return []
+    try:
+        from content_generator.creative import ai_backgrounds
+        choice = {
+            "date": on_date,
+            "format": "reel",
+            "concept": "granule_dissolve",
+            "scene": "granules",
+            "ai_prompt": (
+                "extreme macro of hot water pouring and a spoon scooping dark coffee granules, "
+                "steam, amber light, no jar, no bottle, no packaging, no label, no logo, no text"
+            ),
+        }
+        frames, source = ai_backgrounds.fetch_background(choice, f"{label}_broll", (540, 480), 5)
+        if not frames or source == "procedural":
+            return []
+        from PIL import Image
+        step = max(1, len(frames) // 4)
+        paths = []
+        for index, frame in enumerate(frames[::step][:4]):
+            dest = os.path.join(dest_dir, f"{label}_broll_{index}.jpg")
+            Image.fromarray(frame).convert("RGB").save(dest, quality=85)
+            paths.append(dest)
+        logger.info("[ken_burns] %s b-roll stills from %s", len(paths), source)
+        return paths
+    except Exception as exc:
+        logger.info("[ken_burns] b-roll skipped: %s", type(exc).__name__)
+        return []
 
 
 def _bed() -> str | None:
@@ -147,6 +222,26 @@ def _bed() -> str | None:
     if os.path.isfile("music_library/lofi_cafe.wav"):
         return "music_library/lofi_cafe.wav"
     return None
+
+
+def _assemble(photos: list[str], plates: list[str], plan: list[dict], work: str) -> list[str]:
+    """One exact 1080x1920 still per shot. The opening still is a split when asked."""
+    inputs = []
+    jar = photos[0]
+    for shot in plan:
+        dest = os.path.join(work, f"shot_{shot['index']}_{len(inputs)}.jpg")
+        if shot.get("split"):
+            top_src = plates[0] if plates else photos[min(1, len(photos) - 1)]
+            top = _cover(top_src, (W, H // 2), os.path.join(work, f"top_{len(inputs)}.jpg"))
+            bottom = _cover(jar, (W, H // 2), os.path.join(work, f"bot_{len(inputs)}.jpg"))
+            inputs.append(_stack(top, bottom, dest))
+            continue
+        if plates and shot["index"] % 2 == 0:
+            source = plates[shot["index"] % len(plates)]
+        else:
+            source = photos[shot["index"] % len(photos)]
+        inputs.append(_cover(source, (W, H), dest))
+    return inputs
 
 
 def _words(reel: dict) -> list[str]:
@@ -181,22 +276,6 @@ def render_reel(reel: dict, day: int, label: str, on_date, *, fast: bool = False
     else:
         duration = float(os.getenv("KEN_BURNS_SECONDS", "8"))
         split = False
-    photos = paths[:8]
-    plan = shot_plan(duration, len(photos), split=split and len(photos) >= 2)
-    # Map each shot onto a photo path. Split consumes two photos on shot 0.
-    inputs: list[str] = []
-    if plan and plan[0].get("split"):
-        inputs.extend(photos[:2])
-        rest = photos[2:] or photos[:1]
-        for shot in plan[1:]:
-            inputs.append(rest[(shot["index"]) % len(rest)])
-    else:
-        for shot in plan:
-            inputs.append(photos[shot["index"] % len(photos)])
-    graph = filtergraph(len(inputs), plan, _words(reel), _font())
-    if "xfade" in graph:
-        logger.info("[ken_burns] refused a crossfade graph")
-        return None
     from content_generator.core.ist_dates import today_ist
     if on_date is None:
         date_str = today_ist().isoformat()
@@ -204,12 +283,24 @@ def render_reel(reel: dict, day: int, label: str, on_date, *, fast: bool = False
         date_str = on_date.isoformat()
     else:
         date_str = str(on_date)[:10]
+    photos = paths[:8]
+    plan = shot_plan(duration, len(photos), split=split and len(photos) >= 2)
+    work = tempfile.mkdtemp(prefix="kenburns-")
+    plates = broll_stills(label, work, date_str)
+    inputs = _assemble(photos, plates, plan, work)
+    graph_plan = [{**shot, "split": False} for shot in plan]
+    graph = filtergraph(len(inputs), graph_plan, _words(reel), _font())
+    if "xfade" in graph:
+        logger.info("[ken_burns] refused a crossfade graph")
+        shutil.rmtree(work, ignore_errors=True)
+        return None
     out_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
     os.makedirs(out_dir, exist_ok=True)
     out = os.path.join(out_dir, f"{label}_day{day}_{date_str}.mp4")
+    hold = f"{max(shot['seconds'] for shot in plan) + 0.4:.2f}"
     cmd = [ffmpeg, "-nostdin", "-y", "-loglevel", "error"]
     for path in inputs:
-        cmd.extend(["-loop", "1", "-t", "4", "-i", path])
+        cmd.extend(["-loop", "1", "-framerate", str(FPS), "-t", hold, "-i", path])
     bed = _bed()
     if bed:
         cmd.extend(["-stream_loop", "-1", "-i", bed])
@@ -225,11 +316,13 @@ def render_reel(reel: dict, day: int, label: str, on_date, *, fast: bool = False
         "-c:a", "aac", "-shortest", "-movflags", "+faststart", out,
     ])
     try:
-        subprocess.run(cmd, check=True, timeout=max(30, int(duration) + 45))
+        subprocess.run(cmd, check=True, timeout=max(90, int(duration) * 4))
     except Exception as exc:
         logger.info("[ken_burns] encode failed: %s", type(exc).__name__)
         _fail(fast)
         return None
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
     if not os.path.isfile(out) or os.path.getsize(out) < 1000:
         _fail(fast)
         return None

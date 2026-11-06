@@ -66,7 +66,10 @@ def store_link(content: str = "cup") -> str:
 
 
 def reference_entry() -> dict:
-    return dict(REFERENCE_LIBRARY[0])
+    entry = dict(REFERENCE_LIBRARY[0])
+    entry["copied"] = dict(entry["copied"])
+    entry["structure_notes"] = tuple(entry["structure_notes"])
+    return entry
 
 
 def prompt_block() -> str:

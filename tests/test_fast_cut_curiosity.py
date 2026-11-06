@@ -1,6 +1,7 @@
 """fast_cut_curiosity template, reference structure, and video fallbacks."""
 import json
 import logging
+import os
 
 import pytest
 
@@ -223,6 +224,51 @@ def test_shot_plan_is_hard_cuts_with_punch_in():
     assert "xfade" not in graph
     assert "zoompan" in graph
     assert "concat" in graph
+
+
+def test_caption_punctuation_cannot_break_the_filter():
+    assert ken_burns._esc("Watch, the pour: 100%") == "Watch the pour 100"
+    graph = ken_burns.filtergraph(
+        1, [{"seconds": 2, "split": False}], ["Watch,", "pour"], "/tmp/font.ttf",
+    )
+    assert "text='Watch,'" not in graph
+    assert "text='Watch'" in graph
+
+
+def test_fast_cut_uses_broll_frames_when_the_chain_returns_them(tmp_path, monkeypatch):
+    import numpy as np
+    from PIL import Image
+    from content_generator.creative import ai_backgrounds
+
+    one = tmp_path / "jar_a.png"
+    two = tmp_path / "jar_b.png"
+    Image.new("RGB", (32, 48), (90, 40, 20)).save(one)
+    Image.new("RGB", (32, 48), (40, 20, 10)).save(two)
+    monkeypatch.setattr(ken_burns, "real_product_paths", lambda sku=None: [str(one), str(two)])
+    monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(tmp_path))
+    monkeypatch.setenv("KEN_BURNS_FAST_S", "2")
+    monkeypatch.setenv("FAST_CUT_BROLL", "1")
+    monkeypatch.setenv("MUSIC_LIBRARY_DIR", str(tmp_path / "nomusic"))
+    seen = {}
+
+    def fake_fetch(choice, label, size, seconds=5):
+        seen["prompt"] = choice.get("ai_prompt")
+        seen["size"] = size
+        frame = np.zeros((size[1], size[0], 3), np.uint8)
+        frame[:, :, 1] = 180
+        return [frame, frame], "hf_cogvideo"
+
+    monkeypatch.setattr(ai_backgrounds, "fetch_background", fake_fetch)
+    if ken_burns._ffmpeg() is None:
+        pytest.skip("ffmpeg is not installed")
+    out = ken_burns.render_reel(
+        {"growth_template_id": "fast_cut_curiosity", "chosen_hook": "Watch, the pour"},
+        4, "growth_broll", "2026-11-06", fast=True,
+    )
+    assert out and os.path.getsize(out) > 1000
+    assert "no jar" in seen["prompt"]
+    assert "packaging" in seen["prompt"]
+    assert seen["size"] == (540, 480)
 
 
 def test_photo_fallback_renders_a_real_file(tmp_path, monkeypatch):
