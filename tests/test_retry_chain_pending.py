@@ -94,6 +94,56 @@ def test_pending_keeps_preflight_no_images_retryable():
     assert "ig_feed" in ru.pending_targets(T(12), records=rec, pack_exists=True)
 
 
+def _day_live_except_reel_1():
+    """Every target posted except the evening reel. growth_reel is the morning reel."""
+    live = "VERIFIED_LIVE"
+    rec = [{"slot": s, "platform": p, "status": live, "attempt_count": 1, "error": ""} for s, p in (
+        ("morning", "instagram_story"), ("morning", "facebook"),
+        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
+    rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "instagram_post"})
+    rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "carousel"})
+    rec.append({"slot": "morning", "platform": "instagram_video", "status": live, "asset": "growth_reel"})
+    return rec
+
+
+def test_approved_evening_reel_does_not_spin_before_its_slot():
+    """6 Nov 2026: reel_1 was approved and prewarm-only, but PENDING stayed
+    reel_1, so retry-unposted re-dispatched itself every few minutes until 21:53.
+    """
+    rec = _day_live_except_reel_1()
+    assert ru.pending_targets(T(19), records=rec, pack_exists=True, evening_ready=True) == []
+    assert ru.pending_targets(T(12), records=rec, pack_exists=True, evening_ready=False) == ["reel_1"]
+    assert ru.pending_targets(T(21, 54), records=rec, pack_exists=True, evening_ready=True) == ["reel_1"]
+
+
+def test_evening_copy_ready_follows_the_editorial_gate(monkeypatch):
+    monkeypatch.setattr(
+        "content_generator.scheduler.publish_recovery._load_content",
+        lambda date: ({"reels": [{"hook": "x"}]}, ""),
+    )
+    monkeypatch.setattr(ru, "_approved", lambda content: {"reel_1": content["reels"][0]})
+    assert ru._evening_copy_ready("2026-11-06", ["reel_1"]) is True
+    monkeypatch.setattr(ru, "_approved", lambda content: {})
+    assert ru._evening_copy_ready("2026-11-06", ["reel_1"]) is False
+    monkeypatch.setattr(ru, "_approved", lambda content: (_ for _ in ()).throw(RuntimeError("gate down")))
+    assert ru._evening_copy_ready("2026-11-06", ["reel_1"]) is False
+
+
+def test_ready_check_reads_the_pack_when_the_caller_does_not_say(monkeypatch):
+    rec = _day_live_except_reel_1()
+    monkeypatch.setattr(ru, "_evening_copy_ready", lambda date, names: names == ["reel_1"] and date == "2026-10-17")
+    assert ru.pending_targets(T(19), records=rec, pack_exists=True) == []
+    monkeypatch.setattr(ru, "_evening_copy_ready", lambda date, names: False)
+    assert ru.pending_targets(T(19), records=rec, pack_exists=True) == ["reel_1"]
+
+
+def test_other_gaps_still_keep_the_waiting_evening_reel_visible():
+    rec = _day_live_except_reel_1()
+    rec = [r for r in rec if r.get("platform") != "facebook"]
+    todo = ru.pending_targets(T(19), records=rec, pack_exists=True, evening_ready=True)
+    assert "facebook" in todo and "reel_1" in todo
+
+
 def test_pending_probe_error_returns_nonzero(monkeypatch, capsys):
     import sys
     monkeypatch.setattr(ru, "pending_targets", lambda: (_ for _ in ()).throw(RuntimeError("probe broke")))
