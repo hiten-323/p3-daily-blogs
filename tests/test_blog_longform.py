@@ -110,6 +110,31 @@ def test_topic_plan_skips_slugs_already_in_output(tmp_path):
     assert chosen["slug"] != first["slug"]
 
 
+def test_exhausted_plan_reuses_the_oldest_slot_with_a_new_slug(tmp_path):
+    """Once every planned slug has been used, the next post must not be held
+    as a duplicate. 6 Nov 2026 was held because instant-coffee-for-milk-coffee
+    was already saved on 13 Oct."""
+    from content_generator.core.blog_quality import duplicate_slug_issue, seo_issues
+
+    for index, topic in enumerate(TOPICS):
+        payload = {"blog_post": {
+            "slug": topic["slug"], "topic_id": topic["id"],
+            "primary_keyword": topic["primary"], "title": topic["title"],
+        }}
+        (tmp_path / f"content_2026-09-{index + 1:02d}.json").write_text(
+            json.dumps(payload), encoding="utf-8")
+    slot = 5 % len(TOPICS)
+    chosen = choose_topic(5, output_dir=str(tmp_path), on_date="2026-11-06")
+    assert chosen["slug"] == f"{TOPICS[slot]['slug']}-2"
+    assert chosen["title"] != TOPICS[slot]["title"]
+    assert 20 <= len(chosen["title"]) <= 60
+    assert duplicate_slug_issue(chosen["slug"], on_date="2026-11-06", output_dir=str(tmp_path)) is None
+    assert "slug must be" not in " ".join(seo_issues({
+        "title": chosen["title"], "slug": chosen["slug"],
+        "meta_description": "x" * 155, "introduction": "A real introduction.",
+    }))
+
+
 def test_partial_draft_is_saved_and_a_later_run_resumes(tmp_path):
     def failing(prompt, label="", max_tokens=900):
         if "outline" in str(label):
