@@ -1123,6 +1123,7 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
             # then fail prepublish forever.
             piece["featured_product"] = featured
 
+        viral_score_misses = 0
         for attempt in range(attempts_allowed):
             if _editorial_deadline_passed():
                 piece.setdefault("editorial_error", "editorial time budget reached before this piece passed")
@@ -1179,13 +1180,27 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                     if viral_gate.enabled():
                         vg = viral_gate.evaluate(label, piece)
                         piece["viral_potential"] = vg
-                        if not vg.get("passed"):
+                        if vg.get("overall") is None:
+                            # The judge did not return a score. Keep this draft
+                            # and score it again. A missing score is not a 7.
+                            feedback = str(vg.get("error") or "viral scoring failed")
+                            piece["editorial_error"] = feedback
+                            viral_score_misses += 1
+                            logger.warning(
+                                "[viral] %s scoring failed (%s) — draft kept | attempt %d/%d",
+                                label, feedback, attempt + 1, attempts_allowed,
+                            )
+                            if viral_score_misses <= 2 and attempt + 1 < attempts_allowed:
+                                _remember_obstacle(label, feedback, "generation", gate="provider")
+                                continue
                             verdict = "VIRAL_REJECT"
-                            feedback = viral_gate.feedback_for(label, vg, attempt) if vg.get("overall") is not None \
-                                else str(vg.get("error") or "viral scoring failed")
+                        elif not vg.get("passed"):
+                            verdict = "VIRAL_REJECT"
+                            feedback = viral_gate.feedback_for(label, vg, attempt)
                             logger.warning("[viral] %s REJECT — viral %s < %.1f | attempt %d/%d",
                                            label, vg.get("overall"), viral_gate.PASS_MARK, attempt + 1, attempts_allowed)
                         else:
+                            viral_score_misses = 0
                             logger.info("[viral] %s PASS — viral %.1f", label, vg["overall"])
                 if verdict == "PASS":
                     # Run the downstream publish gates NOW so the loop regenerates against the
