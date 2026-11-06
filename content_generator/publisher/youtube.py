@@ -73,12 +73,8 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.info("[youtube] Not configured — YOUTUBE_CLIENT_ID/SECRET/REFRESH_TOKEN missing")
         return {"success": False, "video_id": "", "url": "", "error": "not_configured"}
 
-    # Get fresh access token
-    access_token = _refresh_access_token()
-    if not access_token:
-        return {"success": False, "video_id": "", "url": "", "error": "token_refresh_failed"}
-
-    # Find video file
+    # Find video file before any Google call. A missing file or a false claim
+    # must not refresh an OAuth token or open an upload.
     video_path = _find_video(content)
     if not video_path:
         if os.getenv("ALLOW_YOUTUBE_SLIDESHOW", "").lower() in ("true", "1", "yes"):
@@ -103,22 +99,30 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.debug("[youtube] product link skipped: %s", e)
     tags        = _build_tags(content)
 
-    from content_generator.core.product_truth import product_truth_findings, separate_ultra_from_pure
+    from content_generator.core.product_truth import (
+        featured_product_name, piece_copy_text, product_truth_findings, separate_ultra_from_pure,
+    )
     title = separate_ultra_from_pure(title)
     description = separate_ultra_from_pure(description)
-    if product_truth_findings(f"{title}\n{description}"):
-        logger.error("[youtube] Refusing a Short whose title or description contradicts the jar")
+    short = content.get("yt_short") if isinstance(content.get("yt_short"), dict) else {}
+    featured = featured_product_name(content) or str(short.get("featured_product") or "")
+    spoken = piece_copy_text(short) if short else ""
+    if product_truth_findings(f"{title}\n{description}\n{spoken}", featured=featured):
+        logger.error("[youtube] Refusing a Short whose title, description, or script contradicts the jar")
         return {"success": False, "attempted": False, "skipped": True,
                 "video_id": "", "url": "", "error": "product_truth_failed", "held": True}
 
     from content_generator.core.publish_bar import quality_block, reason_code
-    short = content.get("yt_short") if isinstance(content.get("yt_short"), dict) else {}
     block = quality_block(short, "yt_short")
     if block:
         code = reason_code(block)
         logger.warning("[youtube] Quality bar held the Short: %s", block)
         return {"success": False, "attempted": False, "skipped": True,
                 "video_id": "", "url": "", "error": "prepublish_gate:" + code, "held": True}
+
+    access_token = _refresh_access_token()
+    if not access_token:
+        return {"success": False, "video_id": "", "url": "", "error": "token_refresh_failed"}
 
     result = _upload_video(access_token, video_path, title, description, tags)
 
