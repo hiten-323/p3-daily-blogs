@@ -203,6 +203,24 @@ jobs:
           BLOG_ENABLED: "false"
         run: |
           set -uo pipefail
+          # GitHub's workflow-dispatch API returns HTTP 500 on blips. One failure
+          # used to fail this job and page "RECOVERY FAILED" even when publishing
+          # itself succeeded (run 42195864571, 6 Nov 2026).
+          dispatch_with_retry() {
+            local attempt=1
+            local max=4
+            while true; do
+              if "$@"; then
+                return 0
+              fi
+              if [ "$attempt" -ge "$max" ]; then
+                return 1
+              fi
+              echo "::warning::workflow dispatch failed (attempt ${attempt}/${max}); retrying"
+              sleep $((10 * attempt))
+              attempt=$((attempt + 1))
+            done
+          }
           HOUR_IST=$(TZ=Asia/Kolkata date +%H)
           if [ "$HOUR_IST" -lt 7 ] || [ "$HOUR_IST" -ge 23 ]; then echo "Outside 07-23 IST; not chaining."; exit 0; fi
           # Count what is DUE and not posted (not just non-live ledger rows): a
@@ -227,23 +245,11 @@ jobs:
               --jq "[.[] | select((.createdAt | fromdateiso8601 + 19800 | strftime(\"%Y-%m-%d\")) == \"$TODAY_IST\") | select(.status == \"queued\" or .status == \"in_progress\")] | length" 2>/dev/null) || { echo "::error::could not inspect same-day daily runs; refusing to assume one is active"; exit 1; }
             if [ "$DAILY_ACTIVE" = "0" ]; then
               echo "::warning::No content pack for $TODAY_IST by ${HOUR_IST}h IST and no active daily run; dispatching generate."
-              gh workflow run daily.yml -R "$GITHUB_REPOSITORY" --ref main -f slot=generate -f force_run=false || { echo "::error::generate dispatch failed"; exit 1; }
+              dispatch_with_retry gh workflow run daily.yml -R "$GITHUB_REPOSITORY" --ref main -f slot=generate -f force_run=false || { echo "::error::generate dispatch failed"; exit 1; }
             fi
           fi
           sleep 240
-          # GitHub occasionally returns HTTP 500 on workflow_dispatch. One failure
-          # used to fail the job and page a recovery alert even though the piece
-          # was only waiting for its slot. Retry the dispatch before giving up.
-          dispatched=0
-          for attempt in 1 2 3; do
-            if gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main; then
-              dispatched=1
-              break
-            fi
-            echo "::warning::self-dispatch attempt ${attempt} failed"
-            sleep $((attempt * 20))
-          done
-          [ "$dispatched" = 1 ] || { echo "::error::self-dispatch failed"; exit 1; }
+          dispatch_with_retry gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::self-dispatch failed"; exit 1; }
       - name: Alert on recovery failure
         if: failure()
         env:
