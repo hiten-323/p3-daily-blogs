@@ -187,10 +187,17 @@ def _num(v):
         return None
 
 
+def _score_map(raw: dict) -> dict:
+    """Nested scores win. A flat object that already has the dimension keys counts too."""
+    nested = raw.get("scores") if isinstance(raw.get("scores"), dict) else {}
+    flat = {k: raw[k] for k in DIMENSIONS if k in raw}
+    return {**flat, **nested}
+
+
 def normalize(raw: dict) -> dict:
     """overall = the LOWER of the model's overall and the dimension mean (no inflation)."""
     raw = raw if isinstance(raw, dict) else {}
-    scores = raw.get("scores") if isinstance(raw.get("scores"), dict) else {}
+    scores = _score_map(raw)
     dims = {k: _num(scores.get(k)) for k in DIMENSIONS}
     missing = [k for k, v in dims.items() if v is None]
     if missing:

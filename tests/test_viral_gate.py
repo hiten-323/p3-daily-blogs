@@ -127,3 +127,30 @@ def test_reasoning_only_truncated_response_is_held(monkeypatch):
     assert result["passed"] is False
     assert result["overall"] is None
     assert str(result.get("error", "")).startswith("viral_scoring_failed")
+
+
+def test_trailing_fragment_does_not_replace_the_score(monkeypatch):
+    """A reasoning model often emits the score and then a small closing object.
+    The fragment must not become the parse, or normalize raises ValueError and
+    the piece is held with no score."""
+    raw = (
+        "The user wants me to score a YouTube Short piece for Purity Beans.\n"
+        + _score_body()
+        + '\n{"note": "done"}'
+    )
+    result = vg.evaluate("threads_post", {"text": "Read the jar."}, call=_nvidia_router(monkeypatch, raw).call)
+    assert vg.PASS_MARK == 8.0
+    assert result["passed"] is True
+    assert result["overall"] == 8.7
+    assert "error" not in result
+
+
+def test_flat_dimension_scores_still_use_the_bar(monkeypatch):
+    import json
+    flat = {k: 9 for k in vg.DIMENSIONS}
+    flat.update(overall=7.4, feedback="Sharper hook.", better_hook="Read the jar first.", weakest=["hook"])
+    raw = "Here is the score, not wrapped.\n" + json.dumps(flat)
+    result = vg.evaluate("threads_post", {"text": "Read the jar."}, call=_nvidia_router(monkeypatch, raw).call)
+    assert result["passed"] is False
+    assert result["overall"] == 7.4
+    assert "error" not in result

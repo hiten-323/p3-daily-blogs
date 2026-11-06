@@ -98,25 +98,50 @@ def _loads_object(text: str) -> dict | None:
     return result if isinstance(result, dict) else None
 
 
+def _richness(obj: dict) -> tuple:
+    """Prefer a real score over a trailing {"note": "done"} fragment.
+
+    Key count, then serialized size. Equal objects keep the later one, which
+    is the answer when a reasoning trace drafts the same shape twice.
+    """
+    scores = obj.get("scores") if isinstance(obj.get("scores"), dict) else {}
+    return (len(scores), len(obj), len(json.dumps(obj, ensure_ascii=False)))
+
+
+def _richest(objects: list[dict]) -> dict:
+    best = max(_richness(obj) for obj in objects)
+    for obj in reversed(objects):
+        if _richness(obj) == best:
+            return obj
+    return objects[-1]
+
+
 def _extract_from(text: str) -> dict | None:
     cleaned = text.strip()
     if not cleaned:
         return None
-    direct = _loads_object(cleaned)
-    if direct is not None:
+    try:
+        direct = json.loads(_sanitize_control_chars(cleaned))
+    except json.JSONDecodeError:
+        direct = None
+    if isinstance(direct, dict):
         return direct
     fence = re.search(r"```(?:json)?\s*([\s\S]*?)```", cleaned)
     if fence:
         fenced = _loads_object(fence.group(1).strip())
         if fenced is not None:
             return fenced
-    # Last object: reasoning models put scratch JSON in the trace and the
-    # real score after it. A greedy first-brace match joins those and fails.
-    for candidate in reversed(_top_level_objects(cleaned)):
-        parsed = _loads_object(candidate)
-        if parsed is not None:
-            return parsed
-    return None
+    # A greedy first-brace match joins a scratch object to the real score and
+    # fails. A last-object match keeps a trailing fragment and drops the score.
+    # Keep the richest object; ties go to the later one.
+    parsed = []
+    for candidate in _top_level_objects(cleaned):
+        obj = _loads_object(candidate)
+        if isinstance(obj, dict) and obj:
+            parsed.append(obj)
+    if parsed:
+        return _richest(parsed)
+    return _loads_object(cleaned)
 
 
 def extract(raw: str) -> dict:
