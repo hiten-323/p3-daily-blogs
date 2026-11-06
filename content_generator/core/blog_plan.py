@@ -374,8 +374,19 @@ def used_topic_keys(output_dir: str = "output", on_date: str | None = None) -> s
     return found
 
 
+def _unique_slug(base: str, used: set[str], on_date: str | None) -> str:
+    """A repeat of the plan still needs a slug no earlier day has published."""
+    stamp = re.sub(r"[^0-9]", "", str(on_date or "")) or "repeat"
+    candidate = f"{base}-{stamp}"
+    n = 2
+    while candidate.lower() in used:
+        candidate = f"{base}-{stamp}-{n}"
+        n += 1
+    return candidate
+
+
 def choose_topic(day_number: int, output_dir: str = "output", on_date: str | None = None) -> dict:
-    """Next unused topic. Falls forward through the plan, then repeats the day's slot."""
+    """Next unused topic. When the plan is exhausted, repeat the day's angle under a new slug."""
     used = used_topic_keys(output_dir, on_date=on_date)
     start = int(day_number) % len(TOPICS)
     for offset in range(len(TOPICS)):
@@ -383,4 +394,7 @@ def choose_topic(day_number: int, output_dir: str = "output", on_date: str | Non
         identity = {topic["id"], topic["slug"], topic["primary"].lower()}
         if identity.isdisjoint(used):
             return topic
-    return TOPICS[start]
+    topic = dict(TOPICS[start])
+    topic["slug"] = _unique_slug(topic["slug"], used, on_date)
+    topic["id"] = f"{topic['id']}-{re.sub(r'[^0-9]', '', str(on_date or '')) or 'repeat'}"
+    return topic
