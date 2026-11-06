@@ -192,12 +192,49 @@ def resolve_psychology_governance(content: dict) -> dict | None:
     return frm.get("governance_rules") or {}
 
 
+def _repair_publish_copy(content: dict) -> None:
+    """Rewrite a false jar clause before the gate reads the piece.
+
+    A saved script can still say "pure coffee variants or our balanced Ultra
+    Blend" in a field the scorer never walked. Repair does not lower the
+    gate: a clause that cannot be rewritten still fails product truth.
+    """
+    if not isinstance(content, dict):
+        return
+    try:
+        from content_generator.core.process_match import align_process_piece
+        from content_generator.core.product_truth import featured_product_name
+        featured = featured_product_name(content)
+    except Exception as e:
+        logger.debug("[editorial] copy repair unavailable: %s", e)
+        return
+    pieces: list[dict] = []
+    for key in (
+        "carousel", "instagram_post", "linkedin_post", "blog_post", "yt_short",
+        "stories", "growth_reel", "facebook_post", "threads_post",
+    ):
+        value = content.get(key)
+        if isinstance(value, dict) and value:
+            pieces.append(value)
+        elif isinstance(value, list):
+            pieces.extend(item for item in value if isinstance(item, dict) and item)
+    reels = content.get("reels")
+    if isinstance(reels, list):
+        pieces.extend(item for item in reels if isinstance(item, dict) and item)
+    for piece in pieces:
+        try:
+            align_process_piece(piece, featured or piece.get("featured_product"))
+        except Exception as e:
+            logger.debug("[editorial] copy repair skipped: %s", e)
+
+
 def get_valid_assets(content: dict) -> list[str]:
     """
     Verify which of the generated assets are complete, pass schema validation,
     and meet brand guidelines.
     Returns a list of keys of valid, publishable assets.
     """
+    _repair_publish_copy(content)
     # Resolve governance once, up front. If the frame is missing or bogus this
     # raises and NOTHING is publishable — the correct outcome, since every
     # per-asset brand check below depends on these rules.

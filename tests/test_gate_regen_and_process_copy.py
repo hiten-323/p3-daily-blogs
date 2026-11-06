@@ -237,6 +237,32 @@ def test_stale_pass_is_replaced_after_a_process_rewrite(monkeypatch):
     assert _reasons(piece["body"], featured="Bold") == []
     assert piece["editorial_score"]["overall"] == 8.4
 
+def test_publish_gate_repairs_ultra_clause_and_reads_a_string_script():
+    """A string script used to be read one letter at a time, so the claim was invisible."""
+    from content_generator.core.editorial_engine import get_valid_assets
+    from content_generator.core.product_truth import piece_copy_text, product_truth_findings
+
+    raw = (
+        "Whether you choose our pure coffee variants or our balanced Ultra Blend, "
+        "you always know the exact ingredients in your kitchen."
+    )
+    assert "Ultra Blend" in piece_copy_text({"script": raw})
+    assert product_truth_findings(piece_copy_text({"script": raw}), featured="Ultra Blend")
+    content = {
+        "featured_product": "Ultra Blend",
+        "linkedin_post": {"brand_bridge": raw, "body": "Ultra Blend is 70% coffee and 30% chicory."},
+        "yt_short": {"script": raw, "hook": "Read the jar."},
+        "facebook_post": {"body": raw},
+        "threads_post": {"text": raw},
+    }
+    get_valid_assets(content)
+    for key in ("linkedin_post", "yt_short", "facebook_post", "threads_post"):
+        piece = content[key]
+        text = piece.get("brand_bridge") or piece.get("script") or piece.get("body") or piece.get("text")
+        assert product_truth_findings(text, featured="Ultra Blend") == [], key
+        assert "variants or our balanced" not in text
+
+
 def test_ultra_pure_clause_is_rewritten_and_linkedin_skip_retries(tmp_path, monkeypatch):
     """5 Nov LinkedIn called Ultra Blend pure in the brand bridge, then skipped forever."""
     from content_generator.core.ist_dates import today_ist

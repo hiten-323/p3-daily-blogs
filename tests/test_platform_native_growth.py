@@ -141,6 +141,34 @@ def test_semantic_premise_lock_detects_topic_collapse():
     assert len(div_report["duplicates"]) == 0
 
 
+def test_youtube_does_not_call_google_when_the_script_is_false(monkeypatch):
+    monkeypatch.setattr(youtube, "is_configured", lambda: True)
+    monkeypatch.setattr(youtube, "_find_video", lambda _content: "/tmp/short.mp4")
+
+    def boom(*_args, **_kwargs):
+        raise AssertionError("Google must not be called for a false Short")
+
+    monkeypatch.setattr(youtube, "_refresh_access_token", boom)
+    monkeypatch.setattr(youtube, "_upload_video", boom)
+    monkeypatch.setattr(
+        "content_generator.core.editorial_engine.approved_assets",
+        lambda content: {"yt_short": content.get("yt_short")},
+    )
+    result = youtube.post_content({
+        "featured_product": "Ultra Blend",
+        "yt_short": {
+            "title": "Read the jar",
+            "description": "Ultra Blend is 70% coffee and 30% chicory.",
+            "script": (
+                "Whether you choose our pure coffee variants or our balanced Ultra Blend, "
+                "you always know the exact ingredients."
+            ),
+        },
+    }, day=1)
+    assert result.get("error") == "product_truth_failed"
+    assert result.get("held") is True
+
+
 def test_youtube_holds_without_video_file(monkeypatch):
     import os
     monkeypatch.delenv("ALLOW_YOUTUBE_SLIDESHOW", raising=False)

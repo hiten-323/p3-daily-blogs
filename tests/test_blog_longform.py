@@ -110,6 +110,25 @@ def test_topic_plan_skips_slugs_already_in_output(tmp_path):
     assert chosen["slug"] != first["slug"]
 
 
+def test_topic_plan_revisits_with_a_new_slug_when_every_topic_is_used(tmp_path):
+    original = TOPICS[0]["slug"]
+    for index, topic in enumerate(TOPICS):
+        payload = {
+            "blog_post": {
+                "slug": topic["slug"],
+                "topic_id": topic["id"],
+                "primary_keyword": topic["primary"],
+            }
+        }
+        (tmp_path / f"content_2026-08-{index + 1:02d}.json").write_text(
+            json.dumps(payload), encoding="utf-8",
+        )
+    chosen = choose_topic(0, output_dir=str(tmp_path), on_date="2026-10-04")
+    assert chosen["slug"] != original
+    assert chosen["slug"] not in {topic["slug"] for topic in TOPICS}
+    assert TOPICS[0]["slug"] == original
+
+
 def test_partial_draft_is_saved_and_a_later_run_resumes(tmp_path):
     def failing(prompt, label="", max_tokens=900):
         if "outline" in str(label):

@@ -1,8 +1,10 @@
 """Rotating blog topics, catalog-grounded copy, and SEO shells.
 
 Topics are chosen from previous output files so a day does not repeat a slug,
-topic id, or primary keyword. Prices and blend facts come only from the
-Shopify catalog.
+topic id, or primary keyword while another topic is still unused. Once every
+topic has been used, the day's slot is revisited with a new slug. That keeps
+the duplicate-slug gate from holding every later post. Prices and blend facts
+come only from the Shopify catalog.
 """
 from __future__ import annotations
 
@@ -374,8 +376,19 @@ def used_topic_keys(output_dir: str = "output", on_date: str | None = None) -> s
     return found
 
 
+def _fresh_slug(base: str, used: set[str]) -> str:
+    base = str(base or "purity-beans").strip().lower()
+    if base and base not in used:
+        return base
+    for number in range(2, 1000):
+        candidate = f"{base}-{number}"
+        if candidate not in used:
+            return candidate
+    return base
+
+
 def choose_topic(day_number: int, output_dir: str = "output", on_date: str | None = None) -> dict:
-    """Next unused topic. Falls forward through the plan, then repeats the day's slot."""
+    """Next unused topic. When the plan is exhausted, revisit the day's slot with a new slug."""
     used = used_topic_keys(output_dir, on_date=on_date)
     start = int(day_number) % len(TOPICS)
     for offset in range(len(TOPICS)):
@@ -383,4 +396,7 @@ def choose_topic(day_number: int, output_dir: str = "output", on_date: str | Non
         identity = {topic["id"], topic["slug"], topic["primary"].lower()}
         if identity.isdisjoint(used):
             return topic
-    return TOPICS[start]
+    # Do not mutate TOPICS. A repeated slug is what holds every later post.
+    fresh = dict(TOPICS[start])
+    fresh["slug"] = _fresh_slug(str(fresh.get("slug") or ""), used)
+    return fresh
