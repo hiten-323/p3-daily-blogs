@@ -231,7 +231,13 @@ def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | No
         return [NO_PACK]
     if records is None:
         records = records_for_date(date)
-    return [t for t in unposted_targets(records, now_ist.hour) if not target_refuses_retry(records, t)]
+    due = [t for t in unposted_targets(records, now_ist.hour) if not target_refuses_retry(records, t)]
+    # reel_1 regenerates from 10:00 but cannot publish before 21:53. Counting it
+    # as still due made the chain re-dispatch every few minutes all afternoon
+    # (6 Nov: "Still due today: reel_1", then a GitHub 500 on that dispatch
+    # paged a recovery failure). The half-hour cron still regenerates it.
+    waiting = prewarm_targets(due, now_ist.hour, now_ist.minute)
+    return [t for t in due if t not in waiting]
 
 
 def is_mandatory(target: str) -> bool:
