@@ -231,7 +231,19 @@ jobs:
             fi
           fi
           sleep 240
-          gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::self-dispatch failed"; exit 1; }
+          # GitHub occasionally returns HTTP 500 on workflow_dispatch. One failure
+          # used to fail the job and page a recovery alert even though the piece
+          # was only waiting for its slot. Retry the dispatch before giving up.
+          dispatched=0
+          for attempt in 1 2 3; do
+            if gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main; then
+              dispatched=1
+              break
+            fi
+            echo "::warning::self-dispatch attempt ${attempt} failed"
+            sleep $((attempt * 20))
+          done
+          [ "$dispatched" = 1 ] || { echo "::error::self-dispatch failed"; exit 1; }
       - name: Alert on recovery failure
         if: failure()
         env:
