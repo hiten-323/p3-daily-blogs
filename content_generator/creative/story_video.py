@@ -69,6 +69,7 @@ def build_story_video(
     from content_generator.creative.approved_photos import _norm_sku
     sku = _norm_sku(product) or _norm_sku(_sku_from(reference_text or headline, day)) or "bold"
 
+    gate_rejected = False
     if os.getenv("CINEMATIC_VIDEO", "1") != "0":
         try:
             from content_generator.creative import cinematic_motion
@@ -79,6 +80,7 @@ def build_story_video(
                 format_type="story")
             if meta:
                 return out
+            gate_rejected = True
             logger.warning("[story_video] cinematic story held by visual gate; trying premium card story")
         except Exception as exc:
             logger.warning("[story_video] cinematic path failed: %s", exc)
@@ -96,6 +98,7 @@ def build_story_video(
                 if verdict["passed"]:
                     visual_gate.remember_layout(layout, label)
                     return out
+                gate_rejected = True
                 logger.warning("[visual-gate] story try %d failed: %s", attempt + 1, verdict["reasons"][:4])
                 if visual_gate.vision_outage():
                     break
@@ -103,6 +106,9 @@ def build_story_video(
             return None
         except Exception as exc:
             logger.warning("[story_video] premium story path failed: %s", exc)
+
+    if gate_rejected:
+        return None
 
     try:
         from content_generator.creative.story_motion import render_story_motion

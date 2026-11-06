@@ -215,3 +215,51 @@ def test_local_story_image_is_held_unless_visual_gate_passes(monkeypatch, tmp_pa
     assert posted["success"] is True
     assert posted.get("media_id") == "local-story"
     assert uploads == [image]
+
+
+def test_premium_gate_miss_does_not_publish_an_ungated_motion_story(monkeypatch):
+    """A story the 8.0 gate already rejected must not fall through to motion or Ken Burns."""
+    from content_generator.creative import story_video
+
+    monkeypatch.setenv("CINEMATIC_VIDEO", "0")
+    monkeypatch.setenv("PREMIUM_CARDS", "1")
+    called = {"motion": 0}
+
+    monkeypatch.setattr(
+        "content_generator.creative.premium_cards.render_story_video",
+        lambda *a, **k: {"layout": "editorial_top"},
+    )
+    monkeypatch.setattr("content_generator.creative.visual_gate.recent_layouts", lambda: [])
+    monkeypatch.setattr("content_generator.creative.visual_gate.vision_outage", lambda: False)
+    monkeypatch.setattr(
+        "content_generator.creative.visual_gate.evaluate_video",
+        lambda *a, **k: {"passed": False, "reasons": ["aesthetic_below_8.0:4.0"]},
+    )
+
+    def motion(*a, **k):
+        called["motion"] += 1
+        return {"video": "/tmp/ungated.mp4"}
+
+    monkeypatch.setattr("content_generator.creative.story_motion.render_story_motion", motion)
+    out = story_video.build_story_video(headline="Read the jar", day=3, sub="Bold coffee")
+    assert out is None
+    assert called["motion"] == 0
+
+
+def test_cinematic_gate_hold_does_not_fall_through_when_premium_is_off(monkeypatch):
+    from content_generator.creative import story_video
+
+    monkeypatch.setenv("CINEMATIC_VIDEO", "1")
+    monkeypatch.setenv("PREMIUM_CARDS", "0")
+    called = {"motion": 0}
+    monkeypatch.setattr(
+        "content_generator.creative.cinematic_motion.render_cinematic_until_pass",
+        lambda *a, **k: None,
+    )
+    monkeypatch.setattr(
+        "content_generator.creative.story_motion.render_story_motion",
+        lambda *a, **k: called.__setitem__("motion", called["motion"] + 1) or {"video": "/tmp/ungated.mp4"},
+    )
+    out = story_video.build_story_video(headline="Read the jar", day=3, sub="Bold coffee")
+    assert out is None
+    assert called["motion"] == 0
