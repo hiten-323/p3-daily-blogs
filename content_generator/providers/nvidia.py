@@ -17,8 +17,11 @@ the editorial deadline.
 
 moonshotai/kimi-k2.6 is still returned by GET /v1/models, but chat/completions
 answers HTTP 404 ("Function not found for account") — run 39939422932 on
-2026-10-23. openai/gpt-oss-120b is not on that catalog. Both are skipped.
-The backup chain is the other ids below, each present on the catalog that day.
+2026-10-23. openai/gpt-oss-120b is not on that catalog. z-ai/glm-5.3 (non-flash)
+left the catalog by 2026-11-06. Those ids are skipped. The backup chain is the
+other ids below, each present on the catalog that day. Ultra leads: Lightning
+returned an empty body and Gemma timed out before Ultra answered (run
+42175027407).
 """
 from __future__ import annotations
 
@@ -39,15 +42,20 @@ _URL = f"{_BASE}/chat/completions"
 # Runs 341 (2026-10-05) and 344 (2026-10-06) called nemotron-3-super first.
 # It often returned HTTP 200 with empty content (reel_1, carousel, stories,
 # yt_short, blog sections) and the calls that did answer took 12–17s.
-# Nemotron 3.5 Lightning is NVIDIA's current text-only model with a free hosted
-# endpoint. Prefer it for generation; retain Gemma, Ultra, Super, and GPT-OSS 20B
-# as fallbacks. All five were on GET /v1/models on 2026-10-23.
+# Run 42175027407 (2026-11-06): Lightning answered HTTP 200 with an empty body,
+# then Gemma 4 31B sat until the 45s read timeout. Ultra, with thinking turned
+# off, was the model that returned text. Lead with Ultra. Lightning stays in
+# the chain now that thinking is disabled for every Nemotron chat id. Gemma
+# stays in _PREFER below the six-model cap so a timeout cannot eat the budget
+# unless the earlier catalog ids disappear. Bolt was added to GET /v1/models
+# after 2026-10-23 and is a live backup. All of these ids were on that catalog
+# on 2026-11-06.
 _DEFAULT_MODELS = (
-    "nvidia/nemotron-3.5-lightning-30b-a3b",
-    "google/gemma-4-31b-it",
     "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
     "nvidia/nemotron-3-super-120b-a12b",
     "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-bolt-e4b",
 )
 _DEFAULT_MODEL = _DEFAULT_MODELS[0]
 _BACKOFF_S = (2, 5, 12)
@@ -97,24 +105,28 @@ def get_key() -> str:
     return os.environ.get("NVIDIA_API_KEY", "").strip()
 
 
-# Exact ids, in try-order. Each one was on GET /v1/models on 2026-10-23.
-# qwen/qwen3 and meta/llama-4 matched nothing on that list, so they are not here.
+# Exact ids, in try-order. Each one was on GET /v1/models on 2026-11-06.
+# qwen/qwen3 and meta/llama-4 matched nothing. Gemma is last: it is listed,
+# but on 2026-11-06 it timed out at 45s before Ultra answered.
 _PREFER = (
-    "nvidia/nemotron-3.5-lightning-30b-a3b",
-    "google/gemma-4-31b-it",
     "nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
     "nvidia/nemotron-3-super-120b-a12b",
-    "deepseek-ai/deepseek-v4.1-flash",
     "openai/gpt-oss-20b",
+    "nvidia/nemotron-3.5-bolt-e4b",
+    "deepseek-ai/deepseek-v4.1-flash",
     "z-ai/glm-5.3-flash",
     "minimaxai/minimax-m3.1-flash",
     "nvidia/nemotron-nano-3-30b-a3b",
     "nvidia/llama-3.1-nemotron-70b-instruct",
+    "google/gemma-4-31b-it",
 )
 # Catalog-listed or previously configured, but not a working chat model.
+# z-ai/glm-5.3 (non-flash) left GET /v1/models between 2026-10-23 and 2026-11-06.
 _REMOVED = frozenset({
     "moonshotai/kimi-k2.6",
     "openai/gpt-oss-120b",
+    "z-ai/glm-5.3",
 })
 _SKIP = ("embed", "safety", "guard", "retriever", "reward", "coder", "-vl", "vision", "omni", "parse", "rerank")
 _DISCOVERED: list[str] | None = None
@@ -171,14 +183,19 @@ def _redact(text: str) -> str:
 
 
 def _reasoning_model(model: str) -> bool:
-    """Ultra (and other explicit reasoning ids) think by default.
+    """Nemotron chat ids think by default.
 
     On 2026-10-23 viral_yt_short gave nemotron-3-ultra max_tokens=700. The
     hosted default reasoning_effort is high, so the whole budget came back as
     'The user wants me to score...' and the JSON score never started.
+    On 2026-11-06 Lightning (no 'ultra' in the id) returned HTTP 200 with an
+    empty content field the same way. Every Nemotron chat id gets thinking
+    turned off. Embed, safety, and parse ids are not chat models.
     """
     name = (model or "").lower()
-    return "ultra" in name or "reason" in name
+    if any(skip in name for skip in ("embed", "safety", "guard", "parse", "reward", "retriever")):
+        return False
+    return "nemotron" in name or "reason" in name
 
 
 def _call_model(prompt: str, max_tokens: int, model: str, headers: dict) -> tuple[str | None, dict]:

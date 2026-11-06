@@ -50,13 +50,13 @@ def test_provider_order_env_override(monkeypatch):
 def test_empty_model_env_keeps_the_default(monkeypatch):
     monkeypatch.setenv("NVIDIA_MODEL", "   ")
     assert nvidia.get_models() == [
-        "nvidia/nemotron-3.5-lightning-30b-a3b",
-        "google/gemma-4-31b-it",
         "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
         "nvidia/nemotron-3-super-120b-a12b",
         "openai/gpt-oss-20b",
+        "nvidia/nemotron-3.5-bolt-e4b",
     ]
-    assert nvidia.get_model() == "nvidia/nemotron-3.5-lightning-30b-a3b"
+    assert nvidia.get_model() == "nvidia/nemotron-3-ultra-550b-a55b"
     assert "meta/llama-3.3-70b-instruct" not in nvidia.get_models()
     assert "moonshotai/kimi-k2.6" not in nvidia.get_models()
     assert len(nvidia.get_models()) >= 2
@@ -96,10 +96,10 @@ def test_success_uses_chat_completions(monkeypatch):
     monkeypatch.setattr(nvidia._http, "post", post)
     text, usage = nvidia.call("Write a caption.", 120)
     assert text == '{"ok": true}'
-    assert usage["model"] == "nvidia/nemotron-3.5-lightning-30b-a3b"
+    assert usage["model"] == "nvidia/nemotron-3-ultra-550b-a55b"
     assert seen["url"] == "https://integrate.api.nvidia.com/v1/chat/completions"
     assert seen["auth"] == "Bearer nvapi-secretvalue"
-    assert seen["model"] == "nvidia/nemotron-3.5-lightning-30b-a3b"
+    assert seen["model"] == "nvidia/nemotron-3-ultra-550b-a55b"
     assert seen["timeout"] == nvidia._CALL_TIMEOUT_S
     assert 15 < nvidia._CALL_TIMEOUT_S <= 60
 
@@ -369,6 +369,26 @@ def test_ultra_disables_reasoning_and_reads_reasoning_content(monkeypatch):
     assert seen["json"]["chat_template_kwargs"]["enable_thinking"] is False
     assert text == answer
     assert usage["model"] == "nvidia/nemotron-3-ultra-550b-a55b"
+
+
+def test_lightning_disables_reasoning(monkeypatch):
+    """Lightning has no 'ultra' in the id, but it returned an empty body on
+    2026-11-06 the same way Ultra does when thinking is left on."""
+    monkeypatch.setenv("NVIDIA_API_KEY", "nvapi-secretvalue")
+    monkeypatch.setenv("NVIDIA_MODEL", "nvidia/nemotron-3.5-lightning-30b-a3b")
+    seen = {}
+
+    def post(url, headers=None, json=None, timeout=None):
+        seen["json"] = json
+        return _Response(200, _ok_body('{"hook": "from lightning"}'))
+
+    monkeypatch.setattr(nvidia._http, "post", post)
+    text, usage = nvidia.call("Write JSON.", 40)
+    assert text == '{"hook": "from lightning"}'
+    assert usage["model"] == "nvidia/nemotron-3.5-lightning-30b-a3b"
+    assert seen["json"]["reasoning_effort"] == "none"
+    assert seen["json"]["chat_template_kwargs"]["enable_thinking"] is False
+    assert seen["json"]["stream"] is False
 
 
 def test_non_reasoning_nvidia_model_does_not_send_reasoning_controls(monkeypatch):

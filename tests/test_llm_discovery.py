@@ -43,6 +43,8 @@ def test_discovery_backup_chain_uses_catalog_models_not_kimi(monkeypatch):
         "moonshotai/kimi-k2.6",
         "openai/gpt-oss-120b",
         "openai/gpt-oss-20b",
+        "nvidia/nemotron-3.5-bolt-e4b",
+        "z-ai/glm-5.3",
         "z-ai/glm-5.3-flash",
         "minimaxai/minimax-m3.1-flash",
         "nvidia/nemotron-nano-3-30b-a3b",
@@ -52,12 +54,14 @@ def test_discovery_backup_chain_uses_catalog_models_not_kimi(monkeypatch):
         "meta/llama-4-maverick",
     ))
     assert ms == [
-        "nvidia/nemotron-3.5-lightning-30b-a3b",
-        "google/gemma-4-31b-it",
         "nvidia/nemotron-3-ultra-550b-a55b",
+        "nvidia/nemotron-3.5-lightning-30b-a3b",
         "nvidia/nemotron-3-super-120b-a12b",
-        "deepseek-ai/deepseek-v4.1-flash",
         "openai/gpt-oss-20b",
+        "nvidia/nemotron-3.5-bolt-e4b",
+        "deepseek-ai/deepseek-v4.1-flash",
     ]
+    assert "google/gemma-4-31b-it" not in ms
+    assert "z-ai/glm-5.3" not in ms
     assert all(model not in nvidia._REMOVED for model in ms)
     assert len(ms) >= 2
