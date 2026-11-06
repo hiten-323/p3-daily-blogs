@@ -244,3 +244,22 @@ def test_premium_gate_miss_does_not_publish_an_ungated_motion_story(monkeypatch)
     out = story_video.build_story_video(headline="Read the jar", day=3, sub="Bold coffee")
     assert out is None
     assert called["motion"] == 0
+
+
+def test_cinematic_gate_hold_does_not_fall_through_when_premium_is_off(monkeypatch):
+    from content_generator.creative import story_video
+
+    monkeypatch.setenv("CINEMATIC_VIDEO", "1")
+    monkeypatch.setenv("PREMIUM_CARDS", "0")
+    called = {"motion": 0}
+    monkeypatch.setattr(
+        "content_generator.creative.cinematic_motion.render_cinematic_until_pass",
+        lambda *a, **k: None,
+    )
+    monkeypatch.setattr(
+        "content_generator.creative.story_motion.render_story_motion",
+        lambda *a, **k: called.__setitem__("motion", called["motion"] + 1) or {"video": "/tmp/ungated.mp4"},
+    )
+    out = story_video.build_story_video(headline="Read the jar", day=3, sub="Bold coffee")
+    assert out is None
+    assert called["motion"] == 0

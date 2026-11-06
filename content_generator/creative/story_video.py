@@ -42,9 +42,11 @@ def build_story_video(
 ) -> str | None:
     """Render a 9–12s vertical story video (1080x1920 MP4) with audio.
 
-    Prefers the motion story. Falls back to Ken Burns on a still if motion
-    fails. Returns the MP4 path, or None when every path fails (caller then
-    posts the improved static frame).
+    Cinematic, then premium cards, each behind the 8.0 visual gate. A gate
+    rejection returns None so the caller holds the story. Motion and Ken Burns
+    run only when those gated renderers are off or raise. They are not a way
+    around a failed gate. None means the caller may publish a still only after
+    that still passes the same gate.
     """
     if os.getenv("ENABLE_STORY_VIDEO", "true").lower() != "true":
         logger.info("[story_video] disabled via ENABLE_STORY_VIDEO=false")
@@ -100,7 +102,8 @@ def build_story_video(
                 logger.warning("[visual-gate] story try %d failed: %s", attempt + 1, verdict["reasons"][:4])
                 if visual_gate.vision_outage():
                     break
-            logger.warning("[visual-gate] premium story held after re-renders; not posting a failing story")
+            logger.error("[visual-gate] premium story held after re-renders; not posting a failing story")
+            return None
         except Exception as exc:
             logger.warning("[story_video] premium story path failed: %s", exc)
 
