@@ -110,23 +110,56 @@ def test_topic_plan_skips_slugs_already_in_output(tmp_path):
     assert chosen["slug"] != first["slug"]
 
 
-def test_topic_plan_revisits_with_a_new_slug_when_every_topic_is_used(tmp_path):
-    original = TOPICS[0]["slug"]
+def _write_exhausted_plan(tmp_path: Path) -> None:
     for index, topic in enumerate(TOPICS):
         payload = {
             "blog_post": {
                 "slug": topic["slug"],
                 "topic_id": topic["id"],
                 "primary_keyword": topic["primary"],
+                "title": topic["title"],
             }
         }
-        (tmp_path / f"content_2026-08-{index + 1:02d}.json").write_text(
-            json.dumps(payload), encoding="utf-8",
+        (tmp_path / f"content_2026-09-{index + 1:02d}.json").write_text(
+            json.dumps(payload), encoding="utf-8"
         )
-    chosen = choose_topic(0, output_dir=str(tmp_path), on_date="2026-10-04")
-    assert chosen["slug"] != original
+
+
+def test_exhausted_plan_revisits_the_oldest_topic_with_a_new_slug(tmp_path):
+    _write_exhausted_plan(tmp_path)
+    chosen = choose_topic(3, output_dir=str(tmp_path), on_date="2026-10-04")
+    assert chosen["id"] == TOPICS[0]["id"]
+    assert chosen["slug"] == f"{TOPICS[0]['slug']}-2"
     assert chosen["slug"] not in {topic["slug"] for topic in TOPICS}
-    assert TOPICS[0]["slug"] == original
+    assert len(chosen["slug"].split("-")) <= 8
+    assert chosen["title"] != TOPICS[0]["title"]
+    assert 20 <= len(chosen["title"]) <= 60
+    piece = generate_blog_post(
+        3,
+        llm_call=_llm({"n": 0}),
+        output_dir=str(tmp_path),
+        on_date="2026-10-04",
+    )
+    assert piece["slug"] == chosen["slug"]
+    assert piece.get("hold_reason") in (None, "")
+    assert assess(piece, on_date="2026-10-04", output_dir=str(tmp_path)) == []
+
+
+def test_next_day_after_a_revisit_uses_a_different_topic(tmp_path):
+    _write_exhausted_plan(tmp_path)
+    first = choose_topic(0, output_dir=str(tmp_path), on_date="2026-10-04")
+    payload = {
+        "blog_post": {
+            "slug": first["slug"],
+            "topic_id": first["id"],
+            "primary_keyword": first["primary"],
+            "title": first["title"],
+        }
+    }
+    (tmp_path / "content_2026-10-04.json").write_text(json.dumps(payload), encoding="utf-8")
+    second = choose_topic(1, output_dir=str(tmp_path), on_date="2026-10-05")
+    assert second["id"] == TOPICS[1]["id"]
+    assert second["slug"] != first["slug"]
 
 
 def test_partial_draft_is_saved_and_a_later_run_resumes(tmp_path):

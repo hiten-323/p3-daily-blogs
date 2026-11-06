@@ -136,7 +136,7 @@ _COPY_KEYS = (
     "cta", "primary_cta", "on_screen", "spoken", "text", "content",
     "description", "tagline", "product", "product_slug", "subtext",
     "comment_trigger", "save_trigger", "share_trigger", "hashtags",
-    "brand_bridge", "closing_question",
+    "brand_bridge", "closing_question", "script",
 )
 _REPAIR_SUBS = (
     (re.compile(r"You might be drinking hidden chicory fillers\.?", re.I),

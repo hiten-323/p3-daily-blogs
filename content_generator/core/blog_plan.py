@@ -2,9 +2,9 @@
 
 Topics are chosen from previous output files so a day does not repeat a slug,
 topic id, or primary keyword while another topic is still unused. Once every
-topic has been used, the day's slot is revisited with a new slug. That keeps
-the duplicate-slug gate from holding every later post. Prices and blend facts
-come only from the Shopify catalog.
+topic has been used, the oldest one is revisited with a new slug and title.
+That keeps the duplicate-slug gate from holding every later post. Prices and
+blend facts come only from the Shopify catalog.
 """
 from __future__ import annotations
 
@@ -354,16 +354,17 @@ def _blob_keys(blog: dict) -> set[str]:
     return keys
 
 
-def used_topic_keys(output_dir: str = "output", on_date: str | None = None) -> set[str]:
-    """Slugs, topic ids, and primary keywords already saved before `on_date`."""
+def _prior_entries(output_dir: str = "output", on_date: str | None = None) -> list[dict]:
+    """Blog identity saved strictly before `on_date`."""
     root = Path(output_dir)
     if not root.is_dir():
-        return set()
-    found: set[str] = set()
+        return []
+    entries: list[dict] = []
     paths = list(root.glob("content_*.json")) + list(root.glob("blog_*.json"))
     for path in paths:
         stamped = _DATE.search(path.name)
-        if stamped and on_date and stamped.group(1) >= on_date:
+        date = stamped.group(1) if stamped else ""
+        if date and on_date and date >= on_date:
             continue
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
@@ -371,32 +372,80 @@ def used_topic_keys(output_dir: str = "output", on_date: str | None = None) -> s
             continue
         if not isinstance(data, dict):
             continue
-        found |= _blob_keys(data)
-        found |= _blob_keys(data.get("blog_post") if isinstance(data.get("blog_post"), dict) else {})
+        blog = data.get("blog_post") if isinstance(data.get("blog_post"), dict) else data
+        if not isinstance(blog, dict):
+            continue
+        entries.append({
+            "date": date,
+            "keys": _blob_keys(data) | _blob_keys(blog),
+            "title": " ".join(str(blog.get("title") or "").split()),
+            "slug": str(blog.get("slug") or "").strip().lower(),
+        })
+    return entries
+
+
+def used_topic_keys(output_dir: str = "output", on_date: str | None = None) -> set[str]:
+    """Slugs, topic ids, and primary keywords already saved before `on_date`."""
+    found: set[str] = set()
+    for entry in _prior_entries(output_dir, on_date=on_date):
+        found |= entry["keys"]
     return found
 
 
-def _fresh_slug(base: str, used: set[str]) -> str:
-    base = str(base or "purity-beans").strip().lower()
+def _unused_slug(base: str, used: set[str]) -> str:
+    base = str(base or "").strip().lower()
     if base and base not in used:
         return base
     for number in range(2, 1000):
         candidate = f"{base}-{number}"
-        if candidate not in used:
+        if len(candidate.split("-")) <= 8 and candidate not in used:
             return candidate
     return base
 
 
+def _unused_title(title: str, used: set[str]) -> str:
+    title = " ".join(str(title or "").split())
+
+    def _norm(value: str) -> str:
+        return " ".join(value.split()).casefold()
+
+    if title and _norm(title) not in used and 20 <= len(title) <= 60:
+        return title
+    for number in range(2, 100):
+        suffix = f" ({number})"
+        stem = title[: 60 - len(suffix)].rstrip(" -–—,")
+        candidate = f"{stem}{suffix}"
+        if 20 <= len(candidate) <= 60 and _norm(candidate) not in used:
+            return candidate
+    return title[:60]
+
+
 def choose_topic(day_number: int, output_dir: str = "output", on_date: str | None = None) -> dict:
-    """Next unused topic. When the plan is exhausted, revisit the day's slot with a new slug."""
-    used = used_topic_keys(output_dir, on_date=on_date)
+    """Next unused topic. When the plan is exhausted, revisit the oldest with a new slug."""
+    entries = _prior_entries(output_dir, on_date=on_date)
+    used: set[str] = set()
+    titles: set[str] = set()
+    slugs: set[str] = set()
+    for entry in entries:
+        used |= entry["keys"]
+        if entry["title"]:
+            titles.add(entry["title"].casefold())
+        if entry["slug"]:
+            slugs.add(entry["slug"])
     start = int(day_number) % len(TOPICS)
     for offset in range(len(TOPICS)):
         topic = TOPICS[(start + offset) % len(TOPICS)]
         identity = {topic["id"], topic["slug"], topic["primary"].lower()}
         if identity.isdisjoint(used):
-            return topic
-    # Do not mutate TOPICS. A repeated slug is what holds every later post.
-    fresh = dict(TOPICS[start])
-    fresh["slug"] = _fresh_slug(str(fresh.get("slug") or ""), used)
-    return fresh
+            return dict(topic)
+
+    def _last_seen(topic: dict) -> str:
+        identity = {topic["id"], topic["slug"], topic["primary"].lower()}
+        dates = [entry["date"] for entry in entries if identity & entry["keys"]]
+        return max(dates) if dates else ""
+
+    oldest = min(TOPICS, key=lambda topic: (_last_seen(topic), TOPICS.index(topic)))
+    chosen = dict(oldest)
+    chosen["slug"] = _unused_slug(oldest["slug"], slugs)
+    chosen["title"] = _unused_title(oldest["title"], titles)
+    return chosen

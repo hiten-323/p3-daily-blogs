@@ -313,3 +313,27 @@ def test_ultra_pure_clause_is_rewritten_and_linkedin_skip_retries(tmp_path, monk
     assert record["status"] == "FAILED"
     assert record["next_retry_at"]
     assert ledger.attempt_budget_exhausted(record) is False
+
+
+def test_publish_gate_repairs_ultra_clause_on_every_asset():
+    """The canonical gate rewrites the clause before it can reject or publish it."""
+    from content_generator.core.editorial_engine import get_valid_assets
+    from content_generator.core.product_truth import product_truth_findings
+
+    raw = (
+        "Whether you choose our pure coffee variants or our balanced Ultra Blend, "
+        "you always know the exact ingredients in your kitchen."
+    )
+    content = {
+        "featured_product": "Ultra Blend",
+        "linkedin_post": {"brand_bridge": raw, "body": "Ultra Blend is 70% coffee and 30% chicory."},
+        "yt_short": {"script": raw, "hook": "Read the jar."},
+        "facebook_post": {"body": raw},
+        "threads_post": {"text": raw},
+    }
+    get_valid_assets(content)
+    for key in ("linkedin_post", "yt_short", "facebook_post", "threads_post"):
+        piece = content[key]
+        text = piece.get("brand_bridge") or piece.get("script") or piece.get("body") or piece.get("text")
+        assert product_truth_findings(text, featured="Ultra Blend") == [], key
+        assert "variants or our balanced" not in text
