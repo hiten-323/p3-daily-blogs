@@ -374,8 +374,31 @@ def used_topic_keys(output_dir: str = "output", on_date: str | None = None) -> s
     return found
 
 
+def _cycled(topic: dict, used: set[str]) -> dict:
+    """Same jar facts, a slug and title the duplicate gate has not seen."""
+    for generation in range(2, 20):
+        slug = f"{topic['slug']}-{generation}"
+        if slug in used or len(slug.split("-")) > 8:
+            continue
+        title = f"{topic['title']} ({generation})"
+        if len(title) > 60:
+            title = f"{topic['title'][:54].rstrip()} {generation}"
+        copy = dict(topic)
+        copy["slug"] = slug
+        copy["id"] = f"{topic['id']}-{generation}"
+        copy["title"] = title
+        return copy
+    return dict(topic)
+
+
 def choose_topic(day_number: int, output_dir: str = "output", on_date: str | None = None) -> dict:
-    """Next unused topic. Falls forward through the plan, then repeats the day's slot."""
+    """Next unused topic. Falls forward through the plan, then repeats the day's slot.
+
+    After every planned slug has been published once, the day's slot is reused
+    with a new slug (`…-2`) and a distinct title. Returning the original slug
+    held every later blog, including 6 Nov 2026 (`instant-coffee-for-milk-coffee`,
+    already saved on 13 Oct).
+    """
     used = used_topic_keys(output_dir, on_date=on_date)
     start = int(day_number) % len(TOPICS)
     for offset in range(len(TOPICS)):
@@ -383,4 +406,4 @@ def choose_topic(day_number: int, output_dir: str = "output", on_date: str | Non
         identity = {topic["id"], topic["slug"], topic["primary"].lower()}
         if identity.isdisjoint(used):
             return topic
-    return TOPICS[start]
+    return _cycled(TOPICS[start], used)
