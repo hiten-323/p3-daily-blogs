@@ -231,7 +231,15 @@ def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | No
         return [NO_PACK]
     if records is None:
         records = records_for_date(date)
-    return [t for t in unposted_targets(records, now_ist.hour) if not target_refuses_retry(records, t)]
+    due = [t for t in unposted_targets(records, now_ist.hour) if not target_refuses_retry(records, t)]
+    # reel_1 publishes at 21:53 IST. Before that it is only a prewarm: main()
+    # may still regenerate it when another target starts a run, and the
+    # half-hour cron publishes it once the slot has passed. Listing it here
+    # made --pending keep the self-resume chain dispatching every 4 minutes
+    # from 10:00 with nothing to post (6 Nov 2026, 19:47 IST: "Still due
+    # today: reel_1", the retry step exited 0 in one second).
+    waiting = prewarm_targets(due, now_ist.hour, now_ist.minute)
+    return [t for t in due if t not in waiting]
 
 
 def is_mandatory(target: str) -> bool:

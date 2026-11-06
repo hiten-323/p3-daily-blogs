@@ -21,9 +21,32 @@ def test_dropped_morning_slot_with_no_rows_is_pending():
     # Oct 17: only a generate|threads SKIPPED row, morning never ran.
     rec = [{"slot": "generate", "platform": "threads", "status": "SKIPPED"}]
     todo = ru.pending_targets(T(11, 37), records=rec, pack_exists=True)
-    for t in ("ig_feed", "ig_story", "facebook", "threads", "carousel", "reel_1", "youtube"):
+    for t in ("ig_feed", "ig_story", "facebook", "threads", "carousel", "youtube"):
         assert t in todo
     assert "growth_reel" in todo
+    # Evening reel is not a chain reason before 21:53. The morning targets above
+    # keep the chain alive, and they still prewarm reel_1 inside main().
+    assert "reel_1" not in todo
+
+
+def test_approved_evening_reel_does_not_chain_before_its_slot():
+    """6 Nov 2026 19:47 IST: everything else was live, reel_1 scored 8.5, and
+    the chain redispatched every 4 minutes because --pending listed it."""
+    live = "VERIFIED_LIVE"
+    rec = [{"slot": s, "platform": p, "status": live, "asset": a} for s, p, a in (
+        ("morning", "instagram", "instagram_post"),
+        ("morning", "instagram", "carousel"),
+        ("morning", "instagram_story", ""),
+        ("morning", "facebook", ""),
+        ("morning", "instagram_video", "growth_reel"),
+        ("generate", "linkedin", ""),
+        ("generate", "youtube", ""),
+        ("generate", "threads", ""),
+    )]
+    before = ru.pending_targets(dt.datetime(2026, 11, 6, 19, 47), records=rec, pack_exists=True)
+    assert before == []
+    after = ru.pending_targets(dt.datetime(2026, 11, 6, 21, 54), records=rec, pack_exists=True)
+    assert after == ["reel_1"]
 
 
 def test_nothing_pending_once_each_piece_is_live():
