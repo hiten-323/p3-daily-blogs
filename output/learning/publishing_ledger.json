@@ -13752,11 +13752,11 @@
     },
     "2026-11-07|morning|instagram_story|pb_9d9812de14": {
       "asset": "",
-      "attempt_count": 19,
+      "attempt_count": 20,
       "content_date": "2026-11-07",
       "content_id": "pb_9d9812de14",
       "day_number": 310,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient is muddy and lacks rich color depth, looking amateur rather than premium D2C; Typographic hierarchy is weak and cluttered with awkward title phrasing ('Purista: Freeze-Dried Vs Bold: Agglomerated'); The label design on the jar looks flat, low-res, and unr",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient is muddy and lacks rich color depth or texture, looking somewhat flat and dated.; Headline typography 'Purista: Freeze-Dried Vs Bold: Agglomerated' uses awkward line breaks and is too long for an effective Instagram ad hook.; The label design on the jar l",
       "history": [
         {
           "at": "2026-11-07T07:44:56+00:00",
@@ -14042,20 +14042,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-07T15:57:16+00:00",
+          "attempt": 20,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-07T16:09:04+00:00",
+          "attempt": 20,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient is muddy and lacks rich color depth or texture, looking somewhat flat and dated.; Headline typography 'Purista: Freeze-Dried Vs Bold: Agglomerated' uses awkward line breaks and is too long for an effective Instagram ad hook.; The label design on the jar l",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-07T15:40:16+00:00",
+      "last_attempt_at": "2026-11-07T15:57:16+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient is muddy and lacks rich color depth, looking amateur rather than premium D2C; Typographic hierarchy is weak and cluttered with awkward title phrasing ('Purista: Freeze-Dried Vs Bold: Agglomerated'); The label design on the jar looks flat, low-res, and unr",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient is muddy and lacks rich color depth or texture, looking somewhat flat and dated.; Headline typography 'Purista: Freeze-Dried Vs Bold: Agglomerated' uses awkward line breaks and is too long for an effective Instagram ad hook.; The label design on the jar l",
         "success": false
       },
-      "next_retry_at": "2026-11-07T15:51:18+00:00",
+      "next_retry_at": "2026-11-07T16:09:04+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-07T15:51:18+00:00",
+      "updated_at": "2026-11-07T16:09:04+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
