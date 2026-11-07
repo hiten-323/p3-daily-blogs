@@ -19497,6 +19497,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient is muddy and lacks rich color depth or texture, looking somewhat flat and dated.; Headline typography 'Purista: Freeze-Dried Vs Bold: Agglomerated' uses awkward line breaks and is too long for an effective Instagram ad hook.; The label design on the jar l",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient feels flat, muddy, and lacks the rich, immersive depth expected of a premium coffee brand.; typographic hierarchy is weak; the main hea",
+      "label": "stories",
+      "last_seen": "2026-11-07",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient feels flat, muddy, and lacks the rich, immersive depth expected of a premium coffee brand.; Typographic hierarchy is weak; the main headline is awkwardly phrased ('Purista: Freeze-Dried Vs Bold: Agglomerated') and feels like technical jargon rather than a",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
