@@ -19511,6 +19511,48 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient feels flat, muddy, and lacks the rich, immersive depth expected of a premium coffee brand.; Typographic hierarchy is weak; the main headline is awkwardly phrased ('Purista: Freeze-Dried Vs Bold: Agglomerated') and feels like technical jargon rather than a",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color gradient looks muddy, flat, and lacks rich depth or premium texture.; headline typography ('purista: freeze-dried vs bold: agglomerated') ",
+      "label": "stories",
+      "last_seen": "2026-11-07",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color gradient looks muddy, flat, and lacks rich depth or premium texture.; Headline typography ('Purista: Freeze-Dried Vs Bold: Agglomerated') is awkwardly capitalized and poorly formatted, lacking strong editorial hierarchy.; The product label design on the jar",
+      "stage": "publish",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:4.0; cluttered and redundant copy: 'visit p3online.in' heading combined with long body text repeating the exact same url.; unrefined graphic design elements, su",
+      "label": "reel_1",
+      "last_seen": "2026-11-07",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:4.0; Cluttered and redundant copy: 'Visit P3ONLINE.IN' heading combined with long body text repeating the exact same URL.; Unrefined graphic design elements, such as the multiple floating pill badges ('REEL \u2022 PURITY BEANS', 'PURE COFFEE \u2022 ZERO CHICORY') which feel cluttered rathe",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:4.0; redundant messaging: 'visit p3online.in' in massive text followed immediately by a subtitle repeating the exact same url.; boring, flat background with a b",
+      "label": "reel_1",
+      "last_seen": "2026-11-07",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:4.0; Redundant messaging: 'VISIT P3ONLINE.IN' in massive text followed immediately by a subtitle repeating the exact same URL.; Boring, flat background with a blurry digital pattern lacking rich coffee texture or lifestyle depth.; Too many floating callout pills and badges clutte",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
