@@ -19245,6 +19245,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient looks flat and dated with cheap radial bokeh spots instead of rich, atmospheric lighting.; The headline is overly wordy, clunky, and uses awkward capitalization ('Vs' and 'Agglomerated').; Poor visual hierarchy; the top badge and bottom CTA pills feel rep",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.2; background uses a flat, dated brown gradient with generic bokeh instead of rich, tactile studio staging or organic lighting.; the 'vs' headline implies a c",
+      "label": "stories",
+      "last_seen": "2026-11-07",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.2; Background uses a flat, dated brown gradient with generic bokeh instead of rich, tactile studio staging or organic lighting.; The 'Vs' headline implies a comparison, but only a single product is showcased, resulting in conceptual dissonance and a weak visual narrative.; Jar",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
