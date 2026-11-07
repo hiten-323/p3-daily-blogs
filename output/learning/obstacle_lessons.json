@@ -19553,6 +19553,20 @@
       "reason": "aesthetic_below_8.0:4.0; Redundant messaging: 'VISIT P3ONLINE.IN' in massive text followed immediately by a subtitle repeating the exact same URL.; Boring, flat background with a blurry digital pattern lacking rich coffee texture or lifestyle depth.; Too many floating callout pills and badges clutte",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient is muddy and flat, lacking rich depth or luxury d2c atmosphere.; headline typography ('purista: freeze-dried vs bold: agglomerated') is",
+      "label": "stories",
+      "last_seen": "2026-11-07",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient is muddy and flat, lacking rich depth or luxury D2C atmosphere.; Headline typography ('Purista: Freeze-Dried Vs Bold: Agglomerated') is clunky, poorly formatted, and lacks strong visual hierarchy.; Product label design looks dated and cheap rather than ar",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
