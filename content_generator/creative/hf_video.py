@@ -57,6 +57,10 @@ def _space_host(space_id: str) -> str:
 
 def space_call(space_id: str, prompt: str) -> tuple[str, list]:
     """Gradio api name and data list for a Space. No network."""
+    if "cogvideo" in (space_id or "").lower():
+        # zai-org/CogVideoX-2B-Space generate(prompt, steps, guidance).
+        # 20 steps stays inside the fallback timeout. The space has no negative field.
+        return "generate", [prompt, 20, 6.0]
     if "wan" in (space_id or "").lower():
         # Wan-AI/Wan2.1 exposes t2v_generation_async(prompt, resolution, watermark, seed).
         return "t2v_generation_async", [prompt, "720*1280", False, -1]

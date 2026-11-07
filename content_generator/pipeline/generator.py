@@ -223,6 +223,20 @@ def _optimized_pick(bank: list, day: int, label: str = "", offset: int = 0):
 
 # ── Pipeline ───────────────────────────────────────────────────────────────────
 
+def _stamp_growth_reel(piece, day_number: int):
+    """Mark a fast_cut_curiosity day so render and learning can see the template."""
+    if not isinstance(piece, dict):
+        return piece
+    try:
+        from content_generator.creative.growth_reel_templates import TEMPLATE_ID, stamp
+        from content_generator.prompts.growth_reel import format_for_day
+        if format_for_day(day_number) == TEMPLATE_ID:
+            return stamp(piece)
+    except Exception as exc:
+        logger.debug("[pipeline] growth template stamp skipped: %s", exc)
+    return piece
+
+
 def generate_daily_content(
     day_number: int  = None,
     research_context: dict = None,
@@ -499,7 +513,7 @@ def generate_daily_content(
         "blog_post":      phase1_results["blog_post"],
         "stories":        phase1_results["stories"],
         "yt_short":       phase1_results["yt_short"],
-        "growth_reel":    phase1_results.get("growth_reel", {}),
+        "growth_reel":    _stamp_growth_reel(phase1_results.get("growth_reel", {}), day_number),
         "threads_post":   phase1_results.get("threads_post", {}),
         "facebook_post":  phase1_results.get("facebook_post", {}),
         **vp,
