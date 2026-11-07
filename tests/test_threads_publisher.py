@@ -62,9 +62,15 @@ def test_threads_prompt_builder():
     assert "https://p3online.in" in prompt
 
 
+def _container_is_finished(monkeypatch):
+    """The publish path polls Meta until FINISHED. Tests must not wait on that."""
+    monkeypatch.setattr(threads, "get_container_status", lambda *_args, **_kwargs: "FINISHED")
+
+
 def test_threads_post_success_mock(monkeypatch):
     monkeypatch.setenv("THREADS_USER_ID", "th_user_999")
     monkeypatch.setenv("THREADS_ACCESS_TOKEN", "th_tok_123")
+    _container_is_finished(monkeypatch)
 
     calls = []
 
@@ -76,6 +82,7 @@ def test_threads_post_success_mock(monkeypatch):
 
     monkeypatch.setattr(threads, "_post_request", mock_post_request)
     monkeypatch.setattr(threads, "is_configured", lambda: True)
+    monkeypatch.setattr(threads, "get_thread_permalink", lambda post_id, token: "")
     monkeypatch.setattr("content_generator.publisher.prepublish_gate.authorize_publish", lambda content, platform: {"allowed": True, "reason": "test-approved"})
 
     content = {"threads_post": {"text": "Test thread post for Purity Beans! https://p3online.in"}}
@@ -162,6 +169,7 @@ def test_threads_exception_does_not_drop_other_platforms(monkeypatch, tmp_path):
 def test_threads_numeric_id_uses_shortcode_url(monkeypatch):
     monkeypatch.setenv("THREADS_USER_ID", "th_user_999")
     monkeypatch.setenv("THREADS_ACCESS_TOKEN", "th_tok_123")
+    _container_is_finished(monkeypatch)
 
     def mock_post_request(url, params):
         if "threads_publish" in url:
