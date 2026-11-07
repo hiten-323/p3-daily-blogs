@@ -19441,6 +19441,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient is muddy and flat with uninspired bokeh circles, lacking rich D2C depth and texture.; Typography is overly generic; serif subheadings lack strong hierarchy and contrast against the dark brown backdrop.; The headline phrasing ('Purista: Freeze-Dried Vs Bol",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient is muddy and flat, lacking rich depth or sophisticated lighting.; typographic hierarchy is weak and cluttered with awkward capitalizati",
+      "label": "stories",
+      "last_seen": "2026-11-07",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient is muddy and flat, lacking rich depth or sophisticated lighting.; Typographic hierarchy is weak and cluttered with awkward capitalization ('Purista: Freeze-Dried Vs Bold: Agglomerated').; Product label design looks cheap and dated rather than premium D2C.",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
