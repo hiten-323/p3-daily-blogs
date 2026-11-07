@@ -311,7 +311,7 @@
     "asset_id": "threads_day303",
     "track": "conversation",
     "platform": "threads",
-    "observation_window": "72h",
+    "observation_window": "7d",
     "publication_id": "17916738654547308",
     "kpi": "",
     "policy_version": "",
@@ -326,14 +326,14 @@
     "decision_version": null,
     "audio_category": "",
     "posted_at": "2026-10-31T03:32:49",
-    "recorded_at": "2026-11-03T05:36:23",
+    "recorded_at": "2026-11-07T06:39:40",
     "metrics": {
       "views": 2,
       "likes": 0,
       "comments": 0,
       "shares": 0
     },
-    "notes": "auto-recorded from 72h threads native API observation"
+    "notes": "auto-recorded from 7d threads native API observation"
   },
   {
     "asset_id": "threads_day305",
@@ -418,5 +418,33 @@
       "shares": 0
     },
     "notes": "auto-recorded from 24h threads native API observation"
+  },
+  {
+    "asset_id": "threads_day307",
+    "track": "conversation",
+    "platform": "threads",
+    "observation_window": "72h",
+    "publication_id": "18094765262185338",
+    "kpi": "",
+    "policy_version": "",
+    "hook": "",
+    "topic": "threads_post",
+    "format": "discussion",
+    "attention_mechanism": null,
+    "scroller_state": null,
+    "psychology_frame": null,
+    "hook_strategy": null,
+    "payoff_type": null,
+    "decision_version": null,
+    "audio_category": "",
+    "posted_at": "2026-11-04T06:27:31",
+    "recorded_at": "2026-11-07T06:39:39",
+    "metrics": {
+      "views": 0,
+      "likes": 0,
+      "comments": 0,
+      "shares": 0
+    },
+    "notes": "auto-recorded from 72h threads native API observation"
   }
 ]
