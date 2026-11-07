@@ -2,9 +2,9 @@
 Threads auto-publisher — posts text and image threads via official Meta Threads API.
 
 Meta Threads API flow:
-  1. POST /{threads-user-id}/threads?media_type=TEXT&text={text}&access_token={token}
+  1. POST /{threads-user-id}/threads with the access token in the Authorization header
      -> returns container_id
-  2. POST /{threads-user-id}/threads_publish?creation_id={container_id}&access_token={token}
+  2. POST /{threads-user-id}/threads_publish with the same header
      -> returns post_id
 
 Required secrets (GitHub Actions):
@@ -50,17 +50,20 @@ def _extract_thread_text(content: dict) -> str:
     return ""
 
 def _post_request(url: str, params: dict) -> dict:
-    """Execute a POST request with form-encoded data against Threads API."""
-    data = urllib.parse.urlencode(params).encode("utf-8")
-    req = urllib.request.Request(
-        url,
-        data=data,
-        headers={
-            "User-Agent": "PurityBeans/1.0",
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        method="POST",
-    )
+    """POST form fields. The access token goes in the Authorization header, never the URL."""
+    from content_generator.publisher.secret_mask import mask_secret
+
+    payload = dict(params or {})
+    token = str(payload.pop("access_token", "") or "")
+    data = urllib.parse.urlencode(payload).encode("utf-8")
+    headers = {
+        "User-Agent": "PurityBeans/1.0",
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+    if token:
+        mask_secret(token)
+        headers["Authorization"] = f"Bearer {token}"
+    req = urllib.request.Request(url, data=data, headers=headers, method="POST")
     with urllib.request.urlopen(req, timeout=_TIMEOUT_S) as response:
         return json.loads(response.read().decode("utf-8"))
 
@@ -86,9 +89,15 @@ def create_thread_container(user_id: str, token: str, text: str, image_url: str 
 
 
 def get_container_status(container_id: str, token: str) -> str:
+    from content_generator.publisher.secret_mask import mask_secret
+
+    mask_secret(token)
     url = (f"{THREADS_BASE_URL}/{urllib.parse.quote(container_id, safe='')}?"
-           + urllib.parse.urlencode({"fields": "status,error_message", "access_token": token}))
-    req = urllib.request.Request(url, headers={"User-Agent": "PurityBeans/1.0"})
+           + urllib.parse.urlencode({"fields": "status,error_message"}))
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "PurityBeans/1.0",
+        "Authorization": f"Bearer {token}",
+    })
     with urllib.request.urlopen(req, timeout=_TIMEOUT_S) as response:
         data = json.loads(response.read().decode("utf-8"))
     status = str(data.get("status") or "").upper()
@@ -103,15 +112,19 @@ def wait_for_container(container_id: str, token: str, *, timeout_s: float = 120,
     import time
     sleep = sleep or time.sleep
     status_fn = status_fn or get_container_status
-    waited, status, errors = 0.0, "", 0
-    while waited <= timeout_s:
+    step = interval_s if interval_s and interval_s > 0 else 0.0
+    # A zero interval used to leave `waited` unchanged and spin forever.
+    poll_cap = 1 if step <= 0 else int(timeout_s / step) + 2
+    waited, status, errors, polls = 0.0, "", 0, 0
+    while waited <= timeout_s and polls < poll_cap:
+        polls += 1
         try:
             status = status_fn(container_id, token)
         except (urllib.error.HTTPError, urllib.error.URLError, ValueError, OSError) as exc:
             if isinstance(exc, ValueError) and "container error" in str(exc):
                 raise
             errors += 1
-            status = f"status unavailable ({exc})"
+            status = "status unavailable"
             if errors >= 3:
                 # Status endpoint unreadable: let publish try; its 400 retry covers a not-ready container.
                 logger.warning("[threads] container status unreadable; publishing with retry")
@@ -120,8 +133,8 @@ def wait_for_container(container_id: str, token: str, *, timeout_s: float = 120,
             return status
         if status == "EXPIRED":
             raise ValueError("Threads container expired before publish")
-        sleep(interval_s)
-        waited += interval_s
+        sleep(step)
+        waited += step if step else timeout_s + 1
     raise TimeoutError(f"Threads container {container_id} not FINISHED after {timeout_s}s (last {status})")
 
 
@@ -145,8 +158,9 @@ def publish_thread_container(user_id: str, token: str, container_id: str, *,
             last = exc
             if exc.code != 400 and exc.code < 500:
                 raise
+            from content_generator.publisher.secret_mask import redact
             logger.warning("[threads] publish attempt %d failed (%s %s); retrying",
-                           attempt + 1, exc.code, body[:120])
+                           attempt + 1, exc.code, redact(body[:120], [token]))
             sleep(min(30, 5 * (attempt + 1)))
     raise RuntimeError(f"Threads publish failed after {attempts} attempts: {last}")
 
@@ -183,10 +197,15 @@ def _media_id_to_shortcode(media_id: str | int) -> str:
 def get_thread_permalink(post_id: str, token: str) -> str:
     """Fetch the canonical public permalink from the Threads Graph API."""
     try:
-        url = f"{THREADS_BASE_URL}/{urllib.parse.quote(post_id, safe='')}?fields=permalink&access_token={urllib.parse.quote(token, safe='')}"
+        from content_generator.publisher.secret_mask import mask_secret
+        mask_secret(token)
+        url = f"{THREADS_BASE_URL}/{urllib.parse.quote(post_id, safe='')}?fields=permalink"
         req = urllib.request.Request(
             url,
-            headers={"User-Agent": "PurityBeans/1.0"},
+            headers={
+                "User-Agent": "PurityBeans/1.0",
+                "Authorization": f"Bearer {token}",
+            },
             method="GET",
         )
         with urllib.request.urlopen(req, timeout=_TIMEOUT_S) as response:
@@ -266,7 +285,8 @@ def post_content(content: dict, day: int = 0) -> dict:
             "error": None,
         }
     except urllib.error.HTTPError as exc:
-        body = exc.read().decode("utf-8", errors="replace")[:300]
+        from content_generator.publisher.secret_mask import redact
+        body = redact(exc.read().decode("utf-8", errors="replace")[:300], [token])
         logger.error("[threads] HTTP %d error: %s", exc.code, body)
         return {
             "success": False,
@@ -277,12 +297,14 @@ def post_content(content: dict, day: int = 0) -> dict:
             "error": f"HTTP {exc.code}: {body}",
         }
     except Exception as exc:
-        logger.error("[threads] Publish exception: %s", exc)
+        from content_generator.publisher.secret_mask import redact
+        safe = redact(str(exc), [token])
+        logger.error("[threads] Publish exception: %s", type(exc).__name__)
         return {
             "success": False,
             "attempted": True,
             "skipped": False,
             "post_id": "",
             "url": "",
-            "error": str(exc),
+            "error": safe,
         }

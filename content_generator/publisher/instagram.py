@@ -184,7 +184,7 @@ _FALLBACK_HASHTAGS = (
     "#PremiumCoffee #GlassJar #GourmetCoffee #PureCoffee #CoffeeCommunity "
     "#IndianCoffee #CoffeeIndia #MadeInIndia #IndianBrands #SupportIndianBrands "
     "#CoffeeAddict #CoffeeDaily #CoffeeGram #CoffeeCulture #CoffeeLife "
-    "#PurityBeans #PurityBeansCoffee #NoChicory #BrewPure #PureCoffeeExperience"
+    "#PurityBeans #PurityBeansCoffee #BrewPure #PureCoffeeExperience"
 )
 
 
