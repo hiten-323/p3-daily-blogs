@@ -19231,6 +19231,20 @@
       "reason": "aesthetic_below_8.0:4.0; Cluttered layout with redundant call-to-actions ('Follow @purepantryprovisions' appears twice in the copy and footer).; Product presentation feels amateurish; the floating jar lacks a realistic grounding surface and shadow integration.; Typography hierarchy is weak, using ba",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient looks flat and dated with cheap radial bokeh spots instead of rich, atmospheric lighting.; the headline is overly wordy, clunky, and us",
+      "label": "stories",
+      "last_seen": "2026-11-07",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient looks flat and dated with cheap radial bokeh spots instead of rich, atmospheric lighting.; The headline is overly wordy, clunky, and uses awkward capitalization ('Vs' and 'Agglomerated').; Poor visual hierarchy; the top badge and bottom CTA pills feel rep",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
