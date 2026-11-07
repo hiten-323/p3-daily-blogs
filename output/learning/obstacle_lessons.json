@@ -19455,6 +19455,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient is muddy and flat, lacking rich depth or sophisticated lighting.; Typographic hierarchy is weak and cluttered with awkward capitalization ('Purista: Freeze-Dried Vs Bold: Agglomerated').; Product label design looks cheap and dated rather than premium D2C.",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color gradient looks flat, muddy, and cheap rather than rich and dimensional.; headline typography is generic, poorly tracked, and awkward with ",
+      "label": "stories",
+      "last_seen": "2026-11-07",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color gradient looks flat, muddy, and cheap rather than rich and dimensional.; Headline typography is generic, poorly tracked, and awkward with punctuation (e.g., 'Vs Bold:').; Product label design looks low-res, amateurish, and lacks premium D2C aesthetics.",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
