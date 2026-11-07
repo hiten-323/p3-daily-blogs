@@ -19413,6 +19413,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient is muddy and flat with low-quality artificial bokeh spots, lacking rich color depth for a premium coffee aesthetic.; Headline typography is awkwardly split ('Purista: Freeze-Dried Vs Bold: / Agglomerated') and sits awkwardly in the upper negative space.;",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient is muddy and flat with uninspired bokeh effects, failing to deliver rich color and depth.; typography lacks strong hierarchy; the main ",
+      "label": "stories",
+      "last_seen": "2026-11-07",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient is muddy and flat with uninspired bokeh effects, failing to deliver rich color and depth.; Typography lacks strong hierarchy; the main heading is wordy ('Purista: Freeze-Dried Vs Bold: Agglomerated') and awkward to read quickly.; The label design on the c",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
