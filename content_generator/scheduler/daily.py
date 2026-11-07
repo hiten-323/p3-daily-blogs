@@ -664,14 +664,14 @@ def _strip_unsupported_stats(text: str) -> str:
 
 
 _DEFAULT_HASHTAGS = (
-    "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
+    "#PurityBeans #PureCoffee #InstantCoffee #CoffeeLover "
     "#IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar "
     "#GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture "
     "#SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience "
     "#MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove"
 )
 
-_DEFAULT_COMMENT = "Comment COFFEE below if you refuse to drink chicory disguised as coffee."
+_DEFAULT_COMMENT = "Comment the first word you see on the jar label."
 _DEFAULT_SAVE    = "Save this before your next grocery run — real coffee matters."
 _DEFAULT_SHARE   = "Share with someone who starts every morning with coffee."
 
@@ -889,6 +889,13 @@ def _schema_issues(label: str, piece: dict) -> list[str]:
         "blog_post": BlogSchema,
         "yt_short": YoutubeShortSchema,
     }
+    if label == "threads_post":
+        text = str(piece.get("text") or piece.get("body") or piece.get("content") or "").strip()
+        if not text:
+            return ["threads text is required"]
+        if len(text) > 480:
+            return ["threads text is over 480 characters"]
+        return []
     schema = schemas.get(label)
     if schema is None:
         return []
@@ -1456,6 +1463,7 @@ def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | No
         BlogSchema, CarouselSchema, InstagramSchema, LinkedinSchema, ReelSchema,
         validate_or_fail,
     )
+    from content_generator.core.schema_validation import YoutubeShortSchema
     schemas = {
         "reel_1": ReelSchema,
         "reel_2": ReelSchema,
@@ -1464,6 +1472,7 @@ def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | No
         "instagram_post": InstagramSchema,
         "linkedin_post": LinkedinSchema,
         "blog_post": BlogSchema,
+        "yt_short": YoutubeShortSchema,
     }
     if label == "facebook_post":
         from content_generator.core.piece_integrity import accept_facebook_regen
@@ -1472,7 +1481,23 @@ def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | No
             logger.warning("[editorial] regenerated facebook_post was not a complete native post")
             return None
         return ensure_structural_fields(accepted, label)
+    if label == "threads_post":
+        from content_generator.prompts.threads import accept_threads_regen
+        accepted = accept_threads_regen(improved, original)
+        if not accepted:
+            logger.warning("[editorial] regenerated threads_post was not a native post")
+            return None
+        return ensure_structural_fields(accepted, label)
     merged = ensure_structural_fields(merge_regenerated_piece(original, improved), label)
+    if label == "yt_short":
+        from content_generator.core.yt_short_repair import repair_yt_short
+        repair_yt_short(merged, allow_llm=False)
+        try:
+            validate_or_fail(YoutubeShortSchema, merged)
+        except Exception as e:
+            logger.warning("[editorial] regenerated yt_short failed schema: %s", e)
+            return None
+        return merged
     if label == "blog_post" and not str((improved or {}).get("hold_reason") or "").strip():
         merged.pop("hold_reason", None)
         merged.pop("held", None)
@@ -1515,6 +1540,21 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
                 return accepted
             logger.warning("[editorial] facebook_post regen was not a complete native post")
             return None
+        if label == "threads_post":
+            from content_generator.prompts.threads import accept_threads_regen, regeneration_prompt
+            regen_prompt = regeneration_prompt(
+                piece, feedback, threshold, brand_block(), from_scratch=from_scratch)
+            result = llm_call(
+                regen_prompt,
+                label=f"{'fresh' if from_scratch else 'regen'}_{label}",
+                max_tokens=600,
+            )
+            accepted = accept_threads_regen(result, None if from_scratch else piece)
+            if accepted:
+                logger.info("[editorial] Regeneration successful for %s", label)
+                return accepted
+            logger.warning("[editorial] threads_post regen was not a native post")
+            return None
         piece_json = json.dumps(piece, ensure_ascii=False)[:6000]
         regen_prompt = (
             f"{brand_block()}\n\n"
@@ -1524,7 +1564,7 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
             f"REQUIREMENTS:\n"
             f"- Fix the rejection. Do not answer with a shorter stub.\n"
             f"- Reel frames: at least 5 objects, each with on_screen and spoken.\n"
-            f"- Carousel and Instagram: caption at least 50 characters, with the brand facts already in the original.\n"
+            f"- Carousel and Instagram: caption at least 50 characters, plus comment_trigger, save_trigger, share_trigger, and hashtags.\n"
             f"- Blog: introduction, body of at least 800 words, and conclusion. Do not rename them to intro or body_html.\n"
             f"- Return the FULL object. Do not drop caption, hashtags, triggers, "
             f"frames, slides, script, audio, loop_note, or editorial subscores.\n"

@@ -517,7 +517,11 @@ def test_hashtag_typo_is_gone():
     brand = (ROOT / "config" / "brand_config.py").read_text(encoding="utf-8")
     assert "NoCicory" not in daily
     assert "NoCicory" not in brand
-    assert "NoChicory" in daily
+    integrity = (ROOT / "content_generator" / "core" / "piece_integrity.py").read_text(encoding="utf-8")
+    assert "NoChicory" not in daily
+    assert "NoChicory" not in integrity
+    assert "chicory disguised" not in daily
+    assert "chicory disguised" not in integrity
 
 
 def test_product_truth_catches_single_origin_sludge_and_range_wide_pure():

@@ -264,8 +264,8 @@ def _instagram_publish_checks():
 
     try:
         calls.clear()
-        def errored(method, url, params=None, timeout=None, headers=None):
-            calls.append((method, url, params or {}))
+        def errored(method, url, params=None, timeout=None, headers=None, data=None, **kwargs):
+            calls.append((method, url, params or data or {}))
             if method == "GET":
                 return _Resp({"status_code": "ERROR", "status": "Media download failed"})
             return _Resp({"id": "container_err"})
@@ -276,8 +276,8 @@ def _instagram_publish_checks():
         check("ERROR reason is surfaced", "Media download failed" in (result.get("error") or ""), result.get("error"))
 
         calls.clear()
-        def stalled(method, url, params=None, timeout=None, headers=None):
-            calls.append((method, url, params or {}))
+        def stalled(method, url, params=None, timeout=None, headers=None, data=None, **kwargs):
+            calls.append((method, url, params or data or {}))
             if method == "GET":
                 return _Resp({"status_code": "IN_PROGRESS"})
             return _Resp({"id": "container_wait"})
@@ -288,9 +288,9 @@ def _instagram_publish_checks():
         check("timeout names the last status", "timeout" in (result.get("error") or "").lower(), result.get("error"))
 
         calls.clear()
-        def one_child(method, url, params=None, timeout=None, headers=None):
-            calls.append((method, url, params or {}))
-            params = params or {}
+        def one_child(method, url, params=None, timeout=None, headers=None, data=None, **kwargs):
+            params = params or data or {}
+            calls.append((method, url, params))
             if method == "GET":
                 return _Resp({"status_code": "FINISHED"})
             if params.get("is_carousel_item"):
@@ -313,8 +313,8 @@ def _instagram_publish_checks():
 
         calls.clear()
         state = {"n": 0}
-        def flaky(method, url, params=None, timeout=None, headers=None):
-            calls.append((method, url, params or {}))
+        def flaky(method, url, params=None, timeout=None, headers=None, data=None, **kwargs):
+            calls.append((method, url, params or data or {}))
             state["n"] += 1
             if state["n"] == 1:
                 return _Resp({"error": {"message": "rate limit reached", "code": 4, "is_transient": True}}, 400)
