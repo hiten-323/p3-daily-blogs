@@ -19301,6 +19301,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient is muddy and flat with basic blurred bokeh circles, lacking rich depth and studio-grade lighting.; Typographic hierarchy is weak; the main headline is long, awkward to read ('Purista: Freeze-Dried Vs Bold: Agglomerated'), and uses a serif font that feels",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-07",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient feels muddy and lacks rich depth or modern d2c aesthetic (looks dated and generic).; typographic hierarchy is weak; the headline uses a",
+      "label": "stories",
+      "last_seen": "2026-11-07",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient feels muddy and lacks rich depth or modern D2C aesthetic (looks dated and generic).; Typographic hierarchy is weak; the headline uses a plain serif font with awkward capitalization ('Vs' and 'Agglomerated' on a broken second line).; Product packaging desi",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
