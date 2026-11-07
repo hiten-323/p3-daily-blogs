@@ -13752,11 +13752,11 @@
     },
     "2026-11-07|morning|instagram_story|pb_9d9812de14": {
       "asset": "",
-      "attempt_count": 10,
+      "attempt_count": 11,
       "content_date": "2026-11-07",
       "content_id": "pb_9d9812de14",
       "day_number": 310,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient is muddy and lacks rich color depth or texture, looking flat and amateurish.; The headline typography is awkwardly wrapped, awkward phrasing ('Freeze-Dried Vs Bold: Agglomerated'), and lacks refined hierarchy.; The lighting and drop shadow on the product ",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Headline typography is clumsy with awkward capitalization and spacing ('Freeze-Dried Vs Bold: Agglomerated').; Background gradient is muddy and flat, lacking the rich depth and lighting expected of a premium D2C brand.; The product label looks cheap and lacks high-end aesthe",
       "history": [
         {
           "at": "2026-11-07T07:44:56+00:00",
@@ -13907,20 +13907,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-07T13:11:58+00:00",
+          "attempt": 11,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-07T13:25:57+00:00",
+          "attempt": 11,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Headline typography is clumsy with awkward capitalization and spacing ('Freeze-Dried Vs Bold: Agglomerated').; Background gradient is muddy and flat, lacking the rich depth and lighting expected of a premium D2C brand.; The product label looks cheap and lacks high-end aesthe",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-07T12:56:32+00:00",
+      "last_attempt_at": "2026-11-07T13:11:58+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient is muddy and lacks rich color depth or texture, looking flat and amateurish.; The headline typography is awkwardly wrapped, awkward phrasing ('Freeze-Dried Vs Bold: Agglomerated'), and lacks refined hierarchy.; The lighting and drop shadow on the product ",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Headline typography is clumsy with awkward capitalization and spacing ('Freeze-Dried Vs Bold: Agglomerated').; Background gradient is muddy and flat, lacking the rich depth and lighting expected of a premium D2C brand.; The product label looks cheap and lacks high-end aesthe",
         "success": false
       },
-      "next_retry_at": "2026-11-07T13:05:56+00:00",
+      "next_retry_at": "2026-11-07T13:25:57+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-07T13:05:56+00:00",
+      "updated_at": "2026-11-07T13:25:57+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
