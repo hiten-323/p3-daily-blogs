@@ -14515,6 +14515,214 @@
       "verification_detail": "public video confirmed by oEmbed",
       "verification_method": "youtube_oembed",
       "verified_at": "2026-11-08T03:29:10+00:00"
+    },
+    "2026-11-08|morning|facebook|pb_30a084a045": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-08",
+      "content_id": "pb_30a084a045",
+      "day_number": 311,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-08T06:52:01+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-08T06:52:07+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "494003270464484_122170019336655685",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/posts/122170019336655685",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-08T06:52:01+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-08T06:52:07+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": true,
+      "remote_id": "494003270464484_122170019336655685",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-08T06:52:06+00:00",
+      "url": "https://www.facebook.com/494003270464484/posts/122170019336655685",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-08T06:52:07+00:00"
+    },
+    "2026-11-08|morning|instagram_story|pb_30a084a045": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-08",
+      "content_id": "pb_30a084a045",
+      "day_number": 311,
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; Typography lacks sophistication and proper kerning; the pill-shaped badges look dated and cheap rather than premium D2C.; Background gradient and bo",
+      "history": [
+        {
+          "at": "2026-11-08T06:52:07+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-08T07:04:38+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; Typography lacks sophistication and proper kerning; the pill-shaped badges look dated and cheap rather than premium D2C.; Background gradient and bo",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-11-08T06:52:07+00:00",
+      "last_result": {
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; Typography lacks sophistication and proper kerning; the pill-shaped badges look dated and cheap rather than premium D2C.; Background gradient and bo",
+        "success": false
+      },
+      "next_retry_at": "2026-11-08T07:04:38+00:00",
+      "platform": "instagram_story",
+      "published": false,
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-11-08T07:04:38+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-11-08|morning|instagram_video|pb_30a084a045|growth_reel": {
+      "asset": "growth_reel",
+      "attempt_count": 1,
+      "content_date": "2026-11-08",
+      "content_id": "pb_30a084a045",
+      "day_number": 311,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-08T07:14:29+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-08T07:15:04+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18162412717497573",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/reel/DfeMhXZmSP_/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-08T07:14:29+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-08T07:15:04+00:00",
+      "next_retry_at": null,
+      "platform": "instagram_video",
+      "published": true,
+      "remote_id": "18162412717497573",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-08T07:15:03+00:00",
+      "url": "https://www.instagram.com/reel/DfeMhXZmSP_/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-08T07:15:04+00:00"
+    },
+    "2026-11-08|morning|instagram|pb_30a084a045|carousel": {
+      "asset": "carousel",
+      "attempt_count": 1,
+      "content_date": "2026-11-08",
+      "content_id": "pb_30a084a045",
+      "day_number": 311,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-08T06:50:51+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-08T06:51:46+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18103351715432876",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DfeJ5Njk-vS/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-08T06:50:51+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-08T06:51:46+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "18103351715432876",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-08T06:51:46+00:00",
+      "url": "https://www.instagram.com/p/DfeJ5Njk-vS/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-08T06:51:46+00:00"
+    },
+    "2026-11-08|morning|instagram|pb_30a084a045|instagram_post": {
+      "asset": "instagram_post",
+      "attempt_count": 1,
+      "content_date": "2026-11-08",
+      "content_id": "pb_30a084a045",
+      "day_number": 311,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-08T06:51:46+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-08T06:52:00+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18114139013612529",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DfeJ7K9kyzk/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-08T06:51:46+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-08T06:52:00+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "18114139013612529",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-08T06:52:00+00:00",
+      "url": "https://www.instagram.com/p/DfeJ7K9kyzk/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-08T06:52:00+00:00"
     }
   },
   "version": 1
