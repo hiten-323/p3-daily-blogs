@@ -20603,6 +20603,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background.; The background feels flat and amateurish with generic bokeh spots instead of rich, atmospheric coffee depth.; The composition feels static and floating rat",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-08",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background.; the brown-on-brown color palette la",
+      "label": "stories",
+      "last_seen": "2026-11-08",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background.; The brown-on-brown color palette lacks rich contrast and depth, making the overall composition look muddy and flat.; The jar appears floating rather than r",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

@@ -14560,11 +14560,11 @@
     },
     "2026-11-08|morning|instagram_story|pb_30a084a045": {
       "asset": "",
-      "attempt_count": 18,
+      "attempt_count": 16,
       "content_date": "2026-11-08",
       "content_id": "pb_30a084a045",
       "day_number": 311,
-      "error": "claimed_by_other_run",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background.; The brown-on-brown color palette lacks rich contrast and depth, making the overall composition look muddy and flat.; The jar appears floating rather than r",
       "history": [
         {
           "at": "2026-11-08T06:52:07+00:00",
@@ -14792,63 +14792,33 @@
           "verification_method": ""
         },
         {
-          "at": "2026-11-08T11:15:38+00:00",
+          "at": "2026-11-08T11:29:55+00:00",
           "attempt": 16,
           "event": "attempt_started"
         },
         {
-          "at": "2026-11-08T11:25:35+00:00",
+          "at": "2026-11-08T11:40:23+00:00",
           "attempt": 16,
-          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background.; The background feels flat and amateurish with generic bokeh spots instead of rich, atmospheric coffee depth.; The composition feels static and floating rat",
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background.; The brown-on-brown color palette lacks rich contrast and depth, making the overall composition look muddy and flat.; The jar appears floating rather than r",
           "event": "attempt_finished",
           "remote_id": "",
           "status": "FAILED",
           "url": "",
           "verification_method": ""
-        },
-        {
-          "at": "2026-11-08T11:33:22+00:00",
-          "attempt": 17,
-          "event": "attempt_started"
-        },
-        {
-          "at": "2026-11-08T11:33:24+00:00",
-          "attempt": 17,
-          "error": "claimed_by_other_run",
-          "event": "attempt_finished",
-          "remote_id": "",
-          "status": "SKIPPED",
-          "url": "",
-          "verification_method": ""
-        },
-        {
-          "at": "2026-11-08T11:39:31+00:00",
-          "attempt": 18,
-          "event": "attempt_started"
-        },
-        {
-          "at": "2026-11-08T11:39:32+00:00",
-          "attempt": 18,
-          "error": "claimed_by_other_run",
-          "event": "attempt_finished",
-          "remote_id": "",
-          "status": "SKIPPED",
-          "url": "",
-          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-08T11:39:31+00:00",
+      "last_attempt_at": "2026-11-08T11:29:55+00:00",
       "last_result": {
-        "error": "claimed_by_other_run",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background.; The brown-on-brown color palette lacks rich contrast and depth, making the overall composition look muddy and flat.; The jar appears floating rather than r",
         "success": false
       },
-      "next_retry_at": null,
+      "next_retry_at": "2026-11-08T11:40:23+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
-      "status": "SKIPPED",
-      "updated_at": "2026-11-08T11:39:32+00:00",
+      "status": "FAILED",
+      "updated_at": "2026-11-08T11:40:23+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
