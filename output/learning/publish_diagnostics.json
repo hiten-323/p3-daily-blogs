@@ -6550,41 +6550,5 @@
     "rate_limit": {},
     "exception_type": "",
     "exception_msg": ""
-  },
-  {
-    "ts": "2026-11-08T03:20:27",
-    "day_number": 311,
-    "platform": "linkedin",
-    "content_id": "pb_30a084a045",
-    "generation_id": "gen_2026-11-08_128591b0",
-    "publisher_version": "2.3.0",
-    "status": "success",
-    "duration_ms": 4670,
-    "http_status": null,
-    "retry_count": 0,
-    "failure_class": "none",
-    "error": "",
-    "response": "{\"success\": true, \"post_id\": \"urn:li:share:7525034470199046144\", \"url\": \"https://www.linkedin.com/feed/update/urn:li:share:7525034470199046144/\", \"ledger_status\": \"VERIFIED_LIVE\", \"ledger_attempt_count\": 1}",
-    "rate_limit": {},
-    "exception_type": "",
-    "exception_msg": ""
-  },
-  {
-    "ts": "2026-11-08T03:20:37",
-    "day_number": 311,
-    "platform": "threads",
-    "content_id": "pb_30a084a045",
-    "generation_id": "gen_2026-11-08_128591b0",
-    "publisher_version": "2.3.0",
-    "status": "success",
-    "duration_ms": 9207,
-    "http_status": null,
-    "retry_count": 0,
-    "failure_class": "none",
-    "error": "",
-    "response": "{\"success\": true, \"attempted\": true, \"skipped\": false, \"post_id\": \"17980890564126014\", \"url\": \"https://www.threads.com/@hiten_jain323/post/DfdxvJ5F9h2\", \"ledger_status\": \"VERIFIED_LIVE\", \"ledger_attempt_count\": 1}",
-    "rate_limit": {},
-    "exception_type": "",
-    "exception_msg": ""
   }
 ]
