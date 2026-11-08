@@ -20491,6 +20491,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; The background gradient feels muddy and lacks rich depth or luxurious textures expected from a premium D2C brand.; Typography lacks sophistication;",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-08",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the product mockup is heavily pixelated and low-resolution, failing to meet premium d2c standards.; the lighting on the jar feels artificial and lacks prof",
+      "label": "stories",
+      "last_seen": "2026-11-08",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The product mockup is heavily pixelated and low-resolution, failing to meet premium D2C standards.; The lighting on the jar feels artificial and lacks professional studio polish, with a cheap-looking drop shadow.; The background gradient looks muddy and flat rather than rich",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
