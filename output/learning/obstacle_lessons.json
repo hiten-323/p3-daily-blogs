@@ -20617,6 +20617,34 @@
       "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background.; The brown-on-brown color palette lacks rich contrast and depth, making the overall composition look muddy and flat.; The jar appears floating rather than r",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-08",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:3.0; awkward and distracting foreground blur element (another jar lid/top) cutting off the bottom of the frame.; generic, low-quality radial gradient background",
+      "label": "reel_1",
+      "last_seen": "2026-11-08",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:3.0; Awkward and distracting foreground blur element (another jar lid/top) cutting off the bottom of the frame.; Generic, low-quality radial gradient background with dated light rays rather than rich, tactile coffee-themed depth.; Cluttered and redundant copy layout ('VISIT P3ONL",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-08",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|pale_background:sat=0.14; pale_background:sat=0.18; pale_background:sat=0.16; same_layout_as_last_tile:hero_center",
+      "label": "reel_1",
+      "last_seen": "2026-11-08",
+      "platform": "instagram",
+      "reason": "pale_background:sat=0.14; pale_background:sat=0.18; pale_background:sat=0.16; same_layout_as_last_tile:hero_center",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
