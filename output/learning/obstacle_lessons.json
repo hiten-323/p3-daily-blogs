@@ -20575,6 +20575,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background surface shadow; The background gradient feels muddy and lacks rich, premium coffee tones or dynamic lighting depth; Typography lacks refined hierarchy; the p",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-08",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product cutout is poorly executed with rough edges and lacks a realistic shadow or interaction with the surface.; the background gradient is muddy and date",
+      "label": "stories",
+      "last_seen": "2026-11-08",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and lacks a realistic shadow or interaction with the surface.; The background gradient is muddy and dated, lacking rich, dimensional lighting that defines premium coffee aesthetics.; Typography feels disconnected, utilizing",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
