@@ -20547,6 +20547,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that lacks integration with the background environment.; The background gradient is muddy and flat, lacking the rich atmospheric depth expected from a premium D2C coffee brand.; Typography feels dated",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-08",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background surface shadow; background gradient a",
+      "label": "stories",
+      "last_seen": "2026-11-08",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background surface shadow; Background gradient and bokeh effect look amateurish, flat, and digitally generated rather than photographic; Pills/badges for 'STORY - ONE I",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
