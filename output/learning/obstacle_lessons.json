@@ -20421,6 +20421,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; The brown background features muddy radial gradients and low-resolution bokeh spots that look cheap rather than premium.; Typography lacks refined h",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-08",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background surface shadow; background color pale",
+      "label": "stories",
+      "last_seen": "2026-11-08",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background surface shadow; Background color palette feels muddy and dated rather than rich and premium, lacking sophisticated depth or lighting gradients; Excessive use",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
