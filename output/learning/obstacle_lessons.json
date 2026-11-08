@@ -20477,6 +20477,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the surface and background.; Background gradient and bokeh effect look amateurish and lack the rich, tactile depth expected of a premium D2C coffee brand.; Typography feels",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-08",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; the background gradient feel",
+      "label": "stories",
+      "last_seen": "2026-11-08",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; The background gradient feels muddy and lacks rich depth or luxurious textures expected from a premium D2C brand.; Typography lacks sophistication;",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

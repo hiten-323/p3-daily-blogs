@@ -14560,11 +14560,11 @@
     },
     "2026-11-08|morning|instagram_story|pb_30a084a045": {
       "asset": "",
-      "attempt_count": 6,
+      "attempt_count": 7,
       "content_date": "2026-11-08",
       "content_id": "pb_30a084a045",
       "day_number": 311,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the surface and background.; Background gradient and bokeh effect look amateurish and lack the rich, tactile depth expected of a premium D2C coffee brand.; Typography feels",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; The background gradient feels muddy and lacks rich depth or luxurious textures expected from a premium D2C brand.; Typography lacks sophistication; ",
       "history": [
         {
           "at": "2026-11-08T06:52:07+00:00",
@@ -14655,20 +14655,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-08T08:46:19+00:00",
+          "attempt": 7,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-08T08:57:55+00:00",
+          "attempt": 7,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; The background gradient feels muddy and lacks rich depth or luxurious textures expected from a premium D2C brand.; Typography lacks sophistication; ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-08T08:24:31+00:00",
+      "last_attempt_at": "2026-11-08T08:46:19+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the surface and background.; Background gradient and bokeh effect look amateurish and lack the rich, tactile depth expected of a premium D2C coffee brand.; Typography feels",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; The background gradient feels muddy and lacks rich depth or luxurious textures expected from a premium D2C brand.; Typography lacks sophistication; ",
         "success": false
       },
-      "next_retry_at": "2026-11-08T08:40:28+00:00",
+      "next_retry_at": "2026-11-08T08:57:55+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-08T08:40:28+00:00",
+      "updated_at": "2026-11-08T08:57:55+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
