@@ -14560,11 +14560,11 @@
     },
     "2026-11-08|morning|instagram_story|pb_30a084a045": {
       "asset": "",
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-11-08",
       "content_id": "pb_30a084a045",
       "day_number": 311,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; Typography lacks sophistication and proper kerning; the pill-shaped badges look dated and cheap rather than premium D2C.; Background gradient and bo",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; The brown background features muddy radial gradients and low-resolution bokeh spots that look cheap rather than premium.; Typography lacks refined h",
       "history": [
         {
           "at": "2026-11-08T06:52:07+00:00",
@@ -14580,20 +14580,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-08T07:20:59+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-08T07:30:21+00:00",
+          "attempt": 2,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; The brown background features muddy radial gradients and low-resolution bokeh spots that look cheap rather than premium.; Typography lacks refined h",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-08T06:52:07+00:00",
+      "last_attempt_at": "2026-11-08T07:20:59+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; Typography lacks sophistication and proper kerning; the pill-shaped badges look dated and cheap rather than premium D2C.; Background gradient and bo",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and unnatural lighting that fails to integrate with the background shadow.; The brown background features muddy radial gradients and low-resolution bokeh spots that look cheap rather than premium.; Typography lacks refined h",
         "success": false
       },
-      "next_retry_at": "2026-11-08T07:04:38+00:00",
+      "next_retry_at": "2026-11-08T07:30:21+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-08T07:04:38+00:00",
+      "updated_at": "2026-11-08T07:30:21+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
