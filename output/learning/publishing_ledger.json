@@ -14473,6 +14473,48 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-08T03:20:37+00:00"
+    },
+    "2026-11-08|generate|youtube|pb_30a084a045": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-08",
+      "content_id": "pb_30a084a045",
+      "day_number": 311,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-08T03:29:07+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-08T03:29:10+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "IryxkW9ALlU",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.youtube.com/shorts/IryxkW9ALlU",
+          "verification_method": "youtube_oembed"
+        }
+      ],
+      "last_attempt_at": "2026-11-08T03:29:07+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-08T03:29:10+00:00",
+      "next_retry_at": null,
+      "platform": "youtube",
+      "published": true,
+      "remote_id": "IryxkW9ALlU",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-08T03:29:10+00:00",
+      "url": "https://www.youtube.com/shorts/IryxkW9ALlU",
+      "verification_detail": "public video confirmed by oEmbed",
+      "verification_method": "youtube_oembed",
+      "verified_at": "2026-11-08T03:29:10+00:00"
     }
   },
   "version": 1

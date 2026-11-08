@@ -8082,7 +8082,8 @@
     "published_at": "2026-11-08T03:20:37",
     "insights_recorded": false,
     "measurement_snapshots": [],
-    "fetch_attempts_by_window": {}
+    "fetch_attempts_by_window": {},
+    "failed_windows": []
   },
   {
     "media_id": "17980890564126014",
@@ -8102,6 +8103,29 @@
     "format": "discussion",
     "hashtags": "",
     "published_at": "2026-11-08T03:20:37",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {},
+    "failed_windows": []
+  },
+  {
+    "media_id": "IryxkW9ALlU",
+    "asset_id": "youtube_day311",
+    "platform": "youtube",
+    "track": "discovery",
+    "hook": "",
+    "topic": "youtube_short",
+    "kpi_at_creation": "",
+    "policy_version": "",
+    "attention_mechanism": "",
+    "scroller_state": "",
+    "psychology_frame": "",
+    "hook_strategy": "",
+    "payoff_type": "",
+    "decision_version": "",
+    "format": "yt_short",
+    "hashtags": "",
+    "published_at": "2026-11-08T03:29:10",
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {}
