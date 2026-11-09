@@ -21989,6 +21989,20 @@
       "reason": "aesthetic_below_8.0:4.0; Typography lacks clear hierarchy; headline is awkwardly wrapped and the subheadline is tiny and low-contrast.; The background looks muddy and amateurish with flat gradients and generic soft light bursts rather than rich, tactile depth.; Product label design is dated and look",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the headline is cut off abruptly ('taste' hanging on a new line with awkward spacing).; typography lacks sophistication and feels generic rather than premi",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The headline is cut off abruptly ('Taste' hanging on a new line with awkward spacing).; Typography lacks sophistication and feels generic rather than premium D2C.; The label design on the jar uses bright, saturated yellow that clashes with the moody brown background.",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

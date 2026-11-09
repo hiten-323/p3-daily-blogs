@@ -15203,11 +15203,11 @@
     },
     "2026-11-09|morning|instagram_story|pb_b6a2fd7361": {
       "asset": "",
-      "attempt_count": 27,
+      "attempt_count": 28,
       "content_date": "2026-11-09",
       "content_id": "pb_b6a2fd7361",
       "day_number": 312,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Typography lacks clear hierarchy; headline is awkwardly wrapped and the subheadline is tiny and low-contrast.; The background looks muddy and amateurish with flat gradients and generic soft light bursts rather than rich, tactile depth.; Product label design is dated and look",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The headline is cut off abruptly ('Taste' hanging on a new line with awkward spacing).; Typography lacks sophistication and feels generic rather than premium D2C.; The label design on the jar uses bright, saturated yellow that clashes with the moody brown background.",
       "history": [
         {
           "at": "2026-11-09T07:14:26+00:00",
@@ -15613,20 +15613,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-09T15:53:55+00:00",
+          "attempt": 28,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-09T16:07:20+00:00",
+          "attempt": 28,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The headline is cut off abruptly ('Taste' hanging on a new line with awkward spacing).; Typography lacks sophistication and feels generic rather than premium D2C.; The label design on the jar uses bright, saturated yellow that clashes with the moody brown background.",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-09T15:34:50+00:00",
+      "last_attempt_at": "2026-11-09T15:53:55+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Typography lacks clear hierarchy; headline is awkwardly wrapped and the subheadline is tiny and low-contrast.; The background looks muddy and amateurish with flat gradients and generic soft light bursts rather than rich, tactile depth.; Product label design is dated and look",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The headline is cut off abruptly ('Taste' hanging on a new line with awkward spacing).; Typography lacks sophistication and feels generic rather than premium D2C.; The label design on the jar uses bright, saturated yellow that clashes with the moody brown background.",
         "success": false
       },
-      "next_retry_at": "2026-11-09T15:47:45+00:00",
+      "next_retry_at": "2026-11-09T16:07:20+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-09T15:47:45+00:00",
+      "updated_at": "2026-11-09T16:07:20+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
