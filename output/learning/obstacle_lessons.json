@@ -21681,6 +21681,20 @@
       "reason": "aesthetic_below_8.0:4.0; Headline awkwardly cuts off at 'Taste', failing to complete the sentence or pose the full question naturally.; Typography lacks sophistication and hierarchy; the serif fonts feel generic rather than bespoke or modern D2C.; The background gradient and bokeh effects look amate",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; headline typography feels generic and lacks strong typographic hierarchy or premium editorial polish; product label design uses harsh, clashing primary yel",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Headline typography feels generic and lacks strong typographic hierarchy or premium editorial polish; Product label design uses harsh, clashing primary yellow that detracts from the luxury D2C coffee aesthetic; Background lighting and bokeh effect look flat and artificial ra",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
