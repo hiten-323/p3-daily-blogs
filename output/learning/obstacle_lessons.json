@@ -21695,6 +21695,20 @@
       "reason": "aesthetic_below_8.0:4.0; Headline typography feels generic and lacks strong typographic hierarchy or premium editorial polish; Product label design uses harsh, clashing primary yellow that detracts from the luxury D2C coffee aesthetic; Background lighting and bokeh effect look flat and artificial ra",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; headline gets awkwardly cut off at 'taste', lacking completion or punch.; typography feels dated and generic, lacking refined d2c aesthetic (heavy drop sha",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Headline gets awkwardly cut off at 'Taste', lacking completion or punch.; Typography feels dated and generic, lacking refined D2C aesthetic (heavy drop shadows on text).; Product label design is low-resolution and cluttered, looking amateur rather than premium.",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
