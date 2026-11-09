@@ -21877,6 +21877,20 @@
       "reason": "aesthetic_below_8.0:4.0; Headline typography feels generic, lacking refined kerning and sophisticated hierarchy typical of premium D2C brands; Background lighting and bokeh effect look flat and artificial, lacking true depth and rich coffee-tonal textures; The jar cutout lacks realistic shadow integ",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; incomplete headline text ('why does my instant coffee taste...'), failing to deliver the core hook or message.; typography feels amateurish with generic se",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Incomplete headline text ('Why Does My Instant Coffee Taste...'), failing to deliver the core hook or message.; Typography feels amateurish with generic serif and sans-serif pairings and weak hierarchy.; Product label design is visually dated and lacks high-end aesthetic app",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
