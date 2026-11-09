@@ -21975,6 +21975,20 @@
       "reason": "aesthetic_below_8.0:4.0; Headline awkwardly cuts off at 'Taste', breaking reading flow and creating an incomplete sentence structure; Product label design is visually dated and lacks high-end D2C aesthetic polish; Background gradient feels flat and artificial with generic bokeh spots rather than ric",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; typography lacks clear hierarchy; headline is awkwardly wrapped and the subheadline is tiny and low-contrast.; the background looks muddy and amateurish wi",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Typography lacks clear hierarchy; headline is awkwardly wrapped and the subheadline is tiny and low-contrast.; The background looks muddy and amateurish with flat gradients and generic soft light bursts rather than rich, tactile depth.; Product label design is dated and look",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
