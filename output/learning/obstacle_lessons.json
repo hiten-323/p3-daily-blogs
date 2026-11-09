@@ -21835,6 +21835,20 @@
       "reason": "aesthetic_below_8.0:5.0; Headline copy is grammatically incomplete ('Taste' dangles without an object), which undermines brand credibility; Background relies on a generic dark gradient with flat bokeh, lacking rich texture or depth; Subhead gold text on brown background has low contrast, hurting mob",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:5.0; the headline 'why does my instant coffee taste' cuts off abruptly, leaving the question unfinished and creating poor copywriting structure.; the background",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:5.0; The headline 'Why Does My Instant Coffee Taste' cuts off abruptly, leaving the question unfinished and creating poor copywriting structure.; The background feels flat with generic bokeh circles, lacking the rich textures and lighting depth expected from a premium D2C coffee",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

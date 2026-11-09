@@ -15203,11 +15203,11 @@
     },
     "2026-11-09|morning|instagram_story|pb_b6a2fd7361": {
       "asset": "",
-      "attempt_count": 16,
+      "attempt_count": 17,
       "content_date": "2026-11-09",
       "content_id": "pb_b6a2fd7361",
       "day_number": 312,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Headline copy is grammatically incomplete ('Taste' dangles without an object), which undermines brand credibility; Background relies on a generic dark gradient with flat bokeh, lacking rich texture or depth; Subhead gold text on brown background has low contrast, hurting mob",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; The headline 'Why Does My Instant Coffee Taste' cuts off abruptly, leaving the question unfinished and creating poor copywriting structure.; The background feels flat with generic bokeh circles, lacking the rich textures and lighting depth expected from a premium D2C coffee ",
       "history": [
         {
           "at": "2026-11-09T07:14:26+00:00",
@@ -15448,20 +15448,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-09T12:29:57+00:00",
+          "attempt": 17,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-09T12:41:23+00:00",
+          "attempt": 17,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; The headline 'Why Does My Instant Coffee Taste' cuts off abruptly, leaving the question unfinished and creating poor copywriting structure.; The background feels flat with generic bokeh circles, lacking the rich textures and lighting depth expected from a premium D2C coffee ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-09T12:13:10+00:00",
+      "last_attempt_at": "2026-11-09T12:29:57+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Headline copy is grammatically incomplete ('Taste' dangles without an object), which undermines brand credibility; Background relies on a generic dark gradient with flat bokeh, lacking rich texture or depth; Subhead gold text on brown background has low contrast, hurting mob",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; The headline 'Why Does My Instant Coffee Taste' cuts off abruptly, leaving the question unfinished and creating poor copywriting structure.; The background feels flat with generic bokeh circles, lacking the rich textures and lighting depth expected from a premium D2C coffee ",
         "success": false
       },
-      "next_retry_at": "2026-11-09T12:23:15+00:00",
+      "next_retry_at": "2026-11-09T12:41:23+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-09T12:23:15+00:00",
+      "updated_at": "2026-11-09T12:41:23+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
