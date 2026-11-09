@@ -15203,11 +15203,11 @@
     },
     "2026-11-09|morning|instagram_story|pb_b6a2fd7361": {
       "asset": "",
-      "attempt_count": 13,
+      "attempt_count": 14,
       "content_date": "2026-11-09",
       "content_id": "pb_b6a2fd7361",
       "day_number": 312,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Headline awkwardly cuts off at 'Taste' leaving a dangling line; Product label design looks dated and lacks premium D2C aesthetics; Background uses generic AI-style bokeh spots rather than rich coffee textures or lighting",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Sentence structure broken mid-thought ('Why Does My Instant Coffee Taste'); Plain flat-color background lacks rich depth, lighting, or authentic coffee atmosphere; Product label design looks dated and lacks high-end D2C aesthetic (cheap yellow block, generic graphics)",
       "history": [
         {
           "at": "2026-11-09T07:14:26+00:00",
@@ -15403,20 +15403,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-09T11:42:21+00:00",
+          "attempt": 14,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-09T11:53:40+00:00",
+          "attempt": 14,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Sentence structure broken mid-thought ('Why Does My Instant Coffee Taste'); Plain flat-color background lacks rich depth, lighting, or authentic coffee atmosphere; Product label design looks dated and lacks high-end D2C aesthetic (cheap yellow block, generic graphics)",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-09T11:23:48+00:00",
+      "last_attempt_at": "2026-11-09T11:42:21+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Headline awkwardly cuts off at 'Taste' leaving a dangling line; Product label design looks dated and lacks premium D2C aesthetics; Background uses generic AI-style bokeh spots rather than rich coffee textures or lighting",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Sentence structure broken mid-thought ('Why Does My Instant Coffee Taste'); Plain flat-color background lacks rich depth, lighting, or authentic coffee atmosphere; Product label design looks dated and lacks high-end D2C aesthetic (cheap yellow block, generic graphics)",
         "success": false
       },
-      "next_retry_at": "2026-11-09T11:35:22+00:00",
+      "next_retry_at": "2026-11-09T11:53:40+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-09T11:35:22+00:00",
+      "updated_at": "2026-11-09T11:53:40+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
