@@ -21765,6 +21765,20 @@
       "reason": "aesthetic_below_8.0:4.0; The headline text ('Why Does My Instant Coffee Taste') is cut off abruptly without the sentence being finished, making the hook ineffective.; The background gradients and bokeh light spots look cheap and digitally generated rather than rich and photographic.; Typography lack",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; background lacks depth and premium texture, relying on generic brown bokeh that feels flat.; typography hierarchy is weak; the subhead is too small and low",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Background lacks depth and premium texture, relying on generic brown bokeh that feels flat.; Typography hierarchy is weak; the subhead is too small and low-contrast to be legible at feed size.; Composition is static and centered, lacking the dynamic energy required to stop a",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
