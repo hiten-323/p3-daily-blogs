@@ -15287,11 +15287,11 @@
     },
     "2026-11-09|morning|instagram_story|pb_b6a2fd7361": {
       "asset": "",
-      "attempt_count": 32,
+      "attempt_count": 33,
       "content_date": "2026-11-09",
       "content_id": "pb_b6a2fd7361",
       "day_number": 312,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Sentence structure is broken ('Why Does My Instant Coffee Taste'); Label design looks dated and generic rather than premium D2C; Background uses generic bokeh stock imagery lacking rich depth or texture",
+      "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
       "history": [
         {
           "at": "2026-11-09T07:14:26+00:00",
@@ -15772,20 +15772,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-09T17:38:51+00:00",
+          "attempt": 33,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-09T17:45:44+00:00",
+          "attempt": 33,
+          "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-09T17:21:27+00:00",
+      "last_attempt_at": "2026-11-09T17:38:51+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Sentence structure is broken ('Why Does My Instant Coffee Taste'); Label design looks dated and generic rather than premium D2C; Background uses generic bokeh stock imagery lacking rich depth or texture",
+        "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
         "success": false
       },
-      "next_retry_at": "2026-11-09T17:35:54+00:00",
+      "next_retry_at": "2026-11-09T17:45:44+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-09T17:35:54+00:00",
+      "updated_at": "2026-11-09T17:45:44+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
