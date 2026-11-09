@@ -21751,6 +21751,20 @@
       "reason": "aesthetic_below_8.0:4.0; Headline gets cut off awkwardly ('Taste' pushed to second line alone), breaking optimal reading flow.; The background gradient and lighting feel generic and flat, lacking rich depth and moody atmosphere expected from a premium brand.; The product label design (yellow and bro",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the headline text ('why does my instant coffee taste') is cut off abruptly without the sentence being finished, making the hook ineffective.; the backgroun",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The headline text ('Why Does My Instant Coffee Taste') is cut off abruptly without the sentence being finished, making the hook ineffective.; The background gradients and bokeh light spots look cheap and digitally generated rather than rich and photographic.; Typography lack",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
