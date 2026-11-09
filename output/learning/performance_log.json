@@ -395,7 +395,7 @@
     "asset_id": "threads_day308",
     "track": "conversation",
     "platform": "threads",
-    "observation_window": "24h",
+    "observation_window": "72h",
     "publication_id": "17913368538561567",
     "kpi": "",
     "policy_version": "",
@@ -410,14 +410,14 @@
     "decision_version": null,
     "audio_category": "",
     "posted_at": "2026-11-05T05:16:34",
-    "recorded_at": "2026-11-06T06:42:15",
+    "recorded_at": "2026-11-09T06:13:16",
     "metrics": {
       "views": 1,
       "likes": 0,
       "comments": 0,
       "shares": 0
     },
-    "notes": "auto-recorded from 24h threads native API observation"
+    "notes": "auto-recorded from 72h threads native API observation"
   },
   {
     "asset_id": "threads_day307",
@@ -469,6 +469,62 @@
     "recorded_at": "2026-11-08T02:41:09",
     "metrics": {
       "views": 7,
+      "likes": 0,
+      "comments": 0,
+      "shares": 0
+    },
+    "notes": "auto-recorded from 24h threads native API observation"
+  },
+  {
+    "asset_id": "threads_day311",
+    "track": "conversation",
+    "platform": "threads",
+    "observation_window": "24h",
+    "publication_id": "17980890564126014",
+    "kpi": "",
+    "policy_version": "",
+    "hook": "",
+    "topic": "threads_post",
+    "format": "discussion",
+    "attention_mechanism": null,
+    "scroller_state": null,
+    "psychology_frame": null,
+    "hook_strategy": null,
+    "payoff_type": null,
+    "decision_version": null,
+    "audio_category": "",
+    "posted_at": "2026-11-08T03:20:37",
+    "recorded_at": "2026-11-09T06:13:15",
+    "metrics": {
+      "views": 3,
+      "likes": 0,
+      "comments": 0,
+      "shares": 0
+    },
+    "notes": "auto-recorded from 24h threads native API observation"
+  },
+  {
+    "asset_id": "threads_day310",
+    "track": "conversation",
+    "platform": "threads",
+    "observation_window": "24h",
+    "publication_id": "18576352876078892",
+    "kpi": "",
+    "policy_version": "",
+    "hook": "",
+    "topic": "threads_post",
+    "format": "discussion",
+    "attention_mechanism": null,
+    "scroller_state": null,
+    "psychology_frame": null,
+    "hook_strategy": null,
+    "payoff_type": null,
+    "decision_version": null,
+    "audio_category": "",
+    "posted_at": "2026-11-07T07:43:43",
+    "recorded_at": "2026-11-09T06:13:15",
+    "metrics": {
+      "views": 12,
       "likes": 0,
       "comments": 0,
       "shares": 0
