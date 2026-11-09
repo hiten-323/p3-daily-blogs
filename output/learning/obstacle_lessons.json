@@ -21331,6 +21331,62 @@
       "reason": "aesthetic_below_8.0:4.0; Cluttered typographic hierarchy with too many competing badges, pills, and handles at the top.; Unclickable, long raw URL included in the body copy instead of clean CTA phrasing.; Generic and muddy background imagery lacks sharp contrast, making the composition feel flat and",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.0 < 8.0 (weakest: hook, format_fit). The time mismatch between the chosen hook ('6:52 AM') and scene 1 ('7:43 AM') breaks viewer immersion immediately. Streamline the opening line so it matches the spoken text and visual timestamp exactly. Ensure the 3-beat rhythm hits harder in the first 2 seconds without fluff. Suggested hook: Your morning milk coffee tastes watery because you're",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.0 < 8.0 (weakest: hook, format_fit). the time mismatch between the chosen hook ('6:52 am') and scene 1 ('7:43 am') breaks viewer immersion immediately. streamline th",
+      "label": "yt_short",
+      "last_seen": "2026-11-09",
+      "platform": "youtube",
+      "reason": "viral: score 7.0 < 8.0 (weakest: hook, format_fit). The time mismatch between the chosen hook ('6:52 AM') and scene 1 ('7:43 AM') breaks viewer immersion immediately. Streamline the opening line so it matches the spoken text and visual timestamp exactly. Ensure the 3-beat rhythm hits harder in the f",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 7,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/string_type",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "schema",
+      "id": "youtube|yt_short|schema|schema: 1 validation error for youtubeshortschema emotion_arc input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], in",
+      "label": "yt_short",
+      "last_seen": "2026-11-09",
+      "platform": "youtube",
+      "reason": "schema: 1 validation error for YoutubeShortSchema emotion_arc Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/string_type",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/string_type",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|schema: 1 validation error for youtubeshortschema emotion_arc input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], in",
+      "label": "yt_short",
+      "last_seen": "2026-11-09",
+      "platform": "youtube",
+      "reason": "schema: 1 validation error for YoutubeShortSchema emotion_arc Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list] For further information visit https://errors.pydantic.dev/2.14/v/string_type",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; headline typography feels generic and lacks strong typographic hierarchy or premium editorial spacing.; the background gradients and bokeh effects look art",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Headline typography feels generic and lacks strong typographic hierarchy or premium editorial spacing.; The background gradients and bokeh effects look artificial and lack rich, tactile coffee-world depth.; The product label design (yellow/brown block) looks dated and underm",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

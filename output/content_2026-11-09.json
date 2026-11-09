@@ -1715,123 +1715,97 @@
   },
   "yt_short": {
     "featured_product": "ultra_blend",
-    "objective": "Drive product page visits for Purity Beans Ultra Blend",
-    "primary_cta": "Shop Ultra Blend at https://p3online.in",
-    "success_metric": "Website clicks and profile saves",
+    "objective": "Drive traffic to website and increase product education for Purity Beans Ultra Blend.",
+    "primary_cta": "Shop now: https://p3online.in",
+    "success_metric": "Saves, website clicks, and profile visits",
     "_growth_attempts": 1,
-    "audio": "Ambient morning kitchen sounds blending into a crisp, satisfying pour, paired with a low, warm cinematic underscore.",
-    "audio_direction": "Start with subtle ambient kitchen clinks, transitioning smoothly into a focused, rhythmic pouring sound.",
-    "audio_publish_mode": "original",
+    "audio": "Quiet kitchen ambient morning hum with the gentle sound of glass tapping a wooden counter",
+    "audio_direction": "Subtle low-frequency pulse on cut, crisp tactile sound of glass and spoon",
+    "audio_publish_mode": "native_reel_audio",
     "audio_required": true,
-    "chosen_hook": "6:52 AM. Your milk coffee is beige disappointment. The jar tells you exactly why.",
-    "comment_trigger": "Comment BLEND if you prefer your milk coffee balanced with 30 percent chicory.",
-    "confidence": 0.98,
+    "chosen_hook": "The exact percentage on the back panel changes how your afternoon milk coffee behaves.",
+    "comment_trigger": "Ultra Blend is 70% coffee and 30% chicory.",
+    "confidence": 0.95,
     "cta": "Shop Ultra Blend at https://p3online.in",
-    "description": "Why guessing your morning milk coffee ratio leaves your cup tasting thin. Discover Purity Beans Ultra Blend, crafted with a smooth 70% coffee and 30% chicory blend designed specifically for milk. At ₹309 for 100g yielding at least 66 cups, it costs about ₹5 a cup. Read the jar, know your brew, and upgrade your morning routine. Follow @purepantryprovisions. Shop https://p3online.in",
-    "edit_pacing": "Fast cuts during the opening 3 seconds, settling into smooth 4-to-6-second contemplative macro shots of pouring milk.",
-    "emotion_arc": "Curiosity about morning coffee ratios, tension over hidden blend percentages, and satisfying relief upon finding a transparent daily milk coffee.",
-    "funnel_objective": "Conversion and brand trust for Ultra Blend",
-    "gate_rejection": "none",
-    "growth_plan": "Maximize profile visits and website clicks via transparent ingredient education for milk coffee drinkers.",
-    "growth_review": "Aligned strictly with Ultra Blend product truths: 70% coffee, 30% chicory, ₹309 for 100g, at least 66 cups, about ₹5 a cup. No banned claims included.",
-    "hashtags": "#PurityBeans #UltraBlend #InstantCoffee #CoffeeLoversIndia #PurePantryProvisions",
-    "hook": "6:52 AM. Your milk coffee is beige disappointment. The jar tells you exactly why.",
-    "hook_text": "THE MILK COFFEE MISTAKE",
+    "description": "Ultra Blend is 70% coffee and 30% chicory. Purity Beans delivers honest ingredient transparency.",
+    "edit_pacing": "Fast 2-second cuts in the opening, slowing down during the pour for maximum visual satisfaction",
+    "emotion_arc": [
+      "curiosity",
+      "tension",
+      "satisfaction",
+      "belonging"
+    ],
+    "funnel_objective": "conversion_and_education",
+    "gate_rejection": false,
+    "growth_plan": "Leverage saveable coffee education paired with clear ingredient transparency for Purity Beans Ultra Blend.",
+    "growth_review": "Hook uses an observational command that stops the scroll instantly. Visual pacing matches the required 3-beat rhythm.",
+    "hashtags": "#PurityBeans #UltraBlend #Coffee #CoffeeLoversIndia #PureCoffee",
+    "hook": "The exact percentage on the back panel changes how your afternoon milk coffee behaves.",
+    "hook_text": "The exact percentage on the back panel changes how your afternoon milk coffee behaves.",
     "ladder_exhausted": true,
-    "loop_note": "Ends on the Purity Beans Ultra Blend jar resting on the kitchen counter, prompting an immediate replay to check the label details.",
-    "manual_instruction": "Ensure exact pricing and cup yield match Ultra Blend rules without mixing up bean processes.",
-    "product": "Ultra Blend",
+    "loop_note": "Ends on the final sip, cutting right back to the spoon tapping the Purity Beans Ultra Blend jar.",
+    "manual_instruction": "Ensure the Purity Beans Ultra Blend glass jar packaging matches reference image exactly.",
+    "product": "ultra_blend",
     "publish_blocked": "ladder_exhausted",
-    "reason": "Meets all mandatory product truths, brand rules, and structural Short requirements while resolving previous critique on hook/payoff alignment and website reference.",
-    "reel_inspiration": "Documentary-style macro food and beverage cinematography focusing on authentic kitchen morning lighting.",
+    "reason": "Ultra Blend is 70% coffee and 30% chicory.",
+    "reel_inspiration": "Ultra Blend is 70% coffee and 30% chicory.",
     "rights_check_required": false,
-    "save_trigger": "Save this before your next grocery run to remember the exact 70/30 milk coffee ratio.",
+    "save_trigger": "Save this video for your next coffee upgrade.",
     "scenes": [
       {
         "scene": 1,
-        "type": "STOP",
-        "duration_s": 3.5,
-        "on_screen": "7:43 AM. WATERY MILK COFFEE.",
-        "spoken": "7:43 AM. Your milk coffee tastes like colored water. The label knows why.",
-        "visual_direction": "Shot on iPhone 15, handheld close-up of a disappointed sip from a dark ceramic mug on a cluttered kitchen counter. Natural window light catches steam rising. A half-open Purity Beans Ultra Blend jar sits slightly off-center, label facing away. Real morning mess: crumpled napkin, phone charging cable, fingerprint on mug rim."
+        "type": "problem",
+        "duration_s": 4.0,
+        "on_screen": "Check the back panel percentages.",
+        "spoken": "The exact percentage on the back panel changes how your afternoon milk coffee behaves.",
+        "visual_direction": "Lead-free glass catches afternoon window light. Fingerprint smudge on the jar neck. Net weight visible on label. Purity Beans Ultra Blend is 70% coffee and 30% chicory."
       },
       {
         "scene": 2,
-        "type": "CURIOSITY",
-        "duration_s": 4.5,
-        "on_screen": "TURN THE JAR. READ THE BACK.",
-        "spoken": "Most jars hide the ratio behind vague words. This one doesn't.",
-        "visual_direction": "Macro lens, shallow depth of field. Hand enters frame naturally, picks up the exact Purity Beans Ultra Blend glass jar, rotates it slowly to reveal the ingredient panel. Warm amber light catches the label texture — printed paper, not a flat decal. Contact shadow grounds the jar on dark marble. Background: soft bokeh of morning kitchen clutter."
+        "type": "curiosity",
+        "duration_s": 5.0,
+        "on_screen": "Ultra Blend is 70% coffee and 30% chicory.",
+        "spoken": "Ultra Blend is 70% coffee and 30% chicory.",
+        "visual_direction": "Hand pours warm milk from a stainless steel pitcher into a clear glass mug containing brewed Purity Beans Ultra Blend. Steam rises. Amber room light mixes with cool daylight. Exact Purity Beans Ultra Blend jar sits beside the mug, label facing camera."
       },
       {
         "scene": 3,
-        "type": "VALUE",
-        "duration_s": 5.5,
-        "on_screen": "70% COFFEE. 30% CHICORY. BUILT FOR MILK.",
-        "spoken": "Purity Beans Ultra Blend tells you straight: 70% coffee, 30% chicory. Formulated for milk.",
-        "visual_direction": "Jar centered on dark marble, crisp contact shadow, environment reflections on glass. Label clearly legible: 70% coffee, 30% chicory. Warm gold rim light outlines the jar. No floating text — the label speaks for itself. Slow, subtle push-in on the ingredient line."
+        "type": "value",
+        "duration_s": 6.0,
+        "on_screen": "Read the back panel. 70% coffee.",
+        "spoken": "Read the jar. Purity Beans Ultra Blend gives you a smooth milk coffee profile without guessing the blend.",
+        "visual_direction": "Camera tilts down to the back label of the Purity Beans Ultra Blend jar. Sharp focus on ingredient list: 70% coffee and 30% chicory. Shallow depth of field. Warm wood grain texture visible behind the jar. Natural light from side window."
       },
       {
         "scene": 4,
-        "type": "TRUST",
+        "type": "trust",
         "duration_s": 5.0,
-        "on_screen": "₹309 FOR 100G. AT LEAST 66 CUPS. ~₹5 A CUP.",
-        "spoken": "₹309 for 100g. At least 66 cups. Your daily cafe-style milk coffee lands around ₹5 a cup.",
-        "visual_direction": "24fps, natural motion blur. Steady pour of milk into the dark ceramic mug from scene 1, swirling into a rich caramel tone. The Purity Beans Ultra Blend jar rests beside it, untouched. Steam rises and disperses realistically. Warm kitchen ambient sound implied. Hand holds mug with slight imperfection — thumb near rim."
+        "on_screen": "70% coffee and 30% chicory.",
+        "spoken": "Every jar of Purity Beans Ultra Blend delivers consistent everyday milk coffee extraction.",
+        "visual_direction": "Lived-in kitchen frame. Used teaspoon resting on a saucer. Small water ring on the counter. Exact Purity Beans Ultra Blend jar beside a freshly poured cup. Steam curls. Handheld micro-movement."
       },
       {
         "scene": 5,
-        "type": "FOLLOW",
-        "duration_s": 4.5,
-        "on_screen": "FOLLOW @PUREPANTYPROVISIONS FOR MORE COFFEE TRUTHS",
-        "spoken": "Follow for more coffee truths. Shop Ultra Blend at https://p3online.in",
-        "visual_direction": "Hold on the Purity Beans Ultra Blend jar on dark marble, warm amber light, contact shadow. Subtle slow push-in. End frame lingers 1 second for loop."
+        "type": "follow",
+        "duration_s": 5.0,
+        "on_screen": "Shop Ultra Blend at https://p3online.in",
+        "spoken": "Follow Purity Beans for honest coffee education. Shop Ultra Blend at https://p3online.in.",
+        "visual_direction": "Relaxed hand closes the exact Purity Beans Ultra Blend jar lid. Soft click. Lens flare from window catches the lead-free glass. Jar remains steady, prominent. Handheld sway settles into a lock-off."
       }
     ],
-    "share_trigger": "Share this with someone who drinks instant milk coffee every single morning.",
-    "tagline": "Read the jar. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "tagline": "Read the jar. Purity Beans Ultra Blend is 70% coffee and 30% chicory.",
     "tags": [
-      "Ultra Blend",
       "Purity Beans",
+      "Ultra Blend",
       "Instant Coffee India"
     ],
-    "target": "Urban Indian working professionals seeking an honest, everyday milk coffee.",
-    "editorial_score": {
-      "shareability": 4.5,
-      "saveability": 4.0,
-      "emotion_pull": 3.5,
-      "hook_strength": 4.0,
-      "brand_clarity": 7.0,
-      "overall": 4.6,
-      "verdict": "REJECT",
-      "feedback": "The hook is mismatched: '6:52 AM' in copy vs '7:43 AM' in scene 1 creates immediate cognitive dissonance. 'Beige disappointment' is weak — real disappointment is watery, bitter, or tasteless. Scene 1 visual direction describes the jar label 'facing away' which defeats the entire purpose of a product reel. The pricing math is exposed (₹309/100g = 66 cups = ₹4.68 rounded to ₹5) but presented as a value prop without earning it — save trigger feels transactional, not educational. Comment trigger 'Comment BLEND if you prefer your milk coffee balanced with 30 percent chicory' is unnatural language — nobody talks like this. Audio direction promises 'crisp pour' but scene 1 is a 'disappointed sip.' Loop note references 'label details' but scene 1 explicitly hides the label. Fix: align hook time with scene 1, show label in scene 1, make comment trigger conversational ('Comment MILK COFFEE if you drink it daily'), rewrite save trigger as 'Save this ratio for your next grocery run: 70% coffee, 30% chicory for milk.', and ensure every visual direction serves the label reveal.",
-      "retention_audit": "Hook (0s): Time mismatch (6:52 vs 7:43) breaks trust instantly. Scene 1 (0-3.5s): Jar label facing away = wasted product visibility. Spoken line 'The label knows why' contradicts visual. Scene 2 (3.5-8s): Only moment label is shown but no close-up of actual 70/30 text described. Missing: price-per-cup visual proof, milk pour macro shot promised in edit_pacing but not in scenes, emotional payoff of 'relief' never visualized. Ending: Loop note assumes viewer saw label details — they didn't."
-    },
-    "viral_potential": {
-      "scores": {
-        "hook": 5.0,
-        "curiosity_gap": 6.0,
-        "relatability": 7.0,
-        "shareability": 6.0,
-        "comment_trigger": 4.0,
-        "format_fit": 6.0,
-        "follow_cta": 3.0
-      },
-      "overall": 5.29,
-      "weakest": [
-        "hook",
-        "comment_trigger",
-        "follow_cta"
-      ],
-      "feedback": "Hook is generic and explanatory — 'The coffee mistake almost every Indian kitchen makes' is a label, not a pattern interrupt. It does not stop the scroll in 1 second. Curiosity gap opens but payoff is delayed to scene 3; the 'mistake' (guessing ratio) is weak because most people don't think they're guessing — they just scoop. Relatability is the only decent dimension (morning milk coffee ritual). Shareability is low: '70/30 ratio' is not a tip people save; they save hacks or revelations. Comment trigger ('Comment BLEND if you prefer...') is compliance theater — nobody types that. It feels like",
-      "better_hook": "Your milk coffee tastes watery because you're using the wrong ratio — here's the fix.",
-      "passed": false,
-      "honesty": [],
-      "pass_mark": 8.0
-    },
+    "target": "Ultra Blend is 70% coffee and 30% chicory.",
+    "share_trigger": "Share with someone who drinks instant coffee daily.",
+    "editorial_error": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type",
+    "script": "The exact percentage on the back panel changes how your afternoon milk coffee behaves. Read the jar. Shop Ultra Blend at https://p3online.in. Ultra Blend is 70% coffee and 30% chicory.",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The hook is mismatched: '6:52 AM' in copy vs '7:43 AM' in scene 1 creates immediate cognitive dissonance. 'Beige disappointment' is weak — real disappointment is watery, bitter, or tasteless. Scene 1 visual direction describes the jar label 'facing away' which defeats the entire purpose of a product reel. The pricing math is exposed (₹309/100g = 66 cups = ₹4.68 rounded to ₹5) but presented as a value prop without earning it — save trigger feels transactional, not educa"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
   },
   "growth_reel": {
     "type": "reel",
@@ -3230,7 +3204,7 @@
       {
         "attempt": 1,
         "rung": "from_scratch",
-        "feedback": "viral: score 6.0 < 8.0 (weakest: relatability, comment_trigger, curiosity_gap). The script violates branding rules by repeatedly stating 'Ultra Blend is 70% coffee and 30% chicory' while featuring Purica (which is 100% pure Arabica). Furthermore, the spoken lines in scenes 1 and 2 do not match the p"
+        "feedback": "viral: score 6.0 < 8.0 (weakest: relatability, comment_trigger, curiosity_gap). The script violates branding rules by repeatedly stating 'Ultra Blend is 70% coffee and 30% chicory' while featuring Purica (which is pure Arabica). Furthermore, the spoken lines in scenes 1 and 2 do not match the p"
       },
       {
         "attempt": 2,
@@ -3270,6 +3244,50 @@
       {
         "status": "exhausted",
         "reason": "The hook is mismatched: '6:52 AM' in copy vs '7:43 AM' in scene 1 creates immediate cognitive dissonance. 'Beige disappointment' is weak — real disappointment is watery, bitter, or tasteless. Scene 1 visual direction describes the jar label 'facing away' which defeats the entire purpose of a product"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, format_fit). The time mismatch between the chosen hook ('6:52 AM') and scene 1 ('7:43 AM') breaks viewer immersion immediately. Streamline the opening line so it matches the spoken text and visual timestamp exactly. Ensure the 3-beat rhythm hits harder in the f"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "status": "exhausted",
+        "reason": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
       }
     ]
   },
