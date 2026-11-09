@@ -15203,11 +15203,11 @@
     },
     "2026-11-09|morning|instagram_story|pb_b6a2fd7361": {
       "asset": "",
-      "attempt_count": 24,
+      "attempt_count": 25,
       "content_date": "2026-11-09",
       "content_id": "pb_b6a2fd7361",
       "day_number": 312,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Headline awkwardly cuts off at 'Taste' without completing the question or thought; Background color and lighting lack depth and look flat and dated; Product label design is visually cluttered and lacks high-end aesthetic appeal",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Unfinished sentence: The headline 'Why Does My Instant Coffee Taste' is cut off awkwardly without finishing the thought.; Generic background: The brown gradient with blurry bokeh lacks rich texture, depth, or environmental context, feeling flat and template-driven.; Awkward ",
       "history": [
         {
           "at": "2026-11-09T07:14:26+00:00",
@@ -15568,20 +15568,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-09T14:56:56+00:00",
+          "attempt": 25,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-09T15:11:14+00:00",
+          "attempt": 25,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Unfinished sentence: The headline 'Why Does My Instant Coffee Taste' is cut off awkwardly without finishing the thought.; Generic background: The brown gradient with blurry bokeh lacks rich texture, depth, or environmental context, feeling flat and template-driven.; Awkward ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-09T14:35:41+00:00",
+      "last_attempt_at": "2026-11-09T14:56:56+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Headline awkwardly cuts off at 'Taste' without completing the question or thought; Background color and lighting lack depth and look flat and dated; Product label design is visually cluttered and lacks high-end aesthetic appeal",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Unfinished sentence: The headline 'Why Does My Instant Coffee Taste' is cut off awkwardly without finishing the thought.; Generic background: The brown gradient with blurry bokeh lacks rich texture, depth, or environmental context, feeling flat and template-driven.; Awkward ",
         "success": false
       },
-      "next_retry_at": "2026-11-09T14:50:48+00:00",
+      "next_retry_at": "2026-11-09T15:11:14+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-09T14:50:48+00:00",
+      "updated_at": "2026-11-09T15:11:14+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null

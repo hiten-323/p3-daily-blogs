@@ -21947,6 +21947,20 @@
       "reason": "aesthetic_below_8.0:4.0; Headline awkwardly cuts off at 'Taste' without completing the question or thought; Background color and lighting lack depth and look flat and dated; Product label design is visually cluttered and lacks high-end aesthetic appeal",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; unfinished sentence: the headline 'why does my instant coffee taste' is cut off awkwardly without finishing the thought.; generic background: the brown gra",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Unfinished sentence: The headline 'Why Does My Instant Coffee Taste' is cut off awkwardly without finishing the thought.; Generic background: The brown gradient with blurry bokeh lacks rich texture, depth, or environmental context, feeling flat and template-driven.; Awkward",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
