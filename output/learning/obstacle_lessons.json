@@ -21849,6 +21849,20 @@
       "reason": "aesthetic_below_8.0:5.0; The headline 'Why Does My Instant Coffee Taste' cuts off abruptly, leaving the question unfinished and creating poor copywriting structure.; The background feels flat with generic bokeh circles, lacking the rich textures and lighting depth expected from a premium D2C coffee",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; background lacks rich depth; appears muddy and flat rather than premium.; typographic hierarchy is weak; subheadline is too small and low-contrast against ",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Background lacks rich depth; appears muddy and flat rather than premium.; Typographic hierarchy is weak; subheadline is too small and low-contrast against the brown background.; Product lighting is flat; lacks dimensional highlights and specular reflections expected for prem",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
