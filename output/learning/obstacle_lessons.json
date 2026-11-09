@@ -21779,6 +21779,20 @@
       "reason": "aesthetic_below_8.0:6.0; Background lacks depth and premium texture, relying on generic brown bokeh that feels flat.; Typography hierarchy is weak; the subhead is too small and low-contrast to be legible at feed size.; Composition is static and centered, lacking the dynamic energy required to stop a",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; headline awkwardly cuts off at 'taste' leaving a dangling line; product label design looks dated and lacks premium d2c aesthetics; background uses generic ",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Headline awkwardly cuts off at 'Taste' leaving a dangling line; Product label design looks dated and lacks premium D2C aesthetics; Background uses generic AI-style bokeh spots rather than rich coffee textures or lighting",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
