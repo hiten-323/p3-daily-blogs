@@ -15203,11 +15203,11 @@
     },
     "2026-11-09|morning|instagram_story|pb_b6a2fd7361": {
       "asset": "",
-      "attempt_count": 21,
+      "attempt_count": 22,
       "content_date": "2026-11-09",
       "content_id": "pb_b6a2fd7361",
       "day_number": 312,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Headline awkwardly splits ('Taste' isolated on its own line), harming typographic flow.; The background gradient feels flat and lacks rich cinematic depth typical of premium D2C brands.; The product label design (yellow/brown) looks generic and cheap rather than artisanal or",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Typography hierarchy is weak and split awkwardly across multiple small tags and font sizes; Background lacks rich color depth and relies on cheap-looking blur spots rather than sophisticated lighting; Product label design ('PURITY BEANS' / 'ULTRA BLEND') looks amateurish and",
       "history": [
         {
           "at": "2026-11-09T07:14:26+00:00",
@@ -15523,20 +15523,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-09T14:00:14+00:00",
+          "attempt": 22,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-09T14:08:44+00:00",
+          "attempt": 22,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Typography hierarchy is weak and split awkwardly across multiple small tags and font sizes; Background lacks rich color depth and relies on cheap-looking blur spots rather than sophisticated lighting; Product label design ('PURITY BEANS' / 'ULTRA BLEND') looks amateurish and",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-09T13:40:12+00:00",
+      "last_attempt_at": "2026-11-09T14:00:14+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Headline awkwardly splits ('Taste' isolated on its own line), harming typographic flow.; The background gradient feels flat and lacks rich cinematic depth typical of premium D2C brands.; The product label design (yellow/brown) looks generic and cheap rather than artisanal or",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Typography hierarchy is weak and split awkwardly across multiple small tags and font sizes; Background lacks rich color depth and relies on cheap-looking blur spots rather than sophisticated lighting; Product label design ('PURITY BEANS' / 'ULTRA BLEND') looks amateurish and",
         "success": false
       },
-      "next_retry_at": "2026-11-09T13:54:21+00:00",
+      "next_retry_at": "2026-11-09T14:08:44+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-09T13:54:21+00:00",
+      "updated_at": "2026-11-09T14:08:44+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
