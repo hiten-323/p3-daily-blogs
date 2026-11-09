@@ -15203,11 +15203,11 @@
     },
     "2026-11-09|morning|instagram_story|pb_b6a2fd7361": {
       "asset": "",
-      "attempt_count": 28,
+      "attempt_count": 29,
       "content_date": "2026-11-09",
       "content_id": "pb_b6a2fd7361",
       "day_number": 312,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The headline is cut off abruptly ('Taste' hanging on a new line with awkward spacing).; Typography lacks sophistication and feels generic rather than premium D2C.; The label design on the jar uses bright, saturated yellow that clashes with the moody brown background.",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Incomplete headline text ('Why Does My Instant Coffee Taste...'), killing the hook and leaving the user hanging without delivering the punchline or value proposition.; The product label design uses a bright, saturated yellow that clashes harshly with the premium, moody dark ",
       "history": [
         {
           "at": "2026-11-09T07:14:26+00:00",
@@ -15628,20 +15628,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-09T16:13:11+00:00",
+          "attempt": 29,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-09T16:27:20+00:00",
+          "attempt": 29,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Incomplete headline text ('Why Does My Instant Coffee Taste...'), killing the hook and leaving the user hanging without delivering the punchline or value proposition.; The product label design uses a bright, saturated yellow that clashes harshly with the premium, moody dark ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-09T15:53:55+00:00",
+      "last_attempt_at": "2026-11-09T16:13:11+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The headline is cut off abruptly ('Taste' hanging on a new line with awkward spacing).; Typography lacks sophistication and feels generic rather than premium D2C.; The label design on the jar uses bright, saturated yellow that clashes with the moody brown background.",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Incomplete headline text ('Why Does My Instant Coffee Taste...'), killing the hook and leaving the user hanging without delivering the punchline or value proposition.; The product label design uses a bright, saturated yellow that clashes harshly with the premium, moody dark ",
         "success": false
       },
-      "next_retry_at": "2026-11-09T16:07:20+00:00",
+      "next_retry_at": "2026-11-09T16:27:20+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-09T16:07:20+00:00",
+      "updated_at": "2026-11-09T16:27:20+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
