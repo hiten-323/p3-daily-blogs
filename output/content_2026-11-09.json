@@ -1715,97 +1715,99 @@
   },
   "yt_short": {
     "featured_product": "ultra_blend",
-    "objective": "Drive traffic to website and increase product education for Purity Beans Ultra Blend.",
-    "primary_cta": "Shop now: https://p3online.in",
-    "success_metric": "Saves, website clicks, and profile visits",
-    "_growth_attempts": 1,
-    "audio": "Quiet kitchen ambient morning hum with the gentle sound of glass tapping a wooden counter",
-    "audio_direction": "Subtle low-frequency pulse on cut, crisp tactile sound of glass and spoon",
-    "audio_publish_mode": "native_reel_audio",
-    "audio_required": true,
-    "chosen_hook": "The exact percentage on the back panel changes how your afternoon milk coffee behaves.",
-    "comment_trigger": "Ultra Blend is 70% coffee and 30% chicory.",
-    "confidence": 0.95,
-    "cta": "Shop Ultra Blend at https://p3online.in",
-    "description": "Ultra Blend is 70% coffee and 30% chicory. Purity Beans delivers honest ingredient transparency.",
-    "edit_pacing": "Fast 2-second cuts in the opening, slowing down during the pour for maximum visual satisfaction",
-    "emotion_arc": [
-      "curiosity",
-      "tension",
-      "satisfaction",
-      "belonging"
-    ],
-    "funnel_objective": "conversion_and_education",
-    "gate_rejection": false,
-    "growth_plan": "Leverage saveable coffee education paired with clear ingredient transparency for Purity Beans Ultra Blend.",
-    "growth_review": "Hook uses an observational command that stops the scroll instantly. Visual pacing matches the required 3-beat rhythm.",
-    "hashtags": "#PurityBeans #UltraBlend #Coffee #CoffeeLoversIndia #PureCoffee",
-    "hook": "The exact percentage on the back panel changes how your afternoon milk coffee behaves.",
-    "hook_text": "The exact percentage on the back panel changes how your afternoon milk coffee behaves.",
-    "ladder_exhausted": true,
-    "loop_note": "Ends on the final sip, cutting right back to the spoon tapping the Purity Beans Ultra Blend jar.",
-    "manual_instruction": "Ensure the Purity Beans Ultra Blend glass jar packaging matches reference image exactly.",
+    "objective": "conversion",
+    "primary_cta": "Shop now at https://p3online.in",
+    "success_metric": "conversion",
     "product": "ultra_blend",
-    "publish_blocked": "ladder_exhausted",
-    "reason": "Ultra Blend is 70% coffee and 30% chicory.",
-    "reel_inspiration": "Ultra Blend is 70% coffee and 30% chicory.",
-    "rights_check_required": false,
-    "save_trigger": "Save this video for your next coffee upgrade.",
+    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "hook": "That flat, watery milk coffee sitting on your desk has nothing to do with the bean.",
+    "script": "That flat, watery milk coffee sitting on your desk has nothing to do with the bean. When you pour dairy into an unlabelled or vague jar, you never really know what proportion is in your mug. Purity Beans Ultra Blend prints the exact 70% coffee and 30% chicory ratio right on the glass label so your morning milk drink stays balanced. At ₹309 for 100g, it yields at least 66 cups, coming out to about ₹5 a cup. Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Follow @purepantryprovisions to decode your daily brew. Shop now at https://p3online.in",
+    "cta": "Shop now at https://p3online.in",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
-        "duration_s": 4.0,
-        "on_screen": "Check the back panel percentages.",
-        "spoken": "The exact percentage on the back panel changes how your afternoon milk coffee behaves.",
-        "visual_direction": "Lead-free glass catches afternoon window light. Fingerprint smudge on the jar neck. Net weight visible on label. Purity Beans Ultra Blend is 70% coffee and 30% chicory."
+        "duration_s": 5.0,
+        "on_screen": "THE MILK COFFEE MYSTERY",
+        "spoken": "That flat, watery milk coffee sitting on your desk has nothing to do with the bean.",
+        "visual_direction": "Shot on iPhone 15, close-up of a greyish milk coffee mug sitting on a cluttered wooden office desk with a charging cable, skin pores visible on the hand resting nearby, natural mixed warm lamp and cool daylight."
       },
       {
         "scene": 2,
-        "type": "curiosity",
+        "type": "tension",
         "duration_s": 5.0,
-        "on_screen": "Ultra Blend is 70% coffee and 30% chicory.",
-        "spoken": "Ultra Blend is 70% coffee and 30% chicory.",
-        "visual_direction": "Hand pours warm milk from a stainless steel pitcher into a clear glass mug containing brewed Purity Beans Ultra Blend. Steam rises. Amber room light mixes with cool daylight. Exact Purity Beans Ultra Blend jar sits beside the mug, label facing camera."
+        "on_screen": "THE VAGUE LABEL",
+        "spoken": "When you pour dairy into an unlabelled or vague jar, you never really know what proportion is in your mug.",
+        "visual_direction": "Handheld shot of a generic plain coffee jar being pushed aside on a messy kitchen counter, showing a water ring and a crumpled napkin, shallow depth of field."
       },
       {
         "scene": 3,
-        "type": "value",
+        "type": "turn",
         "duration_s": 6.0,
-        "on_screen": "Read the back panel. 70% coffee.",
-        "spoken": "Read the jar. Purity Beans Ultra Blend gives you a smooth milk coffee profile without guessing the blend.",
-        "visual_direction": "Camera tilts down to the back label of the Purity Beans Ultra Blend jar. Sharp focus on ingredient list: 70% coffee and 30% chicory. Shallow depth of field. Warm wood grain texture visible behind the jar. Natural light from side window."
+        "on_screen": "70% COFFEE, 30% CHICORY",
+        "spoken": "Purity Beans Ultra Blend prints the exact 70% coffee and 30% chicory ratio right on the glass label so your morning milk drink stays balanced.",
+        "visual_direction": "An asymmetrical human hand with flyaway hairs lifts the authentic Purity Beans glass jar under warm kitchen light, capturing fingerprints on the glass and realistic contact shadow on the counter."
       },
       {
         "scene": 4,
-        "type": "trust",
+        "type": "value",
         "duration_s": 5.0,
-        "on_screen": "70% coffee and 30% chicory.",
-        "spoken": "Every jar of Purity Beans Ultra Blend delivers consistent everyday milk coffee extraction.",
-        "visual_direction": "Lived-in kitchen frame. Used teaspoon resting on a saucer. Small water ring on the counter. Exact Purity Beans Ultra Blend jar beside a freshly poured cup. Steam curls. Handheld micro-movement."
+        "on_screen": "RS 309 FOR 66+ CUPS",
+        "spoken": "At ₹309 for 100g, it yields at least 66 cups, coming out to about ₹5 a cup.",
+        "visual_direction": "85mm f/1.8 close-up shot of the pricing printed on the back label, natural lens falloff, slight film grain, lived-in kitchen background with a used stainless steel spoon."
       },
       {
         "scene": 5,
-        "type": "follow",
+        "type": "payoff",
         "duration_s": 5.0,
-        "on_screen": "Shop Ultra Blend at https://p3online.in",
-        "spoken": "Follow Purity Beans for honest coffee education. Shop Ultra Blend at https://p3online.in.",
-        "visual_direction": "Relaxed hand closes the exact Purity Beans Ultra Blend jar lid. Soft click. Lens flare from window catches the lead-free glass. Jar remains steady, prominent. Handheld sway settles into a lock-off."
+        "on_screen": "SHOP P3ONLINE.IN",
+        "spoken": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Follow @purepantryprovisions to decode your daily brew. Shop now at https://p3online.in",
+        "visual_direction": "Locked-off shot of the ceramic mug with steady steam rising, Purity Beans jar standing crisp beside it, bottom text overlay showing the website link https://p3online.in."
       }
     ],
-    "tagline": "Read the jar. Purity Beans Ultra Blend is 70% coffee and 30% chicory.",
-    "tags": [
-      "Purity Beans",
-      "Ultra Blend",
-      "Instant Coffee India"
-    ],
-    "target": "Ultra Blend is 70% coffee and 30% chicory.",
-    "share_trigger": "Share with someone who drinks instant coffee daily.",
-    "editorial_error": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type",
-    "script": "The exact percentage on the back panel changes how your afternoon milk coffee behaves. Read the jar. Shop Ultra Blend at https://p3online.in. Ultra Blend is 70% coffee and 30% chicory.",
+    "hook_text": "That flat, watery milk coffee sitting on your desk has nothing to do with the bean.",
+    "chosen_hook": "That flat, watery milk coffee sitting on your desk has nothing to do with the bean.",
+    "hashtags": "#PurityBeans #UltraBlend #MilkCoffee #CoffeeLoversIndia #CleanCoffee #GlassJar #TransparentCoffee #CoffeeTime #MorningRoutine #CoffeeCulture",
+    "comment_trigger": "Comment RATIO below if you want to know how to balance your daily milk coffee.",
+    "save_trigger": "Save this short before your next kitchen restock.",
+    "share_trigger": "Share this with someone who drinks milk coffee every single morning.",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.2,
+      "emotion_pull": 8.0,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.6,
+      "verdict": "PASS",
+      "feedback": "The hook immediately grounds the viewer in a relatable daily pain point (watery milk coffee) without relying on cheap anti-chicory scare tactics. Transparently disclosing the 70/30 ratio builds instant trust and positions Ultra Blend as an honest choice for milk coffee drinkers. Pacing through the scenes keeps attention locked.",
+      "retention_audit": "Scene 1 creates an immediate sensory problem. Scene 2 transitions well into the lack of transparency in generic jars. Scene 3 delivers the exact product truth and correct Ultra Blend specification. Scene 4 anchors the value clearly with pricing and cup count. Scene 5 closes cleanly with the exact brand handle and website link."
+    },
+    "viral_potential": {
+      "scores": {
+        "hook": 7.0,
+        "curiosity_gap": 6.0,
+        "relatability": 8.0,
+        "shareability": 6.0,
+        "comment_trigger": 7.0,
+        "format_fit": 7.0,
+        "follow_cta": 8.0
+      },
+      "overall": 7.0,
+      "weakest": [
+        "curiosity_gap",
+        "shareability"
+      ],
+      "feedback": "The script clearly communicates the value and pricing of Ultra Blend while respecting the exact product rules (properly identifying it as a 70% coffee and 30% chicory milk coffee). However, the hook starts slightly slow for a YouTube Short and lacks an immediate visual open loop. To push past 8, tighten the opening statement to a sharper contrarian claim about office coffee, and increase the immediate visual tension in the first second.",
+      "better_hook": "Your office milk coffee is hiding its real ingredients.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "ladder_exhausted": true,
+    "publish_blocked": "ladder_exhausted",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The script clearly communicates the value and pricing of Ultra Blend while respecting the exact product rules (properly identifying it as a 70% coffee and 30% chicory milk coffee). However, the hook starts slightly slow for a YouTube Short and lacks an immediate visual open loop. To push past 8, tighten the opening statement to a sharper contrarian claim about office coffee, and increase the immediate visua"
   },
   "growth_reel": {
     "type": "reel",
@@ -3288,6 +3290,50 @@
       {
         "status": "exhausted",
         "reason": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema emotion_arc   Input should be a valid string [type=string_type, input_value=['curiosity', 'tension', ...isfaction', 'belonging'], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/string_type"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, shareability). The opening hook is too academic and informative rather than a scroll-stopping pattern interrupt. Instead of starting with an explanatory statement about a ratio, lead directly with the consumer frustration (e.g., why morning milk coffee tastes w"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (The hook \"The coffee mistake almost every Indian kitchen makes when pouring milk into a thin brew\" is relatable but too vague; it could apply to any brand and fails to stop scrolling within 2 seconds. Strengthen the hook by mentioning Ultra Blend directly and the 70/30 ratio, "
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema scenes   List should have at least 5 items after validation, not 3 [type=too_short, input_value=[{'scene': 1, 'type': 'pr...t callus on thumb. Tw'}], input_type=list]     For further information visit https://errors.pydantic.dev/2.14/v/too_short | br"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, shareability, format_fit). The hook relies slightly too much on descriptive action rather than an immediate pattern interrupt. To fit YouTube Shorts mechanics better, tighten the opening line to grab attention within the first 1 second. Ensure the visual transi"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.86 < 8.0 (weakest: curiosity_gap, shareability). The piece hits strong notes on Indian milk-coffee habits and follows all brand rules regarding Ultra Blend's exact 70/30 ratio. To push the score higher, tighten the curiosity gap in the first two seconds by teasing the visual consequen"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: shareability, hook). The opening hook is good for visual engagement with the milk pour, but could punch harder on the consumer value frustration of hidden filler ratios. Shareability is moderate because price breakdowns are helpful but not inherently viral compared t"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, shareability). The opening line is a bit instructional rather than a sharp pattern interrupt for a short-form video. To hit an 8+ score, the hook needs to instantly challenge a common assumption about milk coffee or pricing rather than just describing the steps"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.0 < 8.0 (weakest: curiosity_gap, shareability). The script clearly communicates the value and pricing of Ultra Blend while respecting the exact product rules (properly identifying it as a 70% coffee and 30% chicory milk coffee). However, the hook starts slightly slow for a YouTube Sho"
       }
     ]
   },
