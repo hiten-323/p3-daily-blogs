@@ -22045,6 +22045,20 @@
       "reason": "weak_hierarchy:62/41",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:5.0; the background feels a bit flat and muddy with generic bokeh spots rather than a rich, textured depth.; the headline typography is awkwardly broken across ",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:5.0; The background feels a bit flat and muddy with generic bokeh spots rather than a rich, textured depth.; The headline typography is awkwardly broken across lines ('Why Does My Instant Coffee / Taste') hurting immediate legibility.; The product label design on the jar uses bri",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
