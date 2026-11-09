@@ -21723,6 +21723,20 @@
       "reason": "aesthetic_below_8.0:4.0; Headline awkwardly broken over two lines leaving the word 'Taste' isolated, hurting typographic flow.; The background gradient feels flat and generic digital brown, lacking rich textures or lighting depth expected from a premium brand.; Product label design ('PURITY BEANS UL",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-09",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the typography is weak and dated: the headline cuts awkwardly after 'taste', and the tracking and font choices lack modern d2c aesthetic polish.; the backg",
+      "label": "stories",
+      "last_seen": "2026-11-09",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The typography is weak and dated: the headline cuts awkwardly after 'Taste', and the tracking and font choices lack modern D2C aesthetic polish.; The background gradient feels artificial with random blur spots rather than sophisticated lighting or depth.; The label design on",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
