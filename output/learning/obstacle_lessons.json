@@ -23781,6 +23781,34 @@
       "reason": "aesthetic_below_8.0:4.0; The product render looks amateur and pasted-on, lacking realistic lighting, shadows, and interaction with the surface.; The background gradient is muddy and flat, lacking the rich depth and luxurious texture expected from a premium D2C coffee brand.; Typography feels disjoin",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-10",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|pale_background:sat=0.11; same_layout_as_last_tile:hero_center",
+      "label": "reel_1",
+      "last_seen": "2026-11-10",
+      "platform": "instagram",
+      "reason": "pale_background:sat=0.11; same_layout_as_last_tile:hero_center",
+      "stage": "render",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
+      "first_seen": "2026-11-10",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram|reel_1|aesthetic|aesthetic_below_8.0:4.0; cluttered typographic hierarchy with too many competing call-to-actions ('p3online.in', 'follow...', 'pure coffee \u2022 zero chicory', and the bottom button).;",
+      "label": "reel_1",
+      "last_seen": "2026-11-10",
+      "platform": "instagram",
+      "reason": "aesthetic_below_8.0:4.0; Cluttered typographic hierarchy with too many competing call-to-actions ('P3ONLINE.IN', 'Follow...', 'PURE COFFEE \u2022 ZERO CHICORY', and the bottom button).; Prominent URL as the main headline instead of a compelling product benefit or flavor note.; Generic and slightly artifi",
+      "stage": "render",
+      "status": "gate_holding"
     }
   ],
   "version": 1
