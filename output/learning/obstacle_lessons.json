@@ -23753,6 +23753,20 @@
       "reason": "aesthetic_below_8.0:4.0; The product packaging design looks amateurish and lacks the sophisticated aesthetic expected from a premium D2C brand.; The purple and black label color scheme clashes awkwardly with the warm brown background tones.; Typography lacks refined hierarchy; the pill badges at the",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-10",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; flat, template-like lighting with minimal dimensional depth; background bokeh feels generic rather than premium; lavender/purple label lacks immediate coff",
+      "label": "stories",
+      "last_seen": "2026-11-10",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Flat, template-like lighting with minimal dimensional depth; background bokeh feels generic rather than premium; Lavender/purple label lacks immediate coffee category cues and reads as off-brand for a premium coffee D2C; Static centered composition is safe but not scroll-sto",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
