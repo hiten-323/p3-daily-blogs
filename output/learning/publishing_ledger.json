@@ -16116,11 +16116,11 @@
     },
     "2026-11-10|morning|instagram_story|pb_bf055375a1": {
       "asset": "",
-      "attempt_count": 10,
+      "attempt_count": 11,
       "content_date": "2026-11-10",
       "content_id": "pb_bf055375a1",
       "day_number": 313,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient feels muddy and lacks rich depth or premium ambient lighting.; Product render is visibly cut-out and placed awkwardly on a flat two-toned surface with an unnatural drop shadow.; Typography styling for 'Read The Label' uses generic web-safe fonts and plain",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, looking more like a basic template than a premium D2C brand aesthetic.; Product packaging design uses unappealing pastel purples that clash with the rich coffee brown tones, reducing shelf appeal.; Typographic hier",
       "history": [
         {
           "at": "2026-11-10T07:40:32+00:00",
@@ -16271,20 +16271,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-10T11:03:50+00:00",
+          "attempt": 11,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-10T11:17:01+00:00",
+          "attempt": 11,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, looking more like a basic template than a premium D2C brand aesthetic.; Product packaging design uses unappealing pastel purples that clash with the rich coffee brown tones, reducing shelf appeal.; Typographic hier",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-10T10:49:56+00:00",
+      "last_attempt_at": "2026-11-10T11:03:50+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient feels muddy and lacks rich depth or premium ambient lighting.; Product render is visibly cut-out and placed awkwardly on a flat two-toned surface with an unnatural drop shadow.; Typography styling for 'Read The Label' uses generic web-safe fonts and plain",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, looking more like a basic template than a premium D2C brand aesthetic.; Product packaging design uses unappealing pastel purples that clash with the rich coffee brown tones, reducing shelf appeal.; Typographic hier",
         "success": false
       },
-      "next_retry_at": "2026-11-10T10:57:47+00:00",
+      "next_retry_at": "2026-11-10T11:17:01+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-10T10:57:47+00:00",
+      "updated_at": "2026-11-10T11:17:01+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
