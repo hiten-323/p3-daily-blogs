@@ -1678,105 +1678,129 @@
     }
   },
   "yt_short": {
-    "featured_product": "Bold",
-    "objective": "increase Bold Pure Coffee jar sales and website visits",
-    "primary_cta": "Shop Bold Pure Coffee at https://p3online.in",
-    "success_metric": "website clicks and Bold jar add-to-carts",
-    "audio": "ambient coffee shop low hum, distant spoon clink, warm jazz piano, sudden quiet",
-    "audio_direction": "mix of ambient room tone and warm piano melody, volume dips during spoken word",
-    "chosen_hook": "revelation",
-    "comment_trigger": "Comment BOLD if you drink strong black coffee daily.",
-    "cta": "Shop p3online.in for Bold Pure Coffee glass jar.",
-    "description": "A short, sharp look at what makes a coffee jar truly pure — and why most instant coffee jars aren't.",
-    "edit_pacing": "fast-slow-fast: quick cuts of jar close-ups, slowing on the label, quick finish with CTA",
-    "emotion_arc": "curiosity → recognition → trust → action",
-    "follow_trigger": "Follow @purepantryprovisions for more honest coffee truths.",
-    "funnel_objective": "drive website traffic and Bold jar sales",
-    "growth_plan": "teaser for next reel on Purica freeze-drying process. Bold is agglomerated pure coffee.",
-    "growth_review": "pending performance data review in 48h",
-    "hashtags": "#puritybeans #boldpurecoffee #instantcoffee #premiumcoffee #coffeeloversindia",
-    "hook": "Your spoon stands upright, but the label hides the truth.",
-    "hook_text": "You scoop your morning coffee. The spoon stands upright — and that changes everything.",
+    "featured_product": "bold",
+    "objective": "Brand awareness and non-sales ritual engagement",
+    "primary_cta": "Follow @purepantryprovisions for more",
+    "success_metric": "Saves and Profile Follows",
+    "audio": "Ambient morning kitchen sounds with the soft scrape of a ceramic spoon and a gentle pour of hot water.",
+    "audio_direction": "Start with sharp acoustic detail of a spoon hitting porcelain, transitioning into a warm, low-frequency hum as steam rises.",
+    "blog_post": "Read the jar: why understanding agglomerated pure coffee changes your morning routine. A deep dive into agglomerated coffee production, grain density, and reading back-panel ingredient lists to ensure you know what is in your cup.",
+    "brand_mention": "Purity Beans Bold",
+    "caption": "The quiet 7 AM kitchen light hits the counter differently when you stop guessing what is in your cup. Purity Beans Bold is agglomerated pure coffee with zero chicory. Read the jar, know your brew, and start your morning with absolute clarity. Explore pure coffee at https://p3online.in",
+    "chosen_hook": "Your spoon sinks differently into an agglomerated jar than a standard spray-dried one.",
+    "comment_trigger": "Comment COFFEE if you read your ingredient labels every single time.",
+    "cta": "Read the jar and explore pure coffee at https://p3online.in",
+    "description": "A quiet cinematic YouTube Short exploring the tactile ritual of brewing Bold agglomerated pure coffee without any sales pressure.",
+    "edit_pacing": "Deliberate and unhurried. 5-second cuts with micro-movements of steam and light.",
+    "editorial_subscores": {
+      "brand_clarity": 9,
+      "hook_strength": 9,
+      "saveability": 8,
+      "shareability": 9
+    },
+    "emotion_arc": "Curiosity -> Calm Understanding -> Satisfaction",
+    "follow_trigger": "Follow @purepantryprovisions for calm daily coffee rituals and ingredient transparency.",
+    "funnel_objective": "Discovery and Follow",
+    "gate_rejection": "none",
+    "growth_plan": "Publish as YouTube Short with strict focus on retention and educational save-rate.",
+    "growth_review": "Evaluated against strict non-sales community guidelines. Zero discount language.",
+    "hashtags": "#PurityBeans #AgglomeratedCoffee #PureCoffee #ZeroChicory #CoffeeRituals #ReadTheJar",
+    "hook": "The coffee mistake almost every Indian kitchen makes before the sun is even up.",
+    "hook_text": "The coffee mistake almost every Indian kitchen makes before the sun is even up.",
     "ladder_exhausted": true,
-    "product": "Bold",
+    "product": "bold",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "close-up food photography with shallow depth of field, warm kitchen light",
-    "save_trigger": "Save this before your next grocery run.",
+    "reel_inspiration": "Chef's Table macro coffee extraction mixed with architectural morning light.",
+    "save_trigger": "Save this video for your next weekend coffee brewing ritual.",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
         "duration_s": 5.0,
-        "on_screen": "SPOON IN JAR",
-        "spoken": "You scoop your morning coffee. The spoon stands upright.",
-        "visual_direction": "Extreme close-up of a tablespoon standing inside a jar of coffee granules, dust motes floating in warm light"
+        "on_screen": "THE 7 AM LIGHT",
+        "spoken": "The coffee mistake almost every Indian kitchen makes before the sun is even up.",
+        "visual_direction": "Shot on iPhone 15, 85mm lens. Close-up of hot water pouring into a ceramic mug against a dark marble counter with natural window light."
       },
       {
         "scene": 2,
         "type": "tension",
-        "duration_s": 5.0,
-        "on_screen": "POURING WATER",
-        "spoken": "You pour boiling water. It disappears instantly. No body, no crema, just brown water.",
-        "visual_direction": "Hand pouring near-boiling water into a jar of instant coffee granules; the water turns murky instantly, no crema forms"
+        "duration_s": 6.0,
+        "on_screen": "AGGLOMERATED PURE COFFEE",
+        "spoken": "Pouring boiling water straight onto dry coffee granules shocks the bean structure.",
+        "visual_direction": "Macro shot of the exact Purity Beans Bold jar resting on a warm wooden surface with soft morning lens flare and a wisp of steam."
       },
       {
         "scene": 3,
         "type": "turn",
-        "duration_s": 4.0,
-        "on_screen": "LABEL REVEAL",
-        "spoken": "But the label tells a different story.",
-        "visual_direction": "Hand flips the jar; warm studio light catches the Purity Beans Bold label in sharp focus against a dark background"
+        "duration_s": 6.0,
+        "on_screen": "ZERO CHICORY",
+        "spoken": "Purity Beans Bold is agglomerated pure coffee with zero chicory, made to release its deep, full-bodied profile when water cools just slightly below a boil.",
+        "visual_direction": "A relaxed hand turning the Purity Beans Bold glass jar slightly to reveal the crisp, clear ingredient panel in warm side light."
       },
       {
         "scene": 4,
         "type": "payoff",
-        "duration_s": 4.0,
-        "on_screen": "BOLD JAR ON TABLE",
-        "spoken": "Bold Pure Coffee. 0% chicory. Agglomerated pure coffee. Deep, full-bodied kick.",
-        "visual_direction": "The Purity Beans Bold glass jar sits on a dark marble surface; amber light hits the label, a steel spoon rests beside it, steam rises from a faraway cup"
+        "duration_s": 5.0,
+        "on_screen": "READ THE JAR",
+        "spoken": "Notice how the aroma opens up without any harsh bitterness.",
+        "visual_direction": "Steaming mug beside the Purity Beans Bold jar, soft natural window light casting long, calm shadows across the lived-in kitchen counter."
       },
       {
         "scene": 5,
         "type": "cta",
         "duration_s": 3.0,
-        "on_screen": "SHOP NOW",
-        "spoken": "Shop Bold Pure Coffee. Glass jar. Pure coffee.",
-        "visual_direction": "Graphic overlay: SHOP NOW → https://p3online.in — the jar fills the right third of the screen"
+        "on_screen": "Follow @purepantryprovisions",
+        "spoken": "Read the jar at https://p3online.in. Follow @purepantryprovisions for more.",
+        "visual_direction": "Clean, minimalist end frame featuring the Purity Beans Bold glass jar and website link https://p3online.in"
       }
     ],
-    "share_trigger": "Share with a friend who drinks instant coffee daily.",
-    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "script": "The coffee mistake almost every Indian kitchen makes before the sun is even up. Pouring boiling water straight onto dry coffee granules shocks the bean structure. Purity Beans Bold is agglomerated pure coffee with zero chicory, made to release its deep, full-bodied profile when water cools just slightly below a boil. Notice how the aroma opens up without any harsh bitterness. Read the jar at https://p3online.in. Follow @purepantryprovisions for more calm coffee rituals.",
+    "share_trigger": "Share this with someone who appreciates a genuine black coffee routine.",
+    "tagline": "Read the jar. Bold is pure coffee.",
     "tags": [
+      "purity beans",
       "bold",
       "pure coffee",
-      "agglomerated",
-      "premium instant coffee",
-      "indian coffee brand"
+      "zero chicory",
+      "agglomerated coffee"
     ],
-    "target": "urban indian coffee drinkers 22–45, strong black coffee lovers, moka pot and filter coffee enthusiasts",
-    "editorial_error": "brand: ['Missing brand mention', 'Missing website reference']",
-    "script": "A short, sharp look at what makes a coffee jar truly pure — and why most instant coffee jars aren't.",
-    "brand_mention": "Purity Beans",
-    "website_reference": "https://p3online.in",
-    "editorial_subscores": {
-      "shareability": 9,
-      "saveability": 8,
-      "hook_strength": 9,
-      "brand_clarity": 9,
-      "overall": 9
+    "viral_potential": {
+      "scores": {
+        "hook": 7.0,
+        "curiosity_gap": 7.0,
+        "relatability": 8.0,
+        "shareability": 8.0,
+        "comment_trigger": 7.0,
+        "format_fit": 8.0,
+        "follow_cta": 8.0
+      },
+      "overall": 7.57,
+      "weakest": [
+        "hook",
+        "curiosity_gap",
+        "comment_trigger"
+      ],
+      "feedback": "The hook 'The coffee mistake almost every Indian kitchen makes...' is a bit cliché and slightly generic for short-form video. Tighten the first 2 seconds by focusing immediately on the specific water temperature or granule shock to spike the curiosity gap faster. Strengthen the comment trigger by asking a more direct, polarising question about morning brewing habits rather than just asking who reads labels.",
+      "better_hook": "Stop pouring boiling water straight onto your coffee granules.",
+      "passed": false,
+      "honesty": [],
+      "pass_mark": 8.0
     },
-    "caption": "Your morning coffee ritual deserves the truth. Read the jar. #PurityBeans #BoldPureCoffee #InstantCoffee #PremiumCoffee #CoffeeLoversIndia https://p3online.in",
-    "blog_post": {
-      "title": "Why Your Instant Coffee Spoon Stands Upright: The Truth About Bold Pure Coffee",
-      "meta_description": "Have you noticed your coffee spoon standing upright in the jar? What it reveals about what you're really drinking. Discover the difference between agglomerated pure coffee and ordinary blends. Read the jar and taste the difference.",
-      "introduction": "That moment when you scoop your morning coffee and the spoon stands upright in the jar—it feels like a small miracle. But have you ever wondered why this happens with some jars and not others? The answer lies not in physics tricks, but in what's actually inside the canister. Most instant coffee brands bulk up their product with fillers that change how the granules behave. At Purity Beans, we believe what you don't see matters just as much as what you do. Let's open the jar on the truth behind your daily cup.",
-      "body": "The spoon-standing phenomenon is more common than you might think. When you pour a spoonful of coffee into your cup, does it glide smoothly or does it stand at attention? This subtle behavior is actually a window into the coffee's composition. Traditional instant coffees often use agglomeration processes that add bulking agents. These agents make the granules heavier and change how they settle in water. But there is another way. At Purity Beans, the Bold Pure Coffee jar contains pure coffee — 0% chicory. Because it is agglomerated pure coffee without added fillers, the granules behave differently. The spoon stands upright because the particles are denser and more consistent, a sign of pure coffee without hidden bulking agents. When you brew with boiling water, the pure coffee releases its full body and aroma without the murkiness that fillers create. The result is a deep, full-bodied cup that lives up to the label. Unlike blends",
-      "conclusion": "If you have been wondering why your coffee spoon behaves differently from jar to jar, the answer is in the composition. Purity Beans Bold is 100% pure coffee, agglomerated without fillers. It is not freeze-dried, and it has no chicory. Read the jar to confirm. Visit https://p3online.in to choose your blend and taste the difference for yourself.",
-      "cta": "Shop Bold Pure Coffee at https://p3online.in"
+    "viral_readiness_score": 9,
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.0,
+      "emotion_pull": 8.2,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.6,
+      "verdict": "PASS",
+      "feedback": "The asset strong-matches all brand guidelines for Purity Beans Bold, correctly identifying it as agglomerated pure coffee with zero chicory without violating product lines. The cinematic morning lighting and tactile descriptions meet all realism rules. To optimize further, ensure the opening hook immediately connects the morning routine friction directly to ingredient awareness.",
+      "retention_audit": "Scene 1 successfully anchors the viewer with morning lighting and a relatable ritual hook. Scene 2 introduces the precise product without breaking realism. Scene 3 cleanly clarifies the agglomerated pure coffee profile. Scene 4 delivers a smooth, non-pushy closure with a clear CTA and website link."
     },
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: ['Missing brand mention', 'Missing website reference']"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.57 < 8.0 (weakest: hook, curiosity_gap, comment_trigger). The hook 'The coffee mistake almost every Indian kitchen makes...' is a bit cliché and slightly generic for short-form video. Tighten the first 2 seconds by focusing immediately on the specific water temperature or granule shock to spike the curiosity gap faster. Strengthen the comment trigger by asking a more direct, polarising question about morning brewing habits rather than just asking who rea"
   },
   "growth_reel": {
     "type": "reel",
@@ -1821,45 +1845,166 @@
     "chosen_hook": "I read the label so you don't have to: your 'strong' coffee isn't a roast level — it's a completely different plant.",
     "follow_cta": "Follow @purepantryprovisions for the label truth every morning.",
     "loop_note": "Final frame (hand picking Bold) cuts instantly to Frame 1 (6:47 AM flashlight on Bold label). Seamless loop — the morning choice repeats.",
+    "regen_round": 6,
     "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 8.5,
+      "shareability": 8.7,
+      "saveability": 8.3,
       "emotion_pull": 8.0,
       "hook_strength": 8.5,
       "brand_clarity": 9.0,
       "overall": 8.5,
       "verdict": "PASS",
-      "feedback": "The species-angle hook is specific and ownable — it stops the scroll because most consumers conflate 'strong' with roast level. The 6:47 AM lived-in kitchen frame grounds the product in reality and passes the realism audit (water ring, cable, steam). Frame 2's macro bean comparison is the highest-save moment; keep the 0.8s hold on crease depth. Frame 3's office pantry POV adds relatable friction but the 'wrong bean for the moment' overlay must appear exactly at the grimace, not after, or the insight arrives late. Frame 4 correctly showcases the Bold jar with agglomerated + zero-chicory callouts — no process drift. Frame 5 cleanly maps all three pure-coffee SKUs to species + process without mentioning Ultra Blend, avoiding the chicory trap. CTA 'Comment ARABICA or ROBUSTA' is intent-qualifying and founder-reply ready. Caption front-loads the insight and includes the link. Audio cut-off in the prompt is a production note, not a content flaw.",
-      "retention_audit": "Frame 3: ensure the 'WRONG BEAN FOR THE MOMENT' text hits at the first-sip grimace, not the 4 PM nod — the pain point must lead the relief. Frame 5: the line 'Three species. Three processes.' is dense; consider a 0.3s pause after 'species' so the viewer registers Arabica/Robusta before 'processes' lands. Otherwise no attention drops."
+      "feedback": "The hook is strong and brand‑specific, but tighten the opening visual cue: start with the jar in dim light and a quick flash of the ‘0% Chicory’ line to boost immediate curiosity. In frame 2, replace the generic ‘side by side on matte black’ with a lived‑in kitchen surface to add realism. Ensure the spoken line in frame 4 matches the on‑screen text exactly (“Pure Coffee — Agglomerated”) to avoid a tiny disconnect. Minor tightening will raise share and save scores further.",
+      "retention_audit": "Frame 1: Strong visual, but the spoken line repeats the hook verbatim; consider adding a brief pause for emphasis. Frame 2: The macro cut is educational but could feel staged; add a subtle hand movement to introduce the beans. Frame 3: Good contrast of wrong vs right moment; ensure the POV shake is subtle to keep comfort. Frame 4: Excellent close‑up of label; add a faint fingerprint for realism. Frame 5: Call‑to‑action text is clear; keep the push‑in motion slow to maintain focus."
     },
     "viral_potential": {
       "scores": {
-        "hook": 7.0,
+        "hook": 8.0,
         "curiosity_gap": 8.0,
-        "relatability": 6.0,
+        "relatability": 9.0,
         "shareability": 8.0,
-        "comment_trigger": 6.0,
-        "format_fit": 6.0,
-        "follow_cta": 4.0
+        "comment_trigger": 9.0,
+        "format_fit": 9.0,
+        "follow_cta": 8.0
       },
-      "overall": 6.0,
+      "overall": 8.4,
       "weakest": [
-        "follow_cta",
-        "format_fit",
-        "relatability",
-        "comment_trigger"
+        "hook",
+        "follow_cta"
       ],
-      "feedback": "1. Hook (7→9): Replace the meta 'I read the label so you don't have to' with the raw revelation itself. Open on the impossible fact: 'Your \"strong\" coffee isn't a roast. It's a different species.' Visual: flashlight hitting the Bold label at 6:47 AM — the text '0% Chicory' and 'Agglomerated' catch the light. 2. Format Fit (6→9): Current frames run 3-5s each. Enforce hard cuts every 1-2s. Split Frame 2 into 3 beats: (a) Arabica bean macro 0.8s, (b) Robusta bean macro 0.8s, (c) side-by-side text flash 0.6s. Frame 3: cut on grimace (0.5s) → 4pm nod (0.5s) → 'WRONG BEAN' overlay (0.5s). Frame 4: l",
-      "better_hook": "Your \"strong\" coffee isn't a roast. It's a different species.",
-      "passed": false,
+      "feedback": "The piece has strong educational value, clear structural beats, and adheres strictly to brand rules by correctly categorizing Bold as agglomerated pure coffee with zero chicory. To push virality higher, sharpen the opening hook to create immediate tension around being misled, and make the follow CTA more specific to daily label-reading habits.",
+      "better_hook": "Your daily instant coffee jar is hiding a completely different plant species from you.",
+      "passed": true,
       "honesty": [],
       "pass_mark": 8.0
     },
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 6.0 < 8.0 (weakest: follow_cta, format_fit, relatability, comment_trigger). 1. Hook (7→9): Replace the meta 'I read the label so you don't have to' with the raw revelation itself. Open on the impossible fact: 'Your \"strong\" coffee isn't a roast. It's a different species.' Visual: flashlight hitting the Bold label at 6:47 AM — the text '0% Chicory' and 'Agglomerated' catch the light. 2. Format Fit (6→9): Current frames run 3-5s each. Enforce hard cuts every"
+    "viral_readiness_score": 94.0,
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "people who buy instant coffee and have never turned the jar around",
+      "angle": "visual discovery of one label fact",
+      "follow_promise": "Follow for the next thing the label is hiding.",
+      "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+      "platform": "reel",
+      "sku": "Bold",
+      "day": 313
+    },
+    "growth_review": {
+      "platform": "reel",
+      "label": "growth_reel",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "people who buy instant coffee and have never turned the jar around",
+        "angle": "visual discovery of one label fact",
+        "follow_promise": "Follow for the next thing the label is hiding.",
+        "rationale": "A Reel is discovery. The first frame has to stop a stranger.",
+        "platform": "reel",
+        "sku": "Bold",
+        "day": 313
+      },
+      "published": false
+    }
   },
   "threads_post": {
     "featured_product": "Bold Pure Coffee",
@@ -3329,6 +3474,50 @@
       {
         "status": "exhausted",
         "reason": "brand: ['Missing brand mention', 'Missing website reference']"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', 'Missing website reference']"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 5.29 < 8.0 (weakest: comment_trigger, format_fit, curiosity_gap). The hook is generic fear-mongering ('industrial brands hope you never read') rather than a specific, visual pattern interrupt. Curiosity gap is weak — the payoff ('zero chicory') is visible in the hook's premise, so no op"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, format_fit). The hook is slightly too long for a fast-paced YouTube Short; tighten it to under 3 seconds to immediately stop the scroll. Ensure the 3-beat rhythm hits hard in the first 5 seconds with a sharper pattern interrupt before showing the jar. Suggested"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.29 < 8.0 (weakest: hook, shareability). The hook 'What is actually inside this jar? Let's read it.' is a bit generic and relies on a common curiosity trope. It can be sharpened with a more direct contrast or question regarding ingredient transparency. Shareability can be improved by p"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, curiosity_gap, shareability). The current hook relies on a basic instruction rather than a strong pattern interrupt or psychological trigger. To push past 8, open with a direct truth or counter-intuitive coffee observation that makes scrolling impossible. Ensur"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a ritual (a calm, relatable daily coffee moment the viewer will recognise). Every frame/slide must teach, debunk or show a ritual; no prices, no offers, no "
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing brand mention', 'Missing website reference']"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 6.8 < 8.0 (weakest: hook, shareability). The opening hook is a bit too descriptive and lacks immediate punch for a short-form video where seconds matter. To improve shareability and stopping power, lead with a surprising consumer realization about what is actually in coffee jars rather "
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.57 < 8.0 (weakest: hook, curiosity_gap, comment_trigger). The hook 'The coffee mistake almost every Indian kitchen makes...' is a bit cliché and slightly generic for short-form video. Tighten the first 2 seconds by focusing immediately on the specific water temperature or granule shoc"
       }
     ]
   },
@@ -5476,6 +5665,6 @@
   "mandatory_regen_rounds": {
     "facebook_post": 1,
     "reel_1": 1,
-    "growth_reel": 5
+    "growth_reel": 6
   }
 }
