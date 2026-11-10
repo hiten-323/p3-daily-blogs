@@ -23641,6 +23641,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background feels flat and lacks rich depth, using a plain gradient with generic bokeh instead of a textured, premium coffee-themed environment.; The product packaging design looks amateurish and unrefined, lacking the sophisticated aesthetic expected from a top D2C coffe",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-10",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient feels muddy and lacks rich depth or premium ambient lighting.; product render is visibly cut-out and placed awkwardly on a flat two-ton",
+      "label": "stories",
+      "last_seen": "2026-11-10",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient feels muddy and lacks rich depth or premium ambient lighting.; Product render is visibly cut-out and placed awkwardly on a flat two-toned surface with an unnatural drop shadow.; Typography styling for 'Read The Label' uses generic web-safe fonts and plain",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
