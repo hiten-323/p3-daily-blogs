@@ -23725,6 +23725,20 @@
       "reason": "aesthetic_below_8.0:4.0; The product packaging design looks amateurish and lacks the sophisticated, minimalist aesthetic expected of premium D2C coffee brands.; The background gradient and lighting feel flat and dated, lacking rich depth and moody atmosphere.; The typography hierarchy is weak, using",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-10",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient looks flat and muddy rather than rich and dimensional, lacking the premium warmth expected of a d2c coffee brand.; the product mock",
+      "label": "stories",
+      "last_seen": "2026-11-10",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient looks flat and muddy rather than rich and dimensional, lacking the premium warmth expected of a D2C coffee brand.; The product mockup is poorly integrated; the jar looks amateurishly cut out with harsh drop shadows and sits awkwardly on the surface.;",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
