@@ -23571,6 +23571,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth, feeling flat and dated rather than premium D2C.; The product packaging design looks amateurish with a harsh, unrefined purple color palette and low-resolution graphics.; The drop shadow underneath the coffee jar is",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-10",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; muted brown/purple palette lacks premium depth and richness; feels flat rather than dimensional; generic gradient background with basic bokeh is safe but n",
+      "label": "stories",
+      "last_seen": "2026-11-10",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Muted brown/purple palette lacks premium depth and richness; feels flat rather than dimensional; Generic gradient background with basic bokeh is safe but not scroll-stopping for a premium D2C feed; Typography is functional but uninspired; hierarchy is basic and lacks editori",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
