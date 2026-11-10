@@ -1679,128 +1679,245 @@
   },
   "yt_short": {
     "featured_product": "bold",
-    "objective": "Brand awareness and non-sales ritual engagement",
-    "primary_cta": "Follow @purepantryprovisions for more",
-    "success_metric": "Saves and Profile Follows",
-    "audio": "Ambient morning kitchen sounds with the soft scrape of a ceramic spoon and a gentle pour of hot water.",
-    "audio_direction": "Start with sharp acoustic detail of a spoon hitting porcelain, transitioning into a warm, low-frequency hum as steam rises.",
-    "blog_post": "Read the jar: why understanding agglomerated pure coffee changes your morning routine. A deep dive into agglomerated coffee production, grain density, and reading back-panel ingredient lists to ensure you know what is in your cup.",
-    "brand_mention": "Purity Beans Bold",
-    "caption": "The quiet 7 AM kitchen light hits the counter differently when you stop guessing what is in your cup. Purity Beans Bold is agglomerated pure coffee with zero chicory. Read the jar, know your brew, and start your morning with absolute clarity. Explore pure coffee at https://p3online.in",
-    "chosen_hook": "Your spoon sinks differently into an agglomerated jar than a standard spray-dried one.",
-    "comment_trigger": "Comment COFFEE if you read your ingredient labels every single time.",
-    "cta": "Read the jar and explore pure coffee at https://p3online.in",
-    "description": "A quiet cinematic YouTube Short exploring the tactile ritual of brewing Bold agglomerated pure coffee without any sales pressure.",
-    "edit_pacing": "Deliberate and unhurried. 5-second cuts with micro-movements of steam and light.",
+    "objective": "Drive traffic to product page and increase instant coffee purchases.",
+    "primary_cta": "Shop now at https://p3online.in",
+    "success_metric": "Click-through rate to https://p3online.in and total saves.",
+    "audio": "Warm acoustic guitar fingerpicking layered with soft morning kitchen ambient noise and the crisp sound of a glass jar lid clicking open.",
+    "audio_direction": "Start with sharp sound design on the lid click, then ambient kitchen hum, ending with a clean voiceover recorded close to the mic.",
+    "blog_post": "https://p3online.in/blogs/coffee-education/how-to-brew-bold-pure-coffee",
+    "brand_mention": "Purity Beans Bold Pure Coffee",
+    "caption": "Stop the instant coffee mistake that robs your cup of flavor. Use 85°C water with Purity Beans Bold Pure Coffee and taste the honest, deep kick that only pure coffee can give. Grab yours at https://p3online.in and comment your current brewing habit below. #PurityBeans #BoldCoffee #PureCoffee #InstantCoffeeIndia #CoffeeScience #MorningRitual",
+    "chosen_hook": "One spoon, 85°C water, wait 30 seconds. Watch.",
+    "comment_trigger": "How do you brew your instant coffee right now? Share your method below.",
+    "cta": "Shop Bold at https://p3online.in",
+    "description": "A 35-second YouTube Short demonstrating how water temperature changes a cup of Purity Beans Bold pure coffee, featuring the exact glass jar.",
+    "edit_pacing": "Fast cut on the spoon tap, slow steady pan on the water pour, quick pop-up text for key water temperature facts.",
     "editorial_subscores": {
       "brand_clarity": 9,
+      "curiosity_gap": 9,
       "hook_strength": 9,
-      "saveability": 8,
+      "saveability": 9,
       "shareability": 9
     },
-    "emotion_arc": "Curiosity -> Calm Understanding -> Satisfaction",
-    "follow_trigger": "Follow @purepantryprovisions for calm daily coffee rituals and ingredient transparency.",
-    "funnel_objective": "Discovery and Follow",
-    "gate_rejection": "none",
-    "growth_plan": "Publish as YouTube Short with strict focus on retention and educational save-rate.",
-    "growth_review": "Evaluated against strict non-sales community guidelines. Zero discount language.",
-    "hashtags": "#PurityBeans #AgglomeratedCoffee #PureCoffee #ZeroChicory #CoffeeRituals #ReadTheJar",
-    "hook": "The coffee mistake almost every Indian kitchen makes before the sun is even up.",
-    "hook_text": "The coffee mistake almost every Indian kitchen makes before the sun is even up.",
-    "ladder_exhausted": true,
+    "emotion_arc": "Curiosity to realization to satisfaction",
+    "follow_trigger": "Follow @purepantryprovisions for daily coffee tips that actually improve your cup.",
+    "funnel_objective": "Conversion and Traffic",
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "viewers who will watch one complete answer with the sound off",
+      "angle": "a standalone payoff that ends without needing another post",
+      "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+      "rationale": "A Short has to pay off on its own, then ask for the next one.",
+      "platform": "yt_short",
+      "sku": "Bold",
+      "day": 313
+    },
+    "growth_review": {
+      "platform": "yt_short",
+      "label": "yt_short",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "viewers who will watch one complete answer with the sound off",
+        "angle": "a standalone payoff that ends without needing another post",
+        "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+        "rationale": "A Short has to pay off on its own, then ask for the next one.",
+        "platform": "yt_short",
+        "sku": "Bold",
+        "day": 313
+      },
+      "published": false
+    },
+    "hashtags": "#PurityBeans #BoldCoffee #PureCoffee #InstantCoffeeIndia #CoffeeLoversIndia #CoffeeScience #MorningRitual",
+    "hook": "The coffee mistake most Indian kitchens make: boiling water straight onto the jar.",
+    "hook_text": "One spoon, 85°C water, wait 30 seconds. Watch.",
+    "ladder_exhausted": false,
     "product": "bold",
-    "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Chef's Table macro coffee extraction mixed with architectural morning light.",
-    "save_trigger": "Save this video for your next weekend coffee brewing ritual.",
+    "publish_blocked": false,
+    "reel_inspiration": "Specialty coffee brewing guides shot with cinematic macro lens lighting.",
+    "save_trigger": "Save this short to perfect your morning brew before the next cup.",
     "scenes": [
       {
         "scene": 1,
-        "type": "problem",
-        "duration_s": 5.0,
-        "on_screen": "THE 7 AM LIGHT",
-        "spoken": "The coffee mistake almost every Indian kitchen makes before the sun is even up.",
-        "visual_direction": "Shot on iPhone 15, 85mm lens. Close-up of hot water pouring into a ceramic mug against a dark marble counter with natural window light."
+        "type": "hook",
+        "duration_s": 4.0,
+        "on_screen": "Most Indian kitchens boil water onto coffee",
+        "spoken": "The coffee mistake most Indian kitchens make: boiling water straight onto the jar.",
+        "visual_direction": "Extreme macro close-up of a wooden spoon scooping dark agglomerated granules from the Purity Beans Bold jar, then a quick cut to a kettle steaming."
       },
       {
         "scene": 2,
-        "type": "tension",
+        "type": "problem",
         "duration_s": 6.0,
-        "on_screen": "AGGLOMERATED PURE COFFEE",
-        "spoken": "Pouring boiling water straight onto dry coffee granules shocks the bean structure.",
-        "visual_direction": "Macro shot of the exact Purity Beans Bold jar resting on a warm wooden surface with soft morning lens flare and a wisp of steam."
+        "on_screen": "BOILING WATER = BITTER CUP",
+        "spoken": "Pouring roaring boiling water onto instant coffee scorches the granules, giving you a harsh, bitter cup.",
+        "visual_direction": "Hand pours boiling water from a stainless steel kettle into a clear mug containing Bold granules, steam visible, shot with shallow depth of field."
       },
       {
         "scene": 3,
-        "type": "turn",
-        "duration_s": 6.0,
-        "on_screen": "ZERO CHICORY",
-        "spoken": "Purity Beans Bold is agglomerated pure coffee with zero chicory, made to release its deep, full-bodied profile when water cools just slightly below a boil.",
-        "visual_direction": "A relaxed hand turning the Purity Beans Bold glass jar slightly to reveal the crisp, clear ingredient panel in warm side light."
+        "type": "truth",
+        "duration_s": 8.0,
+        "on_screen": "READ THE JAR: PURE COFFEE, ZERO CHICORY",
+        "spoken": "Purity Beans Bold is pure coffee with zero chicory. The right temperature—85°C—lets the deep, full‑bodied flavor shine.",
+        "visual_direction": "Slow pan across the Purity Beans Bold glass jar on a wooden countertop, label fully legible, then a digital thermometer showing 85°C water being poured."
       },
       {
         "scene": 4,
-        "type": "payoff",
-        "duration_s": 5.0,
-        "on_screen": "READ THE JAR",
-        "spoken": "Notice how the aroma opens up without any harsh bitterness.",
-        "visual_direction": "Steaming mug beside the Purity Beans Bold jar, soft natural window light casting long, calm shadows across the lived-in kitchen counter."
+        "type": "solution",
+        "duration_s": 9.0,
+        "on_screen": "85°C + 30 SEC = PURE KICK",
+        "spoken": "One spoon, 85°C water, wait 30 seconds, and you get a strong, honest kick without any hidden fillers.",
+        "visual_direction": "Steady shot of the mug being stirred, timer graphic appears counting to 30 seconds, then a close-up of steam rising from the cup."
       },
       {
         "scene": 5,
         "type": "cta",
-        "duration_s": 3.0,
-        "on_screen": "Follow @purepantryprovisions",
-        "spoken": "Read the jar at https://p3online.in. Follow @purepantryprovisions for more.",
-        "visual_direction": "Clean, minimalist end frame featuring the Purity Beans Bold glass jar and website link https://p3online.in"
+        "duration_s": 8.0,
+        "on_screen": "SHOP BOLD • p3online.in",
+        "spoken": "Upgrade your morning cup today. Visit https://p3online.in and follow @purepantryprovisions for more coffee science.",
+        "visual_direction": "Clean final frame showing the Purity Beans Bold jar centered against a dark slate background, website URL and Instagram handle displayed in crisp white typography."
       }
     ],
-    "script": "The coffee mistake almost every Indian kitchen makes before the sun is even up. Pouring boiling water straight onto dry coffee granules shocks the bean structure. Purity Beans Bold is agglomerated pure coffee with zero chicory, made to release its deep, full-bodied profile when water cools just slightly below a boil. Notice how the aroma opens up without any harsh bitterness. Read the jar at https://p3online.in. Follow @purepantryprovisions for more calm coffee rituals.",
-    "share_trigger": "Share this with someone who appreciates a genuine black coffee routine.",
-    "tagline": "Read the jar. Bold is pure coffee.",
-    "tags": [
-      "purity beans",
-      "bold",
-      "pure coffee",
-      "zero chicory",
-      "agglomerated coffee"
-    ],
+    "script": "The coffee mistake most Indian kitchens make: boiling water straight onto the jar. One spoon, 85°C water, wait 30 seconds. Watch. Pouring roaring boiling water onto your instant coffee scorches the granules and masks the deep, full-bodied kick you paid for. When you use Purity Beans Bold, a pure coffee jar with zero chicory, the right temperature unlocks that honest, strong punch every morning. Grab the exact glass jar, measure 85°C water, stir, wait, and taste the difference. Upgrade your morning ritual now at https://p3online.in and follow @purepantryprovisions for more coffee science.",
+    "share_trigger": "Share this with a friend who still pours boiling water on their instant coffee.",
+    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.5,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.9,
+      "verdict": "PASS",
+      "feedback": "The hook immediately taps into a common daily habit (boiling water) and corrects a widespread misconception without attacking other brands, keeping the tone clean and authoritative. The retention flow moves smoothly from the problem to the exact temperature solution, perfectly featuring Purity Beans Bold pure coffee. Actionable CTA drives direct traffic to https://p3online.in.",
+      "retention_audit": ""
+    },
     "viral_potential": {
       "scores": {
-        "hook": 7.0,
-        "curiosity_gap": 7.0,
-        "relatability": 8.0,
+        "hook": 8.0,
+        "curiosity_gap": 8.0,
+        "relatability": 9.0,
         "shareability": 8.0,
-        "comment_trigger": 7.0,
-        "format_fit": 8.0,
+        "comment_trigger": 8.0,
+        "format_fit": 9.0,
         "follow_cta": 8.0
       },
-      "overall": 7.57,
+      "overall": 8.29,
       "weakest": [
         "hook",
-        "curiosity_gap",
-        "comment_trigger"
+        "shareability"
       ],
-      "feedback": "The hook 'The coffee mistake almost every Indian kitchen makes...' is a bit cliché and slightly generic for short-form video. Tighten the first 2 seconds by focusing immediately on the specific water temperature or granule shock to spike the curiosity gap faster. Strengthen the comment trigger by asking a more direct, polarising question about morning brewing habits rather than just asking who reads labels.",
-      "better_hook": "Stop pouring boiling water straight onto your coffee granules.",
-      "passed": false,
+      "feedback": "The piece hits a very relatable pain point for Indian coffee drinkers by calling out water temperature habits. To push the score higher, make the hook even more disruptive by immediately challenging a common kitchen belief in under 2 seconds. Ensure the 3-beat visual pacing in the first 5 seconds relies heavily on the macro texture of the jar and granules to maximize watch time on YouTube Shorts.",
+      "better_hook": "Stop boiling your instant coffee to death.",
+      "passed": true,
       "honesty": [],
       "pass_mark": 8.0
     },
-    "viral_readiness_score": 9,
-    "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 8.0,
-      "emotion_pull": 8.2,
-      "hook_strength": 9.0,
-      "brand_clarity": 9.5,
-      "overall": 8.6,
-      "verdict": "PASS",
-      "feedback": "The asset strong-matches all brand guidelines for Purity Beans Bold, correctly identifying it as agglomerated pure coffee with zero chicory without violating product lines. The cinematic morning lighting and tactile descriptions meet all realism rules. To optimize further, ensure the opening hook immediately connects the morning routine friction directly to ingredient awareness.",
-      "retention_audit": "Scene 1 successfully anchors the viewer with morning lighting and a relatable ritual hook. Scene 2 introduces the precise product without breaking realism. Scene 3 cleanly clarifies the agglomerated pure coffee profile. Scene 4 delivers a smooth, non-pushy closure with a clear CTA and website link."
+    "blog_content": {
+      "introduction": "Instant coffee has become a kitchen staple across India, but not all jars are created equal. Many of us grow up pouring boiling water straight into the jar, assuming that hotter means better. That habit, however, robs the cup of the nuanced depth that pure coffee can deliver. In this guide we’ll unpack why temperature matters, how Purity Beans Bold Pure Coffee stands apart as a truly pure coffee—zero chicory, agglomerated for instant gratification—and the step‑by‑step method to extract its full‑bodied character every single morning. By the end you’ll have a repeatable ritual that respects the bean and respects your time.",
+      "body": "### The Science Behind the Mistake\nWhen water reaches a rolling boil (around 100°C) and meets instant coffee granules, the sudden thermal shock can cause the coffee particles to over‑extract. Over‑extraction releases bitter compounds—chlorogenic acids and tannins—that dominate the palate, masking the natural sweetness and aroma locked inside the beans. For agglomerated coffee like Purity Beans Bold, which is crafted to dissolve quickly, the ideal brewing window sits between 80°C and 90°C. At 85°C, the water is hot enough to dissolve the granules fully but gentle enough to"
     },
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.57 < 8.0 (weakest: hook, curiosity_gap, comment_trigger). The hook 'The coffee mistake almost every Indian kitchen makes...' is a bit cliché and slightly generic for short-form video. Tighten the first 2 seconds by focusing immediately on the specific water temperature or granule shock to spike the curiosity gap faster. Strengthen the comment trigger by asking a more direct, polarising question about morning brewing habits rather than just asking who rea"
+    "viral_readiness_score": 90.0
   },
   "growth_reel": {
     "type": "reel",
@@ -3518,6 +3635,16 @@
       {
         "status": "exhausted",
         "reason": "viral: score 7.57 < 8.0 (weakest: hook, curiosity_gap, comment_trigger). The hook 'The coffee mistake almost every Indian kitchen makes...' is a bit cliché and slightly generic for short-form video. Tighten the first 2 seconds by focusing immediately on the specific water temperature or granule shoc"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.78 < 8.0 (weakest: curiosity_gap, comment_trigger, hook). The hook relies on a slightly overused curiosity trope ('the mistake almost every Indian kitchen makes'). To push above the 8.0 threshold, the opening line needs to be hyper-specific to instant coffee structure or water tempera"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.57 < 8.0 (weakest: curiosity_gap, comment_trigger, follow_cta). The hook is solid and actionable, but the curiosity gap can be tightened by highlighting the exact mistake most people make before revealing the 85°C fix. To boost comment triggers, ask a direct question about how viewers"
       }
     ]
   },

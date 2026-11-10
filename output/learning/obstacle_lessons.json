@@ -23515,6 +23515,48 @@
       "reason": "pale_background:sat=0.19; weak_hierarchy:60/41; same_layout_as_last_tile:hero_center",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.78 < 8.0 (weakest: curiosity_gap, comment_trigger, hook). The hook relies on a slightly overused curiosity trope ('the mistake almost every Indian kitchen makes'). To push above the 8.0 threshold, the opening line needs to be hyper-specific to instant coffee structure or water temperature within the first 1.5 seconds. Additionally, the comment trigger asks a passive reading question",
+      "first_seen": "2026-11-10",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.78 < 8.0 (weakest: curiosity_gap, comment_trigger, hook). the hook relies on a slightly overused curiosity trope ('the mistake almost every indian kitchen makes'). t",
+      "label": "yt_short",
+      "last_seen": "2026-11-10",
+      "platform": "youtube",
+      "reason": "viral: score 7.78 < 8.0 (weakest: curiosity_gap, comment_trigger, hook). The hook relies on a slightly overused curiosity trope ('the mistake almost every Indian kitchen makes'). To push above the 8.0 threshold, the opening line needs to be hyper-specific to instant coffee structure or water tempera",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.57 < 8.0 (weakest: curiosity_gap, comment_trigger, follow_cta). The hook is solid and actionable, but the curiosity gap can be tightened by highlighting the exact mistake most people make before revealing the 85\u00b0C fix. To boost comment triggers, ask a direct question about how viewers currently brew their morning coffee rather than just telling them to comment a keyword. Ensure the",
+      "first_seen": "2026-11-10",
+      "fix": "later draft passed the same gates",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.57 < 8.0 (weakest: curiosity_gap, comment_trigger, follow_cta). the hook is solid and actionable, but the curiosity gap can be tightened by highlighting the exact mi",
+      "label": "yt_short",
+      "last_seen": "2026-11-10",
+      "platform": "youtube",
+      "reason": "viral: score 7.57 < 8.0 (weakest: curiosity_gap, comment_trigger, follow_cta). The hook is solid and actionable, but the curiosity gap can be tightened by highlighting the exact mistake most people make before revealing the 85\u00b0C fix. To boost comment triggers, ask a direct question about how viewers",
+      "stage": "generation",
+      "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-10",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and lacks rich, premium contrast against the product; product render looks slightly flat and pasted onto the surface r",
+      "label": "stories",
+      "last_seen": "2026-11-10",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium contrast against the product; Product render looks slightly flat and pasted onto the surface rather than naturally integrated with lighting and shadows; Label design uses unappealing pastel purple that clashes with",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
