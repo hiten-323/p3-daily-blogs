@@ -16116,11 +16116,11 @@
     },
     "2026-11-10|morning|instagram_story|pb_bf055375a1": {
       "asset": "",
-      "attempt_count": 18,
+      "attempt_count": 19,
       "content_date": "2026-11-10",
       "content_id": "pb_bf055375a1",
       "day_number": 313,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Flat, template-like lighting with minimal dimensional depth; background bokeh feels generic rather than premium; Lavender/purple label lacks immediate coffee category cues and reads as off-brand for a premium coffee D2C; Static centered composition is safe but not scroll-sto",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The product render looks amateur and pasted-on, lacking realistic lighting, shadows, and interaction with the surface.; The background gradient is muddy and flat, lacking the rich depth and luxurious texture expected from a premium D2C coffee brand.; Typography feels disjoin",
       "history": [
         {
           "at": "2026-11-10T07:40:32+00:00",
@@ -16391,20 +16391,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-10T14:04:34+00:00",
+          "attempt": 19,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-10T14:18:40+00:00",
+          "attempt": 19,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The product render looks amateur and pasted-on, lacking realistic lighting, shadows, and interaction with the surface.; The background gradient is muddy and flat, lacking the rich depth and luxurious texture expected from a premium D2C coffee brand.; Typography feels disjoin",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-10T13:32:48+00:00",
+      "last_attempt_at": "2026-11-10T14:04:34+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Flat, template-like lighting with minimal dimensional depth; background bokeh feels generic rather than premium; Lavender/purple label lacks immediate coffee category cues and reads as off-brand for a premium coffee D2C; Static centered composition is safe but not scroll-sto",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The product render looks amateur and pasted-on, lacking realistic lighting, shadows, and interaction with the surface.; The background gradient is muddy and flat, lacking the rich depth and luxurious texture expected from a premium D2C coffee brand.; Typography feels disjoin",
         "success": false
       },
-      "next_retry_at": "2026-11-10T13:47:19+00:00",
+      "next_retry_at": "2026-11-10T14:18:40+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-10T13:47:19+00:00",
+      "updated_at": "2026-11-10T14:18:40+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
