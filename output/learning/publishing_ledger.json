@@ -16116,11 +16116,11 @@
     },
     "2026-11-10|morning|instagram_story|pb_bf055375a1": {
       "asset": "",
-      "attempt_count": 13,
+      "attempt_count": 14,
       "content_date": "2026-11-10",
       "content_id": "pb_bf055375a1",
       "day_number": 313,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking the rich, dimensional lighting expected from a premium D2C brand.; The product mockup looks pasted onto the scene with unnatural shadows and lack of integration with the surface floor.; The label design on the jar uses a har",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Lavender label feels pale and off-strategy for a product named 'BOLD'; undermines premium coffee positioning; Background gradient is flat and generic, lacks rich depth or dimensional lighting; Product is sharp and unobstructed, but lighting is static and lacks premium polish",
       "history": [
         {
           "at": "2026-11-10T07:40:32+00:00",
@@ -16316,20 +16316,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-10T12:05:28+00:00",
+          "attempt": 14,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-10T12:18:24+00:00",
+          "attempt": 14,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Lavender label feels pale and off-strategy for a product named 'BOLD'; undermines premium coffee positioning; Background gradient is flat and generic, lacks rich depth or dimensional lighting; Product is sharp and unobstructed, but lighting is static and lacks premium polish",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-10T11:42:58+00:00",
+      "last_attempt_at": "2026-11-10T12:05:28+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking the rich, dimensional lighting expected from a premium D2C brand.; The product mockup looks pasted onto the scene with unnatural shadows and lack of integration with the surface floor.; The label design on the jar uses a har",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Lavender label feels pale and off-strategy for a product named 'BOLD'; undermines premium coffee positioning; Background gradient is flat and generic, lacks rich depth or dimensional lighting; Product is sharp and unobstructed, but lighting is static and lacks premium polish",
         "success": false
       },
-      "next_retry_at": "2026-11-10T11:56:51+00:00",
+      "next_retry_at": "2026-11-10T12:18:24+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-10T11:56:51+00:00",
+      "updated_at": "2026-11-10T12:18:24+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
