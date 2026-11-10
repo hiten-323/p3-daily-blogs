@@ -15945,6 +15945,90 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-09T07:14:17+00:00"
+    },
+    "2026-11-10|generate|linkedin|pb_bf055375a1": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-10",
+      "content_id": "pb_bf055375a1",
+      "day_number": 313,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-10T06:52:20+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-10T06:52:25+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7525812586496290816",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7525812586496290816/",
+          "verification_method": "linkedin_public_url"
+        }
+      ],
+      "last_attempt_at": "2026-11-10T06:52:20+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-10T06:52:25+00:00",
+      "next_retry_at": null,
+      "platform": "linkedin",
+      "published": true,
+      "remote_id": "urn:li:share:7525812586496290816",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-10T06:52:24+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7525812586496290816/",
+      "verification_detail": "public feed URL confirmed (200)",
+      "verification_method": "linkedin_public_url",
+      "verified_at": "2026-11-10T06:52:25+00:00"
+    },
+    "2026-11-10|generate|threads|pb_bf055375a1": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-10",
+      "content_id": "pb_bf055375a1",
+      "day_number": 313,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-10T06:52:25+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-10T06:52:37+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18061791554797001",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.threads.com/@hiten_jain323/post/DfjTlWsmwAv",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-10T06:52:25+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-10T06:52:37+00:00",
+      "next_retry_at": null,
+      "platform": "threads",
+      "published": true,
+      "remote_id": "18061791554797001",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-10T06:52:37+00:00",
+      "url": "https://www.threads.com/@hiten_jain323/post/DfjTlWsmwAv",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-10T06:52:37+00:00"
     }
   },
   "version": 1
