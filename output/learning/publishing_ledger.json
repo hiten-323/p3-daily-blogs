@@ -16116,11 +16116,11 @@
     },
     "2026-11-10|morning|instagram_story|pb_bf055375a1": {
       "asset": "",
-      "attempt_count": 19,
+      "attempt_count": 20,
       "content_date": "2026-11-10",
       "content_id": "pb_bf055375a1",
       "day_number": 313,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The product render looks amateur and pasted-on, lacking realistic lighting, shadows, and interaction with the surface.; The background gradient is muddy and flat, lacking the rich depth and luxurious texture expected from a premium D2C coffee brand.; Typography feels disjoin",
+      "error": "",
       "history": [
         {
           "at": "2026-11-10T07:40:32+00:00",
@@ -16406,23 +16406,40 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-10T14:24:23+00:00",
+          "attempt": 20,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-10T14:33:38+00:00",
+          "attempt": 20,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18147340465607270",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/stories/purepantryprovisions/4027380442365302816",
+          "verification_method": "meta_graph_readback"
         }
       ],
-      "last_attempt_at": "2026-11-10T14:04:34+00:00",
+      "last_attempt_at": "2026-11-10T14:24:23+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The product render looks amateur and pasted-on, lacking realistic lighting, shadows, and interaction with the surface.; The background gradient is muddy and flat, lacking the rich depth and luxurious texture expected from a premium D2C coffee brand.; Typography feels disjoin",
-        "success": false
+        "error": "",
+        "success": true
       },
-      "next_retry_at": "2026-11-10T14:18:40+00:00",
+      "last_verification_at": "2026-11-10T14:33:38+00:00",
+      "next_retry_at": null,
       "platform": "instagram_story",
-      "published": false,
-      "remote_id": "",
+      "published": true,
+      "remote_id": "18147340465607270",
       "slot": "morning",
-      "status": "FAILED",
-      "updated_at": "2026-11-10T14:18:40+00:00",
-      "url": "",
-      "verification_method": "",
-      "verified_at": null
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-10T14:33:36+00:00",
+      "url": "https://www.instagram.com/stories/purepantryprovisions/4027380442365302816",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-10T14:33:38+00:00"
     },
     "2026-11-10|morning|instagram_video|pb_bf055375a1|growth_reel": {
       "asset": "growth_reel",
