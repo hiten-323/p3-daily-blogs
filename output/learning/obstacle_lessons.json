@@ -25447,6 +25447,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product packaging design looks dated and lacks modern D2C aesthetic appeal; Background gradient feels muddy and lacks sophisticated lighting or depth; Too much text at the top with weak typographic hierarchy",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:3.0; product label design looks dated, resembling generic supermarket brands rather than a premium d2c coffee aesthetic.; the background gradient and lighting f",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:3.0; Product label design looks dated, resembling generic supermarket brands rather than a premium D2C coffee aesthetic.; The background gradient and lighting feel cheap and muddy, lacking rich color depth and sophisticated texture.; Typography lacks refined hierarchy; the headli",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
