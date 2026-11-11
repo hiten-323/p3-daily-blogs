@@ -25293,6 +25293,20 @@
       "reason": "aesthetic_below_8.0:5.0; Brand inconsistency: headline reads 'Purista' while jar label reads 'Purity Beans', causing immediate confusion.; Flat lighting and generic brown background lack premium depth, richness, and dimensionality.; Headline is educational/comparative rather than appetite-stimulatin",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background uses a cheap, unrefined gradient with artificial circular bokeh spots instead of authentic depth or photography; typographic hierarchy is weak: ",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background uses a cheap, unrefined gradient with artificial circular bokeh spots instead of authentic depth or photography; Typographic hierarchy is weak: headline is cramped, uses mixed capitalization ('Vs Bold: Agglomerated'), and serif font lacks modern D2C edge; Pill-sha",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
