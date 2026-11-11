@@ -1672,117 +1672,118 @@
     }
   },
   "yt_short": {
-    "featured_product": "purista",
+    "featured_product": "Purista Gourmet Robusta Granules",
     "objective": "educate and convert",
-    "primary_cta": "Shop p3online.in",
+    "primary_cta": "Shop https://p3online.in",
     "success_metric": "saves and website visits",
-    "audio": "Ambient kitchen morning sounds with the soft clink of a glass jar on a wooden counter, followed by a deliberate cap twist.",
-    "audio_direction": "Subtle acoustic guitar picking underneath natural kitchen textures and a grounded, clear voiceover.",
-    "chosen_hook": "The freeze-drying process locks in aroma because ice evaporates without melting.",
-    "comment_trigger": "Comment PURISTA to receive our guide on how freeze-dried granules preserve natural coffee aroma.",
-    "cta": "Shop p3online.in",
-    "description": "Discover why freeze-dried pure Robusta stands apart in your morning cup. Purity Beans Purista brings locked-in aroma and bold character straight to your kitchen counter. Read the jar. Shop now at https://p3online.in.",
-    "edit_pacing": "Deliberate and slow-paced, with 4 to 6-second clips emphasizing macro textures, slow steam dispersion, and smooth camera pans across the glass jar.",
-    "emotion_arc": "Curiosity leading to clear understanding, ending with the quiet confidence of knowing exactly what is in your cup.",
+    "audio": "Warm ambient morning kitchen sounds with the soft clink of a glass spoon against ceramic and a low ambient indie guitar instrumental.",
+    "audio_direction": "Clean, warm audio mix with crisp vocal delivery and subtle background ambience.",
+    "chosen_hook": "The coffee mistake almost every Indian kitchen makes",
+    "comment_trigger": "Comment RATIO if you prefer milk coffee every morning.",
+    "cta": "Shop https://p3online.in",
+    "description": "Discover why Purity Beans Ultra Blend brings a balanced 70% coffee and 30% chicory milk coffee to your morning routine with transparent pricing at about ₹5 a cup. Visit https://p3online.in.",
+    "edit_pacing": "Fast cuts every 3 seconds for the first 10 seconds, then slower cinematic pans over the glass jar.",
+    "emotion_arc": "Curiosity to realization to satisfaction",
     "funnel_objective": "conversion",
     "gate_rejection": "none",
-    "hashtags": "#PurityBeans #Purista #FreezeDriedCoffee #PureRobusta #CoffeeLoversIndia #CleanCoffee",
-    "hook": "The coffee mistake almost every Indian kitchen makes when storing freeze-dried granules.",
-    "hook_text": "Why freeze-dried coffee smells completely different when you open the jar.",
-    "instagram_caption": "The Purity Beans Purista jar holds pure freeze-dried Robusta granules designed to keep their rich aroma intact. Read the back panel. Zero chicory, pure coffee, and transparent labeling. Discover your morning routine at https://p3online.in.",
+    "hashtags": "#PurityBeans #UltraBlend #MilkCoffee #CoffeeLoversIndia #CleanCoffee",
+    "hook": "The coffee mistake almost every Indian kitchen makes",
+    "hook_text": "The coffee mistake almost every Indian kitchen makes",
+    "instagram_caption": "What is actually inside your daily kitchen jar? When you read the back ingredient panel of Purity Beans Ultra Blend, you see a clear 70% coffee and 30% chicory ratio crafted specifically for milk coffee drinkers at about ₹5 a cup. Inspect your jar and order at https://p3online.in. #PurityBeans #UltraBlend #MilkCoffee #CoffeeLoversIndia #CleanCoffee",
     "ladder_exhausted": true,
-    "product": "purista",
-    "save_trigger": "Save this reel before your next coffee restock so you remember how proper storage preserves aroma.",
-    "share_trigger": "Share this with someone who drinks instant coffee every single morning.",
-    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "product": "Ultra Blend",
+    "publish_blocked": "ladder_exhausted",
+    "save_trigger": "Save this before your next grocery run.",
+    "scenes": [
+      {
+        "scene": 1,
+        "type": "hook",
+        "duration_s": 3.5,
+        "on_screen": "ONE SPOON",
+        "spoken": "One spoon, 85°C water, wait 30 seconds. Watch.",
+        "visual_direction": "Extreme close-up of a measured coffee spoon scooping dark granules under warm morning kitchen light, shot on iPhone 15 with shallow depth of field."
+      },
+      {
+        "scene": 2,
+        "type": "problem",
+        "duration_s": 4.5,
+        "on_screen": "HIDDEN RATIOS",
+        "spoken": "Finding the right daily milk coffee balance often feels like guesswork when ingredient proportions remain unclear in your kitchen.",
+        "visual_direction": "Macro shot of milk pouring into a dark amber coffee brew, swirling smoothly against a wooden kitchen counter with visible wood grain and a stray water ring."
+      },
+      {
+        "scene": 3,
+        "type": "truth",
+        "duration_s": 5.0,
+        "on_screen": "70% COFFEE 30% CHICORY",
+        "spoken": "When you inspect Purity Beans Ultra Blend, you find a transparent 70% coffee and 30% chicory breakdown printed right there.",
+        "visual_direction": "Focus sharpens on the printed label of the reference glass jar, highlighting the clear percentage text with golden accent light and visible paper label texture."
+      },
+      {
+        "scene": 4,
+        "type": "solution",
+        "duration_s": 5.5,
+        "on_screen": "AT LEAST 66 CUPS",
+        "spoken": "AT LEAST 66 CUPS",
+        "visual_direction": "Warm morning light catching the glass jar while steam rises from a finished ceramic mug of milk coffee on a lived-in wooden table."
+      },
+      {
+        "scene": 5,
+        "type": "cta",
+        "duration_s": 4.5,
+        "on_screen": "SHOP P3ONLINE.IN",
+        "spoken": "Follow @purepantryprovisions for transparent coffee education. Shop at https://p3online.in.",
+        "visual_direction": "The Purity Beans Ultra Blend jar centered on a wooden counter with clean typography overlay and subtle natural glass reflections, shot handheld."
+      }
+    ],
+    "script": "The coffee mistake almost every Indian kitchen makes is guessing proportions instead of checking the back panel. When you inspect Purity Beans Ultra Blend, you find a transparent 70% coffee and 30% chicory breakdown built for milk coffee. Follow @purepantryprovisions for transparent coffee education. Shop at https://p3online.in.",
+    "share_trigger": "Share this with someone who drinks milk coffee daily.",
+    "tagline": "Read the jar. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "viral_potential": {
       "scores": {
-        "hook": 5.0,
-        "curiosity_gap": 6.0,
-        "relatability": 6.0,
+        "hook": 7.0,
+        "curiosity_gap": 7.0,
+        "relatability": 8.0,
         "shareability": 6.0,
         "comment_trigger": 7.0,
-        "format_fit": 6.0,
-        "follow_cta": 7.0
+        "format_fit": 7.0,
+        "follow_cta": 8.0
       },
-      "overall": 6.0,
+      "overall": 7.1,
       "weakest": [
+        "shareability",
         "hook",
         "format_fit"
       ],
-      "feedback": "The opening hook is too textbook-scientific ('The freeze-drying process locks in aroma because ice evaporates without melting') rather than a scroll-stopping pattern interrupt. For a YouTube Short, the first 1-2 seconds need a sharper contrast or a direct consumer call-out. The pacing is slightly too slow for short-form video norms.",
-      "better_hook": "Most instant coffee smells burnt because of how it is dried. Here is why freeze-drying changes everything.",
+      "feedback": "The hook relies slightly on a generic fear-based framing ('mistake almost every Indian kitchen makes') which is common in short-form content. To boost scores, make the hook sharper and specific to milk coffee routines without implying danger. The shareability can be improved by adding a distinct takeaway about why ingredient transparency matters for everyday milk coffee drinkers.",
+      "better_hook": "Why guessing your coffee-to-chicory ratio ruins your morning cup.",
       "passed": false,
       "honesty": [],
       "pass_mark": 8.0
     },
     "viral_readiness_score": 9.2,
-    "scenes": [
-      {
-        "scene": 1,
-        "type": "problem",
-        "duration_s": 5.0,
-        "on_screen": "THE KITCHEN MISTAKE",
-        "spoken": "The coffee mistake almost every Indian kitchen makes when storing freeze-dried granules.",
-        "visual_direction": "A close-up shot of the Purity Beans Purista glass jar on a dark marble countertop with an open lid sitting slightly askew."
-      },
-      {
-        "scene": 2,
-        "type": "curiosity",
-        "duration_s": 6.0,
-        "on_screen": "LOSE THE AROMA",
-        "spoken": "Most people leave the glass jar unsealed right after opening.",
-        "visual_direction": "An overhead angle showing a hand reaching out to tighten the cap on the Purity Beans Purista jar under warm kitchen pendant lighting."
-      },
-      {
-        "scene": 3,
-        "type": "value",
-        "duration_s": 6.0,
-        "on_screen": "FREEZE-DRIED ROBUSTA",
-        "spoken": "Purity Beans Purista uses freeze-dried gourmet Robusta that captures aroma instantly, so the cap has to stay tight.",
-        "visual_direction": "Macro camera movement tracking along the textured label of the Purity Beans Purista jar, showing crisp typography and clear glass reflections."
-      },
-      {
-        "scene": 4,
-        "type": "trust",
-        "duration_s": 6.0,
-        "on_screen": "READ THE JAR",
-        "spoken": "Read the jar. Zero chicory, pure coffee, locked-in aroma.",
-        "visual_direction": "A finger pointing to the clean ingredient panel on the back of the Purity Beans Purista jar in soft morning daylight."
-      },
-      {
-        "scene": 5,
-        "type": "follow",
-        "duration_s": 5.0,
-        "on_screen": "FOLLOW @purepantryprovisions",
-        "spoken": "Follow @purepantryprovisions for real coffee facts without the noise.",
-        "visual_direction": "The Purity Beans Purista jar resting calmly next to a ceramic mug on a lived-in kitchen surface."
-      },
-      {
-        "scene": 6,
-        "type": "buy",
-        "duration_s": 5.0,
-        "on_screen": "SHOP P3ONLINE.IN",
-        "spoken": "Shop p3online.in to bring pure coffee home today.",
-        "visual_direction": "A subtle push-in framing the Purity Beans Purista jar clearly against a warm, softly blurred background."
-      }
-    ],
     "editorial_score": {
-      "shareability": 6.5,
-      "saveability": 7.0,
-      "emotion_pull": 6.8,
-      "hook_strength": 6.5,
-      "brand_clarity": 8.5,
-      "overall": 7.1,
-      "verdict": "REJECT",
-      "feedback": "The provided content payload fails to hit the strict overall threshold of 8.0 because the hook is somewhat dry and educational rather than aggressive or scroll-stopping. To elevate this payload to an APPROVE verdict, rewrite the hook to create an immediate curiosity gap about instant coffee storage mistakes, and punch up the emotional contrast between degraded aroma and locked-in freeze-dried freshness.",
-      "retention_audit": "Scene 1 spoken line ('The coffee mistake almost every Indian kitchen makes when storing freeze-dried granules') is a bit wordy and lacks high-stakes tension. Scene 2 dips in visual contrast. To fix, inject a sharper pattern interrupt right at second zero."
+      "shareability": 8.2,
+      "saveability": 8.5,
+      "emotion_pull": 8.0,
+      "hook_strength": 8.8,
+      "brand_clarity": 9.0,
+      "overall": 8.5,
+      "verdict": "PASS",
+      "feedback": "The asset successfully targets milk coffee consumers with honest transparency regarding the 70/30 coffee-to-chicory ratio without crossing into anti-chicory bias. The visual directions maintain product accuracy using the exact Purity Beans reference jar, and the CTA provides a clear pathway to https://p3online.in.",
+      "retention_audit": "Scene 1 hook grabs attention quickly with the action prompt. Scene 2 establishes the problem of opaque coffee ratios. Scene 3 delivers transparent product truth. Scene 4 highlights value and yield. Scene 5 closes with a direct call to action and website link."
     },
-    "script": "The coffee mistake almost every Indian kitchen makes when storing freeze-dried granules. Most people leave the glass jar unsealed right after opening. Purity Beans Purista uses freeze-dried gourmet Robusta that captures aroma instantly, so the cap has to stay tight. Read the jar. Zero chicory, pure coffee, locked-in aroma. Shop p3online.in.",
-    "publish_blocked": "ladder_exhausted",
+    "blog": {
+      "title": "Understanding the Balance of Purity Beans Ultra Blend",
+      "meta_description": "Explore the transparent ingredient panel of Purity Beans Ultra Blend",
+      "introduction": "When morning routines rely on a dependable cup of milk coffee, understanding the exact ratio inside your glass jar matters. Many households brew blindly, missing the specific proportions that define their daily mug. Transparent labeling transforms a routine habit into an informed choice.",
+      "body": "Purity Beans Ultra Blend is crafted specifically for milk coffee lovers who want an honest, reliable profile. By featuring a precise 70% coffee and 30% chicory blend, it delivers a smooth morning cup without ambiguity. This economic and transparent pricing ensures you know exactly what value you bring to your kitchen counter. Reading the back ingredient panel of Purity Beans Ultra Blend gives you complete clarity before you even boil your water. Unlike generic brands that hide behind vague marketing terms, Purity Beans states the exact breakdown on the packaging. Whether you pair it with warm dairy milk or plant-based alternatives, the balance is engineered to hold its own against cafe beverages that often cost upwards of Rs 180. Making the switch to a transparent brand means embracing daily rituals built on honesty. Visit https://p3online.in to explore the full range and bring clarity to your morning counter.",
+      "conclusion": "Your morning coffee should never be a guessing game. By checking the ingredient panel and understanding your daily ratio, you take control of your kitchen counter. Choose transparency with Purity Beans Ultra Blend."
+    },
+    "loop_note": "Loops back to the jar opening shot seamlessly.",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The provided content payload fails to hit the strict overall threshold of 8.0 because the hook is somewhat dry and educational rather than aggressive or scroll-stopping. To elevate this payload to an APPROVE verdict, rewrite the hook to create an immediate curiosity gap about instant coffee storage mistakes, and punch up the emotional contrast between degraded aroma and locked-in freeze-dried freshness."
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.1 < 8.0 (weakest: shareability, hook, format_fit). The hook relies slightly on a generic fear-based framing ('mistake almost every Indian kitchen makes') which is common in short-form content. To boost scores, make the hook sharper and specific to milk coffee routines without implying danger. The shareability can be improved by adding a distinct takeaway about why ingredient transparency matters for everyday milk coffee drinkers. Suggested hook: Why gues"
   },
   "growth_reel": {
     "type": "growth_reel",
@@ -3276,7 +3277,7 @@
       {
         "attempt": 7,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 8,
@@ -3286,6 +3287,50 @@
       {
         "status": "exhausted",
         "reason": "The provided content payload fails to hit the strict overall threshold of 8.0 because the hook is somewhat dry and educational rather than aggressive or scroll-stopping. To elevate this payload to an APPROVE verdict, rewrite the hook to create an immediate curiosity gap about instant coffee storage "
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The asset provides solid educational value about freeze-dried storage, but the hook and pacing lack the sharp psychological tension required to push the overall score above the mandatory 8.0 threshold. The opening line leans too informative rather than creating an immediate pattern interrupt or curi"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 6.7 < 8.0 (weakest: hook, format_fit). The current hook is a bit too descriptive and long for a YouTube Short. It takes too long to get to the point, which risks losing viewers in the first 2 seconds. Shorten the opening line to an instant pattern interrupt about what regular instant co"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: hook, shareability). The hook relies on a slightly generic framing about 'kitchen mistakes'. Make it more specific to the sensory betrayal of burnt powder. The visual directions feature the exact reference jar correctly, and the freeze-drying explanation for Purista "
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.5 < 8.0 (weakest: hook, curiosity_gap). The piece has strong educational value and correctly avoids prohibited claims, but the opening hook 'What's actually inside this jar? Let's read it.' is a bit passive. Replacing it with a direct curiosity prompt or contrast statement will immedi"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.4 < 8.0 (weakest: hook, format_fit, shareability). The opening hook 'One spoon, 85°C water, wait 30 seconds. Watch.' is a bit instructional rather than a scroll-stopping pattern interrupt for YouTube Shorts. To elevate format fit and curiosity, start with an observation about how peop"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: shareability, hook). The piece correctly identifies Ultra Blend as 70% coffee and 30% chicory, adhering to all brand rules. However, the hook relies slightly on a general premise ('Three lines on the back...') rather than a sharper, more urgent consumer pain point. T"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 8.0 (weakest: hook, format_fit). The opening hook 'Look at the back panel...' is too instructional and dry for a YouTube Short where viewers scroll away in under 2 seconds. Replace it with a pattern interrupt or contrarian truth about milk coffee blends. Ensure the visual pace for"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "viral: score 6.4 < 8.0 (weakest: hook, curiosity_gap, format_fit). The opening instruction 'One spoon, 85°C water, wait 30 seconds. Watch.' is a bit instructional rather than a sharp scroll-stopper. For YouTube Shorts, the first second needs an immediate psychological trigger or contrast. Also, ensu"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.1 < 8.0 (weakest: shareability, hook, format_fit). The hook relies slightly on a generic fear-based framing ('mistake almost every Indian kitchen makes') which is common in short-form content. To boost scores, make the hook sharper and specific to milk coffee routines without implying"
       }
     ]
   },
