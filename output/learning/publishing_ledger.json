@@ -16747,6 +16747,214 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-11T03:22:32+00:00"
+    },
+    "2026-11-11|morning|facebook|pb_b1c2a45b1b": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-11",
+      "content_id": "pb_b1c2a45b1b",
+      "day_number": 314,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-11T04:41:02+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T04:41:08+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "494003270464484_122170267028655685",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/posts/122170267028655685",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-11T04:41:02+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-11T04:41:08+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": true,
+      "remote_id": "494003270464484_122170267028655685",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-11T04:41:08+00:00",
+      "url": "https://www.facebook.com/494003270464484/posts/122170267028655685",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-11T04:41:08+00:00"
+    },
+    "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-11",
+      "content_id": "pb_b1c2a45b1b",
+      "day_number": 314,
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background uses a cheap, flat radial gradient rather than rich, textured lighting or actual photography.; Typography lacks sophistication; heavy serif paired with thin tracking feels dated and amateurish.; The product mockup is heavily flattened with harsh, unrealistic drop ",
+      "history": [
+        {
+          "at": "2026-11-11T04:41:08+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T04:55:27+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background uses a cheap, flat radial gradient rather than rich, textured lighting or actual photography.; Typography lacks sophistication; heavy serif paired with thin tracking feels dated and amateurish.; The product mockup is heavily flattened with harsh, unrealistic drop ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-11-11T04:41:08+00:00",
+      "last_result": {
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background uses a cheap, flat radial gradient rather than rich, textured lighting or actual photography.; Typography lacks sophistication; heavy serif paired with thin tracking feels dated and amateurish.; The product mockup is heavily flattened with harsh, unrealistic drop ",
+        "success": false
+      },
+      "next_retry_at": "2026-11-11T04:55:27+00:00",
+      "platform": "instagram_story",
+      "published": false,
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-11-11T04:55:27+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-11-11|morning|instagram_video|pb_b1c2a45b1b|growth_reel": {
+      "asset": "growth_reel",
+      "attempt_count": 1,
+      "content_date": "2026-11-11",
+      "content_id": "pb_b1c2a45b1b",
+      "day_number": 314,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-11T05:02:20+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T05:02:56+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "17985429288066530",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/reel/DflryLGkjho/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-11T05:02:20+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-11T05:02:56+00:00",
+      "next_retry_at": null,
+      "platform": "instagram_video",
+      "published": true,
+      "remote_id": "17985429288066530",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-11T05:02:56+00:00",
+      "url": "https://www.instagram.com/reel/DflryLGkjho/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-11T05:02:56+00:00"
+    },
+    "2026-11-11|morning|instagram|pb_b1c2a45b1b|carousel": {
+      "asset": "carousel",
+      "attempt_count": 1,
+      "content_date": "2026-11-11",
+      "content_id": "pb_b1c2a45b1b",
+      "day_number": 314,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-11T04:39:49+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T04:40:45+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18172735765464272",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DflpR0yjVZB/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-11T04:39:49+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-11T04:40:45+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "18172735765464272",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-11T04:40:45+00:00",
+      "url": "https://www.instagram.com/p/DflpR0yjVZB/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-11T04:40:45+00:00"
+    },
+    "2026-11-11|morning|instagram|pb_b1c2a45b1b|instagram_post": {
+      "asset": "instagram_post",
+      "attempt_count": 1,
+      "content_date": "2026-11-11",
+      "content_id": "pb_b1c2a45b1b",
+      "day_number": 314,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-11T04:40:45+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T04:41:02+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "17969426718234483",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DflpUEvjRAo/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-11T04:40:45+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-11T04:41:02+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "17969426718234483",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-11T04:41:02+00:00",
+      "url": "https://www.instagram.com/p/DflpUEvjRAo/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-11T04:41:02+00:00"
     }
   },
   "version": 1
