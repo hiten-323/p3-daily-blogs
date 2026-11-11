@@ -16834,11 +16834,11 @@
     },
     "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
       "asset": "",
-      "attempt_count": 30,
+      "attempt_count": 31,
       "content_date": "2026-11-11",
       "content_id": "pb_b1c2a45b1b",
       "day_number": 314,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:3.0; Background gradient feels dated, muddy, and lacks rich depth or premium texture.; Typography suffers from awkward capitalization ('Vs') and inconsistent font styling/weight choices.; The product drop-shadow beneath the jar is harsh and unconvincing, making it look poorly pas",
+      "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
       "history": [
         {
           "at": "2026-11-11T04:41:08+00:00",
@@ -17289,20 +17289,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-11T15:17:14+00:00",
+          "attempt": 31,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T15:22:20+00:00",
+          "attempt": 31,
+          "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-11T13:48:01+00:00",
+      "last_attempt_at": "2026-11-11T15:17:14+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:3.0; Background gradient feels dated, muddy, and lacks rich depth or premium texture.; Typography suffers from awkward capitalization ('Vs') and inconsistent font styling/weight choices.; The product drop-shadow beneath the jar is harsh and unconvincing, making it look poorly pas",
+        "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
         "success": false
       },
-      "next_retry_at": "2026-11-11T14:03:19+00:00",
+      "next_retry_at": "2026-11-11T15:22:20+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-11T14:03:19+00:00",
+      "updated_at": "2026-11-11T15:22:20+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
