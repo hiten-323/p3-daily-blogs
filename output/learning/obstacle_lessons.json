@@ -25153,6 +25153,20 @@
       "reason": "aesthetic_below_8.0:3.0; Background uses a cheap, unrefined gradient with artificial bokeh circles instead of rich, textured photography.; Typography lacks clear hierarchy; the headline font feels dated and unpolished, and the tracking/spacing is uneven.; The product cutout is poorly executed with a",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient feels muddy and lacks rich depth or modern d2c aesthetic (feels like a 2010 powerpoint slide).; typography hierarchy is weak: headline ",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient feels muddy and lacks rich depth or modern D2C aesthetic (feels like a 2010 PowerPoint slide).; Typography hierarchy is weak: headline is cramped, uses awkward title casing ('Vs'), and subheadings feel generic.; The product jar mockup is poorly integrated",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
