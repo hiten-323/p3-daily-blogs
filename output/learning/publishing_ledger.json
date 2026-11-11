@@ -16834,11 +16834,11 @@
     },
     "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
       "asset": "",
-      "attempt_count": 15,
+      "attempt_count": 16,
       "content_date": "2026-11-11",
       "content_id": "pb_b1c2a45b1b",
       "day_number": 314,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product photography looks amateurish, featuring a harsh drop shadow and flat integration onto the surface rather than realistic environmental lighting.; Typography lacks refined hierarchy and premium kerning; the headline wraps awkwardly and feels pasted onto the gradient ba",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient feels flat, muddy, and lacks rich depth or luxurious coffee tones.; Typography hierarchy is weak; headlines feel generic and cramped with awkward line wrapping ('Vs Bold: Agglomerated').; Pills/badges ('STORY \u2022 ONE INGREDIENT' and 'PURE COFFEE \u2022 TAP THE L",
       "history": [
         {
           "at": "2026-11-11T04:41:08+00:00",
@@ -17064,20 +17064,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-11T09:34:34+00:00",
+          "attempt": 16,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T09:46:10+00:00",
+          "attempt": 16,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient feels flat, muddy, and lacks rich depth or luxurious coffee tones.; Typography hierarchy is weak; headlines feel generic and cramped with awkward line wrapping ('Vs Bold: Agglomerated').; Pills/badges ('STORY \u2022 ONE INGREDIENT' and 'PURE COFFEE \u2022 TAP THE L",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-11T09:20:01+00:00",
+      "last_attempt_at": "2026-11-11T09:34:34+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product photography looks amateurish, featuring a harsh drop shadow and flat integration onto the surface rather than realistic environmental lighting.; Typography lacks refined hierarchy and premium kerning; the headline wraps awkwardly and feels pasted onto the gradient ba",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient feels flat, muddy, and lacks rich depth or luxurious coffee tones.; Typography hierarchy is weak; headlines feel generic and cramped with awkward line wrapping ('Vs Bold: Agglomerated').; Pills/badges ('STORY \u2022 ONE INGREDIENT' and 'PURE COFFEE \u2022 TAP THE L",
         "success": false
       },
-      "next_retry_at": "2026-11-11T09:28:04+00:00",
+      "next_retry_at": "2026-11-11T09:46:10+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-11T09:28:04+00:00",
+      "updated_at": "2026-11-11T09:46:10+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
