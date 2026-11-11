@@ -25111,6 +25111,48 @@
       "reason": "aesthetic_below_8.0:4.0; Cluttered and repetitive call-to-action messaging ('FOLLOW FOR MORE' and handle mentioned three separate times); Generic template feel with heavy use of basic pill-shaped badge outlines and drop shadows; Background lighting and textures lack modern D2C minimalism and premium",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.8 < 8.0 (weakest: hook, curiosity_gap). The opening line is too instructional and acts like a generic recipe demo rather than a pattern interrupt. To capture attention on YouTube Shorts within the first second, lead with an immediate contrast about how most instant coffee loses its aroma due to heat, or challenge a common assumption about instant coffee texture before introducing th",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "generic_hook",
+      "id": "youtube|yt_short|generic_hook|viral: score 6.8 < 8.0 (weakest: hook, curiosity_gap). the opening line is too instructional and acts like a generic recipe demo rather than a pattern interrupt. to capture attenti",
+      "label": "yt_short",
+      "last_seen": "2026-11-11",
+      "platform": "youtube",
+      "reason": "viral: score 6.8 < 8.0 (weakest: hook, curiosity_gap). The opening line is too instructional and acts like a generic recipe demo rather than a pattern interrupt. To capture attention on YouTube Shorts within the first second, lead with an immediate contrast about how most instant coffee loses its ar",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.5 < 8.0 (weakest: curiosity_gap, relatability, follow_cta). The hook is solid and uses specific numbers, but the curiosity gap can be widened by highlighting the consequence of doing it wrong (e.g., burning the flavor). Relatability can be improved by touching upon how most people ruin their morning cup without realizing it. The CTA should explicitly remind users why following @pure",
+      "first_seen": "2026-11-11",
+      "fix": "later draft passed the same gates",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.5 < 8.0 (weakest: curiosity_gap, relatability, follow_cta). the hook is solid and uses specific numbers, but the curiosity gap can be widened by highlighting the con",
+      "label": "yt_short",
+      "last_seen": "2026-11-11",
+      "platform": "youtube",
+      "reason": "viral: score 7.5 < 8.0 (weakest: curiosity_gap, relatability, follow_cta). The hook is solid and uses specific numbers, but the curiosity gap can be widened by highlighting the consequence of doing it wrong (e.g., burning the flavor). Relatability can be improved by touching upon how most people rui",
+      "stage": "generation",
+      "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:3.0; background uses a cheap, unrefined gradient with artificial bokeh circles instead of rich, textured photography.; typography lacks clear hierarchy; the hea",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:3.0; Background uses a cheap, unrefined gradient with artificial bokeh circles instead of rich, textured photography.; Typography lacks clear hierarchy; the headline font feels dated and unpolished, and the tracking/spacing is uneven.; The product cutout is poorly executed with a",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

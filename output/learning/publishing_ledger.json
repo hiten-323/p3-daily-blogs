@@ -16748,6 +16748,48 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-11T03:22:32+00:00"
     },
+    "2026-11-11|generate|youtube|pb_b1c2a45b1b": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-11",
+      "content_id": "pb_b1c2a45b1b",
+      "day_number": 314,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-11T05:09:30+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T05:09:35+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "dwpioL7r9z0",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.youtube.com/shorts/dwpioL7r9z0",
+          "verification_method": "youtube_oembed"
+        }
+      ],
+      "last_attempt_at": "2026-11-11T05:09:30+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-11T05:09:35+00:00",
+      "next_retry_at": null,
+      "platform": "youtube",
+      "published": true,
+      "remote_id": "dwpioL7r9z0",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-11T05:09:34+00:00",
+      "url": "https://www.youtube.com/shorts/dwpioL7r9z0",
+      "verification_detail": "public video confirmed by oEmbed",
+      "verification_method": "youtube_oembed",
+      "verified_at": "2026-11-11T05:09:35+00:00"
+    },
     "2026-11-11|morning|facebook|pb_b1c2a45b1b": {
       "asset": "",
       "attempt_count": 1,
@@ -16792,11 +16834,11 @@
     },
     "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
       "asset": "",
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-11-11",
       "content_id": "pb_b1c2a45b1b",
       "day_number": 314,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background uses a cheap, flat radial gradient rather than rich, textured lighting or actual photography.; Typography lacks sophistication; heavy serif paired with thin tracking feels dated and amateurish.; The product mockup is heavily flattened with harsh, unrealistic drop ",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:3.0; Background uses a cheap, unrefined gradient with artificial bokeh circles instead of rich, textured photography.; Typography lacks clear hierarchy; the headline font feels dated and unpolished, and the tracking/spacing is uneven.; The product cutout is poorly executed with a",
       "history": [
         {
           "at": "2026-11-11T04:41:08+00:00",
@@ -16812,20 +16854,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-11T05:09:35+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T05:23:03+00:00",
+          "attempt": 2,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:3.0; Background uses a cheap, unrefined gradient with artificial bokeh circles instead of rich, textured photography.; Typography lacks clear hierarchy; the headline font feels dated and unpolished, and the tracking/spacing is uneven.; The product cutout is poorly executed with a",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-11T04:41:08+00:00",
+      "last_attempt_at": "2026-11-11T05:09:35+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background uses a cheap, flat radial gradient rather than rich, textured lighting or actual photography.; Typography lacks sophistication; heavy serif paired with thin tracking feels dated and amateurish.; The product mockup is heavily flattened with harsh, unrealistic drop ",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:3.0; Background uses a cheap, unrefined gradient with artificial bokeh circles instead of rich, textured photography.; Typography lacks clear hierarchy; the headline font feels dated and unpolished, and the tracking/spacing is uneven.; The product cutout is poorly executed with a",
         "success": false
       },
-      "next_retry_at": "2026-11-11T04:55:27+00:00",
+      "next_retry_at": "2026-11-11T05:23:03+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-11T04:55:27+00:00",
+      "updated_at": "2026-11-11T05:23:03+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
