@@ -771,7 +771,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 28,
+      "count": 29,
       "feedback": "brand: ['Missing brand mention']",
       "first_seen": "2026-10-04",
       "fix": "Fix the cited gate before the next draft.",
@@ -1961,7 +1961,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 11,
+      "count": 12,
       "feedback": "brand: ['Missing website reference']",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -5251,7 +5251,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 2,
+      "count": 3,
       "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
       "first_seen": "2026-10-23",
       "fix": "",
@@ -24409,6 +24409,90 @@
       "last_seen": "2026-11-11",
       "platform": "youtube",
       "reason": "viral: score 6.1 < 8.0 (weakest: hook, comment_trigger, format_fit). The current hook is too wordy and takes too long to land for a YouTube Short. A strong YouTube Short hook needs to hit within the first 1-2 seconds with an immediate visual or auditory jolt. The comment trigger asks viewers to type",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.29 < 8.0 (weakest: hook, comment_trigger, format_fit). The hook is too wordy for a YouTube Short and needs a sharper 1-second pattern interrupt. The comment trigger asking users to type a specific word feels forced; a conversational question about storage habits performs better natively. Tighten the pacing for the first 3 seconds. Suggested hook: Your instant coffee is losing its fl",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 6.29 < 8.0 (weakest: hook, comment_trigger, format_fit). the hook is too wordy for a youtube short and needs a sharper 1-second pattern interrupt. the comment trigger ",
+      "label": "yt_short",
+      "last_seen": "2026-11-11",
+      "platform": "youtube",
+      "reason": "viral: score 6.29 < 8.0 (weakest: hook, comment_trigger, format_fit). The hook is too wordy for a YouTube Short and needs a sharper 1-second pattern interrupt. The comment trigger asking users to type a specific word feels forced; a conversational question about storage habits performs better native",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.7 < 8.0 (weakest: hook, shareability, comment_trigger). The hook relies too much on a generic procedural instruction rather than creating an immediate pattern interrupt or cognitive friction. Shareability can be improved by adding a specific takeaway about why 85 degrees C matters for robusta extraction. Ensure the hook instantly stops the scroll in the first 1-2 seconds without fee",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "generic_hook",
+      "id": "youtube|yt_short|generic_hook|viral: score 6.7 < 8.0 (weakest: hook, shareability, comment_trigger). the hook relies too much on a generic procedural instruction rather than creating an immediate pattern interr",
+      "label": "yt_short",
+      "last_seen": "2026-11-11",
+      "platform": "youtube",
+      "reason": "viral: score 6.7 < 8.0 (weakest: hook, shareability, comment_trigger). The hook relies too much on a generic procedural instruction rather than creating an immediate pattern interrupt or cognitive friction. Shareability can be improved by adding a specific takeaway about why 85 degrees C matters for",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.0 < 8.0 (weakest: hook, comment_trigger). The opening price statement is a bit dry for a 2-second YouTube Short hook; it needs an immediate thumb-stopping comparison or question about daily cafe spending vs home coffee cost. The comment trigger ('Comment 7030') is slightly unnatural\u2014asking a more conversational question like 'How much do you spend on morning coffee?' drives higher o",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.0 < 8.0 (weakest: hook, comment_trigger). the opening price statement is a bit dry for a 2-second youtube short hook; it needs an immediate thumb-stopping comparison",
+      "label": "yt_short",
+      "last_seen": "2026-11-11",
+      "platform": "youtube",
+      "reason": "viral: score 7.0 < 8.0 (weakest: hook, comment_trigger). The opening price statement is a bit dry for a 2-second YouTube Short hook; it needs an immediate thumb-stopping comparison or question about daily cafe spending vs home coffee cost. The comment trigger ('Comment 7030') is slightly unnatural\u2014a",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "HOOK/PAYOFF MISMATCH (payoff gate: hook promises 'alternative' but the content delivers verified_discovery \u2014 the promise is never settled). The hook makes a promise the body never settles. Either rewrite the hook so it promises exactly what the body delivers, or rewrite the body so it explicitly delivers what the hook promises (name the answer on screen and in the spoken line before the CTA). If t",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "payoff",
+      "id": "youtube|yt_short|payoff|hook/payoff mismatch (payoff gate: hook promises 'alternative' but the content delivers verified_discovery \u2014 the promise is never settled). the hook makes a promise the body never ",
+      "label": "yt_short",
+      "last_seen": "2026-11-11",
+      "platform": "youtube",
+      "reason": "HOOK/PAYOFF MISMATCH (payoff gate: hook promises 'alternative' but the content delivers verified_discovery \u2014 the promise is never settled). The hook makes a promise the body never settles. Either rewrite the hook so it promises exactly what the body delivers, or rewrite the body so it explicitly del",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 6.0 < 8.0 (weakest: hook, format_fit). The opening hook is too textbook-scientific ('The freeze-drying process locks in aroma because ice evaporates without melting') rather than a scroll-stopping pattern interrupt. For a YouTube Short, the first 1-2 seconds need a sharper contrast or a direct consumer call-out. The pacing is slightly too slow for short-form video norms. Suggested hoo",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 6.0 < 8.0 (weakest: hook, format_fit). the opening hook is too textbook-scientific ('the freeze-drying process locks in aroma because ice evaporates without melting') ",
+      "label": "yt_short",
+      "last_seen": "2026-11-11",
+      "platform": "youtube",
+      "reason": "viral: score 6.0 < 8.0 (weakest: hook, format_fit). The opening hook is too textbook-scientific ('The freeze-drying process locks in aroma because ice evaporates without melting') rather than a scroll-stopping pattern interrupt. For a YouTube Short, the first 1-2 seconds need a sharper contrast or a",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "The provided content payload fails to hit the strict overall threshold of 8.0 because the hook is somewhat dry and educational rather than aggressive or scroll-stopping. To elevate this payload to an APPROVE verdict, rewrite the hook to create an immediate curiosity gap about instant coffee storage mistakes, and punch up the emotional contrast between degraded aroma and locked-in freeze-dried fres",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "youtube|yt_short|ladder_exhausted|the provided content payload fails to hit the strict overall threshold of 8.0 because the hook is somewhat dry and educational rather than aggressive or scroll-stopping. to elevate",
+      "label": "yt_short",
+      "last_seen": "2026-11-11",
+      "platform": "youtube",
+      "reason": "The provided content payload fails to hit the strict overall threshold of 8.0 because the hook is somewhat dry and educational rather than aggressive or scroll-stopping. To elevate this payload to an APPROVE verdict, rewrite the hook to create an immediate curiosity gap about instant coffee storage",
       "stage": "generation",
       "status": "gate_holding"
     }
