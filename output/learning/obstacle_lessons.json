@@ -25461,6 +25461,20 @@
       "reason": "aesthetic_below_8.0:3.0; Product label design looks dated, resembling generic supermarket brands rather than a premium D2C coffee aesthetic.; The background gradient and lighting feel cheap and muddy, lacking rich color depth and sophisticated texture.; Typography lacks refined hierarchy; the headli",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background uses a flat, uninspired brown gradient with cheap-looking bokeh effects lacking true depth and texture.; typography suffers from awkward capital",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background uses a flat, uninspired brown gradient with cheap-looking bokeh effects lacking true depth and texture.; Typography suffers from awkward capitalization ('Vs' instead of 'vs') and weak hierarchy, feeling more like a basic template than bespoke art direction.; The p",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
