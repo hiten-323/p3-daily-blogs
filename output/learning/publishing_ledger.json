@@ -16834,11 +16834,11 @@
     },
     "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
       "asset": "",
-      "attempt_count": 27,
+      "attempt_count": 28,
       "content_date": "2026-11-11",
       "content_id": "pb_b1c2a45b1b",
       "day_number": 314,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product packaging design looks dated and lacks modern D2C aesthetic polish.; Typography is overly generic with weak hierarchy and awkward line breaks in the headline.; Background gradient and lighting look flat and amateurish, lacking rich textures or depth.",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Flat lighting and lack of depth on the product jar; Muddy, low-contrast color palette with pale pink label against brown background; Confusing, benefit-poor headline ('Freeze-Dried Vs Bold: Agglomerated')",
       "history": [
         {
           "at": "2026-11-11T04:41:08+00:00",
@@ -17244,20 +17244,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-11T13:06:57+00:00",
+          "attempt": 28,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T13:19:50+00:00",
+          "attempt": 28,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Flat lighting and lack of depth on the product jar; Muddy, low-contrast color palette with pale pink label against brown background; Confusing, benefit-poor headline ('Freeze-Dried Vs Bold: Agglomerated')",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-11T12:49:57+00:00",
+      "last_attempt_at": "2026-11-11T13:06:57+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product packaging design looks dated and lacks modern D2C aesthetic polish.; Typography is overly generic with weak hierarchy and awkward line breaks in the headline.; Background gradient and lighting look flat and amateurish, lacking rich textures or depth.",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Flat lighting and lack of depth on the product jar; Muddy, low-contrast color palette with pale pink label against brown background; Confusing, benefit-poor headline ('Freeze-Dried Vs Bold: Agglomerated')",
         "success": false
       },
-      "next_retry_at": "2026-11-11T13:00:53+00:00",
+      "next_retry_at": "2026-11-11T13:19:50+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-11T13:00:53+00:00",
+      "updated_at": "2026-11-11T13:19:50+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null

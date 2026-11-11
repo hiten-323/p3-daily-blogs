@@ -25503,6 +25503,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product packaging design looks dated and lacks modern D2C aesthetic polish.; Typography is overly generic with weak hierarchy and awkward line breaks in the headline.; Background gradient and lighting look flat and amateurish, lacking rich textures or depth.",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:5.0; flat lighting and lack of depth on the product jar; muddy, low-contrast color palette with pale pink label against brown background; confusing, benefit-poo",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:5.0; Flat lighting and lack of depth on the product jar; Muddy, low-contrast color palette with pale pink label against brown background; Confusing, benefit-poor headline ('Freeze-Dried Vs Bold: Agglomerated')",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
