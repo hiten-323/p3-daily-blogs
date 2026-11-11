@@ -25475,6 +25475,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background uses a flat, uninspired brown gradient with cheap-looking bokeh effects lacking true depth and texture.; Typography suffers from awkward capitalization ('Vs' instead of 'vs') and weak hierarchy, feeling more like a basic template than bespoke art direction.; The p",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; conceptual mismatch: headline promises a 'vs' comparison but only one product is shown.; product presentation lacks realism: jar appears to float with no c",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Conceptual mismatch: Headline promises a 'Vs' comparison but only one product is shown.; Product presentation lacks realism: jar appears to float with no contact shadow or surface interaction.; Visuals are flat: dark gradient background lacks depth, richness, and premium lig",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
