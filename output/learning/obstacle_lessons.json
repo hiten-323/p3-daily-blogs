@@ -25307,6 +25307,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background uses a cheap, unrefined gradient with artificial circular bokeh spots instead of authentic depth or photography; Typographic hierarchy is weak: headline is cramped, uses mixed capitalization ('Vs Bold: Agglomerated'), and serif font lacks modern D2C edge; Pill-sha",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product packaging design looks amateurish and lacks modern d2c aesthetic appeal; background gradient feels muddy and lacks rich depth or interesting textur",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product packaging design looks amateurish and lacks modern D2C aesthetic appeal; Background gradient feels muddy and lacks rich depth or interesting texture; Typography sizing and hierarchy are awkward, with excessive capitalization and weak tracking",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
