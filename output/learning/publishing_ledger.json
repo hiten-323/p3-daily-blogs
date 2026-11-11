@@ -16834,11 +16834,11 @@
     },
     "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
       "asset": "",
-      "attempt_count": 7,
+      "attempt_count": 8,
       "content_date": "2026-11-11",
       "content_id": "pb_b1c2a45b1b",
       "day_number": 314,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product photography looks amateurish and heavily cutout with harsh drop shadows, lacking natural integration with the background surface.; Typography is cluttered with too many font styles and weights competing for attention; headline capitalization is inconsistent ('Vs').; ",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Brand messaging confusion: headline compares 'Freeze-Dried Vs Bold' but shows a single jar labeled 'Freeze Dried Instant Coffee', creating unclear positioning.; Color palette is monotonous and flat; lacks the rich, warm depth and dimensionality expected for premium coffee vi",
       "history": [
         {
           "at": "2026-11-11T04:41:08+00:00",
@@ -16944,20 +16944,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-11T07:01:16+00:00",
+          "attempt": 8,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T07:12:51+00:00",
+          "attempt": 8,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Brand messaging confusion: headline compares 'Freeze-Dried Vs Bold' but shows a single jar labeled 'Freeze Dried Instant Coffee', creating unclear positioning.; Color palette is monotonous and flat; lacks the rich, warm depth and dimensionality expected for premium coffee vi",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-11T06:42:06+00:00",
+      "last_attempt_at": "2026-11-11T07:01:16+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product photography looks amateurish and heavily cutout with harsh drop shadows, lacking natural integration with the background surface.; Typography is cluttered with too many font styles and weights competing for attention; headline capitalization is inconsistent ('Vs').; ",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Brand messaging confusion: headline compares 'Freeze-Dried Vs Bold' but shows a single jar labeled 'Freeze Dried Instant Coffee', creating unclear positioning.; Color palette is monotonous and flat; lacks the rich, warm depth and dimensionality expected for premium coffee vi",
         "success": false
       },
-      "next_retry_at": "2026-11-11T06:53:29+00:00",
+      "next_retry_at": "2026-11-11T07:12:51+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-11T06:53:29+00:00",
+      "updated_at": "2026-11-11T07:12:51+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
