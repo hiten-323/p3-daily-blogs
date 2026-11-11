@@ -25195,6 +25195,20 @@
       "reason": "aesthetic_below_8.0:3.0; Flat, muddy gradient background lacks depth and rich lighting atmosphere expected from a premium brand; Typographic hierarchy is weak; headlines feel generic and lack distinctive brand styling; Product cutout has harsh, unnatural edges and awkward shadow placement on the sur",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product packaging design looks generic and lacks modern d2c aesthetic polish.; typography sizing and hierarchy feel awkward, with the headline being too pr",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product packaging design looks generic and lacks modern D2C aesthetic polish.; Typography sizing and hierarchy feel awkward, with the headline being too prominent relative to supporting text.; Background gradient and bokeh elements look dated and muddy rather than rich and p",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
