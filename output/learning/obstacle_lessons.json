@@ -25363,6 +25363,20 @@
       "reason": "aesthetic_below_8.0:5.0; Brand confusion: headline reads \u201cPurista\u201d while jar label says \u201cPurity Bears,\u201d breaking brand consistency; Consumer-unfriendly copy: \u201cFreeze-Dried Vs Bold: Agglomerated\u201d uses technical jargon instead of benefit-led language; Static centered composition feels like a template,",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:3.0; flat, muddy brown gradient background lacks rich color depth and high-end d2c polish.; poor typographic hierarchy: headline uses an awkward sentence case (",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:3.0; Flat, muddy brown gradient background lacks rich color depth and high-end D2C polish.; Poor typographic hierarchy: headline uses an awkward sentence case ('Vs') and clunky line breaks.; Label design on the coffee jar looks dated, amateur, and visually low-res compared to top",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
