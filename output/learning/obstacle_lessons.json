@@ -25419,6 +25419,20 @@
       "reason": "aesthetic_below_8.0:3.0; Background gradient feels muddy and lacks premium depth, looking more like a basic digital template than professional coffee photography; Typographic hierarchy is weak with awkward line breaks ('Purista: Freeze-Dried Vs Bold: / Agglomerated') and inconsistent sizing; The lab",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; flat, muddy gradient background lacks depth and high-end d2c aesthetic.; unrefined drop shadow under the product looks artificial and unpolished.; generic ",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Flat, muddy gradient background lacks depth and high-end D2C aesthetic.; Unrefined drop shadow under the product looks artificial and unpolished.; Generic template-style pill buttons ('STORY \u2022 ONE INGREDIENT', 'PURE COFFEE \u2022 TAP THE LINK') feel dated.",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

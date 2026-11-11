@@ -16834,11 +16834,11 @@
     },
     "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
       "asset": "",
-      "attempt_count": 21,
+      "attempt_count": 22,
       "content_date": "2026-11-11",
       "content_id": "pb_b1c2a45b1b",
       "day_number": 314,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:3.0; Background gradient feels muddy and lacks premium depth, looking more like a basic digital template than professional coffee photography; Typographic hierarchy is weak with awkward line breaks ('Purista: Freeze-Dried Vs Bold: / Agglomerated') and inconsistent sizing; The lab",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Flat, muddy gradient background lacks depth and high-end D2C aesthetic.; Unrefined drop shadow under the product looks artificial and unpolished.; Generic template-style pill buttons ('STORY \u2022 ONE INGREDIENT', 'PURE COFFEE \u2022 TAP THE LINK') feel dated.",
       "history": [
         {
           "at": "2026-11-11T04:41:08+00:00",
@@ -17154,20 +17154,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-11T11:26:08+00:00",
+          "attempt": 22,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T11:36:49+00:00",
+          "attempt": 22,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Flat, muddy gradient background lacks depth and high-end D2C aesthetic.; Unrefined drop shadow under the product looks artificial and unpolished.; Generic template-style pill buttons ('STORY \u2022 ONE INGREDIENT', 'PURE COFFEE \u2022 TAP THE LINK') feel dated.",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-11T11:06:00+00:00",
+      "last_attempt_at": "2026-11-11T11:26:08+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:3.0; Background gradient feels muddy and lacks premium depth, looking more like a basic digital template than professional coffee photography; Typographic hierarchy is weak with awkward line breaks ('Purista: Freeze-Dried Vs Bold: / Agglomerated') and inconsistent sizing; The lab",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Flat, muddy gradient background lacks depth and high-end D2C aesthetic.; Unrefined drop shadow under the product looks artificial and unpolished.; Generic template-style pill buttons ('STORY \u2022 ONE INGREDIENT', 'PURE COFFEE \u2022 TAP THE LINK') feel dated.",
         "success": false
       },
-      "next_retry_at": "2026-11-11T11:20:09+00:00",
+      "next_retry_at": "2026-11-11T11:36:49+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-11T11:20:09+00:00",
+      "updated_at": "2026-11-11T11:36:49+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
