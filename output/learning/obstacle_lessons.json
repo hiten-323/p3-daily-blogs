@@ -25251,6 +25251,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color gradient lacks rich depth, feeling muddy rather than luxurious.; Typography suffers from awkward capitalization ('Vs' instead of 'vs') and weak hierarchy.; The product label design looks generic and cheap, detracting from any premium D2C aesthetic.",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; headline uses the unappetizing technical term \"agglomerated,\" which kills premium coffee appeal; brand inconsistency: logo reads \"purity beans\" while headl",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Headline uses the unappetizing technical term \"Agglomerated,\" which kills premium coffee appeal; Brand inconsistency: logo reads \"PURITY BEANS\" while headline and label emphasize \"Purista,\" creating confusion; Generic brown bokeh background lacks dimensional depth and premiu",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

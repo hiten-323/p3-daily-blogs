@@ -16834,11 +16834,11 @@
     },
     "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
       "asset": "",
-      "attempt_count": 9,
+      "attempt_count": 10,
       "content_date": "2026-11-11",
       "content_id": "pb_b1c2a45b1b",
       "day_number": 314,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color gradient lacks rich depth, feeling muddy rather than luxurious.; Typography suffers from awkward capitalization ('Vs' instead of 'vs') and weak hierarchy.; The product label design looks generic and cheap, detracting from any premium D2C aesthetic.",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Headline uses the unappetizing technical term \"Agglomerated,\" which kills premium coffee appeal; Brand inconsistency: logo reads \"PURITY BEANS\" while headline and label emphasize \"Purista,\" creating confusion; Generic brown bokeh background lacks dimensional depth and premiu",
       "history": [
         {
           "at": "2026-11-11T04:41:08+00:00",
@@ -16974,20 +16974,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-11T07:32:42+00:00",
+          "attempt": 10,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T07:44:35+00:00",
+          "attempt": 10,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Headline uses the unappetizing technical term \"Agglomerated,\" which kills premium coffee appeal; Brand inconsistency: logo reads \"PURITY BEANS\" while headline and label emphasize \"Purista,\" creating confusion; Generic brown bokeh background lacks dimensional depth and premiu",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-11T07:18:29+00:00",
+      "last_attempt_at": "2026-11-11T07:32:42+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color gradient lacks rich depth, feeling muddy rather than luxurious.; Typography suffers from awkward capitalization ('Vs' instead of 'vs') and weak hierarchy.; The product label design looks generic and cheap, detracting from any premium D2C aesthetic.",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Headline uses the unappetizing technical term \"Agglomerated,\" which kills premium coffee appeal; Brand inconsistency: logo reads \"PURITY BEANS\" while headline and label emphasize \"Purista,\" creating confusion; Generic brown bokeh background lacks dimensional depth and premiu",
         "success": false
       },
-      "next_retry_at": "2026-11-11T07:26:45+00:00",
+      "next_retry_at": "2026-11-11T07:44:35+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-11T07:26:45+00:00",
+      "updated_at": "2026-11-11T07:44:35+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
