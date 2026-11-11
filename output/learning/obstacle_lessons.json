@@ -25279,6 +25279,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient feels muddy, flat, and lacks rich depth or premium texture; Typographic hierarchy is messy with awkward capitalization ('Vs' instead of 'vs') and generic serif font usage; Stray bright spots/bokeh in the background are distracting and poorly rendered",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:5.0; brand inconsistency: headline reads 'purista' while jar label reads 'purity beans', causing immediate confusion.; flat lighting and generic brown backgroun",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:5.0; Brand inconsistency: headline reads 'Purista' while jar label reads 'Purity Beans', causing immediate confusion.; Flat lighting and generic brown background lack premium depth, richness, and dimensionality.; Headline is educational/comparative rather than appetite-stimulatin",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

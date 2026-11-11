@@ -16834,11 +16834,11 @@
     },
     "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
       "asset": "",
-      "attempt_count": 11,
+      "attempt_count": 12,
       "content_date": "2026-11-11",
       "content_id": "pb_b1c2a45b1b",
       "day_number": 314,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient feels muddy, flat, and lacks rich depth or premium texture; Typographic hierarchy is messy with awkward capitalization ('Vs' instead of 'vs') and generic serif font usage; Stray bright spots/bokeh in the background are distracting and poorly rendered",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Brand inconsistency: headline reads 'Purista' while jar label reads 'Purity Beans', causing immediate confusion.; Flat lighting and generic brown background lack premium depth, richness, and dimensionality.; Headline is educational/comparative rather than appetite-stimulatin",
       "history": [
         {
           "at": "2026-11-11T04:41:08+00:00",
@@ -17004,20 +17004,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-11T08:15:29+00:00",
+          "attempt": 12,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T08:30:22+00:00",
+          "attempt": 12,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Brand inconsistency: headline reads 'Purista' while jar label reads 'Purity Beans', causing immediate confusion.; Flat lighting and generic brown background lack premium depth, richness, and dimensionality.; Headline is educational/comparative rather than appetite-stimulatin",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-11T07:51:37+00:00",
+      "last_attempt_at": "2026-11-11T08:15:29+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient feels muddy, flat, and lacks rich depth or premium texture; Typographic hierarchy is messy with awkward capitalization ('Vs' instead of 'vs') and generic serif font usage; Stray bright spots/bokeh in the background are distracting and poorly rendered",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Brand inconsistency: headline reads 'Purista' while jar label reads 'Purity Beans', causing immediate confusion.; Flat lighting and generic brown background lack premium depth, richness, and dimensionality.; Headline is educational/comparative rather than appetite-stimulatin",
         "success": false
       },
-      "next_retry_at": "2026-11-11T08:09:21+00:00",
+      "next_retry_at": "2026-11-11T08:30:22+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-11T08:09:21+00:00",
+      "updated_at": "2026-11-11T08:30:22+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
