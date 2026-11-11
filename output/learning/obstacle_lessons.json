@@ -25181,6 +25181,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient feels flat, muddy, and lacks rich, luxurious depth typical of premium D2C coffee brands; Typographic hierarchy is weak; headlines use generic system serif fonts with awkward capitalization and tight line spacing; Pill-shaped badge design elements look dat",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:3.0; flat, muddy gradient background lacks depth and rich lighting atmosphere expected from a premium brand; typographic hierarchy is weak; headlines feel gener",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:3.0; Flat, muddy gradient background lacks depth and rich lighting atmosphere expected from a premium brand; Typographic hierarchy is weak; headlines feel generic and lack distinctive brand styling; Product cutout has harsh, unnatural edges and awkward shadow placement on the sur",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
