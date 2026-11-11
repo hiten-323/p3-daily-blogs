@@ -25321,6 +25321,20 @@
       "reason": "aesthetic_below_8.0:4.0; Product packaging design looks amateurish and lacks modern D2C aesthetic appeal; Background gradient feels muddy and lacks rich depth or interesting texture; Typography sizing and hierarchy are awkward, with excessive capitalization and weak tracking",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-11",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; product photography looks amateurish, featuring a harsh drop shadow and flat integration onto the surface rather than realistic environmental lighting.; ty",
+      "label": "stories",
+      "last_seen": "2026-11-11",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Product photography looks amateurish, featuring a harsh drop shadow and flat integration onto the surface rather than realistic environmental lighting.; Typography lacks refined hierarchy and premium kerning; the headline wraps awkwardly and feels pasted onto the gradient ba",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
