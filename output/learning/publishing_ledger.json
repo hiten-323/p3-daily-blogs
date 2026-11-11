@@ -16834,11 +16834,11 @@
     },
     "2026-11-11|morning|instagram_story|pb_b1c2a45b1b": {
       "asset": "",
-      "attempt_count": 26,
+      "attempt_count": 27,
       "content_date": "2026-11-11",
       "content_id": "pb_b1c2a45b1b",
       "day_number": 314,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Conceptual mismatch: Headline promises a 'Vs' comparison but only one product is shown.; Product presentation lacks realism: jar appears to float with no contact shadow or surface interaction.; Visuals are flat: dark gradient background lacks depth, richness, and premium lig",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product packaging design looks dated and lacks modern D2C aesthetic polish.; Typography is overly generic with weak hierarchy and awkward line breaks in the headline.; Background gradient and lighting look flat and amateurish, lacking rich textures or depth.",
       "history": [
         {
           "at": "2026-11-11T04:41:08+00:00",
@@ -17229,20 +17229,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-11T12:49:57+00:00",
+          "attempt": 27,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-11T13:00:53+00:00",
+          "attempt": 27,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product packaging design looks dated and lacks modern D2C aesthetic polish.; Typography is overly generic with weak hierarchy and awkward line breaks in the headline.; Background gradient and lighting look flat and amateurish, lacking rich textures or depth.",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-11T12:30:21+00:00",
+      "last_attempt_at": "2026-11-11T12:49:57+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Conceptual mismatch: Headline promises a 'Vs' comparison but only one product is shown.; Product presentation lacks realism: jar appears to float with no contact shadow or surface interaction.; Visuals are flat: dark gradient background lacks depth, richness, and premium lig",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Product packaging design looks dated and lacks modern D2C aesthetic polish.; Typography is overly generic with weak hierarchy and awkward line breaks in the headline.; Background gradient and lighting look flat and amateurish, lacking rich textures or depth.",
         "success": false
       },
-      "next_retry_at": "2026-11-11T12:44:00+00:00",
+      "next_retry_at": "2026-11-11T13:00:53+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-11T12:44:00+00:00",
+      "updated_at": "2026-11-11T13:00:53+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
