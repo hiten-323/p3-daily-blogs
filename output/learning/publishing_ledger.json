@@ -17732,11 +17732,11 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 24,
+      "attempt_count": 25,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Monochromatic brown palette lacks contrast and depth, risking blend-in with the Instagram feed.; Background is a flat gradient without texture or environmental context to create premium depth.; Typography is clean but generic; lacks premium editorial hierarchy and visual exc",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is monochromatic and lacks premium depth or texture, feeling flat rather than rich.; Typography is legible but generic; lacks distinctive editorial hierarchy or brand personality.; Product lighting is flat; the jar does not pop with dramatic highlights or dimensio",
       "history": [
         {
           "at": "2026-11-12T07:26:03+00:00",
@@ -18097,20 +18097,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-12T15:29:53+00:00",
+          "attempt": 25,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T15:39:57+00:00",
+          "attempt": 25,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is monochromatic and lacks premium depth or texture, feeling flat rather than rich.; Typography is legible but generic; lacks distinctive editorial hierarchy or brand personality.; Product lighting is flat; the jar does not pop with dramatic highlights or dimensio",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-12T15:12:36+00:00",
+      "last_attempt_at": "2026-11-12T15:29:53+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Monochromatic brown palette lacks contrast and depth, risking blend-in with the Instagram feed.; Background is a flat gradient without texture or environmental context to create premium depth.; Typography is clean but generic; lacks premium editorial hierarchy and visual exc",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is monochromatic and lacks premium depth or texture, feeling flat rather than rich.; Typography is legible but generic; lacks distinctive editorial hierarchy or brand personality.; Product lighting is flat; the jar does not pop with dramatic highlights or dimensio",
         "success": false
       },
-      "next_retry_at": "2026-11-12T15:23:43+00:00",
+      "next_retry_at": "2026-11-12T15:39:57+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-12T15:23:43+00:00",
+      "updated_at": "2026-11-12T15:39:57+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null

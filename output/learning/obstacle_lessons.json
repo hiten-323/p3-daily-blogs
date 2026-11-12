@@ -28331,6 +28331,20 @@
       "reason": "aesthetic_below_8.0:6.0; Monochromatic brown palette lacks contrast and depth, risking blend-in with the Instagram feed.; Background is a flat gradient without texture or environmental context to create premium depth.; Typography is clean but generic; lacks premium editorial hierarchy and visual exc",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; background is monochromatic and lacks premium depth or texture, feeling flat rather than rich.; typography is legible but generic; lacks distinctive editor",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Background is monochromatic and lacks premium depth or texture, feeling flat rather than rich.; Typography is legible but generic; lacks distinctive editorial hierarchy or brand personality.; Product lighting is flat; the jar does not pop with dramatic highlights or dimensio",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
