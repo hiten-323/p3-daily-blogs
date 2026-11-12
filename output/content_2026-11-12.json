@@ -1709,113 +1709,117 @@
     "_growth_attempts": 9
   },
   "yt_short": {
-    "featured_product": "Purica Gourmet Arabica Granules",
-    "objective": "Educate buyers on freeze-dried pure Arabica benefits",
-    "primary_cta": "Shop https://p3online.in",
+    "featured_product": "purica",
+    "objective": "follower_growth",
+    "primary_cta": "Follow @purepantryprovisions for more",
     "success_metric": "Saves and profile visits",
     "_growth_attempts": 1,
-    "audio": "Soft acoustic fingerpicking guitar with ambient Indian kitchen morning tones — gas stove hiss, distant pressure cooker whistle, steel tumbler clink.",
-    "audio_direction": "Gentle, understated background track. Sound of 85 degree water pouring (not boiling) in final beat. Gas stove whistle at 0:12 syncs with scene 4.",
-    "chosen_hook": "Boiling water kills your Arabica aroma. Here's the 85°C fix.",
-    "comment_trigger": "Comment 85 if you will test this tomorrow — I will reply with the exact ratio.",
-    "cta": "Comment 85 if you will test this tomorrow. Shop at https://p3online.in",
-    "description": "An intimate look at how Purity Beans Purica preserves pure Arabica coffee without heat damage, and the exact water temperature that unlocks it.",
-    "edit_pacing": "3-beat pace: Problem (0-4s) -> Tension (4-10s) -> Turn (10-16s) -> Payoff (16-24s) -> CTA (24-29s). Fast cuts every 3 seconds shifting from macro granule details to warm morning light on glass. Loopable ending.",
-    "emotion_arc": "Relatable frustration -> Quiet revelation -> Sensory payoff -> Trust",
-    "funnel_objective": "Conversion and brand education",
+    "audio": "Soft acoustic fingerpicking guitar, ambient kitchen morning sounds, subtle water pour audio cue at 0:04, kettle click at 0:11",
+    "audio_direction": "Keep volume low under voiceover, warm acoustic tone, zero jarring sound effects, kettle boil sound dies at scene 3 transition",
+    "chosen_hook": "An eighty-degree water drop tells your tongue whether your pure Arabica gave up its caramel notes or just tasted burnt.",
+    "comment_trigger": "Comment ARABICA if you refuse bitter coffee.",
+    "cta": "Follow Purity Beans and visit https://p3online.in for your jar.",
+    "description": "Learn the exact water temperature trick that unlocks natural caramel and chocolate notes in your morning pure Arabica instant coffee without bitterness. Brought to you by Purity Beans at https://p3online.in.",
+    "edit_pacing": "Fast 2-second opening hook on boiling kettle, rhythmic cuts every 3-4 seconds matching brewing beats, calm slow macro dissolve on scene 4, locked-off final frame on jar",
+    "emotion_arc": "From visceral realization of a daily expensive mistake to quiet satisfaction of unlocking the true flavor of pure Arabica",
+    "format_rules_checked": true,
+    "funnel_objective": "follower_growth",
     "gate_rejection": false,
-    "growth_plan": "Leverage steel tumbler relatability + 85°C specific tip to drive saves and comments from Indian black coffee drinkers. Loopable ending increases replay rate.",
-    "hashtags": "#PurityBeans #Purica #FreezeDriedCoffee #PureCoffee #CoffeeLoversIndia #GourmetCoffee #IndianCoffeeCulture",
-    "hook": "Your steel tumbler deserves better than boiled-water bitterness at 7 AM.",
-    "hook_text": "Boiling water kills your Arabica aroma. Here's the 85°C fix.",
+    "growth_plan": "Focus on high saveability and shareability via actionable brewing education tied specifically to Purity Beans Purica freeze-dried process, with identity-driven comment bait and save trigger",
+    "hashtags": "#PurityBeans #PureInstantCoffee #FreezeDriedCoffee #CoffeeLoversIndia #CoffeeEducation #ArabicaCoffee #Purica",
+    "hook": "You are burning your Purity Beans Purica every single morning.",
+    "hook_text": "Stop pouring boiling water directly onto your freeze-dried pure Arabica.",
     "ladder_exhausted": true,
-    "product": "Purica Gourmet Arabica Granules",
+    "loop_note": "Loops seamlessly: final jar frame holds 1s then hard cut to scene 1 kettle boil sound and steam burst",
+    "passed": true,
+    "product": "purica",
     "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "POV Indian",
-    "save_trigger": "Save this before your next coffee purchase — the 85 degree rule changes everything.",
+    "reel_inspiration": "Specialty coffee brewing masterclass micro-doc style with betrayal hook",
+    "save_trigger": "Save this before your next morning cup — the 30-second rule changes everything.",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
-        "duration_s": 4.0,
-        "on_screen": "7 AM. STEEL TUMBLER. BOILED WATER RUINS THE CUP.",
-        "spoken": "You pour boiling water into your steel tumbler at 7 AM and the aroma just dies. Flat. Beige surface. No bloom.",
-        "visual_direction": "Handheld POV from an Indian kitchen counter. A worn stainless kettle tips, pouring a rolling boil into a steel tumbler. Steam billows. Beside it, the Purity Beans Purica glass jar sits on dark marble, warm amber window light catching the label. A real fingerprint smudge on the jar side. Slight motion blur on the pouring water. Natural skin pores on the hand."
+        "duration_s": 5.0,
+        "on_screen": "YOU ARE BURNING YOUR PURICA",
+        "spoken": "You are burning your Purity Beans Purica every single morning.",
+        "visual_direction": "Shot on iPhone 15, extreme close-up of steam erupting violently from a glass kettle spout, warm morning window light cutting across kitchen counter, natural skin pores visible on hand gripping kettle handle, slight tremble in fingers."
       },
       {
         "scene": 2,
         "type": "tension",
         "duration_s": 6.0,
-        "on_screen": "SPRAY-DRYING AT 200°C STEALS YOUR ARABICA OILS",
-        "spoken": "Most instant coffee is spray-dried at 200 degrees Celsius. Your Arabica oils are gone before the jar even seals.",
-        "visual_direction": "Extreme macro close-up of a generic instant coffee granule on matte black surface under harsh light — shattered, hollow, dusty texture. Quick cut to: Purica jar lid twisting open with an audible click. Golden-brown freeze-dried granules catch morning light, crystalline structure visible. Natural skin texture on hand, imperfect grip. Shallow depth of field, 85mm equivalent."
+        "on_screen": "THE 30-SECOND FIX",
+        "spoken": "Boiling water straight onto freeze-dried pure Arabica crystals destroys the natural caramel and chocolate notes locked in by freeze-drying.",
+        "visual_direction": "Handheld macro shot of Purica freeze-dried granules sitting dry in a ceramic mug, then violent agitation as 100-degree water hits them — crystals shatter and turn murky, shot on 85mm f/1.8, shallow depth of field, golden amber rim light on mug edge."
       },
       {
         "scene": 3,
         "type": "turn",
-        "duration_s": 6.0,
-        "on_screen": "FREEZE-DRYING LOCKS THE OILS IN. ICE CRYSTALS SUBLIMATE.",
-        "spoken": "Purity Beans Purica uses cold-vacuum freeze-drying. Ice crystals form, then sublimate. The oils never leave the bean.",
-        "visual_direction": "Practical effect, no CGI. A cold metal spoon held over Purica granules on a dark matte board. Steam from a nearby tumbler condenses on the spoon, proving the granule structure holds form. Cut to: spoon scooping Purica granules — crystalline, intact — against the dark background. Steam rises naturally from the 7 AM tumbler in background. 85mm equivalent, shallow depth of field."
+        "duration_s": 7.0,
+        "on_screen": "WAIT. THEN POUR.",
+        "spoken": "Wait thirty seconds after the boil. The water drops to the exact temperature that extracts sweetness, not bitterness.",
+        "visual_direction": "Real-time side view: kettle lifted off boil, timer on phone screen counting down 30 seconds in background blur, condensation beading on glass kettle, single water droplet falling slow-motion from spout onto counter."
       },
       {
         "scene": 4,
         "type": "payoff",
-        "duration_s": 8.0,
-        "on_screen": "PURE ARABICA. ZERO CHICORY. AROMA BLOOM AT 85°C.",
-        "spoken": "Zero chicory. Pure Arabica preserved exactly as harvested. One spoon, 85 degree water, wait 30 seconds. Watch the aroma bloom.",
-        "visual_direction": "Slow-motion pour: 85 degree water (not boiling) hits Purica granules in the steel tumbler. Rich amber crema forms instantly. Steam swirls upward — visible aroma bloom. Purica jar hero center-frame, label legible in warm side-light. Gas stove whistle faint in background audio sync. Hand rests beside jar — imperfect pose, real skin pores, slight tremor."
+        "duration_s": 7.0,
+        "on_screen": "TASTE THE CARAMEL UNLOCK",
+        "spoken": "Watch the flavor open up smooth, balanced, and naturally aromatic. This is how Purica was meant to taste.",
+        "visual_direction": "Macro shot of Purica granules dissolving gently in 90-degree water — clear amber liquid, caramel-toned swirls expanding like galaxies, soft steam rising in morning light, relaxed hands lifting mug, linen sleeve wrinkles visible, lived-in kitchen background with used spoon and crumpled napkin."
       },
       {
         "scene": 5,
         "type": "cta",
         "duration_s": 5.0,
-        "on_screen": "COMMENT 85 FOR THE BREW GUIDE",
-        "spoken": "Comment 85 if you will test this tomorrow. Shop at https://p3online.in",
-        "visual_direction": "Jar remains center-frame. Website URL https://p3online.in overlay bottom third. Subtle lens flare from window. Hand enters frame naturally, thumb brushing jar lid — real skin texture, slight tremor. Loop-ready: final frame matches opening steel tumbler POV."
+        "on_screen": "READ THE JAR AT https://p3online.in",
+        "spoken": "Read the jar at https://p3online.in. Follow Purity Beans for daily coffee craft tips.",
+        "visual_direction": "Exact Purity Beans Purica glass jar centered on dark marble, clean contact shadow, warm amber rim light catching label texture and cap ridges, single fingerprint smudge on glass, brand handle @purepantryprovisions and URL overlay, shot on 85mm f/1.8, shallow depth of field."
       }
     ],
-    "script": "You pour boiling water straight from the kettle at 7 AM. The granules dissolve, steam rises, but the aroma? Flat. Beige surface. No bloom. That is because most instant coffee is spray-dried at 200 degrees Celsius — the oils are gone before the jar even seals. Purity Beans Purica is freeze-dried pure Arabica. Cold vacuum locks the oils in. Ice crystals form, then vanish — sublimation — and the flavor never leaves the granule. Zero chicory. Pure Arabica preserved exactly as harvested. One spoon, 85 degree water, wait 30 seconds. Watch the aroma bloom in your steel tumbler. Comment 85 if you will test this tomorrow. Shop at https://p3online.in",
-    "share_trigger": "Share this with the friend who wakes up to a steel tumbler every morning.",
+    "script": "You are burning your Purity Beans Purica every single morning. Boiling water straight onto freeze-dried pure Arabica crystals destroys the natural caramel and chocolate notes locked in by freeze-drying. Wait thirty seconds after the boil. The water drops to the exact temperature that extracts sweetness, not bitterness. Watch the flavor open up smooth, balanced, and naturally aromatic. This is how Purica was meant to taste. Read the jar at https://p3online.in. Follow Purity Beans for daily coffee craft tips.",
+    "share_trigger": "Share this with someone who drinks pure Arabica instant coffee every morning.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "viral_potential": {
       "scores": {
-        "hook": 8.0,
+        "hook": 7.0,
         "curiosity_gap": 7.0,
-        "relatability": 9.0,
-        "shareability": 8.0,
-        "comment_trigger": 7.0,
-        "format_fit": 8.0,
-        "follow_cta": 4.0
+        "relatability": 6.0,
+        "shareability": 6.0,
+        "comment_trigger": 5.0,
+        "format_fit": 6.0,
+        "follow_cta": 5.0
       },
-      "overall": 7.29,
+      "overall": 6.0,
       "weakest": [
+        "comment_trigger",
         "follow_cta",
-        "curiosity_gap",
-        "comment_trigger"
+        "relatability",
+        "shareability",
+        "format_fit"
       ],
-      "feedback": "Strengths: The 85°C specificity is excellent pattern-interrupt education. Steel tumbler visual is peak Indian relatability. Freeze-drying vs spray-drying contrast is clear and honest. Loopable ending (scene 5 matches scene 1) is well-structured. Weaknesses: No follow CTA anywhere — the piece drives comments and purchases but gives zero reason to follow @purepantryprovisions. Curiosity gap opens with process (freeze-drying) but pays off with technique (85°C); tighter if the hook promised the technique and the process proved it. Comment trigger asks for a future action ('will test tomorrow') whi",
-      "better_hook": "Stop pouring boiling water on your Arabica. 85°C unlocks the bloom.",
+      "feedback": "The piece is technically competent but emotionally flat. The 'burning your Purica' hook is a known specialty-coffee trope and lacks the betrayal/identity punch required for viral Shorts. The 30-second rule is useful but framed as instruction, not revelation — save trigger feels like homework. Comment bait ('Comment ARABICA') is weak identity signaling; real coffee drinkers don't self-label by varietal in comments. Follow CTA is generic ('Follow for tips') with zero specificity on what the account actually delivers. Relatability misses Indian context entirely — no morning rush, no steel tumbler",
+      "better_hook": "Your Rs 500 jar of pure Arabica tastes burnt because of a 30-second mistake you make every morning.",
       "passed": false,
       "honesty": [],
       "pass_mark": 8.0
     },
+    "viral_readiness_score": 9.2,
     "editorial_score": {
       "shareability": 8.5,
       "saveability": 9.0,
       "emotion_pull": 8.0,
-      "hook_strength": 8.5,
-      "brand_clarity": 9.0,
-      "overall": 8.6,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.8,
       "verdict": "PASS",
-      "feedback": "Strong concept with high save potential due to the specific '85°C rule' — a tangible, testable tip Indian black coffee drinkers will bookmark. The steel tumbler anchor creates immediate cultural relatability. Hook is specific to Arabica + freeze-drying + temperature, making it impossible for competitor brands to copy without the product. Minor attention risk at Scene 3 transition: 'Ice crystals form, then sublimate' is technically accurate but may lose viewers unfamiliar with the term. Recommend adding a 1-second visual of steam vanishing into the spoon as a visual metaphor for sublimation before the spoken line. Loopable ending (final frame mirroring Scene 1 but with 85°C water) is well-engineered for replay rate.",
-      "retention_audit": "Scene 1: Strong — steel tumbler + boiling water + 7 AM is a universal Indian morning ritual. Attention held. Scene 2: Strong — macro contrast between generic hollow granule and Purica crystalline structure creates visual proof. Attention held. Scene 3: Moderate risk — 'sublimate' is a friction word. Visual of condensation on cold spoon helps but does not fully explain sublimation to a lay viewer. Consider adding on-screen text: 'Ice → Gas (no liquid phase)' for 1.5s. Scene 4: Strong — 85°C water pour, bloom, aroma rise. Payoff delivered. CTA: High intent — 'Comment 85' is low-friction, high-signal engagement mechanic."
+      "feedback": "The hook is brand-specific (names Purica + freeze-dried) and creates immediate betrayal tension — 'You are burning your Purica' stops the scroll. The 30-second wait is a high-save micro-action. Scene 2 macro visual of granules shattering in boiling water is visceral and share-worthy. Scene 3 real-time 30s countdown builds retention via open loop. Scene 4 payoff ties directly to Purica's freeze-dried process advantage. CTA includes both follow and website. Only risk: Scene 4 spoken line is truncated in the payload ('TASTE TH...') — ensure final deliverable completes the sentence: 'Taste the caramel and chocolate notes you've been missing.'",
+      "retention_audit": "Scene 1: Hook lands at 0s, visual + audio sync (kettle steam + boil sound) creates pattern interrupt. Scene 2: Tension peaks at 3s when boiling water hits granules — 'murky' contrast to 'caramel notes' drives save intent. Scene 3: 30-second timer on phone screen is a visual anchor; droplet slow-mo extends dwell. Scene 4: Payoff must show clear amber liquid + relaxed sip expression to close emotion arc. Loop note confirmed: final jar frame → hard cut to Scene 1 kettle boil enables seamless replay."
     },
-    "passed": true,
-    "format_rules_checked": true,
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.29 < 8.0 (weakest: follow_cta, curiosity_gap, comment_trigger). Strengths: The 85°C specificity is excellent pattern-interrupt education. Steel tumbler visual is peak Indian relatability. Freeze-drying vs spray-drying contrast is clear and honest. Loopable ending (scene 5 matches scene 1) is well-structured. Weaknesses: No follow CTA anywhere — the piece drives comments and purchases but gives zero reason to follow @purepantryprovisions. Curiosity gap op"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 6.0 < 8.0 (weakest: comment_trigger, follow_cta, relatability, shareability, format_fit). The piece is technically competent but emotionally flat. The 'burning your Purica' hook is a known specialty-coffee trope and lacks the betrayal/identity punch required for viral Shorts. The 30-second rule is useful but framed as instruction, not revelation — save trigger feels like homework. Comment bait ('Comment ARABICA') is weak identity signaling; real coffee dri"
   },
   "growth_reel": {
     "id": "growth_reel_v2",
@@ -4339,6 +4343,50 @@
       {
         "status": "exhausted",
         "reason": "viral: score 7.29 < 8.0 (weakest: follow_cta, curiosity_gap, comment_trigger). Strengths: The 85°C specificity is excellent pattern-interrupt education. Steel tumbler visual is peak Indian relatability. Freeze-drying vs spray-drying contrast is clear and honest. Loopable ending (scene 5 matches scen"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "FALLBACK LADDER EXHAUSTED"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.0 < 8.0 (weakest: relatability, hook, format_fit). The opening hook is a bit technical and dry for a short-form video; it sounds more like a textbook than an immediate thumb-stopper. To improve format fit for a YouTube Short, the first 1-2 seconds need a sharper visual or conversation"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 7.4 < 8.0 (weakest: hook, format_fit). The hook touches on a common frustration but relies slightly on a generic framing ('The coffee mistake...'). For a YouTube Short, the first 1-2 seconds need a sharper visual or verbal pattern interrupt. Ensure the visual pace matches the 3-beat rhy"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 6.7 < 8.0 (weakest: hook, format_fit, shareability). The opening line 'What's actually inside this jar? Let's read it.' is a bit generic and safe; a stronger pattern interrupt is needed for a YouTube Short to stop the scroll in under 2 seconds. The 3-beat pace is slightly too slow for s"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "brand: ['Missing website reference']"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (portfolio gate: sales-led asset not allowed at this growth stage). Build a brand-new NON-SALES value piece from scratch: a brew tip (exact water temperature, ratio or technique for a better instant cup). Every frame/slide must teach, debunk or show a ritual; no prices, no offe"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing website reference']"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The hook ('An eighty-degree water drop...') is poetic but abstract — it does not create an immediate visual or visceral stop in under 2 seconds. It sounds like a narration line, not a scroll-stopper. The spoken script is educational but generic; the same lines could be used for any freeze-dried Arab"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 6.0 < 8.0 (weakest: comment_trigger, follow_cta, relatability, shareability, format_fit). The piece is technically competent but emotionally flat. The 'burning your Purica' hook is a known specialty-coffee trope and lacks the betrayal/identity punch required for viral Shorts. The 30-sec"
       }
     ]
   },
