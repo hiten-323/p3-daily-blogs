@@ -17732,11 +17732,11 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 8,
+      "attempt_count": 9,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Background is a flat brown gradient with minimal depth; lacks rich, premium texture or dramatic lighting; Typography is functional but generic; headline is decent but body copy is small and uninspired, not agency-caliber; Product is sharp and unobstructed, but the shot is a ",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel flat and amateurish, lacking rich coffee tones or atmospheric depth.; Typography lacks strong hierarchy; the subheadline ('Do you wait...') is awkwardly placed and small.; Product lighting and cutout quality on the jar look cheap, with a po",
       "history": [
         {
           "at": "2026-11-12T07:26:03+00:00",
@@ -17857,20 +17857,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-12T10:26:54+00:00",
+          "attempt": 9,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T10:36:06+00:00",
+          "attempt": 9,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel flat and amateurish, lacking rich coffee tones or atmospheric depth.; Typography lacks strong hierarchy; the subheadline ('Do you wait...') is awkwardly placed and small.; Product lighting and cutout quality on the jar look cheap, with a po",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-12T10:05:11+00:00",
+      "last_attempt_at": "2026-11-12T10:26:54+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Background is a flat brown gradient with minimal depth; lacks rich, premium texture or dramatic lighting; Typography is functional but generic; headline is decent but body copy is small and uninspired, not agency-caliber; Product is sharp and unobstructed, but the shot is a ",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel flat and amateurish, lacking rich coffee tones or atmospheric depth.; Typography lacks strong hierarchy; the subheadline ('Do you wait...') is awkwardly placed and small.; Product lighting and cutout quality on the jar look cheap, with a po",
         "success": false
       },
-      "next_retry_at": "2026-11-12T10:20:36+00:00",
+      "next_retry_at": "2026-11-12T10:36:06+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-12T10:20:36+00:00",
+      "updated_at": "2026-11-12T10:36:06+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
