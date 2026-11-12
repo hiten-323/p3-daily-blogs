@@ -28205,6 +28205,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color and lighting feel flat and amateurish, lacking rich coffee depth or textures.; Product cutout is poorly executed with visible harsh edges and unconvincing shadow placement on the surface.; Typography lacks strong hierarchy; subheadings and callout boxes feel",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background looks like a cheap gradient mesh rather than a rich, textured studio surface or lifestyle environment.; the ui pill buttons ('story \u2022 one ingred",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background looks like a cheap gradient mesh rather than a rich, textured studio surface or lifestyle environment.; The UI pill buttons ('STORY \u2022 ONE INGREDIENT' and 'PURE COFFEE \u2022 TAP THE LINK') feel dated and generic, resembling basic Canva templates.; Typography lacks refi",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
