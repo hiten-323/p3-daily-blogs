@@ -17561,6 +17561,48 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-11T04:41:02+00:00"
+    },
+    "2026-11-12|generate|threads|pb_8c0203f388": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-12",
+      "content_id": "pb_8c0203f388",
+      "day_number": 315,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-12T06:34:02+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T06:34:14+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18107231807370780",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.threads.com/@hiten_jain323/post/DfobEc5kQjg",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-12T06:34:02+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-12T06:34:14+00:00",
+      "next_retry_at": null,
+      "platform": "threads",
+      "published": true,
+      "remote_id": "18107231807370780",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-12T06:34:13+00:00",
+      "url": "https://www.threads.com/@hiten_jain323/post/DfobEc5kQjg",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-12T06:34:14+00:00"
     }
   },
   "version": 1
