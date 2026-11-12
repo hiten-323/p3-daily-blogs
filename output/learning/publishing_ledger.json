@@ -17732,11 +17732,11 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 9,
+      "attempt_count": 10,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel flat and amateurish, lacking rich coffee tones or atmospheric depth.; Typography lacks strong hierarchy; the subheadline ('Do you wait...') is awkwardly placed and small.; Product lighting and cutout quality on the jar look cheap, with a po",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background lacks rich depth and texture, feeling a bit flat and digital-looking rather than artisanal.; Typography feels a bit template-heavy with standard pill-shaped badges that detract from a premium D2C aesthetic.; Lighting on the product cutout is harsh and creates an u",
       "history": [
         {
           "at": "2026-11-12T07:26:03+00:00",
@@ -17872,20 +17872,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-12T10:43:16+00:00",
+          "attempt": 10,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T10:55:00+00:00",
+          "attempt": 10,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background lacks rich depth and texture, feeling a bit flat and digital-looking rather than artisanal.; Typography feels a bit template-heavy with standard pill-shaped badges that detract from a premium D2C aesthetic.; Lighting on the product cutout is harsh and creates an u",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-12T10:26:54+00:00",
+      "last_attempt_at": "2026-11-12T10:43:16+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel flat and amateurish, lacking rich coffee tones or atmospheric depth.; Typography lacks strong hierarchy; the subheadline ('Do you wait...') is awkwardly placed and small.; Product lighting and cutout quality on the jar look cheap, with a po",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background lacks rich depth and texture, feeling a bit flat and digital-looking rather than artisanal.; Typography feels a bit template-heavy with standard pill-shaped badges that detract from a premium D2C aesthetic.; Lighting on the product cutout is harsh and creates an u",
         "success": false
       },
-      "next_retry_at": "2026-11-12T10:36:06+00:00",
+      "next_retry_at": "2026-11-12T10:55:00+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-12T10:36:06+00:00",
+      "updated_at": "2026-11-12T10:55:00+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
