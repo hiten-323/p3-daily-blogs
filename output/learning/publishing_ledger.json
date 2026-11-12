@@ -17562,6 +17562,48 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-11T04:41:02+00:00"
     },
+    "2026-11-12|generate|linkedin|pb_8c0203f388": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-12",
+      "content_id": "pb_8c0203f388",
+      "day_number": 315,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-12T08:01:59+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T08:02:03+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7526554889754316800",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7526554889754316800/",
+          "verification_method": "linkedin_public_url"
+        }
+      ],
+      "last_attempt_at": "2026-11-12T08:01:59+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-12T08:02:03+00:00",
+      "next_retry_at": null,
+      "platform": "linkedin",
+      "published": true,
+      "remote_id": "urn:li:share:7526554889754316800",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-12T08:02:03+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7526554889754316800/",
+      "verification_detail": "public feed URL confirmed (200)",
+      "verification_method": "linkedin_public_url",
+      "verified_at": "2026-11-12T08:02:03+00:00"
+    },
     "2026-11-12|generate|threads|pb_8c0203f388": {
       "asset": "",
       "attempt_count": 1,
@@ -17648,11 +17690,11 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 1,
+      "attempt_count": 2,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks sophisticated depth or rich tonality.; Typography suffers from weak hierarchy; serif and sans-serif pairings look dated and template-driven.; Product placement is a bit static and isolated, lacking ambient lighting or shadow int",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Background is muddy and low-contrast, lacking the rich depth expected of premium coffee imagery.; Typography is functional but generic; the headline lacks typographic impact or custom treatment.; Product presentation is a static center-cut with flat lighting; no dimensional ",
       "history": [
         {
           "at": "2026-11-12T07:26:03+00:00",
@@ -17668,20 +17710,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-12T08:02:20+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T08:14:36+00:00",
+          "attempt": 2,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Background is muddy and low-contrast, lacking the rich depth expected of premium coffee imagery.; Typography is functional but generic; the headline lacks typographic impact or custom treatment.; Product presentation is a static center-cut with flat lighting; no dimensional ",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-12T07:26:03+00:00",
+      "last_attempt_at": "2026-11-12T08:02:20+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks sophisticated depth or rich tonality.; Typography suffers from weak hierarchy; serif and sans-serif pairings look dated and template-driven.; Product placement is a bit static and isolated, lacking ambient lighting or shadow int",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:5.0; Background is muddy and low-contrast, lacking the rich depth expected of premium coffee imagery.; Typography is functional but generic; the headline lacks typographic impact or custom treatment.; Product presentation is a static center-cut with flat lighting; no dimensional ",
         "success": false
       },
-      "next_retry_at": "2026-11-12T07:42:19+00:00",
+      "next_retry_at": "2026-11-12T08:14:36+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-12T07:42:19+00:00",
+      "updated_at": "2026-11-12T08:14:36+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
@@ -17769,6 +17826,48 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-12T07:25:56+00:00"
+    },
+    "2026-11-12|morning|instagram|pb_8c0203f388|instagram_post": {
+      "asset": "instagram_post",
+      "attempt_count": 1,
+      "content_date": "2026-11-12",
+      "content_id": "pb_8c0203f388",
+      "day_number": 315,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-12T08:02:04+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T08:02:20+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18122850895947885",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DfolJabjeKj/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-12T08:02:04+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-12T08:02:20+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "18122850895947885",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-12T08:02:20+00:00",
+      "url": "https://www.instagram.com/p/DfolJabjeKj/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-12T08:02:20+00:00"
     }
   },
   "version": 1
