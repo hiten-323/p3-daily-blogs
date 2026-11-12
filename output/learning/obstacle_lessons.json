@@ -28093,6 +28093,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background looks like a plain gradient rather than a rich, textured, premium photography set.; Typography feels amateurish with weak hierarchy; the subtitle font and tracking are dated.; The lighting and shadow on the coffee jar look artificial and pasted-on, lacking natural",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:5.0; background is a flat brown gradient with minimal depth; lacks rich, premium texture or dramatic lighting; typography is functional but generic; headline is",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:5.0; Background is a flat brown gradient with minimal depth; lacks rich, premium texture or dramatic lighting; Typography is functional but generic; headline is decent but body copy is small and uninspired, not agency-caliber; Product is sharp and unobstructed, but the shot is a",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
