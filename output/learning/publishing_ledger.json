@@ -17732,11 +17732,11 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 23,
+      "attempt_count": 24,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and flat, lacking rich tonal depth or premium coffee atmosphere.; Typography lacks strong hierarchy; the subheadline and pill tags feel amateurish and poorly proportioned.; Product photography looks pasted onto the background with a weak,",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Monochromatic brown palette lacks contrast and depth, risking blend-in with the Instagram feed.; Background is a flat gradient without texture or environmental context to create premium depth.; Typography is clean but generic; lacks premium editorial hierarchy and visual exc",
       "history": [
         {
           "at": "2026-11-12T07:26:03+00:00",
@@ -18082,20 +18082,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-12T15:12:36+00:00",
+          "attempt": 24,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T15:23:43+00:00",
+          "attempt": 24,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Monochromatic brown palette lacks contrast and depth, risking blend-in with the Instagram feed.; Background is a flat gradient without texture or environmental context to create premium depth.; Typography is clean but generic; lacks premium editorial hierarchy and visual exc",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-12T14:55:08+00:00",
+      "last_attempt_at": "2026-11-12T15:12:36+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and flat, lacking rich tonal depth or premium coffee atmosphere.; Typography lacks strong hierarchy; the subheadline and pill tags feel amateurish and poorly proportioned.; Product photography looks pasted onto the background with a weak,",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Monochromatic brown palette lacks contrast and depth, risking blend-in with the Instagram feed.; Background is a flat gradient without texture or environmental context to create premium depth.; Typography is clean but generic; lacks premium editorial hierarchy and visual exc",
         "success": false
       },
-      "next_retry_at": "2026-11-12T15:06:16+00:00",
+      "next_retry_at": "2026-11-12T15:23:43+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-12T15:06:16+00:00",
+      "updated_at": "2026-11-12T15:23:43+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
