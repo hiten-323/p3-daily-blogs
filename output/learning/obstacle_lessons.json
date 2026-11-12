@@ -28177,6 +28177,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient looks muddy and lacks rich color depth or texture, giving it a flat, amateur feel.; Typographic hierarchy is weak; the subheadline and body text run together into a single small line that lacks breathing room.; The UI pill buttons ('STORY \u2022 ONE INGRED",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; flat, direct front lighting on the jar lacks dimensionality and premium rim light; generic bokeh background feels templated rather than custom premium art ",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Flat, direct front lighting on the jar lacks dimensionality and premium rim light; Generic bokeh background feels templated rather than custom premium art direction; Label copy is too small to read at Instagram thumbnail size, weakening product credibility",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
