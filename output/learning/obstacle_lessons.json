@@ -28191,6 +28191,20 @@
       "reason": "aesthetic_below_8.0:6.0; Flat, direct front lighting on the jar lacks dimensionality and premium rim light; Generic bokeh background feels templated rather than custom premium art direction; Label copy is too small to read at Instagram thumbnail size, weakening product credibility",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color and lighting feel flat and amateurish, lacking rich coffee depth or textures.; product cutout is poorly executed with visible harsh edges ",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color and lighting feel flat and amateurish, lacking rich coffee depth or textures.; Product cutout is poorly executed with visible harsh edges and unconvincing shadow placement on the surface.; Typography lacks strong hierarchy; subheadings and callout boxes feel",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
