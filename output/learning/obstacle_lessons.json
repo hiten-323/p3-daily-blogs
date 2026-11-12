@@ -28233,6 +28233,20 @@
       "reason": "aesthetic_below_8.0:6.0; Background is a flat gradient lacking premium texture, depth, or atmospheric lighting expected from a top agency.; Typography is functional but generic; subhead copy is too small for mobile legibility and 'Link in bio' feels tacked onto the main message rather than integrate",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient is muddy and lacks rich color depth or texture, looking like a basic default gradient rather than a premium studio backdrop.; typog",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth or texture, looking like a basic default gradient rather than a premium studio backdrop.; Typography feels dated; the mix of serif header and plain sans-serif subtext lacks editorial polish and strong visual hierarc",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
