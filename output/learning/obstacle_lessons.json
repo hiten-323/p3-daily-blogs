@@ -28401,6 +28401,20 @@
       "reason": "aesthetic_below_8.0:3.0; Placing a raw URL ('HTTPS://P3ONLINE.IN') prominently in large header text looks like spam rather than premium D2C branding.; Redundant copy repetition: the handle and URL are stated multiple times across different text blocks.; Typography lacks refined hierarchy and feels c",
       "stage": "render",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; background is a flat gradient lacking atmospheric depth or premium studio lighting; typography is generic and template-like; subhead has low legibility aga",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Background is a flat gradient lacking atmospheric depth or premium studio lighting; Typography is generic and template-like; subhead has low legibility against the brown background; The hook \"Stop Scorching Your Coffee\" is confusing for instant granules and lacks premium int",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

@@ -17816,11 +17816,11 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 28,
+      "attempt_count": 29,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is a flat gradient lacking depth, texture, and premium environmental context; Body copy has low contrast against the brown background, hurting legibility at scroll speed; Product lighting is a basic studio cutout without rim light or surface interaction to sell ma",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is a flat gradient lacking atmospheric depth or premium studio lighting; Typography is generic and template-like; subhead has low legibility against the brown background; The hook \"Stop Scorching Your Coffee\" is confusing for instant granules and lacks premium int",
       "history": [
         {
           "at": "2026-11-12T07:26:03+00:00",
@@ -18241,20 +18241,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-12T16:53:17+00:00",
+          "attempt": 29,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T17:04:27+00:00",
+          "attempt": 29,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is a flat gradient lacking atmospheric depth or premium studio lighting; Typography is generic and template-like; subhead has low legibility against the brown background; The hook \"Stop Scorching Your Coffee\" is confusing for instant granules and lacks premium int",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-12T16:25:16+00:00",
+      "last_attempt_at": "2026-11-12T16:53:17+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is a flat gradient lacking depth, texture, and premium environmental context; Body copy has low contrast against the brown background, hurting legibility at scroll speed; Product lighting is a basic studio cutout without rim light or surface interaction to sell ma",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is a flat gradient lacking atmospheric depth or premium studio lighting; Typography is generic and template-like; subhead has low legibility against the brown background; The hook \"Stop Scorching Your Coffee\" is confusing for instant granules and lacks premium int",
         "success": false
       },
-      "next_retry_at": "2026-11-12T16:40:29+00:00",
+      "next_retry_at": "2026-11-12T17:04:27+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-12T16:40:29+00:00",
+      "updated_at": "2026-11-12T17:04:27+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
