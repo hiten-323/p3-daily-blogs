@@ -28219,6 +28219,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background looks like a cheap gradient mesh rather than a rich, textured studio surface or lifestyle environment.; The UI pill buttons ('STORY \u2022 ONE INGREDIENT' and 'PURE COFFEE \u2022 TAP THE LINK') feel dated and generic, resembling basic Canva templates.; Typography lacks refi",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; background is a flat gradient lacking premium texture, depth, or atmospheric lighting expected from a top agency.; typography is functional but generic; su",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Background is a flat gradient lacking premium texture, depth, or atmospheric lighting expected from a top agency.; Typography is functional but generic; subhead copy is too small for mobile legibility and 'Link in bio' feels tacked onto the main message rather than integrate",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

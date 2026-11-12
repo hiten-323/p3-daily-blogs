@@ -17736,7 +17736,7 @@
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
-      "error": "claimed_by_other_run",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is a flat gradient lacking premium texture, depth, or atmospheric lighting expected from a top agency.; Typography is functional but generic; subhead copy is too small for mobile legibility and 'Link in bio' feels tacked onto the main message rather than integrate",
       "history": [
         {
           "at": "2026-11-12T07:26:03+00:00",
@@ -17979,33 +17979,33 @@
           "verification_method": ""
         },
         {
-          "at": "2026-11-12T13:02:59+00:00",
+          "at": "2026-11-12T12:58:42+00:00",
           "attempt": 17,
           "event": "attempt_started"
         },
         {
-          "at": "2026-11-12T13:03:00+00:00",
+          "at": "2026-11-12T13:15:39+00:00",
           "attempt": 17,
-          "error": "claimed_by_other_run",
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is a flat gradient lacking premium texture, depth, or atmospheric lighting expected from a top agency.; Typography is functional but generic; subhead copy is too small for mobile legibility and 'Link in bio' feels tacked onto the main message rather than integrate",
           "event": "attempt_finished",
           "remote_id": "",
-          "status": "SKIPPED",
+          "status": "FAILED",
           "url": "",
           "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-12T13:02:59+00:00",
+      "last_attempt_at": "2026-11-12T12:58:42+00:00",
       "last_result": {
-        "error": "claimed_by_other_run",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is a flat gradient lacking premium texture, depth, or atmospheric lighting expected from a top agency.; Typography is functional but generic; subhead copy is too small for mobile legibility and 'Link in bio' feels tacked onto the main message rather than integrate",
         "success": false
       },
-      "next_retry_at": null,
+      "next_retry_at": "2026-11-12T13:15:39+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
-      "status": "SKIPPED",
-      "updated_at": "2026-11-12T13:03:00+00:00",
+      "status": "FAILED",
+      "updated_at": "2026-11-12T13:15:39+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
