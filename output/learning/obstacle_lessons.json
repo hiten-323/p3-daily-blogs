@@ -28149,6 +28149,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking professional D2C lighting gradients or lifestyle context.; Typography lacks strong hierarchy: the subheadline and pill badges use very small, thin white text that gets lost against the br",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background looks like a cheap gradient mesh rather than a rich, textured physical surface or studio lighting setup.; typography lacks sophistication and fe",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background looks like a cheap gradient mesh rather than a rich, textured physical surface or studio lighting setup.; Typography lacks sophistication and feels generic (basic serif paired with thin sans-serif subhead).; The pills/badges ('STORY \u2022 ONE INGREDIENT' and 'PURE COF",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

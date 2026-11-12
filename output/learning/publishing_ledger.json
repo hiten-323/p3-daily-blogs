@@ -17732,11 +17732,11 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 11,
+      "attempt_count": 12,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking professional D2C lighting gradients or lifestyle context.; Typography lacks strong hierarchy: the subheadline and pill badges use very small, thin white text that gets lost against the br",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background looks like a cheap gradient mesh rather than a rich, textured physical surface or studio lighting setup.; Typography lacks sophistication and feels generic (basic serif paired with thin sans-serif subhead).; The pills/badges ('STORY \u2022 ONE INGREDIENT' and 'PURE COF",
       "history": [
         {
           "at": "2026-11-12T07:26:03+00:00",
@@ -17902,20 +17902,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-12T11:21:05+00:00",
+          "attempt": 12,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T11:36:02+00:00",
+          "attempt": 12,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background looks like a cheap gradient mesh rather than a rich, textured physical surface or studio lighting setup.; Typography lacks sophistication and feels generic (basic serif paired with thin sans-serif subhead).; The pills/badges ('STORY \u2022 ONE INGREDIENT' and 'PURE COF",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-12T11:01:07+00:00",
+      "last_attempt_at": "2026-11-12T11:21:05+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking professional D2C lighting gradients or lifestyle context.; Typography lacks strong hierarchy: the subheadline and pill badges use very small, thin white text that gets lost against the br",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background looks like a cheap gradient mesh rather than a rich, textured physical surface or studio lighting setup.; Typography lacks sophistication and feels generic (basic serif paired with thin sans-serif subhead).; The pills/badges ('STORY \u2022 ONE INGREDIENT' and 'PURE COF",
         "success": false
       },
-      "next_retry_at": "2026-11-12T11:14:30+00:00",
+      "next_retry_at": "2026-11-12T11:36:02+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-12T11:14:30+00:00",
+      "updated_at": "2026-11-12T11:36:02+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
