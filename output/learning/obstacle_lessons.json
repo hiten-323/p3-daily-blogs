@@ -28079,6 +28079,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background has a flat, muddy gradient with unrefined circular bokeh spots that lack photographic realism.; Typography lacks strong hierarchy and feels generic, with poorly spaced body copy and uninspired pill-shaped badges.; Product lighting is flat and cutout placement on t",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background looks like a plain gradient rather than a rich, textured, premium photography set.; typography feels amateurish with weak hierarchy; the subtitl",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background looks like a plain gradient rather than a rich, textured, premium photography set.; Typography feels amateurish with weak hierarchy; the subtitle font and tracking are dated.; The lighting and shadow on the coffee jar look artificial and pasted-on, lacking natural",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
