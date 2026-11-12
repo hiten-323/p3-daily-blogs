@@ -28051,6 +28051,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient and lighting feel flat and generic rather than rich and dimensional.; Typography hierarchy is weak; subhead and CTA pills look dated and poorly spaced.; The product crop and drop shadow look like a basic cutout pasted onto the background, lacking realisti",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and lacks rich, premium contrast or depth.; typography suffers from awkward tracking/line-height and generic font pair",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium contrast or depth.; Typography suffers from awkward tracking/line-height and generic font pairings.; The product cutout is poorly executed with visible harsh edges and unconvincing drop shadows.",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
