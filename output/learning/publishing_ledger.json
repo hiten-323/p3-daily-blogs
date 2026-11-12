@@ -17646,6 +17646,48 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-12T06:34:14+00:00"
     },
+    "2026-11-12|generate|youtube|pb_8c0203f388": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-12",
+      "content_id": "pb_8c0203f388",
+      "day_number": 315,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-12T08:41:41+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T08:41:45+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "8FmfAA1bdP0",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.youtube.com/shorts/8FmfAA1bdP0",
+          "verification_method": "youtube_oembed"
+        }
+      ],
+      "last_attempt_at": "2026-11-12T08:41:41+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-12T08:41:45+00:00",
+      "next_retry_at": null,
+      "platform": "youtube",
+      "published": true,
+      "remote_id": "8FmfAA1bdP0",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-12T08:41:45+00:00",
+      "url": "https://www.youtube.com/shorts/8FmfAA1bdP0",
+      "verification_detail": "public video confirmed by oEmbed",
+      "verification_method": "youtube_oembed",
+      "verified_at": "2026-11-12T08:41:45+00:00"
+    },
     "2026-11-12|morning|facebook|pb_8c0203f388": {
       "asset": "",
       "attempt_count": 1,
@@ -17690,11 +17732,11 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 3,
+      "attempt_count": 4,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background looks muddy, flat, and digitally rendered rather than rich and textured.; Unrefined lighting and shadow under the jar look amateurish and lack realism.; Typographic hierarchy is weak, with awkward tracking on the subheadline and generic button/pill styles.",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient and lighting feel flat and generic rather than rich and dimensional.; Typography hierarchy is weak; subhead and CTA pills look dated and poorly spaced.; The product crop and drop shadow look like a basic cutout pasted onto the background, lacking realisti",
       "history": [
         {
           "at": "2026-11-12T07:26:03+00:00",
@@ -17740,20 +17782,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-12T08:41:46+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-12T08:58:18+00:00",
+          "attempt": 4,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient and lighting feel flat and generic rather than rich and dimensional.; Typography hierarchy is weak; subhead and CTA pills look dated and poorly spaced.; The product crop and drop shadow look like a basic cutout pasted onto the background, lacking realisti",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-12T08:22:15+00:00",
+      "last_attempt_at": "2026-11-12T08:41:46+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background looks muddy, flat, and digitally rendered rather than rich and textured.; Unrefined lighting and shadow under the jar look amateurish and lack realism.; Typographic hierarchy is weak, with awkward tracking on the subheadline and generic button/pill styles.",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient and lighting feel flat and generic rather than rich and dimensional.; Typography hierarchy is weak; subhead and CTA pills look dated and poorly spaced.; The product crop and drop shadow look like a basic cutout pasted onto the background, lacking realisti",
         "success": false
       },
-      "next_retry_at": "2026-11-12T08:35:18+00:00",
+      "next_retry_at": "2026-11-12T08:58:18+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-12T08:35:18+00:00",
+      "updated_at": "2026-11-12T08:58:18+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null

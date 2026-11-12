@@ -28023,6 +28023,34 @@
       "reason": "aesthetic_below_8.0:4.0; The background looks muddy, flat, and digitally rendered rather than rich and textured.; Unrefined lighting and shadow under the jar look amateurish and lack realism.; Typographic hierarchy is weak, with awkward tracking on the subheadline and generic button/pill styles.",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 5.8 < 8.0 (weakest: relatability, comment_trigger, follow_cta). The video starts with a common specialty-coffee micro-tip rather than a high-stakes emotional pattern interrupt. To hit viral thresholds, ground the tension in everyday morning habits of Indian coffee drinkers rather than general brewing instructions. Strengthen the comment trigger by asking a polarizing identity or prefe",
+      "first_seen": "2026-11-12",
+      "fix": "later draft passed the same gates",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 5.8 < 8.0 (weakest: relatability, comment_trigger, follow_cta). the video starts with a common specialty-coffee micro-tip rather than a high-stakes emotional pattern i",
+      "label": "yt_short",
+      "last_seen": "2026-11-12",
+      "platform": "youtube",
+      "reason": "viral: score 5.8 < 8.0 (weakest: relatability, comment_trigger, follow_cta). The video starts with a common specialty-coffee micro-tip rather than a high-stakes emotional pattern interrupt. To hit viral thresholds, ground the tension in everyday morning habits of Indian coffee drinkers rather than g",
+      "stage": "generation",
+      "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient and lighting feel flat and generic rather than rich and dimensional.; typography hierarchy is weak; subhead and cta pills look dated an",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient and lighting feel flat and generic rather than rich and dimensional.; Typography hierarchy is weak; subhead and CTA pills look dated and poorly spaced.; The product crop and drop shadow look like a basic cutout pasted onto the background, lacking realisti",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
