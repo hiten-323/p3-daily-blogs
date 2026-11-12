@@ -28135,6 +28135,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background lacks rich depth and texture, feeling a bit flat and digital-looking rather than artisanal.; Typography feels a bit template-heavy with standard pill-shaped badges that detract from a premium D2C aesthetic.; Lighting on the product cutout is harsh and creates an u",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels flat and muddy rather than rich and dimensional, lacking professional d2c lighting gradients or lifestyle context.; typograp",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking professional D2C lighting gradients or lifestyle context.; Typography lacks strong hierarchy: the subheadline and pill badges use very small, thin white text that gets lost against the br",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
