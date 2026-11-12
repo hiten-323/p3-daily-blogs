@@ -28415,6 +28415,20 @@
       "reason": "aesthetic_below_8.0:6.0; Background is a flat gradient lacking atmospheric depth or premium studio lighting; Typography is generic and template-like; subhead has low legibility against the brown background; The hook \"Stop Scorching Your Coffee\" is confusing for instant granules and lacks premium int",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|vision_score_unavailable; gemini:circuit_open; groq:no live model; github_models:openai/gpt-4.1-mini:non-json response: 'ok\\r\\n'; openai/gpt-4o-mini:non-json res; openrouter:no liv",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "vision_score_unavailable; gemini:circuit_open; groq:no live model; github_models:openai/gpt-4.1-mini:non-JSON response: 'OK\\r\\n'; openai/gpt-4o-mini:non-JSON res; openrouter:no live model; nvidia:nvidia/nemotron-3.5-super-vl-120b-a12b:HTTP Error 503: Service Unavailable; meta",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
