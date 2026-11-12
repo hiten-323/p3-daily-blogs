@@ -28275,6 +28275,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color and lighting feel flat and amateurish, lacking rich depth and moody atmosphere expected from premium D2C brands.; Typography lacks strong hierarchy and feels generic, particularly the poorly spaced pill-shaped badges ('STORY \u2022 ONE INGREDIENT' and 'PURE COFFE",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient lacks depth and looks muddy rather than rich and luxurious; typography hierarchy is weak, with small subtitle text lacking contrast aga",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient lacks depth and looks muddy rather than rich and luxurious; Typography hierarchy is weak, with small subtitle text lacking contrast against the brown background; Pill-shaped badges look dated and template-driven rather than bespoke and premium",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
