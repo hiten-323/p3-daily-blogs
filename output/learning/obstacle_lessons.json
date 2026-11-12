@@ -28359,6 +28359,20 @@
       "reason": "aesthetic_below_8.0:5.0; Flat, monochromatic brown background lacks depth, richness, and dimensional lighting; Low contrast between white copy and dark brown background reduces legibility and impact; Generic product shot lacks premium styling (no steam, pour, texture, or lifestyle context)",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-12",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:5.0; flat monochromatic brown background lacks depth, texture, and dimensional richness; lighting is safe and even rather than dramatic or premium; no scroll-st",
+      "label": "stories",
+      "last_seen": "2026-11-12",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:5.0; Flat monochromatic brown background lacks depth, texture, and dimensional richness; Lighting is safe and even rather than dramatic or premium; no scroll-stopping polish; Body copy is small and low-contrast for mobile scrolling",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
