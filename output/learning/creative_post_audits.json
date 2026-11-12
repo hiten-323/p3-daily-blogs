@@ -115587,5 +115587,90 @@
       "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
     ],
     "asset_count": 47
+  },
+  {
+    "ts": "2026-11-12T22:20:28.329335+00:00",
+    "day_number": 1,
+    "generation_id": "test_gen",
+    "image_assets": [
+      {
+        "path": "output/creative/story_day315_2026-11-13.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2283,
+          "contrast": 0.1423,
+          "edge_density": 0.0138,
+          "upper_activity": 0.114,
+          "center_brightness_delta": 0.0761,
+          "lower_center_edge_ratio": 18.824,
+          "lower_center_edge_density": 0.0308,
+          "visual_hash": "d2fa71ce3329a26f"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      }
+    ],
+    "video_assets": [],
+    "copy_audit": [
+      {
+        "asset": "yt_short",
+        "hook_length": 26,
+        "recommendations": [
+          "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+          "yt_short: YouTube Short lacks subscribe/channel retention trigger"
+        ]
+      },
+      {
+        "asset": "carousel",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "carousel: carousel lacks an explicit save/share cue for algorithmic distribution"
+        ]
+      },
+      {
+        "asset": "threads_post",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "threads_post: community asset lacks a question/debate trigger",
+          "threads_post: Threads post needs an open-ended question to fuel reply ranking"
+        ]
+      },
+      {
+        "asset": "linkedin_post",
+        "hook_length": 150,
+        "recommendations": [
+          "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+        ]
+      }
+    ],
+    "vision_audit": {
+      "status": "skipped_no_api_key",
+      "model": "",
+      "assets": [],
+      "recommendations": []
+    },
+    "portfolio_diversity": 0.0,
+    "recommendations": [
+      "raise exposure/background separation; avoid another near-black frame",
+      "add visible action/texture such as pour, hand, steam, granules, or environment",
+      "lower-center focal composition dominates; vary into a contextual or off-center composition",
+      "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+      "yt_short: YouTube Short lacks subscribe/channel retention trigger",
+      "hook is too short to communicate a clear curiosity/problem",
+      "carousel: carousel lacks an explicit save/share cue for algorithmic distribution",
+      "threads_post: community asset lacks a question/debate trigger",
+      "threads_post: Threads post needs an open-ended question to fuel reply ranking",
+      "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+    ],
+    "asset_count": 1
   }
 ]
