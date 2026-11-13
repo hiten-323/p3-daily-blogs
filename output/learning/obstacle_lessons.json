@@ -29325,6 +29325,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking modern D2C warmth or texture.; Typography hierarchy is weak; the 'Milk Coffee Habit' headline clashes in style with the pill badges and lacks a refined modern serif or sans-serif pairing.",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient looks muddy and lacks rich color depth or sophisticated lighting.; typography feels dated with standard serif fonts and weak hierar",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient looks muddy and lacks rich color depth or sophisticated lighting.; Typography feels dated with standard serif fonts and weak hierarchy, especially the subheadline 'How do you make your morning cup?'; The jar cutout is poorly integrated, lacking realis",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
