@@ -29297,6 +29297,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background feels flat with muddy gradient transitions rather than rich, tactile depth.; The yellow label on the product clashes with the sophisticated brown/gold aesthetic of top-tier D2C coffee brands.; The surface perspective and shadow underneath the jar look artifici",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background gradient feels muddy and flat rather than rich and dimensional, lacking professional studio lighting effects.; typography hierarchy is weak; the",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background gradient feels muddy and flat rather than rich and dimensional, lacking professional studio lighting effects.; Typography hierarchy is weak; the 'STORY \u2022 ULTRA BLEND' pill and subheadline look like generic default templates.; The jar looks unnaturally masked and p",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
