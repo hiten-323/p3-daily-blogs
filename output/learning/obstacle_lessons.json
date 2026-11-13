@@ -29563,6 +29563,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient and lighting feel flat and artificial, lacking the rich textures and depth expected from a premium D2C brand.; The packaging design of the product itself looks dated and cheap, undermining the desired premium aesthetic.; The typography is weak and poo",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and lacks rich depth or dynamic contrast; product label design uses cheap-looking gradients and typography, reducing t",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or dynamic contrast; Product label design uses cheap-looking gradients and typography, reducing the premium feel; Jar grounding and drop shadow look unnatural and pasted onto the surface",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
