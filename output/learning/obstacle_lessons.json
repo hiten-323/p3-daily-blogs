@@ -29507,6 +29507,20 @@
       "reason": "aesthetic_below_8.0:6.5; Product appears to float rather than sit on a surface; no clear contact shadow or grounding.; Subheadline is small and low-contrast against the brown background, hurting legibility.; Top pill text is too tiny for a story format and competes poorly with the headline.",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels flat and muddy rather than rich and dimensional, lacking the premium warmth expected of d2c coffee brands.; the product labe",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking the premium warmth expected of D2C coffee brands.; The product label design (especially the bright yellow block) clashes with the luxury aesthetic, looking dated and mass-market rather th",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
