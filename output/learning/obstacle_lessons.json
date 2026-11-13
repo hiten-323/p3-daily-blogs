@@ -29213,6 +29213,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and luxurious, lacking sophisticated depth or atmospheric lighting.; The product label design (bright yellow and brown) clashes with the premium aesthetic expected from top D2C coffee brands.; Typography lacks st",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color and lighting feel muddy and flat, lacking rich depth and moody atmosphere expected of a premium coffee brand; product packaging (the yello",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color and lighting feel muddy and flat, lacking rich depth and moody atmosphere expected of a premium coffee brand; Product packaging (the yellow label on the jar) clashes harshly with the dark brown palette, looking amateur rather than high-end D2C; Typographic h",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
