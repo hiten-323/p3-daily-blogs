@@ -17816,7 +17816,7 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 33,
+      "attempt_count": 34,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
@@ -18316,20 +18316,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T17:48:20+00:00",
+          "attempt": 34,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T17:54:09+00:00",
+          "attempt": 34,
+          "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-13T01:52:19+00:00",
+      "last_attempt_at": "2026-11-13T17:48:20+00:00",
       "last_result": {
         "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
         "success": false
       },
-      "next_retry_at": "2026-11-13T01:59:40+00:00",
+      "next_retry_at": "2026-11-13T17:54:09+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-13T01:59:40+00:00",
+      "updated_at": "2026-11-13T17:54:09+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
@@ -18714,11 +18729,11 @@
     },
     "2026-11-13|morning|instagram_story|pb_075fd8649f": {
       "asset": "",
-      "attempt_count": 36,
+      "attempt_count": 37,
       "content_date": "2026-11-13",
       "content_id": "pb_075fd8649f",
       "day_number": 316,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and sophisticated lighting cues expected from a premium D2C brand.; Typography feels dated with standard serif fonts and weak hierarchy (the 'STORY \u2022 ULTRA BLEND' badge looks unpolished).; The product packaging de",
+      "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
       "history": [
         {
           "at": "2026-11-13T06:28:33+00:00",
@@ -19259,20 +19274,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T17:54:09+00:00",
+          "attempt": 37,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T17:58:36+00:00",
+          "attempt": 37,
+          "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-13T17:23:51+00:00",
+      "last_attempt_at": "2026-11-13T17:54:09+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and sophisticated lighting cues expected from a premium D2C brand.; Typography feels dated with standard serif fonts and weak hierarchy (the 'STORY \u2022 ULTRA BLEND' badge looks unpolished).; The product packaging de",
+        "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
         "success": false
       },
-      "next_retry_at": "2026-11-13T17:31:11+00:00",
+      "next_retry_at": "2026-11-13T17:58:36+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-13T17:31:11+00:00",
+      "updated_at": "2026-11-13T17:58:36+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
