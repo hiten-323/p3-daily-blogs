@@ -18630,11 +18630,11 @@
     },
     "2026-11-13|morning|instagram_story|pb_075fd8649f": {
       "asset": "",
-      "attempt_count": 2,
+      "attempt_count": 3,
       "content_date": "2026-11-13",
       "content_id": "pb_075fd8649f",
       "day_number": 316,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float rather than sit on a surface; no clear contact shadow or grounding.; The background horizon line cuts awkwardly behind the jar, weakening product presentation.; Label typography is cramped and low-contrast in places, especially the yellow-on-orange t",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float slightly\u2014no clear contact shadow or grounded surface beneath the jar; Headline 'Milk Coffee Habit' is vague and lacks a strong scroll-stopping hook; Subheadline is small and low-contrast against the brown gradient",
       "history": [
         {
           "at": "2026-11-13T06:28:33+00:00",
@@ -18665,20 +18665,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T07:19:47+00:00",
+          "attempt": 3,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T07:26:50+00:00",
+          "attempt": 3,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float slightly\u2014no clear contact shadow or grounded surface beneath the jar; Headline 'Milk Coffee Habit' is vague and lacks a strong scroll-stopping hook; Subheadline is small and low-contrast against the brown gradient",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-13T07:01:21+00:00",
+      "last_attempt_at": "2026-11-13T07:19:47+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float rather than sit on a surface; no clear contact shadow or grounding.; The background horizon line cuts awkwardly behind the jar, weakening product presentation.; Label typography is cramped and low-contrast in places, especially the yellow-on-orange t",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float slightly\u2014no clear contact shadow or grounded surface beneath the jar; Headline 'Milk Coffee Habit' is vague and lacks a strong scroll-stopping hook; Subheadline is small and low-contrast against the brown gradient",
         "success": false
       },
-      "next_retry_at": "2026-11-13T07:13:52+00:00",
+      "next_retry_at": "2026-11-13T07:26:50+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-13T07:13:52+00:00",
+      "updated_at": "2026-11-13T07:26:50+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
