@@ -29535,6 +29535,20 @@
       "reason": "aesthetic_below_8.0:6.0; Background is a generic brown gradient lacking texture, depth, or environmental context expected from premium D2C.; Lighting on the jar is soft and even but lacks specular highlights or dimensionality to make the product feel tactile and premium.; Typography is functional bu",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and lacks rich contrast or dimensional depth.; typography lacks refined hierarchy; the pill tags ('story \u2022 ultra blend",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich contrast or dimensional depth.; Typography lacks refined hierarchy; the pill tags ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') look dated and amateurish.; The lighting and drop shadow on the coffee jar appear arti",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
