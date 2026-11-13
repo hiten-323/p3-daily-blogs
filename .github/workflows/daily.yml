@@ -201,7 +201,8 @@ jobs:
           PY
 
       - name: Run autonomous pipeline
-        if: ${{ success() && github.event.inputs.dry_run != 'true' }}
+        # Generation remains available; every publish slot requires an explicit repository-variable opt-in.
+        if: ${{ success() && github.event.inputs.dry_run != 'true' && (env.FORCE_SLOT == 'generate' || vars.PUBLISHING_ENABLED == 'true') }}
         env:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           NVIDIA_MODEL: ${{ secrets.NVIDIA_MODEL }}
