@@ -18630,11 +18630,11 @@
     },
     "2026-11-13|morning|instagram_story|pb_075fd8649f": {
       "asset": "",
-      "attempt_count": 29,
+      "attempt_count": 30,
       "content_date": "2026-11-13",
       "content_id": "pb_075fd8649f",
       "day_number": 316,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich contrast or dimensional depth.; Typography lacks refined hierarchy; the pill tags ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') look dated and amateurish.; The lighting and drop shadow on the coffee jar appear arti",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient and lighting feel flat and artificial, lacking the rich textures and depth expected from a premium D2C brand.; The packaging design of the product itself looks dated and cheap, undermining the desired premium aesthetic.; The typography is weak and poo",
       "history": [
         {
           "at": "2026-11-13T06:28:33+00:00",
@@ -19070,20 +19070,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T15:25:59+00:00",
+          "attempt": 30,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T15:38:10+00:00",
+          "attempt": 30,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient and lighting feel flat and artificial, lacking the rich textures and depth expected from a premium D2C brand.; The packaging design of the product itself looks dated and cheap, undermining the desired premium aesthetic.; The typography is weak and poo",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-13T15:03:56+00:00",
+      "last_attempt_at": "2026-11-13T15:25:59+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich contrast or dimensional depth.; Typography lacks refined hierarchy; the pill tags ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') look dated and amateurish.; The lighting and drop shadow on the coffee jar appear arti",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient and lighting feel flat and artificial, lacking the rich textures and depth expected from a premium D2C brand.; The packaging design of the product itself looks dated and cheap, undermining the desired premium aesthetic.; The typography is weak and poo",
         "success": false
       },
-      "next_retry_at": "2026-11-13T15:17:51+00:00",
+      "next_retry_at": "2026-11-13T15:38:10+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-13T15:17:51+00:00",
+      "updated_at": "2026-11-13T15:38:10+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
