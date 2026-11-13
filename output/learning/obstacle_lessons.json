@@ -29577,6 +29577,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or dynamic contrast; Product label design uses cheap-looking gradients and typography, reducing the premium feel; Jar grounding and drop shadow look unnatural and pasted onto the surface",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels flat and muddy rather than rich and dimensional, lacking the premium warmth expected of d2c coffee brands.; typography feels",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking the premium warmth expected of D2C coffee brands.; Typography feels dated; the serif font combined with multiple outlined pill badges ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY'",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
