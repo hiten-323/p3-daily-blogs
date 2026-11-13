@@ -29115,6 +29115,48 @@
       "reason": "viral: score 6.8 < 8.0 (weakest: hook, shareability). The hook relies on a slightly generic 'mistake' trope which doesn't punch hard enough for the 2-second YouTube Short window. To lift this above 8, open with a sharper contrast about how much people spend per cup or the exact ratio surprise. Share",
       "stage": "generation",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.2 < 8.0 (weakest: hook, shareability). The hook relies on a slightly generic 'mistake' trope which fails to create an immediate enough pattern interrupt for the 2-second YouTube Short window. To push this score above 8, lead with the surprising cost-per-cup math or a more direct contrast about milk coffee proportions. Shareability will increase if the economic breakdown is framed as",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "generic_hook",
+      "id": "youtube|yt_short|generic_hook|viral: score 7.2 < 8.0 (weakest: hook, shareability). the hook relies on a slightly generic 'mistake' trope which fails to create an immediate enough pattern interrupt for the 2-se",
+      "label": "yt_short",
+      "last_seen": "2026-11-13",
+      "platform": "youtube",
+      "reason": "viral: score 7.2 < 8.0 (weakest: hook, shareability). The hook relies on a slightly generic 'mistake' trope which fails to create an immediate enough pattern interrupt for the 2-second YouTube Short window. To push this score above 8, lead with the surprising cost-per-cup math or a more direct contr",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.8 < 8.0 (weakest: curiosity_gap, follow_cta). The hook relies on a relatable financial comparison which works well for urban professionals, but the curiosity gap could be sharper by focusing on the hidden cost rather than just stating the cafe price. The follow CTA could give a clearer reason to follow @purepantryprovisions beyond just a general shop prompt. Suggested hook: Your dai",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.8 < 8.0 (weakest: curiosity_gap, follow_cta). the hook relies on a relatable financial comparison which works well for urban professionals, but the curiosity gap cou",
+      "label": "yt_short",
+      "last_seen": "2026-11-13",
+      "platform": "youtube",
+      "reason": "viral: score 7.8 < 8.0 (weakest: curiosity_gap, follow_cta). The hook relies on a relatable financial comparison which works well for urban professionals, but the curiosity gap could be sharper by focusing on the hidden cost rather than just stating the cafe price. The follow CTA could give a cleare",
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "viral: score 7.8 < 8.0 (weakest: hook, curiosity_gap). The hook relies slightly on a general premise rather than an immediate pattern-interrupt. To push past 8, make the opening line punchier by contrasting the cafe receipt directly against the home kitchen jar cost in the first 1.5 seconds. Ensure the visual cut matches the speed of the audio beat. Suggested hook: Your \u20b9180 cafe milk coffee is co",
+      "first_seen": "2026-11-13",
+      "fix": "later draft passed the same gates",
+      "gate": "llm_viral",
+      "id": "youtube|yt_short|llm_viral|viral: score 7.8 < 8.0 (weakest: hook, curiosity_gap). the hook relies slightly on a general premise rather than an immediate pattern-interrupt. to push past 8, make the opening li",
+      "label": "yt_short",
+      "last_seen": "2026-11-13",
+      "platform": "youtube",
+      "reason": "viral: score 7.8 < 8.0 (weakest: hook, curiosity_gap). The hook relies slightly on a general premise rather than an immediate pattern-interrupt. To push past 8, make the opening line punchier by contrasting the cafe receipt directly against the home kitchen jar cost in the first 1.5 seconds. Ensure",
+      "stage": "generation",
+      "status": "fixed"
     }
   ],
   "version": 1

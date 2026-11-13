@@ -5235,5 +5235,69 @@
       ],
       "timestamp": "2026-11-12T08:41:45"
     }
+  },
+  {
+    "date": "2026-11-13",
+    "day_number": 316,
+    "results": {
+      "linkedin": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "urn:li:share:7526852562617008129",
+        "media_id": "urn:li:share:7526852562617008129",
+        "video_id": "urn:li:share:7526852562617008129",
+        "permalink": "https://www.linkedin.com/feed/update/urn:li:share:7526852562617008129/",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7526852562617008129/",
+        "duration_ms": 2
+      },
+      "instagram": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "facebook": {
+        "success": false,
+        "error": "held_for_timed_slot",
+        "held": true
+      },
+      "youtube": {
+        "success": true,
+        "video_id": "rzDao6l__z8",
+        "url": "https://www.youtube.com/shorts/rzDao6l__z8",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 1,
+        "duration_ms": 3527
+      },
+      "threads": {
+        "success": true,
+        "attempted": false,
+        "skipped": true,
+        "error": "",
+        "ledger_status": "VERIFIED_LIVE",
+        "post_id": "17952453336346815",
+        "media_id": "17952453336346815",
+        "video_id": "17952453336346815",
+        "permalink": "https://www.threads.com/@hiten_jain323/post/DfqsgkYDPGO",
+        "url": "https://www.threads.com/@hiten_jain323/post/DfqsgkYDPGO",
+        "duration_ms": 2
+      },
+      "blog": {
+        "success": false,
+        "attempted": false,
+        "skipped": true,
+        "error": "blog_disabled"
+      },
+      "summary": "Published: Linkedin, Youtube, Threads | Held for slot: Instagram, Facebook | Skipped: Blog",
+      "published_platforms": [
+        "linkedin",
+        "youtube",
+        "threads"
+      ],
+      "timestamp": "2026-11-13T03:58:06"
+    }
   }
 ]

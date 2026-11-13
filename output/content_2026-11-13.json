@@ -1718,121 +1718,247 @@
     }
   },
   "yt_short": {
-    "featured_product": "Ultra Blend 100g",
-    "objective": "Drive traffic to product page and increase Ultra Blend purchases",
-    "primary_cta": "Shop now: https://p3online.in",
-    "success_metric": "Click-through rate to https://p3online.in and save count",
-    "_growth_attempts": 4,
-    "audio": "Warm acoustic guitar background with ambient kitchen sounds and a clear voiceover speaking at a natural pace.",
-    "audio_direction": "Clean vocal recording, subtle warmth, no distracting high-pitched sound effects.",
-    "caption": "The mathematics of a balanced morning milk coffee come down to three lines on the back panel. Ultra Blend by Purity Beans is crafted for your morning milk coffee with 70% coffee and 30% chicory. At ₹309 for 100g, it yields at least 66 cups—about ₹5 a cup. Read the jar, check the ingredient panel, and visit https://p3online.in to get yours today.",
-    "chosen_hook": "The coffee mistake almost every Indian kitchen makes when measuring milk coffee.",
-    "comment_trigger": "Comment MILK if you prefer your morning coffee with milk or BLACK if you drink it plain.",
-    "cta": "Shop now at https://p3online.in",
-    "description": "A 30-second YouTube Short exploring Ultra Blend by Purity Beans, focusing on milk coffee balance, cup math, and a clear view of the ingredient panel.",
-    "edit_pacing": "Fast cuts every 3 to 4 seconds to maintain viewer retention, shifting smoothly between close-ups of the jar and the kitchen counter.",
-    "emotion_arc": "Starts with precise kitchen measurement curiosity, moves to everyday milk coffee clarity, and ends with satisfaction and confidence.",
-    "funnel_objective": "Conversion and education for everyday milk coffee buyers",
-    "growth_plan": "Post on YouTube Shorts at 8 AM IST, share to Instagram Stories as companion content, and pin the comment with the shop link.",
-    "growth_review": "Tested clean formatting and verified cup yield math against Shopify catalog data.",
-    "hashtags": "#PurityBeans #UltraBlend #MilkCoffee #CoffeeLoversIndia #PurePantryProvisions",
-    "hook": "The coffee mistake almost every Indian kitchen makes when measuring milk coffee.",
-    "hook_text": "The coffee mistake almost every Indian kitchen makes when measuring milk coffee.",
-    "ladder_exhausted": true,
-    "loop_note": "The final frame loops back seamlessly to the first pour into the glass.",
+    "featured_product": "ultra_blend",
+    "objective": "Conversions and traffic to https://p3online.in",
+    "primary_cta": "Shop Ultra Blend at https://p3online.in",
+    "success_metric": "Website clicks and Ultra Blend add-to-cart rate",
+    "description": "A fast-paced, high-retention YouTube Short for Ultra Blend that demonstrates the verified per-cup math and smooth milk coffee proportion.",
+    "_growth_attempts": 1,
+    "audio": "Acoustic indie guitar rhythm with warm vinyl crackle and ambient kitchen mug clinks.",
+    "audio_direction": "Start with a subtle spoon clink on glass, transition to smooth lo-fi rhythm at second 6, end with a crisp notification chime.",
+    "caption": "Your morning milk coffee doesn't need to cost a small fortune or hide mystery fillers. Purity Beans Ultra Blend is crafted as a smooth 70% coffee and 30% chicory milk coffee blend that yields at least 66 cups from a single 100g jar for ₹309—about ₹5 a cup. Read the jar and see the transparent proportions for yourself. Order yours at https://p3online.in. #PurityBeans #UltraBlend #InstantCoffeeIndia #CoffeeLoversIndia #PureCoffee",
+    "chosen_hook": "When your morning milk coffee bill hits ₹180 at the cafe, the math in your own kitchen starts looking very different.",
+    "comment_trigger": "Comment MILK to get the direct link to the Ultra Blend jar.",
+    "cta": "Shop Ultra Blend now at https://p3online.in",
+    "edit_pacing": "Fast 2-second cuts for the first 6 seconds, then a smoother 5-second flow for the economic breakdown, closing with a 3-second locked-off product shot.",
+    "emotion_arc": "From the sting of cafe price waste to relief at discovering a transparent, affordable milk coffee solution.",
+    "funnel_objective": "Drive website visits and Ultra Blend purchases by highlighting per-cup economics and the smooth 70/30 blend.",
+    "growth_plan": {
+      "primary_objective": "reach new relevant coffee drinkers",
+      "secondary_objective": "earn qualified followers",
+      "audience": "viewers who will watch one complete answer with the sound off",
+      "angle": "a standalone payoff that ends without needing another post",
+      "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+      "rationale": "A Short has to pay off on its own, then ask for the next one.",
+      "platform": "yt_short",
+      "sku": "Ultra Blend",
+      "day": 316
+    },
+    "growth_review": {
+      "platform": "yt_short",
+      "label": "yt_short",
+      "decision": "PASS",
+      "overall": 8.67,
+      "threshold": 8.0,
+      "dimensions": [
+        {
+          "name": "platform_fit",
+          "score": 9.0,
+          "evidence": "Hook and body are both present.",
+          "hard_fail": false
+        },
+        {
+          "name": "hook",
+          "score": 9.0,
+          "evidence": "The hook names a specific subject.",
+          "hard_fail": false
+        },
+        {
+          "name": "retention",
+          "score": 8.0,
+          "evidence": "The body contains a concrete coffee fact.",
+          "hard_fail": false
+        },
+        {
+          "name": "payoff",
+          "score": 8.0,
+          "evidence": "The body continues the hook.",
+          "hard_fail": false
+        },
+        {
+          "name": "shareability",
+          "score": 9.0,
+          "evidence": "There is a reason to pass this on.",
+          "hard_fail": false
+        },
+        {
+          "name": "saveability",
+          "score": 8.0,
+          "evidence": "A checkable fact is worth saving.",
+          "hard_fail": false
+        },
+        {
+          "name": "follow_conversion",
+          "score": 8.0,
+          "evidence": "The follow reason is specific.",
+          "hard_fail": false
+        },
+        {
+          "name": "purchase_relevance",
+          "score": 8.0,
+          "evidence": "The featured jar or a verified next step is named.",
+          "hard_fail": false
+        },
+        {
+          "name": "brand_truth",
+          "score": 10.0,
+          "evidence": "No product-truth finding.",
+          "hard_fail": false
+        },
+        {
+          "name": "visual_integrity",
+          "score": 8.0,
+          "evidence": "Images come only from approved official photos / studio-cutout cards (approved_photos); the label is never redrawn.",
+          "hard_fail": false
+        },
+        {
+          "name": "claim_verification",
+          "score": 10.0,
+          "evidence": "No prohibited health or medical claim.",
+          "hard_fail": false
+        },
+        {
+          "name": "originality",
+          "score": 9.0,
+          "evidence": "Hook and CTA are not copied from another asset today.",
+          "hard_fail": false
+        },
+        {
+          "name": "mobile_readability",
+          "score": 9.0,
+          "evidence": "The hook is short enough to read on a phone.",
+          "hard_fail": false
+        },
+        {
+          "name": "cta_clarity",
+          "score": 9.0,
+          "evidence": "One CTA field is present.",
+          "hard_fail": false
+        },
+        {
+          "name": "schema",
+          "score": 8.0,
+          "evidence": "No schema or length failure for this format.",
+          "hard_fail": false
+        }
+      ],
+      "hard_fails": [],
+      "attempts": 1,
+      "retry_limit": 8,
+      "feedback": "",
+      "plan": {
+        "primary_objective": "reach new relevant coffee drinkers",
+        "secondary_objective": "earn qualified followers",
+        "audience": "viewers who will watch one complete answer with the sound off",
+        "angle": "a standalone payoff that ends without needing another post",
+        "follow_promise": "Subscribe for the next short payoff, and follow for label checks.",
+        "rationale": "A Short has to pay off on its own, then ask for the next one.",
+        "platform": "yt_short",
+        "sku": "Ultra Blend",
+        "day": 316
+      },
+      "published": false
+    },
+    "hashtags": "#PurityBeans #UltraBlend #InstantCoffeeIndia #CoffeeLoversIndia #PureCoffee #MorningMath",
+    "hook": "What's actually inside this jar? Let's read it.",
+    "hook_text": "A close look at the exact panel on Purity Beans Ultra Blend.",
+    "ladder_exhausted": false,
+    "loop_note": "Ends as the spoon dips into the mug, mirroring the opening clink for a seamless 30-second loop.",
     "product": "Ultra Blend",
-    "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": "Documentary-style macro food and beverage cinematography.",
-    "save_trigger": "Save this short for your next kitchen brew session.",
+    "publish_blocked": false,
+    "reel_inspiration": "Documentary-style kitchen close-up combined with clean typography overlays.",
+    "save_trigger": "Save this reel before your next grocery stock-up.",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
         "duration_s": 5.0,
-        "on_screen": "KITCHEN MEASUREMENT",
-        "spoken": "The coffee mistake almost every Indian kitchen makes when measuring milk coffee.",
-        "visual_direction": "Shot on iPhone 15, close-up of a hand turning the Purity Beans glass jar around on a wooden kitchen counter with natural morning window light."
+        "on_screen": "READ THE JAR",
+        "spoken": "What's actually inside this jar? Let's read it.",
+        "visual_direction": "Handheld iPhone 15 close-up of the exact Purity Beans Ultra Blend glass jar on a wooden table, warm natural light, subtle lens flare."
       },
       {
         "scene": 2,
         "type": "tension",
-        "duration_s": 6.0,
-        "on_screen": "READ THE LABEL",
-        "spoken": "Knowing the exact proportion on the back panel changes how you balance your morning milk brew.",
-        "visual_direction": "Camera pans slowly to reveal steam rising from a glass mug beside the Purity Beans glass jar, catching warm sunlight."
+        "duration_s": 5.0,
+        "on_screen": "₹180 per cafe cup?",
+        "spoken": "When your daily milk coffee costs ₹180 at the cafe, the math in your own kitchen looks shocking.",
+        "visual_direction": "85mm shallow-depth shot of a hand rotating the Ultra Blend glass jar on a sunlit kitchen counter, fingerprints adding realism."
       },
       {
         "scene": 3,
-        "type": "value",
+        "type": "turn",
         "duration_s": 6.0,
-        "on_screen": "70% COFFEE & 30% CHICORY",
-        "spoken": "Ultra Blend by Purity Beans is crafted for your morning milk coffee with 70% coffee and 30% chicory.",
-        "visual_direction": "Macro shot of a hand gently holding the Purity Beans jar, rotating it slightly to catch light on the printed label."
+        "on_screen": "70% Coffee | 30% Chicory",
+        "spoken": "Purity Beans Ultra Blend is transparent: a smooth 70% coffee and 30% chicory blend made for milk coffee.",
+        "visual_direction": "Macro view of a silver spoon scooping the granules from the Ultra Blend jar, soft window light highlighting label texture."
       },
       {
         "scene": 4,
-        "type": "trust",
-        "duration_s": 6.0,
-        "on_screen": "66+ CUPS PER JAR",
-        "spoken": "At ₹309 for 100g, it yields at least 66 cups—about ₹5 a cup. Read the jar and check the ingredient panel.",
-        "visual_direction": "Extreme close-up of the back label text on the Purity Beans jar, shot with shallow depth of field."
+        "type": "payoff",
+        "duration_s": 8.0,
+        "on_screen": "₹309 for 66+ cups (~₹5 each)",
+        "spoken": "A 100g jar is ₹309 and yields at least 66 cups, which works out to about ₹5 a cup at home.",
+        "visual_direction": "Steaming milk poured into a dark mug already filled with brewed Ultra Blend, steam rising toward a warm overhead light."
       },
       {
         "scene": 5,
-        "type": "follow",
-        "duration_s": 7.0,
-        "on_screen": "SHOP P3ONLINE.IN",
-        "spoken": "Follow @purepantryprovisions and shop https://p3online.in to upgrade your morning routine.",
-        "visual_direction": "The Purity Beans jar sits centered on the counter with a finished milk coffee mug beside it."
+        "type": "cta",
+        "duration_s": 6.0,
+        "on_screen": "Shop now: p3online.in",
+        "spoken": "Skip the markup, pour a smarter cup. Visit Purity Beans at https://p3online.in to claim yours.",
+        "visual_direction": "Purely lit shot of the Ultra Blend glass jar on a dark countertop, label crystal-clear, a used spoon beside it."
       }
     ],
-    "script": "The coffee mistake almost every Indian kitchen makes when measuring milk coffee. Knowing the exact proportion on the back panel changes how you balance your morning milk brew. Ultra Blend by Purity Beans is crafted for your morning milk coffee with 70% coffee and 30% chicory. At ₹309 for 100g, it yields at least 66 cups—about ₹5 a cup. Read the jar, check the ingredient panel, and visit https://p3online.in to get yours today. Follow @purepantryprovisions for more kitchen brew tips.",
-    "share_trigger": "Share this with someone who drinks milk coffee every single morning.",
-    "tagline": "Ultra Blend: smooth 70% coffee and 30% chicory milk coffee by Purity Beans.",
+    "script": "What's actually inside this jar? Let's read it. When your daily milk coffee costs ₹180 at the cafe, the math in your own kitchen looks shocking. Most of us never glance at the back of the pack. Purity Beans Ultra Blend is transparent: a smooth 70% coffee and 30% chicory blend made for milk coffee. A 100g jar is ₹309 and yields at least 66 cups, which works out to about ₹5 a cup at home. Skip the markup, pour a smarter cup. Visit Purity Beans at https://p3online.in to claim yours.",
+    "share_trigger": "Share this with someone who spends too much on daily coffee.",
+    "tagline": "Read the jar. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
     "tags": [
       "Ultra Blend",
-      "Milk Coffee",
       "Purity Beans",
-      "Instant Coffee India"
+      "Instant Coffee",
+      "Coffee Math",
+      "Milk Coffee"
     ],
-    "target": "Urban Indian milk coffee drinkers looking for honest labeling and daily value",
-    "title": "What the Back Panel of Your Milk Coffee Jar Actually Says",
+    "target": "Urban Indian working professionals and students looking for an affordable, transparent everyday milk coffee.",
+    "title": "What's actually inside this jar? Let's read it.",
     "viral_potential": {
       "scores": {
-        "hook": 6.0,
-        "curiosity_gap": 7.0,
-        "relatability": 8.0,
-        "shareability": 6.0,
-        "comment_trigger": 7.0,
-        "format_fit": 7.0,
-        "follow_cta": 7.0
+        "hook": 8.0,
+        "curiosity_gap": 8.0,
+        "relatability": 9.0,
+        "shareability": 8.0,
+        "comment_trigger": 8.0,
+        "format_fit": 9.0,
+        "follow_cta": 8.0
       },
-      "overall": 6.8,
+      "overall": 8.0,
       "weakest": [
         "hook",
-        "shareability"
+        "curiosity_gap"
       ],
-      "feedback": "The hook relies on a slightly generic 'mistake' trope which doesn't punch hard enough for the 2-second YouTube Short window. To lift this above 8, open with a sharper contrast about how much people spend per cup or the exact ratio surprise. Shareability increases if the economic math per cup is framed as a direct takeaway for office workers or family households.",
-      "better_hook": "Most Indian households waste money on cafe milk coffee without checking this single back-panel number.",
-      "passed": false,
+      "feedback": "The piece hits the right notes for Indian consumers balancing cafe spend with home brewing, and the 70/30 Ultra Blend math is precise and compliant. To push past 8, sharpen the opening hook to create an even sharper tension between cafe prices and home-brew cost before reading the jar label.",
+      "better_hook": "Paying ₹180 for daily cafe milk coffee when the math in your own kitchen is ₹5 a cup?",
+      "passed": true,
       "honesty": [],
       "pass_mark": 8.0
     },
     "editorial_score": {
-      "shareability": 8.2,
-      "saveability": 8.5,
-      "emotion_pull": 8.0,
+      "shareability": 8.5,
+      "saveability": 9.0,
+      "emotion_pull": 8.5,
       "hook_strength": 9.0,
-      "brand_clarity": 9.2,
-      "overall": 8.8,
+      "brand_clarity": 9.5,
+      "overall": 8.9,
       "verdict": "PASS",
-      "feedback": "The asset effectively targets everyday milk coffee drinkers with precise cup math (₹5 a cup) and transparent ingredient disclosure (70/30 blend). The visual direction adheres strictly to the exact Purity Beans jar without violating zero-chicory claims, making it highly educational and practical for saving.",
+      "feedback": "The asset effectively highlights transparent 70/30 blending proportions for Ultra Blend without attacking chicory, grounding the narrative in relatable per-cup economics (₹309 for 66+ cups, ~₹5/cup). Strong visual and auditable details. Direct CTAs to https://p3online.in with engagement bait included.",
       "retention_audit": ""
     },
-    " description": "A 30-second YouTube Short exploring Ultra Blend by Purity Beans, focusing on milk coffee balance, cup math, and a clear view of the ingredient panel.",
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 6.8 < 8.0 (weakest: hook, shareability). The hook relies on a slightly generic 'mistake' trope which doesn't punch hard enough for the 2-second YouTube Short window. To lift this above 8, open with a sharper contrast about how much people spend per cup or the exact ratio surprise. Shareability increases if the economic math per cup is framed as a direct takeaway for office workers or family households. Suggested hook: Most Indian households waste money on "
+    "follow_cta": "Follow @purepantryprovisions for more transparent coffee math and exclusive tasting tips.",
+    "carousel_caption": "Read the jar. Ultra Blend’s 70% coffee + 30% chicory blend lets you brew a smooth milk coffee at home for about ₹5 a cup. Swap the ₹180 cafe habit for honest, transparent savings. Shop now at https://p3online.in and taste the difference. #PurityBeans #UltraBlend #PureCoffee",
+    "instagram_caption": "Your daily milk coffee might be costing you more than you think. Ultra Blend’s transparent 70% coffee + 30% chicory mix delivers a smooth cup for roughly ₹5 each. Check the label, see the math, and switch to a smarter brew. 👉 https://p3online.in #PurityBeans #UltraBlend #PureCoffee #CoffeeMath #IndianCoffee",
+    "blog_introduction": "India’s coffee culture is evolving. While cafés",
+    "viral_readiness_score": 94.0
   },
   "growth_reel": {
     "platform": "instagram_reel",
@@ -3331,6 +3457,21 @@
       {
         "status": "exhausted",
         "reason": "viral: score 6.8 < 8.0 (weakest: hook, shareability). The hook relies on a slightly generic 'mistake' trope which doesn't punch hard enough for the 2-second YouTube Short window. To lift this above 8, open with a sharper contrast about how much people spend per cup or the exact ratio surprise. Share"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 7.2 < 8.0 (weakest: hook, shareability). The hook relies on a slightly generic 'mistake' trope which fails to create an immediate enough pattern interrupt for the 2-second YouTube Short window. To push this score above 8, lead with the surprising cost-per-cup math or a more direct contr"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.8 < 8.0 (weakest: curiosity_gap, follow_cta). The hook relies on a relatable financial comparison which works well for urban professionals, but the curiosity gap could be sharper by focusing on the hidden cost rather than just stating the cafe price. The follow CTA could give a cleare"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 7.8 < 8.0 (weakest: hook, curiosity_gap). The hook relies slightly on a general premise rather than an immediate pattern-interrupt. To push past 8, make the opening line punchier by contrasting the cafe receipt directly against the home kitchen jar cost in the first 1.5 seconds. Ensure "
       }
     ]
   },
