@@ -29339,6 +29339,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient looks muddy and lacks rich color depth or sophisticated lighting.; Typography feels dated with standard serif fonts and weak hierarchy, especially the subheadline 'How do you make your morning cup?'; The jar cutout is poorly integrated, lacking realis",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.5; product appears to float: no clear contact shadow and the horizon line behind the jar makes the surface read awkwardly.; label typography is cluttered and ",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.5; Product appears to float: no clear contact shadow and the horizon line behind the jar makes the surface read awkwardly.; Label typography is cluttered and too small at feed size; 'PREMIUM INSTANT COFFEE' and net weight are hard to read.; Bottom pill duplicates product-label",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
