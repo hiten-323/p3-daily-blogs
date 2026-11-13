@@ -2411,29 +2411,13 @@
     "hook": "Have you ever wondered why your morning milk coffee tastes harsh before you even pour the milk?",
     "body": "Purity Beans Ultra Blend is a smooth 70% coffee and 30% chicory blend crafted for everyday milk coffee drinkers who want an honest, comforting cup without the cafe price tag. The glass jar sits on our kitchen shelf with a clear ingredient panel so you always know exactly what is in your mug.\n\nWhen water reaches a rolling boil, pouring it straight onto the granules can scorch them and bring out a sharp bitterness. If you let the kettle rest for just a minute after boiling — letting the temperature settle — the granules open up smoothly. The milk folds in cleanly, creating an amber, balanced cup that makes the first five minutes of the morning feel entirely yours.\n\nA 100g jar at ₹309 gives you at least 66 cups, which works out to about ₹5 a cup. That simple daily routine of watching the steam rise and the day settle into place is why we keep this jar front and center on our counter.",
     "community_question": "Do you let your kettle rest for a minute after boiling, or do you pour straight away?",
-    "cta": "Follow @purepantryprovisions to learn these practical morning brewing tips, and visit https://p3online.in to stock your kitchen shelf.",
+    "cta": "Send this to someone who drinks instant coffee. Follow @purepantryprovisions to learn these practical morning brewing tips, and visit https://p3online.in to stock your kitchen shelf.",
     "hashtags": "#PurityBeans #UltraBlend #CoffeeRitual #CleanCoffee",
     "comment_trigger": "Do you let your kettle rest for a minute after boiling, or do you pour straight away?",
     "hook_text": "Have you ever wondered why your morning milk coffee tastes harsh before you even pour the milk?",
     "chosen_hook": "Have you ever wondered why your morning milk coffee tastes harsh before you even pour the milk?",
     "save_trigger": "Save this before your next grocery run — real coffee matters.",
     "share_trigger": "Share with someone who starts every morning with coffee.",
-    "editorial_score": {
-      "shareability": 6.5,
-      "saveability": 7.0,
-      "emotion_pull": 7.5,
-      "hook_strength": 8.0,
-      "brand_clarity": 8.5,
-      "overall": 7.5,
-      "verdict": "REJECT",
-      "feedback": "The asset successfully highlights the honest 70/30 Ultra Blend profile without anti-chicory bias, maintaining brand integrity. The water temperature brewing tip adds strong practical value, driving saveability. To push scores higher, sharpen the emotional connection to the morning routine in the opening lines.",
-      "retention_audit": "The hook effectively targets milk coffee drinkers with a relatable problem. The middle body correctly details the brewing tip and honest formulation without violating brand rules. The CTA clearly drives traffic to https://p3online.in with valid tags."
-    },
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The asset successfully highlights the honest 70/30 Ultra Blend profile without anti-chicory bias, maintaining brand integrity. The water temperature brewing tip adds strong practical value, driving saveability. To push scores higher, sharpen the emotional connection to the morning routine in the opening lines.",
     "funnel_objective": "DISCOVERY",
     "objective": "Engagement Growth",
     "primary_cta": "Send this to someone who drinks instant coffee",
@@ -2564,7 +2548,41 @@
         "day": 316
       },
       "published": false
-    }
+    },
+    "regen_round": 1,
+    "editorial_score": {
+      "shareability": 8.5,
+      "saveability": 8.0,
+      "emotion_pull": 8.2,
+      "hook_strength": 9.0,
+      "brand_clarity": 8.8,
+      "overall": 8.5,
+      "verdict": "PASS",
+      "feedback": "The asset effectively targets everyday milk coffee drinkers with a highly relatable temperature-control tip and an honest mention of Ultra Blend's 70/30 coffee-chicory ratio. The hook immediately engages the reader by calling out harsh morning tastes. To further improve shareability, ensure the price-per-cup calculation and the kettle-rest tip are highlighted clearly so readers feel compelled to pass the tip along to fellow home-brewers.",
+      "retention_audit": ""
+    },
+    "viral_potential": {
+      "scores": {
+        "hook": 8.0,
+        "curiosity_gap": 8.0,
+        "relatability": 9.0,
+        "shareability": 8.0,
+        "comment_trigger": 9.0,
+        "format_fit": 9.0,
+        "follow_cta": 8.0
+      },
+      "overall": 8.4,
+      "weakest": [
+        "hook",
+        "shareability"
+      ],
+      "feedback": "The post performs well on Facebook by anchoring on a familiar household coffee habit and ending with a direct, conversational question. To push the score higher, make the opening line slightly more punchy by cutting filler words, ensuring it reads instantly on mobile feeds without losing its warm, relatable tone.",
+      "better_hook": "Does your morning milk coffee ever taste surprisingly harsh before you even pour the milk?",
+      "passed": true,
+      "honesty": [],
+      "pass_mark": 8.0
+    },
+    "viral_readiness_score": 89.0
   },
   "video_prompts": {
     "reel_1": {
@@ -5643,5 +5661,8 @@
       "threads_post: Threads post needs an open-ended question to fuel reply ranking"
     ],
     "asset_count": 42
+  },
+  "mandatory_regen_rounds": {
+    "facebook_post": 1
   }
 }

@@ -22033,7 +22033,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 3,
+      "count": 5,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-11-09",
       "fix": "",
@@ -29157,6 +29157,20 @@
       "reason": "viral: score 7.8 < 8.0 (weakest: hook, curiosity_gap). The hook relies slightly on a general premise rather than an immediate pattern-interrupt. To push past 8, make the opening line punchier by contrasting the cafe receipt directly against the home kitchen jar cost in the first 1.5 seconds. Ensure",
       "stage": "generation",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels flat and muddy rather than rich and dimensional, lacking the premium warmth expected of d2c coffee brands.; the product pack",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking the premium warmth expected of D2C coffee brands.; The product packaging design (yellow label) clashes severely with the dark brown aesthetic, looking amateur rather than high-end.; Typog",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
