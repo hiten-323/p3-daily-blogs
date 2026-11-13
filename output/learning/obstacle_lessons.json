@@ -29269,6 +29269,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient feels a bit flat and muddy with generic glowing bokeh circles, lacking rich artisanal depth.; The bright yellow label on the coffee jar clashes heavily with the sophisticated, dark premium coffee aesthetic intended for the background.; Typography lack",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.5; product appears to float/pasted: no clear contact shadow or surface grounding, and the background split line cuts awkwardly behind the jar.; subheadline is",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.5; Product appears to float/pasted: no clear contact shadow or surface grounding, and the background split line cuts awkwardly behind the jar.; Subheadline is small and low-contrast against the brown background, weakening legibility at feed size.; Label typography is busy and n",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
