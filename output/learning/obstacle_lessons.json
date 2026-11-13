@@ -29479,6 +29479,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient feels a bit flat and muddy with generic bokeh spots rather than a rich, tactile coffee or lifestyle environment.; The lighting and drop shadow on the jar feel unnatural and clumsily composited, floating awkwardly on the dividing line.; The product lab",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.5; product appears to float: no clear contact shadow and the horizon line sits behind the jar rather than grounding it.; jar is too small in frame with excess",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.5; Product appears to float: no clear contact shadow and the horizon line sits behind the jar rather than grounding it.; Jar is too small in frame with excessive empty space above and below, weakening product desire.; Subhead and label microcopy are too small/low-contrast for m",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1

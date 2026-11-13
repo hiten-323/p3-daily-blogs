@@ -18630,11 +18630,11 @@
     },
     "2026-11-13|morning|instagram_story|pb_075fd8649f": {
       "asset": "",
-      "attempt_count": 23,
+      "attempt_count": 24,
       "content_date": "2026-11-13",
       "content_id": "pb_075fd8649f",
       "day_number": 316,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient feels a bit flat and muddy with generic bokeh spots rather than a rich, tactile coffee or lifestyle environment.; The lighting and drop shadow on the jar feel unnatural and clumsily composited, floating awkwardly on the dividing line.; The product lab",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float: no clear contact shadow and the horizon line sits behind the jar rather than grounding it.; Jar is too small in frame with excessive empty space above and below, weakening product desire.; Subhead and label microcopy are too small/low-contrast for m",
       "history": [
         {
           "at": "2026-11-13T06:28:33+00:00",
@@ -18980,20 +18980,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T13:35:43+00:00",
+          "attempt": 24,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T13:43:37+00:00",
+          "attempt": 24,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float: no clear contact shadow and the horizon line sits behind the jar rather than grounding it.; Jar is too small in frame with excessive empty space above and below, weakening product desire.; Subhead and label microcopy are too small/low-contrast for m",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-13T13:21:24+00:00",
+      "last_attempt_at": "2026-11-13T13:35:43+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient feels a bit flat and muddy with generic bokeh spots rather than a rich, tactile coffee or lifestyle environment.; The lighting and drop shadow on the jar feel unnatural and clumsily composited, floating awkwardly on the dividing line.; The product lab",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float: no clear contact shadow and the horizon line sits behind the jar rather than grounding it.; Jar is too small in frame with excessive empty space above and below, weakening product desire.; Subhead and label microcopy are too small/low-contrast for m",
         "success": false
       },
-      "next_retry_at": "2026-11-13T13:29:40+00:00",
+      "next_retry_at": "2026-11-13T13:43:37+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-13T13:29:40+00:00",
+      "updated_at": "2026-11-13T13:43:37+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
