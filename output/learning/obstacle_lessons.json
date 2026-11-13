@@ -29255,6 +29255,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth or sophisticated lighting.; Typography feels dated with standard serif fonts and weak hierarchy, especially the small subhead and pill-tag styling.; The product label design on the jar looks amateurish and clashes w",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient feels a bit flat and muddy with generic glowing bokeh circles, lacking rich artisanal depth.; the bright yellow label on the coffee",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient feels a bit flat and muddy with generic glowing bokeh circles, lacking rich artisanal depth.; The bright yellow label on the coffee jar clashes heavily with the sophisticated, dark premium coffee aesthetic intended for the background.; Typography lack",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
