@@ -29633,6 +29633,20 @@
       "reason": "aesthetic_below_8.0:6.0; Flat gradient background lacks depth and premium texture; 70% coffee / 30% chicory positioning undermines premium D2C coffee perception; Centered composition is safe but not scroll-stopping for Instagram",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient is muddy and flat, lacking rich depth and sophisticated lighting cues expected from a premium d2c brand.; typography feels dated wi",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and sophisticated lighting cues expected from a premium D2C brand.; Typography feels dated with standard serif fonts and weak hierarchy (the 'STORY \u2022 ULTRA BLEND' badge looks unpolished).; The product packaging de",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
