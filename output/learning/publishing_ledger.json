@@ -18460,6 +18460,90 @@
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-12T08:02:20+00:00"
     },
+    "2026-11-13|evening|facebook|pb_075fd8649f": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-13",
+      "content_id": "pb_075fd8649f",
+      "day_number": 316,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-13T16:57:31+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T16:57:38+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "1662580385414642",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/videos/1662580385414642",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-13T16:57:31+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-13T16:57:38+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": true,
+      "remote_id": "1662580385414642",
+      "slot": "evening",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-13T16:57:38+00:00",
+      "url": "https://www.facebook.com/494003270464484/videos/1662580385414642",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-13T16:57:38+00:00"
+    },
+    "2026-11-13|evening|instagram_video|pb_075fd8649f|reel_1": {
+      "asset": "reel_1",
+      "attempt_count": 1,
+      "content_date": "2026-11-13",
+      "content_id": "pb_075fd8649f",
+      "day_number": 316,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-13T16:56:58+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T16:57:31+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18138436750639462",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/reel/DfsHKDLjTYf/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-13T16:56:58+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-13T16:57:31+00:00",
+      "next_retry_at": null,
+      "platform": "instagram_video",
+      "published": true,
+      "remote_id": "18138436750639462",
+      "slot": "evening",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-13T16:57:31+00:00",
+      "url": "https://www.instagram.com/reel/DfsHKDLjTYf/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-13T16:57:31+00:00"
+    },
     "2026-11-13|generate|linkedin|pb_075fd8649f": {
       "asset": "",
       "attempt_count": 1,
@@ -18630,11 +18714,11 @@
     },
     "2026-11-13|morning|instagram_story|pb_075fd8649f": {
       "asset": "",
-      "attempt_count": 33,
+      "attempt_count": 34,
       "content_date": "2026-11-13",
       "content_id": "pb_075fd8649f",
       "day_number": 316,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and luxurious, lacking sophisticated lighting depth or atmospheric texture.; Product label design is dated and visually disconnected from a modern D2C aesthetic, relying on generic coffee bean clipart and harsh y",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel muddy and flat rather than rich and dimensional, lacking top-tier D2C polish.; Typography (serif headline and subtitle) lacks distinct visual weight and feels amateurish in execution.; The product packaging design (yellow label) clashes wit",
       "history": [
         {
           "at": "2026-11-13T06:28:33+00:00",
@@ -19130,20 +19214,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T16:33:45+00:00",
+          "attempt": 34,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T16:45:28+00:00",
+          "attempt": 34,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel muddy and flat rather than rich and dimensional, lacking top-tier D2C polish.; Typography (serif headline and subtitle) lacks distinct visual weight and feels amateurish in execution.; The product packaging design (yellow label) clashes wit",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-13T16:16:23+00:00",
+      "last_attempt_at": "2026-11-13T16:33:45+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and luxurious, lacking sophisticated lighting depth or atmospheric texture.; Product label design is dated and visually disconnected from a modern D2C aesthetic, relying on generic coffee bean clipart and harsh y",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel muddy and flat rather than rich and dimensional, lacking top-tier D2C polish.; Typography (serif headline and subtitle) lacks distinct visual weight and feels amateurish in execution.; The product packaging design (yellow label) clashes wit",
         "success": false
       },
-      "next_retry_at": "2026-11-13T16:22:59+00:00",
+      "next_retry_at": "2026-11-13T16:45:28+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-13T16:22:59+00:00",
+      "updated_at": "2026-11-13T16:45:28+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null

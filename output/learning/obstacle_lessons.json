@@ -22033,7 +22033,7 @@
       "status": "gate_holding"
     },
     {
-      "count": 5,
+      "count": 7,
       "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-11-09",
       "fix": "",
@@ -29603,6 +29603,20 @@
       "last_seen": "2026-11-13",
       "platform": "instagram_story",
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and luxurious, lacking sophisticated lighting depth or atmospheric texture.; Product label design is dated and visually disconnected from a modern D2C aesthetic, relying on generic coffee bean clipart and harsh y",
+      "stage": "publish",
+      "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color and lighting feel muddy and flat rather than rich and dimensional, lacking top-tier d2c polish.; typography (serif headline and subtitle) ",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color and lighting feel muddy and flat rather than rich and dimensional, lacking top-tier D2C polish.; Typography (serif headline and subtitle) lacks distinct visual weight and feels amateurish in execution.; The product packaging design (yellow label) clashes wit",
       "stage": "publish",
       "status": "gate_holding"
     }
