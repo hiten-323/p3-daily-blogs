@@ -29395,6 +29395,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium depth (flat brown gradient with amateur bokeh effects); Product label design uses harsh, clashing yellow tones that cheapen the overall aesthetic; Shadow beneath the coffee jar is rendered poorly, making the produc",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and lacks rich, dynamic depth.; product label design uses harsh yellow and brown contrasts that detract from a premium",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, dynamic depth.; Product label design uses harsh yellow and brown contrasts that detract from a premium aesthetic.; Typography styling for headings and sub-copy feels generic and uninspired.",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
