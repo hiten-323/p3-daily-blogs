@@ -29381,6 +29381,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color and lighting lack rich depth, resulting in a somewhat flat and dated aesthetic.; The product label design (vibrant yellow with generic stock graphics) feels cheap and detracts from a premium D2C brand feel.; The bottom ratio badge ('70% COFFEE \u2022 30% CHICORY'",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; background color palette feels muddy and lacks rich, premium depth (flat brown gradient with amateur bokeh effects); product label design uses harsh, clash",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, premium depth (flat brown gradient with amateur bokeh effects); Product label design uses harsh, clashing yellow tones that cheapen the overall aesthetic; Shadow beneath the coffee jar is rendered poorly, making the produc",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
