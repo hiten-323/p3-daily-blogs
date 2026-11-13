@@ -29241,6 +29241,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background gradient and lighting feel flat and amateurish, lacking rich depth and moody atmosphere expected from premium D2C brands.; The product presentation feels isolated and poorly integrated into the scene, floating unnaturally above the horizon line with weak shadow in",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:4.0; the background gradient is muddy and lacks rich color depth or sophisticated lighting.; typography feels dated with standard serif fonts and weak hierarchy",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and lacks rich color depth or sophisticated lighting.; Typography feels dated with standard serif fonts and weak hierarchy, especially the small subhead and pill-tag styling.; The product label design on the jar looks amateurish and clashes w",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
