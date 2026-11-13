@@ -29493,6 +29493,20 @@
       "reason": "aesthetic_below_8.0:6.5; Product appears to float: no clear contact shadow and the horizon line sits behind the jar rather than grounding it.; Jar is too small in frame with excessive empty space above and below, weakening product desire.; Subhead and label microcopy are too small/low-contrast for m",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.5; product appears to float rather than sit on a surface; no clear contact shadow or grounding.; subheadline is small and low-contrast against the brown backg",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.5; Product appears to float rather than sit on a surface; no clear contact shadow or grounding.; Subheadline is small and low-contrast against the brown background, hurting legibility.; Top pill text is too tiny for a story format and competes poorly with the headline.",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
