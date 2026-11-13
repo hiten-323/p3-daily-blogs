@@ -29437,6 +29437,20 @@
       "reason": "aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and sophisticated lighting cues expected from a premium D2C brand.; The bright yellow and brown label on the jar clashes unpleasantly with the dark monochromatic background tones.; Typography feels dated and amate",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.0; generic centered composition lacks scroll-stopping dynamism for a fast instagram feed; headline 'milk coffee habit' is descriptive rather than benefit-driv",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.0; Generic centered composition lacks scroll-stopping dynamism for a fast Instagram feed; Headline 'Milk Coffee Habit' is descriptive rather than benefit-driven or provocative; Jar label copy is too small for mobile legibility",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
