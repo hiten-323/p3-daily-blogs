@@ -29171,6 +29171,20 @@
       "reason": "aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking the premium warmth expected of D2C coffee brands.; The product packaging design (yellow label) clashes severely with the dark brown aesthetic, looking amateur rather than high-end.; Typog",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-13",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.5; product appears to float rather than sit on a surface; no clear contact shadow or grounding.; the background horizon line cuts awkwardly behind the jar, we",
+      "label": "stories",
+      "last_seen": "2026-11-13",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.5; Product appears to float rather than sit on a surface; no clear contact shadow or grounding.; The background horizon line cuts awkwardly behind the jar, weakening product presentation.; Label typography is cramped and low-contrast in places, especially the yellow-on-orange t",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
