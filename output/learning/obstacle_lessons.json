@@ -19261,14 +19261,14 @@
       "status": "gate_holding"
     },
     {
-      "count": 9,
+      "count": 10,
       "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
       "first_seen": "2026-11-07",
       "fix": "",
       "gate": "aesthetic",
       "id": "instagram_story|stories|aesthetic|vision_score_unavailable; vision_outage:all_providers_down",
       "label": "stories",
-      "last_seen": "2026-11-12",
+      "last_seen": "2026-11-13",
       "platform": "instagram_story",
       "reason": "vision_score_unavailable; vision_outage:all_providers_down",
       "stage": "publish",
