@@ -18630,11 +18630,11 @@
     },
     "2026-11-13|morning|instagram_story|pb_075fd8649f": {
       "asset": "",
-      "attempt_count": 18,
+      "attempt_count": 19,
       "content_date": "2026-11-13",
       "content_id": "pb_075fd8649f",
       "day_number": 316,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, dynamic depth.; Product label design uses harsh yellow and brown contrasts that detract from a premium aesthetic.; Typography styling for headings and sub-copy feels generic and uninspired.",
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and moody atmosphere expected of a premium coffee brand.; Typography feels dated and template-driven, particularly the outlined pill shapes for the header and footer tags.; The lighting and drop shadow on the coff",
       "history": [
         {
           "at": "2026-11-13T06:28:33+00:00",
@@ -18905,20 +18905,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T12:12:44+00:00",
+          "attempt": 19,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T12:21:48+00:00",
+          "attempt": 19,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and moody atmosphere expected of a premium coffee brand.; Typography feels dated and template-driven, particularly the outlined pill shapes for the header and footer tags.; The lighting and drop shadow on the coff",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-13T11:53:21+00:00",
+      "last_attempt_at": "2026-11-13T12:12:44+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich, dynamic depth.; Product label design uses harsh yellow and brown contrasts that detract from a premium aesthetic.; Typography styling for headings and sub-copy feels generic and uninspired.",
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and moody atmosphere expected of a premium coffee brand.; Typography feels dated and template-driven, particularly the outlined pill shapes for the header and footer tags.; The lighting and drop shadow on the coff",
         "success": false
       },
-      "next_retry_at": "2026-11-13T12:05:22+00:00",
+      "next_retry_at": "2026-11-13T12:21:48+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-13T12:05:22+00:00",
+      "updated_at": "2026-11-13T12:21:48+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
