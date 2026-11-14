@@ -285,6 +285,46 @@ def _remember_provider_failure(source: str, label: str, reason: str) -> None:
         logger.debug("[hf_bg] provider lesson persistence failed: %s", type(exc).__name__)
 
 
+def _retry_request(call, source: str, label: str, phase: str):
+    """Retry transient busy/timeout responses; never retry auth or quota failures."""
+    try:
+        attempts = max(1, min(3, int(os.getenv("HF_VIDEO_PROVIDER_RETRIES", "2"))))
+    except ValueError:
+        attempts = 2
+    try:
+        backoff = max(0.0, min(5.0, float(os.getenv("HF_VIDEO_PROVIDER_BACKOFF_S", "1"))))
+    except ValueError:
+        backoff = 1.0
+    for attempt in range(1, attempts + 1):
+        try:
+            result = call()
+        except Exception as exc:
+            code = getattr(exc, "code", None)
+            reason = f"{phase}_{'http_' + str(code) if code else type(exc).__name__}"
+            _remember_provider_failure(source, label, reason)
+            if (code in {408, 425, 429, 500, 502, 503, 504} or isinstance(exc, TimeoutError)) and attempt < attempts:
+                wait = backoff * (2 ** (attempt - 1))
+                logger.warning("[hf_bg] provider=%s phase=%s transient=%s retry=%d/%d backoff=%.1fs",
+                               source, phase, reason, attempt, attempts, wait)
+                if wait:
+                    import time
+                    time.sleep(wait)
+                continue
+            return "error", b"", ""
+        kind, _extra = interpret(*result)
+        if kind in {"busy", "timeout"} and attempt < attempts:
+            wait = backoff * (2 ** (attempt - 1))
+            logger.warning("[hf_bg] provider=%s phase=%s transient=%s retry=%d/%d backoff=%.1fs",
+                           source, phase, kind, attempt, attempts, wait)
+            _remember_provider_failure(source, label, f"{phase}_{kind}")
+            if wait:
+                import time
+                time.sleep(wait)
+            continue
+        return result
+    return "error", b"", ""
+
+
 def _run(source: str, space: str, router: tuple[str, str], prompt: str, label: str) -> str | None:
     global _AUTH_DEAD
     token = _token()
@@ -298,7 +338,7 @@ def _run(source: str, space: str, router: tuple[str, str], prompt: str, label: s
     timeout = _timeout()
     auth_headers = {"Authorization": f"Bearer {token}"}
     try:
-        status, body, ctype = _space(space, prompt, token, timeout)
+        status, body, ctype = _retry_request(lambda: _space(space, prompt, token, timeout), source, label, "space")
     except Exception as exc:
         logger.info("[hf_bg] %s space failed: %s", source, type(exc).__name__)
         _remember_provider_failure(source, label, "space_" + type(exc).__name__)
@@ -317,7 +357,7 @@ def _run(source: str, space: str, router: tuple[str, str], prompt: str, label: s
         _remember_provider_failure(source, label, "space_" + kind)
     logger.info("[hf_bg] %s space %s — trying router", source, kind)
     try:
-        status, body, ctype = _inference(router, prompt, token, timeout)
+        status, body, ctype = _retry_request(lambda: _inference(router, prompt, token, timeout), source, label, "router")
     except Exception as exc:
         logger.info("[hf_bg] %s router failed: %s", source, type(exc).__name__)
         _remember_provider_failure(source, label, "router_" + type(exc).__name__)
