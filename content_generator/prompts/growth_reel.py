@@ -100,6 +100,8 @@ GROWTH_FORMATS = [
 
     "low production; stays brand-safe, never off-colour)",
 
+    "fast_cut_curiosity",
+
 ]
 
 
@@ -114,11 +116,21 @@ _VALUE_UNLOCK_EVERY = 4
 
 
 
+def format_for_day(day: int) -> str:
+    """Rotation entry for this day. fast_cut_curiosity is not replaced by value-unlock."""
+    fmt = GROWTH_FORMATS[int(day) % len(GROWTH_FORMATS)]
+    if fmt == "fast_cut_curiosity":
+        return fmt
+    if int(day) % _VALUE_UNLOCK_EVERY == 0:
+        return "value-unlock (comment-to-receive a free resource)"
+    return fmt
+
+
 def build(day: int, avoid: str = "") -> str:
 
     topic  = GROWTH_TOPICS[day % len(GROWTH_TOPICS)]
 
-    fmt    = GROWTH_FORMATS[day % len(GROWTH_FORMATS)]
+    fmt    = format_for_day(day)
 
 
 
@@ -126,7 +138,9 @@ def build(day: int, avoid: str = "") -> str:
 
     unlock_block = ""
 
-    if day % _VALUE_UNLOCK_EVERY == 0:
+    template_block = ""
+
+    if fmt.startswith("value-unlock"):
 
         from content_generator.assets.lead_magnets import get_todays_lead_magnet
 
@@ -156,7 +170,26 @@ it, then make commenting the keyword the way to receive it.
 
 '''
 
+    elif fmt == "fast_cut_curiosity":
 
+        from content_generator.creative.growth_reel_templates import prompt_block
+
+        template_block = prompt_block()
+
+
+
+    product_rule = (
+        "The lower half of the first three seconds may show one real photographed jar. "
+        "Do not draw or invent a jar, label, or package. No spoken website. "
+        "The comment reply carries the only link."
+        if fmt == "fast_cut_curiosity"
+        else "NO Purity Beans mention. NO jar. NO logo. NO product. NO website. NO buying language."
+    )
+    change_rule = (
+        "Hard cut every 1-3 seconds. No crossfades. A slow punch-in on every shot. Total length 34 seconds."
+        if fmt == "fast_cut_curiosity"
+        else "Something visually changes every 2-3 seconds."
+    )
 
     text = f"""GROWTH TRACK ASSET — follower-first, non-branded. GROWTH_MODE_CONTEXT rules apply.
 
@@ -178,15 +211,17 @@ FORMAT: {fmt}
 
 {unlock_block}
 
+{template_block}
+
 
 
 HARD RULES:
 
-- NO Purity Beans mention. NO jar. NO logo. NO product. NO website. NO buying language.
+- {product_rule}
 
 - This must look like a Netflix documentary clip or Apple ad, never an advertisement.
 
-- Something visually changes every 2-3 seconds.
+- {change_rule}
 
 - Hook lands in 2 seconds.
 
@@ -291,4 +326,7 @@ HARD RULES:
 }}"""
 
     from content_generator.prompts.piece_craft import craft_block
-    return text + "\n\n" + craft_block("growth_reel")
+    tail = craft_block("growth_reel")
+    if fmt == "fast_cut_curiosity" and template_block:
+        tail = tail + "\n\n" + template_block
+    return text + "\n\n" + tail
