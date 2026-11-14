@@ -177,6 +177,7 @@ jobs:
         if: ${{ success() && env.FORCE_SLOT != 'generate' && github.event.inputs.dry_run != 'true' }}
         env:
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          NURTURE_ENABLED: ${{ vars.NURTURE_ENABLED }}
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
