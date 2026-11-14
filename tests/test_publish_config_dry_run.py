@@ -51,7 +51,9 @@ def test_generate_dry_run_runs_pipeline_but_skips_publishing_and_commits():
 
 def test_nine_piece_dry_run_holds_story_when_visual_renderer_does_not_pass(monkeypatch):
     from content_generator.core import editorial_engine, publish_bar, product_truth, process_match
-    from content_generator.creative import story_video
+    from content_generator.creative import story_video, cinematic_frame, rendered_asset_qa
+    from content_generator.publisher import story_copy, product_links, instagram
+    from content_generator import rotation
 
     labels = {"instagram_post", "carousel", "growth_reel", "reel_1",
               "facebook_post", "threads_post", "linkedin_post", "yt_short"}
@@ -62,6 +64,14 @@ def test_nine_piece_dry_run_holds_story_when_visual_renderer_does_not_pass(monke
     monkeypatch.setattr(product_truth, "asset_product_truth_findings", lambda piece, featured=None: [])
     monkeypatch.setattr(process_match, "process_match_findings", lambda text, featured=None: [])
     monkeypatch.setattr(story_video, "build_story_video", lambda **kwargs: None)
+    monkeypatch.setattr(story_copy, "resolve_story_copy",
+                        lambda content, day=0: {"headline": "Instant coffee in seconds",
+                                                "sub": "Shop p3online.in/?utm_source=instagram&utm_medium=story&utm_campaign=pb"})
+    monkeypatch.setattr(product_links, "story_link_line", lambda sub: sub)
+    monkeypatch.setattr(rotation, "pick", lambda products, day: "purica")
+    monkeypatch.setattr(cinematic_frame, "compose_cinematic_frame", lambda **kwargs: "story.jpg")
+    monkeypatch.setattr(rendered_asset_qa, "audit_rendered_images", lambda paths: {"ok": True, "issues": []})
+    monkeypatch.setattr(instagram, "_static_story_visual_hold", lambda path: {"error": "visual_gate_hold"})
     monkeypatch.setattr(daily, "_remember_obstacle", lambda *a, **k: None)
 
     content = {
@@ -75,4 +85,4 @@ def test_nine_piece_dry_run_holds_story_when_visual_renderer_does_not_pass(monke
     assert report["held"] == 1
     story = next(row for row in report["pieces"] if row["piece"] == "ig_story")
     assert story["status"] == "HOLD"
-    assert "story_visual_gate_hold_or_render_failed" in story["reasons"]
+    assert "story_visual_gate_hold:visual_gate_hold" in story["reasons"]
