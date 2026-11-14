@@ -2091,6 +2091,67 @@ def _maybe_weekly_summary() -> None:
 
 # ── Manual trigger ────────────────────────────────────────────────────────────
 
+def dry_run_asset_report(content: dict) -> dict:
+    """Evaluate the nine required surfaces without calling any publisher."""
+    import re
+    from urllib.parse import urlsplit, parse_qs
+    from content_generator.core.editorial_engine import get_valid_assets
+    from content_generator.core.publish_bar import quality_block
+    from content_generator.core.product_truth import (
+        asset_product_truth_findings, featured_product_name, piece_copy_text,
+    )
+    from content_generator.core.process_match import process_match_findings
+
+    valid = set(get_valid_assets(content))
+    reels = content.get("reels") if isinstance(content.get("reels"), list) else []
+    stories = content.get("stories") if isinstance(content.get("stories"), dict) else {}
+    pieces = [
+        ("ig_post", "instagram_post", content.get("instagram_post"), True),
+        ("ig_story", "stories", stories.get("story_1"), False),
+        ("ig_carousel", "carousel", content.get("carousel"), True),
+        ("growth_reel", "growth_reel", content.get("growth_reel"), True),
+        ("reel_1", "reel_1", reels[0] if reels else content.get("reel_1"), True),
+        ("facebook", "facebook_post", content.get("facebook_post"), True),
+        ("threads", "threads_post", content.get("threads_post"), True),
+        ("linkedin", "linkedin_post", content.get("linkedin_post"), True),
+        ("youtube_short", "yt_short", content.get("yt_short"), True),
+    ]
+    featured = featured_product_name(content)
+    results = []
+    for name, label, piece, schema_required in pieces:
+        reasons = []
+        if not isinstance(piece, dict) or not piece:
+            reasons.append("missing_piece")
+        else:
+            if schema_required and label not in valid:
+                reasons.append("schema_or_brand_gate")
+            block = quality_block(piece, label)
+            if block:
+                reasons.append(block)
+            findings = asset_product_truth_findings(piece, featured=featured)
+            if findings:
+                reasons.extend("product_truth:" + str(x.get("reason") or "claim_rejected") for x in findings[:3])
+            text = piece_copy_text(piece)
+            process_hits = process_match_findings(text, featured=featured)
+            if process_hits:
+                reasons.extend("process_match:" + str(x.get("reason") or "mismatch") for x in process_hits[:3])
+            for raw_url in re.findall(r"https?://[^\s)]+", text):
+                clean_url = raw_url.rstrip(".,;!?")
+                params = parse_qs(urlsplit(clean_url).query)
+                missing = [key for key in ("utm_source", "utm_medium", "utm_campaign") if not params.get(key)]
+                if missing:
+                    reasons.append("utm_missing:" + ",".join(missing))
+                    break
+        status = "PASS" if not reasons else "HOLD"
+        if reasons:
+            _remember_obstacle(label, "; ".join(reasons), "dry_run", gate="dry_run_gate")
+        results.append({"piece": name, "status": status, "reasons": reasons})
+    return {"dry_run": True, "publishing": False, "pieces": results,
+            "passed": sum(1 for row in results if row["status"] == "PASS"),
+            "held": sum(1 for row in results if row["status"] != "PASS"),
+            "all_passed": all(row["status"] == "PASS" for row in results)}
+
+
 def run_now(day_number: int = None, dry_run: bool = False) -> dict:
     """Run the full pipeline immediately; dry_run suppresses every outbound action."""
     if dry_run:
@@ -2172,11 +2233,23 @@ if __name__ == "__main__":
 
         slot = get_current_slot() if slots_enabled() else "generate"
         if slot == "generate":
-            result = run_now(day_number=_day, dry_run="--dry-run" in sys.argv)
+            _dry = "--dry-run" in sys.argv
+            result = run_now(day_number=_day, dry_run=_dry)
+            if _dry:
+                report = dry_run_asset_report(result)
+                print(json.dumps(report, indent=2, ensure_ascii=False))
+                if not report["all_passed"]:
+                    sys.exit(2)
+            else:
+                print(json.dumps(result, indent=2, ensure_ascii=False))
         else:
-            # Publish-only slot: post this morning's content at its optimal window
+            # Publish-only slots are never accepted in dry-run mode.
+            if "--dry-run" in sys.argv:
+                print(json.dumps({"dry_run": True, "publishing": False,
+                                  "error": "dry-run requires slot=generate"}, indent=2))
+                sys.exit(2)
             result = run_publish_slot(slot)
-        print(json.dumps(result, indent=2, ensure_ascii=False))
+            print(json.dumps(result, indent=2, ensure_ascii=False))
     elif "--report" in sys.argv:
         from content_generator.dashboard.reports import print_report
         print_report(days=7)
