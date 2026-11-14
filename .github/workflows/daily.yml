@@ -274,7 +274,7 @@ jobs:
           if [ -n "$OVERRIDE_DAY_NUMBER" ]; then python -m content_generator.scheduler.daily --now --day "$OVERRIDE_DAY_NUMBER" | tee run_result.json; else python -m content_generator.scheduler.daily --now | tee run_result.json; fi
 
       - name: Verify slot result
-        if: ${{ success() && github.event.inputs.dry_run != 'true' }}
+        if: ${{ success() && github.event.inputs.dry_run != 'true' && (env.FORCE_SLOT == 'generate' || vars.PUBLISHING_ENABLED == 'true') }}
         env:
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
