@@ -31,8 +31,8 @@ def _safe_error(exc: Exception, limit: int = 120) -> str:
         secret = os.getenv(name, "").strip()
         if secret:
             detail = detail.replace(secret, "[REDACTED]")
-    detail = re.sub(r"(?i)(authorization|api[_-]?key|access[_-]?token)\\s*[:=]\\s*[^,\\s]+",
-                    r"\\1=[REDACTED]", detail)
+    detail = re.sub(r"(?i)(authorization|api[_-]?key|access[_-]?token)\s*[:=]\s*[^,\s]+",
+                    r"\1=[REDACTED]", detail)
     return detail[:limit]
 
 AESTHETIC_PASS = 8.0
