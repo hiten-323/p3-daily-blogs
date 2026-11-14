@@ -60,11 +60,11 @@ _BRAND_IS_FREEZE_ARABICA = re.compile(
     re.I,
 )
 _NEVER_CLAIMS = (
-    (re.compile(r"\bfresh(?:ly)?\b", re.I), "never describe the instant coffee as fresh/freshly made"),
+    (re.compile(r"\bfresh(?:ly|ness)?\b", re.I), "never describe the instant coffee as fresh/freshly made"),
     (re.compile(r"\blab[\s-]?tested\b", re.I), "no lab-tested claim is authorized"),
     (re.compile(r"\bzero[\s-]+acidity\b", re.I), "zero-acidity claim is prohibited"),
     (re.compile(r"\bsingle[\s-]+origin\b", re.I), "single-origin claim is prohibited"),
-    (re.compile(r"\b(?:coffee[\s-]+beans?|bean[\s-]?based|whole[\s-]+beans?|ground[\s-]+beans?|roasted[\s-]+beans?|beans?[\s-]+(?:from|are|is|based|sourced|roasted|ground))\b", re.I),
+    (re.compile(r"\b(?:coffee[\s-]+beans?|bean[\s-]?based|bean[\s-]+to[\s-]+(?:cup|jar)|whole[\s-]+beans?|ground[\s-]+beans?|roasted[\s-]+beans?|beans?[\s-]+(?:from|are|is|based|sourced|roasted|ground))\b", re.I),
      "bean-based wording is prohibited; describe the product as instant coffee"),
     (re.compile(r"\bfree[\s-]+(?:samples?|sample[\s-]+packs?|trial[\s-]+sachets?)\b|\b(?:samples?|sample[\s-]+packs?|trial[\s-]+sachets?)\s+(?:are|is)\s+free\b", re.I),
      "free consumer samples and trial sachets are not authorized"),
