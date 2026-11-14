@@ -1914,7 +1914,7 @@ def _do_revenue_attribution() -> dict:
 
 
 def _publishing_enabled() -> bool:
-    return os.getenv("PUBLISHING_ENABLED", "false").strip().lower() in ("1", "true", "yes", "on")
+    return os.getenv("PUBLISHING_ENABLED", "true").strip().lower() in ("1", "true", "yes", "on")
 
 
 def _do_publish_if_enabled(content: dict, day_number: int) -> dict:
