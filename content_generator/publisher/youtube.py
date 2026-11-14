@@ -112,13 +112,13 @@ def post_content(content: dict, day: int = 0) -> dict:
         return {"success": False, "attempted": False, "skipped": True,
                 "video_id": "", "url": "", "error": "product_truth_failed", "held": True}
 
-    from content_generator.core.publish_bar import quality_block, reason_code
-    block = quality_block(short, "yt_short")
-    if block:
-        code = reason_code(block)
-        logger.warning("[youtube] Quality bar held the Short: %s", block)
+    from content_generator.publisher.prepublish_gate import authorize_publish
+    gate = authorize_publish(content, "youtube")
+    if not gate["allowed"]:
+        logger.warning("[youtube] Full pre-publish gate held the Short: %s", gate["reason"])
         return {"success": False, "attempted": False, "skipped": True,
-                "video_id": "", "url": "", "error": "prepublish_gate:" + code, "held": True}
+                "video_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"],
+                "held": True, "gate": gate}
 
     access_token = _refresh_access_token()
     if not access_token:
