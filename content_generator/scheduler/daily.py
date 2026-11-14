@@ -2123,6 +2123,23 @@ def dry_run_asset_report(content: dict) -> dict:
         if not isinstance(piece, dict) or not piece:
             reasons.append("missing_piece")
         else:
+            if name == "ig_story":
+                try:
+                    from content_generator.creative.story_video import build_story_video
+                    story_text = piece_copy_text(piece)
+                    story_video = build_story_video(
+                        headline=str(piece.get("headline") or piece.get("hook") or piece.get("chosen_hook") or ""),
+                        sub=str(piece.get("subtext") or piece.get("sub") or ""),
+                        reference_text=story_text,
+                        product=featured,
+                        day=int(content.get("day_number") or 0),
+                        label="dry_run_story",
+                        on_date=content.get("date"),
+                    )
+                    if not story_video:
+                        reasons.append("story_visual_gate_hold_or_render_failed")
+                except Exception as exc:
+                    reasons.append("story_render_exception:" + type(exc).__name__)
             if schema_required and label not in valid:
                 reasons.append("schema_or_brand_gate")
             block = quality_block(piece, label)
