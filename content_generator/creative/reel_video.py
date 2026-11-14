@@ -117,6 +117,12 @@ def _photo_fallback(reel, day, label, on_date, *, fast: bool) -> str | None:
         from content_generator.creative import ken_burns, visual_gate
         path = ken_burns.render_reel(reel if isinstance(reel, dict) else {}, day, label, on_date, fast=fast, use_broll=False)
         if not path:
+            try:
+                from content_generator.scheduler.daily import _remember_obstacle
+                _remember_obstacle(label, "local_ffmpeg_real_photo_fallback_unavailable", "render",
+                                   gate="fallback_exhausted")
+            except Exception:
+                pass
             return None
         verdict = visual_gate.evaluate_video(path, {"requires_jar": False}, visual_gate.recent_layouts())
         if verdict.get("passed"):
@@ -132,6 +138,12 @@ def _photo_fallback(reel, day, label, on_date, *, fast: bool) -> str | None:
         return None
     except Exception as exc:
         logger.warning("[reel_video] photo fallback failed: %s", type(exc).__name__)
+        try:
+            from content_generator.scheduler.daily import _remember_obstacle
+            _remember_obstacle(label, "local_ffmpeg_render_failed:" + type(exc).__name__, "render",
+                               gate="fallback_exhausted")
+        except Exception:
+            pass
         return None
 
 
