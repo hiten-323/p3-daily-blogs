@@ -165,7 +165,19 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
                 "and viral music stays on the audio director",
                 os.path.basename(source),
             )
-            return materialize_template(source, day, label, on_date=on_date, hook_text=hook)
+            candidate = materialize_template(source, day, label, on_date=on_date, hook_text=hook)
+            from content_generator.creative import visual_gate
+            verdict = visual_gate.evaluate_video(candidate, None, visual_gate.recent_layouts())
+            if verdict.get("passed"):
+                logger.info("[reel_video] reused template passed the 8.0 visual gate")
+                return candidate
+            reasons = [str(x) for x in (verdict.get("reasons") or [])]
+            logger.warning("[reel_video] reused template rejected by visual gate: %s", reasons[:6])
+            try:
+                from content_generator.scheduler.daily import _remember_obstacle
+                _remember_obstacle(label, "; ".join(reasons), "visual_gate", gate="reused_reel_template")
+            except Exception:
+                pass
         if inspiration.get("mode") == "style_cues":
             cue_ids = ", ".join(
                 str(cue.get("id") or "") for cue in (inspiration.get("cues") or []) if isinstance(cue, dict)
