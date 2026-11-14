@@ -143,7 +143,7 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.warning("[linkedin] No linkedin_post in content — skipping")
         return {"success": False, "post_id": "", "url": "", "error": "no_content"}
 
-    if product_truth_findings(post_text):
+    if product_truth_findings(post_text, featured=featured_product_name(content)):
         logger.error("[linkedin] Refusing copy that contradicts the jar")
         return {"success": False, "attempted": False, "skipped": True,
                 "post_id": "", "url": "", "error": "product_truth_failed"}
