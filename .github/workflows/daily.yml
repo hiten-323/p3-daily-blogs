@@ -201,7 +201,8 @@ jobs:
           PY
 
       - name: Run autonomous pipeline
-        if: ${{ success() && github.event.inputs.dry_run != 'true' }}
+        # Generation remains available; every publish slot requires an explicit repository-variable opt-in.
+        if: ${{ success() && github.event.inputs.dry_run != 'true' && (env.FORCE_SLOT == 'generate' || vars.PUBLISHING_ENABLED == 'true') }}
         env:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           NVIDIA_MODEL: ${{ secrets.NVIDIA_MODEL }}
@@ -239,6 +240,7 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          PUBLISHING_ENABLED: ${{ vars.PUBLISHING_ENABLED }}
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           PIXAZO_API_KEY: ${{ secrets.PIXAZO_API_KEY }}
@@ -273,7 +275,7 @@ jobs:
           if [ -n "$OVERRIDE_DAY_NUMBER" ]; then python -m content_generator.scheduler.daily --now --day "$OVERRIDE_DAY_NUMBER" | tee run_result.json; else python -m content_generator.scheduler.daily --now | tee run_result.json; fi
 
       - name: Verify slot result
-        if: ${{ success() && github.event.inputs.dry_run != 'true' }}
+        if: ${{ success() && github.event.inputs.dry_run != 'true' && (env.FORCE_SLOT == 'generate' || vars.PUBLISHING_ENABLED == 'true') }}
         env:
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
@@ -447,7 +449,7 @@ jobs:
         # 09:53 morning cron never fired, retry-unposted's :07/:37 cron fired
         # once). Kick the self-resuming retry after every generate/morning run so
         # anything not yet live (incl. a dropped morning slot) is picked up.
-        if: ${{ always() && github.event.inputs.dry_run != 'true' && (env.FORCE_SLOT == 'generate' || env.FORCE_SLOT == 'morning') }}
+        if: ${{ always() && github.event.inputs.dry_run != 'true' && vars.PUBLISHING_ENABLED == 'true' && (env.FORCE_SLOT == 'generate' || env.FORCE_SLOT == 'morning') }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

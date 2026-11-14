@@ -260,7 +260,7 @@ def _run_generate_slot(day_number: int = None) -> dict:
     publish_result: dict = {}
     with timed_step("publish", timeout_s=300):
         step = rm.run(
-            fn=lambda: _do_publish(content, dn),
+            fn=lambda: _do_publish_if_enabled(content, dn),
             label="publish",
             max_retries=1,
         )
@@ -1911,6 +1911,23 @@ def _do_revenue_attribution() -> dict:
     """Pull Shopify orders, attribute Instagram revenue to posts. Non-blocking."""
     from content_generator.analytics.revenue_attribution import run_revenue_attribution
     return run_revenue_attribution()
+
+
+def _publishing_enabled() -> bool:
+    return os.getenv("PUBLISHING_ENABLED", "false").strip().lower() in ("1", "true", "yes", "on")
+
+
+def _do_publish_if_enabled(content: dict, day_number: int) -> dict:
+    """Keep the generate slot available while the global publish hold is active."""
+    if not _publishing_enabled():
+        logger.warning("[publish] PUBLISHING_ENABLED is not true — generation-only run; no platform calls")
+        return {
+            "skipped": True,
+            "reason": "publishing_disabled",
+            "published_platforms": [],
+            "summary": "Generation only; publishing disabled",
+        }
+    return _do_publish(content, day_number)
 
 
 def _do_publish(content: dict, day_number: int) -> dict:

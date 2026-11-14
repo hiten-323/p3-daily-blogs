@@ -88,6 +88,8 @@ jobs:
           PY
 
       - name: Retry unposted platforms/types
+        # Fail closed: scheduled recovery must not publish until explicitly enabled by an owner.
+        if: ${{ success() && vars.PUBLISHING_ENABLED == 'true' }}
         env:
           QUALITY_LADDER_MAX: '8'
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
@@ -196,7 +198,8 @@ jobs:
           fi
 
       - name: Self-resume if today still has unposted pieces (cron backstop)
-        if: always() && steps.meta_preflight.conclusion == 'success' && steps.alert_preflight.conclusion == 'success'
+        # Do not perpetuate an autonomous publishing chain while the owner hold is active.
+        if: always() && vars.PUBLISHING_ENABLED == 'true' && steps.meta_preflight.conclusion == 'success' && steps.alert_preflight.conclusion == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
           PYTHONIOENCODING: utf-8
