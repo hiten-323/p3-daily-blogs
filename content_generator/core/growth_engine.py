@@ -153,8 +153,10 @@ def _schema_issues(label: str, piece: dict) -> list[str]:
     }
     if label == "threads_post":
         text = _first(piece, "text", "body", "content")
-        if text and len(text) > 500:
-            return ["threads text is over 500 characters"]
+        if text and len(text) > 480:
+            return ["threads text is over 480 characters"]
+        if piece and not text:
+            return ["threads text is required"]
         return []
     schema = schemas.get(label)
     if schema is None:

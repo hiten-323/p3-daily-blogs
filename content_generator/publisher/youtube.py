@@ -43,6 +43,8 @@ _SCOPES       = ["https://www.googleapis.com/auth/youtube.upload"]
 _TOKEN_URL    = "https://oauth2.googleapis.com/token"
 _UPLOAD_URL   = "https://www.googleapis.com/upload/youtube/v3/videos"
 _SHORTS_MAX_S = 59   # YouTube Shorts must be <= 60s
+_UPLOAD_ATTEMPTS = 3
+_UPLOAD_RESUMES = 6
 
 
 def is_configured() -> bool:
@@ -138,6 +140,13 @@ def post_content(content: dict, day: int = 0) -> dict:
 
 def _refresh_access_token() -> str | None:
     """Exchange refresh token for a fresh access token."""
+    from content_generator.publisher.secret_mask import mask_secret, redact
+
+    client_secret = os.getenv("YOUTUBE_CLIENT_SECRET", "")
+    refresh = os.getenv("YOUTUBE_REFRESH_TOKEN", "")
+    mask_secret(client_secret)
+    mask_secret(refresh)
+    secrets = [client_secret, refresh]
     try:
         import requests
         resp = requests.post(
@@ -145,33 +154,54 @@ def _refresh_access_token() -> str | None:
             data={
                 "grant_type":    "refresh_token",
                 "client_id":     os.getenv("YOUTUBE_CLIENT_ID", ""),
-                "client_secret": os.getenv("YOUTUBE_CLIENT_SECRET", ""),
-                "refresh_token": os.getenv("YOUTUBE_REFRESH_TOKEN", ""),
+                "client_secret": client_secret,
+                "refresh_token": refresh,
             },
             timeout=15,
         )
         data = resp.json()
         if "access_token" in data:
-            return data["access_token"]
-        logger.warning("[youtube] Token refresh failed: %s", data.get("error_description", data))
+            token = str(data["access_token"])
+            mask_secret(token)
+            return token
+        message = data.get("error_description") or data.get("error") or "token_refresh_failed"
+        logger.warning("[youtube] Token refresh failed: %s", redact(str(message), secrets))
         return None
     except Exception as e:
-        logger.error("[youtube] Token refresh error: %s", e)
+        logger.error("[youtube] Token refresh error: %s", redact(f"{type(e).__name__}", secrets))
         return None
 
 
 # ── Video source ──────────────────────────────────────────────────────────────
 
+def find_native_short(content: dict) -> str | None:
+    """A dedicated Short file only. A reel mp4 is not this asset."""
+    import glob as _glob
+    creative_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
+    today = _today(content)
+    patterns = [
+        os.path.join(creative_dir, f"short_video_day*_{today}.mp4"),
+        os.path.join(creative_dir, f"short_video_day*_{today}_cinematic.mp4"),
+        os.path.join(creative_dir, f"yt_short_*_{today}.mp4"),
+    ]
+    for pat in patterns:
+        files = sorted(_glob.glob(pat))
+        if files:
+            return files[-1]
+    return None
+
+
 def _find_video(content: dict) -> str | None:
     """Look for a rendered .mp4 Short in output/creative/."""
     import glob as _glob
+    native = find_native_short(content)
+    if native:
+        return native
     creative_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
     today = _today(content)
 
     patterns = [
-        os.path.join(creative_dir, f"short_video_day*_{today}.mp4"),
         os.path.join(creative_dir, f"short_*_{today}.mp4"),
-        os.path.join(creative_dir, f"yt_short_*_{today}.mp4"),
         os.path.join(creative_dir, f"reel_*_{today}.mp4"),
         os.path.join(creative_dir, f"*_{today}.mp4"),
     ]
@@ -236,7 +266,23 @@ def _upload_video(
     access_token: str, video_path: str,
     title: str, description: str, tags: list[str],
 ) -> dict:
-    """Upload video to YouTube with Shorts metadata."""
+    """Upload one Short on a single resumable session.
+
+    A dropped connection resumes the same session. It does not open a second
+    video. Transient HTTP statuses get a bounded number of tries.
+    """
+    from content_generator.publisher.secret_mask import mask_secret, redact
+
+    mask_secret(access_token)
+    secrets = [
+        access_token,
+        os.getenv("YOUTUBE_CLIENT_SECRET", ""),
+        os.getenv("YOUTUBE_REFRESH_TOKEN", ""),
+    ]
+
+    def safe(text: str) -> str:
+        return redact(text, secrets)[:300]
+
     try:
         import requests
 
@@ -261,7 +307,6 @@ def _upload_video(
             "X-Upload-Content-Length": str(file_size),
         }
 
-        # Step 1: Initialize resumable upload
         init_resp = requests.post(
             f"{_UPLOAD_URL}?uploadType=resumable&part=snippet,status",
             headers=headers,
@@ -269,36 +314,80 @@ def _upload_video(
             timeout=20,
         )
         upload_url = init_resp.headers.get("Location", "")
-        if not upload_url:
+        if init_resp.status_code not in (200, 201) or not upload_url:
             return {
                 "success": False, "video_id": "", "url": "",
-                "error": f"No upload URL: {init_resp.status_code} {init_resp.text[:200]}"
+                "error": safe(f"No upload URL: HTTP {init_resp.status_code}"),
             }
 
-        # Step 2: Upload video bytes
-        with open(video_path, "rb") as f:
-            upload_resp = requests.put(
-                upload_url,
-                headers={
-                    "Content-Type":   "video/mp4",
-                    "Content-Length": str(file_size),
-                },
-                data=f,
-                timeout=300,   # large file upload timeout
-            )
-
-        data     = upload_resp.json()
-        video_id = data.get("id", "")
-        if video_id:
-            url = f"https://www.youtube.com/shorts/{video_id}"
-            return {"success": True, "video_id": video_id, "url": url, "error": None}
-        else:
-            err = str(data.get("error", {}).get("message", data))[:300]
-            return {"success": False, "video_id": "", "url": "", "error": err}
+        offset = 0
+        attempts = 0
+        resumes = 0
+        last = "upload_failed"
+        while attempts < _UPLOAD_ATTEMPTS and resumes <= _UPLOAD_RESUMES:
+            with open(video_path, "rb") as handle:
+                handle.seek(offset)
+                chunk = handle.read()
+            if not chunk and offset < file_size:
+                last = "upload_read_empty"
+                break
+            if offset >= file_size:
+                put_headers = {
+                    "Content-Length": "0",
+                    "Content-Range": f"bytes */{file_size}",
+                }
+                body = b""
+            else:
+                end = offset + len(chunk) - 1
+                put_headers = {
+                    "Content-Length": str(len(chunk)),
+                    "Content-Type": "video/mp4",
+                    "Content-Range": f"bytes {offset}-{end}/{file_size}",
+                }
+                body = chunk
+            try:
+                upload_resp = requests.put(upload_url, headers=put_headers, data=body, timeout=300)
+            except requests.RequestException as exc:
+                attempts += 1
+                last = safe(f"transport: {type(exc).__name__}")
+                continue
+            if upload_resp.status_code in (200, 201):
+                try:
+                    data = upload_resp.json()
+                except Exception:
+                    data = {}
+                video_id = data.get("id", "") if isinstance(data, dict) else ""
+                if video_id:
+                    return {
+                        "success": True, "video_id": video_id,
+                        "url": f"https://www.youtube.com/shorts/{video_id}", "error": None,
+                    }
+                return {"success": False, "video_id": "", "url": "", "error": "upload finished without a video id"}
+            if upload_resp.status_code == 308:
+                resumes += 1
+                rng = upload_resp.headers.get("Range") or upload_resp.headers.get("range") or ""
+                previous = offset
+                try:
+                    offset = int(str(rng).split("-")[-1]) + 1
+                except ValueError:
+                    offset = offset + len(chunk)
+                if offset <= previous:
+                    attempts += 1
+                    last = "upload resume made no progress"
+                continue
+            if upload_resp.status_code in (429, 500, 502, 503, 504):
+                attempts += 1
+                last = f"HTTP {upload_resp.status_code}"
+                continue
+            return {
+                "success": False, "video_id": "", "url": "",
+                "error": safe(f"HTTP {upload_resp.status_code}"),
+            }
+        return {"success": False, "video_id": "", "url": "", "error": last}
 
     except Exception as e:
-        logger.error("[youtube] Upload error: %s", e)
-        return {"success": False, "video_id": "", "url": "", "error": str(e)}
+        logger.error("[youtube] Upload error: %s", type(e).__name__)
+        return {"success": False, "video_id": "", "url": "", "error": type(e).__name__}
 
 
 # ── Metadata builders ─────────────────────────────────────────────────────────

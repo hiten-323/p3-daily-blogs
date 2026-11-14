@@ -38,6 +38,12 @@ def is_configured() -> bool:
     )
 
 
+def _mask_page_token(token: str) -> str:
+    from content_generator.publisher.secret_mask import mask_secret
+    mask_secret(token)
+    return token
+
+
 def resolve_page_access_token(page_id: str, candidate_token: str) -> str:
     """
     Ensure the token used for Facebook Page publishing is a Page-scoped Access Token.
@@ -59,7 +65,7 @@ def resolve_page_access_token(page_id: str, candidate_token: str) -> str:
         )
         if me_resp.status_code == 200 and str(me_resp.json().get("id")) == str(page_id):
             logger.info("[facebook] candidate_token is already the verified Page Access Token")
-            return candidate_token
+            return _mask_page_token(candidate_token)
     except Exception as exc:
         logger.debug("[facebook] Page /me test failed: %s", exc)
 
@@ -75,7 +81,7 @@ def resolve_page_access_token(page_id: str, candidate_token: str) -> str:
             resolved = resp.json().get("access_token")
             if resolved:
                 logger.info("[facebook] Resolved Page Access Token from Page query")
-                return resolved
+                return _mask_page_token(resolved)
     except Exception as exc:
         logger.debug("[facebook] Page token resolution failed: %s", exc)
 
@@ -90,7 +96,7 @@ def resolve_page_access_token(page_id: str, candidate_token: str) -> str:
             for item in resp.json().get("data", []):
                 if str(item.get("id")) == str(page_id) and item.get("access_token"):
                     logger.info("[facebook] Resolved Page Access Token from /me/accounts")
-                    return item["access_token"]
+                    return _mask_page_token(item["access_token"])
     except Exception as exc:
         logger.debug("[facebook] /me/accounts lookup failed: %s", exc)
 
@@ -111,11 +117,11 @@ def resolve_page_access_token(page_id: str, candidate_token: str) -> str:
                 resolved = resp.json().get("access_token")
                 if resolved:
                     logger.info("[facebook] Resolved Page Access Token via INSTAGRAM_ACCESS_TOKEN")
-                    return resolved
+                    return _mask_page_token(resolved)
         except Exception:
             pass
 
-    return candidate_token
+    return _mask_page_token(candidate_token)
 
 
 def post_content(content: dict, day: int = 0,
@@ -318,7 +324,8 @@ def _post_video_to_page(
             logger.info("[facebook] Video published successfully: %s", url)
             return {"success": True, "post_id": str(video_id), "url": url, "error": None}
         else:
-            err = data.get("error", {}).get("message", str(data)[:200])
+            from content_generator.publisher.secret_mask import redact
+            err = redact(data.get("error", {}).get("message", "") or "facebook_video_failed", [token])[:200]
             logger.warning("[facebook] Video upload failed: %s", err)
             return {"success": False, "post_id": "", "url": "", "error": err}
 
@@ -358,7 +365,7 @@ def _post_to_page(
             # Link post (text + link preview)
             resp = requests.post(
                 f"{_GRAPH_API}/{page_id}/feed",
-                params={"message": message, "link": link},
+                data={"message": message, "link": link},
                 headers={"Authorization": f"Bearer {token}"},
                 timeout=20,
             )
@@ -369,7 +376,8 @@ def _post_to_page(
             url = f"https://www.facebook.com/{post_id.replace('_', '/posts/')}"
             return {"success": True, "post_id": post_id, "url": url, "error": None}
         else:
-            err = data.get("error", {}).get("message", str(data)[:200])
+            from content_generator.publisher.secret_mask import redact
+            err = redact(data.get("error", {}).get("message", "") or "facebook_post_failed", [token])[:200]
             logger.warning("[facebook] Post failed: %s", err)
             return {"success": False, "post_id": "", "url": "", "error": err}
 
