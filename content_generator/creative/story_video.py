@@ -103,7 +103,10 @@ def build_story_video(
             recent = visual_gate.recent_layouts()
             layouts = [layout for layout in premium_cards.LAYOUTS if layout != "split_left"]
             palette_count = max(1, len(premium_cards.PALETTES.get(sku, [])))
-            max_attempts = max(1, min(6, int(os.getenv("STORY_VISUAL_REGEN_ATTEMPTS", "6"))))
+            try:
+                max_attempts = max(1, min(6, int(os.getenv("STORY_VISUAL_REGEN_ATTEMPTS", "6"))))
+            except ValueError:
+                max_attempts = 6
             for attempt in range(max_attempts):
                 layout = layouts[attempt % len(layouts)]
                 palette_idx = (attempt // len(layouts)) % palette_count
