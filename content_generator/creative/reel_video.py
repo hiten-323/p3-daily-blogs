@@ -111,6 +111,16 @@ def _cinematic(beats, product, day, label, on_date, seconds, format_type="reel")
         return None
 
 
+def _photo_fallback(reel, day, label, on_date, *, fast: bool) -> str | None:
+    """Local ffmpeg reel from approved photos. Never raises."""
+    try:
+        from content_generator.creative import ken_burns
+        return ken_burns.render_reel(reel if isinstance(reel, dict) else {}, day, label, on_date, fast=fast)
+    except Exception as exc:
+        logger.warning("[reel_video] photo fallback failed: %s", type(exc).__name__)
+        return None
+
+
 def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=None) -> str | None:
     """
     Render a vertical motion reel. Returns mp4 path or None (caller falls back
@@ -149,14 +159,19 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
             logger.info("[reel_video] style cues only (%s); reference file stays in the bank", cue_ids)
     except Exception as exc:
         logger.debug("[reel_video] product reel lookup skipped: %s", exc)
+    fast_cut = isinstance(reel, dict) and reel.get("growth_template_id") == "fast_cut_curiosity"
+    if fast_cut:
+        made = _photo_fallback(reel, day, label, on_date, fast=True)
+        if made:
+            return made
     _cin = _cinematic(_beats_from_reel(reel), resolve_reel_product(reel), day, label, on_date, 12.0, format_type="reel")
     if _cin:
         return _cin
     try:
         from moviepy import ImageClip, concatenate_videoclips
     except Exception as e:
-        logger.info("[reel_video] moviepy unavailable (%s) — skipping video", e)
-        return None
+        logger.info("[reel_video] moviepy unavailable (%s) — photo fallback", e)
+        return _photo_fallback(reel, day, label, on_date, fast=fast_cut)
 
     # Cinematic frames (real jar, white knocked out, gradient backdrop) —
     # falls back to the static-post composer if unavailable.
@@ -186,7 +201,7 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
         if p:
             frame_paths.append(p)
     if not frame_paths:
-        return None
+        return _photo_fallback(reel, day, label, on_date, fast=fast_cut)
 
     dirs = {}
     try:
@@ -218,7 +233,7 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
             logger.debug("[reel_video] clip build failed: %s", e)
 
     if not clips:
-        return None
+        return _photo_fallback(reel, day, label, on_date, fast=fast_cut)
 
     try:
         video = concatenate_videoclips(clips, method="compose")
@@ -278,7 +293,7 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
         return out
     except Exception as e:
         logger.warning("[reel_video] render failed: %s", e)
-        return None
+        return _photo_fallback(reel, day, label, on_date, fast=fast_cut)
     finally:
         try:
             video.close()

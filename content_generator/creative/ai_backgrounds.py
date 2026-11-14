@@ -1,8 +1,9 @@
 """Background plates for Shorts and Reels. The official jar is never generated.
 
 Provider order: Kaggle clip bank, Hugging Face LTX-Video, Hugging Face Wan,
-Pixazo, Runway, Pexels, Pixabay, then the coded concept renderer. A missing
-secret skips that source. The Short and the Reel on the same day use different
+Pixazo, Runway, Pexels, Pixabay, then CogVideoX, HunyuanVideo, and Wan
+image-to-video. A missing secret skips that source. The reel renderer
+still has a local photo fallback after this plate chain. The Short and the Reel on the same day use different
 sources when another configured source can supply a plate.
 
 Every prompt comes from the concept library and forbids jars, packaging, text
@@ -27,6 +28,7 @@ _OUT = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
 
 PROVIDER_ORDER = (
     "kaggle_bank", "hf_ltx", "hf_wan", "pixazo", "runway", "pexels", "pixabay",
+    "hf_cogvideo", "hf_hunyuan", "hf_wan_i2v",
 )
 
 _SESSION: dict[tuple[str, str], str] = {}
@@ -60,6 +62,7 @@ def _configured(name: str) -> bool:
     env = {
         "hf_ltx": "HF_TOKEN", "hf_wan": "HF_TOKEN", "pixazo": "PIXAZO_API_KEY",
         "runway": "RUNWAY_API_KEY", "pexels": "PEXELS_API_KEY", "pixabay": "PIXABAY_API_KEY",
+        "hf_cogvideo": "HF_TOKEN", "hf_hunyuan": "HF_TOKEN", "hf_wan_i2v": "HF_TOKEN",
     }.get(name)
     return bool(env and os.getenv(env, "").strip())
 
@@ -220,7 +223,7 @@ def load_frames(path: str, size, max_frames: int = 240):
 
 
 def _providers() -> dict:
-    from content_generator.creative import hf_video, kaggle_bank, stock_video
+    from content_generator.creative import hf_video, kaggle_bank, stock_video, video_fallbacks
     return {
         "kaggle_bank": kaggle_bank.take,
         "hf_ltx": hf_video.ltx,
@@ -229,6 +232,9 @@ def _providers() -> dict:
         "runway": lambda choice, label, seconds: _runway(choice.get("ai_prompt") or "", label, seconds),
         "pexels": stock_video.pexels,
         "pixabay": stock_video.pixabay,
+        "hf_cogvideo": video_fallbacks.cogvideo,
+        "hf_hunyuan": video_fallbacks.hunyuan,
+        "hf_wan_i2v": video_fallbacks.wan_i2v,
     }
 
 

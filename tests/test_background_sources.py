@@ -47,9 +47,10 @@ def _frames(*_a, **_k):
 
 
 def test_provider_order_and_gates_unchanged():
-    assert ai_backgrounds.PROVIDER_ORDER == (
+    assert ai_backgrounds.PROVIDER_ORDER[:7] == (
         "kaggle_bank", "hf_ltx", "hf_wan", "pixazo", "runway", "pexels", "pixabay",
     )
+    assert ai_backgrounds.PROVIDER_ORDER[7:] == ("hf_cogvideo", "hf_hunyuan", "hf_wan_i2v")
     assert PASS_MARK == 8.0
     assert PASS_FLOOR == 8.0
     assert EDITORIAL_THRESHOLD == 8.0
