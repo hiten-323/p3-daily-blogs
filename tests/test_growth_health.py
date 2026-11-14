@@ -49,6 +49,20 @@ def test_shopify_read_orders_access_is_checked_without_exposing_orders(monkeypat
     assert result == {"status": "ok", "recent_orders": 2, "instagram_marked_orders": 1}
 
 
+def test_shopify_health_retries_transient_api_failures(monkeypatch):
+    from content_generator.analytics import revenue_attribution
+    monkeypatch.setenv("SHOPIFY_STORE_DOMAIN", "55hd0v-ff.myshopify.com")
+    monkeypatch.setenv("SHOPIFY_ADMIN_TOKEN", "not-a-real-token")
+    responses = [None, None, {"orders": []}]
+    calls = []
+    monkeypatch.setattr(revenue_attribution, "_shopify_get", lambda *a, **k: calls.append(1) or responses.pop(0))
+    monkeypatch.setattr(growth_health.time, "sleep", lambda _seconds: None)
+    result = growth_health.shopify_access_health()
+    assert result["status"] == "ok"
+    assert result["recent_orders"] == 0
+    assert len(calls) == 3
+
+
 def test_duplicate_attribution_ids_are_detected(monkeypatch, tmp_path):
     monkeypatch.setattr(growth_health, "LEARNING", tmp_path)
     (tmp_path / "attributed_orders.json").write_text(

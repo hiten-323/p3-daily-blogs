@@ -13,6 +13,7 @@ from __future__ import annotations
 import datetime
 import json
 import os
+import time
 from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
@@ -158,12 +159,19 @@ def shopify_access_health() -> dict[str, Any]:
         if not revenue_attribution.is_configured():
             return {"status": "not_configured", "recent_orders": 0, "instagram_marked_orders": 0}
         since = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=48)
-        data = revenue_attribution._shopify_get("orders.json", {
+        params = {
             "status": "any",
             "created_at_min": since.isoformat().replace("+00:00", "Z"),
             "limit": 250,
             "fields": "id,created_at,landing_site,referring_site,source_name",
-        })
+        }
+        data = None
+        for attempt in range(3):
+            data = revenue_attribution._shopify_get("orders.json", params)
+            if isinstance(data, dict) and isinstance(data.get("orders"), list):
+                break
+            if attempt < 2:
+                time.sleep(2 ** attempt)
         if not isinstance(data, dict) or not isinstance(data.get("orders"), list):
             return {"status": "failed", "recent_orders": 0, "instagram_marked_orders": 0}
         orders = [row for row in data["orders"] if isinstance(row, dict)]

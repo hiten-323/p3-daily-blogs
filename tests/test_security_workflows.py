@@ -27,6 +27,13 @@ def test_dependabot_updates_python_and_github_actions_weekly():
     assert "timezone: Asia/Kolkata" in config
 
 
+def test_manual_oneoff_publish_respects_global_kill_switch():
+    workflow = (ROOT / ".github" / "workflows" / "oneoff-ig-post.yml").read_text(encoding="utf-8")
+    assert "Enforce global publishing kill switch" in workflow
+    assert "PUBLISHING_ENABLED: ${{ vars.PUBLISHING_ENABLED }}" in workflow
+    assert "Do not enable it until production acceptance is complete" in workflow
+
+
 def test_security_policy_requires_private_disclosure_and_credential_rotation():
     policy = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
     assert "private vulnerability reporting" in policy.lower()
