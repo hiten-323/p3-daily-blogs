@@ -322,9 +322,13 @@ def reject_source(choice: dict, source: str) -> None:
 def _provider_failure(exc: Exception) -> str:
     """Return a useful status without serializing a provider URL or credential."""
     code = getattr(exc, "code", None)
+    if code is None:
+        code = getattr(getattr(exc, "response", None), "status_code", None)
     if code:
         return f"http_{int(code)}"
-    if isinstance(exc, TimeoutError):
+    if isinstance(exc, TimeoutError) or type(exc).__name__.lower() in {"timeout", "readtimeout", "connecttimeout"}:
+        return "timeout"
+    if isinstance(getattr(exc, "reason", None), TimeoutError):
         return "timeout"
     return type(exc).__name__
 
@@ -377,8 +381,8 @@ def fetch_background(choice: dict, label: str, size, seconds: float = 5) -> tupl
             except Exception as exc:
                 reason = _provider_failure(exc)
                 _remember_provider_obstacle(choice, name, reason)
-                code = getattr(exc, "code", None)
-                transient = code in {408, 425, 429, 500, 502, 503, 504} or isinstance(exc, TimeoutError)
+                code = getattr(exc, "code", None) or getattr(getattr(exc, "response", None), "status_code", None)
+                transient = code in {408, 425, 429, 500, 502, 503, 504} or _provider_failure(exc) == "timeout"
                 if transient and attempt < max_attempts:
                     import time
                     wait = backoff * (2 ** (attempt - 1))
