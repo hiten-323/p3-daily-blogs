@@ -353,6 +353,17 @@ def _openrouter(b64):
         "https://openrouter.ai/api/v1/chat/completions", key, m, b64))
 
 
+def _huggingface(b64):
+    """Hugging Face Inference Providers vision fallback using the existing HF_TOKEN."""
+    key = os.getenv("HF_TOKEN", "").strip()
+    model = os.getenv("HF_VISION_MODEL", "Qwen/Qwen2.5-VL-7B-Instruct").strip()
+    if not key:
+        return None
+    return _try_models("huggingface", [model], lambda m: _openai_vision(
+        "https://router.huggingface.co/v1/chat/completions", key, m, b64))
+
+
+
 def _nvidia_models(key):
     """Discover NVIDIA vision models; prefer the newest Nemotron VL (e.g. nemotron-3.5-super-vl)."""
     env = [m for m in [os.getenv("NVIDIA_VISION_MODEL", "")] if m]
@@ -377,7 +388,7 @@ def _nvidia(b64):
 
 # Free providers first; NVIDIA last (house rule).
 VISION_PROVIDERS = [("gemini", _gemini), ("groq", _groq), ("github_models", _github_models),
-                    ("openrouter", _openrouter), ("nvidia", _nvidia)]
+                    ("openrouter", _openrouter), ("huggingface", _huggingface), ("nvidia", _nvidia)]
 
 _OUTAGE = {"n": 0}
 
@@ -393,21 +404,40 @@ def aesthetic_score(path) -> dict:
         return {"provider": None, "score": None, "issues": [], "errors": ["vision_outage:all_providers_down"]}
     b64 = _jpeg_b64(path)
     errors = []
+    configured = {
+        "gemini": bool(os.getenv("GEMINI_API_KEY", "").strip()),
+        "groq": bool(os.getenv("GROQ_API_KEY", "").strip()),
+        "github_models": bool((os.getenv("GITHUB_MODELS_TOKEN") or os.getenv("GH_MODELS_TOKEN") or "").strip()),
+        "openrouter": bool(os.getenv("OPENROUTER_API_KEY", "").strip()),
+        "huggingface": bool(os.getenv("HF_TOKEN", "").strip()),
+        "nvidia": bool(os.getenv("NVIDIA_API_KEY", "").strip()),
+    }
     for name, fn in VISION_PROVIDERS:
+        if not configured.get(name, False):
+            errors.append(f"{name}:missing_credentials")
+            logger.warning("[visual-gate] provider=%s unavailable: missing credentials", name)
+            continue
         if _dead(name):
             errors.append(f"{name}:circuit_open")
+            logger.warning("[visual-gate] provider=%s unavailable: circuit open", name)
             continue
         try:
             res = fn(b64)
-        except Exception as exc:  # rate limit / network: next provider
-            errors.append(f"{name}:{str(exc)[:80]}")
+        except Exception as exc:  # quota/credit/auth/network: next provider
+            detail = f"{name}:{str(exc)[:100]}"
+            errors.append(detail)
+            logger.warning("[visual-gate] provider=%s failed: %s", name, str(exc)[:100])
             continue
         if res is None:
+            errors.append(f"{name}:no_compatible_model_or_response")
+            logger.warning("[visual-gate] provider=%s returned no compatible model/response", name)
             continue
         score, issues = res
         _OUTAGE["n"] = 0
+        logger.info("[visual-gate] scored with provider=%s score=%.1f", name, score)
         return {"provider": name, "score": score, "issues": issues}
     _OUTAGE["n"] += 1
+    logger.error("[visual-gate] all providers down attempt=%s errors=%s", _OUTAGE["n"], errors)
     return {"provider": None, "score": None, "issues": [], "errors": errors}
 
 
