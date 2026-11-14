@@ -1,16 +1,13 @@
 """
-Free motion-reel generator — real reel VIDEOS at zero cost, no AI credits.
+Production reel renderer.
 
-Turns a reel's beats into a vertical 1080x1920 mp4: each beat is a branded
-real-jar composite (from real_jar_composer) shown with a gentle zoom, chained
-with crossfades. moviepy only — renders on any CI runner, no GPU, no API.
+Primary: cinematic provider ladder plus a procedural plate, with visual scoring.
+Last resort: local FFmpeg Ken Burns using approved real product photos only.
+Both paths must pass the same 8.0 visual gate; unscored or failed videos are held.
 
-Not AI-cinematic, but: real product, real motion, on-screen captions, fully
-automated. Pairs with the two-tier strategy — hero reels stay manual (Runway/
-fal.ai); daily volume is these.
-
-Optional background music: set REEL_MUSIC_FILE to a royalty-free audio path.
-Silent otherwise (safe — add trending audio in-app if desired).
+No AI-generated jars or product composites are used. Optional royalty-free audio
+comes from the local music library; the publisher never receives an unscored
+fallback.
 """
 from __future__ import annotations
 import datetime
