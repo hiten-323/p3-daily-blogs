@@ -256,7 +256,7 @@ def _words(reel: dict) -> list[str]:
     return words or ["Watch"]
 
 
-def render_reel(reel: dict, day: int, label: str, on_date, *, fast: bool = False) -> str | None:
+def render_reel(reel: dict, day: int, label: str, on_date, *, fast: bool = False, use_broll: bool = True) -> str | None:
     """Write a 1080x1920 mp4. Returns None when ffmpeg or a real photo is missing."""
     ffmpeg = _ffmpeg()
     if not ffmpeg:
@@ -286,7 +286,7 @@ def render_reel(reel: dict, day: int, label: str, on_date, *, fast: bool = False
     photos = paths[:8]
     plan = shot_plan(duration, len(photos), split=split and len(photos) >= 2)
     work = tempfile.mkdtemp(prefix="kenburns-")
-    plates = broll_stills(label, work, date_str)
+    plates = broll_stills(label, work, date_str) if use_broll else []
     inputs = _assemble(photos, plates, plan, work)
     graph_plan = [{**shot, "split": False} for shot in plan]
     graph = filtergraph(len(inputs), graph_plan, _words(reel), _font())
