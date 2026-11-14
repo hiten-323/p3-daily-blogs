@@ -2090,9 +2090,8 @@ def _maybe_weekly_summary() -> None:
 # ── Manual trigger ────────────────────────────────────────────────────────────
 
 def dry_run_asset_report(content: dict) -> dict:
-    """Evaluate the nine required surfaces without calling any publisher."""
-    import re
-    from urllib.parse import urlsplit, parse_qs
+    """Render and gate all nine required surfaces without calling any publisher."""
+    import os
     from content_generator.core.editorial_engine import get_valid_assets
     from content_generator.core.publish_bar import quality_block
     from content_generator.core.product_truth import (
@@ -2103,6 +2102,10 @@ def dry_run_asset_report(content: dict) -> dict:
     valid = set(get_valid_assets(content))
     reels = content.get("reels") if isinstance(content.get("reels"), list) else []
     stories = content.get("stories") if isinstance(content.get("stories"), dict) else {}
+    day = int(content.get("day_number") or 0)
+    featured = featured_product_name(content)
+    creative_audit = content.get("_creative_audit") if isinstance(content.get("_creative_audit"), dict) else {}
+    image_assets = creative_audit.get("image_assets") if isinstance(creative_audit.get("image_assets"), list) else []
     pieces = [
         ("ig_post", "instagram_post", content.get("instagram_post"), True),
         ("ig_story", "stories", stories.get("story_1"), False),
@@ -2114,49 +2117,145 @@ def dry_run_asset_report(content: dict) -> dict:
         ("linkedin", "linkedin_post", content.get("linkedin_post"), True),
         ("youtube_short", "yt_short", content.get("yt_short"), True),
     ]
-    featured = featured_product_name(content)
+    image_platform = {
+        "ig_post": "instagram",
+        "ig_carousel": "instagram_carousel",
+        "facebook": "facebook",
+    }
     results = []
     for name, label, piece, schema_required in pieces:
         reasons = []
         if not isinstance(piece, dict) or not piece:
             reasons.append("missing_piece")
         else:
-            if name == "ig_story":
-                try:
-                    from content_generator.creative.story_video import build_story_video
-                    story_text = piece_copy_text(piece)
-                    story_video = build_story_video(
-                        headline=str(piece.get("headline") or piece.get("hook") or piece.get("chosen_hook") or ""),
-                        sub=str(piece.get("subtext") or piece.get("sub") or ""),
-                        reference_text=story_text,
-                        product=featured,
-                        day=int(content.get("day_number") or 0),
-                        label="dry_run_story",
-                        on_date=content.get("date"),
-                    )
-                    if not story_video:
-                        reasons.append("story_visual_gate_hold_or_render_failed")
-                except Exception as exc:
-                    reasons.append("story_render_exception:" + type(exc).__name__)
             if schema_required and label not in valid:
                 reasons.append("schema_or_brand_gate")
             block = quality_block(piece, label)
             if block:
-                reasons.append(block)
+                reasons.append(str(block))
             findings = asset_product_truth_findings(piece, featured=featured)
             if findings:
                 reasons.extend("product_truth:" + str(x.get("reason") or "claim_rejected") for x in findings[:3])
-            text = piece_copy_text(piece)
-            process_hits = process_match_findings(text, featured=featured)
+            copy_text = piece_copy_text(piece)
+            process_hits = process_match_findings(copy_text, featured=featured)
             if process_hits:
                 reasons.extend("process_match:" + str(x.get("reason") or "mismatch") for x in process_hits[:3])
-            for raw_url in re.findall(r"https?://[^\s)]+", text):
+
+            if name in image_platform:
+                platform = image_platform[name]
+                candidates = [row for row in image_assets if row.get("platform") == platform]
+                if not candidates:
+                    reasons.append("missing_rendered_real_photo_asset")
+                else:
+                    if not any(row.get("jar_verified") for row in candidates):
+                        reasons.append("real_jar_provenance_unverified")
+                    paths = [row.get("path") for row in candidates if row.get("path") and os.path.exists(row["path"])]
+                    if not paths:
+                        reasons.append("rendered_image_file_missing")
+                    else:
+                        from content_generator.creative.rendered_asset_qa import audit_rendered_images
+                        qa = audit_rendered_images(paths)
+                        if not qa.get("ok"):
+                            reasons.append("rendered_asset_qa:" + ";".join(qa.get("issues") or ["failed"]))
+
+            elif name == "ig_story":
+                try:
+                    from content_generator.publisher.story_copy import resolve_story_copy
+                    from content_generator.publisher.product_links import story_link_line
+                    from content_generator.creative.cinematic_frame import compose_cinematic_frame
+                    from content_generator.creative.rendered_asset_qa import audit_rendered_images
+                    from content_generator.creative.story_video import build_story_video
+                    from content_generator.publisher.instagram import _static_story_visual_hold
+                    story_copy = resolve_story_copy(content, day=day)
+                    headline = str(story_copy.get("headline") or "")
+                    sub = story_link_line(str(story_copy.get("sub") or ""))
+                    story_text = headline + "\n" + sub
+                    story_claims = asset_product_truth_findings({"caption": story_text}, featured=featured)
+                    if story_claims:
+                        reasons.extend("story_product_truth:" + str(x.get("reason") or "claim_rejected") for x in story_claims[:3])
+                    story_process = process_match_findings(story_text, featured=featured)
+                    if story_process:
+                        reasons.extend("story_process_match:" + str(x.get("reason") or "mismatch") for x in story_process[:3])
+                    try:
+                        from content_generator.rotation import PRODUCTS, pick
+                        product = pick(PRODUCTS, day)
+                    except Exception:
+                        product = featured
+                    image_path = compose_cinematic_frame(
+                        headline=headline, sub=sub, day=day, idx=9, product=product,
+                        width=1080, height=1920, label=f"dry_run_story_day{day}", format_type="story",
+                    )
+                    if not image_path:
+                        from content_generator.creative.real_jar_composer import compose_post_image
+                        image_path = compose_post_image(
+                            headline=headline, body=sub, day=day, idx=9,
+                            width=1080, height=1920, label=f"dry_run_story_day{day}",
+                        )
+                    if not image_path:
+                        reasons.append("story_render_failed")
+                    else:
+                        qa = audit_rendered_images([image_path])
+                        if not qa.get("ok"):
+                            reasons.append("story_rendered_asset_qa:" + ";".join(qa.get("issues") or ["failed"]))
+                        video_path = build_story_video(
+                            image_path=image_path, headline=headline, sub=sub, day=day,
+                            label=f"dry_run_story_day{day}", reference_text=story_text,
+                        )
+                        if not video_path:
+                            static_hold = _static_story_visual_hold(image_path)
+                            if static_hold:
+                                reasons.append("story_visual_gate_hold:" + str(static_hold.get("error") or "score_below_8_or_unavailable"))
+                except Exception as exc:
+                    reasons.append("story_render_exception:" + type(exc).__name__)
+
+            elif name in {"growth_reel", "reel_1"}:
+                try:
+                    from content_generator.creative.reel_video import build_reel_video
+                    video_path = build_reel_video(piece, day, name)
+                    if not video_path:
+                        reasons.append("video_render_or_8.0_visual_gate_hold")
+                except Exception as exc:
+                    reasons.append("video_render_exception:" + type(exc).__name__)
+
+            elif name == "youtube_short":
+                try:
+                    from content_generator.publisher import youtube
+                    from content_generator.creative import visual_gate
+                    video_path = youtube._find_video(content)
+                    if not video_path:
+                        video_path = youtube._create_slideshow_short(content, day)
+                    if video_path:
+                        verdict = visual_gate.evaluate_video(video_path, None, visual_gate.recent_layouts())
+                        if not verdict.get("passed"):
+                            _remember_obstacle("yt_short", "; ".join(verdict.get("reasons") or ["visual_gate_hold"]),
+                                                "visual_gate", gate="yt_short_visual_gate")
+                            video_path = None
+                    if not video_path:
+                        try:
+                            from content_generator.creative.ken_burns import render_reel
+                            video_path = render_reel(piece, day, "yt_short", content.get("date"),
+                                                     fast=True, use_broll=False)
+                        except Exception as exc:
+                            logger.warning("[dry-run] local YouTube Short FFmpeg fallback unavailable: %s",
+                                           type(exc).__name__)
+                    if video_path:
+                        verdict = visual_gate.evaluate_video(video_path, None, visual_gate.recent_layouts())
+                        if not verdict.get("passed"):
+                            reasons.append("youtube_short_visual_gate:" + ";".join(verdict.get("reasons") or ["below_8_or_unavailable"]))
+                    else:
+                        reasons.append("youtube_short_render_or_8.0_visual_gate_hold")
+                except Exception as exc:
+                    reasons.append("youtube_short_render_exception:" + type(exc).__name__)
+
+            for raw_url in re.findall(r"https?://[^\s)]+", copy_text):
                 clean_url = raw_url.rstrip(".,;!?")
+                from urllib.parse import urlsplit, parse_qs
                 params = parse_qs(urlsplit(clean_url).query)
                 missing = [key for key in ("utm_source", "utm_medium", "utm_campaign") if not params.get(key)]
                 if missing:
                     reasons.append("utm_missing:" + ",".join(missing))
                     break
+
         status = "PASS" if not reasons else "HOLD"
         if reasons:
             _remember_obstacle(label, "; ".join(reasons), "dry_run", gate="dry_run_gate")
@@ -2165,6 +2264,8 @@ def dry_run_asset_report(content: dict) -> dict:
             "passed": sum(1 for row in results if row["status"] == "PASS"),
             "held": sum(1 for row in results if row["status"] != "PASS"),
             "all_passed": all(row["status"] == "PASS" for row in results)}
+
+
 
 
 def run_now(day_number: int = None, dry_run: bool = False) -> dict:
