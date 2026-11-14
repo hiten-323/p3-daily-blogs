@@ -38,6 +38,9 @@ def test_daily_schedule_uses_one_default_on_publishing_flag():
     assert "Unset or empty: publishing is **ON**" in readme
     assert "PUBLISHING_ENABLED" in readme
     assert "reel_2" not in workflow
+    scheduler = (ROOT / "content_generator" / "scheduler" / "daily.py").read_text(encoding="utf-8")
+    assert '"reel_2": ReelSchema' not in scheduler
+    assert "reel_2_day" not in scheduler
 
 
 def test_generate_dry_run_runs_pipeline_but_skips_publishing_and_commits():
