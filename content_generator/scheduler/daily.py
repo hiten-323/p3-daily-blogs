@@ -882,7 +882,6 @@ def _schema_issues(label: str, piece: dict) -> list[str]:
     )
     schemas = {
         "reel_1": ReelSchema,
-        "reel_2": ReelSchema,
         "growth_reel": ReelSchema,
         "carousel": CarouselSchema,
         "instagram_post": InstagramSchema,
@@ -1595,7 +1594,6 @@ def _do_memory(content: dict, dn: int) -> None:
     from content_generator.memory.semantic import store_content
     pieces = {
         f"reel_1_day{dn}":   content.get("reels", [{}])[0] if content.get("reels") else {},
-        f"reel_2_day{dn}":   (content.get("reels", [{}, {}]) + [{}])[1],
         f"carousel_day{dn}": content.get("carousel", {}),
         f"linkedin_day{dn}": content.get("linkedin_post", {}),
         f"blog_day{dn}":     content.get("blog_post", {}),
