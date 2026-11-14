@@ -50,6 +50,12 @@ def test_wrong_per_cup_and_cup_count_rejected():
     assert _price_issues("Ultra Blend at ₹3 per cup.")
 
 
+def test_a_drinking_habit_is_not_a_jar_yield():
+    habit = "Send this to the friend who drinks 3 cups before lunch."
+    reasons = [f["reason"] for f in product_truth_findings(habit)]
+    assert not any("cup count" in reason for reason in reasons)
+
+
 def test_per_cup_on_other_jars_still_rejected():
     assert _price_issues(f"Purica is about ₹{pt.ultra('per_cup')} a cup.")
 

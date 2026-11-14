@@ -17816,7 +17816,7 @@
     },
     "2026-11-12|morning|instagram_story|pb_8c0203f388": {
       "asset": "",
-      "attempt_count": 33,
+      "attempt_count": 34,
       "content_date": "2026-11-12",
       "content_id": "pb_8c0203f388",
       "day_number": 315,
@@ -18316,20 +18316,35 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T17:48:20+00:00",
+          "attempt": 34,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T17:54:09+00:00",
+          "attempt": 34,
+          "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-13T01:52:19+00:00",
+      "last_attempt_at": "2026-11-13T17:48:20+00:00",
       "last_result": {
         "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
         "success": false
       },
-      "next_retry_at": "2026-11-13T01:59:40+00:00",
+      "next_retry_at": "2026-11-13T17:54:09+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-13T01:59:40+00:00",
+      "updated_at": "2026-11-13T17:54:09+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
@@ -18459,6 +18474,90 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-12T08:02:20+00:00"
+    },
+    "2026-11-13|evening|facebook|pb_075fd8649f": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-13",
+      "content_id": "pb_075fd8649f",
+      "day_number": 316,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-13T16:57:31+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T16:57:38+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "1662580385414642",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/videos/1662580385414642",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-13T16:57:31+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-13T16:57:38+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": true,
+      "remote_id": "1662580385414642",
+      "slot": "evening",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-13T16:57:38+00:00",
+      "url": "https://www.facebook.com/494003270464484/videos/1662580385414642",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-13T16:57:38+00:00"
+    },
+    "2026-11-13|evening|instagram_video|pb_075fd8649f|reel_1": {
+      "asset": "reel_1",
+      "attempt_count": 1,
+      "content_date": "2026-11-13",
+      "content_id": "pb_075fd8649f",
+      "day_number": 316,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-13T16:56:58+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T16:57:31+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18138436750639462",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/reel/DfsHKDLjTYf/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-13T16:56:58+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-13T16:57:31+00:00",
+      "next_retry_at": null,
+      "platform": "instagram_video",
+      "published": true,
+      "remote_id": "18138436750639462",
+      "slot": "evening",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-13T16:57:31+00:00",
+      "url": "https://www.instagram.com/reel/DfsHKDLjTYf/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-13T16:57:31+00:00"
     },
     "2026-11-13|generate|linkedin|pb_075fd8649f": {
       "asset": "",
@@ -18630,11 +18729,11 @@
     },
     "2026-11-13|morning|instagram_story|pb_075fd8649f": {
       "asset": "",
-      "attempt_count": 19,
+      "attempt_count": 38,
       "content_date": "2026-11-13",
       "content_id": "pb_075fd8649f",
       "day_number": 316,
-      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and moody atmosphere expected of a premium coffee brand.; Typography feels dated and template-driven, particularly the outlined pill shapes for the header and footer tags.; The lighting and drop shadow on the coff",
+      "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
       "history": [
         {
           "at": "2026-11-13T06:28:33+00:00",
@@ -18920,20 +19019,305 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T12:28:22+00:00",
+          "attempt": 20,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T12:40:24+00:00",
+          "attempt": 20,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and sophisticated lighting cues expected from a premium D2C brand.; The bright yellow and brown label on the jar clashes unpleasantly with the dark monochromatic background tones.; Typography feels dated and amate",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T12:46:21+00:00",
+          "attempt": 21,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T12:56:26+00:00",
+          "attempt": 21,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Generic centered composition lacks scroll-stopping dynamism for a fast Instagram feed; Headline 'Milk Coffee Habit' is descriptive rather than benefit-driven or provocative; Jar label copy is too small for mobile legibility",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T13:02:45+00:00",
+          "attempt": 22,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T13:15:27+00:00",
+          "attempt": 22,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The label design on the coffee jar looks dated and amateurish, lacking modern D2C aesthetic polish.; Typography is weak: the serif headline combined with multiple bordered pill badges feels cluttered rather than premium.; The background gradient is flat and uninspired, lacki",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T13:21:24+00:00",
+          "attempt": 23,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T13:29:40+00:00",
+          "attempt": 23,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient feels a bit flat and muddy with generic bokeh spots rather than a rich, tactile coffee or lifestyle environment.; The lighting and drop shadow on the jar feel unnatural and clumsily composited, floating awkwardly on the dividing line.; The product lab",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T13:35:43+00:00",
+          "attempt": 24,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T13:43:37+00:00",
+          "attempt": 24,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float: no clear contact shadow and the horizon line sits behind the jar rather than grounding it.; Jar is too small in frame with excessive empty space above and below, weakening product desire.; Subhead and label microcopy are too small/low-contrast for m",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T13:49:55+00:00",
+          "attempt": 25,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T14:04:58+00:00",
+          "attempt": 25,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Product appears to float rather than sit on a surface; no clear contact shadow or grounding.; Subheadline is small and low-contrast against the brown background, hurting legibility.; Top pill text is too tiny for a story format and competes poorly with the headline.",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T14:11:26+00:00",
+          "attempt": 26,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T14:22:33+00:00",
+          "attempt": 26,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking the premium warmth expected of D2C coffee brands.; The product label design (especially the bright yellow block) clashes with the luxury aesthetic, looking dated and mass-market rather th",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T14:29:19+00:00",
+          "attempt": 27,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T14:40:55+00:00",
+          "attempt": 27,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background gradient feels muddy and flat rather than rich and dimensional, lacking professional studio lighting effects.; Typography hierarchy is weak; the top tag, main headline, and subheadline feel disconnected and lack sophisticated tracking/kerning.; The yellow-orange p",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T14:47:10+00:00",
+          "attempt": 28,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T14:57:48+00:00",
+          "attempt": 28,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Background is a generic brown gradient lacking texture, depth, or environmental context expected from premium D2C.; Lighting on the jar is soft and even but lacks specular highlights or dimensionality to make the product feel tactile and premium.; Typography is functional bu",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T15:03:56+00:00",
+          "attempt": 29,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T15:17:51+00:00",
+          "attempt": 29,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich contrast or dimensional depth.; Typography lacks refined hierarchy; the pill tags ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY') look dated and amateurish.; The lighting and drop shadow on the coffee jar appear arti",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T15:25:59+00:00",
+          "attempt": 30,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T15:38:10+00:00",
+          "attempt": 30,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient and lighting feel flat and artificial, lacking the rich textures and depth expected from a premium D2C brand.; The packaging design of the product itself looks dated and cheap, undermining the desired premium aesthetic.; The typography is weak and poo",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T15:44:05+00:00",
+          "attempt": 31,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T15:51:05+00:00",
+          "attempt": 31,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels muddy and lacks rich depth or dynamic contrast; Product label design uses cheap-looking gradients and typography, reducing the premium feel; Jar grounding and drop shadow look unnatural and pasted onto the surface",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T15:57:24+00:00",
+          "attempt": 32,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T16:10:35+00:00",
+          "attempt": 32,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and dimensional, lacking the premium warmth expected of D2C coffee brands.; Typography feels dated; the serif font combined with multiple outlined pill badges ('STORY \u2022 ULTRA BLEND' and '70% COFFEE \u2022 30% CHICORY'",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T16:16:23+00:00",
+          "attempt": 33,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T16:22:59+00:00",
+          "attempt": 33,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color palette feels flat and muddy rather than rich and luxurious, lacking sophisticated lighting depth or atmospheric texture.; Product label design is dated and visually disconnected from a modern D2C aesthetic, relying on generic coffee bean clipart and harsh y",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T16:33:45+00:00",
+          "attempt": 34,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T16:45:28+00:00",
+          "attempt": 34,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Background color and lighting feel muddy and flat rather than rich and dimensional, lacking top-tier D2C polish.; Typography (serif headline and subtitle) lacks distinct visual weight and feels amateurish in execution.; The product packaging design (yellow label) clashes wit",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T17:04:35+00:00",
+          "attempt": 35,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T17:17:46+00:00",
+          "attempt": 35,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.0; Flat gradient background lacks depth and premium texture; 70% coffee / 30% chicory positioning undermines premium D2C coffee perception; Centered composition is safe but not scroll-stopping for Instagram",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T17:23:51+00:00",
+          "attempt": 36,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T17:31:11+00:00",
+          "attempt": 36,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and sophisticated lighting cues expected from a premium D2C brand.; Typography feels dated with standard serif fonts and weak hierarchy (the 'STORY \u2022 ULTRA BLEND' badge looks unpolished).; The product packaging de",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T17:54:09+00:00",
+          "attempt": 37,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T17:58:36+00:00",
+          "attempt": 37,
+          "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-13T23:37:44+00:00",
+          "attempt": 38,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-13T23:43:16+00:00",
+          "attempt": 38,
+          "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-13T12:12:44+00:00",
+      "last_attempt_at": "2026-11-13T23:37:44+00:00",
       "last_result": {
-        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The background gradient is muddy and flat, lacking rich depth and moody atmosphere expected of a premium coffee brand.; Typography feels dated and template-driven, particularly the outlined pill shapes for the header and footer tags.; The lighting and drop shadow on the coff",
+        "error": "prepublish_gate:visual_gate:vision_score_unavailable; vision_outage:all_providers_down",
         "success": false
       },
-      "next_retry_at": "2026-11-13T12:21:48+00:00",
+      "next_retry_at": "2026-11-13T23:43:16+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-13T12:21:48+00:00",
+      "updated_at": "2026-11-13T23:43:16+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
@@ -19063,6 +19447,400 @@
       "verification_detail": "remote object ID confirmed",
       "verification_method": "meta_graph_readback",
       "verified_at": "2026-11-13T06:28:20+00:00"
+    },
+    "2026-11-14|generate|linkedin|pb_123ef2b54a": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-14",
+      "content_id": "pb_123ef2b54a",
+      "day_number": 317,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-14T06:53:48+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T06:53:52+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "urn:li:share:7527262507808395264",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.linkedin.com/feed/update/urn:li:share:7527262507808395264/",
+          "verification_method": "linkedin_public_url"
+        }
+      ],
+      "last_attempt_at": "2026-11-14T06:53:48+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-14T06:53:52+00:00",
+      "next_retry_at": null,
+      "platform": "linkedin",
+      "published": true,
+      "remote_id": "urn:li:share:7527262507808395264",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-14T06:53:52+00:00",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7527262507808395264/",
+      "verification_detail": "public feed URL confirmed (200)",
+      "verification_method": "linkedin_public_url",
+      "verified_at": "2026-11-14T06:53:52+00:00"
+    },
+    "2026-11-14|generate|threads|pb_123ef2b54a": {
+      "asset": "",
+      "attempt_count": 2,
+      "content_date": "2026-11-14",
+      "content_id": "pb_123ef2b54a",
+      "day_number": 317,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-14T06:53:57+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T06:54:00+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:ladder_exhausted",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-14T08:47:12+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T08:47:23+00:00",
+          "attempt": 2,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18451701940122376",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.threads.com/@hiten_jain323/post/Dftz5d8nH8I",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-14T08:47:12+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-14T08:47:23+00:00",
+      "next_retry_at": null,
+      "platform": "threads",
+      "published": true,
+      "remote_id": "18451701940122376",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-14T08:47:22+00:00",
+      "url": "https://www.threads.com/@hiten_jain323/post/Dftz5d8nH8I",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-14T08:47:23+00:00"
+    },
+    "2026-11-14|generate|youtube|pb_123ef2b54a": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-14",
+      "content_id": "pb_123ef2b54a",
+      "day_number": 317,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-14T06:53:52+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T06:53:57+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "ZOT4IVaJObU",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.youtube.com/shorts/ZOT4IVaJObU",
+          "verification_method": "youtube_oembed"
+        }
+      ],
+      "last_attempt_at": "2026-11-14T06:53:52+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-14T06:53:57+00:00",
+      "next_retry_at": null,
+      "platform": "youtube",
+      "published": true,
+      "remote_id": "ZOT4IVaJObU",
+      "slot": "generate",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-14T06:53:56+00:00",
+      "url": "https://www.youtube.com/shorts/ZOT4IVaJObU",
+      "verification_detail": "public video confirmed by oEmbed",
+      "verification_method": "youtube_oembed",
+      "verified_at": "2026-11-14T06:53:57+00:00"
+    },
+    "2026-11-14|morning|facebook|pb_123ef2b54a": {
+      "asset": "",
+      "attempt_count": 1,
+      "content_date": "2026-11-14",
+      "content_id": "pb_123ef2b54a",
+      "day_number": 317,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-14T07:44:03+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T07:44:10+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "494003270464484_122170489118655685",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.facebook.com/494003270464484/posts/122170489118655685",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-14T07:44:03+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-14T07:44:10+00:00",
+      "next_retry_at": null,
+      "platform": "facebook",
+      "published": true,
+      "remote_id": "494003270464484_122170489118655685",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-14T07:44:09+00:00",
+      "url": "https://www.facebook.com/494003270464484/posts/122170489118655685",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-14T07:44:10+00:00"
+    },
+    "2026-11-14|morning|instagram_story|pb_123ef2b54a": {
+      "asset": "",
+      "attempt_count": 4,
+      "content_date": "2026-11-14",
+      "content_id": "pb_123ef2b54a",
+      "day_number": 317,
+      "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Hard horizontal seam behind the jar reads as a flat cut; weak contact shadow makes the product feel floated rather than firmly sitting on a surface.; Headline copy is clunky \u2014 double colons and inconsistent 'Vs' capitalization undercut the premium tone.; Bottom third is dead",
+      "history": [
+        {
+          "at": "2026-11-14T07:44:10+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T07:57:30+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The label design on the jar looks amateurish and heavily pixelated, lacking the polish of a premium D2C brand.; Typography lacks strong hierarchy: the main headline uses a generic serif font with awkward line breaks and poor tracking.; The background gradient and lighting fe",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-14T08:47:23+00:00",
+          "attempt": 2,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T09:01:08+00:00",
+          "attempt": 2,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; Unbalanced typographic hierarchy with a confusing headline ('Bold: Agglomerated Vs Purista: Freeze-Dried'); Flat, muddy brown background lacking rich depth or premium ambient lighting; Amateur label design on the jar featuring pixelated graphics and awkward spacing",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-14T09:09:11+00:00",
+          "attempt": 3,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T09:23:57+00:00",
+          "attempt": 3,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:4.0; The label design on the jar looks amateurish and heavily pixelated, especially around the typography and illustrations.; Typography hierarchy is weak; the main headline uses a generic serif font with awkward capitalization ('Bold: Agglomerated Vs Purista: Freeze-Dried').; Co",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        },
+        {
+          "at": "2026-11-14T09:30:26+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T09:55:16+00:00",
+          "attempt": 4,
+          "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Hard horizontal seam behind the jar reads as a flat cut; weak contact shadow makes the product feel floated rather than firmly sitting on a surface.; Headline copy is clunky \u2014 double colons and inconsistent 'Vs' capitalization undercut the premium tone.; Bottom third is dead",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-11-14T09:30:26+00:00",
+      "last_result": {
+        "error": "prepublish_gate:visual_gate:aesthetic_below_8.0:6.5; Hard horizontal seam behind the jar reads as a flat cut; weak contact shadow makes the product feel floated rather than firmly sitting on a surface.; Headline copy is clunky \u2014 double colons and inconsistent 'Vs' capitalization undercut the premium tone.; Bottom third is dead",
+        "success": false
+      },
+      "next_retry_at": "2026-11-14T09:55:16+00:00",
+      "platform": "instagram_story",
+      "published": false,
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-11-14T09:55:16+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-11-14|morning|instagram_video|pb_123ef2b54a|growth_reel": {
+      "asset": "growth_reel",
+      "attempt_count": 1,
+      "content_date": "2026-11-14",
+      "content_id": "pb_123ef2b54a",
+      "day_number": 317,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-14T08:04:44+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T08:05:12+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18132260494829710",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/reel/DftvC9QD5pH/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-14T08:04:44+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-14T08:05:12+00:00",
+      "next_retry_at": null,
+      "platform": "instagram_video",
+      "published": true,
+      "remote_id": "18132260494829710",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-14T08:05:12+00:00",
+      "url": "https://www.instagram.com/reel/DftvC9QD5pH/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-14T08:05:12+00:00"
+    },
+    "2026-11-14|morning|instagram|pb_123ef2b54a|carousel": {
+      "asset": "carousel",
+      "attempt_count": 1,
+      "content_date": "2026-11-14",
+      "content_id": "pb_123ef2b54a",
+      "day_number": 317,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-14T07:42:46+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T07:43:45+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18179622871449931",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/Dftsnfal5QY/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-14T07:42:46+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-14T07:43:45+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "18179622871449931",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-14T07:43:45+00:00",
+      "url": "https://www.instagram.com/p/Dftsnfal5QY/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-14T07:43:45+00:00"
+    },
+    "2026-11-14|morning|instagram|pb_123ef2b54a|instagram_post": {
+      "asset": "instagram_post",
+      "attempt_count": 1,
+      "content_date": "2026-11-14",
+      "content_id": "pb_123ef2b54a",
+      "day_number": 317,
+      "error": "",
+      "history": [
+        {
+          "at": "2026-11-14T07:43:45+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-14T07:44:03+00:00",
+          "attempt": 1,
+          "error": "",
+          "event": "attempt_finished",
+          "remote_id": "18025988297945437",
+          "status": "VERIFIED_LIVE",
+          "url": "https://www.instagram.com/p/DftspMqFxXT/",
+          "verification_method": "meta_graph_readback"
+        }
+      ],
+      "last_attempt_at": "2026-11-14T07:43:45+00:00",
+      "last_result": {
+        "error": "",
+        "success": true
+      },
+      "last_verification_at": "2026-11-14T07:44:03+00:00",
+      "next_retry_at": null,
+      "platform": "instagram",
+      "published": true,
+      "remote_id": "18025988297945437",
+      "slot": "morning",
+      "status": "VERIFIED_LIVE",
+      "updated_at": "2026-11-14T07:44:03+00:00",
+      "url": "https://www.instagram.com/p/DftspMqFxXT/",
+      "verification_detail": "remote object ID confirmed",
+      "verification_method": "meta_graph_readback",
+      "verified_at": "2026-11-14T07:44:03+00:00"
     }
   },
   "version": 1

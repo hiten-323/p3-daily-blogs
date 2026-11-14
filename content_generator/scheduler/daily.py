@@ -1131,6 +1131,10 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                 break
             _drop_unmeasured_score(piece)
             ensure_structural_fields(piece, label)
+            # A from-scratch rewrite often returns only the new hook. Put the
+            # brand line back before the brand gate, or the attempt is spent
+            # on "Missing brand mention" and never re-scored.
+            _inject_brand_into_piece(label, piece)
             omit_per_cup_for_non_ultra(piece, featured)
             from content_generator.core.process_match import align_process_piece
             from content_generator.core.product_truth import piece_copy_text
