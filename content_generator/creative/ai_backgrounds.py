@@ -86,8 +86,10 @@ def _sibling_source(choice: dict) -> str | None:
 
 def _order(avoid: str | None) -> list[str]:
     names = list(PROVIDER_ORDER)
+    # Preserve the documented order exactly; only skip the sibling's source
+    # when another provider is configured, rather than moving it to the tail.
     if avoid and avoid in names and any(_configured(name) and name != avoid for name in names):
-        names = [name for name in names if name != avoid] + [avoid]
+        names = [name for name in names if name != avoid]
     return names
 
 
