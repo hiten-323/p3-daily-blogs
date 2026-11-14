@@ -67,7 +67,7 @@ def test_provider_order_and_gates_unchanged():
 def test_queries_cover_concepts():
     assert stock_video.query_for("steam_backlight") == "coffee steam"
     assert stock_video.query_for("crema_swirl") == "coffee crema"
-    assert stock_video.query_for("bean_cascade") == "coffee beans"
+    assert stock_video.query_for("granule_cascade") == "instant coffee granules"
     assert stock_video.query_for("granule_dissolve") == "coffee pour"
     assert stock_video.query_for("rain_window_cafe") == "rain window cafe"
     assert stock_video.query_for("golden_hour_kitchen") == "coffee cafe"
