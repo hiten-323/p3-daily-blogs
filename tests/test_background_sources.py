@@ -343,7 +343,7 @@ def test_hf_wan_i2v_receives_only_procedural_steam_still(monkeypatch):
     image = Image.open(io.BytesIO(base64.b64decode(image_data)))
     assert image.format == "JPEG"
     assert image.size == (256, 384)
-    assert "jar" not in seen["payload"]["inputs"].lower()
+    assert "no jar" in seen["payload"]["inputs"].lower()
 def test_hf_quota_busy_and_timeout_skip_cleanly(tmp_path, monkeypatch):
     hf_video.reset_session()
     monkeypatch.setattr(hf_video, "_OUT", str(tmp_path))
