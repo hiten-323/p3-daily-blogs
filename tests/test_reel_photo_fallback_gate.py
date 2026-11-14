@@ -36,3 +36,19 @@ def test_fast_cut_uses_cinematic_provider_chain_before_local_ffmpeg(monkeypatch)
     )
     assert result == "approved.mp4"
     assert calls == ["provider_chain", "local_ffmpeg"]
+
+def test_reel_1_also_uses_local_ffmpeg_as_the_only_final_fallback(monkeypatch):
+    monkeypatch.setenv("ENABLE_REEL_VIDEO", "true")
+    monkeypatch.setattr("content_generator.creative.product_reel_templates.resolve_reusable_reel",
+                        lambda reel: None)
+    calls = []
+    monkeypatch.setattr(reel_video, "_cinematic",
+                        lambda *a, **k: calls.append("provider_and_procedural") or None)
+    monkeypatch.setattr(reel_video, "_photo_fallback",
+                        lambda *a, **k: calls.append("local_ffmpeg") or "reel1.mp4")
+    result = reel_video.build_reel_video(
+        {"product": "purica", "hook_text": "The instant coffee dissolves in seconds."},
+        340, "reel_1",
+    )
+    assert result == "reel1.mp4"
+    assert calls == ["provider_and_procedural", "local_ffmpeg"]
