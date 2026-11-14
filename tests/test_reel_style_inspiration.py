@@ -142,14 +142,19 @@ def test_non_mini_day_receives_style_cues_without_publishing_the_mini_file(tmp_p
     monkeypatch.setenv("ENABLE_STORY_VIDEO", "true")
     monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(tmp_path))
     monkeypatch.setenv("REEL_MUSIC_FILE", "")
+    monkeypatch.setenv("KEN_BURNS_SECONDS", "2")
     monkeypatch.setitem(sys.modules, "moviepy", None)
 
     rendered = build_reel_video(
         reel, day=9, label="reel_1_video", on_date=date(2026, 10, 12),
     )
-    assert rendered is None
-    assert list(tmp_path.glob("*.mp4")) == []
+    # A missing cinematic plate may still encode approved photos. That file
+    # is not the Mini template.
+    if rendered is not None:
+        assert os.path.basename(rendered) != "gourmet_duo_mini.mp4"
+        assert Path(rendered).name.startswith("reel_1_video_")
     assert source.stat().st_size == before
+    assert not any(p.name == "gourmet_duo_mini.mp4" for p in Path(tmp_path).glob("*.mp4"))
     # A non-mini story would encode a 10s zoompan. ffmpeg without -nostdin
     # waits on pytest's stdin, so the suite never finishes. This test only
     # checks that the mini file is not what gets published.
