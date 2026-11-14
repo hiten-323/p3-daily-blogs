@@ -105,7 +105,7 @@ def post_content(content: dict, day: int = 0) -> dict:
     title = separate_ultra_from_pure(title)
     description = separate_ultra_from_pure(description)
     short = content.get("yt_short") if isinstance(content.get("yt_short"), dict) else {}
-    featured = featured_product_name(content) or str(short.get("featured_product") or "")
+    featured = featured_product_name(content) or str(short.get("featured_product") or short.get("product") or "")
     spoken = piece_copy_text(short) if short else ""
     if product_truth_findings(f"{title}\n{description}\n{spoken}", featured=featured):
         logger.error("[youtube] Refusing a Short whose title, description, or script contradicts the jar")
