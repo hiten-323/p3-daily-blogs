@@ -376,22 +376,22 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
                 diffuse_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
                 ddraw = ImageDraw.Draw(diffuse_layer)
                 s_w = int(jar.width * 1.30)
-                s_h = int(jar.height * 0.12)
+                s_h = int(jar.height * 0.10)
                 s_x = jx + (jar.width - s_w) // 2
                 s_y = jy + jar.height - int(s_h * 0.40)
-                ddraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(8, 5, 3, 160))
-                diffuse_layer = diffuse_layer.filter(ImageFilter.GaussianBlur(14))
+                ddraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(8, 5, 3, 185))
+                diffuse_layer = diffuse_layer.filter(ImageFilter.GaussianBlur(20))
                 canvas = Image.alpha_composite(canvas.convert("RGBA"), diffuse_layer).convert("RGB")
 
                 # Stage 2: Sharp physical contact occlusion line directly under jar rim
                 contact_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
                 cdraw = ImageDraw.Draw(contact_layer)
                 c_w = int(jar.width * 0.96)
-                c_h = max(8, int(jar.height * 0.035))
+                c_h = max(6, int(jar.height * 0.025))
                 c_x = jx + (jar.width - c_w) // 2
                 c_y = jy + jar.height - int(c_h * 0.50)
-                cdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 250))
-                contact_layer = contact_layer.filter(ImageFilter.GaussianBlur(2.5))
+                cdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 125))
+                contact_layer = contact_layer.filter(ImageFilter.GaussianBlur(6))
                 canvas = Image.alpha_composite(canvas.convert("RGBA"), contact_layer).convert("RGB")
             except Exception as se:
                 logger.debug("[cine] Shadow compositing skipped: %s", se)
