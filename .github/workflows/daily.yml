@@ -448,7 +448,7 @@ jobs:
         # 09:53 morning cron never fired, retry-unposted's :07/:37 cron fired
         # once). Kick the self-resuming retry after every generate/morning run so
         # anything not yet live (incl. a dropped morning slot) is picked up.
-        if: ${{ always() && github.event.inputs.dry_run != 'true' && (env.FORCE_SLOT == 'generate' || env.FORCE_SLOT == 'morning') }}
+        if: ${{ always() && github.event.inputs.dry_run != 'true' && vars.PUBLISHING_ENABLED == 'true' && (env.FORCE_SLOT == 'generate' || env.FORCE_SLOT == 'morning') }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
