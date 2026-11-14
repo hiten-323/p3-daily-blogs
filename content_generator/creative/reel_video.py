@@ -115,7 +115,7 @@ def _photo_fallback(reel, day, label, on_date, *, fast: bool) -> str | None:
     """Last-resort local FFmpeg reel from approved real photos; still needs the 8.0 gate."""
     try:
         from content_generator.creative import ken_burns, visual_gate
-        path = ken_burns.render_reel(reel if isinstance(reel, dict) else {}, day, label, on_date, fast=fast)
+        path = ken_burns.render_reel(reel if isinstance(reel, dict) else {}, day, label, on_date, fast=fast, use_broll=False)
         if not path:
             return None
         verdict = visual_gate.evaluate_video(path, {"requires_jar": False}, visual_gate.recent_layouts())
