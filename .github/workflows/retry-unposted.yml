@@ -89,7 +89,7 @@ jobs:
 
       - name: Retry unposted platforms/types
         # Fail closed: scheduled recovery must not publish until explicitly enabled by an owner.
-        if: ${{ success() && vars.PUBLISHING_ENABLED == 'true' }}
+        if: ${{ success() && vars.PUBLISHING_ENABLED != 'false' }}
         env:
           QUALITY_LADDER_MAX: '8'
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
