@@ -299,6 +299,24 @@ def validate_asset(label: str, piece: dict,
             is_valid = False
             issues.extend([f"Growth reel caption error: {caption_issues}"])
 
+    elif clean_label == "stories":
+        # A Story frame is one short line, like Threads: it cannot carry the
+        # brand name and the website without becoming an ad. Product/process
+        # truth still applies, and the Instagram native quality gate below
+        # judges the story surface.
+        story_text = " ".join(
+            str(piece.get(key) or "")
+            for key in ("headline", "hook", "chosen_hook", "sub", "subtext",
+                        "poll", "caption")
+        ).strip()
+        is_valid, issues = validate_asset_copy(
+            story_text,
+            check_brand_facts=True,
+            check_website=False,
+            check_brand_mention=False,
+            check_length=False,
+        )
+
     else:
         # Fallback validation for any other type
         combined_text = " ".join([str(v) for v in piece.values() if isinstance(v, str)])
