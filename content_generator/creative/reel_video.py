@@ -112,10 +112,24 @@ def _cinematic(beats, product, day, label, on_date, seconds, format_type="reel")
 
 
 def _photo_fallback(reel, day, label, on_date, *, fast: bool) -> str | None:
-    """Local ffmpeg reel from approved photos. Never raises."""
+    """Last-resort local FFmpeg reel from approved real photos; still needs the 8.0 gate."""
     try:
-        from content_generator.creative import ken_burns
-        return ken_burns.render_reel(reel if isinstance(reel, dict) else {}, day, label, on_date, fast=fast)
+        from content_generator.creative import ken_burns, visual_gate
+        path = ken_burns.render_reel(reel if isinstance(reel, dict) else {}, day, label, on_date, fast=fast)
+        if not path:
+            return None
+        verdict = visual_gate.evaluate_video(path, {"requires_jar": False}, visual_gate.recent_layouts())
+        if verdict.get("passed"):
+            logger.info("[reel_video] local FFmpeg real-photo fallback passed 8.0 visual gate")
+            return path
+        reasons = [str(x) for x in (verdict.get("reasons") or [])]
+        logger.error("[reel_video] local FFmpeg fallback held by 8.0 visual gate: %s", reasons[:6])
+        try:
+            from content_generator.scheduler.daily import _remember_obstacle
+            _remember_obstacle(label, "; ".join(reasons), "render", gate="local_ffmpeg_visual_gate")
+        except Exception:
+            pass
+        return None
     except Exception as exc:
         logger.warning("[reel_video] photo fallback failed: %s", type(exc).__name__)
         return None
@@ -160,13 +174,13 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
     except Exception as exc:
         logger.debug("[reel_video] product reel lookup skipped: %s", exc)
     fast_cut = isinstance(reel, dict) and reel.get("growth_template_id") == "fast_cut_curiosity"
-    if fast_cut:
-        made = _photo_fallback(reel, day, label, on_date, fast=True)
-        if made:
-            return made
     _cin = _cinematic(_beats_from_reel(reel), resolve_reel_product(reel), day, label, on_date, 12.0, format_type="reel")
     if _cin:
         return _cin
+    if fast_cut:
+        # AI providers run first in cinematic_motion; local FFmpeg real photos
+        # are the final fallback and are independently scored before return.
+        return _photo_fallback(reel, day, label, on_date, fast=True)
     try:
         from moviepy import ImageClip, concatenate_videoclips
     except Exception as e:
