@@ -91,6 +91,10 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.warning("[youtube] No video available — skipping YouTube Short")
         return {"success": False, "video_id": "", "url": "", "error": "no_video"}
 
+    if not _visual_gate_video(video_path, "yt_short"):
+        return {"success": False, "video_id": "", "url": "", "attempted": False,
+                "error": "visual_gate_hold_or_vision_unavailable", "held": True}
+
     # Build metadata
     title       = _extract_title(content)
     description = _extract_description(content)
@@ -189,6 +193,26 @@ def find_native_short(content: dict) -> str | None:
         if files:
             return files[-1]
     return None
+
+
+def _visual_gate_video(video_path: str, label: str = "yt_short") -> bool:
+    """Fail closed before upload unless the rendered Short scores at least 8.0."""
+    try:
+        from content_generator.creative import visual_gate
+        verdict = visual_gate.evaluate_video(video_path, None, visual_gate.recent_layouts())
+        if verdict.get("passed"):
+            return True
+        reasons = [str(x) for x in (verdict.get("reasons") or ["visual_gate_hold"])]
+        logger.error("[youtube] %s held by 8.0 visual gate: %s", label, reasons[:6])
+        try:
+            from content_generator.scheduler.daily import _remember_obstacle
+            _remember_obstacle(label, "; ".join(reasons), "visual_gate", gate="youtube_short_visual_gate")
+        except Exception:
+            pass
+        return False
+    except Exception as exc:
+        logger.error("[youtube] %s visual gate unavailable; holding: %s", label, type(exc).__name__)
+        return False
 
 
 def _find_video(content: dict) -> str | None:
