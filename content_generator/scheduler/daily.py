@@ -2014,6 +2014,10 @@ def _do_nurture() -> dict:
 
     Runs whether or not WhatsApp/SMTP are configured — degrades to log-only.
     """
+    if os.getenv("NURTURE_ENABLED", "false").strip().lower() not in ("1", "true", "yes", "on"):
+        logger.info("[nurture] NURTURE_ENABLED is not true — customer follow-up dispatch skipped")
+        return {"skipped": True, "reason": "nurture_disabled", "dispatched": 0}
+
     from content_generator.leads.lead_capture import get_stalling_leads
     from content_generator.nurture.whatsapp import dispatch_nurture_batch
     from content_generator.nurture.email_sequences import dispatch_email_batch
