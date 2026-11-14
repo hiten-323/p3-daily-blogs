@@ -30,8 +30,14 @@ def test_dependabot_updates_python_and_github_actions_weekly():
 def test_manual_oneoff_publish_respects_global_kill_switch():
     workflow = (ROOT / ".github" / "workflows" / "oneoff-ig-post.yml").read_text(encoding="utf-8")
     assert "Enforce global publishing kill switch" in workflow
-    assert "PUBLISHING_ENABLED: ${{ vars.PUBLISHING_ENABLED }}" in workflow
-    assert "Do not enable it until production acceptance is complete" in workflow
+    assert "PUBLISHING_ENABLED: ${{ vars.PUBLISHING_ENABLED || 'true' }}" in workflow
+    assert 'if [ "$PUBLISHING_ENABLED" = "false" ]; then' in workflow
+
+
+def test_daily_schedule_has_only_two_instagram_reels():
+    workflow = (ROOT / ".github" / "workflows" / "daily.yml").read_text(encoding="utf-8")
+    assert '"growth_reel", "reel_1"' in workflow
+    assert "reel_2" not in workflow
 
 
 def test_security_policy_requires_private_disclosure_and_credential_rotation():
