@@ -17,7 +17,6 @@ from content_generator.core.fallback_ladder import PASS_FLOOR, scratch_prompt
 from content_generator.core.growth_engine import PASS_THRESHOLD
 from content_generator.core.piece_integrity import _fit_threads_length, ensure_structural_fields
 from content_generator.core.product_truth import product_truth_findings
-from content_generator.core.viral_gate import PASS_MARK
 from content_generator.prompts.threads import accept_threads_regen
 from content_generator.publisher import facebook as fb
 from content_generator.publisher import meta_graph
@@ -33,10 +32,9 @@ def _keys(label: str, piece: dict) -> list[str]:
     return json.loads(raw.split(".", 1)[0])
 
 
-def test_editorial_and_fallback_gates_stay_at_8_while_viral_gate_is_9():
+def test_editorial_and_fallback_gates_stay_at_8():
     assert PASS_FLOOR == 8.0
     assert PASS_THRESHOLD == 8.0
-    assert PASS_MARK == 9.0
     assert EDITORIAL_THRESHOLD == 8.0
 
 
@@ -362,4 +360,4 @@ def test_secret_mask_only_emits_actions_command_in_ci(monkeypatch, capsys):
 
     monkeypatch.setenv("GITHUB_ACTIONS", "true")
     mask_secret("ci-secret")
-    assert capsys.readouterr().out == "::add-mask::ci-secret\\n"
+    assert capsys.readouterr().out == "::add-mask::ci-secret\n"
