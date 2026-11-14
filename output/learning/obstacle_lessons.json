@@ -32433,6 +32433,20 @@
       "reason": "aesthetic_below_8.0:4.0; The label design on the jar looks amateurish and heavily pixelated, especially around the typography and illustrations.; Typography hierarchy is weak; the main headline uses a generic serif font with awkward capitalization ('Bold: Agglomerated Vs Purista: Freeze-Dried').; Co",
       "stage": "publish",
       "status": "gate_holding"
+    },
+    {
+      "count": 1,
+      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "first_seen": "2026-11-14",
+      "fix": "",
+      "gate": "aesthetic",
+      "id": "instagram_story|stories|aesthetic|aesthetic_below_8.0:6.5; hard horizontal seam behind the jar reads as a flat cut; weak contact shadow makes the product feel floated rather than firmly sitting on a surface.; headl",
+      "label": "stories",
+      "last_seen": "2026-11-14",
+      "platform": "instagram_story",
+      "reason": "aesthetic_below_8.0:6.5; Hard horizontal seam behind the jar reads as a flat cut; weak contact shadow makes the product feel floated rather than firmly sitting on a surface.; Headline copy is clunky \u2014 double colons and inconsistent 'Vs' capitalization undercut the premium tone.; Bottom third is dead",
+      "stage": "publish",
+      "status": "gate_holding"
     }
   ],
   "version": 1
