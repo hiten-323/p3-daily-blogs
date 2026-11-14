@@ -89,9 +89,9 @@ def _knockout_white(img):
 def _gradient_bg(width, height, exposure_boost=False, is_tall=False, seed=0):
     """
     Cinematic grounded studio backdrop:
-    - If is_tall (9:16): Deep roast mahogany espresso studio wall (top 64%) + grounded Italian
-      walnut countertop (bottom 36%) with polished horizon double sheen.
-    - Otherwise: Deep espresso studio wall gradient.
+    - If is_tall (9:16): deep espresso studio wall blends into a walnut-toned
+      surface through a broad, seamless gradient with no hard horizontal seam.
+    - Otherwise: deep espresso studio wall gradient.
     """
     from PIL import Image, ImageDraw
     bg = Image.new("RGB", (width, height))
