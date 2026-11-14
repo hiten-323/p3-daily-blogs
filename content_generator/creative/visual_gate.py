@@ -20,6 +20,21 @@ import urllib.request
 
 logger = logging.getLogger(__name__)
 
+
+def _safe_error(exc: Exception, limit: int = 120) -> str:
+    """Provider diagnostics are useful; credential values are never loggable."""
+    detail = f"{type(exc).__name__}: {exc}"
+    for name in (
+        "GEMINI_API_KEY", "GROQ_API_KEY", "GITHUB_MODELS_TOKEN", "GH_MODELS_TOKEN",
+        "OPENROUTER_API_KEY", "HF_TOKEN", "NVIDIA_API_KEY",
+    ):
+        secret = os.getenv(name, "").strip()
+        if secret:
+            detail = detail.replace(secret, "[REDACTED]")
+    detail = re.sub(r"(?i)(authorization|api[_-]?key|access[_-]?token)\\s*[:=]\\s*[^,\\s]+",
+                    r"\\1=[REDACTED]", detail)
+    return detail[:limit]
+
 AESTHETIC_PASS = 8.0
 MIN_CONTRAST = 4.5
 MIN_BG_STD = 14.0
@@ -252,7 +267,7 @@ def _try_models(prefix, models, call):
             _mark(k, exc)
             if getattr(exc, "code", None) in (401, 402):
                 _mark(prefix, exc)  # key-level problem: whole provider is out
-            errs.append(f"{model}:{str(exc)[:40]}")
+            errs.append(f"{model}:{_safe_error(exc, 80)}")
     if errs:
         raise RuntimeError("; ".join(errs))
     raise RuntimeError("no live model")
@@ -424,9 +439,9 @@ def aesthetic_score(path) -> dict:
         try:
             res = fn(b64)
         except Exception as exc:  # quota/credit/auth/network: next provider
-            detail = f"{name}:{str(exc)[:100]}"
+            detail = f"{name}:{_safe_error(exc, 100)}"
             errors.append(detail)
-            logger.warning("[visual-gate] provider=%s failed: %s", name, str(exc)[:100])
+            logger.warning("[visual-gate] provider=%s failed: %s", name, _safe_error(exc, 100))
             continue
         if res is None:
             errors.append(f"{name}:no_compatible_model_or_response")
