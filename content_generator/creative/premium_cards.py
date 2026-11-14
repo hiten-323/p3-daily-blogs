@@ -91,12 +91,12 @@ def background(w, h, pal, seed=0, light=(0.5, 0.35)):
     # diagonal tonal sweep
     sweep = ((xx / w) * 0.6 + (yy / h) * 0.4)[..., None]
     img = img * (1.08 - 0.25 * sweep)
-    # surface plane (table) in lower 30%
-    horizon = int(h * 0.70)
-    plane = np.clip((yy - horizon) / max(1, h - horizon), 0, 1)[..., None]
-    img = img * (1 - 0.45 * plane) + deep * 0.45 * plane
-    edge = np.exp(-((yy - horizon) ** 2) / (2 * (h * 0.004) ** 2))[..., None]
-    img = img + np.array(pal["accent"], np.float32) * 0.22 * edge
+    # Seamless studio-to-surface transition. Do not draw a hard horizon
+    # or metallic line behind the jar in vertical Story frames.
+    horizon = int(h * 0.68)
+    transition = np.clip((yy - h * 0.50) / max(1, h * 0.36), 0, 1)
+    plane = (transition * transition * (3 - 2 * transition))[..., None]
+    img = img * (1 - 0.36 * plane) + deep * 0.36 * plane
     # grain
     rng = np.random.default_rng(seed)
     img = img + rng.normal(0, 7.0, (h, w, 1)).astype(np.float32)
@@ -166,9 +166,16 @@ def place_jar(canvas, jar, cx, base_y, pal, floor_y=None):
     W, H = canvas.size
     x0, y0 = int(cx - jar.width / 2), int(base_y - jar.height)
     sh = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
-    ImageDraw.Draw(sh).ellipse((x0 - jar.width * 0.08, base_y - jar.height * 0.035,
-                                x0 + jar.width * 1.08, base_y + jar.height * 0.05), fill=(0, 0, 0, 170))
-    canvas.alpha_composite(sh.filter(ImageFilter.GaussianBlur(max(6, jar.width // 14))))
+    sd = ImageDraw.Draw(sh)
+    sd.ellipse((x0 - jar.width * 0.12, base_y - jar.height * 0.025,
+                x0 + jar.width * 1.12, base_y + jar.height * 0.055), fill=(0, 0, 0, 185))
+    canvas.alpha_composite(sh.filter(ImageFilter.GaussianBlur(max(10, jar.width // 11))))
+    # A smaller, softer contact core makes the glass feel grounded, not pasted on.
+    contact = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
+    ImageDraw.Draw(contact).ellipse((x0 + jar.width * 0.08, base_y - jar.height * 0.008,
+                                     x0 + jar.width * 0.92, base_y + jar.height * 0.025),
+                                    fill=(0, 0, 0, 115))
+    canvas.alpha_composite(contact.filter(ImageFilter.GaussianBlur(max(3, jar.width // 38))))
     refl = jar.transpose(Image.FLIP_TOP_BOTTOM)
     rh = int(jar.height * 0.32)
     if floor_y is not None:
