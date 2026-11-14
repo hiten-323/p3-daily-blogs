@@ -33,10 +33,10 @@ def _keys(label: str, piece: dict) -> list[str]:
     return json.loads(raw.split(".", 1)[0])
 
 
-def test_quality_gates_stay_at_8():
+def test_editorial_and_fallback_gates_stay_at_8_while_viral_gate_is_9():
     assert PASS_FLOOR == 8.0
     assert PASS_THRESHOLD == 8.0
-    assert PASS_MARK == 8.0
+    assert PASS_MARK == 9.0
     assert EDITORIAL_THRESHOLD == 8.0
 
 
