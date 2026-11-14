@@ -154,6 +154,66 @@ def test_missing_secrets_skip_to_coded_fallback(monkeypatch):
     assert called == []
 
 
+def test_transient_video_provider_timeout_retries_with_backoff(tmp_path, monkeypatch):
+    ai_backgrounds.reset_session()
+    monkeypatch.setenv("VIDEO_PROVIDER_RETRIES", "2")
+    monkeypatch.setenv("VIDEO_PROVIDER_BACKOFF_S", "0")
+    monkeypatch.setattr(ai_backgrounds, "_sibling_source", lambda choice: None)
+    monkeypatch.setattr(ai_backgrounds, "_order", lambda avoid: ["kaggle_bank"])
+    monkeypatch.setattr(ai_backgrounds, "_configured", lambda name: True)
+    monkeypatch.setattr(ai_backgrounds, "load_frames", _frames)
+    lessons = []
+    monkeypatch.setattr(ai_backgrounds, "_remember_provider_obstacle",
+                        lambda choice, name, reason: lessons.append((name, reason)))
+    plate = _plate(tmp_path, "retry.mp4")
+    calls = []
+
+    def flaky(*_args, **_kwargs):
+        calls.append(1)
+        if len(calls) == 1:
+            raise TimeoutError("provider timeout")
+        return str(plate)
+
+    monkeypatch.setattr(ai_backgrounds, "_providers", lambda: {"kaggle_bank": flaky})
+    frames, source = ai_backgrounds.fetch_background(_choice(), "lab", (8, 8), 5)
+    assert source == "kaggle_bank" and frames
+    assert len(calls) == 2
+    assert ("kaggle_bank", "timeout") in lessons
+
+
+def test_video_provider_quota_failure_is_logged_and_skipped_without_retry(tmp_path, monkeypatch):
+    ai_backgrounds.reset_session()
+    monkeypatch.setenv("VIDEO_PROVIDER_RETRIES", "3")
+    monkeypatch.setenv("VIDEO_PROVIDER_BACKOFF_S", "0")
+    monkeypatch.setattr(ai_backgrounds, "_sibling_source", lambda choice: None)
+    monkeypatch.setattr(ai_backgrounds, "_order", lambda avoid: ["kaggle_bank", "hf_ltx"])
+    monkeypatch.setattr(ai_backgrounds, "_configured", lambda name: True)
+    monkeypatch.setattr(ai_backgrounds, "load_frames", _frames)
+    lessons = []
+    monkeypatch.setattr(ai_backgrounds, "_remember_provider_obstacle",
+                        lambda choice, name, reason: lessons.append((name, reason)))
+    plate = _plate(tmp_path, "after-quota.mp4")
+    calls = {"quota": 0, "next": 0}
+
+    class QuotaError(Exception):
+        code = 402
+
+    def quota(*_args, **_kwargs):
+        calls["quota"] += 1
+        raise QuotaError("credits exhausted")
+
+    def next_provider(*_args, **_kwargs):
+        calls["next"] += 1
+        return str(plate)
+
+    monkeypatch.setattr(ai_backgrounds, "_providers",
+                        lambda: {"kaggle_bank": quota, "hf_ltx": next_provider})
+    frames, source = ai_backgrounds.fetch_background(_choice(), "lab", (8, 8), 5)
+    assert source == "hf_ltx" and frames
+    assert calls == {"quota": 1, "next": 1}
+    assert ("kaggle_bank", "http_402") in lessons
+
+
 def test_chain_stops_at_first_plate_and_splits_same_day(tmp_path, monkeypatch):
     ai_backgrounds.reset_session()
     for name in SECRET_NAMES:
