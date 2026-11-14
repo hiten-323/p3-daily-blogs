@@ -3,10 +3,9 @@
 > **Prefer evidence over elegance.**
 > **The simplest solution that measurably improves the business wins.**
 
-An autonomous daily growth engine for [Purity Beans](https://p3online.in) —
-India's cleanest instant coffee (100% coffee, zero chicory) by Pure Pantry
-Provisions. It generates, publishes, measures, and learns — every day,
-unattended, on GitHub Actions.
+An autonomous daily growth engine for [Purity Beans](https://p3online.in),
+a premium instant-coffee brand by Pure Pantry Provisions. It generates,
+publishes, measures, and learns on GitHub Actions.
 
 ## The daily loop
 
@@ -20,6 +19,32 @@ unattended, on GitHub Actions.
 The publishing times above are the canonical production schedule. They are
 maintained in `content_generator/core/slot_registry.py` and the workflow cron
 is checked against that registry by the config-drift test.
+
+## Autonomous publishing control
+
+All scheduled publishing workflows remain enabled. The single control is the
+GitHub Actions **repository variable** `PUBLISHING_ENABLED`:
+
+- Unset or empty: publishing is **ON** for the normal daily schedule.
+- `true`: publishing is ON.
+- `false`: generation and validation can continue, but platform publishing,
+  retry publishing, and publish recovery are held.
+
+Do not disable the workflows to pause publishing. Change only this repository
+variable. Keep provider credentials and platform tokens in GitHub Actions
+**secrets**; never put secret values in repository variables, code, logs, or
+commits. The variable is a non-secret operational switch.
+
+## Product-copy hard rules
+
+Describe the product as **instant coffee**, never as fresh/freshly made,
+lab-tested, zero-acidity, single-origin, coffee beans, whole beans, or
+bean-based coffee. Never make health claims, fake urgency, free-sample offers,
+or competitor attacks. Ultra Blend is 70% coffee and 30% chicory; its 100g jar
+is ₹309 and yields at least 66 cups (about ₹5 per cup). Freeze-dried applies
+only to Purica and Purista; agglomerated applies only to Bold and Prima.
+Prices must come from the live Shopify price source. Every published link
+must carry `utm_source`, `utm_medium`, and `utm_campaign`.
 
 Every morning the system asks one question: *"What is the fastest way to gain
 followers tomorrow — and which of yesterday's content actually made money?"*
