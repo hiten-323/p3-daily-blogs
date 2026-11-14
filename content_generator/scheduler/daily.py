@@ -2224,9 +2224,11 @@ def dry_run_asset_report(content: dict) -> dict:
                     video_path = youtube._find_video(content)
                     if not video_path:
                         video_path = youtube._create_slideshow_short(content, day)
+                    video_passed = False
                     if video_path:
                         verdict = visual_gate.evaluate_video(video_path, None, visual_gate.recent_layouts())
-                        if not verdict.get("passed"):
+                        video_passed = bool(verdict.get("passed"))
+                        if not video_passed:
                             _remember_obstacle("yt_short", "; ".join(verdict.get("reasons") or ["visual_gate_hold"]),
                                                 "visual_gate", gate="yt_short_visual_gate")
                             video_path = None
@@ -2238,7 +2240,7 @@ def dry_run_asset_report(content: dict) -> dict:
                         except Exception as exc:
                             logger.warning("[dry-run] local YouTube Short FFmpeg fallback unavailable: %s",
                                            type(exc).__name__)
-                    if video_path:
+                    if video_path and not video_passed:
                         verdict = visual_gate.evaluate_video(video_path, None, visual_gate.recent_layouts())
                         if not verdict.get("passed"):
                             reasons.append("youtube_short_visual_gate:" + ";".join(verdict.get("reasons") or ["below_8_or_unavailable"]))
