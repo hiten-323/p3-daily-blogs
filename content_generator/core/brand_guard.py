@@ -225,6 +225,8 @@ FORBIDDEN_TERMS = [
     "coffee beans",
     "whole beans",
     "bean-based",
+    "free samples",
+    "competitor bashing",
 ]
 
 REQUIRED_BRAND_MESSAGES = [
@@ -314,12 +316,12 @@ Every content asset must reinforce at least one of:
 - Clean Coffee Movement
 
 Never claim:
-- Medical benefits
-- Weight loss
-- Sleep benefits
-- Disease prevention
+- Medical benefits, weight loss, sleep benefits, or disease prevention
 - Scientific facts without evidence
-- A sample, sample pack, or trial sachet for a consumer. Samples are only for cafes, offices, retailers, and distributors. Point customers to the 50g Variety Box.
+- Fresh/freshly made, lab-tested, zero-acidity, or single-origin product attributes
+- Coffee beans, whole beans, ground beans, roasted beans, or bean-based coffee; this is instant coffee
+- A free sample, sample pack, or trial sachet for a consumer. Do not make consumer free-sample offers.
+- Negative or disparaging claims about competitors or other brands.
 
 ---
 
