@@ -89,20 +89,47 @@ def build_story_video(
         try:
             from content_generator.creative import premium_cards, visual_gate
             recent = visual_gate.recent_layouts()
-            for attempt in range(4):
-                layout = [l for l in premium_cards.LAYOUTS if l != "split_left"][(day + attempt) % 3]
+            layouts = [layout for layout in premium_cards.LAYOUTS if layout != "split_left"]
+            palette_count = max(1, len(premium_cards.PALETTES.get(sku, [])))
+            max_attempts = max(1, min(6, int(os.getenv("STORY_VISUAL_REGEN_ATTEMPTS", "6"))))
+            for attempt in range(max_attempts):
+                layout = layouts[attempt % len(layouts)]
+                palette_idx = (attempt // len(layouts)) % palette_count
                 out = os.path.join(premium_cards._OUT, f"{label}_day{day}_{date_str}_premium.mp4")
-                meta = premium_cards.render_story_video(sku, headline, sub, out, seed=day + attempt,
-                                                        seconds=duration or _DEFAULT_STORY_DURATION, layout=layout)
+                meta = premium_cards.render_story_video(
+                    sku, headline, sub, out, seed=day + attempt,
+                    seconds=duration or _DEFAULT_STORY_DURATION,
+                    layout=layout, palette_idx=palette_idx,
+                )
                 verdict = visual_gate.evaluate_video(out, meta, recent)
                 if verdict["passed"]:
                     visual_gate.remember_layout(layout, label)
                     return out
                 gate_rejected = True
-                logger.warning("[visual-gate] story try %d failed: %s", attempt + 1, verdict["reasons"][:4])
+                reasons = verdict.get("reasons") or ["visual_gate_rejected"]
+                detail = "; ".join(str(reason) for reason in reasons[:6])
+                for frame in verdict.get("frames") or []:
+                    vision = frame.get("vision") if isinstance(frame, dict) else None
+                    if isinstance(vision, dict) and vision.get("errors"):
+                        detail += "; providers=" + ",".join(str(x) for x in vision["errors"][:6])
+                logger.warning("[visual-gate] story try=%d/%d layout=%s palette=%d rejected: %s",
+                               attempt + 1, max_attempts, layout, palette_idx, detail[:500])
+                try:
+                    from content_generator.scheduler.daily import _remember_obstacle
+                    _remember_obstacle("ig_story", detail, "visual_gate", gate="visual_gate_rejected")
+                except Exception as lesson_error:
+                    logger.warning("[lessons] story rejection lesson failed: %s", type(lesson_error).__name__)
                 if visual_gate.vision_outage():
+                    outage = "vision_outage:all_providers_down; " + detail
+                    logger.error("[visual-gate] story retries stopped: %s", outage[:500])
+                    try:
+                        from content_generator.scheduler.daily import _remember_obstacle
+                        _remember_obstacle("ig_story", outage, "visual_gate", gate="vision_provider_outage")
+                    except Exception:
+                        pass
                     break
-            logger.error("[visual-gate] premium story held after re-renders; not posting a failing story")
+            logger.error("[visual-gate] premium story held after %d attempts; not posting a failing story",
+                         max_attempts)
             return None
         except Exception as exc:
             logger.warning("[story_video] premium story path failed: %s", exc)
