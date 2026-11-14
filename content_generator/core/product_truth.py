@@ -17,6 +17,7 @@ Owner guardrails for Purity Beans copy:
 from __future__ import annotations
 
 import re
+from urllib.parse import urlsplit, parse_qs
 
 _SENTENCE = re.compile(r"(?<=[.!?])\s+|\n+")
 _CLAUSE = re.compile(r"\b(?:while|whereas|but|unlike|except)\b|;", re.I)
@@ -553,6 +554,12 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
         return []
     source = _claim_text(str(text))
     findings: list[dict] = []
+    for raw_url in re.findall(r"https?://[^\\s)]+", source):
+        clean_url = raw_url.rstrip(".,;!?")
+        params = parse_qs(urlsplit(clean_url).query)
+        missing = [key for key in ("utm_source", "utm_medium", "utm_campaign") if not params.get(key)]
+        if missing:
+            findings.append(_finding(clean_url, "published links require utm_source, utm_medium and utm_campaign"))
     for sentence in _SENTENCE.split(source):
         s = sentence.strip()
         if not s:
