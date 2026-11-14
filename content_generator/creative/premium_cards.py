@@ -425,16 +425,17 @@ def render_until_pass(sku, headline, sub="", *, width=1080, height=1350, cta=Non
 
 
 def render_story_video(sku: str, headline: str, sub: str, out_path: str, *, seconds: float = 10.0,
-                       seed: int = 0, audio: str | None = None, layout: str = "hero_center") -> dict:
+                       seed: int = 0, audio: str | None = None, layout: str = "hero_center",
+                       palette_idx: int = 0) -> dict:
     """9:16 story: slow push-in on the hero frame, then the follow CTA frame, with music."""
     import glob
     import subprocess
     import imageio_ffmpeg
     ff = imageio_ffmpeg.get_ffmpeg_exe()
     base = out_path.rsplit(".", 1)[0]
-    a = render(sku, headline, sub, width=1080, height=1920, layout=layout, seed=seed,
+    a = render(sku, headline, sub, width=1080, height=1920, layout=layout, palette_idx=palette_idx, seed=seed,
                out_path=base + "_a.jpg")
-    b = render(sku, headline, sub, width=1080, height=1920, layout=layout, seed=seed,
+    b = render(sku, headline, sub, width=1080, height=1920, layout=layout, palette_idx=palette_idx, seed=seed,
                cta=f"FOLLOW {HANDLE.upper()}", out_path=base + "_b.jpg")
     if audio is None:
         tracks = sorted(glob.glob("music_library/**/*.mp3", recursive=True) + glob.glob("music_library/**/*.wav", recursive=True))
