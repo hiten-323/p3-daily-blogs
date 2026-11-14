@@ -13,6 +13,8 @@ from content_generator.core.product_truth import product_truth_findings
     "Made from premium coffee beans.",
     "A bean-based instant coffee experience.",
     "Whole beans, roasted to perfection.",
+    "DM us for free samples.",
+    "Competitors sell inferior coffee.",
 ])
 def test_unsupported_product_claims_are_rejected(claim):
     findings = product_truth_findings(claim, featured="purica")
