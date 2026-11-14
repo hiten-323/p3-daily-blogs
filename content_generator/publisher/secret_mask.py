@@ -10,7 +10,8 @@ def mask_secret(value: str) -> None:
     raw = str(value or "").strip()
     if not raw or any(ch in raw for ch in "\r\n"):
         return
-    print(f"::add-mask::{raw}", flush=True)
+    if os.getenv("GITHUB_ACTIONS", "").strip().lower() == "true":
+        print(f"::add-mask::{raw}", flush=True)
 
 
 def redact(text: str, secrets: list[str] | tuple[str, ...] | None = None) -> str:
