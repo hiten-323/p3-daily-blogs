@@ -303,7 +303,7 @@ def test_hf_video_busy_response_retries_but_quota_does_not(monkeypatch):
         calls.append(1)
         if len(calls) == 1:
             return 503, b'{"error":"currently loading","estimated_time":2}', "application/json"
-        return 200, b"\\x00\\x00\\x00\\x18ftyp" + b"x" * 40, "video/mp4"
+        return 200, b"\x00\x00\x00\x18ftyp" + b"x" * 40, "video/mp4"
 
     result = hf_video._retry_request(transient_then_video, "hf_ltx", "growth_reel", "space")
     assert len(calls) == 2
