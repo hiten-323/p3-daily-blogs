@@ -199,7 +199,7 @@ jobs:
 
       - name: Self-resume if today still has unposted pieces (cron backstop)
         # Do not perpetuate an autonomous publishing chain while the owner hold is active.
-        if: always() && vars.PUBLISHING_ENABLED == 'true' && steps.meta_preflight.conclusion == 'success' && steps.alert_preflight.conclusion == 'success'
+        if: always() && vars.PUBLISHING_ENABLED != 'false' && steps.meta_preflight.conclusion == 'success' && steps.alert_preflight.conclusion == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
           PYTHONIOENCODING: utf-8
