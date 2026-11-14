@@ -118,3 +118,12 @@ def test_generated_story_below_the_viral_bar_is_not_published(monkeypatch):
     result = instagram.post_story(content, day=342)
     assert result["success"] is False
     assert result["error"] == "prepublish_gate:llm_viral_readiness_failed"
+
+def test_linkedin_and_youtube_publishers_use_full_pre_publish_gate():
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    linkedin = (root / "content_generator" / "publisher" / "linkedin.py").read_text(encoding="utf-8")
+    youtube = (root / "content_generator" / "publisher" / "youtube.py").read_text(encoding="utf-8")
+    assert 'authorize_publish(content, "linkedin")' in linkedin
+    assert 'authorize_publish(content, "youtube")' in youtube
