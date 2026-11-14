@@ -58,6 +58,15 @@ _BRAND_IS_FREEZE_ARABICA = re.compile(
     r"purity beans is freeze[\s-]?dried arabica",
     re.I,
 )
+_NEVER_CLAIMS = (
+    (re.compile(r"\\bfresh(?:ly)?\\b", re.I), "never describe the instant coffee as fresh/freshly made"),
+    (re.compile(r"\\blab[\\s-]?tested\\b", re.I), "no lab-tested claim is authorized"),
+    (re.compile(r"\\bzero[\\s-]+acidity\\b", re.I), "zero-acidity claim is prohibited"),
+    (re.compile(r"\\bsingle[\\s-]+origin\\b", re.I), "single-origin claim is prohibited"),
+    (re.compile(r"\\b(?:coffee[\\s-]+beans?|bean[\\s-]?based|whole[\\s-]+beans?|ground[\\s-]+beans?|roasted[\\s-]+beans?|beans?[\\s-]+(?:from|are|is|based|sourced|roasted|ground))\\b", re.I),
+     "bean-based wording is prohibited; describe the product as instant coffee"),
+)
+
 _INVENTED = re.compile(
     r"100\s*x\s+purer|lab-tested purity certificate|lab[\s-]?certified|"
     r"\bsingle[\s-]origin(?:\s+style)?\b|"
@@ -544,6 +553,9 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
         s = sentence.strip()
         if not s:
             continue
+        for pattern, reason in _NEVER_CLAIMS:
+            if pattern.search(s):
+                findings.append(_finding(s, reason))
         for bm in re.finditer(r"\bBold\b", s):
             rest = s[bm.end():]
             other = _OTHER_SKU.search(rest)
