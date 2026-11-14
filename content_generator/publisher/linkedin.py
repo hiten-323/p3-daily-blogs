@@ -126,7 +126,7 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.info("[linkedin] Not configured — LI_API_ACCESS or LI_AUTHOR_URN missing")
         return {"success": False, "post_id": "", "url": "", "error": "not_configured"}
 
-    from content_generator.core.product_truth import product_truth_findings, separate_ultra_from_pure
+    from content_generator.core.product_truth import featured_product_name, product_truth_findings, separate_ultra_from_pure
     piece = content.get("linkedin_post")
     if isinstance(piece, dict):
         for field in ("hook", "body", "brand_bridge", "closing_question", "cta", "comment_trigger", "hashtags"):
