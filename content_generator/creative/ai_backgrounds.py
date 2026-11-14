@@ -354,7 +354,10 @@ def fetch_background(choice: dict, label: str, size, seconds: float = 5) -> tupl
     avoid = _sibling_source(choice)
     providers = _providers()
     rejected = _REJECTED.get((str(choice.get("date") or ""), str(choice.get("format") or "")), set())
-    max_attempts = max(1, min(3, int(os.getenv("VIDEO_PROVIDER_RETRIES", "2"))))
+    try:
+        max_attempts = max(1, min(3, int(os.getenv("VIDEO_PROVIDER_RETRIES", "2"))))
+    except ValueError:
+        max_attempts = 2
     try:
         backoff = max(0.0, min(5.0, float(os.getenv("VIDEO_PROVIDER_BACKOFF_S", "1"))))
     except ValueError:
