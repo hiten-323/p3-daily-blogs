@@ -123,6 +123,24 @@ def format_for(label: str) -> str:
     return LABEL_FORMAT.get(label, label)
 
 
+def platform_for(label: str) -> str:
+    key = str(label or "").strip().lower()
+    if key == "yt_short":
+        return "youtube"
+    if key == "threads_post":
+        return "threads"
+    if key == "linkedin_post":
+        return "linkedin"
+    if key == "facebook_post":
+        return "facebook"
+    if key == "blog_post":
+        return "shopify"
+    if key in {"reel_1", "reel_2", "growth_reel", "carousel", "instagram_post",
+               "story", "instagram_story", "stories"}:
+        return "instagram"
+    return ""
+
+
 def _text(piece) -> str:
     try:
         return json.dumps(piece, ensure_ascii=False)
@@ -258,7 +276,7 @@ def choose_template(label: str, attempt: int = 0) -> str:
     templates = HOOK_TEMPLATES.get(fmt) or HOOK_TEMPLATES["instagram_post"]
     try:
         from content_generator.core import hook_retirement
-        active = hook_retirement.active_templates(templates)
+        active = hook_retirement.active_templates(templates, platform=platform_for(label), fmt=fmt)
     except Exception as e:  # fail closed on reuse; generation can invent a fresh hook
         logger.warning("[viral] retirement filter unavailable for %s: %s", fmt, e)
         active = []
@@ -291,7 +309,7 @@ def hook_block(label: str) -> str:
         return ""
     try:
         from content_generator.core import hook_retirement
-        active = hook_retirement.active_templates(templates)
+        active = hook_retirement.active_templates(templates, platform=platform_for(label), fmt=fmt)
     except Exception as e:
         logger.warning("[viral] retirement filter unavailable for %s: %s", fmt, e)
         active = []

@@ -8,7 +8,7 @@ from content_generator.ops import meta_token_health as health
 
 def test_page_id_resolves_to_linked_instagram_business_account(monkeypatch):
     responses = [
-        {"data": {"type": "PAGE", "expires_at": 0, "scopes": ["instagram_basic", "instagram_content_publish"], "is_valid": True}},
+        {"data": {"type": "PAGE", "expires_at": 0, "scopes": list(health.IG_SCOPES), "is_valid": True}},
         {"id": "page-123"},
         {"id": "page-123", "instagram_business_account": {"id": "ig-456", "username": "puritybeans"}},
     ]
@@ -26,9 +26,22 @@ def test_page_id_resolves_to_linked_instagram_business_account(monkeypatch):
     assert "instagram_business_account" in calls[-1]
 
 
+def test_insights_scope_is_required_for_strict_instagram_readiness(monkeypatch):
+    responses = [
+        {"data": {"type": "PAGE", "expires_at": 0,
+                  "scopes": ["instagram_basic", "instagram_content_publish", "pages_read_engagement"],
+                  "is_valid": True}},
+        {"id": "ig-123", "username": "puritybeans"},
+    ]
+    monkeypatch.setattr(health, "_fetch", lambda *a, **k: responses.pop(0))
+    report = health.inspect_instagram("ig-123", "test-token", now=100)
+    assert report["ok"] is False
+    assert any("instagram_manage_insights" in problem for problem in report["problems"])
+
+
 def test_page_id_without_linked_instagram_account_fails_closed(monkeypatch):
     responses = [
-        {"data": {"type": "PAGE", "expires_at": 0, "scopes": ["instagram_basic", "instagram_content_publish"], "is_valid": True}},
+        {"data": {"type": "PAGE", "expires_at": 0, "scopes": list(health.IG_SCOPES), "is_valid": True}},
         {"id": "page-123"},
         {"id": "page-123"},
     ]

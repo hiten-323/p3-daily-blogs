@@ -15,7 +15,12 @@ from content_generator.core import hook_retirement
 
 
 def _entry(hook: str, views: int, shares: int, **extra) -> dict:
-    row = {"asset_id": hook, "hook": hook, "metrics": {"views": views, "shares": shares}}
+    from content_generator.core.reward import get_active_kpi
+    row = {
+        "asset_id": hook, "hook": hook, "platform": "instagram",
+        "format": "story", "kpi": get_active_kpi(),
+        "metrics": {"views": views, "shares": shares},
+    }
     row.update(extra)
     return row
 
@@ -76,8 +81,22 @@ def test_bottom_of_measured_posts_is_retired_and_persisted():
     record = state["hooks"][hook_retirement.normalize("hook-9")]
     assert record["source_asset"] == "hook-9"
     assert record["retired_at"] == "2026-11-14T10:00:00"
-    assert hook_retirement.normalize("question") in hook_retirement.retired_strategies()
-    assert hook_retirement.normalize("curiosity") in hook_retirement.retired_strategies()
+    assert hook_retirement.normalize("question") not in hook_retirement.retired_strategies("instagram", "story")
+    assert hook_retirement.normalize("curiosity") not in hook_retirement.retired_strategies("instagram", "story")
+
+
+def test_strategy_retirement_requires_repeated_same_surface_evidence():
+    entries = []
+    for i in range(5):
+        entries.append(_entry(f"weak-{i}", 100 + i, 1 + i,
+                              hook_strategy="question", attention_mechanism="curiosity"))
+    for i in range(5):
+        entries.append(_entry(f"strong-{i}", 1000 + i * 100, 20 + i,
+                              hook_strategy="story", attention_mechanism="surprise"))
+    hook_retirement.retire_from_learning(entries)
+    assert hook_retirement.normalize("question") in hook_retirement.retired_strategies("instagram", "story")
+    assert hook_retirement.normalize("curiosity") in hook_retirement.retired_strategies("instagram", "story")
+    assert hook_retirement.normalize("question") not in hook_retirement.retired_strategies("linkedin", "linkedin_post")
 
 
 def test_other_objective_evidence_is_not_retired_here():
@@ -112,14 +131,28 @@ def test_retired_hook_and_strategy_filter_the_template_pool():
     assert hook_retirement.active_templates(templates)
 
     state = json.loads(_state_path().read_text(encoding="utf-8"))
-    state["strategies"]["question"] = {
+    state["strategies"]["instagram::story::follow::hook_strategy::question"] = {
         "score": 0.1, "source_asset": "x", "retired_at": "2026-11-14T10:00:00",
-        "field": "hook_strategy",
+        "platform": "instagram", "format": "story", "kpi": "follow",
+        "strategy": "question", "field": "hook_strategy",
     }
     _state_path().write_text(json.dumps(state), encoding="utf-8")
-    for template in templates:
-        if "question" in hook_retirement.template_tags(template):
-            assert template not in hook_retirement.active_templates(templates)
+    scoped_template = "Which coffee ritual is yours?"
+    assert "question" in hook_retirement.template_tags(scoped_template)
+    assert scoped_template not in hook_retirement.active_templates([scoped_template], "instagram", "story")
+    assert scoped_template in hook_retirement.active_templates([scoped_template], "linkedin", "linkedin_post")
+
+
+def test_corrupt_retirement_store_fails_closed_for_template_selection():
+    from content_generator.core import viral_gate
+
+    _state_path().parent.mkdir(parents=True, exist_ok=True)
+    _state_path().write_text("{not-json", encoding="utf-8")
+    templates = list(viral_gate.HOOK_TEMPLATES["story"])
+    with pytest.raises(ValueError, match="corrupt retirement state"):
+        hook_retirement.active_templates(templates, "instagram", "story")
+    assert "original hook pattern" in viral_gate.choose_template("stories", 0)
+    assert "no non-retired templates" in viral_gate.hook_block("stories")
 
 
 def test_fatigue_block_carries_permanent_retirements():

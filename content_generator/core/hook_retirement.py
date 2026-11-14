@@ -48,25 +48,29 @@ def _empty() -> dict:
     return {"hooks": {}, "strategies": {}, "updated_at": ""}
 
 
-def _load() -> dict:
+def _load(*, strict: bool = False) -> dict:
+    """Read retirement state; strict consumers must never erase a corrupt avoid-list."""
     path = _path()
     if not os.path.exists(path):
         return _empty()
     try:
         with open(path, "r", encoding="utf-8") as handle:
             payload = json.load(handle)
+        if not isinstance(payload, dict):
+            raise ValueError("retirement state must be a JSON object")
+        state = _empty()
+        for key in ("hooks", "strategies"):
+            value = payload.get(key)
+            if not isinstance(value, dict):
+                raise ValueError(f"retirement state field {key!r} must be an object")
+            state[key] = {str(k): v for k, v in value.items() if str(k).strip()}
+        state["updated_at"] = str(payload.get("updated_at") or "")
+        return state
     except (OSError, ValueError, TypeError) as exc:
         logger.warning("[retirement] could not read %s: %s", path, exc)
+        if strict:
+            raise ValueError(f"Refusing to ignore corrupt retirement state: {path}") from exc
         return _empty()
-    if not isinstance(payload, dict):
-        return _empty()
-    state = _empty()
-    for key in ("hooks", "strategies"):
-        value = payload.get(key)
-        if isinstance(value, dict):
-            state[key] = {str(k): v for k, v in value.items() if str(k).strip()}
-    state["updated_at"] = str(payload.get("updated_at") or "")
-    return state
 
 
 def _save(state: dict) -> None:
@@ -92,28 +96,33 @@ def _save(state: dict) -> None:
                 logger.warning("[retirement] could not clean temp file %s", tmp_name)
 
 
-def _losers(entries: list[dict]) -> list[tuple[dict, float]]:
+def _surface_groups(entries: list[dict]) -> dict[tuple[str, str, str], list[tuple[dict, float]]]:
     from content_generator.core.learning_engine import (
-        _is_measurable, _objective_factor, _weighted_score,
+        _is_measurable, _objective_factor, _weighted_score, is_teachable,
     )
 
-    # Compare like with like. A Story's reach and a LinkedIn post's engagement
-    # are not interchangeable, even when both were created for the same KPI.
     groups: dict[tuple[str, str, str], list[tuple[dict, float]]] = {}
     for entry in entries:
         if not isinstance(entry, dict) or not entry.get("metrics") or not _is_measurable(entry):
             continue
-        if _objective_factor(entry) != 1.0:
+        if not is_teachable(entry) or _objective_factor(entry) != 1.0:
             continue
-        key = (
-            str(entry.get("platform") or "").strip().lower(),
-            str(entry.get("format") or "").strip().lower(),
-            str(entry.get("kpi") or "").strip().lower(),
-        )
-        groups.setdefault(key, []).append((entry, _weighted_score(entry)))
+        # Legacy rows without an explicit KPI/surface cannot establish that
+        # the samples are comparable, so they remain advisory only.
+        platform = str(entry.get("platform") or "").strip().lower()
+        fmt = str(entry.get("format") or "").strip().lower()
+        kpi = str(entry.get("kpi") or "").strip().lower()
+        if not (platform and fmt and kpi):
+            continue
+        groups.setdefault((platform, fmt, kpi), []).append((entry, _weighted_score(entry)))
+    return groups
 
+
+def _losers(entries: list[dict]) -> list[tuple[dict, float]]:
+    # Compare like with like. A Story's reach and a LinkedIn post's engagement
+    # are not interchangeable, even when both were created for the same KPI.
     losers: list[tuple[dict, float]] = []
-    for same_surface in groups.values():
+    for same_surface in _surface_groups(entries).values():
         if len(same_surface) < _MIN_SAMPLES:
             continue
         same_surface.sort(key=lambda pair: pair[1])
@@ -125,13 +134,36 @@ def _losers(entries: list[dict]) -> list[tuple[dict, float]]:
     return losers
 
 
+def _strategy_losers(entries: list[dict]) -> list[tuple[str, str, str, str, str, float]]:
+    """Retire a strategy only after five same-surface examples prove it weak."""
+    result = []
+    for (platform, fmt, kpi), same_surface in _surface_groups(entries).items():
+        if len(same_surface) < _MIN_SAMPLES:
+            continue
+        surface_median = sorted(score for _, score in same_surface)[len(same_surface) // 2]
+        for field in ("hook_strategy", "attention_mechanism"):
+            by_strategy: dict[str, list[float]] = {}
+            for entry, score in same_surface:
+                strategy = normalize(entry.get(field))
+                if strategy:
+                    by_strategy.setdefault(strategy, []).append(score)
+            for strategy, scores in by_strategy.items():
+                if len(scores) < _MIN_SAMPLES:
+                    continue
+                strategy_median = sorted(scores)[len(scores) // 2]
+                if strategy_median < surface_median:
+                    result.append((platform, fmt, kpi, field, strategy, strategy_median))
+    return result
+
+
 def retire_from_learning(entries: list[dict] | None = None, *, now: str | None = None) -> dict:
     """Retire measured losers durably. Returns what changed (idempotent)."""
     if entries is None:
         from content_generator.core.learning_engine import _load_log
         entries = _load_log()
     losers = _losers(entries)
-    state = _load()
+    strategy_losers = _strategy_losers(entries)
+    state = _load(strict=True)
     stamp = now or datetime.datetime.now().isoformat(timespec="seconds")
     added_hooks: list[str] = []
     added_strategies: list[str] = []
@@ -149,11 +181,15 @@ def retire_from_learning(entries: list[dict] | None = None, *, now: str | None =
         if hook and hook not in state["hooks"]:
             state["hooks"][hook] = dict(record, text=str(entry.get("hook") or ""))
             added_hooks.append(hook)
-        for field in ("hook_strategy", "attention_mechanism"):
-            strategy = normalize(entry.get(field))
-            if strategy and strategy not in state["strategies"]:
-                state["strategies"][strategy] = dict(record, field=field)
-                added_strategies.append(strategy)
+    for platform, fmt, kpi, field, strategy, score in strategy_losers:
+        key = "::".join((platform, fmt, kpi, field, strategy))
+        if key not in state["strategies"]:
+            state["strategies"][key] = {
+                "score": round(float(score), 4), "platform": platform,
+                "format": fmt, "kpi": kpi, "field": field,
+                "strategy": strategy, "retired_at": stamp,
+            }
+            added_strategies.append(key)
 
     if added_hooks or added_strategies:
         if len(state["hooks"]) > _MAX_TRACKED:
@@ -176,16 +212,23 @@ def retire_from_learning(entries: list[dict] | None = None, *, now: str | None =
 
 
 def retired_hooks() -> set[str]:
-    return set(_load()["hooks"])
+    return set(_load(strict=True)["hooks"])
 
 
-def retired_strategies() -> set[str]:
-    return set(_load()["strategies"])
+def retired_strategies(platform: str = "", fmt: str = "") -> set[str]:
+    state = _load(strict=True)
+    return {
+        str(record.get("strategy") or "")
+        for record in state["strategies"].values()
+        if (not platform or record.get("platform") == platform)
+        and (not fmt or record.get("format") == fmt)
+        and record.get("strategy")
+    }
 
 
 def is_hook_retired(hook: str) -> bool:
     key = normalize(hook)
-    return bool(key) and key in _load()["hooks"]
+    return bool(key) and key in _load(strict=True)["hooks"]
 
 
 def template_tags(template: str) -> set[str]:
@@ -205,27 +248,48 @@ def template_tags(template: str) -> set[str]:
     return tags
 
 
-def is_template_retired(template: str) -> bool:
+def is_template_retired(template: str, platform: str = "", fmt: str = "") -> bool:
     if is_hook_retired(template):
         return True
-    retired = retired_strategies()
+    retired = retired_strategies(platform, fmt)
     return bool(retired & template_tags(template))
 
 
-def active_templates(templates: list[str]) -> list[str]:
-    """Templates that do not reuse a measured-losing hook or strategy."""
+def active_templates(templates: list[str], platform: str = "", fmt: str = "") -> list[str]:
+    """Templates that do not reuse a measured-losing hook or same-surface strategy."""
     if not templates:
         return []
-    return [template for template in templates if not is_template_retired(template)]
+    # Load once in strict mode: malformed state must never make retired hooks
+    # available again merely because a forgiving reader returned an empty set.
+    state = _load(strict=True)
+    retired_hooks_set = set(state["hooks"])
+    retired_strategy_set = {
+        str(record.get("strategy") or "")
+        for record in state["strategies"].values()
+        if (not platform or record.get("platform") == platform)
+        and (not fmt or record.get("format") == fmt)
+        and record.get("strategy")
+    }
+    active = []
+    for template in templates:
+        if normalize(template) in retired_hooks_set:
+            continue
+        if retired_strategy_set & template_tags(template):
+            continue
+        active.append(template)
+    return active
 
 
 def retired_lines(limit: int = 8) -> list[str]:
     """Short prompt lines naming what the account stopped reusing."""
-    state = _load()
+    state = _load(strict=True)
     lines: list[str] = []
     for key, record in list(state["hooks"].items())[-limit:]:
         text = str(record.get("text") or key)
         lines.append(f'- permanently retired hook (measured bottom 20%): "{text[:120]}"')
-    for key in list(state["strategies"])[-limit:]:
-        lines.append(f"- permanently retired hook strategy: {key}")
+    for record in list(state["strategies"].values())[-limit:]:
+        lines.append(
+            "- permanently retired hook strategy for %s/%s: %s"
+            % (record.get("platform", "unknown"), record.get("format", "unknown"), record.get("strategy", "unknown"))
+        )
     return lines
