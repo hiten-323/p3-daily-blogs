@@ -638,7 +638,13 @@ def render_cinematic_until_pass(sku, beats, out_path, *, seconds=10.0, seed=0, m
         if verdict.get("passed"):
             visual_gate.remember_layout(layout, os.path.basename(out_path))
             return meta
-        logger.warning("[cinematic] %s try %d failed visual gate: %s", sku, i + 1, (verdict.get("reasons") or [])[:4])
+        reasons = [str(r) for r in (verdict.get("reasons") or [])]
+        for frame in verdict.get("frames") or []:
+            vision = frame.get("vision") if isinstance(frame, dict) else None
+            if isinstance(vision, dict) and vision.get("errors"):
+                reasons.extend("vision_provider:" + str(error) for error in vision["errors"][:5])
+        logger.warning("[cinematic] %s try %d failed visual gate: %s", sku, i + 1, reasons[:6])
+        _remember_render_obstacle(format_type, reasons)
         if visual_gate.is_vision_hold(verdict):
             logger.error("[cinematic] no vision scorer available — holding (fail fast, no re-render)")
             return None
@@ -695,6 +701,7 @@ def _render_concept_until_pass(sku, beats, out_path, *, seconds, seed, max_tries
         logger.warning("[cinematic] %s try %d failed: gate=%s variety=%s", sku, i + 1,
                        reasons[:4], (variety.get("reasons") or [])[:3])
         if visual_gate.is_vision_hold(verdict):
+            _remember_render_obstacle(format_type, reasons + ["vision_outage:all_providers_down"])
             logger.error("[cinematic] no vision scorer available — holding (fail fast, no re-render)")
             return None
         blob = " ".join(reasons).lower()
