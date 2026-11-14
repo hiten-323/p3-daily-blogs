@@ -717,7 +717,7 @@ def _remember_render_obstacle(format_type: str, reasons) -> None:
     """A failed plate or layout is a lesson for the next render, not a silent drop."""
     try:
         from content_generator.core.obstacle_lessons import platform_for, record
-        label = "yt_short" if str(format_type or "").lower() == "short" else "reel_1"
+        label = "yt_short" if str(format_type or "").lower() == "short" else ("ig_story" if str(format_type or "").lower() == "story" else "reel_1")
         text = "; ".join(str(r) for r in (reasons or []) if str(r).strip())[:300] or "visual gate failed"
         record(platform_for(label), label, "render", "aesthetic", text,
                "Use a different layout and the next background provider. Do not repeat a failed plate.")
