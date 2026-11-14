@@ -275,7 +275,8 @@ def _run_generate_slot(day_number: int = None) -> dict:
         )
 
     # ── 11. Weekly summary (Mondays only) ─────────────────────────────────────
-    _maybe_weekly_summary()
+    if os.getenv("DRY_RUN", "").strip().lower() not in ("1", "true", "yes", "on"):
+        _maybe_weekly_summary()
 
     elapsed = round(time.time() - t0, 1)
     logger.info("[scheduler] ======= DONE in %.1fs -> %s =======", elapsed, filepath)
@@ -1914,6 +1915,8 @@ def _do_revenue_attribution() -> dict:
 
 
 def _publishing_enabled() -> bool:
+    if os.getenv("DRY_RUN", "").strip().lower() in ("1", "true", "yes", "on"):
+        return False
     return os.getenv("PUBLISHING_ENABLED", "true").strip().lower() in ("1", "true", "yes", "on")
 
 
@@ -1991,12 +1994,18 @@ def _do_publish(content: dict, day_number: int) -> dict:
 
 
 def _do_founder_report(content: dict, nurture_result: dict, publish_result: dict = None) -> bool:
+    if os.getenv("DRY_RUN", "").strip().lower() in ("1", "true", "yes", "on"):
+        logger.info("[dry-run] founder notification suppressed")
+        return False
     from content_generator.scheduler.founder_report import send_founder_report
     pipeline = {**(nurture_result or {}), "publish": publish_result or {}}
     return send_founder_report(content=content, pipeline_result=pipeline)
 
 
 def _do_nurture() -> dict:
+    if os.getenv("DRY_RUN", "").strip().lower() in ("1", "true", "yes", "on"):
+        logger.info("[dry-run] customer nurture suppressed")
+        return {"skipped": True, "reason": "dry_run", "dispatched": 0}
     """
     Daily nurture step — find stalling leads and send follow-up messages.
 
@@ -2082,8 +2091,12 @@ def _maybe_weekly_summary() -> None:
 
 # ── Manual trigger ────────────────────────────────────────────────────────────
 
-def run_now(day_number: int = None) -> dict:
-    """Run the full pipeline immediately. Useful for testing and CI."""
+def run_now(day_number: int = None, dry_run: bool = False) -> dict:
+    """Run the full pipeline immediately; dry_run suppresses every outbound action."""
+    if dry_run:
+        os.environ["DRY_RUN"] = "1"
+        os.environ["PUBLISHING_ENABLED"] = "false"
+        os.environ["NURTURE_ENABLED"] = "false"
     return run_full_pipeline(day_number=day_number)
 
 
@@ -2159,7 +2172,7 @@ if __name__ == "__main__":
 
         slot = get_current_slot() if slots_enabled() else "generate"
         if slot == "generate":
-            result = run_now(day_number=_day)
+            result = run_now(day_number=_day, dry_run="--dry-run" in sys.argv)
         else:
             # Publish-only slot: post this morning's content at its optimal window
             result = run_publish_slot(slot)
