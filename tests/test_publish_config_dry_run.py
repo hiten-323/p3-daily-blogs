@@ -49,9 +49,10 @@ def test_generate_dry_run_runs_pipeline_but_skips_publishing_and_commits():
     assert "github.event.inputs.dry_run == 'true' && 'false'" in workflow
     assert "github.event.inputs.dry_run != 'true'" in workflow
 
-def test_nine_piece_dry_run_holds_story_when_visual_renderer_does_not_pass(monkeypatch):
+def test_nine_piece_dry_run_holds_story_when_visual_renderer_does_not_pass(monkeypatch, tmp_path):
     from content_generator.core import editorial_engine, publish_bar, product_truth, process_match
-    from content_generator.creative import story_video, cinematic_frame, rendered_asset_qa
+    from content_generator.creative import story_video, cinematic_frame, rendered_asset_qa, reel_video, visual_gate
+    from content_generator.publisher import youtube
     from content_generator.publisher import story_copy, product_links, instagram
     from content_generator import rotation
 
@@ -71,14 +72,29 @@ def test_nine_piece_dry_run_holds_story_when_visual_renderer_does_not_pass(monke
     monkeypatch.setattr(rotation, "pick", lambda products, day: "purica")
     monkeypatch.setattr(cinematic_frame, "compose_cinematic_frame", lambda **kwargs: "story.jpg")
     monkeypatch.setattr(rendered_asset_qa, "audit_rendered_images", lambda paths: {"ok": True, "issues": []})
+    monkeypatch.setattr(reel_video, "build_reel_video", lambda *a, **k: "reel.mp4")
+    monkeypatch.setattr(youtube, "_find_video", lambda content: "short.mp4")
+    monkeypatch.setattr(youtube, "_create_slideshow_short", lambda content, day: "short.mp4")
+    monkeypatch.setattr(visual_gate, "recent_layouts", lambda: [])
+    monkeypatch.setattr(visual_gate, "evaluate_video", lambda *a, **k: {"passed": True, "reasons": []})
     monkeypatch.setattr(instagram, "_static_story_visual_hold", lambda path: {"error": "visual_gate_hold"})
     monkeypatch.setattr(daily, "_remember_obstacle", lambda *a, **k: None)
 
+    image_paths = []
+    for name in ("ig.jpg", "carousel.jpg", "facebook.jpg"):
+        path = tmp_path / name
+        path.write_bytes(b"image")
+        image_paths.append(str(path))
     content = {
         "day_number": 340,
         "instagram_post": {}, "stories": {"story_1": {}}, "carousel": {},
         "growth_reel": {}, "reels": [{}], "facebook_post": {},
         "threads_post": {}, "linkedin_post": {}, "yt_short": {},
+        "_creative_audit": {"image_assets": [
+            {"platform": "instagram", "path": image_paths[0], "jar_verified": True},
+            {"platform": "instagram_carousel", "path": image_paths[1], "jar_verified": True},
+            {"platform": "facebook", "path": image_paths[2], "jar_verified": True},
+        ]},
     }
     report = daily.dry_run_asset_report(content)
     assert report["passed"] == 8
