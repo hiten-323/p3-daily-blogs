@@ -28,7 +28,7 @@ on:
         required: false
         default: 'false'
       dry_run:
-        description: 'Probe LLM providers and run tests. Skips publishing and git commits.'
+        description: 'Generate and gate all nine pieces; suppresses publishing, nurture, notifications and git commits.'
         required: false
         type: boolean
         default: false
