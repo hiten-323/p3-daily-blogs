@@ -58,7 +58,7 @@ def test_gates_stay_at_eight():
     from content_generator.core.viral_gate import PASS_MARK
 
     assert PASS_FLOOR == 8.0
-    assert PASS_MARK == 8.0
+    assert PASS_MARK == 9.0
     assert get_current_pass_score() == 8.0
 
 

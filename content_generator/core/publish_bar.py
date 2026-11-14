@@ -1,4 +1,4 @@
-"""Shared 8.0 editorial + LLM viral bar for every publish path.
+"""Shared 8.0 editorial + 9.0 LLM viral bar for every publish path.
 
 The morning Facebook mirror used to publish a piece whose editorial score
 was 8.6 while the viral judge had rejected it at 7.0, and an exhausted

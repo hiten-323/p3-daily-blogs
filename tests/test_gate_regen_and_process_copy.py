@@ -154,7 +154,7 @@ def test_nested_facebook_copy_is_scored_until_it_passes(monkeypatch):
     from content_generator.scheduler import daily
 
     assert PASS_FLOOR == 8.0
-    assert PASS_MARK == 8.0
+    assert PASS_MARK == 9.0
     assert get_current_pass_score() == 8.0
 
     seen = []

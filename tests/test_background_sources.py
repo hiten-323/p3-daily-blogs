@@ -50,7 +50,7 @@ def test_provider_order_and_gates_unchanged():
     assert ai_backgrounds.PROVIDER_ORDER == (
         "kaggle_bank", "hf_ltx", "hf_wan", "pixazo", "runway", "pexels", "pixabay",
     )
-    assert PASS_MARK == 8.0
+    assert PASS_MARK == 9.0
     assert PASS_FLOOR == 8.0
     assert EDITORIAL_THRESHOLD == 8.0
     assert AESTHETIC_PASS == 8.0

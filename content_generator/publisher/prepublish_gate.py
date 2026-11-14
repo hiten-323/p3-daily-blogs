@@ -130,7 +130,7 @@ def authorize_publish(content: Any, platform: str) -> dict:
         logger.exception("[prepublish] Claim safety gate failed for %s", platform)
         return {"allowed": False, "asset_key": key, "reason": f"claim_safety_error:{type(exc).__name__}", "checks": {"editorial": True}}
 
-    # Same 8.0 editorial + LLM viral bar on every platform. A 7.0 viral
+    # Same 8.0 editorial + 9.0 LLM viral bar on every platform. A 7.0 viral
     # reject used to pass this function because only the editorial float
     # and the deterministic readiness score were checked.
     try:

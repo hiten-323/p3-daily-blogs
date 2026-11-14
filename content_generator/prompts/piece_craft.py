@@ -1,6 +1,6 @@
 """Shared hook, tension-arc, lesson, and follow-growth rules for Shorts and reels.
 
-The 8.0 editorial and viral gates are unchanged. This only tells the next
+The 8.0 editorial and 9.0 viral gates are unchanged. This only tells the next
 attempt what the judge already rejected.
 """
 from __future__ import annotations

@@ -394,6 +394,18 @@ def _log_daily_summary(content: dict, publish_result: dict, elapsed: float, fail
         lines.append(f"Learning: {n} posts with performance data so far")
     except Exception as e:
         logger.debug("[summary] learning count unavailable: %s", e)
+    # Close the post-publish loop: measured losers become retired hook
+    # templates for tomorrow. Insufficient evidence retires nothing.
+    try:
+        from content_generator.core.hook_retirement import retire_from_learning
+        retired = retire_from_learning()
+        if retired.get("added_hooks") or retired.get("added_strategies"):
+            lines.append(
+                "Learning retirement: %d hook(s), %d strategie(s) retired"
+                % (len(retired["added_hooks"]), len(retired["added_strategies"]))
+            )
+    except Exception as e:
+        logger.warning("[summary] hook retirement update failed: %s", e)
     try:
         from content_generator.analytics.telemetry import format_report
         lines.append(format_report(7))
@@ -1075,6 +1087,12 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
         ("threads_post",   "threads_post",   None),
         ("growth_reel",    "growth_reel",    None),
         ("yt_short",       "yt_short",       None),
+        # The generated Story used to be excluded from this loop, so
+        # instagram.post_story published it only when some other path had
+        # already stamped a score. A nested string index targets
+        # content["stories"]["story_1"] and makes the Story take the same
+        # editorial + viral gate as every other asset.
+        ("stories",        "stories",        "story_1"),
     ]
     # Blog regen only when explicitly enabled; Blogs bot owns Shopify blog.
     if blog_enabled():
@@ -1091,9 +1109,12 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
     for label, key, idx in review_targets:
         if only is not None and label not in only:
             continue
-        if idx is not None:
+        if isinstance(idx, str):
+            holder = content.get(key)
+            piece = (holder.get(idx) if isinstance(holder, dict) else None) or {}
+        elif idx is not None:
             pieces = content.get(key) or []
-            piece  = pieces[idx] if len(pieces) > idx else {}
+            piece  = pieces[idx] if isinstance(pieces, list) and len(pieces) > idx else {}
         else:
             piece  = content.get(key) or {}
 
@@ -1107,7 +1128,13 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
             piece = _materialize_missing_piece(content, label, day_no, featured or "")
             if not isinstance(piece, dict) or not piece:
                 continue
-            if idx is not None:
+            if isinstance(idx, str):
+                holder = content.get(key)
+                if not isinstance(holder, dict):
+                    holder = {}
+                    content[key] = holder
+                holder[idx] = piece
+            elif idx is not None:
                 slot = content.get(key)
                 if not isinstance(slot, list):
                     slot = []

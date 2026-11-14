@@ -7,8 +7,8 @@ def _call(scores, overall=9):
     return lambda prompt, label, max_tokens: {"scores": scores, "overall": overall, "feedback": "f"}
 
 
-def test_pass_mark_is_8():
-    assert vg.PASS_MARK == 8.0
+def test_pass_mark_is_9():
+    assert vg.PASS_MARK == 9.0
 
 
 def test_passes_at_or_above_8():
@@ -63,10 +63,10 @@ def test_prompt_block_includes_hooks():
     assert "VIRAL HOOK TEMPLATES" in prompt_block("reel_1", "bold", 1)
 
 
-def _score_body(overall: float = 8.7) -> str:
+def _score_body(overall: float = 9.2) -> str:
     import json
     return json.dumps({
-        "scores": {k: 9 for k in vg.DIMENSIONS},
+        "scores": {k: 9.4 for k in vg.DIMENSIONS},
         "overall": overall,
         "weakest": ["follow_cta"],
         "feedback": "Put the follow reason in the last beat.",
@@ -113,9 +113,9 @@ def _nvidia_router(monkeypatch, raw: str):
 def test_reasoning_prose_then_json_is_a_real_viral_score(monkeypatch):
     router = _nvidia_router(monkeypatch, _REASONING_THEN_JSON)
     result = vg.evaluate("yt_short", {"caption": "Watch the granules bloom."}, call=router.call)
-    assert vg.PASS_MARK == 8.0
+    assert vg.PASS_MARK == 9.0
     assert result["passed"] is True
-    assert result["overall"] == 8.7
+    assert result["overall"] == 9.2
     assert "error" not in result
     assert set(result["scores"]) == set(vg.DIMENSIONS)
 
@@ -123,7 +123,7 @@ def test_reasoning_prose_then_json_is_a_real_viral_score(monkeypatch):
 def test_reasoning_only_truncated_response_is_held(monkeypatch):
     router = _nvidia_router(monkeypatch, _REASONING_ONLY)
     result = vg.evaluate("yt_short", {"caption": "Watch the granules bloom."}, call=router.call)
-    assert vg.PASS_MARK == 8.0
+    assert vg.PASS_MARK == 9.0
     assert result["passed"] is False
     assert result["overall"] is None
     assert str(result.get("error", "")).startswith("viral_scoring_failed")
@@ -136,13 +136,13 @@ def test_incomplete_judge_is_retried_once_then_can_pass():
         calls["n"] += 1
         if calls["n"] == 1:
             return {"scores": {"hook": 9}, "overall": 9, "feedback": "truncated"}
-        return {"scores": dict(GOOD), "overall": 8.4, "feedback": "specific", "weakest": ["hook"]}
+        return {"scores": dict(GOOD), "overall": 9.2, "feedback": "specific", "weakest": ["hook"]}
 
     result = vg.evaluate("threads_post", {"text": "The jar lists the process."}, call=call)
     assert calls["n"] == 2
     assert result["passed"] is True
-    assert result["overall"] == 8.4
-    assert vg.PASS_MARK == 8.0
+    assert result["overall"] == 9.0
+    assert vg.PASS_MARK == 9.0
 
 
 def test_scoring_failure_keeps_the_draft(monkeypatch):
@@ -171,10 +171,10 @@ def test_scoring_failure_keeps_the_draft(monkeypatch):
         scores["n"] += 1
         if scores["n"] == 1:
             return {"passed": False, "overall": None, "scores": {}, "honesty": [],
-                    "pass_mark": 8.0, "error": "viral_scoring_failed: ValueError: missing dimensions",
+                    "pass_mark": 9.0, "error": "viral_scoring_failed: ValueError: missing dimensions",
                     "feedback": "viral_scoring_failed: ValueError: missing dimensions"}
-        return {"passed": True, "overall": 8.4, "scores": dict(GOOD), "honesty": [],
-                "pass_mark": 8.0, "feedback": "specific"}
+        return {"passed": True, "overall": 9.2, "scores": dict(GOOD), "honesty": [],
+                "pass_mark": 9.0, "feedback": "specific"}
 
     def regenerate(*args, **kwargs):
         regens["n"] += 1
@@ -199,7 +199,7 @@ def test_scoring_failure_keeps_the_draft(monkeypatch):
     assert "back panel names the process" in content["threads_post"]["text"]
     assert regens["n"] == 0
     assert scores["n"] == 2
-    assert content["threads_post"]["viral_potential"]["overall"] == 8.4
+    assert content["threads_post"]["viral_potential"]["overall"] == 9.2
     assert content["threads_post"]["editorial_score"]["overall"] == 9.1
 
 
@@ -213,9 +213,9 @@ def test_trailing_fragment_does_not_replace_the_score(monkeypatch):
         + '\n{"note": "done"}'
     )
     result = vg.evaluate("threads_post", {"text": "Read the jar."}, call=_nvidia_router(monkeypatch, raw).call)
-    assert vg.PASS_MARK == 8.0
+    assert vg.PASS_MARK == 9.0
     assert result["passed"] is True
-    assert result["overall"] == 8.7
+    assert result["overall"] == 9.2
     assert "error" not in result
 
 
