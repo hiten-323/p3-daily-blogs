@@ -321,6 +321,29 @@ def test_hf_video_busy_response_retries_but_quota_does_not(monkeypatch):
     assert hf_video.interpret(*result)[0] == "quota"
 
 
+def test_hf_wan_i2v_receives_only_procedural_steam_still(monkeypatch):
+    import base64
+    import io
+    from PIL import Image
+    from content_generator.creative import video_fallbacks, hf_video
+
+    monkeypatch.setenv("HF_TOKEN", "test-hf-token")
+    monkeypatch.setattr(hf_video, "_AUTH_DEAD", False)
+    monkeypatch.setattr(video_fallbacks, "_lesson", lambda *a, **k: None)
+    seen = {}
+
+    def request(url, payload, headers, timeout):
+        seen["payload"] = payload
+        return 402, b'{"error":"credits exhausted"}', "application/json"
+
+    monkeypatch.setattr(hf_video, "_request", request)
+    monkeypatch.setattr(hf_video, "_router_url", lambda provider, model: "https://router.invalid/test")
+    assert video_fallbacks.wan_i2v({"ai_prompt": "steam rising", "format": "reel"}, "growth_reel") is None
+    image_data = seen["payload"]["parameters"]["image"].split(",", 1)[1]
+    image = Image.open(io.BytesIO(base64.b64decode(image_data)))
+    assert image.format == "JPEG"
+    assert image.size == (256, 384)
+    assert "jar" not in seen["payload"]["inputs"].lower()
 def test_hf_quota_busy_and_timeout_skip_cleanly(tmp_path, monkeypatch):
     hf_video.reset_session()
     monkeypatch.setattr(hf_video, "_OUT", str(tmp_path))
