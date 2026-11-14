@@ -52,3 +52,17 @@ def test_reel_1_also_uses_local_ffmpeg_as_the_only_final_fallback(monkeypatch):
     )
     assert result == "reel1.mp4"
     assert calls == ["provider_and_procedural", "local_ffmpeg"]
+
+def test_reused_reel_template_must_pass_the_8_gate_before_return(monkeypatch):
+    from content_generator.creative import product_reel_templates
+
+    monkeypatch.setenv("ENABLE_REEL_VIDEO", "true")
+    monkeypatch.setattr(product_reel_templates, "resolve_reusable_reel", lambda reel: "template.mp4")
+    monkeypatch.setattr(product_reel_templates, "materialize_template", lambda *a, **k: "materialized.mp4")
+    monkeypatch.setattr(visual_gate, "recent_layouts", lambda: [])
+    monkeypatch.setattr(visual_gate, "evaluate_video",
+                        lambda *a, **k: {"passed": False, "reasons": ["aesthetic_below_8.0:6.5"]})
+    monkeypatch.setattr("content_generator.scheduler.daily._remember_obstacle", lambda *a, **k: None)
+    monkeypatch.setattr(reel_video, "_cinematic", lambda *a, **k: None)
+    monkeypatch.setattr(reel_video, "_photo_fallback", lambda *a, **k: "gated-ffmpeg.mp4")
+    assert reel_video.build_reel_video({"product": "purica"}, 340, "reel_1") == "gated-ffmpeg.mp4"
