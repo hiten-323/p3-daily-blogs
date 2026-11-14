@@ -240,6 +240,7 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          PUBLISHING_ENABLED: ${{ vars.PUBLISHING_ENABLED }}
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           PIXAZO_API_KEY: ${{ secrets.PIXAZO_API_KEY }}
