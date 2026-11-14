@@ -1,6 +1,7 @@
 """Mask and redact publishing tokens before they reach logs or URLs."""
 from __future__ import annotations
 
+import os
 import urllib.parse
 
 
