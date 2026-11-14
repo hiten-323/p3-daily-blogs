@@ -58,8 +58,20 @@ def build_story_video(
         )
         selected = select_product_reel(text=reference_text if reference_text is not None else headline)
         if selected:
-            logger.info("[story_video] reusing founder product reel %s", os.path.basename(selected["path"]))
-            return materialize_template(selected["path"], day, label, on_date=on_date, hook_text=headline)
+            logger.info("[story_video] checking founder product reel template %s", os.path.basename(selected["path"]))
+            candidate = materialize_template(selected["path"], day, label, on_date=on_date, hook_text=headline)
+            from content_generator.creative import visual_gate
+            verdict = visual_gate.evaluate_video(candidate, None, visual_gate.recent_layouts())
+            if verdict.get("passed"):
+                logger.info("[story_video] reused template passed the 8.0 visual gate")
+                return candidate
+            reasons = [str(x) for x in (verdict.get("reasons") or [])]
+            logger.warning("[story_video] reused template rejected: %s", reasons[:6])
+            try:
+                from content_generator.scheduler.daily import _remember_obstacle
+                _remember_obstacle("ig_story", "; ".join(reasons), "visual_gate", gate="story_template_visual_gate")
+            except Exception:
+                pass
     except Exception as exc:
         logger.debug("[story_video] product reel lookup skipped: %s", exc)
 
