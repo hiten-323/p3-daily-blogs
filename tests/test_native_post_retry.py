@@ -352,3 +352,14 @@ def test_regen_cap_drops_exhausted_native_targets_and_keeps_open_ones():
     assert "facebook" in unchanged
     assert "youtube" in unchanged
     assert "threads" in unchanged
+
+def test_secret_mask_only_emits_actions_command_in_ci(monkeypatch, capsys):
+    from content_generator.publisher.secret_mask import mask_secret
+
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    mask_secret("local-secret")
+    assert capsys.readouterr().out == ""
+
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    mask_secret("ci-secret")
+    assert capsys.readouterr().out == "::add-mask::ci-secret\\n"
