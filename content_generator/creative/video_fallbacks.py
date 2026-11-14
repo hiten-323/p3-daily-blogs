@@ -43,15 +43,29 @@ def safe_prompt(choice: dict | None) -> str:
 
 
 def ambience_jpeg() -> bytes:
-    """A small steam-colored still. It is not a photograph of a jar."""
-    from PIL import Image, ImageDraw
-    image = Image.new("RGB", (64, 96), (28, 18, 14))
-    draw = ImageDraw.Draw(image)
-    for i, color in enumerate(((80, 60, 48), (140, 120, 100), (210, 200, 190))):
-        draw.ellipse((18 - i * 2, 10 + i * 16, 46 + i * 2, 40 + i * 16), fill=color)
+    """Procedural steam-only still for image-to-video; never a jar or product photo."""
+    from PIL import Image, ImageDraw, ImageFilter
+    image = Image.new("RGB", (256, 384))
+    px = image.load()
+    top, bottom = (20, 13, 12), (62, 38, 25)
+    for y in range(image.height):
+        t = y / max(1, image.height - 1)
+        color = tuple(int(top[i] * (1 - t) + bottom[i] * t) for i in range(3))
+        for x in range(image.width):
+            px[x, y] = color
+    steam = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(steam)
+    for index, x in enumerate((78, 128, 178)):
+        offset = index * 9
+        draw.arc((x - 34, 105 + offset, x + 12, 280 + offset), 185, 345,
+                 fill=(232, 213, 188, 118 - index * 18), width=5)
+        draw.arc((x - 12, 70 + offset, x + 35, 235 + offset), 195, 350,
+                 fill=(245, 229, 208, 90 - index * 12), width=3)
+    steam = steam.filter(ImageFilter.GaussianBlur(4))
+    image = Image.alpha_composite(image.convert("RGBA"), steam).convert("RGB")
     import io
     buf = io.BytesIO()
-    image.save(buf, format="JPEG", quality=70)
+    image.save(buf, format="JPEG", quality=78)
     return buf.getvalue()
 
 
