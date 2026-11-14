@@ -10,9 +10,11 @@ it as an Authorization header so that URL stays free of the secret. Logs
 carry the token type, expiry, scopes, and username. The token value is
 redacted from every line, including error bodies.
 
-Strict mode (token health, publish preflight) fails when instagram_basic or
-instagram_content_publish is missing, or when the token is expired. Soft mode
-(generate) reports the same facts as warnings and continues.
+Strict mode (token health, publish preflight) fails when instagram_basic,
+instagram_content_publish, instagram_manage_insights, or pages_read_engagement
+is missing, or when the token is expired. Insights permission is a production
+requirement because published content must be measurable. Soft mode (generate)
+reports the same facts as warnings and continues.
 
 FACEBOOK_PAGE_ACCESS_TOKEN is required for strict publish preflight and must
 include pages_manage_posts. Missing credentials, lookup errors, missing scope,
@@ -37,7 +39,12 @@ from datetime import datetime, timezone
 
 from config.api_versions import META_GRAPH_BASE
 
-IG_SCOPES = ("instagram_basic", "instagram_content_publish")
+IG_SCOPES = (
+    "instagram_basic",
+    "instagram_content_publish",
+    "instagram_manage_insights",
+    "pages_read_engagement",
+)
 FB_SCOPES = ("pages_manage_posts",)
 _TIMEOUT_S = 15
 

@@ -33,6 +33,14 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: python -m pip install --no-cache-dir -r requirements.txt
+      - name: Enforce global publishing kill switch
+        env:
+          PUBLISHING_ENABLED: ${{ vars.PUBLISHING_ENABLED }}
+        run: |
+          if [ "$PUBLISHING_ENABLED" != "true" ]; then
+            echo "::error::Publishing is globally disabled. Do not enable it until production acceptance is complete."
+            exit 1
+          fi
       - name: Resolve Meta publishing account
         id: meta_preflight
         env:

@@ -103,7 +103,7 @@ def test_healthy_token_logs_type_expiry_scopes_and_username(monkeypatch, capsys)
     assert code == 0
     assert "type=PAGE" in out
     assert "expires=never" in out
-    assert "scopes=instagram_basic,instagram_content_publish" in out
+    assert "scopes=instagram_basic,instagram_content_publish,instagram_manage_insights,pages_read_engagement" in out
     assert "username=puritybeans" in out
     assert TOKEN not in out
     debug = seen[0]

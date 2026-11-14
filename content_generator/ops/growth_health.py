@@ -10,8 +10,10 @@ cannot be trusted and the caller should fail closed rather than publish.
 """
 from __future__ import annotations
 
+import datetime
 import json
 import os
+import time
 from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
@@ -150,6 +152,36 @@ def config_health() -> dict[str, Any]:
     return result
 
 
+def shopify_access_health() -> dict[str, Any]:
+    """Verify read_orders access without logging or persisting order details."""
+    try:
+        from content_generator.analytics import revenue_attribution
+        if not revenue_attribution.is_configured():
+            return {"status": "not_configured", "recent_orders": 0, "instagram_marked_orders": 0}
+        since = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=48)
+        params = {
+            "status": "any",
+            "created_at_min": since.isoformat().replace("+00:00", "Z"),
+            "limit": 250,
+            "fields": "id,created_at,landing_site,referring_site,source_name",
+        }
+        data = None
+        for attempt in range(3):
+            data = revenue_attribution._shopify_get("orders.json", params)
+            if isinstance(data, dict) and isinstance(data.get("orders"), list):
+                break
+            if attempt < 2:
+                time.sleep(2 ** attempt)
+        if not isinstance(data, dict) or not isinstance(data.get("orders"), list):
+            return {"status": "failed", "recent_orders": 0, "instagram_marked_orders": 0}
+        orders = [row for row in data["orders"] if isinstance(row, dict)]
+        marked = sum(1 for row in orders if revenue_attribution._is_instagram_order(row))
+        return {"status": "ok", "recent_orders": len(orders), "instagram_marked_orders": marked}
+    except Exception as exc:
+        return {"status": "failed", "recent_orders": 0, "instagram_marked_orders": 0,
+                "error_type": type(exc).__name__}
+
+
 def attribution_health() -> dict[str, Any]:
     path = LEARNING / "attributed_orders.json"
     if not path.exists():
@@ -171,11 +203,13 @@ def run() -> int:
     meta = meta_preflight()
     config = config_health()
     attribution = attribution_health()
+    shopify = shopify_access_health()
 
     print("=== PURITY BEANS GROWTH OS HEALTH ===")
     print(f"Measurement : {measurement['status']} | records={measurement['records']} measured_views={measurement['measured_views']}" + (f" | missing={measurement.get('missing_permission')}" if measurement.get("missing_permission") else ""))
     print(f"Meta access : {meta['status']}")
     print(f"Attribution : {attribution['status']} | orders={attribution['orders']}")
+    print(f"Shopify API : {shopify['status']} | recent_orders={shopify['recent_orders']} instagram_marked={shopify['instagram_marked_orders']}")
     print(f"Config      : {config['status']} | warnings={','.join(config['warnings']) or 'none'}")
 
     # Cold measurement is not a publishing failure. It is explicitly surfaced
@@ -183,8 +217,12 @@ def run() -> int:
     hard_failures: list[str] = []
     if meta["status"] == "failed":
         hard_failures.append("instagram_graph_access")
+    if measurement["status"] == "permission_missing":
+        hard_failures.append("instagram_insights_permission")
     if attribution["status"] == "failed":
         hard_failures.append("attribution_ledger")
+    if shopify["status"] != "ok":
+        hard_failures.append("shopify_read_orders")
     if config["status"] == "failed":
         hard_failures.append("policy_configuration")
 

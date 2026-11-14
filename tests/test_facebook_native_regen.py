@@ -2,7 +2,7 @@
 
 2026-10-22 retry runs 39750328684 and 39745778845 exhausted the ladder because
 the facebook_post candidate was a truncated article (introduction, sections,
-carousel) and the 8.0 editorial and viral gates scored that article. The gates
+carousel) and the 8.0 editorial and 9.0 viral gates scored that article. The gates
 stay where they are.
 """
 from __future__ import annotations
@@ -50,7 +50,7 @@ def test_gates_stay_at_eight():
     from content_generator.core.viral_gate import PASS_MARK
 
     assert PASS_FLOOR == 8.0
-    assert PASS_MARK == 8.0
+    assert PASS_MARK == 9.0
     assert get_current_pass_score() == 8.0
 
 

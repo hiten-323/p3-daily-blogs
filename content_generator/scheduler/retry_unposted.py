@@ -7,7 +7,7 @@ and reel_2 is retired, so it is never due, regenerated or published. A run
 never publishes both reels.
 
 A legacy ledger row with no asset still clears single-platform targets and reel_1.
-It does not clear carousel or growth_reel. The 8.0 gates stay.
+It does not clear carousel or growth_reel. The 8.0 editorial and 9.0 viral gates stay.
 Blog stays off unless BLOG_ENABLED.
 """
 from __future__ import annotations
@@ -361,7 +361,8 @@ def recover_blocked_stories(content: dict, todo: list[str]) -> bool:
 
     Reel targets are not rewritten. The process-match check is unchanged: the
     replacement has to pass it. A Story that already carries an editorial or
-    viral score is left in place so an unscored line cannot skip the 8.0 bar.
+    viral score is left in place so an unscored line cannot skip the shared
+    8.0 editorial / 9.0 viral bar.
     """
     if "ig_story" not in (todo or []) or not isinstance(content, dict):
         return False
@@ -420,7 +421,10 @@ def _approved(content: dict) -> dict:
                             bad, res.get("reason"))
                 approved.pop(bad, None)
     except Exception as e:
-        log.warning("[retry] pre-publish gate check failed (%s) — relying on editorial approval", e)
+        # A retry is still a real publish path. If the shared gate cannot
+        # authorize it, approve nothing rather than falling back to editorial-only.
+        log.error("[retry] pre-publish gate check failed (%s) — refusing all retry publishes", e)
+        return {}
     return approved
 
 
@@ -538,7 +542,7 @@ def main() -> int:
     regen_need = labels_to_regen(todo, approved, records)
     deadline = _time.monotonic() + MANDATORY_BUDGET_S
     while regen_need and _time.monotonic() < deadline:
-        log.warning("Gate regen (from scratch, 8.0 unchanged): %s", regen_need)
+        log.warning("Gate regen (from scratch, 8.0 editorial / 9.0 viral unchanged): %s", regen_need)
         mark_fresh(content, regen_need)
         _do_editorial(content, only=set(regen_need))
         save_content(content)

@@ -143,19 +143,17 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.warning("[linkedin] No linkedin_post in content — skipping")
         return {"success": False, "post_id": "", "url": "", "error": "no_content"}
 
-    if product_truth_findings(post_text):
+    if product_truth_findings(post_text, featured=featured_product_name(content)):
         logger.error("[linkedin] Refusing copy that contradicts the jar")
         return {"success": False, "attempted": False, "skipped": True,
                 "post_id": "", "url": "", "error": "product_truth_failed"}
 
-    from content_generator.core.publish_bar import quality_block, reason_code
-    linkedin_piece = content.get("linkedin_post") if isinstance(content.get("linkedin_post"), dict) else {}
-    block = quality_block(linkedin_piece, "linkedin_post")
-    if block:
-        code = reason_code(block)
-        logger.warning("[linkedin] Quality bar held the post: %s", block)
+    from content_generator.publisher.prepublish_gate import authorize_publish
+    gate = authorize_publish(content, "linkedin")
+    if not gate["allowed"]:
+        logger.warning("[linkedin] Full pre-publish gate held the post: %s", gate["reason"])
         return {"success": False, "attempted": False, "skipped": True,
-                "post_id": "", "url": "", "error": "prepublish_gate:" + code}
+                "post_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
 
     # Try to attach an image (carousel cover or first reel thumbnail)
     image_path = _find_image(content)

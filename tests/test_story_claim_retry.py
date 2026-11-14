@@ -128,7 +128,7 @@ def test_measured_story_is_not_swapped_off_the_quality_bar(tmp_path, monkeypatch
     monkeypatch.setenv("OBSTACLE_LESSONS_PATH", str(tmp_path / "lessons.json"))
     content = _pack()
     content["stories"]["story_1"]["editorial_score"] = {"overall": 8.6, "verdict": "PASS"}
-    content["stories"]["story_1"]["viral_potential"] = {"passed": True, "overall": 8.4}
+    content["stories"]["story_1"]["viral_potential"] = {"passed": True, "overall": 9.2}
     assert recover_blocked_stories(content, ["ig_story"]) is False
     assert content["stories"]["story_1"]["headline"] == _BLOCKED_HEADLINE
     assert content["stories"]["story_1"]["editorial_score"]["overall"] == 8.6
@@ -143,6 +143,10 @@ def test_post_story_logs_the_claim_block_and_does_not_publish(tmp_path, monkeypa
     monkeypatch.setattr(instagram, "is_configured", lambda: True)
     content = _pack()
     content["stories"] = {"story_1": dict(content["stories"]["story_1"])}
+    # This test is about the process-match block, so give the story the
+    # verdicts the shared bar now requires before that check runs.
+    content["stories"]["story_1"]["editorial_score"] = {"overall": 8.6, "verdict": "PASS"}
+    content["stories"]["story_1"]["viral_potential"] = {"passed": True, "overall": 9.2, "honesty": []}
     result = instagram.post_story(content, day=306)
     assert result["success"] is False
     assert result["attempted"] is False

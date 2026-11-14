@@ -149,8 +149,8 @@ def post_content(content: dict, day: int = 0,
             code = reason_code(block)
             return {"success": False, "post_id": "", "url": "",
                     "error": "prepublish_gate:" + code, "quality": block}
-        from content_generator.core.product_truth import product_truth_findings
-        if product_truth_findings(message_override):
+        from content_generator.core.product_truth import featured_product_name, product_truth_findings
+        if product_truth_findings(message_override, featured=featured_product_name(content)):
             return {"success": False, "post_id": "", "url": "",
                     "error": "prepublish_gate:product_truth_failed"}
     else:

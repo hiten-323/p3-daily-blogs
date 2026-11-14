@@ -56,7 +56,7 @@ def _passing(body):
         "cta": "Shop Purity Beans at p3online.in today.",
         "hashtags": "#PurityBeans #PureCoffee",
         "editorial_score": _score(8.6, "PASS"),
-        "viral_potential": {"passed": True, "overall": 8.4, "honesty": []},
+        "viral_potential": {"passed": True, "overall": 9.2, "honesty": []},
     }
 
 
@@ -125,6 +125,14 @@ def _clause(summary, label):
 
 def test_approved_piece_posts(monkeypatch, quiet_publish):
     _approve(monkeypatch, "linkedin_post", "yt_short")
+    from content_generator.publisher import prepublish_gate
+    gate_calls = []
+
+    def allow_full_gate(content, platform):
+        gate_calls.append(platform)
+        return {"allowed": True, "reason": "test-approved"}
+
+    monkeypatch.setattr(prepublish_gate, "authorize_publish", allow_full_gate)
     posted = _allow_posts(monkeypatch)
     content = {
         "linkedin_post": _passing("APPROVED LINKEDIN BODY about the label on the jar."),
@@ -136,6 +144,7 @@ def test_approved_piece_posts(monkeypatch, quiet_publish):
     yt = youtube.post_content(content, day=276)
     assert li["success"] is True
     assert yt["success"] is True
+    assert "linkedin" in gate_calls and "youtube" in gate_calls
     assert "APPROVED LINKEDIN BODY" in posted["linkedin"]
     assert posted["youtube"]
 
