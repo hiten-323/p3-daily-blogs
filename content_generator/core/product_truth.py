@@ -554,7 +554,7 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
         return []
     source = _claim_text(str(text))
     findings: list[dict] = []
-    for raw_url in re.findall(r"https?://[^\\s)]+", source):
+    for raw_url in re.findall(r"https?://[^\s)]+", source):
         clean_url = raw_url.rstrip(".,;!?")
         params = parse_qs(urlsplit(clean_url).query)
         missing = [key for key in ("utm_source", "utm_medium", "utm_campaign") if not params.get(key)]
