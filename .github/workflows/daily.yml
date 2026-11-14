@@ -346,7 +346,7 @@ jobs:
               from content_generator.core.editorial_engine import approved_assets
               approved = approved_assets(payload)
               feed_ok = "carousel" in approved or "instagram_post" in approved
-              reel_ok = any(k in approved for k in ("growth_reel", "reel_1", "reel_2"))
+              reel_ok = any(k in approved for k in ("growth_reel", "reel_1"))
               if not feed_ok or not reel_ok:
                   alert(
                       "GENERATE saved content the morning and evening slots cannot publish: "
