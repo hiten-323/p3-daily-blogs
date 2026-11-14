@@ -319,8 +319,33 @@ def reject_source(choice: dict, source: str) -> None:
         _PENDING = None
 
 
+def _provider_failure(exc: Exception) -> str:
+    """Return a useful status without serializing a provider URL or credential."""
+    code = getattr(exc, "code", None)
+    if code:
+        return f"http_{int(code)}"
+    if isinstance(exc, TimeoutError):
+        return "timeout"
+    return type(exc).__name__
+
+
+def _remember_provider_obstacle(choice: dict, name: str, reason: str) -> None:
+    label = "yt_short" if str(choice.get("format") or "") == "short" else "growth_reel"
+    detail = f"{name}:{reason}"
+    logger.warning("[ai_bg] provider=%s obstacle=%s", name, reason)
+    try:
+        from content_generator.core.obstacle_lessons import platform_for, record
+        record(
+            platform_for(label), label, "background_provider", "provider", detail,
+            "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback.",
+            fix="Check provider availability, quota, credentials and timeout before retrying. Never send a jar image to image-to-video.",
+        )
+    except Exception as exc:
+        logger.debug("[ai_bg] provider lesson persistence failed: %s", type(exc).__name__)
+
+
 def fetch_background(choice: dict, label: str, size, seconds: float = 5) -> tuple[list | None, str]:
-    """Try providers for this concept. Returns (frames|None, source)."""
+    """Try the documented providers in order with bounded transient retries."""
     global _PENDING
     _PENDING = None
     if not enabled():
@@ -329,32 +354,56 @@ def fetch_background(choice: dict, label: str, size, seconds: float = 5) -> tupl
     avoid = _sibling_source(choice)
     providers = _providers()
     rejected = _REJECTED.get((str(choice.get("date") or ""), str(choice.get("format") or "")), set())
+    max_attempts = max(1, min(3, int(os.getenv("VIDEO_PROVIDER_RETRIES", "2"))))
+    try:
+        backoff = max(0.0, min(5.0, float(os.getenv("VIDEO_PROVIDER_BACKOFF_S", "1"))))
+    except ValueError:
+        backoff = 1.0
     for name in _order(avoid):
         if name in rejected:
             logger.info("[ai_bg] %s skipped (plate failed the visual gate)", name)
+            _remember_provider_obstacle(choice, name, "rejected_after_visual_gate")
             continue
         if not _configured(name):
-            logger.info("[ai_bg] %s skipped (not configured)", name)
+            logger.info("[ai_bg] %s skipped (missing credentials/configuration)", name)
+            _remember_provider_obstacle(choice, name, "missing_credentials_or_config")
             continue
-        try:
-            pending = _as_pending(name, providers[name](choice, label, duration), choice)
-        except Exception as exc:
-            logger.info("[ai_bg] %s failed: %s", name, type(exc).__name__)
-            continue
-        if not pending or not os.path.exists(pending["path"]):
-            continue
-        try:
-            frames = load_frames(pending["path"], size)
-        except Exception as exc:
-            logger.info("[ai_bg] %s clip unreadable: %s", name, type(exc).__name__)
-            _release(pending)
-            continue
-        if not frames:
-            _release(pending)
-            continue
-        _PENDING = pending
-        if choice.get("date") and choice.get("format"):
-            _SESSION[(choice["date"], choice["format"])] = name
-        logger.info("[ai_bg] %s background for %s (%d frames)", name, choice.get("concept"), len(frames))
-        return frames, name
+        for attempt in range(1, max_attempts + 1):
+            try:
+                raw = providers[name](choice, label, duration)
+            except Exception as exc:
+                reason = _provider_failure(exc)
+                _remember_provider_obstacle(choice, name, reason)
+                code = getattr(exc, "code", None)
+                transient = code in {408, 425, 429, 500, 502, 503, 504} or isinstance(exc, TimeoutError)
+                if transient and attempt < max_attempts:
+                    import time
+                    wait = backoff * (2 ** (attempt - 1))
+                    logger.warning("[ai_bg] provider=%s transient=%s retry=%d/%d backoff=%.1fs",
+                                   name, reason, attempt, max_attempts, wait)
+                    if wait:
+                        time.sleep(wait)
+                    continue
+                break
+            pending = _as_pending(name, raw, choice)
+            if not pending or not os.path.exists(pending["path"]):
+                _remember_provider_obstacle(choice, name, "empty_result_or_missing_file")
+                break
+            try:
+                frames = load_frames(pending["path"], size)
+            except Exception as exc:
+                _remember_provider_obstacle(choice, name, "clip_unreadable:" + type(exc).__name__)
+                _release(pending)
+                break
+            if not frames:
+                _remember_provider_obstacle(choice, name, "no_usable_frames")
+                _release(pending)
+                break
+            _PENDING = pending
+            if choice.get("date") and choice.get("format"):
+                _SESSION[(choice["date"], choice["format"])] = name
+            logger.info("[ai_bg] provider=%s background for %s (%d frames)",
+                        name, choice.get("concept"), len(frames))
+            return frames, name
+    logger.warning("[ai_bg] provider chain exhausted; use procedural plate before local FFmpeg real-photo fallback")
     return None, "procedural"
