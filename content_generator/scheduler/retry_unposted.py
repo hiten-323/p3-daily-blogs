@@ -216,8 +216,47 @@ def target_refuses_retry(records: list[dict], target: str) -> bool:
     return all(attempt_budget_exhausted(r) for r in rows)
 
 
+def regen_cap_reached(content: dict, label: str) -> bool:
+    """True once this label has used the ladder's hard ceiling of rounds."""
+    from content_generator.core.fallback_ladder import HARD_CEILING
+    rounds = content.get("mandatory_regen_rounds") if isinstance(content, dict) else None
+    try:
+        return int((rounds or {}).get(label) or 0) >= HARD_CEILING
+    except (TypeError, ValueError):
+        return False
+
+
+def regen_cap_blocks_target(content: dict, target: str) -> bool:
+    """A ladder-exhausted piece at the round ceiling is not due again."""
+    if target not in TARGETS or not isinstance(content, dict):
+        return False
+    label = TARGETS[target][2][0]
+    if not regen_cap_reached(content, label):
+        return False
+    piece = _piece_slot(content, label)[2] or {}
+    if piece.get("ladder_exhausted") or piece.get("held"):
+        return True
+    return str(piece.get("hold_reason") or "").startswith("FALLBACK LADDER")
+
+
+def label_regen_capped(content: dict, label: str) -> bool:
+    if not regen_cap_reached(content, label):
+        return False
+    piece = _piece_slot(content, label)[2] or {}
+    if piece.get("ladder_exhausted") or piece.get("held"):
+        return True
+    return str(piece.get("hold_reason") or "").startswith("FALLBACK LADDER")
+
+
+def _piece_stopped(content: dict, label: str) -> bool:
+    piece = _piece_slot(content, label)[2] or {}
+    if piece.get("ladder_exhausted"):
+        return True
+    return str(piece.get("hold_reason") or "").startswith("FALLBACK LADDER")
+
+
 def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | None = None,
-                    pack_exists: bool | None = None) -> list[str]:
+                    pack_exists: bool | None = None, content: dict | None = None) -> list[str]:
     """Due targets plus a missing pack. A dropped cron writes no rows and must stay pending."""
     if now_ist is None:
         now_ist = dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=5, minutes=30)
@@ -226,7 +265,10 @@ def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | No
     date = now_ist.date().isoformat()
     if pack_exists is None:
         from content_generator.scheduler.publish_recovery import _load_content
-        pack_exists = _load_content(date)[0] is not None
+        loaded, _why = _load_content(date)
+        pack_exists = loaded is not None
+        if content is None:
+            content = loaded
     if not pack_exists:
         return [NO_PACK]
     if records is None:
@@ -237,7 +279,10 @@ def pending_targets(now_ist: dt.datetime | None = None, records: list[dict] | No
     # (6 Nov: "Still due today: reel_1", then a GitHub 500 on that dispatch
     # paged a recovery failure). The half-hour cron still regenerates it.
     waiting = prewarm_targets(due, now_ist.hour, now_ist.minute)
-    return [t for t in due if t not in waiting]
+    due = [t for t in due if t not in waiting]
+    if content is not None:
+        due = [t for t in due if not regen_cap_blocks_target(content, t)]
+    return due
 
 
 def is_mandatory(target: str) -> bool:
@@ -482,6 +527,33 @@ def ensure_ig_images(content: dict) -> bool:
         return False
 
 
+def ensure_yt_video(content: dict) -> bool:
+    """Render the native Short when retry is about to publish YouTube.
+
+    A reel mp4 is not this file. A failed render leaves the publish path to
+    fail closed instead of uploading another asset.
+    """
+    from content_generator.publisher.youtube import find_native_short
+    if find_native_short(content):
+        return True
+    piece = content.get("yt_short") if isinstance(content, dict) else None
+    if not isinstance(piece, dict) or not piece:
+        log.warning("[retry] no yt_short piece to render")
+        return False
+    try:
+        from content_generator.core.ist_dates import asset_date
+        from content_generator.creative.short_video import build_short_video
+        path = build_short_video(
+            piece, int(content.get("day_number") or 0), on_date=asset_date(content))
+    except Exception:
+        log.exception("[retry] native short render failed")
+        return False
+    if not path:
+        log.warning("[retry] native short render returned no file")
+        return False
+    return bool(find_native_short(content) or path)
+
+
 def main() -> int:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     from content_generator.core.ist_dates import today_ist
@@ -537,13 +609,21 @@ def main() -> int:
     import time as _time
     regen_need = labels_to_regen(todo, approved, records)
     deadline = _time.monotonic() + MANDATORY_BUDGET_S
-    while regen_need and _time.monotonic() < deadline:
+    passes = 0
+    while regen_need and passes < 2 and _time.monotonic() < deadline:
+        passes += 1
+        regen_need = [label for label in regen_need if not label_regen_capped(content, label)]
+        if not regen_need:
+            break
         log.warning("Gate regen (from scratch, 8.0 unchanged): %s", regen_need)
         mark_fresh(content, regen_need)
         _do_editorial(content, only=set(regen_need))
         save_content(content)
         approved = _approved(content)
-        regen_need = [l for l in regen_need if l not in approved]
+        regen_need = [
+            label for label in regen_need
+            if label not in approved and not _piece_stopped(content, label)
+        ]
     handled = set(labels_to_regen(todo, {}, records))
     need = [l for l in need if l not in approved and l not in handled]
     if need:
@@ -564,6 +644,8 @@ def main() -> int:
     slots = plan["slots"]
     if ("ig_feed" in todo or "carousel" in todo) and "morning" in slots:
         ensure_ig_images(content)
+    if "youtube" in todo and "yt_short" in approved and "generate" in slots:
+        ensure_yt_video(content)
     os.environ.setdefault("ENABLE_TIMED_SLOTS", "true")
     if "generate" in slots:
         os.environ["FORCE_SLOT"] = "generate"
@@ -599,6 +681,14 @@ def main() -> int:
             return 0
         refused = [t for t in unresolved if target_refuses_retry(after_records, t)]
         retryable = [t for t in unresolved if t not in refused]
+        capped = [t for t in retryable if regen_cap_blocks_target(content, t)]
+        still_open = [t for t in retryable if t not in capped]
+        if retryable and not still_open:
+            log.warning(
+                "RETRY-UNPOSTED: %s regen cap reached for %s; recovery chain will not re-dispatch.",
+                date, capped,
+            )
+            return 0
         if refused and not retryable:
             msg = (
                 f"RETRY-UNPOSTED: {date} will not retry {refused} "
