@@ -5,6 +5,7 @@ from PIL import Image
 
 from content_generator.creative.cinematic_frame import _gradient_bg
 from content_generator.creative.real_jar_composer import knockout_white
+from content_generator.creative.premium_cards import PALETTES, background
 
 
 def test_tall_story_background_has_no_hard_horizontal_seam():
@@ -24,3 +25,8 @@ def test_jar_cutout_has_feathered_alpha_edges_without_losing_opaque_body():
     assert alpha.max() == 255
     assert np.any((alpha > 0) & (alpha < 255))
     assert np.any(alpha == 0)
+
+def test_premium_story_background_has_no_horizontal_horizon_line():
+    image, _horizon = background(96, 170, PALETTES["purica"][0], seed=12)
+    rows = np.asarray(image).astype(float).mean(axis=1)
+    assert float(np.abs(np.diff(rows)).max()) <= 4.5
