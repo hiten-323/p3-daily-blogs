@@ -299,10 +299,11 @@ def _retry_request(call, source: str, label: str, phase: str):
         try:
             result = call()
         except Exception as exc:
-            code = getattr(exc, "code", None)
-            reason = f"{phase}_{'http_' + str(code) if code else type(exc).__name__}"
+            code = getattr(exc, "code", None) or getattr(getattr(exc, "response", None), "status_code", None)
+            is_timeout = isinstance(exc, TimeoutError) or type(exc).__name__.lower() in {"timeout", "readtimeout", "connecttimeout"} or isinstance(getattr(exc, "reason", None), TimeoutError)
+            reason = f"{phase}_{'http_' + str(code) if code else ('timeout' if is_timeout else type(exc).__name__)}"
             _remember_provider_failure(source, label, reason)
-            if (code in {408, 425, 429, 500, 502, 503, 504} or isinstance(exc, TimeoutError)) and attempt < attempts:
+            if (code in {408, 425, 429, 500, 502, 503, 504} or is_timeout) and attempt < attempts:
                 wait = backoff * (2 ** (attempt - 1))
                 logger.warning("[hf_bg] provider=%s phase=%s transient=%s retry=%d/%d backoff=%.1fs",
                                source, phase, reason, attempt, attempts, wait)
