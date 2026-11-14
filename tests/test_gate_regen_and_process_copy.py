@@ -315,6 +315,14 @@ def test_ultra_pure_clause_is_rewritten_and_linkedin_skip_retries(tmp_path, monk
     assert ledger.attempt_budget_exhausted(record) is False
 
 
+def test_string_script_is_a_sentence_not_a_letter():
+    from content_generator.core.product_truth import asset_product_truth_findings
+
+    piece = {"script": "Bold is freeze-dried pure coffee."}
+    reasons = [item["reason"] for item in asset_product_truth_findings(piece, featured="Bold")]
+    assert any("not freeze-dried" in reason for reason in reasons)
+
+
 def test_publish_gate_repairs_ultra_clause_on_every_asset():
     """The canonical gate rewrites the clause before it can reject or publish it."""
     from content_generator.core.editorial_engine import get_valid_assets
