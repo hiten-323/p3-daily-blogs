@@ -27,3 +27,13 @@ def test_brand_name_purity_beans_is_not_mistaken_for_bean_claim():
 
 def test_instant_coffee_description_remains_allowed():
     assert product_truth_findings("A smooth instant coffee for your daily cup.", featured="purica") == []
+
+def test_published_links_require_all_three_utm_parameters():
+    findings = product_truth_findings("Shop here: https://p3online.in")
+    assert any("utm_source" in str(row) and "utm_campaign" in str(row) for row in findings)
+
+
+def test_fully_tagged_product_link_is_allowed():
+    assert product_truth_findings(
+        "Shop here: https://p3online.in/?utm_source=instagram&utm_medium=story&utm_campaign=purity_beans"
+    ) == []
