@@ -291,6 +291,36 @@ def test_commit_records_stock_attribution(tmp_path, monkeypatch):
     assert "pexels-secret" not in hist.read_text()
 
 
+def test_hf_video_busy_response_retries_but_quota_does_not(monkeypatch):
+    monkeypatch.setenv("HF_VIDEO_PROVIDER_RETRIES", "2")
+    monkeypatch.setenv("HF_VIDEO_PROVIDER_BACKOFF_S", "0")
+    lessons = []
+    monkeypatch.setattr(hf_video, "_remember_provider_failure",
+                        lambda source, label, reason: lessons.append((source, reason)))
+    calls = []
+
+    def transient_then_video():
+        calls.append(1)
+        if len(calls) == 1:
+            return 503, b'{"error":"currently loading","estimated_time":2}', "application/json"
+        return 200, b"\\x00\\x00\\x00\\x18ftyp" + b"x" * 40, "video/mp4"
+
+    result = hf_video._retry_request(transient_then_video, "hf_ltx", "growth_reel", "space")
+    assert len(calls) == 2
+    assert hf_video.interpret(*result)[0] == "video"
+    assert ("hf_ltx", "space_busy") in lessons
+
+    calls.clear()
+
+    def quota():
+        calls.append(1)
+        return 402, b'{"error":"credits exhausted"}', "application/json"
+
+    result = hf_video._retry_request(quota, "hf_ltx", "growth_reel", "router")
+    assert len(calls) == 1
+    assert hf_video.interpret(*result)[0] == "quota"
+
+
 def test_hf_quota_busy_and_timeout_skip_cleanly(tmp_path, monkeypatch):
     hf_video.reset_session()
     monkeypatch.setattr(hf_video, "_OUT", str(tmp_path))
