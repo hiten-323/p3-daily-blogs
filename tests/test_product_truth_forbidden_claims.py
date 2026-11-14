@@ -7,11 +7,13 @@ from content_generator.core.product_truth import product_truth_findings
 
 @pytest.mark.parametrize("claim", [
     "Fresh instant coffee for your morning.",
+    "Enjoy the freshness of every cup.",
     "Lab-tested instant coffee.",
     "Zero acidity instant coffee.",
     "Single-origin instant coffee.",
     "Made from premium coffee beans.",
     "A bean-based instant coffee experience.",
+    "From bean to cup in one shot.",
     "Whole beans, roasted to perfection.",
     "DM us for free samples.",
     "Competitors sell inferior coffee.",
