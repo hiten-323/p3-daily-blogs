@@ -33,6 +33,12 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --no-cache-dir -r requirements.txt
 
+      - name: Load engine state branch
+        # main is protected (PR + status checks only), so the engine keeps its
+        # run state on the engine-state branch. Code comes from main; content,
+        # creatives, ledger and learning come from engine-state (main if absent).
+        run: python -m content_generator.ops.engine_state load
+
       - name: Resolve Meta publishing account
         id: meta_preflight
         env:
@@ -116,25 +122,9 @@ jobs:
           set -euo pipefail
           git config user.name "Purity Beans Engine"
           git config user.email "engine@puritybeans.auto"
-          python -m content_generator.ops.ledger_sync save
-          git pull --rebase --autostash
-          python -m content_generator.ops.ledger_sync restore
-          git add -f output/learning/publishing_ledger.json output/learning/published_posts.json output/learning/obstacle_lessons.json output/creative/ 2>/dev/null || true
-          git add -f output/publish_log.json output/learning/publish_diagnostics.json 2>/dev/null || true
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: persist publish recovery ledger [skip ci]"
-            for i in 1 2 3; do
-              git push && break
-              echo "push rejected — merging ledger with remote and retrying ($i)"
-              git reset --soft HEAD~1
-              python -m content_generator.ops.ledger_sync save
-              git pull --rebase --autostash
-              python -m content_generator.ops.ledger_sync restore
-              git add -f output/learning/publishing_ledger.json output/learning/published_posts.json output/learning/obstacle_lessons.json
-              git commit -m "chore: persist publish recovery ledger [skip ci]"
-              [ "$i" = 3 ] && { git push || { echo "::error::Could not push ledger"; exit 1; }; }
-            done
-          fi
+          # main is protected; ledger merge + push happen against engine-state.
+          python -m content_generator.ops.engine_state save -m "chore: persist publish recovery ledger [skip ci]" \
+            || { echo "::error::Could not push ledger"; exit 1; }
 
       - name: Alert on recovery failure
         if: failure()

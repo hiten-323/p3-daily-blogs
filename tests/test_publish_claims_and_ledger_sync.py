@@ -73,8 +73,12 @@ def test_workflows_use_separate_groups_and_ledger_sync():
     retry = (wf / "retry-unposted.yml").read_text()
     assert "group: purity-beans-daily" in daily
     assert "group: purity-beans-retry" in retry
+    # Ledger merges now happen inside engine_state save (ledger_sync.merge*),
+    # against the engine-state branch; main is protected.
     for t in (daily, retry, (wf / "publish-recovery.yml").read_text()):
-        assert "ledger_sync save" in t and "ledger_sync restore" in t
+        assert "engine_state load" in t and "engine_state save" in t
+    src = (ROOT / "content_generator/ops/engine_state.py").read_text()
+    assert "ledger_sync.merge(" in src and "ledger_sync.merge_posts(" in src and "ledger_sync.merge_lessons(" in src
 
 
 

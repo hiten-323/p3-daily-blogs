@@ -32480,7 +32480,7 @@
       "count": 1,
       "feedback": "main now requires status checks; GITHUB_TOKEN bot commits ([skip ci]) cannot satisfy them.",
       "first_seen": "2026-11-15",
-      "fix": "Owner decision: let the engine write state (exempt the bot / drop required checks on main) or move engine state to a separate branch.",
+      "fix": "Engine state moved to the engine-state branch (content_generator/ops/engine_state.py): daily, retry-unposted and publish-recovery load state from it after checking out main (fallback: main) and save only changed state files onto its tip with record-level ledger/posts/lessons/provenance merges. main protection unchanged; publish claims also read the engine-state ledger.",
       "gate": "branch_protection",
       "id": "github|persist_state|branch_protection|run 531 (15 nov): engine push of validated content/ledger to main rejected: gh006 protected branch, 2 of 2 required status checks expected. publish slots, retry",
       "label": "persist_state",
@@ -32488,7 +32488,7 @@
       "platform": "github",
       "reason": "run 531 (15 Nov): engine push of validated content/ledger to main rejected: GH006 protected branch, 2 of 2 required status checks expected. Publish slots, retry-unposted and recovery all load state from main, so nothing generated can be published",
       "stage": "persist",
-      "status": "open"
+      "status": "fixed"
     },
     {
       "count": 1,

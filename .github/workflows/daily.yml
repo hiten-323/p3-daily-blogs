@@ -104,6 +104,12 @@ jobs:
       - name: Ensure output directory
         run: mkdir -p output
 
+      - name: Load engine state branch
+        # main is protected (PR + status checks only), so the engine keeps its
+        # run state on the engine-state branch. Code comes from main; content,
+        # creatives, ledger and learning come from engine-state (main if absent).
+        run: python -m content_generator.ops.engine_state load
+
       - name: Mark generate start
         if: ${{ env.FORCE_SLOT == 'generate' }}
         run: date +%s > .generate_started_epoch
@@ -399,9 +405,8 @@ jobs:
           set -euo pipefail
           git config user.name "Purity Beans Engine"
           git config user.email "engine@puritybeans.auto"
-          python -m content_generator.ops.ledger_sync save
-          git pull --rebase --autostash
-          python -m content_generator.ops.ledger_sync restore
+          # No pull of main here: state is merged against engine-state inside
+          # engine_state save (ledger, posts, lessons and provenance record by record).
           echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) run #${{ github.run_number }}" >> .last_run
           git add .last_run
           git add -f output/learning/ 2>/dev/null || true
@@ -442,17 +447,9 @@ jobs:
           git add -f "output/blog_${ist_date}.json" "output/blog_${ist_date}.md" "output/blog_${ist_date}.html" "output/blog_${ist_date}.llms.txt" 2>/dev/null || true
           git add -f output/reports/ 2>/dev/null || true
           git add -f output/.running* 2>/dev/null || true
-          if ! git diff --staged --quiet; then git commit -m "chore: run ${{ github.run_number }} — validated content + learning data [skip ci]"; fi
-          if ! git push; then
-            echo "push rejected — merging the ledger with the remote and retrying"
-            git reset --soft HEAD~1
-            python -m content_generator.ops.ledger_sync save
-            git pull --rebase --autostash
-            python -m content_generator.ops.ledger_sync restore
-            git add -f output/learning/publishing_ledger.json output/learning/published_posts.json output/learning/obstacle_lessons.json
-            git commit -m "chore: run ${{ github.run_number }} — validated content + learning data [skip ci]"
-            git push || { echo "::error::Could not push validated run state; publish slots cannot load persisted content."; exit 1; }
-          fi
+          # main is protected; the engine's state commit goes to engine-state.
+          python -m content_generator.ops.engine_state save -m "chore: run ${{ github.run_number }} — validated content + learning data [skip ci]" \
+            || { echo "::error::Could not push validated run state to engine-state; publish slots cannot load persisted content."; exit 1; }
 
       - name: Start the retry-unposted chain (cron-drop backstop)
         # GitHub drops/delays schedule events (Oct 17: generate ran 4h late, the
