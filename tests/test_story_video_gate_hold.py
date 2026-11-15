@@ -22,11 +22,13 @@ def _patch_common(monkeypatch, tmp_path):
     )
     monkeypatch.setattr("content_generator.creative.visual_gate.recent_layouts", lambda: [])
     monkeypatch.setattr("content_generator.creative.visual_gate.remember_layout", lambda *a, **k: None)
-    calls = {"premium": 0, "motion": 0, "ken": 0}
+    monkeypatch.setattr("content_generator.scheduler.daily._remember_obstacle", lambda *a, **k: None)
+    calls = {"premium": 0, "motion": 0, "ken": 0, "variants": []}
 
     def render_story(*args, **kwargs):
         calls["premium"] += 1
-        return {"layout": "hero_center"}
+        calls["variants"].append((kwargs.get("layout"), kwargs.get("palette_idx")))
+        return {"layout": kwargs.get("layout")}
 
     def motion(*args, **kwargs):
         calls["motion"] += 1
@@ -62,7 +64,8 @@ def test_rejected_story_does_not_fall_through_to_ungated_video(monkeypatch, tmp_
     )
 
     assert result is None
-    assert calls["premium"] == 4
+    assert calls["premium"] == 6
+    assert len(set(calls["variants"])) == 6
     assert calls["motion"] == 0
     assert calls["ken"] == 0
 

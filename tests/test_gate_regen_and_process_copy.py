@@ -20,7 +20,7 @@ def test_bold_day_freeze_dried_line_is_rewritten_until_compliant():
     piece = {
         "body": (
             "Read the jar: Purica is pure Arabica freeze-dried instant coffee "
-            "with zero chicory. Purity Beans. https://p3online.in"
+            "with zero chicory. Purity Beans. https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610"
         ),
         "featured_product": "Bold",
     }
@@ -50,7 +50,7 @@ def test_mixed_process_list_does_not_call_purista_agglomerated():
         "body": (
             "Bold, Purista, and Purica by Purity Beans are pure coffee with zero chicory, "
             "agglomerated or freeze-dried, in glass jars. Ultra Blend by Purity Beans is "
-            "a smooth 70% coffee and 30% chicory blend. https://p3online.in"
+            "a smooth 70% coffee and 30% chicory blend. https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610"
         ),
     }
     align_process_piece(piece, "Purista")
@@ -61,7 +61,7 @@ def test_mixed_process_list_does_not_call_purista_agglomerated():
 def test_bold_granule_process_is_rewritten_to_agglomerated():
     from content_generator.core.process_match import align_process_piece
 
-    piece = {"caption": "Bold is made into granules. Purity Beans. https://p3online.in"}
+    piece = {"caption": "Bold is made into granules. Purity Beans. https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610"}
     align_process_piece(piece, "Bold")
     assert _reasons(piece["caption"], featured="Bold") == []
     assert "granule" not in piece["caption"].lower()
@@ -177,7 +177,7 @@ def test_nested_facebook_copy_is_scored_until_it_passes(monkeypatch):
         "featured_product": "Purista",
         "facebook_post": {
             "featured_product": "ultra_blend_100g",
-            "primary_cta": "Shop https://p3online.in",
+            "primary_cta": "Shop https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610",
             "comment_trigger": "Comment MILK or BLACK.",
             "editorial_subscores": {
                 "brand_clarity": 9.5,
@@ -189,7 +189,7 @@ def test_nested_facebook_copy_is_scored_until_it_passes(monkeypatch):
                 "body": (
                     "Bold, Purista, and Purica by Purity Beans are pure coffee with zero chicory, "
                     "agglomerated or freeze-dried, in glass jars. Ultra Blend by Purity Beans is a "
-                    "smooth 70% coffee and 30% chicory blend. https://p3online.in"
+                    "smooth 70% coffee and 30% chicory blend. https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610"
                 ),
             },
         },
@@ -224,7 +224,7 @@ def test_stale_pass_is_replaced_after_a_process_rewrite(monkeypatch):
             "hook": "Why the morning cup tastes burnt",
             "body": (
                 "Read the jar: Purica is pure Arabica freeze-dried instant coffee "
-                "with zero chicory. Purity Beans. https://p3online.in"
+                "with zero chicory. Purity Beans. https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610"
             ),
             "cta": "Follow @purepantryprovisions",
             "comment_trigger": "Comment the first ingredient.",

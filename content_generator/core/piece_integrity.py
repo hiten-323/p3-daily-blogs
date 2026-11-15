@@ -381,7 +381,8 @@ def _ensure_facebook_brand_facts(piece: dict) -> None:
         if line.lower() not in joined().lower():
             piece["body"] = (str(piece.get("body") or "").rstrip() + " " + line).strip()
     if not validate_website(joined()):
-        piece["cta"] = (str(piece.get("cta") or "").rstrip() + " Shop: https://p3online.in").strip()
+        from content_generator.core.utm import site_link
+        piece["cta"] = (str(piece.get("cta") or "").rstrip() + f" Shop: {site_link('facebook')}").strip()
 
 
 def promote_facebook_copy(piece: dict) -> dict:

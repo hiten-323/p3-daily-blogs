@@ -89,9 +89,9 @@ def _knockout_white(img):
 def _gradient_bg(width, height, exposure_boost=False, is_tall=False, seed=0):
     """
     Cinematic grounded studio backdrop:
-    - If is_tall (9:16): Deep roast mahogany espresso studio wall (top 64%) + grounded Italian
-      walnut countertop (bottom 36%) with polished horizon double sheen.
-    - Otherwise: Deep espresso studio wall gradient.
+    - If is_tall (9:16): deep espresso studio wall blends into a walnut-toned
+      surface through a broad, seamless gradient with no hard horizontal seam.
+    - Otherwise: deep espresso studio wall gradient.
     """
     from PIL import Image, ImageDraw
     bg = Image.new("RGB", (width, height))
@@ -109,21 +109,21 @@ def _gradient_bg(width, height, exposure_boost=False, is_tall=False, seed=0):
         table_bot = (32, 18, 12)
 
     if is_tall:
-        table_y = int(height * 0.64)
-        # Studio wall gradient with warm ambient lighting
-        for y in range(table_y):
-            f = y / max(1, table_y)
-            c = tuple(int(wall_top[i] + (wall_mid[i] - wall_top[i]) * f) for i in range(3))
-            draw.line([(0, y), (width, y)], fill=c)
-        # Tabletop surface gradient
-        for y in range(table_y, height):
-            f = (y - table_y) / max(1, height - table_y)
-            c = tuple(int(table_edge[i] + (table_bot[i] - table_edge[i]) * f) for i in range(3))
-            draw.line([(0, y), (width, y)], fill=c)
-        # Polished metallic horizon edge highlight sheen (double line)
-        draw.line([(0, table_y - 1), (width, table_y - 1)], fill=(95, 60, 28))
-        draw.line([(0, table_y), (width, table_y)], fill=(215, 165, 65))
-        draw.line([(0, table_y + 1), (width, table_y + 1)], fill=(145, 98, 42))
+        # Seamless studio-to-surface transition. The previous hard 64% split
+        # and gold double-line read as a visible horizontal seam behind the jar.
+        # Crossfade the wall and tabletop palettes over a broad vertical band.
+        blend_start = 0.52
+        blend_end = 0.84
+        for y in range(height):
+            pos = y / max(1, height - 1)
+            wall_t = min(1.0, pos / 0.68)
+            table_t = max(0.0, min(1.0, (pos - blend_start) / (1.0 - blend_start)))
+            wall = tuple(wall_top[i] + (wall_mid[i] - wall_top[i]) * wall_t for i in range(3))
+            table = tuple(table_edge[i] + (table_bot[i] - table_edge[i]) * table_t for i in range(3))
+            blend = max(0.0, min(1.0, (pos - blend_start) / (blend_end - blend_start)))
+            blend = blend * blend * (3.0 - 2.0 * blend)
+            color = tuple(int(wall[i] * (1.0 - blend) + table[i] * blend) for i in range(3))
+            draw.line([(0, y), (width, y)], fill=color)
     else:
         for y in range(height):
             f = y / height
@@ -376,22 +376,22 @@ def compose_cinematic_frame(headline, sub="", day=0, idx=0, product=None,
                 diffuse_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
                 ddraw = ImageDraw.Draw(diffuse_layer)
                 s_w = int(jar.width * 1.30)
-                s_h = int(jar.height * 0.12)
+                s_h = int(jar.height * 0.10)
                 s_x = jx + (jar.width - s_w) // 2
                 s_y = jy + jar.height - int(s_h * 0.40)
-                ddraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(8, 5, 3, 160))
-                diffuse_layer = diffuse_layer.filter(ImageFilter.GaussianBlur(14))
+                ddraw.ellipse([(s_x, s_y), (s_x + s_w, s_y + s_h)], fill=(8, 5, 3, 185))
+                diffuse_layer = diffuse_layer.filter(ImageFilter.GaussianBlur(20))
                 canvas = Image.alpha_composite(canvas.convert("RGBA"), diffuse_layer).convert("RGB")
 
                 # Stage 2: Sharp physical contact occlusion line directly under jar rim
                 contact_layer = Image.new("RGBA", (width, height), (0, 0, 0, 0))
                 cdraw = ImageDraw.Draw(contact_layer)
                 c_w = int(jar.width * 0.96)
-                c_h = max(8, int(jar.height * 0.035))
+                c_h = max(6, int(jar.height * 0.025))
                 c_x = jx + (jar.width - c_w) // 2
                 c_y = jy + jar.height - int(c_h * 0.50)
-                cdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 250))
-                contact_layer = contact_layer.filter(ImageFilter.GaussianBlur(2.5))
+                cdraw.ellipse([(c_x, c_y), (c_x + c_w, c_y + c_h)], fill=(2, 1, 1, 125))
+                contact_layer = contact_layer.filter(ImageFilter.GaussianBlur(6))
                 canvas = Image.alpha_composite(canvas.convert("RGBA"), contact_layer).convert("RGB")
             except Exception as se:
                 logger.debug("[cine] Shadow compositing skipped: %s", se)

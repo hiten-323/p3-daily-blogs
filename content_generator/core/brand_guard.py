@@ -217,7 +217,16 @@ FORBIDDEN_TERMS = [
     "medical benefit",
     "cures",
     "sleep cure",
-    "disease prevention"
+    "disease prevention",
+    "fresh",
+    "lab-tested",
+    "zero acidity",
+    "single-origin",
+    "coffee beans",
+    "whole beans",
+    "bean-based",
+    "free samples",
+    "competitor bashing",
 ]
 
 REQUIRED_BRAND_MESSAGES = [
@@ -295,6 +304,8 @@ Language: ENGLISH ONLY. Never generate Hindi, Punjabi, Hinglish, Urdu, or mixed-
 
 Freeze-dried is only Purica (Arabica) and Purista (Robusta). Agglomerated is Bold (pure coffee) and Prima (out of stock — never promote Prima). Do not name a process for Ultra Blend. Any mention of freeze-dried, freeze-drying, agglomerated, or granules as a process must match the featured or linked product on Threads, Instagram, Facebook, LinkedIn, YouTube, Stories, Reels, carousels, and campaign push. If it does not match, rewrite or regenerate. Freeze-drying education links Purica, Purista, the Variety Box, or Gourmet Duo Mini. A freeze-dried vs agglomerated comparison may link Bold for the agglomerated side and must not call Bold freeze-dried.
 
+Never describe the product as fresh/freshly made, lab-tested, zero-acidity, or single-origin. Never use coffee-bean, whole-bean, ground-bean, roasted-bean, or bean-based descriptions: this is instant coffee. Do not invent health, acidity, origin, laboratory, or bean claims.
+
 Every content asset must reinforce at least one of:
 - Pure Coffee
 - Zero Chicory
@@ -305,12 +316,12 @@ Every content asset must reinforce at least one of:
 - Clean Coffee Movement
 
 Never claim:
-- Medical benefits
-- Weight loss
-- Sleep benefits
-- Disease prevention
+- Medical benefits, weight loss, sleep benefits, or disease prevention
 - Scientific facts without evidence
-- A sample, sample pack, or trial sachet for a consumer. Samples are only for cafes, offices, retailers, and distributors. Point customers to the 50g Variety Box.
+- Fresh/freshly made, lab-tested, zero-acidity, or single-origin product attributes
+- Coffee beans, whole beans, ground beans, roasted beans, or bean-based coffee; this is instant coffee
+- A free sample, sample pack, or trial sachet for a consumer. Do not make consumer free-sample offers.
+- Negative or disparaging claims about competitors or other brands.
 
 ---
 

@@ -126,7 +126,8 @@ def _catalog_links(text: str) -> list[str]:
     allowed = {url.rstrip("/") for url in catalog_page_urls()}
     found: list[str] = []
     for raw in _CATALOG_LINK.findall(text or ""):
-        url = raw.rstrip(".,;:)").replace("://www.p3online.in", "://p3online.in").rstrip("/")
+        url = raw.rstrip(".,;:)").split("?", 1)[0].split("#", 1)[0]
+        url = url.replace("://www.p3online.in", "://p3online.in").rstrip("/")
         if url in allowed and url not in found:
             found.append(url)
     return found

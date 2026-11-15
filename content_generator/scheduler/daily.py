@@ -275,7 +275,8 @@ def _run_generate_slot(day_number: int = None) -> dict:
         )
 
     # ── 11. Weekly summary (Mondays only) ─────────────────────────────────────
-    _maybe_weekly_summary()
+    if os.getenv("DRY_RUN", "").strip().lower() not in ("1", "true", "yes", "on"):
+        _maybe_weekly_summary()
 
     elapsed = round(time.time() - t0, 1)
     logger.info("[scheduler] ======= DONE in %.1fs -> %s =======", elapsed, filepath)
@@ -438,6 +439,7 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
     Ensure brand name and website appear in every text field.
     Appends a natural CTA line only when missing — never duplicates.
     """
+    from content_generator.core.utm import site_link, tag_store_links
     TEXT_FIELDS = {
         "reel_1":         ["caption", "cta"],
         "carousel":       ["caption", "cta"],
@@ -458,15 +460,15 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
         # every day (one-note-messaging fix). Deterministic by piece text.
         line = _brand_tagline(val)
         if needs_brand and needs_website:
-            piece[field] = val.rstrip() + f" {line} Shop: https://p3online.in"
+            piece[field] = val.rstrip() + f" {line} Shop: {site_link(label)}"
         elif needs_brand:
             piece[field] = val.rstrip() + " — Purity Beans"
         elif needs_website:
-            piece[field] = val.rstrip() + " Shop: https://p3online.in"
+            piece[field] = val.rstrip() + f" Shop: {site_link(label)}"
 
     # CTA field is mandatory on brand-track assets — create it if the LLM skipped it
     if label in ("reel_1", "carousel", "instagram_post") and not str(piece.get("cta", "")).strip():
-        piece["cta"] = f"{_brand_tagline(str(piece))} Shop Purity Beans: https://p3online.in"
+        piece["cta"] = f"{_brand_tagline(str(piece))} Shop Purity Beans: {site_link(label)}"
 
     # Carousel: the schema requires the FINAL SLIDE to carry brand + website.
     # Injection previously only touched caption/cta, so any carousel whose last
@@ -480,8 +482,20 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
             if "purity beans" not in low:
                 body = (body.rstrip() + " Purity Beans.").strip()
             if "p3online.in" not in body.lower():
-                body = (body.rstrip() + " Shop: https://p3online.in").strip()
+                body = (body.rstrip() + f" Shop: {site_link(label)}").strip()
             last["body"] = body
+    # Any store link already in the copy (model-written or older template)
+    # gets its UTM tags here, before the product-truth gate sees it.
+    for field, val in list(piece.items()):
+        if isinstance(val, str):
+            piece[field] = tag_store_links(val, label)
+    slides = piece.get("slides")
+    if isinstance(slides, list):
+        for slide in slides:
+            if isinstance(slide, dict):
+                for key, val in list(slide.items()):
+                    if isinstance(val, str):
+                        slide[key] = tag_store_links(val, label)
     return piece
 
 
@@ -881,7 +895,6 @@ def _schema_issues(label: str, piece: dict) -> list[str]:
     )
     schemas = {
         "reel_1": ReelSchema,
-        "reel_2": ReelSchema,
         "growth_reel": ReelSchema,
         "carousel": CarouselSchema,
         "instagram_post": InstagramSchema,
@@ -1470,7 +1483,6 @@ def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | No
     from content_generator.core.schema_validation import YoutubeShortSchema
     schemas = {
         "reel_1": ReelSchema,
-        "reel_2": ReelSchema,
         "growth_reel": ReelSchema,
         "carousel": CarouselSchema,
         "instagram_post": InstagramSchema,
@@ -1634,7 +1646,6 @@ def _do_memory(content: dict, dn: int) -> None:
     from content_generator.memory.semantic import store_content
     pieces = {
         f"reel_1_day{dn}":   content.get("reels", [{}])[0] if content.get("reels") else {},
-        f"reel_2_day{dn}":   (content.get("reels", [{}, {}]) + [{}])[1],
         f"carousel_day{dn}": content.get("carousel", {}),
         f"linkedin_day{dn}": content.get("linkedin_post", {}),
         f"blog_day{dn}":     content.get("blog_post", {}),
@@ -1954,6 +1965,8 @@ def _do_revenue_attribution() -> dict:
 
 
 def _publishing_enabled() -> bool:
+    if os.getenv("DRY_RUN", "").strip().lower() in ("1", "true", "yes", "on"):
+        return False
     return os.getenv("PUBLISHING_ENABLED", "false").strip().lower() in ("1", "true", "yes", "on")
 
 
@@ -2031,12 +2044,18 @@ def _do_publish(content: dict, day_number: int) -> dict:
 
 
 def _do_founder_report(content: dict, nurture_result: dict, publish_result: dict = None) -> bool:
+    if os.getenv("DRY_RUN", "").strip().lower() in ("1", "true", "yes", "on"):
+        logger.info("[dry-run] founder notification suppressed")
+        return False
     from content_generator.scheduler.founder_report import send_founder_report
     pipeline = {**(nurture_result or {}), "publish": publish_result or {}}
     return send_founder_report(content=content, pipeline_result=pipeline)
 
 
 def _do_nurture() -> dict:
+    if os.getenv("DRY_RUN", "").strip().lower() in ("1", "true", "yes", "on"):
+        logger.info("[dry-run] customer nurture suppressed")
+        return {"skipped": True, "reason": "dry_run", "dispatched": 0}
     """
     Daily nurture step — find stalling leads and send follow-up messages.
 
@@ -2122,8 +2141,196 @@ def _maybe_weekly_summary() -> None:
 
 # ── Manual trigger ────────────────────────────────────────────────────────────
 
-def run_now(day_number: int = None) -> dict:
-    """Run the full pipeline immediately. Useful for testing and CI."""
+def dry_run_asset_report(content: dict) -> dict:
+    """Render and gate all nine required surfaces without calling any publisher."""
+    import os
+    from content_generator.core.editorial_engine import get_valid_assets
+    from content_generator.core.publish_bar import quality_block
+    from content_generator.core.product_truth import (
+        asset_product_truth_findings, featured_product_name, piece_copy_text,
+    )
+    from content_generator.core.process_match import process_match_findings
+
+    valid = set(get_valid_assets(content))
+    reels = content.get("reels") if isinstance(content.get("reels"), list) else []
+    stories = content.get("stories") if isinstance(content.get("stories"), dict) else {}
+    day = int(content.get("day_number") or 0)
+    featured = featured_product_name(content)
+    creative_audit = content.get("_creative_audit") if isinstance(content.get("_creative_audit"), dict) else {}
+    image_assets = creative_audit.get("image_assets") if isinstance(creative_audit.get("image_assets"), list) else []
+    pieces = [
+        ("ig_post", "instagram_post", content.get("instagram_post"), True),
+        ("ig_story", "stories", stories.get("story_1"), False),
+        ("ig_carousel", "carousel", content.get("carousel"), True),
+        ("growth_reel", "growth_reel", content.get("growth_reel"), True),
+        ("reel_1", "reel_1", reels[0] if reels else content.get("reel_1"), True),
+        ("facebook", "facebook_post", content.get("facebook_post"), True),
+        ("threads", "threads_post", content.get("threads_post"), True),
+        ("linkedin", "linkedin_post", content.get("linkedin_post"), True),
+        ("youtube_short", "yt_short", content.get("yt_short"), True),
+    ]
+    image_platform = {
+        "ig_post": "instagram",
+        "ig_carousel": "instagram_carousel",
+        "facebook": "facebook",
+    }
+    results = []
+    for name, label, piece, schema_required in pieces:
+        reasons = []
+        if not isinstance(piece, dict) or not piece:
+            reasons.append("missing_piece")
+        else:
+            if schema_required and label not in valid:
+                reasons.append("schema_or_brand_gate")
+            block = quality_block(piece, label)
+            if block:
+                reasons.append(str(block))
+            findings = asset_product_truth_findings(piece, featured=featured)
+            if findings:
+                reasons.extend("product_truth:" + str(x.get("reason") or "claim_rejected") for x in findings[:3])
+            copy_text = piece_copy_text(piece)
+            process_hits = process_match_findings(copy_text, featured=featured)
+            if process_hits:
+                reasons.extend("process_match:" + str(x.get("reason") or "mismatch") for x in process_hits[:3])
+
+            if name in image_platform:
+                platform = image_platform[name]
+                candidates = [row for row in image_assets if row.get("platform") == platform]
+                if not candidates:
+                    reasons.append("missing_rendered_real_photo_asset")
+                else:
+                    if not any(row.get("jar_verified") for row in candidates):
+                        reasons.append("real_jar_provenance_unverified")
+                    paths = [row.get("path") for row in candidates if row.get("path") and os.path.exists(row["path"])]
+                    if not paths:
+                        reasons.append("rendered_image_file_missing")
+                    else:
+                        from content_generator.creative.rendered_asset_qa import audit_rendered_images
+                        qa = audit_rendered_images(paths)
+                        if not qa.get("ok"):
+                            reasons.append("rendered_asset_qa:" + ";".join(qa.get("issues") or ["failed"]))
+
+            elif name == "ig_story":
+                try:
+                    from content_generator.publisher.story_copy import resolve_story_copy
+                    from content_generator.publisher.product_links import story_link_line
+                    from content_generator.creative.cinematic_frame import compose_cinematic_frame
+                    from content_generator.creative.rendered_asset_qa import audit_rendered_images
+                    from content_generator.creative.story_video import build_story_video
+                    from content_generator.publisher.instagram import _static_story_visual_hold
+                    story_copy = resolve_story_copy(content, day=day)
+                    headline = str(story_copy.get("headline") or "")
+                    sub = story_link_line(str(story_copy.get("sub") or ""))
+                    story_text = headline + "\n" + sub
+                    story_claims = asset_product_truth_findings({"caption": story_text}, featured=featured)
+                    if story_claims:
+                        reasons.extend("story_product_truth:" + str(x.get("reason") or "claim_rejected") for x in story_claims[:3])
+                    story_process = process_match_findings(story_text, featured=featured)
+                    if story_process:
+                        reasons.extend("story_process_match:" + str(x.get("reason") or "mismatch") for x in story_process[:3])
+                    try:
+                        from content_generator.rotation import PRODUCTS, pick
+                        product = pick(PRODUCTS, day)
+                    except Exception:
+                        product = featured
+                    image_path = compose_cinematic_frame(
+                        headline=headline, sub=sub, day=day, idx=9, product=product,
+                        width=1080, height=1920, label=f"dry_run_story_day{day}", format_type="story",
+                    )
+                    if not image_path:
+                        from content_generator.creative.real_jar_composer import compose_post_image
+                        image_path = compose_post_image(
+                            headline=headline, body=sub, day=day, idx=9,
+                            width=1080, height=1920, label=f"dry_run_story_day{day}",
+                        )
+                    if not image_path:
+                        reasons.append("story_render_failed")
+                    else:
+                        qa = audit_rendered_images([image_path])
+                        if not qa.get("ok"):
+                            reasons.append("story_rendered_asset_qa:" + ";".join(qa.get("issues") or ["failed"]))
+                        video_path = build_story_video(
+                            image_path=image_path, headline=headline, sub=sub, day=day,
+                            label=f"dry_run_story_day{day}", reference_text=story_text,
+                        )
+                        if not video_path:
+                            static_hold = _static_story_visual_hold(image_path)
+                            if static_hold:
+                                reasons.append("story_visual_gate_hold:" + str(static_hold.get("error") or "score_below_8_or_unavailable"))
+                except Exception as exc:
+                    reasons.append("story_render_exception:" + type(exc).__name__)
+
+            elif name in {"growth_reel", "reel_1"}:
+                try:
+                    from content_generator.creative.reel_video import build_reel_video
+                    video_path = build_reel_video(piece, day, name)
+                    if not video_path:
+                        reasons.append("video_render_or_8.0_visual_gate_hold")
+                except Exception as exc:
+                    reasons.append("video_render_exception:" + type(exc).__name__)
+
+            elif name == "youtube_short":
+                try:
+                    from content_generator.publisher import youtube
+                    from content_generator.creative import visual_gate
+                    video_path = youtube._find_video(content)
+                    if not video_path:
+                        video_path = youtube._create_slideshow_short(content, day)
+                    video_passed = False
+                    if video_path:
+                        verdict = visual_gate.evaluate_video(video_path, None, visual_gate.recent_layouts())
+                        video_passed = bool(verdict.get("passed"))
+                        if not video_passed:
+                            _remember_obstacle("yt_short", "; ".join(verdict.get("reasons") or ["visual_gate_hold"]),
+                                                "visual_gate", gate="yt_short_visual_gate")
+                            video_path = None
+                    if not video_path:
+                        try:
+                            from content_generator.creative.ken_burns import render_reel
+                            video_path = render_reel(piece, day, "yt_short", content.get("date"),
+                                                     fast=True, use_broll=False)
+                        except Exception as exc:
+                            logger.warning("[dry-run] local YouTube Short FFmpeg fallback unavailable: %s",
+                                           type(exc).__name__)
+                    if video_passed:
+                        pass  # the found Short already passed the 8.0 visual gate
+                    elif video_path:
+                        # Local fallback render: it must pass the same 8.0 gate.
+                        verdict = visual_gate.evaluate_video(video_path, None, visual_gate.recent_layouts())
+                        if not verdict.get("passed"):
+                            reasons.append("youtube_short_visual_gate:" + ";".join(verdict.get("reasons") or ["below_8_or_unavailable"]))
+                    else:
+                        reasons.append("youtube_short_render_or_8.0_visual_gate_hold")
+                except Exception as exc:
+                    reasons.append("youtube_short_render_exception:" + type(exc).__name__)
+
+            for raw_url in re.findall(r"https?://[^\s)]+", copy_text):
+                clean_url = raw_url.rstrip(".,;!?")
+                from urllib.parse import urlsplit, parse_qs
+                params = parse_qs(urlsplit(clean_url).query)
+                missing = [key for key in ("utm_source", "utm_medium", "utm_campaign") if not params.get(key)]
+                if missing:
+                    reasons.append("utm_missing:" + ",".join(missing))
+                    break
+
+        status = "PASS" if not reasons else "HOLD"
+        if reasons:
+            _remember_obstacle(label, "; ".join(reasons), "dry_run", gate="dry_run_gate")
+        results.append({"piece": name, "status": status, "reasons": reasons})
+    return {"dry_run": True, "publishing": False, "pieces": results,
+            "passed": sum(1 for row in results if row["status"] == "PASS"),
+            "held": sum(1 for row in results if row["status"] != "PASS"),
+            "all_passed": all(row["status"] == "PASS" for row in results)}
+
+
+
+
+def run_now(day_number: int = None, dry_run: bool = False) -> dict:
+    """Run the full pipeline immediately; dry_run suppresses every outbound action."""
+    if dry_run:
+        os.environ["DRY_RUN"] = "1"
+        os.environ["PUBLISHING_ENABLED"] = "false"
+        os.environ["NURTURE_ENABLED"] = "false"
     return run_full_pipeline(day_number=day_number)
 
 
@@ -2199,11 +2406,23 @@ if __name__ == "__main__":
 
         slot = get_current_slot() if slots_enabled() else "generate"
         if slot == "generate":
-            result = run_now(day_number=_day)
+            _dry = "--dry-run" in sys.argv
+            result = run_now(day_number=_day, dry_run=_dry)
+            if _dry:
+                report = dry_run_asset_report(result)
+                print(json.dumps(report, indent=2, ensure_ascii=False))
+                if not report["all_passed"]:
+                    sys.exit(2)
+            else:
+                print(json.dumps(result, indent=2, ensure_ascii=False))
         else:
-            # Publish-only slot: post this morning's content at its optimal window
+            # Publish-only slots are never accepted in dry-run mode.
+            if "--dry-run" in sys.argv:
+                print(json.dumps({"dry_run": True, "publishing": False,
+                                  "error": "dry-run requires slot=generate"}, indent=2))
+                sys.exit(2)
             result = run_publish_slot(slot)
-        print(json.dumps(result, indent=2, ensure_ascii=False))
+            print(json.dumps(result, indent=2, ensure_ascii=False))
     elif "--report" in sys.argv:
         from content_generator.dashboard.reports import print_report
         print_report(days=7)

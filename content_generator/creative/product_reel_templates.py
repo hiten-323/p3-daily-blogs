@@ -145,7 +145,7 @@ def template_record() -> dict | None:
         "compare_at_inr": _component_price("purista") + _component_price("purica"),
         "components": ["purista_50g", "purica_50g"],
         "packaging": product.get("packaging") or "",
-        "store": "https://p3online.in",
+        "store": _store_link(),
         "pure_coffee": True,
         "chicory": product.get("chicory") or "",
         "allowed_claims": [
@@ -158,6 +158,11 @@ def template_record() -> dict | None:
         "audio_embedded": False,
         "audio_hook": "audio_director.get_audio_plan",
     }
+
+
+def _store_link() -> str:
+    from content_generator.core.utm import tag_url, SITE
+    return tag_url(SITE + "/", "instagram", "reel", "gourmet_duo_mini")
 
 
 def allowed_claim_text(record: dict | None = None) -> str:
