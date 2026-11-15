@@ -59,9 +59,13 @@ def test_short_sections_are_expanded_and_the_post_passes_gates(tmp_path):
     html = (tmp_path / "blog_2026-10-04.html").read_text(encoding="utf-8")
     assert "application/ld+json" in html
     assert "FAQPage" in html
+    # Published links carry utm_source, utm_medium and utm_campaign.
     product = "https://p3online.in/products/purity-beans-bold-instant-coffee"
-    assert f"]({product})" in (tmp_path / "blog_2026-10-04.md").read_text(encoding="utf-8")
-    assert f'href="{product}"' in html
+    tracked = product + "?utm_source=blog&utm_medium=post&utm_campaign=202610"
+    markdown = (tmp_path / "blog_2026-10-04.md").read_text(encoding="utf-8")
+    assert f"]({tracked})" in markdown
+    assert f"]({product})" not in markdown
+    assert f'href="{tracked}"' in html.replace("&amp;", "&")
 
 
 def test_expand_section_retries_a_short_draft():

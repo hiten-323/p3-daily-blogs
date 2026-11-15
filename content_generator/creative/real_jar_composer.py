@@ -259,7 +259,7 @@ def knockout_white(img):
     and removes residual studio sweep floor shadow while preserving whites
     inside the authentic label and cap.
     """
-    from PIL import Image, ImageDraw
+    from PIL import Image, ImageDraw, ImageFilter
     img = img.convert("RGBA")
     w, h = img.size
     seeds = (
@@ -283,6 +283,13 @@ def knockout_white(img):
                         pix[x, y] = (r, g, b, 0)
     except Exception as e:
         logger.debug("[real_jar] floor shadow cleaning skipped: %s", e)
+    # Sub-pixel alpha feather removes stair-stepped white-sweep cutout edges
+    # without recolouring or synthesizing any part of the authentic jar label.
+    try:
+        alpha = img.getchannel("A").filter(ImageFilter.GaussianBlur(0.65))
+        img.putalpha(alpha)
+    except Exception as e:
+        logger.debug("[real_jar] edge feather skipped: %s", e)
     try:
         bbox = img.getbbox()
         if bbox:

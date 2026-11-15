@@ -7,6 +7,8 @@ stay where they are.
 """
 from __future__ import annotations
 
+import re
+
 NATIVE_BODY = (
     "Most houses have one person who measures the spoon and another who says it is too strong. "
     "Purity Beans Purista is freeze-dried pure Robusta with zero chicory, so the jar matches the cup. "
@@ -18,7 +20,7 @@ NATIVE = {
     "hook": "Who makes the coffee in your house, and who complains about it?",
     "body": NATIVE_BODY,
     "community_question": "Who makes the coffee in your house?",
-    "cta": "Follow @purepantryprovisions for the next honest cup. https://p3online.in",
+    "cta": "Follow @purepantryprovisions for the next honest cup. https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610",
     "hashtags": "#PurityBeans #IndianCoffee #MorningCoffee",
 }
 
@@ -39,7 +41,7 @@ def _polluted() -> dict:
         "instagram_post": "Read the jar. Purity Beans Purista is 100% pure gourmet Robusta.",
         "facebook_post": (
             "Who makes the coffee in your house? Purity Beans Purista is freeze-dried pure Robusta "
-            "with zero chicory. Shop https://p3online.in"
+            "with zero chicory. Shop https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610"
         ),
     }
 
@@ -160,7 +162,8 @@ def test_saved_article_pack_is_not_what_the_scorer_reads():
     assert piece.get("caption") in (None, "")
     assert "Who make\"" not in blob
     assert "freeze-dried pure Robusta" in piece.get("body", "")
-    assert piece["body"].rstrip().endswith("p3online.in") or piece["body"].rstrip().endswith(".")
+    # Not cut mid-sentence: ends on a full stop or on the (tagged) store link.
+    assert re.search(r"p3online\.in\S*$", piece["body"].rstrip()) or piece["body"].rstrip().endswith(".")
 
 
 def test_brand_fact_gate_is_unchanged_for_native_facebook_copy():
@@ -169,7 +172,7 @@ def test_brand_fact_gate_is_unchanged_for_native_facebook_copy():
     missing = {
         "hook": "How is the morning going in your kitchen today?",
         "body": "Just a note about the kettle and the weather and the mug on the counter, nothing else at all.",
-        "cta": "See the site https://p3online.in",
+        "cta": "See the site https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610",
         "featured_product": "Purista",
     }
     ok, issues = validate_asset("facebook_post", missing)

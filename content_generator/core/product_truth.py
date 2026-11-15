@@ -17,6 +17,7 @@ Owner guardrails for Purity Beans copy:
 from __future__ import annotations
 
 import re
+from urllib.parse import urlsplit, parse_qs
 
 _SENTENCE = re.compile(r"(?<=[.!?])\s+|\n+")
 _CLAUSE = re.compile(r"\b(?:while|whereas|but|unlike|except)\b|;", re.I)
@@ -58,6 +59,19 @@ _BRAND_IS_FREEZE_ARABICA = re.compile(
     r"purity beans is freeze[\s-]?dried arabica",
     re.I,
 )
+_NEVER_CLAIMS = (
+    (re.compile(r"\bfresh(?:ly|ness)?\b", re.I), "never describe the instant coffee as fresh/freshly made"),
+    (re.compile(r"\blab[\s-]?tested\b", re.I), "no lab-tested claim is authorized"),
+    (re.compile(r"\bzero[\s-]+acidity\b", re.I), "zero-acidity claim is prohibited"),
+    (re.compile(r"\bsingle[\s-]+origin\b", re.I), "single-origin claim is prohibited"),
+    (re.compile(r"\b(?:coffee[\s-]+beans?|bean[\s-]?based|bean[\s-]+to[\s-]+(?:cup|jar)|whole[\s-]+beans?|ground[\s-]+beans?|roasted[\s-]+beans?|(?<!purity )(?<!purity-)beans?[\s-]+(?:from|are|is|based|sourced|roasted|ground))\b", re.I),
+     "bean-based wording is prohibited; describe the product as instant coffee"),
+    (re.compile(r"\bfree[\s-]+(?:samples?|sample[\s-]+packs?|trial[\s-]+sachets?)\b|\b(?:samples?|sample[\s-]+packs?|trial[\s-]+sachets?)\s+(?:are|is)\s+free\b", re.I),
+     "free consumer samples and trial sachets are not authorized"),
+    (re.compile(r"\b(?:competitors?|other brands?)\s+(?:are|is)\s+(?:bad|inferior|fake|dishonest|cheap|misleading)\b|\b(?:competitors?|other brands?)\s+(?:use|sell)\s+(?:fake|inferior|bad)\b", re.I),
+     "competitor attacks are prohibited; communicate verified product facts only"),
+)
+
 _INVENTED = re.compile(
     r"100\s*x\s+purer|lab-tested purity certificate|lab[\s-]?certified|"
     r"\bsingle[\s-]origin(?:\s+style)?\b|"
@@ -534,16 +548,48 @@ def _price_findings(sentence: str) -> list[str]:
 _AMOUNT_ANY = re.compile(r"(?:₹|\brs\.?|\binr)\s*\d", re.I)
 
 
+_JSON_LD_BLOCK = re.compile(r"<script[^>]*application/ld\+json[^>]*>.*?</script>", re.I | re.S)
+_LINK_TAG = re.compile(r"<link\b[^>]*>", re.I)
+_STORE_URL = re.compile(r"https?://(?:www\.)?p3online\.in(?:[/?#][^\s)\]\"'<>]*)?", re.I)
+
+
+def _customer_store_links(text: str) -> list[str]:
+    """p3online.in links a customer can click.
+
+    The UTM rule covers store links only. schema.org identifiers and the
+    page's own canonical URL inside structured data (JSON-LD, <link> tags)
+    are not customer-facing links and are not checked.
+    """
+    text = _LINK_TAG.sub(" ", _JSON_LD_BLOCK.sub(" ", text))
+    stripped = text.strip()
+    if stripped.startswith("{") and '"@context"' in stripped:
+        return []  # a bare JSON-LD document
+    out = []
+    for raw in _STORE_URL.findall(text):
+        url = raw.rstrip(".,;:!?")
+        if url not in out:
+            out.append(url)
+    return out
+
+
 def product_truth_findings(text: str, featured: str | None = None) -> list[dict]:
     """Unsupported or contradicted product claims in `text`."""
     if not text or not str(text).strip():
         return []
     source = _claim_text(str(text))
     findings: list[dict] = []
+    for clean_url in _customer_store_links(str(text)):
+        params = parse_qs(urlsplit(clean_url).query)
+        missing = [key for key in ("utm_source", "utm_medium", "utm_campaign") if not params.get(key)]
+        if missing:
+            findings.append(_finding(clean_url, "published links require utm_source, utm_medium and utm_campaign"))
     for sentence in _SENTENCE.split(source):
         s = sentence.strip()
         if not s:
             continue
+        for pattern, reason in _NEVER_CLAIMS:
+            if pattern.search(s):
+                findings.append(_finding(s, reason))
         for bm in re.finditer(r"\bBold\b", s):
             rest = s[bm.end():]
             other = _OTHER_SKU.search(rest)

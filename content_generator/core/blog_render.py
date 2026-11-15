@@ -117,8 +117,10 @@ def render_markdown(piece: dict) -> str:
 def _inline(text: str) -> str:
     escaped = html.escape(text)
     def _link(match: re.Match) -> str:
-        label = html.escape(match.group(1))
-        url = html.escape(match.group(2), quote=True)
+        # The text is already escaped; unescape first so "&" in a UTM query
+        # becomes "&amp;" once, not "&amp;amp;".
+        label = html.escape(html.unescape(match.group(1)))
+        url = html.escape(html.unescape(match.group(2)), quote=True)
         return f'<a href="{url}">{label}</a>'
     return _MD_LINK.sub(_link, escaped)
 
