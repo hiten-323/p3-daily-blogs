@@ -512,17 +512,68 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
                 body = (body.rstrip() + f" Shop: {site_link(label)}").strip()
             last["body"] = body
     # Any store link already in the copy (model-written or older template)
-    # gets its UTM tags here, before the product-truth gate sees it.
-    for field, val in list(piece.items()):
-        if isinstance(val, str):
-            piece[field] = tag_store_links(val, label)
-    slides = piece.get("slides")
-    if isinstance(slides, list):
-        for slide in slides:
-            if isinstance(slide, dict):
-                for key, val in list(slide.items()):
-                    if isinstance(val, str):
-                        slide[key] = tag_store_links(val, label)
+    # gets its UTM tags here, before the product-truth gate sees it. This
+    # walks every nested field: on 15 Nov a model-written link inside a
+    # YouTube Short scene/script list was never tagged, so the Short failed
+    # "published links require utm_*" on all 9 ladder attempts.
+    _tag_links_everywhere(piece, label)
+    if label == "stories":
+        _ensure_story_brand_fact(piece)
+    return piece
+
+
+def _tag_links_everywhere(node, label: str, _depth: int = 0):
+    """Tag every p3online.in link in any nested string of a piece, in place."""
+    from content_generator.core.utm import tag_store_links
+    if _depth > 6:
+        return node
+    if isinstance(node, dict):
+        for key, val in list(node.items()):
+            if isinstance(val, str):
+                node[key] = tag_store_links(val, label)
+            elif isinstance(val, (dict, list)):
+                _tag_links_everywhere(val, label, _depth + 1)
+    elif isinstance(node, list):
+        for i, val in enumerate(node):
+            if isinstance(val, str):
+                node[i] = tag_store_links(val, label)
+            elif isinstance(val, (dict, list)):
+                _tag_links_everywhere(val, label, _depth + 1)
+    return node
+
+
+# One true, product-matched brand fact per featured jar. Ultra Blend is the
+# 70/30 chicory blend and is never called pure.
+_STORY_FACTS = (
+    ("ultra", "Ultra Blend: 70% coffee, 30% chicory."),
+    ("purista", "Purista is pure Robusta."),
+    ("purica", "Purica is pure Arabica."),
+    ("prima", "Prima is pure Arabica."),
+    ("bold", "Bold is pure coffee."),
+)
+_STORY_TEXT_KEYS = ("headline", "hook", "chosen_hook", "sub", "subtext", "poll", "caption")
+
+
+def _ensure_story_brand_fact(piece: dict) -> dict:
+    """A Story frame is one short line and often drops the brand fact.
+
+    The brand validator still requires one, so 15 Nov's Story failed
+    "Missing required brand facts" on all 9 attempts. Add a single fact that
+    matches the featured jar to the sub line, only when no fact is present.
+    """
+    from content_generator.core.brand_validator import validate_brand_facts
+    if not isinstance(piece, dict):
+        return piece
+    text = " ".join(str(piece.get(k) or "") for k in _STORY_TEXT_KEYS)
+    if validate_brand_facts(text):
+        return piece
+    featured = str(piece.get("featured_product") or piece.get("product") or "").lower()
+    scope = featured or text.lower()
+    fact = next((f for key, f in _STORY_FACTS if key in scope),
+                "Bold, Purista, Purica and Prima are pure coffee.")
+    field = "sub" if "sub" in piece or "subtext" not in piece else "subtext"
+    current = str(piece.get(field) or "").strip()
+    piece[field] = f"{current} {fact}".strip() if current else fact
     return piece
 
 
