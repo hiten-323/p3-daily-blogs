@@ -29,3 +29,65 @@ PLATFORM RULES (STRICT):
   "angle": "{angle[0]}",
   "text": "Your sharp, conversational viral thread under 480 characters ending with a discussion prompt and follower reason."
 }}"""
+
+
+_ARTICLE_KEYS = ("blog_post", "sections", "introduction", "slides", "frames", "scenes")
+
+
+def regeneration_prompt(piece: dict, feedback: str, threshold: float, brand: str,
+                        from_scratch: bool = False) -> str:
+    """Native Threads regen. The model must return text, not another platform's pack."""
+    featured = (piece or {}).get("featured_product") or "the featured Purity Beans jar"
+    reasons = " ".join(str(feedback or "").split())[:600]
+    source = ""
+    if not from_scratch and isinstance(piece, dict):
+        text = str(piece.get("text") or piece.get("body") or "").strip()
+        if text:
+            source = "ORIGINAL TEXT (rewrite it; stay under 480 characters):\n" + text[:480] + "\n\n"
+    return (
+        f"{brand}\n\n"
+        f"TASK: Write a native Threads post for {featured}. "
+        f"It must pass an editorial score of {threshold}.\n"
+        f"{source}"
+        f"REJECTION TO FIX:\n{reasons}\n"
+        "This is a Threads post, not a blog, a reel, or a Facebook article. "
+        "Do not write an introduction, sections, slides, frames, or scenes. "
+        'Return ONE JSON object with exactly this key: ["text"]. '
+        "text is under 480 characters. Put the hook alone on the first line, then a blank line, "
+        "then the payoff that answers the hook, then one reply prompt. "
+        "Name the jar. No promotional link. No hashtag block. "
+        "Do not include an editorial_score. Return ONLY the JSON object."
+    )
+
+
+def accept_threads_regen(improved: dict, original: dict | None = None) -> dict | None:
+    """Keep a short native post. An article pack or an over-long line is not stored."""
+    if not isinstance(improved, dict) or any(key in improved for key in _ARTICLE_KEYS):
+        return None
+    text = ""
+    for key in ("text", "body", "content"):
+        value = improved.get(key)
+        if isinstance(value, str) and value.strip():
+            text = value.strip()
+            break
+    if not text:
+        nested = improved.get("threads_post")
+        if isinstance(nested, str):
+            text = nested.strip()
+    if len(text) < 20:
+        return None
+    if len(text) > 480:
+        window = text[:480]
+        end = max(window.rfind("."), window.rfind("!"), window.rfind("?"))
+        if end < 40:
+            return None
+        text = window[: end + 1].strip()
+    if len(text) > 480 or len(text) < 20:
+        return None
+    merged = dict(improved)
+    merged["text"] = text
+    if isinstance(original, dict):
+        for key in ("featured_product", "objective", "primary_cta", "success_metric", "day_number", "type", "regen_round"):
+            if key not in merged and key in original:
+                merged[key] = original[key]
+    return merged

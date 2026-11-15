@@ -187,12 +187,13 @@ def _track(result: dict, content: dict, slot: str, piece: dict) -> None:
             # carried an empty hook and the learning engine had nothing to
             # attribute performance to. Cascade + warn, so a future rename
             # degrades loudly instead of silently emptying the learning log.
-            hook = _first(piece, "hook", "hook_text", "headline", "title")
+            hook = _first(piece, "hook", "chosen_hook", "hook_text", "headline", "title")
             topic = _first(piece, "objective", "angle", "save_mechanic",
                            "hook_archetype", "type")
             # `slot` is the time of day, not a format — it made every record say
             # "morning"/"evening" and made format-level learning impossible.
-            fmt = _first(piece, "type") or slot
+            # growth_template_id is the structure that should learn from real views.
+            fmt = _first(piece, "growth_template_id", "type") or slot
 
             if not hook:
                 logger.warning(
