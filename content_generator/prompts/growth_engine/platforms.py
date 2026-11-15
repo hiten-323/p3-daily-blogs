@@ -147,7 +147,17 @@ def prompt_block(label: str, sku: str = "", day: int = 0, *, variant: int = 0) -
         _platform_learning(platform),
         _real_outcomes(label),
         _novelty(label),
+        _ad_template(label, day),
     ]).strip()
+
+
+def _ad_template(label: str, day: int) -> str:
+    """Script contract for today's ad-creator video template (reels and Short only)."""
+    try:
+        from content_generator.creative.ad_creator import prompt_contract
+        return prompt_contract(label, int(day or 0))
+    except Exception:
+        return ""
 
 
 def _real_outcomes(label: str) -> str:

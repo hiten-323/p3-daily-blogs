@@ -201,6 +201,14 @@ def load_content_by_day(output_dir: Path | None = None, days: int = 45) -> dict[
     return by_day
 
 
+def _known_templates() -> set[str]:
+    try:
+        from content_generator.creative.ad_creator import TEMPLATES
+        return set(TEMPLATES)
+    except Exception:
+        return {"fast_cut_curiosity"}
+
+
 def _day_from_asset(asset_id: str) -> int:
     match = re.search(r"day(\d+)", str(asset_id or ""))
     return int(match.group(1)) if match else 0
@@ -297,7 +305,7 @@ def build_outcomes(now: dt.datetime | None = None, *, posts: list | None = None,
             "published_at": published.isoformat(),
             "hook": (str(post.get("hook") or "") or piece_hook(piece))[:200],
             "angle": piece_angle(piece),
-            "template": piece_template(piece) or str(post.get("format") if post.get("format") in ("fast_cut_curiosity",) else ""),
+            "template": piece_template(piece) or (str(post.get("format")) if str(post.get("format") or "") in _known_templates() else ""),
             "hook_strategy": str(post.get("hook_strategy") or ""),
             "attention_mechanism": str(post.get("attention_mechanism") or ""),
             "product": str((piece or {}).get("featured_product") or ""),

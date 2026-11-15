@@ -86,6 +86,13 @@ def build_short_video(yt_short: dict, day: int, label: str = "short_video", on_d
         return None
 
     from content_generator.creative.reel_video import resolve_reel_product
+    try:
+        from content_generator.creative.ad_creator import render_for
+        _ad = render_for(yt_short, label if "short" in str(label) else "yt_short", day, on_date)
+        if _ad:
+            return _ad
+    except Exception as exc:
+        logger.warning("[short_video] ad-creator path failed: %s", type(exc).__name__)
     _cin = _cinematic(_scenes_from_short(yt_short), resolve_reel_product(yt_short), day, label, on_date, 12.0, format_type="short")
     if _cin:
         return _cin
