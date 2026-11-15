@@ -217,8 +217,9 @@ def run() -> int:
     hard_failures: list[str] = []
     if meta["status"] == "failed":
         hard_failures.append("instagram_graph_access")
-    if measurement["status"] == "permission_missing":
-        hard_failures.append("instagram_insights_permission")
+    # A missing instagram_manage_insights permission is a WARNING (DEGRADED,
+    # reported below), not a fail-closed error: publishing does not depend on
+    # it, only the learning loop's view counts do (owner decision 2026-11-15).
     if attribution["status"] == "failed":
         hard_failures.append("attribution_ledger")
     if shopify["status"] != "ok":

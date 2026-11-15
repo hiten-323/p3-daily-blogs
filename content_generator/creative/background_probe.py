@@ -19,7 +19,7 @@ USER_AGENT = "PurityBeansBackground/1.0"
 
 ORDER = (
     "kaggle_bank", "kaggle_gpu", "hf_ltx", "hf_wan", "pixazo", "runway",
-    "pexels", "pixabay", "coded",
+    "pexels", "pixabay", "hf_cogvideo", "hf_hunyuan", "hf_wan_i2v", "coded",
 )
 
 
@@ -185,17 +185,29 @@ def probe_results(transport=None) -> list[dict]:
 
     token = _secret("HF_TOKEN")
     if not token:
-        rows.append({"name": "hf_ltx", "status": "skipped", "detail": "HF_TOKEN unset"})
-        rows.append({"name": "hf_wan", "status": "skipped", "detail": "HF_TOKEN unset"})
+        for name in ("hf_ltx", "hf_wan", "hf_cogvideo", "hf_hunyuan", "hf_wan_i2v"):
+            rows.append({"name": name, "status": "skipped", "detail": "HF_TOKEN unset"})
     else:
         who, _body = call("GET", "https://huggingface.co/api/whoami-v2", {"Authorization": f"Bearer {token}"}, 8, None)
         if _http_state(who) != "live":
-            rows.append({"name": "hf_ltx", "status": "down", "detail": f"token http {who}"})
-            rows.append({"name": "hf_wan", "status": "down", "detail": f"token http {who}"})
+            for name in ("hf_ltx", "hf_wan", "hf_cogvideo", "hf_hunyuan", "hf_wan_i2v"):
+                rows.append({"name": name, "status": "down", "detail": f"token http {who}"})
         else:
             for name, space in (("hf_ltx", hf_video.LTX_SPACE), ("hf_wan", hf_video.WAN_SPACE)):
                 status, _body = call("GET", hf_video._space_host(space) + "/", {}, 8, None)
                 rows.append({"name": name, "status": _http_state(status), "detail": f"space http {status}"})
+            from content_generator.creative import video_fallbacks
+            status, _body = call("GET", hf_video._space_host(video_fallbacks.COGVIDEO_SPACE) + "/", {}, 8, None)
+            rows.append({"name": "hf_cogvideo", "status": _http_state(status), "detail": f"space http {status}"})
+            for name, model in (
+                ("hf_hunyuan", "tencent/HunyuanVideo"),
+                ("hf_wan_i2v", "Wan-AI/Wan2.1-I2V-14B-480P"),
+            ):
+                status, _body = call(
+                    "GET", f"https://huggingface.co/api/models/{model}",
+                    {"Authorization": f"Bearer {token}"}, 8, None,
+                )
+                rows.append({"name": name, "status": _http_state(status), "detail": f"model http {status}"})
 
     pixazo_key = _secret("PIXAZO_API_KEY")
     if not pixazo_key:

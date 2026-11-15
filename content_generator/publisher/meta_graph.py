@@ -12,6 +12,7 @@ import logging
 import time
 
 from config.api_versions import META_GRAPH_BASE
+from content_generator.publisher.secret_mask import mask_secret, redact
 
 logger = logging.getLogger(__name__)
 
@@ -63,19 +64,26 @@ def graph_request(method: str, url: str, params: dict | None = None, timeout: in
     last = "meta_request_failed"
     attempts = max(1, _RETRY_ATTEMPTS)
     safe_params = dict(params or {})
-    token = safe_params.pop("access_token", None)
+    token = str(safe_params.pop("access_token", None) or "")
     headers = {"User-Agent": "PurityBeans/1.0"}
     if token:
+        mask_secret(token)
         headers["Authorization"] = f"Bearer {token}"
+    method_name = str(method or "GET").upper()
+    # POST/PUT bodies stay out of the query string. A caption or page message
+    # in the URL is truncated by proxies and shows up in error logs.
+    request_kwargs = {"headers": headers, "timeout": timeout}
+    if method_name == "GET":
+        request_kwargs["params"] = safe_params
+    else:
+        request_kwargs["data"] = safe_params
     for attempt in range(attempts):
         try:
-            resp = requests.request(
-                method, url, params=safe_params, headers=headers, timeout=timeout,
-            )
+            resp = requests.request(method_name, url, **request_kwargs)
         except requests.RequestException as exc:
-            last = f"transport: {exc}"
+            last = redact(f"transport: {type(exc).__name__}", [token])
             logger.warning("[meta] %s %s failed (%s) attempt %d/%d",
-                           method, url, exc, attempt + 1, attempts)
+                           method_name, url.split("?", 1)[0], last, attempt + 1, attempts)
             if attempt == attempts - 1:
                 break
             time.sleep(delay)
@@ -89,9 +97,9 @@ def graph_request(method: str, url: str, params: dict | None = None, timeout: in
             data = {}
         if _is_transient(resp.status_code, data):
             err = data.get("error") if isinstance(data.get("error"), dict) else {}
-            last = str(err.get("message") or f"HTTP {resp.status_code}")
+            last = redact(str(err.get("message") or f"HTTP {resp.status_code}"), [token])
             logger.warning("[meta] transient %s on %s (attempt %d/%d)",
-                           last, url, attempt + 1, attempts)
+                           last, url.split("?", 1)[0], attempt + 1, attempts)
             if attempt == attempts - 1:
                 break
             time.sleep(delay)
@@ -109,11 +117,20 @@ def wait_for_container(container_id: str, token: str, max_wait: int | None = 60,
     ERROR and deadline expiry raise ContainerNotReady with Meta's status
     text when the API sent one. Callers must not publish after this raises.
     """
-    deadline = time.monotonic() + max(0, int(max_wait or 0))
-    pause = _POLL_INTERVAL if interval is None else interval
+    budget = max(0, int(max_wait or 0))
+    deadline = time.monotonic() + budget
+    pause = _POLL_INTERVAL if interval is None else float(interval)
+    if pause < 0:
+        pause = _POLL_INTERVAL
+    # A zero interval must not busy-loop until the clock moves.
+    if pause <= 0 or budget <= 0:
+        max_polls = 1
+    else:
+        max_polls = max(1, int(budget / pause) + 2)
     last = "UNKNOWN"
     reason = ""
-    while True:
+    polls = 0
+    while polls < max_polls:
         try:
             data = graph_request(
                 "GET",
@@ -133,7 +150,8 @@ def wait_for_container(container_id: str, token: str, max_wait: int | None = 60,
         if status in ("ERROR", "EXPIRED"):
             detail = (data or {}).get("status") or reason or status
             raise ContainerNotReady(f"container {container_id} {status}: {detail}")
-        if time.monotonic() >= deadline:
+        polls += 1
+        if time.monotonic() >= deadline or polls >= max_polls:
             detail = reason or last
             raise ContainerNotReady(
                 f"container {container_id} timeout after {max_wait}s (last status {detail})"

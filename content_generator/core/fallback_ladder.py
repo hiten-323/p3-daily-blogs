@@ -185,14 +185,17 @@ def scratch_prompt(label: str, piece: dict, feedback: str, threshold: float, bra
     keys = (piece or {}).get("_shape") or sorted(
         k for k in (piece or {}) if k not in ("editorial_score", "editorial_error", "needs_regen",
                                               "held", "hold_reason", "_shape"))
-    if label == "yt_short":
-        # A from-scratch retry used to ask only for keys already on the draft.
-        # A draft that omitted tagline (or named the jar only as featured_product)
-        # was then told to omit them again, and every ladder attempt failed schema.
-        keys = list(keys)
-        for key in ("product", "tagline", "scenes"):
-            if key not in keys:
-                keys.append(key)
+    # Callers and schemas disagree when a stub only carries type/featured_product.
+    # The model then returns that stub shape and every ladder attempt fails schema.
+    required = {
+        "instagram_post": ("caption", "comment_trigger", "save_trigger", "share_trigger", "hashtags"),
+        "threads_post": ("text",),
+        "yt_short": ("product", "tagline", "scenes"),
+    }.get(label, ())
+    keys = list(keys)
+    for key in required:
+        if key not in keys:
+            keys.append(key)
     featured = (piece or {}).get("featured_product") or "the featured Purity Beans jar"
     reasons = _re.sub(r"\s+", " ", str(feedback or ""))[:900]
     banned = is_banned_claim_failure(feedback)

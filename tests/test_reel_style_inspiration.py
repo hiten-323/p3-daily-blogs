@@ -16,6 +16,19 @@ def _silence_music(monkeypatch, tmp_path):
     monkeypatch.setenv("STORY_MUSIC_FILE", "")
 
 
+def _pass_visual_gate(monkeypatch):
+    """These tests cover template reuse mechanics, not render quality.
+
+    The reused template must pass the 8.0 visual gate before it is returned
+    (see test_reused_template_is_held_when_visual_gate_rejects). CI has no
+    vision provider, so the gate is stubbed as a pass here.
+    """
+    from content_generator.creative import visual_gate
+    monkeypatch.setattr(visual_gate, "recent_layouts", lambda: [])
+    monkeypatch.setattr(visual_gate, "evaluate_video",
+                        lambda *a, **k: {"passed": True, "reasons": []})
+
+
 def test_mini_day_still_uses_the_template_file(tmp_path, monkeypatch):
     from content_generator.creative.jar_composer import build_reel_hook_prompt
     from content_generator.creative.product_reel_templates import (
@@ -24,6 +37,7 @@ def test_mini_day_still_uses_the_template_file(tmp_path, monkeypatch):
     from content_generator.creative.reel_video import build_reel_video
 
     _silence_music(monkeypatch, tmp_path)
+    _pass_visual_gate(monkeypatch)
     piece = {
         "product": "Gourmet Duo Mini",
         "hook_text": "TWO JARS",
@@ -142,14 +156,19 @@ def test_non_mini_day_receives_style_cues_without_publishing_the_mini_file(tmp_p
     monkeypatch.setenv("ENABLE_STORY_VIDEO", "true")
     monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(tmp_path))
     monkeypatch.setenv("REEL_MUSIC_FILE", "")
+    monkeypatch.setenv("KEN_BURNS_SECONDS", "2")
     monkeypatch.setitem(sys.modules, "moviepy", None)
 
     rendered = build_reel_video(
         reel, day=9, label="reel_1_video", on_date=date(2026, 10, 12),
     )
-    assert rendered is None
-    assert list(tmp_path.glob("*.mp4")) == []
+    # A missing cinematic plate may still encode approved photos. That file
+    # is not the Mini template.
+    if rendered is not None:
+        assert os.path.basename(rendered) != "gourmet_duo_mini.mp4"
+        assert Path(rendered).name.startswith("reel_1_video_")
     assert source.stat().st_size == before
+    assert not any(p.name == "gourmet_duo_mini.mp4" for p in Path(tmp_path).glob("*.mp4"))
     # A non-mini story would encode a 10s zoompan. ffmpeg without -nostdin
     # waits on pytest's stdin, so the suite never finishes. This test only
     # checks that the mini file is not what gets published.

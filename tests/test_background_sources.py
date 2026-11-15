@@ -47,9 +47,10 @@ def _frames(*_a, **_k):
 
 
 def test_provider_order_and_gates_unchanged():
-    assert ai_backgrounds.PROVIDER_ORDER == (
+    assert ai_backgrounds.PROVIDER_ORDER[:7] == (
         "kaggle_bank", "hf_ltx", "hf_wan", "pixazo", "runway", "pexels", "pixabay",
     )
+    assert ai_backgrounds.PROVIDER_ORDER[7:] == ("hf_cogvideo", "hf_hunyuan", "hf_wan_i2v")
     assert PASS_MARK == 9.0
     assert PASS_FLOOR == 8.0
     assert EDITORIAL_THRESHOLD == 8.0
@@ -66,7 +67,7 @@ def test_provider_order_and_gates_unchanged():
 def test_queries_cover_concepts():
     assert stock_video.query_for("steam_backlight") == "coffee steam"
     assert stock_video.query_for("crema_swirl") == "coffee crema"
-    assert stock_video.query_for("bean_cascade") == "coffee beans"
+    assert stock_video.query_for("granule_cascade") == "instant coffee granules"
     assert stock_video.query_for("granule_dissolve") == "coffee pour"
     assert stock_video.query_for("rain_window_cafe") == "rain window cafe"
     assert stock_video.query_for("golden_hour_kitchen") == "coffee cafe"
@@ -153,6 +154,66 @@ def test_missing_secrets_skip_to_coded_fallback(monkeypatch):
     assert called == []
 
 
+def test_transient_video_provider_timeout_retries_with_backoff(tmp_path, monkeypatch):
+    ai_backgrounds.reset_session()
+    monkeypatch.setenv("VIDEO_PROVIDER_RETRIES", "2")
+    monkeypatch.setenv("VIDEO_PROVIDER_BACKOFF_S", "0")
+    monkeypatch.setattr(ai_backgrounds, "_sibling_source", lambda choice: None)
+    monkeypatch.setattr(ai_backgrounds, "_order", lambda avoid: ["kaggle_bank"])
+    monkeypatch.setattr(ai_backgrounds, "_configured", lambda name: True)
+    monkeypatch.setattr(ai_backgrounds, "load_frames", _frames)
+    lessons = []
+    monkeypatch.setattr(ai_backgrounds, "_remember_provider_obstacle",
+                        lambda choice, name, reason: lessons.append((name, reason)))
+    plate = _plate(tmp_path, "retry.mp4")
+    calls = []
+
+    def flaky(*_args, **_kwargs):
+        calls.append(1)
+        if len(calls) == 1:
+            raise TimeoutError("provider timeout")
+        return str(plate)
+
+    monkeypatch.setattr(ai_backgrounds, "_providers", lambda: {"kaggle_bank": flaky})
+    frames, source = ai_backgrounds.fetch_background(_choice(), "lab", (8, 8), 5)
+    assert source == "kaggle_bank" and frames
+    assert len(calls) == 2
+    assert ("kaggle_bank", "timeout") in lessons
+
+
+def test_video_provider_quota_failure_is_logged_and_skipped_without_retry(tmp_path, monkeypatch):
+    ai_backgrounds.reset_session()
+    monkeypatch.setenv("VIDEO_PROVIDER_RETRIES", "3")
+    monkeypatch.setenv("VIDEO_PROVIDER_BACKOFF_S", "0")
+    monkeypatch.setattr(ai_backgrounds, "_sibling_source", lambda choice: None)
+    monkeypatch.setattr(ai_backgrounds, "_order", lambda avoid: ["kaggle_bank", "hf_ltx"])
+    monkeypatch.setattr(ai_backgrounds, "_configured", lambda name: True)
+    monkeypatch.setattr(ai_backgrounds, "load_frames", _frames)
+    lessons = []
+    monkeypatch.setattr(ai_backgrounds, "_remember_provider_obstacle",
+                        lambda choice, name, reason: lessons.append((name, reason)))
+    plate = _plate(tmp_path, "after-quota.mp4")
+    calls = {"quota": 0, "next": 0}
+
+    class QuotaError(Exception):
+        code = 402
+
+    def quota(*_args, **_kwargs):
+        calls["quota"] += 1
+        raise QuotaError("credits exhausted")
+
+    def next_provider(*_args, **_kwargs):
+        calls["next"] += 1
+        return str(plate)
+
+    monkeypatch.setattr(ai_backgrounds, "_providers",
+                        lambda: {"kaggle_bank": quota, "hf_ltx": next_provider})
+    frames, source = ai_backgrounds.fetch_background(_choice(), "lab", (8, 8), 5)
+    assert source == "hf_ltx" and frames
+    assert calls == {"quota": 1, "next": 1}
+    assert ("kaggle_bank", "http_402") in lessons
+
+
 def test_chain_stops_at_first_plate_and_splits_same_day(tmp_path, monkeypatch):
     ai_backgrounds.reset_session()
     for name in SECRET_NAMES:
@@ -230,6 +291,59 @@ def test_commit_records_stock_attribution(tmp_path, monkeypatch):
     assert "pexels-secret" not in hist.read_text()
 
 
+def test_hf_video_busy_response_retries_but_quota_does_not(monkeypatch):
+    monkeypatch.setenv("HF_VIDEO_PROVIDER_RETRIES", "2")
+    monkeypatch.setenv("HF_VIDEO_PROVIDER_BACKOFF_S", "0")
+    lessons = []
+    monkeypatch.setattr(hf_video, "_remember_provider_failure",
+                        lambda source, label, reason: lessons.append((source, reason)))
+    calls = []
+
+    def transient_then_video():
+        calls.append(1)
+        if len(calls) == 1:
+            return 503, b'{"error":"currently loading","estimated_time":2}', "application/json"
+        return 200, b"\x00\x00\x00\x18ftyp" + b"x" * 40, "video/mp4"
+
+    result = hf_video._retry_request(transient_then_video, "hf_ltx", "growth_reel", "space")
+    assert len(calls) == 2
+    assert hf_video.interpret(*result)[0] == "video"
+    assert ("hf_ltx", "space_busy") in lessons
+
+    calls.clear()
+
+    def quota():
+        calls.append(1)
+        return 402, b'{"error":"credits exhausted"}', "application/json"
+
+    result = hf_video._retry_request(quota, "hf_ltx", "growth_reel", "router")
+    assert len(calls) == 1
+    assert hf_video.interpret(*result)[0] == "quota"
+
+
+def test_hf_wan_i2v_receives_only_procedural_steam_still(monkeypatch):
+    import base64
+    import io
+    from PIL import Image
+    from content_generator.creative import video_fallbacks, hf_video
+
+    monkeypatch.setenv("HF_TOKEN", "test-hf-token")
+    monkeypatch.setattr(hf_video, "_AUTH_DEAD", False)
+    monkeypatch.setattr(video_fallbacks, "_lesson", lambda *a, **k: None)
+    seen = {}
+
+    def request(url, payload, headers, timeout):
+        seen["payload"] = payload
+        return 402, b'{"error":"credits exhausted"}', "application/json"
+
+    monkeypatch.setattr(hf_video, "_request", request)
+    monkeypatch.setattr(hf_video, "_router_url", lambda provider, model: "https://router.invalid/test")
+    assert video_fallbacks.wan_i2v({"ai_prompt": "steam rising", "format": "reel"}, "growth_reel") is None
+    image_data = seen["payload"]["parameters"]["image"].split(",", 1)[1]
+    image = Image.open(io.BytesIO(base64.b64decode(image_data)))
+    assert image.format == "JPEG"
+    assert image.size == (256, 384)
+    assert "no jar" in seen["payload"]["inputs"].lower()
 def test_hf_quota_busy_and_timeout_skip_cleanly(tmp_path, monkeypatch):
     hf_video.reset_session()
     monkeypatch.setattr(hf_video, "_OUT", str(tmp_path))

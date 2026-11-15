@@ -21,7 +21,7 @@ def test_missing_metric_is_unknown_not_zero(monkeypatch, tmp_path):
     assert result["status"] == "cold"
 
 
-def test_missing_instagram_insights_permission_is_fail_closed(monkeypatch, capsys):
+def test_missing_instagram_insights_permission_is_a_warning(monkeypatch, capsys):
     monkeypatch.setattr(growth_health, "measurement_health", lambda: {
         "status": "permission_missing", "records": 1337, "measured_views": 24,
         "missing_permission": "instagram_manage_insights",
@@ -30,10 +30,25 @@ def test_missing_instagram_insights_permission_is_fail_closed(monkeypatch, capsy
     monkeypatch.setattr(growth_health, "config_health", lambda: {"status": "ok", "warnings": []})
     monkeypatch.setattr(growth_health, "attribution_health", lambda: {"status": "empty", "orders": 0})
     monkeypatch.setattr(growth_health, "shopify_access_health", lambda: {"status": "ok", "recent_orders": 0, "instagram_marked_orders": 0})
-    assert growth_health.run() == 1
+    # Owner decision 2026-11-15: reported as DEGRADED, does not fail the check.
+    assert growth_health.run() == 0
     output = capsys.readouterr().out
-    assert "HEALTH: FAIL-CLOSED" in output
-    assert "instagram_insights_permission" in output
+    assert "HEALTH: DEGRADED" in output
+    assert "instagram_manage_insights" in output
+    assert "FAIL-CLOSED" not in output
+
+
+def test_missing_insights_permission_still_fails_closed_with_a_real_hard_failure(monkeypatch, capsys):
+    monkeypatch.setattr(growth_health, "measurement_health", lambda: {
+        "status": "permission_missing", "records": 1, "measured_views": 0,
+        "missing_permission": "instagram_manage_insights",
+    })
+    monkeypatch.setattr(growth_health, "meta_preflight", lambda: {"status": "ok"})
+    monkeypatch.setattr(growth_health, "config_health", lambda: {"status": "ok", "warnings": []})
+    monkeypatch.setattr(growth_health, "attribution_health", lambda: {"status": "empty", "orders": 0})
+    monkeypatch.setattr(growth_health, "shopify_access_health", lambda: {"status": "failed", "recent_orders": 0, "instagram_marked_orders": 0})
+    assert growth_health.run() == 1
+    assert "shopify_read_orders" in capsys.readouterr().out
 
 
 def test_shopify_read_orders_access_is_checked_without_exposing_orders(monkeypatch):

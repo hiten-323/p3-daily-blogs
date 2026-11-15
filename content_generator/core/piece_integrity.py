@@ -29,13 +29,13 @@ _CAPTION_LABELS = {"reel_1", "reel_2", "carousel", "instagram_post", "growth_ree
 _REEL_LABELS = {"reel_1", "reel_2", "growth_reel"}
 
 _DEFAULT_HASHTAGS = (
-    "#PurityBeans #PureCoffee #InstantCoffee #NoChicory #CoffeeLover "
+    "#PurityBeans #PureCoffee #InstantCoffee #CoffeeLover "
     "#IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar "
     "#GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture "
     "#SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience "
     "#MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove"
 )
-_DEFAULT_COMMENT = "Comment COFFEE below if you refuse to drink chicory disguised as coffee."
+_DEFAULT_COMMENT = "Comment the first word you see on the jar label."
 _DEFAULT_SAVE = "Save this before your next grocery run — real coffee matters."
 _DEFAULT_SHARE = "Share with someone who starts every morning with coffee."
 
@@ -342,7 +342,7 @@ def _threads_copy(node) -> str:
 
 
 def _fit_threads_length(piece: dict, limit: int = 480) -> None:
-    """Cut a Threads post at the last sentence that fits. No clean cut stays long."""
+    """Fit a Threads post into the 480-character gate. A missing sentence end is cut."""
     for key in ("text", "body", "content"):
         text = piece.get(key)
         if not isinstance(text, str) or len(text.strip()) <= limit:
@@ -352,6 +352,9 @@ def _fit_threads_length(piece: dict, limit: int = 480) -> None:
         idx = max(window.rfind("."), window.rfind("!"), window.rfind("?"))
         if idx >= 40:
             piece[key] = window[: idx + 1].strip()
+            continue
+        space = window.rfind(" ")
+        piece[key] = (window[:space] if space >= 40 else window).rstrip(" ,;:-")
 
 
 def _ensure_facebook_brand_facts(piece: dict) -> None:

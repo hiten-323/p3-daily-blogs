@@ -16,6 +16,19 @@ def _silence_music(monkeypatch, tmp_path):
     monkeypatch.setenv("STORY_MUSIC_FILE", "")
 
 
+def _pass_visual_gate(monkeypatch):
+    """These tests cover template reuse mechanics, not render quality.
+
+    The reused template must pass the 8.0 visual gate before it is returned
+    (see test_reused_template_is_held_when_visual_gate_rejects). CI has no
+    vision provider, so the gate is stubbed as a pass here.
+    """
+    from content_generator.creative import visual_gate
+    monkeypatch.setattr(visual_gate, "recent_layouts", lambda: [])
+    monkeypatch.setattr(visual_gate, "evaluate_video",
+                        lambda *a, **k: {"passed": True, "reasons": []})
+
+
 def test_template_file_is_a_reusable_vertical_mp4():
     from content_generator.creative.product_reel_templates import TEMPLATE_PATH, template_record
 
@@ -179,6 +192,7 @@ def test_daily_render_reuses_the_template_without_posting_or_consuming_it(tmp_pa
     from content_generator.creative.story_video import build_story_video
 
     _silence_music(monkeypatch, tmp_path)
+    _pass_visual_gate(monkeypatch)
     monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(tmp_path))
     source = ROOT / TEMPLATE_PATH
     before = source.stat().st_size
@@ -223,3 +237,24 @@ def test_daily_render_reuses_the_template_without_posting_or_consuming_it(tmp_pa
     # Non-mini days get their own motion story (or nothing) — never the mini file.
     assert other is None or Path(other).stat().st_size != before
     assert template_record()["audio_embedded"] is False
+
+
+def test_reused_template_is_held_when_visual_gate_rejects(tmp_path, monkeypatch):
+    from datetime import date
+
+    from content_generator.creative import reel_video, visual_gate
+
+    _silence_music(monkeypatch, tmp_path)
+    monkeypatch.setenv("ENABLE_REEL_VIDEO", "true")
+    monkeypatch.setenv("CREATIVE_OUTPUT_DIR", str(tmp_path))
+    monkeypatch.setattr(visual_gate, "recent_layouts", lambda: [])
+    monkeypatch.setattr(visual_gate, "evaluate_video",
+                        lambda *a, **k: {"passed": False, "reasons": ["aesthetic_below_8.0:6.5"]})
+    monkeypatch.setattr("content_generator.scheduler.daily._remember_obstacle", lambda *a, **k: None)
+    monkeypatch.setattr(reel_video, "_cinematic", lambda *a, **k: None)
+    monkeypatch.setattr(reel_video, "_photo_fallback", lambda *a, **k: None)
+    rendered = reel_video.build_reel_video(
+        {"product": "Gourmet Duo Mini", "hook_text": "TWO GOURMET JARS"},
+        day=4, label="reel_1_video", on_date=date(2026, 10, 12),
+    )
+    assert rendered is None
