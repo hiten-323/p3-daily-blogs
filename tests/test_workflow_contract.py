@@ -43,9 +43,12 @@ def main() -> None:
     # Soft Meta notice on generate (does not fail the generate slot).
     assert "Soft Meta token notice" in text or "Meta token soft-check" in text
 
-    # Repository synchronization failures must never be swallowed.
+    # Repository synchronization failures must never be swallowed. State is
+    # saved to the engine-state branch (main is protected); a failed save
+    # fails the step.
     assert "git pull --rebase --autostash || true" not in text
-    assert re.search(r"git pull --rebase --autostash\s*$", text, re.M)
+    assert "engine_state save || true" not in text
+    assert re.search(r"engine_state save -m [^\n]*\\\n\s*\|\| \{ echo \"::error::[^\n]*exit 1; \}", text)
 
     # No stale production-window references.
     assert "08:00 / 20:00" not in text
@@ -479,7 +482,14 @@ def test_recovery_workflows_persist_creative_output():
     for wf_name in ("retry-unposted.yml", "publish-recovery.yml"):
         wf_path = ROOT / ".github" / "workflows" / wf_name
         text = wf_path.read_text(encoding="utf-8")
-        assert "git add -f output/learning/publishing_ledger.json" in text
-        assert "output/learning/published_posts.json" in text
-        assert "output/creative/" in text
+        # engine_state save persists every changed state file, including the
+        # ledger, published posts and re-rendered creatives + provenance.
+        assert "content_generator.ops.engine_state save" in text
+        assert "|| { echo \"::error::Could not push ledger\"; exit 1; }" in text
+    from content_generator.ops import engine_state
+    for rel in ("output/learning/publishing_ledger.json", "output/learning/published_posts.json",
+                "output/creative/reel_1_2026-11-16.jpg", "output/creative/jar_provenance.json",
+                "output/publish_log.json", "output/learning/publish_diagnostics.json",
+                "output/content_2026-11-16.json"):
+        assert engine_state.is_state_path(rel), rel
 

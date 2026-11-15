@@ -123,10 +123,18 @@ def test_retry_keeps_verified_images(monkeypatch):
 
 
 def test_retry_persist_keeps_rerendered_creatives_and_registry():
+    # Retry persistence now goes through engine_state save, which copies every
+    # creative this run re-rendered and merges the provenance registry so this
+    # run's entries win (no reset/clean that could drop them).
     text = (ROOT / ".github/workflows/retry-unposted.yml").read_text(encoding="utf-8")
-    i = text.index('mkdir -p "$PERSIST/creative"')
-    assert i < text.index("git reset -q --hard HEAD && git clean -qfd output/creative")
-    assert "provenance registry merged" in text
+    assert "content_generator.ops.engine_state save" in text
+    assert "git reset -q --hard HEAD" not in text
+    from content_generator.ops import engine_state
+    assert engine_state.is_state_path("output/creative/fb_day1_2026-11-16.jpg")
+    merged, _ = engine_state.merge_json(engine_state.PROVENANCE,
+                                        {"a.jpg": {"src": "old"}, "b.jpg": {"src": "keep"}},
+                                        {"a.jpg": {"src": "rerendered"}})
+    assert merged == {"a.jpg": {"src": "rerendered"}, "b.jpg": {"src": "keep"}}
 
 
 def test_ledger_dedupe_uses_content_date_and_rolls_back(tmp_path, monkeypatch):

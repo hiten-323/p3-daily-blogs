@@ -75,14 +75,43 @@ def _claim_commit() -> str:
     return out.stdout.strip()
 
 
+_STATE_BRANCH = os.getenv("ENGINE_STATE_BRANCH", "engine-state")
+
+
+def _remote_ledgers() -> list[dict] | None:
+    """Ledger records on origin's state branch and on main; None = cannot tell.
+
+    The engine saves its ledger to the engine-state branch (main is protected),
+    so a post recorded there must block a duplicate. main is still read for
+    records saved before the move.
+    """
+    out: list[dict] = []
+    probe = _git("ls-remote", "--exit-code", "--heads", "origin", _STATE_BRANCH)
+    if probe.returncode not in (0, 2):
+        return None  # origin unreachable: fail closed
+    branches = ([_STATE_BRANCH] if probe.returncode == 0 else []) + ["main"]
+    for branch in branches:
+        if _git("fetch", "-q", "origin", f"+refs/heads/{branch}:refs/remotes/origin/{branch}").returncode != 0:
+            return None
+        show = _git("show", f"origin/{branch}:{_LEDGER}")
+        if show.returncode != 0:
+            continue
+        try:
+            recs = json.loads(show.stdout).get("records", {})
+        except Exception:
+            return None
+        if isinstance(recs, dict):
+            out.append(recs)
+    return out or None
+
+
 def _remote_posted(date: str, slot: str, platform: str, asset: str = "") -> bool:
-    if _git("fetch", "-q", "origin", "main").returncode != 0:
+    ledgers = _remote_ledgers()
+    if ledgers is None:
         return True  # cannot prove it is free: fail closed
-    show = _git("show", f"origin/main:{_LEDGER}")
-    try:
-        recs = json.loads(show.stdout).get("records", {})
-    except Exception:
-        return True
+    recs = {}
+    for i, led in enumerate(ledgers):
+        recs.update({f"{i}|{k}": v for k, v in led.items()})
     for r in recs.values():
         if not isinstance(r, dict):
             continue
