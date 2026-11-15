@@ -20,7 +20,7 @@ from content_generator.prompts.yt_short import SCENE_FIELDS, build, scene_contra
 def test_quality_gates_stay_at_8():
     assert PASS_FLOOR == 8.0
     assert PASS_THRESHOLD == 8.0
-    assert PASS_MARK == 8.0
+    assert PASS_MARK == 9.0
     assert EDITORIAL_THRESHOLD == 8.0
 
 
@@ -207,7 +207,7 @@ def test_schema_repair_does_not_burn_a_ladder_attempt(monkeypatch):
     monkeypatch.setattr("content_generator.agents.editorial.review_content", review)
     monkeypatch.setattr(
         "content_generator.core.viral_gate.evaluate",
-        lambda *_a, **_k: {"passed": True, "overall": 8.4, "honesty": []},
+        lambda *_a, **_k: {"passed": True, "overall": 9.2, "honesty": []},
     )
     monkeypatch.setattr(
         "content_generator.scheduler.daily._growth_gate_reason",

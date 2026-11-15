@@ -1,6 +1,6 @@
 """Separate retry targets, reel fallback, and the Short/reel prompt contract.
 
-The 8.0 editorial and viral gates stay where they are. Product-truth and
+The 8.0 editorial and 9.0 viral gates stay where they are. Product-truth and
 process-match are not bypassed.
 """
 from content_generator.scheduler import retry_unposted as ru
@@ -50,14 +50,14 @@ def test_gates_stay_at_8():
     from content_generator.core.fallback_ladder import PASS_FLOOR
     from content_generator.core.viral_gate import PASS_MARK
     assert PASS_FLOOR == 8.0
-    assert PASS_MARK == 8.0
+    assert PASS_MARK == 9.0
     assert float(get_current_pass_score()) == 8.0
 
 
 def test_scratch_prompt_feeds_the_judge_critique_back():
     from content_generator.core.fallback_ladder import scratch_prompt
     critique = (
-        "viral: score 5.1 < 8.0. The hook 'Most people never read the back of their coffee jar' "
+        "viral: score 5.1 < 9.0. The hook 'Most people never read the back of their coffee jar' "
         "is generic and the scenes had no tension."
     )
     prompt = scratch_prompt(

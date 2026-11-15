@@ -12,7 +12,7 @@ import pytest
 from content_generator.core import obstacle_lessons, publish_bar
 
 
-def _piece(editorial=8.6, viral=8.4, passed=True, honesty=None):
+def _piece(editorial=8.6, viral=9.2, passed=True, honesty=None):
     return {
         "hook": "Why the label matters",
         "body": "Bold is pure coffee with zero chicory.",

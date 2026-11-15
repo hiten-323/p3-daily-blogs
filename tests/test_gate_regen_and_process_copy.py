@@ -154,7 +154,7 @@ def test_nested_facebook_copy_is_scored_until_it_passes(monkeypatch):
     from content_generator.scheduler import daily
 
     assert PASS_FLOOR == 8.0
-    assert PASS_MARK == 8.0
+    assert PASS_MARK == 9.0
     assert get_current_pass_score() == 8.0
 
     seen = []
@@ -313,6 +313,14 @@ def test_ultra_pure_clause_is_rewritten_and_linkedin_skip_retries(tmp_path, monk
     assert record["status"] == "FAILED"
     assert record["next_retry_at"]
     assert ledger.attempt_budget_exhausted(record) is False
+
+
+def test_string_script_is_a_sentence_not_a_letter():
+    from content_generator.core.product_truth import asset_product_truth_findings
+
+    piece = {"script": "Bold is freeze-dried pure coffee."}
+    reasons = [item["reason"] for item in asset_product_truth_findings(piece, featured="Bold")]
+    assert any("not freeze-dried" in reason for reason in reasons)
 
 
 def test_publish_gate_repairs_ultra_clause_on_every_asset():

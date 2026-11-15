@@ -249,7 +249,13 @@ def get_fatigue_block(max_items: int = 15) -> str:
     LLM generates something different. Empty string when history is thin.
     """
     history = _recent_creative_history()
-    if len(history) < 3:
+    try:
+        from content_generator.core import hook_retirement
+        retired = hook_retirement.retired_lines(limit=6)
+    except Exception as e:
+        logger.debug("[hooks] retirement list unavailable: %s", e)
+        retired = []
+    if len(history) < 3 and not retired:
         return ""
 
     hooks  = [e.get("hook", "")  for e in history if e.get("hook")]
@@ -261,4 +267,7 @@ def get_fatigue_block(max_items: int = 15) -> str:
     if topics:
         lines.append("Topics/angles already used: " + " | ".join(dict.fromkeys(topics))[:400])
     lines.append("Generate something structurally different — new angle, new emotion, new format.")
+    if retired:
+        lines.append("PERMANENTLY RETIRED BY MEASURED PERFORMANCE — never reuse these:")
+        lines.extend(retired)
     return "\n".join(lines)

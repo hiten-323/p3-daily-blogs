@@ -1,4 +1,4 @@
-"""Pre-publish VIRAL POTENTIAL gate (LLM-scored, 8.0 pass mark, per platform/format).
+"""Pre-publish VIRAL POTENTIAL gate (LLM-scored, 9.0 pass mark, per platform/format).
 
 Builds on the existing growth framework (core/growth_engine.py, core/viral_readiness.py,
 prompts/growth_engine). Those stay as they are; this adds a free-LLM judge, routed through
@@ -22,7 +22,7 @@ import re
 
 logger = logging.getLogger(__name__)
 
-PASS_MARK = 8.0  # never lowered
+PASS_MARK = 9.0  # never lowered; raised from 8.0 on 2026-11-14
 
 DIMENSIONS = {
     "hook": "first 1-2 seconds / first line stops the scroll (pattern interrupt, specific, not generic)",
@@ -121,6 +121,24 @@ _DISHONEST = [
 
 def format_for(label: str) -> str:
     return LABEL_FORMAT.get(label, label)
+
+
+def platform_for(label: str) -> str:
+    key = str(label or "").strip().lower()
+    if key == "yt_short":
+        return "youtube"
+    if key == "threads_post":
+        return "threads"
+    if key == "linkedin_post":
+        return "linkedin"
+    if key == "facebook_post":
+        return "facebook"
+    if key == "blog_post":
+        return "shopify"
+    if key in {"reel_1", "reel_2", "growth_reel", "carousel", "instagram_post",
+               "story", "instagram_story", "stories"}:
+        return "instagram"
+    return ""
 
 
 def _text(piece) -> str:
@@ -247,17 +265,37 @@ def evaluate(label: str, piece: dict, *, call=None) -> dict:
     return res
 
 
-def feedback_for(label: str, result: dict, attempt: int = 0) -> str:
-    """Regeneration instruction: the judge's notes + a DIFFERENT proven hook template."""
+def choose_template(label: str, attempt: int = 0) -> str:
+    """Choose a measured-safe template, or request a novel pattern from scratch.
+
+    A retirement-store error or an exhausted template pool must never cause a
+    measured loser to be offered again. The generator can still create a fresh
+    hook without a template; the publish gate judges that draft normally.
+    """
     fmt = format_for(label)
     templates = HOOK_TEMPLATES.get(fmt) or HOOK_TEMPLATES["instagram_post"]
-    tmpl = templates[int(attempt) % len(templates)]
+    try:
+        from content_generator.core import hook_retirement
+        active = hook_retirement.active_templates(templates, platform=platform_for(label), fmt=fmt)
+    except Exception as e:  # fail closed on reuse; generation can invent a fresh hook
+        logger.warning("[viral] retirement filter unavailable for %s: %s", fmt, e)
+        active = []
+    if not active:
+        return ("Create a completely original hook pattern from verified facts; "
+                "do not reuse any retired hook or strategy.")
+    return active[int(attempt) % len(active)]
+
+
+def feedback_for(label: str, result: dict, attempt: int = 0) -> str:
+    """Regeneration instruction: judge notes plus an active template or novel-pattern direction."""
+    fmt = format_for(label)
+    tmpl = choose_template(label, attempt)
     weak = ", ".join(result.get("weakest") or [])
     parts = [f"viral: score {result.get('overall')} < {PASS_MARK} (weakest: {weak or 'n/a'}).",
              str(result.get("feedback") or "").strip()]
     if result.get("better_hook"):
         parts.append(f"Suggested hook: {result['better_hook']}")
-    parts.append(f"Use a DIFFERENT hook and angle from the last draft, e.g. this template: \"{tmpl}\". "
+    parts.append(f"Use a DIFFERENT hook and angle from the last draft. Starting point: \"{tmpl}\". "
                  f"Format rules: {FORMAT_RULES.get(fmt, '')}. Add a comment trigger and a clear "
                  "'Follow @purepantryprovisions' reason. Never invent urgency, reviews, metrics, health "
                  "claims, '100%', or prices; never knock chicory.")
@@ -266,10 +304,22 @@ def feedback_for(label: str, result: dict, attempt: int = 0) -> str:
 
 def hook_block(label: str) -> str:
     fmt = format_for(label)
-    t = HOOK_TEMPLATES.get(fmt)
-    if not t:
+    templates = HOOK_TEMPLATES.get(fmt)
+    if not templates:
         return ""
-    return ("VIRAL HOOK TEMPLATES (pick one, fill only with verified facts, never invented numbers): "
-            + " | ".join(t) + f"\nFORMAT MECHANICS: {FORMAT_RULES.get(fmt, '')}. "
+    try:
+        from content_generator.core import hook_retirement
+        active = hook_retirement.active_templates(templates, platform=platform_for(label), fmt=fmt)
+    except Exception as e:
+        logger.warning("[viral] retirement filter unavailable for %s: %s", fmt, e)
+        active = []
+    if active:
+        choices = " | ".join(active)
+        lead = "VIRAL HOOK TEMPLATES (pick one, fill only with verified facts, never invented numbers): " + choices
+    else:
+        lead = ("VIRAL HOOK TEMPLATES: no non-retired templates are available for this format. "
+                "Create a completely original hook pattern from verified facts; do not reuse any "
+                "retired hook or strategy.")
+    return (lead + f"\nFORMAT MECHANICS: {FORMAT_RULES.get(fmt, '')}. "
             "Include a curiosity gap that pays off, a comment trigger (question or this-or-that), a "
             "save/share reason, and a clear follow CTA for @purepantryprovisions.")

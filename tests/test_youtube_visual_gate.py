@@ -42,6 +42,8 @@ def test_post_content_holds_upload_when_visual_gate_fails(monkeypatch):
     )
     monkeypatch.setattr("content_generator.core.publish_bar.quality_block", lambda *a, **k: None)
     monkeypatch.setattr("content_generator.core.product_truth.product_truth_findings", lambda *a, **k: [])
+    monkeypatch.setattr("content_generator.publisher.prepublish_gate.authorize_publish",
+                        lambda *a, **k: {"allowed": True, "reason": ""})
     res = youtube.post_content({"yt_short": {
         "title": "Read the label",
         "description": "Purica is freeze-dried instant coffee. Shop at p3online.in.",

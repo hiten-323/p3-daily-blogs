@@ -21,6 +21,63 @@ def test_missing_metric_is_unknown_not_zero(monkeypatch, tmp_path):
     assert result["status"] == "cold"
 
 
+def test_missing_instagram_insights_permission_is_a_warning(monkeypatch, capsys):
+    monkeypatch.setattr(growth_health, "measurement_health", lambda: {
+        "status": "permission_missing", "records": 1337, "measured_views": 24,
+        "missing_permission": "instagram_manage_insights",
+    })
+    monkeypatch.setattr(growth_health, "meta_preflight", lambda: {"status": "ok"})
+    monkeypatch.setattr(growth_health, "config_health", lambda: {"status": "ok", "warnings": []})
+    monkeypatch.setattr(growth_health, "attribution_health", lambda: {"status": "empty", "orders": 0})
+    monkeypatch.setattr(growth_health, "shopify_access_health", lambda: {"status": "ok", "recent_orders": 0, "instagram_marked_orders": 0})
+    # Owner decision 2026-11-15: reported as DEGRADED, does not fail the check.
+    assert growth_health.run() == 0
+    output = capsys.readouterr().out
+    assert "HEALTH: DEGRADED" in output
+    assert "instagram_manage_insights" in output
+    assert "FAIL-CLOSED" not in output
+
+
+def test_missing_insights_permission_still_fails_closed_with_a_real_hard_failure(monkeypatch, capsys):
+    monkeypatch.setattr(growth_health, "measurement_health", lambda: {
+        "status": "permission_missing", "records": 1, "measured_views": 0,
+        "missing_permission": "instagram_manage_insights",
+    })
+    monkeypatch.setattr(growth_health, "meta_preflight", lambda: {"status": "ok"})
+    monkeypatch.setattr(growth_health, "config_health", lambda: {"status": "ok", "warnings": []})
+    monkeypatch.setattr(growth_health, "attribution_health", lambda: {"status": "empty", "orders": 0})
+    monkeypatch.setattr(growth_health, "shopify_access_health", lambda: {"status": "failed", "recent_orders": 0, "instagram_marked_orders": 0})
+    assert growth_health.run() == 1
+    assert "shopify_read_orders" in capsys.readouterr().out
+
+
+def test_shopify_read_orders_access_is_checked_without_exposing_orders(monkeypatch):
+    from content_generator.analytics import revenue_attribution
+    monkeypatch.setenv("SHOPIFY_STORE_DOMAIN", "example.myshopify.com")
+    monkeypatch.setenv("SHOPIFY_ADMIN_TOKEN", "not-a-real-token")
+    sample = [
+        {"id": 123, "landing_site": "/?utm_source=instagram"},
+        {"id": 456, "landing_site": "/?utm_source=google"},
+    ]
+    monkeypatch.setattr(revenue_attribution, "_shopify_get", lambda *a, **k: {"orders": sample})
+    result = growth_health.shopify_access_health()
+    assert result == {"status": "ok", "recent_orders": 2, "instagram_marked_orders": 1}
+
+
+def test_shopify_health_retries_transient_api_failures(monkeypatch):
+    from content_generator.analytics import revenue_attribution
+    monkeypatch.setenv("SHOPIFY_STORE_DOMAIN", "55hd0v-ff.myshopify.com")
+    monkeypatch.setenv("SHOPIFY_ADMIN_TOKEN", "not-a-real-token")
+    responses = [None, None, {"orders": []}]
+    calls = []
+    monkeypatch.setattr(revenue_attribution, "_shopify_get", lambda *a, **k: calls.append(1) or responses.pop(0))
+    monkeypatch.setattr(growth_health.time, "sleep", lambda _seconds: None)
+    result = growth_health.shopify_access_health()
+    assert result["status"] == "ok"
+    assert result["recent_orders"] == 0
+    assert len(calls) == 3
+
+
 def test_duplicate_attribution_ids_are_detected(monkeypatch, tmp_path):
     monkeypatch.setattr(growth_health, "LEARNING", tmp_path)
     (tmp_path / "attributed_orders.json").write_text(

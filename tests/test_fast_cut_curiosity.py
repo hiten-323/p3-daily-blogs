@@ -32,7 +32,9 @@ def _fast_day() -> int:
 
 
 def test_gates_stay_at_eight():
-    assert PASS_MARK == 8.0
+    # The viral pass mark was raised to 9.0 (never below 8.0); the editorial,
+    # floor and visual gates stay at 8.0.
+    assert PASS_MARK == 9.0
     assert PASS_FLOOR == 8.0
     assert EDITORIAL_THRESHOLD == 8.0
     assert DURATION_S == 34

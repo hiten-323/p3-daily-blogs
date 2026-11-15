@@ -157,9 +157,9 @@ def _bokeh_layer(seed: int, n: int, rmin: int, rmax: int, alpha: int) -> Image.I
 
 
 # ── copy ───────────────────────────────────────────────────────────────────
-def _safe(text: str) -> bool:
+def _safe(text: str, featured: str | None = None) -> bool:
     from content_generator.core.product_truth import product_truth_findings
-    return bool(text) and not product_truth_findings(text) and "100%" not in text
+    return bool(text) and not product_truth_findings(text, featured=featured) and "100%" not in text
 
 
 def story_copy(sku: str, headline: str = "", sub: str = "") -> dict:
@@ -167,16 +167,16 @@ def story_copy(sku: str, headline: str = "", sub: str = "") -> dict:
     d_head, d_sub = ap.SKU_COPY.get(sku, ("Real coffee, honestly made.", "Pure instant coffee"))
     headline = ap._clean(headline) if headline else ""
     sub = ap._strip_shop(ap._clean(sub)) if sub else ""
-    if not _safe(headline) or len(headline.split()) > 7:
+    if not _safe(headline, sku) or len(headline.split()) > 7:
         headline = d_head
-    if not _safe(sub) or len(sub) > 60:
+    if not _safe(sub, sku) or len(sub) > 60:
         sub = d_sub
     if sku == "ultra_blend":
         chip = f"Ultra Blend · about ₹{pt.ultra('per_cup')} a cup · {pt.ultra('cups')}+ cups"
     else:
         price = pt.variant_price(sku, 100)
         chip = f"{_SKU_NAME.get(sku, '')} 100g · ₹{int(price)}" if price else _SKU_FACT.get(sku, "")
-    if not _safe(f"{_SKU_NAME.get(sku, '')} {chip}"):
+    if not _safe(f"{_SKU_NAME.get(sku, '')} {chip}", sku):
         chip = _SKU_FACT.get(sku, "")
     return {"headline": headline, "sub": sub, "chip": chip,
             "cta": f"Follow {HANDLE}", "shop": "Shop at p3online.in"}
@@ -395,7 +395,7 @@ def render_story_motion(sku: str, headline: str = "", sub: str = "", day: int = 
         return None
     poster_path = os.path.join(out_dir, f"{label}_poster.jpg")
     (poster or frame).save(poster_path, quality=93)
-    qa = qa_story(jar_boxes, video, copy)
+    qa = qa_story(jar_boxes, video, copy, featured=sku)
     if qa:
         logger.error("[story_motion] QA failed: %s", qa)
         try:
@@ -406,7 +406,7 @@ def render_story_motion(sku: str, headline: str = "", sub: str = "", day: int = 
     return {"video": video, "poster": poster_path, "qa": [], "copy": copy, "source_jar": it["file"]}
 
 
-def qa_story(jar_boxes, video: str, copy: dict) -> list[str]:
+def qa_story(jar_boxes, video: str, copy: dict, featured: str | None = None) -> list[str]:
     """Fail-closed: jar fully in frame every frame, duration/size/audio OK, copy safe."""
     issues = []
     for (x0, y0, x1, y1) in jar_boxes[int(FPS * 1.4):]:
@@ -440,7 +440,7 @@ def qa_story(jar_boxes, video: str, copy: dict) -> list[str]:
     except Exception as exc:
         issues.append(f"probe_failed:{exc}")
     for key in ("headline", "sub", "chip"):
-        if copy.get(key) and not _safe(copy[key]):
+        if copy.get(key) and not _safe(copy[key], featured):
             issues.append(f"unsafe_copy_{key}")
     if HANDLE not in copy.get("cta", "") or "p3online.in" not in copy.get("shop", ""):
         issues.append("cta_missing")

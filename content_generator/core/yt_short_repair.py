@@ -10,8 +10,8 @@ is the first words of spoken, spoken is the on-screen line when the voiceover
 is blank). A trailing stub with no line is dropped once five complete scenes
 remain. Anything still empty is sent back to the model as a patch of only the
 failing fields. New prices, percentages, or numbers that are not already in
-the piece are refused. The 8.0 gates and the product-truth checks are not
-touched; they still run on whatever this returns.
+the piece are refused. The 8.0 editorial and 9.0 viral gates, plus the
+product-truth checks, still run on whatever this returns.
 
 A scene-based Short that already has product and five complete scenes still
 fails the schema when tagline is absent (run 40060597663: the model returned
