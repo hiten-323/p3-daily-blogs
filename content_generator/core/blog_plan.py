@@ -14,6 +14,19 @@ from pathlib import Path
 
 from content_generator.core.shopify_catalog import SHOPIFY_PRODUCTS, product_page_url
 
+# Every published blog link carries utm_source, utm_medium and utm_campaign
+# (same tags the Shopify blog publisher uses for its fallback site link).
+BLOG_UTM = "utm_source=blog&utm_medium=post&utm_campaign=202610"
+SITE_URL = "https://p3online.in/?" + BLOG_UTM
+
+
+def tracked_blog_url(url: str) -> str:
+    """`url` with the blog UTM tags appended."""
+    url = str(url or "").strip()
+    if not url or "utm_source=" in url:
+        return url
+    return url + ("&" if "?" in url else "?") + BLOG_UTM
+
 _DATE = re.compile(r"(\d{4}-\d{2}-\d{2})")
 
 TOPICS: list[dict] = [
@@ -251,6 +264,7 @@ def link_targets() -> list[dict]:
         chosen.append({
             "name": product["short_name"],
             "url": product_page_url(product),
+            "tracked_url": tracked_blog_url(product_page_url(product)),
             "price": product["variants"][0]["price"],
             "slug": slug,
         })
@@ -260,7 +274,7 @@ def link_targets() -> list[dict]:
 def links_paragraph() -> str:
     bits = []
     for item in link_targets():
-        bits.append(f"[{item['name']}]({item['url']}) (₹{item['price']})")
+        bits.append(f"[{item['name']}]({item['tracked_url']}) (₹{item['price']})")
     return "Catalog pages for shoppers in India: " + ", ".join(bits) + "."
 
 
@@ -323,7 +337,7 @@ def conclusion_for(topic: dict) -> str:
         "Pick the jar that matches your cup, and read the chicory line first. "
         "Ultra Blend is 70% coffee and 30% chicory, and only that jar may be called lower caffeine. "
         "Prima, the Premium Agglomerate, is pure Arabica. "
-        "Then open the catalog at https://p3online.in"
+        f"Then open the catalog at {SITE_URL}"
     )
 
 
@@ -335,7 +349,7 @@ def image_alt_for(topic: dict) -> str:
 def llms_summary_for(topic: dict, tldr: str) -> str:
     return (
         f"{tldr} "
-        "Brand: Purity Beans. Site: https://p3online.in. "
+        f"Brand: Purity Beans. Site: {SITE_URL} "
         "Ultra Blend is 70% coffee and 30% chicory. "
         "Prima / Premium Agglomerate is pure Arabica and is not freeze-dried. "
         "Purista is pure Robusta. Bold is pure coffee. Purica is freeze-dried pure Arabica. "

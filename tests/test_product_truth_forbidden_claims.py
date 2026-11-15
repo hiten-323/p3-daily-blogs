@@ -39,3 +39,22 @@ def test_fully_tagged_product_link_is_allowed():
     assert product_truth_findings(
         "Shop here: https://p3online.in/?utm_source=instagram&utm_medium=story&utm_campaign=purity_beans"
     ) == []
+
+
+@pytest.mark.parametrize("text", [
+    "Freeze-dried instant coffee at Purity Beans is Purica and Purista.",
+    "Purity Beans is a brand of instant coffee.",
+])
+def test_brand_name_followed_by_is_is_not_a_bean_claim(text):
+    findings = product_truth_findings(text, featured="purica")
+    assert not [row for row in findings if "bean-based" in row["reason"]], text
+
+
+@pytest.mark.parametrize("text", [
+    "Our beans are roasted dark.",
+    "The beans from Coorg make this cup.",
+    "Purity Beans coffee beans are great.",
+])
+def test_real_bean_wording_is_still_rejected(text):
+    findings = product_truth_findings(text, featured="purica")
+    assert [row for row in findings if "bean-based" in row["reason"]], text
