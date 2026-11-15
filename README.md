@@ -22,13 +22,16 @@ is checked against that registry by the config-drift test.
 
 ## Autonomous publishing control
 
-All scheduled publishing workflows remain enabled. The single control is the
+The single publishing control is the
 GitHub Actions **repository variable** `PUBLISHING_ENABLED`:
 
-- Unset or empty: publishing is **ON** for the normal daily schedule.
-- `true`: publishing is ON.
-- `false`: generation and validation can continue, but platform publishing,
-  retry publishing, and publish recovery are held.
+Publishing is **opt-in**:
+
+- `true`: scheduled publishing, retry publishing and publish recovery run.
+- Unset, empty, `false` or any other value: generation and validation can
+  continue, but platform publishing, retry publishing and publish recovery
+  are held.
+- A manual `dry_run` of the daily workflow always holds publishing.
 
 Do not disable the workflows to pause publishing. Change only this repository
 variable. Keep provider credentials and platform tokens in GitHub Actions

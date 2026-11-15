@@ -49,8 +49,8 @@ def test_comparison_may_link_bold_without_calling_it_freeze_dried():
 
 
 def test_process_education_link_follows_the_product_url():
-    bold_url = "https://p3online.in/products/purity-beans-bold-instant-coffee"
-    purica_url = "https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules"
+    bold_url = "https://p3online.in/products/purity-beans-bold-instant-coffee?utm_source=facebook&utm_medium=post&utm_campaign=202610"
+    purica_url = "https://p3online.in/products/purity-beans-purica-gourmet-instant-coffee-granules?utm_source=facebook&utm_medium=post&utm_campaign=202610"
     essay = "Freeze-drying works cold, so more aroma survives."
     assert any("not freeze-dried" in reason for reason in _reasons(f"{essay} {bold_url}"))
     assert _reasons(f"{essay} Purica is freeze-dried pure Arabica. {purica_url}") == []

@@ -99,6 +99,9 @@ def test_committed_2026_10_12_yt_short_scene_is_honest():
     later_rules = (
         "FSSAI", "Bold is pure coffee", "not Robusta", "Never call Ultra Blend 'pure'",
         "Rs 18", "Per-cup", "freeze-dry", "agglomerat", "granule process", "no process claim", "single-origin",
+        # The UTM link rule (2026-11-14) also postdates this pack.
+        # So do the founder hard bans on fresh and bean-based wording (2026-11-14).
+        "published links require utm_source", "fresh/freshly made", "bean-based wording",
     )
     assert [f for f in remaining_findings(data)
             if not any(r in str(f) for r in later_rules)] == []

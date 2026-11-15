@@ -548,14 +548,37 @@ def _price_findings(sentence: str) -> list[str]:
 _AMOUNT_ANY = re.compile(r"(?:₹|\brs\.?|\binr)\s*\d", re.I)
 
 
+_JSON_LD_BLOCK = re.compile(r"<script[^>]*application/ld\+json[^>]*>.*?</script>", re.I | re.S)
+_LINK_TAG = re.compile(r"<link\b[^>]*>", re.I)
+_STORE_URL = re.compile(r"https?://(?:www\.)?p3online\.in(?:[/?#][^\s)\]\"'<>]*)?", re.I)
+
+
+def _customer_store_links(text: str) -> list[str]:
+    """p3online.in links a customer can click.
+
+    The UTM rule covers store links only. schema.org identifiers and the
+    page's own canonical URL inside structured data (JSON-LD, <link> tags)
+    are not customer-facing links and are not checked.
+    """
+    text = _LINK_TAG.sub(" ", _JSON_LD_BLOCK.sub(" ", text))
+    stripped = text.strip()
+    if stripped.startswith("{") and '"@context"' in stripped:
+        return []  # a bare JSON-LD document
+    out = []
+    for raw in _STORE_URL.findall(text):
+        url = raw.rstrip(".,;:!?")
+        if url not in out:
+            out.append(url)
+    return out
+
+
 def product_truth_findings(text: str, featured: str | None = None) -> list[dict]:
     """Unsupported or contradicted product claims in `text`."""
     if not text or not str(text).strip():
         return []
     source = _claim_text(str(text))
     findings: list[dict] = []
-    for raw_url in re.findall(r"https?://[^\s)]+", source):
-        clean_url = raw_url.rstrip(".,;!?")
+    for clean_url in _customer_store_links(str(text)):
         params = parse_qs(urlsplit(clean_url).query)
         missing = [key for key in ("utm_source", "utm_medium", "utm_campaign") if not params.get(key)]
         if missing:

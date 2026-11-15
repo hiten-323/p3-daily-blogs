@@ -439,6 +439,7 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
     Ensure brand name and website appear in every text field.
     Appends a natural CTA line only when missing — never duplicates.
     """
+    from content_generator.core.utm import site_link, tag_store_links
     TEXT_FIELDS = {
         "reel_1":         ["caption", "cta"],
         "carousel":       ["caption", "cta"],
@@ -459,15 +460,15 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
         # every day (one-note-messaging fix). Deterministic by piece text.
         line = _brand_tagline(val)
         if needs_brand and needs_website:
-            piece[field] = val.rstrip() + f" {line} Shop: https://p3online.in"
+            piece[field] = val.rstrip() + f" {line} Shop: {site_link(label)}"
         elif needs_brand:
             piece[field] = val.rstrip() + " — Purity Beans"
         elif needs_website:
-            piece[field] = val.rstrip() + " Shop: https://p3online.in"
+            piece[field] = val.rstrip() + f" Shop: {site_link(label)}"
 
     # CTA field is mandatory on brand-track assets — create it if the LLM skipped it
     if label in ("reel_1", "carousel", "instagram_post") and not str(piece.get("cta", "")).strip():
-        piece["cta"] = f"{_brand_tagline(str(piece))} Shop Purity Beans: https://p3online.in"
+        piece["cta"] = f"{_brand_tagline(str(piece))} Shop Purity Beans: {site_link(label)}"
 
     # Carousel: the schema requires the FINAL SLIDE to carry brand + website.
     # Injection previously only touched caption/cta, so any carousel whose last
@@ -481,8 +482,20 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
             if "purity beans" not in low:
                 body = (body.rstrip() + " Purity Beans.").strip()
             if "p3online.in" not in body.lower():
-                body = (body.rstrip() + " Shop: https://p3online.in").strip()
+                body = (body.rstrip() + f" Shop: {site_link(label)}").strip()
             last["body"] = body
+    # Any store link already in the copy (model-written or older template)
+    # gets its UTM tags here, before the product-truth gate sees it.
+    for field, val in list(piece.items()):
+        if isinstance(val, str):
+            piece[field] = tag_store_links(val, label)
+    slides = piece.get("slides")
+    if isinstance(slides, list):
+        for slide in slides:
+            if isinstance(slide, dict):
+                for key, val in list(slide.items()):
+                    if isinstance(val, str):
+                        slide[key] = tag_store_links(val, label)
     return piece
 
 
@@ -1470,7 +1483,6 @@ def _apply_regeneration(label: str, original: dict, improved: dict) -> dict | No
     from content_generator.core.schema_validation import YoutubeShortSchema
     schemas = {
         "reel_1": ReelSchema,
-        "reel_2": ReelSchema,
         "growth_reel": ReelSchema,
         "carousel": CarouselSchema,
         "instagram_post": InstagramSchema,
@@ -1955,7 +1967,7 @@ def _do_revenue_attribution() -> dict:
 def _publishing_enabled() -> bool:
     if os.getenv("DRY_RUN", "").strip().lower() in ("1", "true", "yes", "on"):
         return False
-    return os.getenv("PUBLISHING_ENABLED", "true").strip().lower() in ("1", "true", "yes", "on")
+    return os.getenv("PUBLISHING_ENABLED", "false").strip().lower() in ("1", "true", "yes", "on")
 
 
 def _do_publish_if_enabled(content: dict, day_number: int) -> dict:
@@ -2280,7 +2292,10 @@ def dry_run_asset_report(content: dict) -> dict:
                         except Exception as exc:
                             logger.warning("[dry-run] local YouTube Short FFmpeg fallback unavailable: %s",
                                            type(exc).__name__)
-                    if video_path and not video_passed:
+                    if video_passed:
+                        pass  # the found Short already passed the 8.0 visual gate
+                    elif video_path:
+                        # Local fallback render: it must pass the same 8.0 gate.
                         verdict = visual_gate.evaluate_video(video_path, None, visual_gate.recent_layouts())
                         if not verdict.get("passed"):
                             reasons.append("youtube_short_visual_gate:" + ";".join(verdict.get("reasons") or ["below_8_or_unavailable"]))

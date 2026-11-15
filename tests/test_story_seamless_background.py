@@ -28,5 +28,22 @@ def test_jar_cutout_has_feathered_alpha_edges_without_losing_opaque_body():
 
 def test_premium_story_background_has_no_horizontal_horizon_line():
     image, _horizon = background(96, 170, PALETTES["purica"][0], seed=12)
-    rows = np.asarray(image).astype(float).mean(axis=1)
-    assert float(np.abs(np.diff(rows)).max()) <= 4.5
+    assert _max_row_step(image) <= 4.5
+
+
+def _max_row_step(image) -> float:
+    """Largest mean-brightness jump between adjacent rows (RGB only).
+
+    np.diff must run down the rows (axis=0); without an axis it compares the
+    R/G/B/A channels of each row with each other, which is not a seam.
+    """
+    rgb = np.asarray(image.convert("RGB")).astype(float)
+    rows = rgb.mean(axis=1)
+    return float(np.abs(np.diff(rows, axis=0)).max())
+
+
+def test_row_step_measure_catches_a_hard_horizon_line():
+    image, _horizon = background(96, 170, PALETTES["purica"][0], seed=12)
+    arr = np.asarray(image.convert("RGB")).copy()
+    arr[119, :, :] = 255  # a hard metallic horizon line like the old renderer drew
+    assert _max_row_step(Image.fromarray(arr)) > 4.5
