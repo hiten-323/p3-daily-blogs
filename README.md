@@ -22,28 +22,32 @@ is checked against that registry by the config-drift test.
 
 ## Autonomous publishing control
 
-All scheduled workflows stay enabled. The single switch is the GitHub Actions
-repository variable `PUBLISHING_ENABLED`:
+The single publishing control is the
+GitHub Actions **repository variable** `PUBLISHING_ENABLED`:
 
-- Unset or empty: publishing is ON for the normal daily schedule.
-- `true`: publishing is ON.
-- `false`: generation and validation continue, but platform publishing,
-  retries, and recovery are held.
+Publishing is **opt-in**:
 
-Do not disable workflows to pause publishing. Change only this repository
-variable. Keep all credentials in GitHub Actions secrets; never place secrets
-in variables, source code, logs, or commits.
+- `true`: scheduled publishing, retry publishing and publish recovery run.
+- Unset, empty, `false` or any other value: generation and validation can
+  continue, but platform publishing, retry publishing and publish recovery
+  are held.
+- A manual `dry_run` of the daily workflow always holds publishing.
+
+Do not disable the workflows to pause publishing. Change only this repository
+variable. Keep provider credentials and platform tokens in GitHub Actions
+**secrets**; never put secret values in repository variables, code, logs, or
+commits. The variable is a non-secret operational switch.
 
 ## Product-copy hard rules
 
-Describe the product as instant coffee, never fresh/freshly made, lab-tested,
-zero-acidity, single-origin, coffee beans, whole beans, or bean-based coffee.
-Never make health claims, fake urgency, free-sample offers, or competitor
-attacks. Ultra Blend is 70% coffee and 30% chicory; its 100g jar is ₹309 and
-yields at least 66 cups (about ₹5 per cup). Freeze-dried applies only to Purica
-and Purista; agglomerated only to Bold and Prima. Prices must match live
-Shopify. Every link must carry `utm_source`, `utm_medium`, and
-`utm_campaign`.
+Describe the product as **instant coffee**, never as fresh/freshly made,
+lab-tested, zero-acidity, single-origin, coffee beans, whole beans, or
+bean-based coffee. Never make health claims, fake urgency, free-sample offers,
+or competitor attacks. Ultra Blend is 70% coffee and 30% chicory; its 100g jar
+is ₹309 and yields at least 66 cups (about ₹5 per cup). Freeze-dried applies
+only to Purica and Purista; agglomerated applies only to Bold and Prima.
+Prices must come from the live Shopify price source. Every published link
+must carry `utm_source`, `utm_medium`, and `utm_campaign`.
 
 Every morning the system asks one question: *"What is the fastest way to gain
 followers tomorrow — and which of yesterday's content actually made money?"*
