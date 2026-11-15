@@ -24,7 +24,7 @@ pytrends>=4.9.2                 # Google Trends
 praw>=7.7.0                     # Reddit research
 
 # Optional: JSON repair (graceful LLM output parsing)
-json-repair>=0.28.0
+json-repair>=0.64.9
 
 # Optional: image generation
 Pillow>=10.3.0                  # Carousel rendering + branded placeholder (always works)
