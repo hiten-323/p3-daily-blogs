@@ -57,6 +57,10 @@ def _space_host(space_id: str) -> str:
 
 def space_call(space_id: str, prompt: str) -> tuple[str, list]:
     """Gradio api name and data list for a Space. No network."""
+    if "cogvideo" in (space_id or "").lower():
+        # zai-org/CogVideoX-2B-Space generate(prompt, steps, guidance).
+        # 20 steps stays inside the fallback timeout. The space has no negative field.
+        return "generate", [prompt, 20, 6.0]
     if "wan" in (space_id or "").lower():
         # Wan-AI/Wan2.1 exposes t2v_generation_async(prompt, resolution, watermark, seed).
         return "t2v_generation_async", [prompt, "720*1280", False, -1]
@@ -266,11 +270,68 @@ def _consume(kind: str, extra: str | None, body: bytes, label: str, name: str, t
     return None
 
 
+def _remember_provider_failure(source: str, label: str, reason: str) -> None:
+    """Record provider status without response bodies, URLs, or token material."""
+    target = "yt_short" if str(label or "").lower() in ("short", "yt_short") else "growth_reel"
+    try:
+        from content_generator.core.obstacle_lessons import platform_for, record
+        record(
+            platform_for(target), target, "video_provider", "provider",
+            f"{source}:{reason}",
+            "Use the next provider in the configured fallback ladder; do not invent a jar or package.",
+            fix="Resolve the named auth/quota/timeout condition, then retry once within the bounded provider policy.",
+        )
+    except Exception as exc:
+        logger.debug("[hf_bg] provider lesson persistence failed: %s", type(exc).__name__)
+
+
+def _retry_request(call, source: str, label: str, phase: str):
+    """Retry transient busy/timeout responses; never retry auth or quota failures."""
+    try:
+        attempts = max(1, min(3, int(os.getenv("HF_VIDEO_PROVIDER_RETRIES", "2"))))
+    except ValueError:
+        attempts = 2
+    try:
+        backoff = max(0.0, min(5.0, float(os.getenv("HF_VIDEO_PROVIDER_BACKOFF_S", "1"))))
+    except ValueError:
+        backoff = 1.0
+    for attempt in range(1, attempts + 1):
+        try:
+            result = call()
+        except Exception as exc:
+            code = getattr(exc, "code", None) or getattr(getattr(exc, "response", None), "status_code", None)
+            is_timeout = isinstance(exc, TimeoutError) or type(exc).__name__.lower() in {"timeout", "readtimeout", "connecttimeout"} or isinstance(getattr(exc, "reason", None), TimeoutError)
+            reason = f"{phase}_{'http_' + str(code) if code else ('timeout' if is_timeout else type(exc).__name__)}"
+            _remember_provider_failure(source, label, reason)
+            if (code in {408, 425, 429, 500, 502, 503, 504} or is_timeout) and attempt < attempts:
+                wait = backoff * (2 ** (attempt - 1))
+                logger.warning("[hf_bg] provider=%s phase=%s transient=%s retry=%d/%d backoff=%.1fs",
+                               source, phase, reason, attempt, attempts, wait)
+                if wait:
+                    import time
+                    time.sleep(wait)
+                continue
+            return "error", b"", ""
+        kind, _extra = interpret(*result)
+        if kind in {"busy", "timeout"} and attempt < attempts:
+            wait = backoff * (2 ** (attempt - 1))
+            logger.warning("[hf_bg] provider=%s phase=%s transient=%s retry=%d/%d backoff=%.1fs",
+                           source, phase, kind, attempt, attempts, wait)
+            _remember_provider_failure(source, label, f"{phase}_{kind}")
+            if wait:
+                import time
+                time.sleep(wait)
+            continue
+        return result
+    return "error", b"", ""
+
+
 def _run(source: str, space: str, router: tuple[str, str], prompt: str, label: str) -> str | None:
     global _AUTH_DEAD
     token = _token()
     if not token:
         logger.info("[hf_bg] %s skipped (HF_TOKEN unset)", source)
+        _remember_provider_failure(source, label, "missing_HF_TOKEN")
         return None
     if _AUTH_DEAD:
         logger.info("[hf_bg] %s skipped (token rejected)", source)
@@ -278,36 +339,44 @@ def _run(source: str, space: str, router: tuple[str, str], prompt: str, label: s
     timeout = _timeout()
     auth_headers = {"Authorization": f"Bearer {token}"}
     try:
-        status, body, ctype = _space(space, prompt, token, timeout)
+        status, body, ctype = _retry_request(lambda: _space(space, prompt, token, timeout), source, label, "space")
     except Exception as exc:
         logger.info("[hf_bg] %s space failed: %s", source, type(exc).__name__)
+        _remember_provider_failure(source, label, "space_" + type(exc).__name__)
         status, body, ctype = "error", b"", ""
     kind, extra = interpret(status, body, ctype)
     if kind == "auth":
         _AUTH_DEAD = True
         logger.info("[hf_bg] %s space auth rejected — skipping huggingface", source)
+        _remember_provider_failure(source, label, "space_auth")
         return None
     saved = _consume(kind, extra, body, label, source, timeout, auth_headers)
     if saved:
         logger.info("[hf_bg] %s space clip for %s", source, label)
         return saved
+    if kind in {"quota", "busy", "timeout", "error"}:
+        _remember_provider_failure(source, label, "space_" + kind)
     logger.info("[hf_bg] %s space %s — trying router", source, kind)
     try:
-        status, body, ctype = _inference(router, prompt, token, timeout)
+        status, body, ctype = _retry_request(lambda: _inference(router, prompt, token, timeout), source, label, "router")
     except Exception as exc:
         logger.info("[hf_bg] %s router failed: %s", source, type(exc).__name__)
+        _remember_provider_failure(source, label, "router_" + type(exc).__name__)
         return None
     kind, extra = interpret(status, body, ctype)
     if kind == "auth":
         _AUTH_DEAD = True
         logger.info("[hf_bg] %s router auth rejected", source)
+        _remember_provider_failure(source, label, "router_auth")
         return None
     if kind in {"quota", "busy", "timeout"}:
         logger.info("[hf_bg] %s router %s — skipping", source, kind)
+        _remember_provider_failure(source, label, "router_" + kind)
         return None
     saved = _consume(kind, extra, body, label, source, timeout, auth_headers)
     if not saved:
         logger.info("[hf_bg] %s router %s — skipping", source, kind)
+        _remember_provider_failure(source, label, "router_" + (kind or "empty"))
     return saved
 
 

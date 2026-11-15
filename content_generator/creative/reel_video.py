@@ -1,16 +1,13 @@
 """
-Free motion-reel generator — real reel VIDEOS at zero cost, no AI credits.
+Production reel renderer.
 
-Turns a reel's beats into a vertical 1080x1920 mp4: each beat is a branded
-real-jar composite (from real_jar_composer) shown with a gentle zoom, chained
-with crossfades. moviepy only — renders on any CI runner, no GPU, no API.
+Primary: cinematic provider ladder plus a procedural plate, with visual scoring.
+Last resort: local FFmpeg Ken Burns using approved real product photos only.
+Both paths must pass the same 8.0 visual gate; unscored or failed videos are held.
 
-Not AI-cinematic, but: real product, real motion, on-screen captions, fully
-automated. Pairs with the two-tier strategy — hero reels stay manual (Runway/
-fal.ai); daily volume is these.
-
-Optional background music: set REEL_MUSIC_FILE to a royalty-free audio path.
-Silent otherwise (safe — add trending audio in-app if desired).
+No AI-generated jars or product composites are used. Optional royalty-free audio
+comes from the local music library; the publisher never receives an unscored
+fallback.
 """
 from __future__ import annotations
 import datetime
@@ -111,6 +108,42 @@ def _cinematic(beats, product, day, label, on_date, seconds, format_type="reel")
         return None
 
 
+def _photo_fallback(reel, day, label, on_date, *, fast: bool) -> str | None:
+    """Last-resort local FFmpeg reel from approved real photos; still needs the 8.0 gate."""
+    try:
+        from content_generator.creative import ken_burns, visual_gate
+        path = ken_burns.render_reel(reel if isinstance(reel, dict) else {}, day, label, on_date, fast=fast, use_broll=False)
+        if not path:
+            try:
+                from content_generator.scheduler.daily import _remember_obstacle
+                _remember_obstacle(label, "local_ffmpeg_real_photo_fallback_unavailable", "render",
+                                   gate="fallback_exhausted")
+            except Exception:
+                pass
+            return None
+        verdict = visual_gate.evaluate_video(path, {"requires_jar": False}, visual_gate.recent_layouts())
+        if verdict.get("passed"):
+            logger.info("[reel_video] local FFmpeg real-photo fallback passed 8.0 visual gate")
+            return path
+        reasons = [str(x) for x in (verdict.get("reasons") or [])]
+        logger.error("[reel_video] local FFmpeg fallback held by 8.0 visual gate: %s", reasons[:6])
+        try:
+            from content_generator.scheduler.daily import _remember_obstacle
+            _remember_obstacle(label, "; ".join(reasons), "render", gate="local_ffmpeg_visual_gate")
+        except Exception:
+            pass
+        return None
+    except Exception as exc:
+        logger.warning("[reel_video] photo fallback failed: %s", type(exc).__name__)
+        try:
+            from content_generator.scheduler.daily import _remember_obstacle
+            _remember_obstacle(label, "local_ffmpeg_render_failed:" + type(exc).__name__, "render",
+                               gate="fallback_exhausted")
+        except Exception:
+            pass
+        return None
+
+
 def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=None) -> str | None:
     """
     Render a vertical motion reel. Returns mp4 path or None (caller falls back
@@ -141,7 +174,19 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
                 "and viral music stays on the audio director",
                 os.path.basename(source),
             )
-            return materialize_template(source, day, label, on_date=on_date, hook_text=hook)
+            candidate = materialize_template(source, day, label, on_date=on_date, hook_text=hook)
+            from content_generator.creative import visual_gate
+            verdict = visual_gate.evaluate_video(candidate, None, visual_gate.recent_layouts())
+            if verdict.get("passed"):
+                logger.info("[reel_video] reused template passed the 8.0 visual gate")
+                return candidate
+            reasons = [str(x) for x in (verdict.get("reasons") or [])]
+            logger.warning("[reel_video] reused template rejected by visual gate: %s", reasons[:6])
+            try:
+                from content_generator.scheduler.daily import _remember_obstacle
+                _remember_obstacle(label, "; ".join(reasons), "visual_gate", gate="reused_reel_template")
+            except Exception:
+                pass
         if inspiration.get("mode") == "style_cues":
             cue_ids = ", ".join(
                 str(cue.get("id") or "") for cue in (inspiration.get("cues") or []) if isinstance(cue, dict)
@@ -149,138 +194,10 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
             logger.info("[reel_video] style cues only (%s); reference file stays in the bank", cue_ids)
     except Exception as exc:
         logger.debug("[reel_video] product reel lookup skipped: %s", exc)
+    fast_cut = isinstance(reel, dict) and reel.get("growth_template_id") == "fast_cut_curiosity"
     _cin = _cinematic(_beats_from_reel(reel), resolve_reel_product(reel), day, label, on_date, 12.0, format_type="reel")
     if _cin:
         return _cin
-    try:
-        from moviepy import ImageClip, concatenate_videoclips
-    except Exception as e:
-        logger.info("[reel_video] moviepy unavailable (%s) — skipping video", e)
-        return None
-
-    # Cinematic frames (real jar, white knocked out, gradient backdrop) —
-    # falls back to the static-post composer if unavailable.
-    try:
-        from content_generator.creative.cinematic_frame import compose_cinematic_frame as _frame
-    except Exception:
-        from content_generator.creative.real_jar_composer import compose_post_image as _frame
-
-    beats = _beats_from_reel(reel)
-    total_beats = len(beats)
-    product = resolve_reel_product(reel)
-    logger.warning("[reel_video] cinematic motion unavailable for %s; using legacy poster frames", product)
-    frame_paths = []
-    for i, b in enumerate(beats):
-        if _frame.__name__ == "compose_cinematic_frame":
-            p = _frame(
-                headline=b["on"], sub=b["sub"], day=day, idx=i, product=product,
-                width=1080, height=1920, label=f"{label}_beat{i}_day{day}",
-                format_type="reel", scene_idx=i, total_scenes=total_beats,
-                on_date=on_date,
-            )
-        else:
-            p = _frame(
-                headline=b["on"], body=b["sub"], day=day, idx=i, product=product,
-                width=1080, height=1920, label=f"{label}_beat{i}_day{day}",
-            )
-        if p:
-            frame_paths.append(p)
-    if not frame_paths:
-        return None
-
-    dirs = {}
-    try:
-        from content_generator.analytics.creative_post_audit import get_visual_adaptation_directives
-        dirs = get_visual_adaptation_directives(platform="instagram")
-    except Exception:
-        dirs = {}
-
-    boost_motion = dirs.get("boost_motion", True)
-
-    clips = []
-    for i, p in enumerate(frame_paths):
-        try:
-            dur = _BEAT_SECONDS
-            clip = ImageClip(p).with_duration(dur)
-            # Subtle Ken Burns motion: gentle push-in / push-out keeping jar textures and typography razor sharp
-            try:
-                if boost_motion:
-                    if i % 2 == 0:
-                        clip = clip.resized(lambda t, d=dur: 1.0 + 0.04 * (t / d))
-                    else:
-                        clip = clip.resized(lambda t, d=dur: 1.04 - 0.03 * (t / d))
-                else:
-                    clip = clip.resized(lambda t, d=dur: 1.0 + 0.02 * (t / d))
-            except Exception as _e:
-                logger.debug("[reel_video] optional step failed: %s", _e)
-            clips.append(clip)
-        except Exception as e:
-            logger.debug("[reel_video] clip build failed: %s", e)
-
-    if not clips:
-        return None
-
-    try:
-        video = concatenate_videoclips(clips, method="compose")
-    except Exception:
-        video = concatenate_videoclips(clips)
-
-    # Background music: Audio Director picks a mood-matched royalty-free track
-    # from music_library/ for the content; env override wins if set.
-    music = os.getenv("REEL_MUSIC_FILE")
-    if not (music and os.path.exists(music)):
-        try:
-            from content_generator.creative.audio_director import get_audio_plan
-            hook = str(reel.get("hook_text") or reel.get("caption") or "")
-            music = get_audio_plan(hook, day).get("local_track")
-        except Exception as e:
-            logger.debug("[reel_video] audio director skipped: %s", e)
-    if music and os.path.exists(music):
-        try:
-            from moviepy import AudioFileClip
-            audio = AudioFileClip(music)
-            dur = min(audio.duration, video.duration)
-            audio = audio.subclipped(0, dur)
-            try:
-                # Scale volume to commercial loudness (~ -14 LUFS / dB) so it's punchy and audible
-                audio = audio.with_volume_scaled(1.8)
-            except Exception as ve:
-                logger.debug("[reel_video] volume scaling failed: %s", ve)
-            video = video.with_audio(audio)
-        except Exception as e:
-            logger.debug("[reel_video] music attach failed: %s", e)
-
-    os.makedirs(_OUT_DIR, exist_ok=True)
-    from content_generator.core.ist_dates import today_ist
-    if on_date is None:
-        date_str = today_ist().isoformat()
-    elif hasattr(on_date, "isoformat"):
-        date_str = on_date.isoformat()
-    else:
-        date_str = str(on_date)[:10]
-    out = os.path.join(_OUT_DIR, f"{label}_day{day}_{date_str}.mp4")
-    try:
-        temp_audio = os.path.join(_OUT_DIR, f"temp_{label}_{os.getpid()}_{day}.m4a")
-        video.write_videofile(
-            out,
-            fps=24,
-            codec="libx264",
-            audio_codec="aac",
-            bitrate="10000k",
-            pixel_format="yuv420p",
-            ffmpeg_params=["-crf", "18", "-movflags", "+faststart"],
-            temp_audiofile=temp_audio,
-            remove_temp=True,
-            logger=None,
-            threads=2,
-        )
-        logger.info("[reel_video] Rendered %ds reel -> %s", int(video.duration), out)
-        return out
-    except Exception as e:
-        logger.warning("[reel_video] render failed: %s", e)
-        return None
-    finally:
-        try:
-            video.close()
-        except Exception as _e:
-            logger.debug("[reel_video] optional step failed: %s", _e)
+    logger.warning("[reel_video] cinematic provider/procedural path did not pass for %s; trying gated local FFmpeg real-photo Ken Burns",
+                   label)
+    return _photo_fallback(reel, day, label, on_date, fast=fast_cut)

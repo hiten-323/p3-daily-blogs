@@ -1,6 +1,6 @@
 """Pexels and Pixabay coffee footage for the daily concept background.
 
-Search is limited to the day's concept (steam, pour, beans, crema, cafe,
+Search is limited to the day's concept (steam, pour, instant coffee granules, crema, cafe,
 rain window). Vertical HD is preferred. Clip ids used in the last 30 days
 are stored under output/learning and skipped. Metadata, and a frame when it
 is readable, reject other brands' logos, packaging and text.
@@ -30,7 +30,7 @@ _RESERVED: set[str] = set()
 QUERIES = {
     "steam": "coffee steam",
     "pour": "coffee pour",
-    "beans": "coffee beans",
+    "granules": "instant coffee granules",
     "crema": "coffee crema",
     "cafe": "coffee cafe",
     "rain_window": "rain window cafe",
@@ -42,15 +42,15 @@ CONCEPT_QUERY = {
     "crema_swirl": "crema",
     "golden_hour_kitchen": "cafe",
     "rain_window_cafe": "rain_window",
-    "marble_spotlight": "beans",
-    "bean_cascade": "beans",
+    "marble_spotlight": "granules",
+    "granule_cascade": "granules",
     "ink_in_water": "pour",
     "night_city_bokeh": "cafe",
     "sunrise_window": "cafe",
     "light_tunnel": "steam",
     "monsoon_chai_time": "rain_window",
-    "velvet_orbit": "beans",
-    "ember_glow": "beans",
+    "velvet_orbit": "steam",
+    "ember_glow": "steam",
 }
 
 _BRAND = re.compile(
