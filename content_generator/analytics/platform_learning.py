@@ -24,10 +24,15 @@ logger = logging.getLogger(__name__)
 LEARNING_DIR = Path(os.getenv("LEARNING_DIR", "output/learning"))
 POSTS_PATH = LEARNING_DIR / "published_posts.json"
 LEDGER_PATH = LEARNING_DIR / "publishing_ledger.json"
-WINDOWS = (("24h", 24), ("72h", 72), ("7d", 168))
+WINDOWS = (("early", 2), ("24h", 24), ("72h", 72), ("7d", 168))
 # A window is only comparable within its collection grace period. Late API reads
 # must not be mislabeled as historical 24h/72h measurements.
-WINDOW_MAX_AGE_HOURS = {"24h": 48, "72h": 120, "7d": 240}
+WINDOW_MAX_AGE_HOURS = {"early": 14, "24h": 48, "72h": 120, "7d": 240}
+# Collection runs at 06:13, 09:53 and 21:53 IST and posts go live after 06:13,
+# so a strict 24h floor made the 24h read fall through to 72h on every post.
+# "early" is a same-day snapshot for the outcome tracker, never a learning sample.
+WINDOW_MIN_AGE_HOURS = {"early": 2, "24h": 18, "72h": 66, "7d": 160}
+_LAST_HTTP_ERROR = {"code": 0, "detail": ""}
 MAX_ATTEMPTS = 5
 MAX_API_FETCHES_PER_RUN = 12
 _TIMEOUT = 20
@@ -231,6 +236,8 @@ def _request_json(url: str, *, headers: dict[str, str] | None = None) -> dict | 
             detail = exc.read().decode("utf-8", "replace")[:300]
         except Exception:
             detail = ""
+        _LAST_HTTP_ERROR["code"] = int(getattr(exc, "code", 0) or 0)
+        _LAST_HTTP_ERROR["detail"] = detail
         logger.warning("[platform-learning] API returned HTTP %s: %s", exc.code, detail)
     except (urllib.error.URLError, TimeoutError, ValueError, OSError) as exc:
         logger.warning("[platform-learning] API request failed: %s", type(exc).__name__)
@@ -293,12 +300,16 @@ def _fetch_youtube(media_id: str) -> dict | None:
     key = os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")
     access_token = None if key else _youtube_access_token()
     if not key and not access_token:
-        return None
+        return _fetch_youtube_public(media_id)
     params = urllib.parse.urlencode({"part": "statistics", "id": media_id, **({"key": key} if key else {})})
     headers = {"Accept": "application/json"}
     if access_token:
         headers["Authorization"] = f"Bearer {access_token}"
+    _LAST_HTTP_ERROR["detail"] = ""
     data = _request_json(f"https://www.googleapis.com/youtube/v3/videos?{params}", headers=headers)
+    if data is None and "insufficient" in _LAST_HTTP_ERROR["detail"].lower():
+        _YT_SCOPE_MISSING["missing"] = True
+        return _fetch_youtube_public(media_id)
     items = (data or {}).get("items") or []
     if not items:
         return None
@@ -320,6 +331,13 @@ def _fetch_facebook(media_id: str) -> dict | None:
     # Keep engagement fields independent from Insights permissions: a missing
     # insights scope must not discard otherwise valid like/comment/share counts.
     data = _meta_get(media_id, token, "shares,likes.summary(true),comments.summary(true)")
+    if not data and "nonexisting field (shares)" in _LAST_HTTP_ERROR["detail"].lower():
+        # Photo/video objects have no `shares` edge; one bad field must not
+        # discard the likes and comments that the same object does expose.
+        data = _meta_get(media_id, token, "likes.summary(true),comments.summary(true)")
+    if not data and "pages_read_engagement" in _LAST_HTTP_ERROR["detail"].lower():
+        _FB_SCOPE_MISSING["missing"] = True
+        return None
     if not data:
         return None
     out: dict[str, Any] = {}
@@ -352,6 +370,52 @@ def _fetch_facebook(media_id: str) -> dict | None:
             out["views"] = value
         elif name == "post_engaged_users":
             out["engaged_users"] = value
+    return out or None
+
+
+_FB_SCOPE_MISSING = {"missing": False}
+_YT_SCOPE_MISSING = {"missing": False}
+
+
+def _public_youtube_enabled() -> bool:
+    flag = os.getenv("YOUTUBE_PUBLIC_STATS", "").strip()
+    if flag in ("0", "1"):
+        return flag == "1"
+    return not os.getenv("PYTEST_CURRENT_TEST")
+
+
+def _fetch_youtube_public(media_id: str) -> dict | None:
+    """Public view count from the watch page when the OAuth token has upload scope only.
+
+    The repository's YouTube refresh token is scoped for uploads, so
+    videos.list answers 403 insufficient scopes. The public watch page still
+    carries the view count every viewer sees. Likes/comments stay unknown.
+    """
+    if not _public_youtube_enabled():
+        return None
+    vid = "".join(ch for ch in str(media_id or "") if ch.isalnum() or ch in "-_")
+    if not vid:
+        return None
+    request = urllib.request.Request(
+        f"https://www.youtube.com/watch?v={vid}",
+        headers={"User-Agent": "Mozilla/5.0 (PurityBeans measurement)", "Accept-Language": "en-US,en;q=0.8"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=_TIMEOUT) as response:
+            html = response.read(2_500_000).decode("utf-8", "replace")
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, OSError) as exc:
+        logger.warning("[platform-learning] YouTube public page failed: %s", type(exc).__name__)
+        return None
+    return parse_youtube_public_stats(html)
+
+
+def parse_youtube_public_stats(html: str) -> dict | None:
+    import re
+    text = str(html or "")
+    out: dict[str, Any] = {}
+    match = re.search(r'"videoDetails":\{.*?"viewCount":"(\d+)"', text, re.S)
+    if match:
+        out["views"] = int(match.group(1))
     return out or None
 
 
@@ -415,13 +479,21 @@ def _fetch_platform_metrics(post: dict) -> tuple[dict | None, str]:
     if not media_id:
         return None, "missing_media_id"
     if platform == "youtube":
-        if not ((os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")) or (os.getenv("YOUTUBE_CLIENT_ID") and os.getenv("YOUTUBE_CLIENT_SECRET") and os.getenv("YOUTUBE_REFRESH_TOKEN"))):
+        has_creds = (os.getenv("YOUTUBE_API_KEY") or os.getenv("GOOGLE_API_KEY")) or (
+            os.getenv("YOUTUBE_CLIENT_ID") and os.getenv("YOUTUBE_CLIENT_SECRET") and os.getenv("YOUTUBE_REFRESH_TOKEN"))
+        if not has_creds and not _public_youtube_enabled():
             return None, "missing_youtube_credentials"
+        _YT_SCOPE_MISSING["missing"] = not has_creds
         metrics = _fetch_youtube(media_id)
+        if metrics and _YT_SCOPE_MISSING["missing"]:
+            return metrics, "measured_public_view_count"
     elif platform == "facebook":
         if not (os.getenv("FACEBOOK_PAGE_ACCESS_TOKEN") or os.getenv("FACEBOOK_ACCESS_TOKEN")):
             return None, "missing_facebook_page_token"
+        _FB_SCOPE_MISSING["missing"] = False
         metrics = _fetch_facebook(media_id)
+        if not metrics and _FB_SCOPE_MISSING["missing"]:
+            return None, "missing_pages_read_engagement_permission"
     elif platform == "threads":
         if not os.getenv("THREADS_ACCESS_TOKEN"):
             return None, "missing_threads_access_token"
@@ -487,6 +559,8 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         missed = post.setdefault("missed_windows", {})
         for name, hours in WINDOWS:
             max_age = 24 if platform == "instagram_story" and name == "24h" else WINDOW_MAX_AGE_HOURS[name]
+            if name == "early":
+                continue  # optional same-day read; missing it burns nothing
             if name not in completed | abandoned and age > max_age:
                 abandoned.add(name)
                 missed[name] = "outside_comparable_collection_window"
@@ -498,7 +572,7 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         due = next((
             (name, hours) for name, hours in WINDOWS
             if name not in completed | abandoned
-            and age >= (20 if platform == "instagram_story" and name == "24h" else hours)
+            and age >= (20 if platform == "instagram_story" and name == "24h" else WINDOW_MIN_AGE_HOURS.get(name, hours))
             and age <= (24 if platform == "instagram_story" and name == "24h" else WINDOW_MAX_AGE_HOURS[name])
         ), None)
         if due is None:
@@ -550,6 +624,9 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         }
         snapshots.append(snapshot)
         snapshots_written += 1
+        if window == "early":
+            # Same-day read for the outcome tracker only; never a learning sample.
+            continue
         terminal_window = "24h" if platform == "instagram_story" else "7d"
         # Each observation updates one sample keyed by the publication ID. This
         # makes the 24h signal available to tomorrow's prompts while keeping 72h
