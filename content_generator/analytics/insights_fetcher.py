@@ -446,8 +446,10 @@ def _fetch_media_insights(media_id: str) -> dict | None:
         # readable on the media object itself. Keep those REAL audience counts
         # instead of discarding the whole observation; reach/views/saves stay
         # unknown (never coerced to zero) and the gap is logged once per run.
+        # Only for the confirmed missing-scope case: any other failure (network,
+        # outage, unknown error) still records nothing for this window.
         public = {k: v for k, v in (("likes", likes), ("comments", comments)) if v is not None}
-        if public:
+        if public and _insights_missing_scope:
             _note_public_only()
             return public
         logger.warning("[insights] No metrics returned for %s — not measured", media_id)
