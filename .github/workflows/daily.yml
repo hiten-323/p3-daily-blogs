@@ -1,6 +1,7 @@
 # Purity Beans — Autonomous Daily Pipeline
 # Canonical slots: 06:13 IST generate, 09:53 IST morning, 21:53 IST evening (off round minutes).
 # Git is authoritative persistent state. Actions cache is intentionally not used for output state.
+# Schedule re-registration touch: 2026-11-15 (re-register crons after the 15 Nov re-enable)
 
 name: P3 daily content
 
