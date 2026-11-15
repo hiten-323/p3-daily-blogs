@@ -92,6 +92,10 @@ def _allow_posts(monkeypatch):
     monkeypatch.setattr(youtube, "_refresh_access_token", lambda: "token")
     monkeypatch.setattr(youtube, "_find_video", lambda content: "/tmp/approved-short.mp4")
     monkeypatch.setattr(youtube, "_upload_video", upload)
+    # This test covers editorial approval, not rendering. The fixture path has
+    # no real video, so the 8.0 visual gate (covered in
+    # tests/test_youtube_visual_gate.py) is stubbed as a pass here.
+    monkeypatch.setattr(youtube, "_visual_gate_video", lambda path, label="yt_short": True)
     monkeypatch.setenv("LI_API_ACCESS", "token")
     monkeypatch.setenv("LI_AUTHOR_URN", "urn:li:person:test")
     monkeypatch.setenv("YOUTUBE_CLIENT_ID", "id")
