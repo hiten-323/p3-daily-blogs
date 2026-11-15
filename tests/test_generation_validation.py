@@ -230,9 +230,14 @@ def test_editorial_pass_repairs_day_275_without_zero_scores(monkeypatch):
     assert any(key in approved for key in ("reel_1", "reel_2", "growth_reel"))
 
 
-def test_brand_failure_does_not_stamp_editorial_zero():
+def test_brand_failure_does_not_stamp_editorial_zero(monkeypatch):
     import content_generator.providers.llm_router as router
+    from content_generator.scheduler import daily
     from content_generator.scheduler.daily import _do_editorial
+    # Isolate the brand-failure branch: the original short fixture also failed
+    # LinkedIn's 300-character schema check, so the test never proved this path.
+    monkeypatch.setattr(daily, "_schema_issues", lambda label, piece: [])
+    monkeypatch.setattr(daily, "_validate_piece_copy", lambda label, piece: (False, ["Missing brand mention"]))
 
     content = {
         "linkedin_post": {

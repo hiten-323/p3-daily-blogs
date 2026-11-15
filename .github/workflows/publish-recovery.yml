@@ -75,6 +75,8 @@ jobs:
           PY
 
       - name: Retry due publishing failures
+        # Fail closed: publishing recovery requires explicit owner opt-in.
+        if: ${{ success() && vars.PUBLISHING_ENABLED == 'true' }}
         env:
           FORCE_SLOT: generate
           ENABLE_TIMED_SLOTS: "true"

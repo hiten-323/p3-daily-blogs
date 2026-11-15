@@ -260,7 +260,7 @@ def _run_generate_slot(day_number: int = None) -> dict:
     publish_result: dict = {}
     with timed_step("publish", timeout_s=300):
         step = rm.run(
-            fn=lambda: _do_publish(content, dn),
+            fn=lambda: _do_publish_if_enabled(content, dn),
             label="publish",
             max_retries=1,
         )
@@ -1158,6 +1158,10 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
                 break
             _drop_unmeasured_score(piece)
             ensure_structural_fields(piece, label)
+            # A from-scratch rewrite often returns only the new hook. Put the
+            # brand line back before the brand gate, or the attempt is spent
+            # on "Missing brand mention" and never re-scored.
+            _inject_brand_into_piece(label, piece)
             omit_per_cup_for_non_ultra(piece, featured)
             from content_generator.core.process_match import align_process_piece
             from content_generator.core.product_truth import piece_copy_text
@@ -1934,6 +1938,23 @@ def _do_revenue_attribution() -> dict:
     """Pull Shopify orders, attribute Instagram revenue to posts. Non-blocking."""
     from content_generator.analytics.revenue_attribution import run_revenue_attribution
     return run_revenue_attribution()
+
+
+def _publishing_enabled() -> bool:
+    return os.getenv("PUBLISHING_ENABLED", "false").strip().lower() in ("1", "true", "yes", "on")
+
+
+def _do_publish_if_enabled(content: dict, day_number: int) -> dict:
+    """Keep the generate slot available while the global publish hold is active."""
+    if not _publishing_enabled():
+        logger.warning("[publish] PUBLISHING_ENABLED is not true — generation-only run; no platform calls")
+        return {
+            "skipped": True,
+            "reason": "publishing_disabled",
+            "published_platforms": [],
+            "summary": "Generation only; publishing disabled",
+        }
+    return _do_publish(content, day_number)
 
 
 def _do_publish(content: dict, day_number: int) -> dict:

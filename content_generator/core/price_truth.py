@@ -56,6 +56,15 @@ _CONTEXT_EXEMPT = re.compile(
 _AMOUNT = re.compile(r"(?:₹|\brs\.?|\binr)\s*([\d,]+(?:\.\d+)?)", re.I)
 _PER_CUP = re.compile(r"(?:₹|\brs\.?|\binr)\s*([\d,]+(?:\.\d+)?)(?:\s*[–-]\s*\d+)?\s*(?:/|a|per|each)\s*cup", re.I)
 _CUP_COUNT = re.compile(r"\b(\d{1,4})\s*(?:\+\s*)?cups\b", re.I)
+# A jar yield ("makes at least 66 cups", "50 cups per 100g jar"), not a habit
+# ("drinks 3 cups before lunch"). The viral ladder's own hook template uses
+# the habit form, and treating it as a Shopify yield burned the rewrite.
+_CUP_YIELD = re.compile(
+    r"\b(?:makes?|making|yields?|at least)\b"
+    r"|\b(?:per|from|in)\s+(?:a |one |the |this )?(?:jar|pack|tin)\b"
+    r"|\bper\s+100\s*g\b",
+    re.I,
+)
 
 
 def _grams(title: str, fallback: float = 0) -> float:
@@ -212,6 +221,9 @@ def price_findings(text: str) -> list[str]:
             issues.append(f"per-cup ₹{n} does not match Shopify-derived per-cup "
                           f"{sorted('₹%d' % x for x in per_cup_ok)}")
     for m in _CUP_COUNT.finditer(text):
+        window = text[max(0, m.start() - 70): m.end() + 50]
+        if not _CUP_YIELD.search(window):
+            continue
         n = int(m.group(1))
         if n not in cups_ok and not exempt:
             issues.append(f"'{n} cups' does not match the Shopify-derived cup count {sorted(cups_ok)} (1.5g serving)")
