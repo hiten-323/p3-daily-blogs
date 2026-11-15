@@ -145,7 +145,31 @@ def prompt_block(label: str, sku: str = "", day: int = 0, *, variant: int = 0) -
         _viral_hooks(label),
         _obstacle_lessons(label),
         _platform_learning(platform),
+        _real_outcomes(label),
+        _novelty(label),
     ]).strip()
+
+
+def _real_outcomes(label: str) -> str:
+    """Reuse/retire lessons from this platform's own measured posts (post_outcomes.json)."""
+    try:
+        from content_generator.analytics.post_outcomes import prompt_block as outcomes
+        return outcomes(label)
+    except Exception as exc:
+        import logging
+        logging.getLogger(__name__).debug("[outcomes] prompt block unavailable: %s", exc)
+        return ""
+
+
+def _novelty(label: str) -> str:
+    """Recent openings and angles on this surface that today's piece must not repeat."""
+    try:
+        from content_generator.core.distinctness import novelty_prompt_block
+        return novelty_prompt_block(label)
+    except Exception as exc:
+        import logging
+        logging.getLogger(__name__).debug("[distinctness] novelty block unavailable: %s", exc)
+        return ""
 
 
 def _platform_learning(platform: str) -> str:

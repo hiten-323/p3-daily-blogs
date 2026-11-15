@@ -285,14 +285,16 @@ def test_insights_skips_when_scope_missing_without_tripping_circuit(monkeypatch)
     monkeypatch.setattr(insights, "_graph_get", _mock_graph_get)
 
     m1 = insights._fetch_media_insights("media_1")
-    assert m1 is None
+    # Without the insights scope the real public counts are still measured.
+    assert m1 == {"likes": 14, "comments": 2}
     assert insights._insights_missing_scope is True
     assert len(insights_calls) == 1
 
     # Subsequent media must skip /insights calls completely to prevent circuit trip
     for i in range(20):
         m = insights._fetch_media_insights(f"media_{i}")
-        assert m is None
+        expected = {"media_1": {"likes": 14, "comments": 2}, "media_2": {"likes": 7, "comments": 0}}
+        assert m == expected.get(f"media_{i}")
 
     # /insights was called only once across 21 posts
     assert len(insights_calls) == 1

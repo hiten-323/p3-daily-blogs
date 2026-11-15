@@ -12,7 +12,7 @@ def _post(age_hours: int, snapshots=None):
 
 
 def test_windows_are_ordered_and_terminal() -> None:
-    assert MEASUREMENT_WINDOWS == (("24h", 24), ("72h", 72), ("7d", 168))
+    assert MEASUREMENT_WINDOWS == (("early", 2), ("24h", 24), ("72h", 72), ("7d", 168))
 
 
 def test_24h_is_first_due_window() -> None:

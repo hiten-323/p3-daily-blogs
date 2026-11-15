@@ -26,9 +26,15 @@ _POSTS_PATH = os.path.join(_LEARNING_DIR, "published_posts.json")
 _TIMEOUT = 30
 MIN_AGE_HOURS = 20
 MAX_FETCH_ATTEMPTS = 5
-MEASUREMENT_WINDOWS = (("24h", 24), ("72h", 72), ("7d", 168))
+MEASUREMENT_WINDOWS = (("early", 2), ("24h", 24), ("72h", 72), ("7d", 168))
 MAX_MEDIA_FETCHES_PER_RUN = 8
-_WINDOW_MAX_AGE_HOURS = {"24h": 48, "72h": 120, "7d": 240}
+_WINDOW_MAX_AGE_HOURS = {"early": 14, "24h": 48, "72h": 120, "7d": 240}
+# Measurement runs at 06:13 (generate), 09:53 (morning) and 21:53 (evening) IST.
+# Posts go live after 06:13, so a strict 24h lower bound made the next
+# generate run see every post at ~23h and skip its 24h read entirely. The
+# early window gives the same-day slot runs a first read (same-day learning)
+# and is stored as a snapshot only; it is never written as a learning sample.
+_WINDOW_MIN_AGE_HOURS = {"early": 2, "24h": 18, "72h": 66, "7d": 160}
 
 
 def _load_posts() -> list[dict]:
@@ -435,6 +441,17 @@ def _fetch_media_insights(media_id: str) -> dict | None:
                 break
 
     if not raw:
+        # The token has instagram_basic but not instagram_manage_insights, so
+        # /insights is refused while like_count/comments_count are still
+        # readable on the media object itself. Keep those REAL audience counts
+        # instead of discarding the whole observation; reach/views/saves stay
+        # unknown (never coerced to zero) and the gap is logged once per run.
+        # Only for the confirmed missing-scope case: any other failure (network,
+        # outage, unknown error) still records nothing for this window.
+        public = {k: v for k, v in (("likes", likes), ("comments", comments)) if v is not None}
+        if public and _insights_missing_scope:
+            _note_public_only()
+            return public
         logger.warning("[insights] No metrics returned for %s — not measured", media_id)
         return None
 
@@ -453,6 +470,30 @@ def _fetch_media_insights(media_id: str) -> dict | None:
     if total_ms is not None:
         out["watch_time_s"] = round(float(total_ms) / 1000.0, 2)
     return out
+
+
+_PUBLIC_ONLY_NOTED = {"done": False}
+
+
+def _note_public_only() -> None:
+    """Log (once per process) that Instagram reach/views/saves need a token scope."""
+    if _PUBLIC_ONLY_NOTED["done"]:
+        return
+    _PUBLIC_ONLY_NOTED["done"] = True
+    logger.warning(
+        "[insights] instagram_manage_insights is missing on the Instagram token: "
+        "measuring likes and comments only (reach, views, saves, shares, watch time unknown)"
+    )
+    try:
+        from content_generator.core.obstacle_lessons import record
+        record(
+            "instagram", "instagram_insights", "measurement", "permission",
+            "Instagram media insights refused: token lacks instagram_manage_insights",
+            "Learning uses likes and comments only until the token is re-issued with insights access.",
+            fix="Re-issue the Instagram token with instagram_manage_insights.",
+        )
+    except Exception as exc:
+        logger.debug("[insights] lesson record skipped: %s", exc)
 
 
 def _fetch_account_insights() -> dict:
@@ -508,13 +549,16 @@ def _next_due_window(post: dict, now: datetime.datetime) -> tuple[str, int] | No
     age = _hours_since(str(post.get("published_at") or ""), now)
     missed = post.setdefault("missed_windows", {})
     for name, hours in MEASUREMENT_WINDOWS:
+        if name == "early":
+            continue  # optional same-day read; missing it burns nothing
         if name not in resolved and age > _WINDOW_MAX_AGE_HOURS[name]:
             abandoned.add(name)
             missed[name] = "outside_comparable_collection_window"
     post["failed_windows"] = sorted(abandoned)
     resolved = completed | abandoned
     for name, hours in MEASUREMENT_WINDOWS:
-        if name not in resolved and hours <= age <= _WINDOW_MAX_AGE_HOURS[name]:
+        low = _WINDOW_MIN_AGE_HOURS.get(name, hours)
+        if name not in resolved and low <= age <= _WINDOW_MAX_AGE_HOURS[name]:
             return name, hours
     return None
 
@@ -648,6 +692,10 @@ def fetch_pending_insights() -> dict:
         }
         post.setdefault("measurement_snapshots", []).append(snapshot)
         snapshots_written += 1
+        if window == "early":
+            # Same-day read for the outcome tracker only; not a learning sample.
+            logger.info("[insights] %s early window %s", post.get("asset_id"), metrics)
+            continue
 
         # Every successful window updates the same publication's learning record.
         # The upsert key is publication_id + platform, so 24h/72h/7d never count

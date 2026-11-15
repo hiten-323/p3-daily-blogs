@@ -282,6 +282,27 @@ def _skipped(slot: str, day: int = 0, reason: str = "") -> dict:
     return res
 
 
+def _measure_before_slot(slot: str) -> None:
+    """Read due metrics (early/24h/72h/7d) for every platform before this slot posts.
+
+    The generate slot was the only measurement run, so posts were observed once
+    a day and the 24h window was routinely missed. Morning and evening slots now
+    take a read too, which gives same-day "early" signals. Read-only API calls;
+    a failure or timeout here never blocks publishing.
+    """
+    flag = os.getenv("SLOT_MEASUREMENT", "").strip()
+    if flag == "0" or (flag != "1" and os.getenv("PYTEST_CURRENT_TEST")):
+        return
+    try:
+        from content_generator.scheduler.watchdog import run_with_hard_timeout
+        from content_generator.scheduler.daily import _do_fetch_insights
+        result = run_with_hard_timeout(f"insights_fetch_{slot}", _do_fetch_insights,
+                                       timeout_s=int(os.getenv("SLOT_MEASUREMENT_TIMEOUT_S", "150")))
+        logger.info("[slots] %s measurement: %s", slot, result)
+    except Exception as exc:
+        logger.warning("[slots] %s measurement skipped: %s", slot, type(exc).__name__)
+
+
 def run_publish_slot(slot: str, force_retry: bool = False, on_date: datetime.date | None = None,
                      only_asset: str = "") -> dict:
     """
@@ -323,6 +344,7 @@ def run_publish_slot(slot: str, force_retry: bool = False, on_date: datetime.dat
     # behind that read as a completed run, and because the workflow reports a
     # skipped slot as green, every later slot that day skipped in silence. The
     # lock file is committed to the repo, so that state outlived the container.
+    _measure_before_slot(slot)
     try:
         result = _execute_publish_slot(slot, on_date=slot_date, only_asset=only_asset)
     except Exception:

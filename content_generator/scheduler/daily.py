@@ -167,6 +167,13 @@ def _run_generate_slot(day_number: int = None) -> dict:
     _inject_brand_into_content(content, day=dn)
     _refresh_shopify_prices()
 
+    # ── 3a. Distinctness gate (before scoring) ───────────────────────────────
+    # Every piece today must be its own idea, and no surface may repeat an
+    # opening from the last 14 days. Collisions are regenerated here, so the
+    # editorial gate below scores the distinct version. No gate is lowered.
+    with timed_step("distinctness_gate", timeout_s=int(os.getenv("DISTINCT_TIMEOUT_S", "420")), fatal=False):
+        _do_distinctness(content, stage="pre_editorial")
+
     # Soft deadline inside the review loop stops new attempts before the hard
     # timeout, so pieces that already PASSED are kept and saved. Previously the
     # hard timeout raised and the run exited, discarding passing drafts (day 286:
@@ -187,6 +194,14 @@ def _run_generate_slot(day_number: int = None) -> dict:
                      "for retry-unposted", exc)
     finally:
         _EDITORIAL_DEADLINE["at"] = None
+
+    # ── 3b. Distinctness re-check after editorial rewrites ───────────────────
+    # Editorial regenerations can drift back into a collision. Anything still
+    # colliding is regenerated once more and re-scored by the same editorial
+    # gate before it can be approved.
+    with timed_step("distinctness_recheck", timeout_s=int(os.getenv("DISTINCT_TIMEOUT_S", "420")), fatal=False):
+        _do_distinctness(content, stage="post_editorial",
+                         rescore=lambda labels: _rescore_with_deadline(content, labels), max_rounds=1)
 
     # ── 4. Business objectives ────────────────────────────────────────────────
     with timed_step("objective_assignment", timeout_s=10):
@@ -1664,6 +1679,40 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
     return None
 
 
+def _rescore_with_deadline(content: dict, labels) -> None:
+    """Editorial re-score of regenerated pieces, bounded so it ends inside its step."""
+    import time as _time
+    budget = int(os.getenv("DISTINCT_RESCORE_S", "300"))
+    _EDITORIAL_DEADLINE["at"] = _time.monotonic() + max(30, budget)
+    try:
+        _do_editorial(content, only=set(labels))
+    finally:
+        _EDITORIAL_DEADLINE["at"] = None
+
+
+def _do_distinctness(content: dict, *, stage: str, rescore=None, max_rounds: int | None = None) -> dict:
+    """Run the distinctness gate with the normal piece regenerator. Non-blocking."""
+    flag = os.getenv("DISTINCTNESS_GATE", "").strip()
+    if flag == "0" or (flag != "1" and os.getenv("PYTEST_CURRENT_TEST")):
+        return {}
+    try:
+        from content_generator.core.distinctness import MAX_ROUNDS, enforce_distinctness
+
+        def _regen(label: str, piece: dict, feedback: str):
+            improved = _regenerate_piece(label, piece, feedback, content)
+            if not isinstance(improved, dict) or not improved:
+                return None
+            return _apply_regeneration(label, piece, improved)
+
+        return enforce_distinctness(
+            content, _regen, rescore=rescore, stage=stage,
+            max_rounds=MAX_ROUNDS if max_rounds is None else max_rounds,
+        )
+    except Exception as exc:
+        logger.warning("[distinctness] %s gate failed: %s", stage, type(exc).__name__)
+        return {}
+
+
 def _do_objectives(content: dict, dn: int) -> dict:
     from content_generator.objectives.mapper import assign_all
     return assign_all(content, dn)
@@ -1982,6 +2031,14 @@ def _do_fetch_insights() -> dict:
     except Exception as e:
         logger.warning("[learning] cross-platform measurement failed: %s", e)
         results["other_platforms"] = {"error": type(e).__name__}
+    # Turn every platform's measured posts into reuse/retire decisions for the
+    # next generation (post_outcomes.json). Never blocks content.
+    try:
+        from content_generator.analytics.post_outcomes import refresh as refresh_outcomes
+        results["outcomes"] = refresh_outcomes()
+    except Exception as e:
+        logger.warning("[learning] outcome refresh failed: %s", e)
+        results["outcomes"] = {"error": type(e).__name__}
     return results
 
 
