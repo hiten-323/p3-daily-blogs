@@ -193,7 +193,7 @@ def _track(result: dict, content: dict, slot: str, piece: dict) -> None:
             # `slot` is the time of day, not a format — it made every record say
             # "morning"/"evening" and made format-level learning impossible.
             # growth_template_id is the structure that should learn from real views.
-            fmt = _first(piece, "growth_template_id", "type") or slot
+            fmt = _first(piece, "growth_template_id", "ad_template_id", "type") or slot
 
             if not hook:
                 logger.warning(

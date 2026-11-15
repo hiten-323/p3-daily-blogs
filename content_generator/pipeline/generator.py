@@ -535,6 +535,14 @@ def generate_daily_content(
         },
     }
 
+    # Distinct ad-creator video templates for today's reels and Short, chosen
+    # from real measured outcomes (post_outcomes) with exploration.
+    try:
+        from content_generator.creative.ad_creator import assign_templates
+        output["video_templates"] = assign_templates(output, day_number)
+    except Exception as exc:
+        logger.debug("[pipeline] ad template assignment skipped: %s", exc)
+
     try:
         from content_generator.creative.product_reel_templates import attach_product_reels
         attach_product_reels(output, featured_product=product)

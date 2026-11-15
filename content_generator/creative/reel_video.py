@@ -195,6 +195,16 @@ def build_reel_video(reel: dict, day: int, label: str = "reel_video", on_date=No
     except Exception as exc:
         logger.debug("[reel_video] product reel lookup skipped: %s", exc)
     fast_cut = isinstance(reel, dict) and reel.get("growth_template_id") == "fast_cut_curiosity"
+    # Ad-creator edit first: beat-synced 1-3s cuts, motion, kinetic captions,
+    # grade and CTA end card on the real jar cutouts. Same 8.0 gate; on a miss
+    # the existing cinematic and real-photo paths below still run.
+    try:
+        from content_generator.creative.ad_creator import render_for
+        _ad = render_for(reel, label, day, on_date)
+        if _ad:
+            return _ad
+    except Exception as exc:
+        logger.warning("[reel_video] ad-creator path failed: %s", type(exc).__name__)
     _cin = _cinematic(_beats_from_reel(reel), resolve_reel_product(reel), day, label, on_date, 12.0, format_type="reel")
     if _cin:
         return _cin
