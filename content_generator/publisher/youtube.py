@@ -91,10 +91,6 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.warning("[youtube] No video available — skipping YouTube Short")
         return {"success": False, "video_id": "", "url": "", "error": "no_video"}
 
-    if not _visual_gate_video(video_path, "yt_short"):
-        return {"success": False, "video_id": "", "url": "", "attempted": False,
-                "error": "visual_gate_hold_or_vision_unavailable", "held": True}
-
     # Build metadata
     title       = _extract_title(content)
     description = _extract_description(content)
@@ -125,6 +121,12 @@ def post_content(content: dict, day: int = 0) -> dict:
         logger.warning("[youtube] Quality bar held the Short: %s", block)
         return {"success": False, "attempted": False, "skipped": True,
                 "video_id": "", "url": "", "error": "prepublish_gate:" + code, "held": True}
+
+    # The 8.0 visual gate runs after the cheap text checks (a false claim is
+    # refused without spending a vision call) and before any Google call.
+    if not _visual_gate_video(video_path, "yt_short"):
+        return {"success": False, "video_id": "", "url": "", "attempted": False,
+                "error": "visual_gate_hold_or_vision_unavailable", "held": True}
 
     access_token = _refresh_access_token()
     if not access_token:
