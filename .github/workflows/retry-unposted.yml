@@ -40,6 +40,12 @@ jobs:
       - name: Install dependencies
         run: python -m pip install --no-cache-dir -r requirements.txt
 
+      - name: Load engine state branch
+        # main is protected (PR + status checks only), so the engine keeps its
+        # run state on the engine-state branch. Code comes from main; content,
+        # creatives, ledger and learning come from engine-state (main if absent).
+        run: python -m content_generator.ops.engine_state load
+
       - name: Install rendering fonts
         run: |
           sudo apt-get update -qq
@@ -141,61 +147,12 @@ jobs:
           set -euo pipefail
           git config user.name "Purity Beans Engine"
           git config user.email "engine@puritybeans.auto"
-          # Persist publishing ledger, logs, regenerated content, and measurement tracker
-          PERSIST=$(mktemp -d)
-          cp -f output/content_*.json output/publish_log.json output/learning/publish_diagnostics.json "$PERSIST"/ 2>/dev/null || true
-          python -m content_generator.ops.ledger_sync save
-          # Keep this run's re-rendered creatives AND their provenance entries.
-          # The reset/clean below used to discard both, so an image re-rendered
-          # here (e.g. to replace one whose registry entry was lost) went back to
-          # unregistered_image on the next run.
-          mkdir -p "$PERSIST/creative"
-          { git ls-files -m -o --exclude-standard output/creative; git ls-files -o -i --exclude-standard output/creative; } 2>/dev/null \
-            | sort -u | grep -v '/\.jar_provenance\.' | while IFS= read -r f; do
-                [ -f "$f" ] && { mkdir -p "$PERSIST/creative/$(dirname "$f")"; cp -f "$f" "$PERSIST/creative/$f"; }
-              done || true
-          git reset -q --hard HEAD && git clean -qfd output/creative 2>/dev/null || true
-          git pull --rebase
-          python -m content_generator.ops.ledger_sync restore
-          if [ -d "$PERSIST/creative/output/creative" ]; then
-            REMOTE_REG=$(mktemp); cp -f output/creative/jar_provenance.json "$REMOTE_REG" 2>/dev/null || echo '{}' > "$REMOTE_REG"
-            cp -rf "$PERSIST/creative/output/creative/." output/creative/
-            python - "$REMOTE_REG" "$PERSIST/creative/output/creative/jar_provenance.json" <<'PYMERGE'
-          import json, os, sys
-          def load(p):
-              try:
-                  d = json.load(open(p, encoding="utf-8"))
-                  return d if isinstance(d, dict) else {}
-              except Exception:
-                  return {}
-          merged = load(sys.argv[1])
-          merged.update(load(sys.argv[2]))   # this run's entries win for the files it re-rendered
-          tmp = "output/creative/.jar_provenance.merge.tmp"
-          with open(tmp, "w", encoding="utf-8") as fh:
-              json.dump(merged, fh, indent=2)
-          os.replace(tmp, "output/creative/jar_provenance.json")
-          print(f"provenance registry merged: {len(merged)} entries")
-          PYMERGE
-          fi
-          for f in "$PERSIST"/content_*.json "$PERSIST"/publish_log.json; do [ -f "$f" ] && cp -f "$f" output/; done
-          [ -f "$PERSIST/publish_diagnostics.json" ] && cp -f "$PERSIST/publish_diagnostics.json" output/learning/ || true
-          git add -f output/learning/publishing_ledger.json output/learning/published_posts.json output/learning/obstacle_lessons.json output/content_*.json output/creative/ 2>/dev/null || true
-          git add -f output/publish_log.json output/learning/publish_diagnostics.json 2>/dev/null || true
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: retry-unposted ledger + regenerated pieces [skip ci]"
-            for i in 1 2 3; do
-              git push && break
-              echo "push rejected — merging ledger with remote and retrying ($i)"
-              git reset --soft HEAD~1
-              python -m content_generator.ops.ledger_sync save
-              git reset -q --hard HEAD
-              git pull --rebase
-              python -m content_generator.ops.ledger_sync restore
-              git add -f output/learning/publishing_ledger.json output/learning/published_posts.json output/learning/obstacle_lessons.json
-              git commit -m "chore: retry-unposted ledger + regenerated pieces [skip ci]"
-              [ "$i" = 3 ] && { git push || { echo "::error::Could not push ledger"; exit 1; }; }
-            done
-          fi
+          # main is protected. engine_state save copies only what this run
+          # changed (content, publish log, diagnostics, re-rendered creatives and
+          # their provenance entries, ledger) onto the engine-state tip and merges
+          # the ledger, posts, lessons and provenance registry record by record.
+          python -m content_generator.ops.engine_state save -m "chore: retry-unposted ledger + regenerated pieces [skip ci]" \
+            || { echo "::error::Could not push ledger"; exit 1; }
 
       - name: Self-resume if today still has unposted pieces (cron backstop)
         # Do not perpetuate an autonomous publishing chain while the owner hold is active.
