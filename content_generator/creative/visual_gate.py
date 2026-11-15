@@ -21,9 +21,9 @@ import urllib.request
 logger = logging.getLogger(__name__)
 
 
-def _safe_error(exc: Exception, limit: int = 120) -> str:
+def _safe_error(exc: Exception, limit: int = 120, with_type: bool = True) -> str:
     """Provider diagnostics are useful; credential values are never loggable."""
-    detail = f"{type(exc).__name__}: {exc}"
+    detail = f"{type(exc).__name__}: {exc}" if with_type else str(exc)
     for name in (
         "GEMINI_API_KEY", "GROQ_API_KEY", "GITHUB_MODELS_TOKEN", "GH_MODELS_TOKEN",
         "OPENROUTER_API_KEY", "HF_TOKEN", "NVIDIA_API_KEY",
@@ -428,7 +428,9 @@ def aesthetic_score(path) -> dict:
         "nvidia": bool(os.getenv("NVIDIA_API_KEY", "").strip()),
     }
     for name, fn in VISION_PROVIDERS:
-        if not configured.get(name, False):
+        # Known providers without a key are reported and skipped; any other
+        # registered scorer has no key to check and is always tried.
+        if not configured.get(name, True):
             errors.append(f"{name}:missing_credentials")
             logger.warning("[visual-gate] provider=%s unavailable: missing credentials", name)
             continue
@@ -439,7 +441,7 @@ def aesthetic_score(path) -> dict:
         try:
             res = fn(b64)
         except Exception as exc:  # quota/credit/auth/network: next provider
-            detail = f"{name}:{_safe_error(exc, 100)}"
+            detail = f"{name}:{_safe_error(exc, 100, with_type=False)}"
             errors.append(detail)
             logger.warning("[visual-gate] provider=%s failed: %s", name, _safe_error(exc, 100))
             continue
