@@ -7215,7 +7215,8 @@
     ],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "7d"
     ]
   },
   {
@@ -7244,7 +7245,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7273,7 +7275,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7302,7 +7305,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7328,7 +7332,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7357,7 +7362,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7386,7 +7392,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7409,7 +7416,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -7434,7 +7442,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -7506,7 +7515,9 @@
       }
     ],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "7d"
+    ]
   },
   {
     "media_id": "17914125984504479",
@@ -7534,7 +7545,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7563,7 +7575,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7592,7 +7605,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7622,7 +7636,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7651,7 +7666,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -7675,7 +7691,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -7700,7 +7717,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "api_returned_no_metrics",
     "missed_windows": {}
@@ -8331,7 +8349,7 @@
     "format": "discussion",
     "hashtags": "",
     "published_at": "2026-11-08T03:20:37",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "24h",
@@ -8353,6 +8371,19 @@
         "actual_age_hours": 98.56,
         "metrics": {
           "views": 4,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 196.02,
+        "metrics": {
+          "views": 5,
           "likes": 0,
           "comments": 0,
           "shares": 0
@@ -8381,8 +8412,19 @@
     "format": "yt_short",
     "hashtags": "",
     "published_at": "2026-11-08T03:29:10",
-    "insights_recorded": false,
-    "measurement_snapshots": [],
+    "insights_recorded": true,
+    "measurement_snapshots": [
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 195.88,
+        "metrics": {
+          "views": 53
+        },
+        "source": "youtube_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1,
       "72h": 2
@@ -8517,8 +8559,20 @@
     "permalink": "https://www.facebook.com/494003270464484/videos/1104095552467984",
     "ledger_key": "2026-11-08|evening|facebook|pb_30a084a045",
     "publication_status": "VERIFIED_LIVE",
-    "insights_recorded": false,
-    "measurement_snapshots": [],
+    "insights_recorded": true,
+    "measurement_snapshots": [
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 182.77,
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        },
+        "source": "facebook_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1,
       "72h": 2
@@ -8577,7 +8631,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8598,7 +8653,7 @@
     "format": "discussion",
     "hashtags": "",
     "published_at": "2026-11-09T07:00:48",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "24h",
@@ -8618,6 +8673,19 @@
         "target_hours": 72,
         "measured_at": "2026-11-13T03:00:15+00:00",
         "actual_age_hours": 91.99,
+        "metrics": {
+          "views": 10,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 168.35,
         "metrics": {
           "views": 10,
           "likes": 0,
@@ -8655,7 +8723,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8683,7 +8752,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8711,7 +8781,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8732,14 +8803,26 @@
     "format": "yt_short",
     "hashtags": "",
     "published_at": "2026-11-09T08:50:34",
-    "insights_recorded": false,
-    "measurement_snapshots": [],
+    "insights_recorded": true,
+    "measurement_snapshots": [
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 166.52,
+        "metrics": {
+          "views": 22
+        },
+        "source": "youtube_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1,
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8767,7 +8850,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8789,7 +8873,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -8813,7 +8898,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -8840,7 +8926,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8917,7 +9004,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8944,7 +9032,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8971,7 +9060,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -8999,7 +9089,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -9027,7 +9118,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -9049,7 +9141,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -9095,7 +9188,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -9173,7 +9267,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -9201,7 +9296,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -9229,7 +9325,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -9257,7 +9354,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -9300,7 +9398,19 @@
     "ledger_key": "2026-11-11|evening|facebook|pb_b1c2a45b1b",
     "publication_status": "VERIFIED_LIVE",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 109.55,
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        },
+        "source": "facebook_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1
     },
@@ -9329,7 +9439,8 @@
       "72h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "api_returned_no_metrics",
     "missed_windows": {}
@@ -9366,6 +9477,19 @@
           "shares": 0
         },
         "source": "threads_native_api"
+      },
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 96.8,
+        "metrics": {
+          "views": 41,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
       }
     ],
     "fetch_attempts_by_window": {},
@@ -9394,7 +9518,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18146628214716764",
@@ -9419,7 +9545,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "urn:li:share:7526554889754316800",
@@ -9442,7 +9570,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18122850895947885",
@@ -9463,11 +9593,23 @@
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeDaily #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #ArtisanCoffee #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #SwadeshiProducts",
     "published_at": "2026-11-12T08:02:20",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "8FmfAA1bdP0",
@@ -9488,11 +9630,24 @@
     "hashtags": "",
     "published_at": "2026-11-12T08:41:45",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 94.67,
+        "metrics": {
+          "views": 5
+        },
+        "source": "youtube_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18121938223910682",
@@ -9513,11 +9668,23 @@
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeDaily #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #ArtisanCoffee #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #SwadeshiProducts",
     "published_at": "2026-11-12T16:47:06",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "1955886668921199",
@@ -9532,11 +9699,25 @@
     "ledger_key": "2026-11-12|evening|facebook|pb_8c0203f388",
     "publication_status": "VERIFIED_LIVE",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 86.58,
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        },
+        "source": "facebook_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -9557,7 +9738,9 @@
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -9582,7 +9765,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "17952453336346815",
@@ -9616,6 +9801,19 @@
           "shares": 0
         },
         "source": "threads_native_api"
+      },
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 75.62,
+        "metrics": {
+          "views": 27,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
       }
     ],
     "fetch_attempts_by_window": {},
@@ -9640,11 +9838,24 @@
     "hashtags": "Ultra Blend Purity Beans Instant Coffee Coffee Math Milk Coffee",
     "published_at": "2026-11-13T03:58:06",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 75.4,
+        "metrics": {
+          "views": 8
+        },
+        "source": "youtube_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1
     },
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18126620320929451",
@@ -9665,9 +9876,21 @@
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CafeLife #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeFacts #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #StartupIndia",
     "published_at": "2026-11-13T06:28:04",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18187003909426491",
@@ -9688,9 +9911,21 @@
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CafeLife #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeFacts #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #StartupIndia",
     "published_at": "2026-11-13T06:28:20",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18060603875562342",
@@ -9711,9 +9946,21 @@
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CafeLife #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeFacts #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #StartupIndia",
     "published_at": "2026-11-13T06:53:46",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18138436750639462",
@@ -9736,7 +9983,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "1662580385414642",
@@ -9753,7 +10002,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -9772,7 +10023,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": [],
+    "failed_windows": [
+      "24h"
+    ],
     "measurement_status": "pending",
     "missed_windows": {}
   },
@@ -9797,7 +10050,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "urn:li:share:7527262507808395264",
@@ -9820,7 +10075,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18179622871449931",
@@ -9841,7 +10098,17 @@
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeBeans #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeTasting #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #CoffeeCultureIndia",
     "published_at": "2026-11-14T07:43:45",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "24h",
+        "target_hours": 24,
+        "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {},
     "failed_windows": []
   },
@@ -9864,7 +10131,17 @@
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeBeans #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeTasting #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #CoffeeCultureIndia",
     "published_at": "2026-11-14T07:44:03",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "24h",
+        "target_hours": 24,
+        "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {},
     "failed_windows": []
   },
@@ -9887,7 +10164,17 @@
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeBeans #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeTasting #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #CoffeeCultureIndia",
     "published_at": "2026-11-14T08:05:12",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "24h",
+        "target_hours": 24,
+        "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {},
     "failed_windows": []
   },
@@ -9910,8 +10197,41 @@
     "hashtags": "",
     "published_at": "2026-11-14T08:47:23",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "24h",
+        "target_hours": 24,
+        "measured_at": "2026-11-16T07:22:03+00:00",
+        "actual_age_hours": 46.58,
+        "metrics": {
+          "views": 1,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {},
     "failed_windows": []
+  },
+  {
+    "media_id": "494003270464484_122170489118655685",
+    "asset_id": "facebook_day317",
+    "platform": "facebook",
+    "track": "brand",
+    "hook": "",
+    "topic": "",
+    "format": "morning",
+    "published_at": "2026-11-14T07:44:10+00:00",
+    "permalink": "https://www.facebook.com/494003270464484/posts/122170489118655685",
+    "ledger_key": "2026-11-14|morning|facebook|pb_123ef2b54a",
+    "publication_status": "VERIFIED_LIVE",
+    "insights_recorded": false,
+    "measurement_snapshots": [],
+    "fetch_attempts_by_window": {},
+    "failed_windows": [],
+    "measurement_status": "missing_pages_read_engagement_permission",
+    "missed_windows": {}
   }
 ]
