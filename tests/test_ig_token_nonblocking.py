@@ -15,7 +15,10 @@ def _env(monkeypatch, tmp_path, *, preflight=True):
     else:
         monkeypatch.delenv("META_PUBLISH_PREFLIGHT", raising=False)
     monkeypatch.delenv("META_INSTAGRAM_REQUIRED", raising=False)
-    monkeypatch.delenv("INSTAGRAM_CREDENTIAL_BLOCK", raising=False)
+    # setenv first so monkeypatch records the original and removes the block
+    # that run_checks writes into os.environ when the test ends.
+    monkeypatch.setenv("INSTAGRAM_CREDENTIAL_BLOCK", "")
+    monkeypatch.delenv("INSTAGRAM_CREDENTIAL_BLOCK")
     monkeypatch.delenv("ALERT_WEBHOOK_URL", raising=False)
     for k, v in {"INSTAGRAM_ACCOUNT_ID": "ig-123", "INSTAGRAM_ACCESS_TOKEN": "ig-token",
                  "FACEBOOK_PAGE_ID": "fb-123", "FACEBOOK_PAGE_ACCESS_TOKEN": "fb-token",
