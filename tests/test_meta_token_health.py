@@ -26,17 +26,31 @@ def test_page_id_resolves_to_linked_instagram_business_account(monkeypatch):
     assert "instagram_business_account" in calls[-1]
 
 
-def test_insights_scope_is_required_for_strict_instagram_readiness(monkeypatch):
+def test_missing_insights_scope_is_degraded_not_a_publish_problem(monkeypatch):
+    # Owner decision (8 Oct): insights are optional. #152 made them fatal and
+    # every preflight failed on 15-16 Nov.
     responses = [
         {"data": {"type": "PAGE", "expires_at": 0,
-                  "scopes": ["instagram_basic", "instagram_content_publish", "pages_read_engagement"],
+                  "scopes": ["instagram_basic", "instagram_content_publish"],
                   "is_valid": True}},
         {"id": "ig-123", "username": "puritybeans"},
     ]
     monkeypatch.setattr(health, "_fetch", lambda *a, **k: responses.pop(0))
     report = health.inspect_instagram("ig-123", "test-token", now=100)
+    assert report["ok"] is True and report["problems"] == []
+    assert report["degraded"] == ["instagram_manage_insights", "pages_read_engagement"]
+    assert health.IG_PUBLISH_SCOPES == ("instagram_basic", "instagram_content_publish")
+
+
+def test_missing_publish_scope_is_still_a_problem(monkeypatch):
+    responses = [
+        {"data": {"type": "PAGE", "expires_at": 0, "scopes": ["instagram_basic"], "is_valid": True}},
+        {"id": "ig-123", "username": "puritybeans"},
+    ]
+    monkeypatch.setattr(health, "_fetch", lambda *a, **k: responses.pop(0))
+    report = health.inspect_instagram("ig-123", "test-token", now=100)
     assert report["ok"] is False
-    assert any("instagram_manage_insights" in problem for problem in report["problems"])
+    assert any("instagram_content_publish" in p for p in report["problems"])
 
 
 def test_page_id_without_linked_instagram_account_fails_closed(monkeypatch):

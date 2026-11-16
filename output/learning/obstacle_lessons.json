@@ -32531,6 +32531,20 @@
       "reason": "run 531 (15 Nov): #164 ad-creator reel/short templates (listicle_3, fast_cut_curiosity, asmr_macro) and the FFmpeg Ken Burns fallback scored 3.0-4.0 on the 8.0 visual gate; image_generation hit the 900s watchdog",
       "stage": "visual_gate",
       "status": "open"
+    },
+    {
+      "count": 1,
+      "feedback": "Measurement permissions must never gate publishing; one platform's credential problem must never stop the others.",
+      "first_seen": "2026-11-15",
+      "fix": "Publishing requires only instagram_basic + instagram_content_publish (valid, unexpired, resolvable account). Missing insights scopes log 'Instagram metrics DEGRADED' and only disable IG metrics. In publish preflight an Instagram problem is a warning + alert + retryable ledger credential block + INSTAGRAM_CREDENTIAL_BLOCK (IG skipped like the owner pause); other platforms continue. Token health fails only on a real publishing problem. META_INSTAGRAM_REQUIRED=true keeps it fatal for the IG-only one-off job.",
+      "gate": "token_scopes",
+      "id": "all|meta_preflight|token_scopes|missing instagram_manage_insights failed every publish preflight and token health (regression from #152)",
+      "label": "meta_preflight",
+      "last_seen": "2026-11-16",
+      "platform": "all",
+      "reason": "16 Nov: P3 daily content (07:16 and 12:56 UTC), Retry unposted (08:31 UTC), Publish Recovery and Instagram Token Health all failed preflight with 'Instagram token cannot publish: missing instagram_manage_insights'. #152 had added instagram_manage_insights and pages_read_engagement to the required Instagram scopes, against the owner's 8 Oct decision to skip insights; and any Instagram problem failed the whole job, blocking Facebook, Threads, LinkedIn and YouTube.",
+      "stage": "preflight",
+      "status": "fixed"
     }
   ],
   "version": 1
