@@ -10,11 +10,20 @@ it as an Authorization header so that URL stays free of the secret. Logs
 carry the token type, expiry, scopes, and username. The token value is
 redacted from every line, including error bodies.
 
-Strict mode (token health, publish preflight) fails when instagram_basic,
-instagram_content_publish, instagram_manage_insights, or pages_read_engagement
-is missing, or when the token is expired. Insights permission is a production
-requirement because published content must be measurable. Soft mode (generate)
-reports the same facts as warnings and continues.
+Instagram publishing needs only instagram_basic and instagram_content_publish
+plus a valid, unexpired token and a resolvable account. Missing
+instagram_manage_insights or pages_read_engagement only disables Instagram
+metrics collection: it is logged as DEGRADED and never blocks publishing (owner
+decision, 8 Oct 2026; #152 had made it fatal again and every preflight failed
+on 15-16 Nov). Token health fails only on a real publishing problem. Soft mode
+(generate) reports the same facts as warnings and continues.
+
+An Instagram publishing problem in publish preflight never blocks the other
+platforms: it is a warning plus an alert, a retryable credential block on the
+ledger, and INSTAGRAM_CREDENTIAL_BLOCK exported for later steps (Instagram is
+skipped like the owner pause), and the job continues for Facebook, Threads,
+LinkedIn and YouTube. Set META_INSTAGRAM_REQUIRED=true for an Instagram-only job
+(the one-off post) to keep it fatal there.
 
 FACEBOOK_PAGE_ACCESS_TOKEN is required for strict publish preflight and must
 include pages_manage_posts. Missing credentials, lookup errors, missing scope,
@@ -39,12 +48,11 @@ from datetime import datetime, timezone
 
 from config.api_versions import META_GRAPH_BASE
 
-IG_SCOPES = (
-    "instagram_basic",
-    "instagram_content_publish",
-    "instagram_manage_insights",
-    "pages_read_engagement",
-)
+# Required to publish. Nothing else may block an Instagram post.
+IG_PUBLISH_SCOPES = ("instagram_basic", "instagram_content_publish")
+# Only needed to read metrics; missing = DEGRADED metrics, publishing unaffected.
+IG_INSIGHTS_SCOPES = ("instagram_manage_insights", "pages_read_engagement")
+IG_SCOPES = IG_PUBLISH_SCOPES + IG_INSIGHTS_SCOPES  # full healthy set (tests, logs)
 FB_SCOPES = ("pages_manage_posts",)
 _TIMEOUT_S = 15
 
@@ -259,9 +267,11 @@ def inspect_instagram(account_id: str, token: str, *, now: int | None = None) ->
     """Return ok plus the fields the workflow is allowed to log."""
     problems: list[str] = []
     report = inspect_token(token, now=now)
-    missing = [scope for scope in IG_SCOPES if scope not in set(report["scopes"])]
+    granted = set(report["scopes"])
+    missing = [scope for scope in IG_PUBLISH_SCOPES if scope not in granted]
     if missing:
         problems.append("missing " + ", ".join(missing))
+    report["degraded"] = [scope for scope in IG_INSIGHTS_SCOPES if scope not in granted]
     if report.get("valid") is not True:
         problems.append("token validity not confirmed (Meta debug response must explicitly return is_valid=true)")
     if report["expired"]:
@@ -337,6 +347,46 @@ def _warn_threads(messages: list[tuple[str, str]], text: str, *, preflight: bool
         print(f"::warning::Threads credential block was not recorded: {type(exc).__name__}")
 
 
+def degraded_message(missing: list[str]) -> str:
+    return ("Instagram metrics DEGRADED: token lacks " + ", ".join(missing)
+            + " — Instagram insights collection is disabled; publishing is unaffected.")
+
+
+def _instagram_required() -> bool:
+    return os.environ.get("META_INSTAGRAM_REQUIRED", "").strip().lower() in {"1", "true", "yes"}
+
+
+def _instagram_problem(messages: list[tuple[str, str]], text: str, *, mode: str,
+                       preflight: bool, secrets: list[str]) -> bool:
+    """Report an Instagram publishing problem; True when the job must fail.
+
+    Publish preflight: warn, alert, ledger a retryable credential block and
+    export INSTAGRAM_CREDENTIAL_BLOCK so this job skips Instagram while
+    Facebook, Threads, LinkedIn and YouTube still publish. Token health (strict,
+    no preflight) still fails so the problem is visible. Soft mode only warns.
+    """
+    if mode == "soft":
+        messages.append(("warning", text))
+        return False
+    if not preflight or _instagram_required():
+        messages.append(("error", text))
+        return True
+    messages.append(("warning", text + " — Instagram is skipped in this job; other platforms continue."))
+    _alert(text, secrets)
+    reason = " ".join(_redact(text, secrets).split())[:300]
+    os.environ["INSTAGRAM_CREDENTIAL_BLOCK"] = reason
+    env_file = os.environ.get("GITHUB_ENV", "").strip()
+    if env_file:
+        with open(env_file, "a", encoding="utf-8") as handle:
+            handle.write(f"INSTAGRAM_CREDENTIAL_BLOCK={reason}\n")
+    try:
+        from content_generator.publisher.publishing_ledger import record_credential_block
+        record_credential_block("instagram", text)
+    except Exception as exc:
+        print(f"::warning::Instagram credential block was not recorded: {type(exc).__name__}")
+    return False
+
+
 def _finish(messages: list[tuple[str, str]], secrets: list[str], failed: bool) -> int:
     for level, message in messages:
         _emit(level, message, secrets)
@@ -359,25 +409,23 @@ def run_checks(now: int | None = None) -> int:
     failed = False
 
     if not account_id or not token:
-        level = "error" if mode != "soft" else "warning"
-        messages.append((
-            level,
+        failed |= _instagram_problem(
+            messages,
             "Instagram token health FAILED — INSTAGRAM_ACCOUNT_ID or "
             "INSTAGRAM_ACCESS_TOKEN is not configured."
             if mode != "soft"
             else "Instagram credentials unavailable; generate continues; publish slots fail closed.",
-        ))
-        failed = True
+            mode=mode, preflight=publish_preflight, secrets=secrets,
+        )
     else:
         try:
             report = inspect_instagram(account_id, token, now=now)
         except TokenHttpError as exc:
-            failed = True
             detail = _redact(exc.body, secrets)[:300]
-            messages.append((
-                "error" if mode != "soft" else "warning",
-                f"Instagram token check failed (HTTP {exc.code}): {detail}",
-            ))
+            failed |= _instagram_problem(
+                messages, f"Instagram token check failed (HTTP {exc.code}): {detail}",
+                mode=mode, preflight=publish_preflight, secrets=secrets,
+            )
         else:
             resolved_id = str(report.get("resolved_account_id") or "").strip()
             publish_account_id = resolved_id or account_id
@@ -396,12 +444,13 @@ def run_checks(now: int | None = None) -> int:
                 with open(output_file, "a", encoding="utf-8") as handle:
                     handle.write(f"instagram_account_id={publish_account_id}\n")
             messages.append(("notice", format_instagram(report)))
+            if report.get("degraded"):
+                messages.append(("warning", degraded_message(report["degraded"])))
             if not report["ok"]:
-                failed = True
-                messages.append((
-                    "error" if mode != "soft" else "warning",
-                    "Instagram token cannot publish: " + "; ".join(report["problems"]),
-                ))
+                failed |= _instagram_problem(
+                    messages, "Instagram token cannot publish: " + "; ".join(report["problems"]),
+                    mode=mode, preflight=publish_preflight, secrets=secrets,
+                )
 
     fb_page_id = os.environ.get("FACEBOOK_PAGE_ID", "").strip()
     if not facebook:

@@ -22,21 +22,19 @@ is checked against that registry by the config-drift test.
 
 ## Autonomous publishing control
 
-The single publishing control is the
-GitHub Actions **repository variable** `PUBLISHING_ENABLED`:
+Publishing is **on by default** (owner, 16 Nov 2026): every scheduled slot,
+retry-unposted and publish recovery publish to every platform each day. The
+`PUBLISHING_ENABLED` repository variable no longer gates anything.
 
-Publishing is **opt-in**:
-
-- `true`: scheduled publishing, retry publishing and publish recovery run.
-- Unset, empty, `false` or any other value: generation and validation can
-  continue, but platform publishing, retry publishing and publish recovery
-  are held.
+- Pause every platform: set `config/publishing_pause.json` to
+  `{"paused": true}` in a PR (or env `PUBLISHING_PAUSED=true` for one run).
+- Pause only Instagram: `config/instagram_pause.json`.
 - A manual `dry_run` of the daily workflow always holds publishing.
 
-Do not disable the workflows to pause publishing. Change only this repository
-variable. Keep provider credentials and platform tokens in GitHub Actions
-**secrets**; never put secret values in repository variables, code, logs, or
-commits. The variable is a non-secret operational switch.
+Do not disable the workflows to pause publishing. Keep provider credentials and
+platform tokens in GitHub Actions **secrets**; never put secret values in code,
+logs, or commits. All content gates (8.0 visual, 9.0 viral), claim rules and
+UTM tagging apply to every post regardless of this switch.
 
 ## Product-copy hard rules
 

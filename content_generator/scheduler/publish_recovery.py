@@ -70,6 +70,10 @@ def outcome_fails_recovery(platform: str, outcome: dict) -> bool:
 
 
 def main() -> int:
+    from content_generator.core.publishing_pause import publishing_paused
+    if publishing_paused():
+        log.warning("Publishing paused by config/publishing_pause.json; no recovery publishing")
+        return 0
     groups = due_retry_groups()
     if not groups:
         today_records = records_for_today()

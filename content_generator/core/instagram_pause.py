@@ -26,9 +26,22 @@ _FALSE = {"0", "false", "no", "off"}
 PAUSE_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
                           "config", "instagram_pause.json")
 PAUSED_ERROR = "instagram_paused"
+CREDENTIAL_BLOCK_ERROR = "instagram_credential_block"
+
+
+def instagram_credential_block() -> str:
+    """Reason set by publish preflight when the Instagram token cannot publish.
+
+    Instagram is skipped for the rest of that job exactly like the owner pause,
+    so Facebook, Threads, LinkedIn and YouTube still go out. The preflight also
+    ledgers a retryable credential block; the next run re-checks the token.
+    """
+    return str(os.getenv("INSTAGRAM_CREDENTIAL_BLOCK", "") or "").strip()
 
 
 def instagram_paused() -> bool:
+    if instagram_credential_block():
+        return True
     raw = str(os.getenv("INSTAGRAM_PUBLISH_PAUSED", "") or "").strip().lower()
     if raw in _TRUE:
         return True
@@ -47,6 +60,11 @@ def instagram_paused() -> bool:
 
 def paused_result() -> dict:
     """Publisher-shaped result for a paused call: not attempted, not retried."""
+    block = instagram_credential_block()
+    if block:
+        logger.warning("[instagram] credential block from preflight — not publishing to Instagram: %s", block)
+        return {"success": False, "attempted": False, "skipped": True, "paused": True,
+                "credential_block": True, "media_id": "", "permalink": "", "error": CREDENTIAL_BLOCK_ERROR}
     logger.warning("[instagram] PAUSED by owner kill switch — not publishing to Instagram")
     return {"success": False, "attempted": False, "skipped": True, "paused": True,
             "media_id": "", "permalink": "", "error": PAUSED_ERROR}

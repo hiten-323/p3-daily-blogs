@@ -159,6 +159,11 @@ def test_dry_run_gates_publishing_steps():
 
     for name in _PUBLISHING_STEPS:
         condition = str(by_name[name].get("if") or "")
+        if name == "Run autonomous pipeline":
+            # Runs in a dry run too (generation only); DRY_RUN forces publishing
+            # off in Python. Publishing is on by default otherwise (16 Nov 2026).
+            assert "DRY_RUN: ${{ github.event.inputs.dry_run }}" in WORKFLOW.read_text(encoding="utf-8")
+            continue
         assert "github.event.inputs.dry_run != 'true'" in condition, name
 
     assert "success()" in by_name["Run autonomous pipeline"]["if"]

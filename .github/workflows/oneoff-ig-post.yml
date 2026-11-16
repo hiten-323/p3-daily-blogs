@@ -53,6 +53,8 @@ jobs:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           META_TOKEN_MODE: strict
           META_PUBLISH_PREFLIGHT: "true"
+          # Instagram-only job: an Instagram token problem stays fatal here.
+          META_INSTAGRAM_REQUIRED: "true"
         run: python -m content_generator.ops.meta_token_health
       - name: Publish once (no retry)
         env:
