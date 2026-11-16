@@ -716,6 +716,14 @@ def main() -> int:
 
 def _cli() -> int:
     import sys
+    from content_generator.core.publishing_pause import publishing_paused
+    if publishing_paused():
+        # Owner pause: nothing is due, nothing is published, the chain stops.
+        if "--pending" in sys.argv[1:]:
+            print("PENDING:")
+        else:
+            print("[retry] publishing paused by config/publishing_pause.json; nothing published")
+        return 0
     if "--pending" in sys.argv[1:]:
         logging.basicConfig(level=logging.ERROR)
         try:

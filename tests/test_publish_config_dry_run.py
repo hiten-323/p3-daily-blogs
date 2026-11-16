@@ -30,32 +30,44 @@ def test_dry_run_suppresses_nurture_and_founder_notifications(monkeypatch):
     assert founder is False
 
 
-def test_daily_schedule_uses_one_opt_in_publishing_flag():
+def test_publishing_is_on_by_default_and_not_gated_by_the_variable():
     workflow = (ROOT / ".github" / "workflows" / "daily.yml").read_text(encoding="utf-8")
     retry = (ROOT / ".github" / "workflows" / "retry-unposted.yml").read_text(encoding="utf-8")
     recovery = (ROOT / ".github" / "workflows" / "publish-recovery.yml").read_text(encoding="utf-8")
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    # Publishing is opt-in: only an explicit 'true' publishes.
+    # Publishing is on by default (owner, 16 Nov 2026): the variable gates nothing.
     for text in (workflow, retry, recovery):
-        assert "vars.PUBLISHING_ENABLED == 'true'" in text
-        assert "vars.PUBLISHING_ENABLED != 'false'" not in text
-        assert "vars.PUBLISHING_ENABLED || 'true'" not in text
-    assert "Publishing is **opt-in**" in readme
-    assert "PUBLISHING_ENABLED" in readme
+        assert "vars.PUBLISHING_ENABLED" not in text
+    assert "Publishing is **on by default**" in readme
+    assert "config/publishing_pause.json" in readme
     assert "reel_2" not in workflow
     scheduler = (ROOT / "content_generator" / "scheduler" / "daily.py").read_text(encoding="utf-8")
     assert '"reel_2": ReelSchema' not in scheduler
     assert "reel_2_day" not in scheduler
 
 
-def test_unset_publishing_flag_holds_publishing(monkeypatch):
+def test_publishing_defaults_on_and_only_pause_or_dry_run_hold_it(monkeypatch, tmp_path):
     monkeypatch.delenv("DRY_RUN", raising=False)
-    monkeypatch.delenv("PUBLISHING_ENABLED", raising=False)
+    monkeypatch.delenv("PUBLISHING_PAUSED", raising=False)
+    pause = tmp_path / "publishing_pause.json"
+    pause.write_text('{"paused": false}')
+    monkeypatch.setenv("PUBLISHING_PAUSE_FILE", str(pause))
+    for value in (None, "", "false", "true"):
+        if value is None:
+            monkeypatch.delenv("PUBLISHING_ENABLED", raising=False)
+        else:
+            monkeypatch.setenv("PUBLISHING_ENABLED", value)
+        assert daily._publishing_enabled() is True, value
+    pause.write_text('{"paused": true}')
     assert daily._publishing_enabled() is False
-    monkeypatch.setenv("PUBLISHING_ENABLED", "true")
-    assert daily._publishing_enabled() is True
+    pause.write_text('{"paused": false}')
     monkeypatch.setenv("DRY_RUN", "1")
     assert daily._publishing_enabled() is False
+
+
+def test_repo_pause_file_is_unpaused():
+    import json
+    assert json.loads((ROOT / "config" / "publishing_pause.json").read_text())["paused"] is False
 
 
 def test_generate_dry_run_runs_pipeline_but_skips_publishing_and_commits():

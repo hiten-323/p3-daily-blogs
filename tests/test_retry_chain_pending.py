@@ -87,9 +87,9 @@ def test_workflows_chain_on_due_targets_not_ledger_rows():
     assert "DAILY_ACTIVE" in retry and 'status == \\"in_progress\\"' in retry
     assert "actions: write" in daily
     assert "gh workflow run retry-unposted.yml" in daily
-    # Owner hold disables the retry kickoff and all actual publishing paths.
-    assert "vars.PUBLISHING_ENABLED == 'true'" in daily
-    assert "vars.PUBLISHING_ENABLED == 'true'" in retry
+    # Publishing is on by default; the retry kickoff is not gated by the variable.
+    assert "vars.PUBLISHING_ENABLED" not in daily
+    assert "vars.PUBLISHING_ENABLED" not in retry
 
 
 def test_instagram_reel_alias_counts_as_posted():

@@ -2100,15 +2100,21 @@ def _do_revenue_attribution() -> dict:
 
 
 def _publishing_enabled() -> bool:
-    if os.getenv("DRY_RUN", "").strip().lower() in ("1", "true", "yes", "on"):
+    """Publishing is on by default; only a dry run or the config pause holds it.
+
+    The PUBLISHING_ENABLED repository variable no longer gates publishing
+    (owner, 16 Nov 2026). Pause with config/publishing_pause.json.
+    """
+    from content_generator.core.publishing_pause import dry_run, publishing_paused
+    if dry_run():
         return False
-    return os.getenv("PUBLISHING_ENABLED", "false").strip().lower() in ("1", "true", "yes", "on")
+    return not publishing_paused()
 
 
 def _do_publish_if_enabled(content: dict, day_number: int) -> dict:
-    """Keep the generate slot available while the global publish hold is active."""
+    """Keep the generate slot available while publishing is paused or in a dry run."""
     if not _publishing_enabled():
-        logger.warning("[publish] PUBLISHING_ENABLED is not true — generation-only run; no platform calls")
+        logger.warning("[publish] publishing paused (config/publishing_pause.json) or dry run — generation-only run; no platform calls")
         return {
             "skipped": True,
             "reason": "publishing_disabled",
