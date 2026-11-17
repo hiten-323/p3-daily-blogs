@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-17T02:43:41+00:00",
+  "generated_at": "2026-11-17T13:48:28+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 54,
+      "posts": 53,
       "measured": 6,
       "ranked": 6,
       "metrics_seen": [
@@ -12,8 +12,9 @@
       ],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 40,
-        "missing_pages_read_engagement_permission": 7,
-        "api_returned_no_metrics": 1
+        "missing_pages_read_engagement_permission": 5,
+        "api_returned_no_metrics": 1,
+        "pending": 1
       },
       "winners": [],
       "losers": [],
@@ -104,19 +105,54 @@
     },
     "instagram": {
       "posts": 91,
-      "measured": 21,
-      "ranked": 21,
+      "measured": 24,
+      "ranked": 24,
       "metrics_seen": [
         "comments",
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 60,
-        "awaiting_first_window": 10
+        "too_old_for_comparable_window": 63,
+        "awaiting_first_window": 4
       },
-      "winners": [],
+      "winners": [
+        {
+          "dimension": "angle",
+          "value": "follower growth",
+          "ratio": 1.29,
+          "n": 7,
+          "provisional": false
+        },
+        {
+          "dimension": "hook_strategy",
+          "value": "question",
+          "ratio": 1.25,
+          "n": 4,
+          "provisional": true
+        },
+        {
+          "dimension": "attention_mechanism",
+          "value": "curiosity_gap",
+          "ratio": 1.33,
+          "n": 3,
+          "provisional": true
+        }
+      ],
       "losers": [],
       "top_posts": [
+        {
+          "label": "carousel",
+          "hook": "How to find your spoon in three mornings",
+          "template": "",
+          "angle": "follower growth",
+          "relative": 2.0,
+          "window": "7d",
+          "editorial_score": null,
+          "metrics": {
+            "likes": 1,
+            "comments": 0
+          }
+        },
         {
           "label": "growth_reel",
           "hook": "Most people boil their kettle, pour it straight onto the coffee, and wonder why their morning starts with a spike and a ",
@@ -131,23 +167,10 @@
           }
         },
         {
-          "label": "instagram_post",
-          "hook": "The three-word sentence on your coffee jar that brand marketers hope you never read.",
+          "label": "reel_1",
+          "hook": "I read the ingredient panel of five office coffee jars so you don't have to.",
           "template": "",
-          "angle": "follower growth",
-          "relative": 1.0,
-          "window": "7d",
-          "editorial_score": null,
-          "metrics": {
-            "likes": 0,
-            "comments": 0
-          }
-        },
-        {
-          "label": "growth_reel",
-          "hook": "POV: it's 9:40 at the office and your desk coffee actually tastes good",
-          "template": "",
-          "angle": "educate",
+          "angle": "label_truth",
           "relative": 1.0,
           "window": "7d",
           "editorial_score": null,
@@ -222,14 +245,14 @@
       ]
     },
     "linkedin": {
-      "posts": 28,
+      "posts": 27,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 20,
-        "missing_linkedin_token_or_version": 7,
-        "awaiting_first_window": 1
+        "missing_linkedin_token_or_version": 5,
+        "awaiting_first_window": 2
       },
       "winners": [],
       "losers": [],
@@ -244,7 +267,7 @@
     "threads": {
       "posts": 29,
       "measured": 25,
-      "ranked": 24,
+      "ranked": 25,
       "metrics_seen": [
         "comments",
         "likes",
@@ -256,10 +279,17 @@
       },
       "winners": [
         {
+          "dimension": "angle",
+          "value": "sensory",
+          "ratio": 5.5,
+          "n": 2,
+          "provisional": true
+        },
+        {
           "dimension": "label",
           "value": "threads_post",
-          "ratio": 1.62,
-          "n": 24,
+          "ratio": 1.72,
+          "n": 25,
           "provisional": false
         }
       ],
@@ -270,7 +300,7 @@
           "hook": "Hot take: most people never taste their coffee, they just drink it.",
           "template": "",
           "angle": "sensory",
-          "relative": 9.111,
+          "relative": 10.25,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -285,7 +315,7 @@
           "hook": "Hot take: most people never taste their coffee, they just drink the sugar and milk poured on top of it. ",
           "template": "",
           "angle": "myth-busting coffee truths",
-          "relative": 6.0,
+          "relative": 6.75,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -300,7 +330,7 @@
           "hook": "Unpopular opinion: bitter instant coffee isn't a bad bean, it's just boiling water poured straight on top.",
           "template": "",
           "angle": "the 100c water mistake",
-          "relative": 3.111,
+          "relative": 3.5,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -332,7 +362,7 @@
           "hook": "Unpopular opinion: water temperature matters less than the brand transparency hiding on the back of your coffee jar.",
           "template": "",
           "angle": "unpopular opinion: water temperature matters less than the b",
-          "relative": 0.222,
+          "relative": 0.25,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -362,20 +392,39 @@
       "gaps": []
     },
     "youtube": {
-      "posts": 28,
-      "measured": 6,
-      "ranked": 4,
+      "posts": 27,
+      "measured": 7,
+      "ranked": 7,
       "metrics_seen": [
         "views"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 20,
-        "awaiting_first_window": 1,
-        "api_returned_no_metrics": 1
+        "too_old_for_comparable_window": 19,
+        "awaiting_first_window": 1
       },
-      "winners": [],
+      "winners": [
+        {
+          "dimension": "label",
+          "value": "yt_short",
+          "ratio": 8.55,
+          "n": 7,
+          "provisional": false
+        }
+      ],
       "losers": [],
       "top_posts": [
+        {
+          "label": "yt_short",
+          "hook": "The coffee mistake almost every Indian kitchen makes",
+          "template": "",
+          "angle": "engagement growth",
+          "relative": 53.5,
+          "window": "72h",
+          "editorial_score": null,
+          "metrics": {
+            "views": 428
+          }
+        },
         {
           "label": "yt_short",
           "hook": "Your glass kettle hits one hundred degrees Celsius, and you pour it straight onto your coffee — that exact thirty-second window is why your ",
@@ -399,21 +448,21 @@
           "metrics": {
             "views": 31
           }
-        },
-        {
-          "label": "yt_short",
-          "hook": "Why Freeze-Dried Coffee Tastes Different",
-          "template": "",
-          "angle": "brand discovery and follow growth",
-          "relative": 0.873,
-          "window": "7d",
-          "editorial_score": null,
-          "metrics": {
-            "views": 24
-          }
         }
       ],
       "bottom_posts": [
+        {
+          "label": "yt_short",
+          "hook": "Your morning coffee smells flat because the crystals inside shattered before they ever touched your mug.",
+          "template": "",
+          "angle": "drive traffic to https://p3online.in",
+          "relative": 0.625,
+          "window": "72h",
+          "editorial_score": null,
+          "metrics": {
+            "views": 5
+          }
+        },
         {
           "label": "yt_short",
           "hook": "7:12 AM. The only jar on my shelf that tells me exactly what's in it before I've even opened my eyes.",
@@ -436,18 +485,6 @@
           "editorial_score": null,
           "metrics": {
             "views": 24
-          }
-        },
-        {
-          "label": "yt_short",
-          "hook": "The coffee mistake most Indian kitchens make: boiling water straight onto the jar.",
-          "template": "",
-          "angle": "drive traffic to product page and increase instant coffee pu",
-          "relative": 1.127,
-          "window": "7d",
-          "editorial_score": null,
-          "metrics": {
-            "views": 31
           }
         }
       ],
@@ -1086,7 +1123,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.111
+      "relative": 1.25
     },
     {
       "platform": "instagram",
@@ -1538,7 +1575,7 @@
       },
       "basis": "reach",
       "value": 3.0,
-      "relative": 0.667
+      "relative": 0.75
     },
     {
       "platform": "youtube",
@@ -1638,7 +1675,7 @@
       },
       "basis": "reach",
       "value": 4.0,
-      "relative": 0.889
+      "relative": 1.0
     },
     {
       "platform": "linkedin",
@@ -1838,7 +1875,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.111
+      "relative": 1.25
     },
     {
       "platform": "youtube",
@@ -2266,7 +2303,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.444
+      "relative": 0.5
     },
     {
       "platform": "instagram",
@@ -2637,7 +2674,7 @@
       },
       "basis": "reach",
       "value": 1.0,
-      "relative": 0.222
+      "relative": 0.25
     },
     {
       "platform": "instagram",
@@ -2908,7 +2945,7 @@
       },
       "basis": "reach",
       "value": 7.0,
-      "relative": 1.556
+      "relative": 1.75
     },
     {
       "platform": "instagram",
@@ -3120,11 +3157,14 @@
       "attention_mechanism": "specificity",
       "product": "purica",
       "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
+      "window": "7d",
+      "metrics": {
+        "likes": 0,
+        "comments": 0
+      },
+      "basis": "engagement",
+      "value": 0.0,
+      "relative": 1.0
     },
     {
       "platform": "facebook",
@@ -3244,11 +3284,14 @@
       "attention_mechanism": "curiosity_gap",
       "product": "Purica",
       "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
+      "window": "7d",
+      "metrics": {
+        "likes": 1,
+        "comments": 0
+      },
+      "basis": "engagement",
+      "value": 1.0,
+      "relative": 2.0
     },
     {
       "platform": "instagram",
@@ -3693,11 +3736,14 @@
       "attention_mechanism": "specificity",
       "product": "Bold",
       "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
+      "window": "7d",
+      "metrics": {
+        "likes": 0,
+        "comments": 0
+      },
+      "basis": "engagement",
+      "value": 0.0,
+      "relative": 1.0
     },
     {
       "platform": "facebook",
@@ -3778,7 +3824,7 @@
       },
       "basis": "reach",
       "value": 14.0,
-      "relative": 3.111
+      "relative": 3.5
     },
     {
       "platform": "instagram",
@@ -3938,7 +3984,7 @@
       },
       "basis": "reach",
       "value": 41.0,
-      "relative": 9.111
+      "relative": 10.25
     },
     {
       "platform": "instagram",
@@ -4044,7 +4090,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": null
+      "relative": 0.625
     },
     {
       "platform": "instagram",
@@ -4150,7 +4196,7 @@
       },
       "basis": "reach",
       "value": 27.0,
-      "relative": 6.0
+      "relative": 6.75
     },
     {
       "platform": "youtube",
@@ -4171,7 +4217,7 @@
       },
       "basis": "reach",
       "value": 8.0,
-      "relative": null
+      "relative": 1.0
     },
     {
       "platform": "instagram",
@@ -4315,11 +4361,13 @@
       "attention_mechanism": "",
       "product": "Bold",
       "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
+      "window": "72h",
+      "metrics": {
+        "views": 428
+      },
+      "basis": "reach",
+      "value": 428.0,
+      "relative": 53.5
     },
     {
       "platform": "linkedin",
@@ -4419,16 +4467,16 @@
       "attention_mechanism": "",
       "product": "bold",
       "editorial_score": null,
-      "window": "24h",
+      "window": "72h",
       "metrics": {
-        "views": 1,
+        "views": 3,
         "likes": 0,
         "comments": 0,
         "shares": 0
       },
       "basis": "reach",
-      "value": 1.0,
-      "relative": null
+      "value": 3.0,
+      "relative": 0.75
     },
     {
       "platform": "facebook",

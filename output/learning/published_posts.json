@@ -8067,7 +8067,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -8199,7 +8200,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -8228,7 +8230,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -8257,7 +8260,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -8278,8 +8282,18 @@
     "format": "reel",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeLife #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeBrewing #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #BangaloreCoffee",
     "published_at": "2026-11-07T16:58:30",
-    "insights_recorded": false,
-    "measurement_snapshots": [],
+    "insights_recorded": true,
+    "measurement_snapshots": [
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-17T13:48:23",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1,
       "72h": 1
@@ -8346,7 +8360,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -8498,8 +8513,18 @@
     "format": "carousel",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #MorningRoutine #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #FrenchPress #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #IndiaFood",
     "published_at": "2026-11-08T06:51:46",
-    "insights_recorded": false,
-    "measurement_snapshots": [],
+    "insights_recorded": true,
+    "measurement_snapshots": [
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-17T13:48:23",
+        "metrics": {
+          "likes": 1,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1
     },
@@ -9293,8 +9318,18 @@
     "format": "reel",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeArt #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeRoasters #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #MadeInIndiaProducts",
     "published_at": "2026-11-10T16:36:51",
-    "insights_recorded": false,
-    "measurement_snapshots": [],
+    "insights_recorded": true,
+    "measurement_snapshots": [
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-17T13:48:23",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {
       "24h": 1,
       "72h": 1
@@ -9774,7 +9809,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -9942,7 +9978,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -10273,7 +10310,18 @@
     "hashtags": "purity beans premium instant coffee agglomerated coffee coffee without preservatives instant coffee india Purity Beans instant coffee gourmet instant coffee indian coffee brand",
     "published_at": "2026-11-14T06:54:00",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-17T13:48:25+00:00",
+        "actual_age_hours": 78.91,
+        "metrics": {
+          "views": 428
+        },
+        "source": "youtube_native_api"
+      }
+    ],
     "fetch_attempts_by_window": {
       "72h": 1
     },
@@ -10459,6 +10507,19 @@
         "actual_age_hours": 46.58,
         "metrics": {
           "views": 1,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      },
+      {
+        "window": "72h",
+        "target_hours": 72,
+        "measured_at": "2026-11-17T13:48:25+00:00",
+        "actual_age_hours": 77.02,
+        "metrics": {
+          "views": 3,
           "likes": 0,
           "comments": 0,
           "shares": 0

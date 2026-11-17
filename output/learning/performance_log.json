@@ -883,7 +883,7 @@
     "asset_id": "threads_day317",
     "track": "conversation",
     "platform": "threads",
-    "observation_window": "24h",
+    "observation_window": "72h",
     "publication_id": "18451701940122376",
     "kpi": "",
     "policy_version": "",
@@ -898,14 +898,14 @@
     "decision_version": null,
     "audio_category": "",
     "posted_at": "2026-11-14T08:47:23",
-    "recorded_at": "2026-11-16T07:22:03",
+    "recorded_at": "2026-11-17T13:48:25",
     "metrics": {
-      "views": 1,
+      "views": 3,
       "likes": 0,
       "comments": 0,
       "shares": 0
     },
-    "notes": "auto-recorded from 24h threads native API observation"
+    "notes": "auto-recorded from 72h threads native API observation"
   },
   {
     "asset_id": "youtube_day316",
@@ -1550,5 +1550,108 @@
       "comments": 0
     },
     "notes": "auto-recorded from 7d Instagram measurement window"
+  },
+  {
+    "asset_id": "instagram_evening_day313",
+    "track": "brand",
+    "platform": "instagram",
+    "observation_window": "7d",
+    "publication_id": "18119381476824010",
+    "kpi": "",
+    "policy_version": "",
+    "hook": "I read the ingredient panel so you don't have to: one of these jars is freeze-dried pure Arabica and the other is agglom",
+    "topic": "Engagement Growth",
+    "format": "reel",
+    "attention_mechanism": "specificity",
+    "scroller_state": "skeptical",
+    "psychology_frame": "revelation",
+    "hook_strategy": "negation",
+    "payoff_type": "useful_test",
+    "decision_version": "1.0.0",
+    "audio_category": "",
+    "posted_at": "2026-11-10T16:36:51",
+    "recorded_at": "2026-11-17T13:48:24",
+    "metrics": {
+      "likes": 0,
+      "comments": 0
+    },
+    "notes": "auto-recorded from 7d Instagram measurement window"
+  },
+  {
+    "asset_id": "instagram_morning_day311",
+    "track": "brand",
+    "platform": "instagram",
+    "observation_window": "7d",
+    "publication_id": "18103351715432876",
+    "kpi": "",
+    "policy_version": "",
+    "hook": "How to find your spoon in three mornings",
+    "topic": "Follower Growth",
+    "format": "carousel",
+    "attention_mechanism": "curiosity_gap",
+    "scroller_state": "curious",
+    "psychology_frame": "revelation",
+    "hook_strategy": "question",
+    "payoff_type": "useful_test",
+    "decision_version": "1.0.0",
+    "audio_category": "",
+    "posted_at": "2026-11-08T06:51:46",
+    "recorded_at": "2026-11-17T13:48:25",
+    "metrics": {
+      "likes": 1,
+      "comments": 0
+    },
+    "notes": "auto-recorded from 7d Instagram measurement window"
+  },
+  {
+    "asset_id": "instagram_evening_day310",
+    "track": "brand",
+    "platform": "instagram",
+    "observation_window": "7d",
+    "publication_id": "18111546227181658",
+    "kpi": "",
+    "policy_version": "",
+    "hook": "I read the ingredient panel of five office coffee jars so you don't have to.",
+    "topic": "Follower Growth",
+    "format": "reel",
+    "attention_mechanism": "specificity",
+    "scroller_state": "skeptical",
+    "psychology_frame": "revelation",
+    "hook_strategy": "negation",
+    "payoff_type": "useful_test",
+    "decision_version": "1.0.0",
+    "audio_category": "",
+    "posted_at": "2026-11-07T16:58:30",
+    "recorded_at": "2026-11-17T13:48:25",
+    "metrics": {
+      "likes": 0,
+      "comments": 0
+    },
+    "notes": "auto-recorded from 7d Instagram measurement window"
+  },
+  {
+    "asset_id": "youtube_day317",
+    "track": "discovery",
+    "platform": "youtube",
+    "observation_window": "72h",
+    "publication_id": "ZOT4IVaJObU",
+    "kpi": "",
+    "policy_version": "",
+    "hook": "The coffee mistake almost every Indian kitchen makes",
+    "topic": "youtube_short",
+    "format": "yt_short",
+    "attention_mechanism": null,
+    "scroller_state": null,
+    "psychology_frame": null,
+    "hook_strategy": null,
+    "payoff_type": null,
+    "decision_version": null,
+    "audio_category": "",
+    "posted_at": "2026-11-14T06:54:00",
+    "recorded_at": "2026-11-17T13:48:27",
+    "metrics": {
+      "views": 428
+    },
+    "notes": "auto-recorded from 72h youtube native API observation"
   }
 ]
