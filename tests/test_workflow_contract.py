@@ -121,6 +121,9 @@ _PUBLISHING_STEPS = (
 )
 
 _LLM_PROBE_ENV = {
+    # xAI (Grok), the main writer and scorer since 17 Nov 2026.
+    "XAI_API_KEY": "${{ secrets.XAI_API_KEY }}",
+    "GROK_API_KEY": "${{ secrets.GROK_API_KEY }}",
     "NVIDIA_API_KEY": "${{ secrets.NVIDIA_API_KEY }}",
     "NVIDIA_MODEL": "${{ secrets.NVIDIA_MODEL }}",
     "GEMINI_API_KEY": "${{ secrets.GEMINI_API_KEY }}",

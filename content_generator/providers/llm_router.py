@@ -1,8 +1,10 @@
 """
 LLM router — circuit breaker, rate limiter, retry, cost tracking.
 
-Call order: Gemini → Groq → Cerebras → OpenRouter(:free) → GitHub Models →
-Mistral → Cloudflare Workers AI → Hugging Face → DeepSeek → NVIDIA (last).
+Call order: xAI (Grok, main writer and scorer since 17 Nov 2026) → Gemini → Groq →
+Cerebras → OpenRouter(:free) → Mistral → Cloudflare Workers AI → Hugging Face →
+DeepSeek → NVIDIA (last). GitHub Models was retired on 30 Jul 2026 and is not in
+the chain (only reachable by naming it in LLM_PROVIDER_ORDER).
 LLM_PROVIDER_ORDER overrides. Missing keys are skipped; failover is quick.
 Each provider has an independent circuit breaker: after 3 consecutive failures
 it is disabled for 15 minutes before being retried.
@@ -16,7 +18,7 @@ from threading import Semaphore, Lock
 from dataclasses import dataclass, field
 
 from content_generator.providers import gemini, groq, openrouter, deepseek, cerebras, nvidia, ollama
-from content_generator.providers import github_models, mistral, cloudflare, huggingface
+from content_generator.providers import github_models, mistral, cloudflare, huggingface, xai
 from content_generator.parsers.json_parser import extract
 
 logger = logging.getLogger(__name__)
@@ -79,6 +81,7 @@ class _ProviderState:
 
 
 _STATES = {
+    "xai": _ProviderState("xai"),
     "ollama": _ProviderState("ollama"),
     "nvidia": _ProviderState("nvidia"),
     "gemini": _ProviderState("gemini"),
@@ -152,6 +155,7 @@ def _record_usage(label: str, provider: str, usage: dict) -> None:
 
 
 _ALL_PROVIDERS = {
+    "xai": xai.call,
     "gemini": gemini.call,
     "nvidia": nvidia.call,
     "groq": groq.call,
@@ -167,8 +171,11 @@ _ALL_PROVIDERS = {
 # answered in ~3s on day 286 while NVIDIA timed out or returned empty. NVIDIA is
 # last. Providers without a key return (None, {}) and are skipped instantly.
 # LLM_PROVIDER_ORDER="a,b,..." overrides; unnamed providers keep this order after it.
+# xAI first (owner, 17 Nov 2026): the paid Grok key is the main writer and
+# scorer; on 429/5xx the router falls through to the free chain below.
+# GitHub Models is left out: it was retired on 30 Jul 2026 (HTTP 200 "OK").
 _DEFAULT_ORDER = (
-    "gemini", "groq", "cerebras", "openrouter", "github_models",
+    "xai", "gemini", "groq", "cerebras", "openrouter",
     "mistral", "cloudflare", "huggingface", "deepseek", "nvidia",
 )
 
@@ -186,6 +193,7 @@ def _provider_order() -> list:
 _PROVIDERS = _provider_order()
 
 _KEY_GETTERS = (
+    ("xai", xai.get_key),
     ("ollama", ollama.get_key),
     ("nvidia", nvidia.get_key),
     ("groq", groq.get_key),

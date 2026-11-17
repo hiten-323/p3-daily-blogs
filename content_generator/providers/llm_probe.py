@@ -13,7 +13,7 @@ import logging
 import requests
 
 from content_generator.providers import cerebras, deepseek, gemini, groq, nvidia, openrouter
-from content_generator.providers import cloudflare, github_models, huggingface, mistral
+from content_generator.providers import cloudflare, github_models, huggingface, mistral, xai
 from content_generator.providers.llm_router import _KEY_GETTERS, _redact
 from content_generator.rotation import WEBSITE_URL
 
@@ -84,6 +84,7 @@ def _openai_chat(
     extra_headers: dict | None = None,
     *,
     reject_empty: bool = True,
+    max_tokens: int = _MAX_TOKENS,
 ) -> str:
     if not key or not model:
         return "skipped"
@@ -100,7 +101,7 @@ def _openai_chat(
             "model": model,
             "messages": [{"role": "user", "content": _PROMPT}],
             "temperature": 0,
-            "max_tokens": _MAX_TOKENS,
+            "max_tokens": max_tokens,
         },
         key=key,
         reject_empty=reject_empty,
@@ -163,6 +164,8 @@ def _nvidia_chat() -> str:
 def probe_results() -> list[tuple[str, str]]:
     """One tiny chat call per provider. Missing keys are skipped, not errors."""
     return [
+        # Grok 4.x reasons first; 16 tokens can be all reasoning and no answer.
+        ("xai", _openai_chat(xai._URL, xai.get_key(), _first_model(xai.MODELS), max_tokens=1024)),
         ("nvidia", _nvidia_chat()),
         ("groq", _openai_chat(groq._URL, groq.get_key(), _first_model(groq.MODELS))),
         ("gemini", _gemini_chat(gemini.get_key())),
@@ -191,6 +194,8 @@ def main() -> int:
     present = [name for name, getter in _KEY_GETTERS if getter()]
     summary = "providers with keys: " + (", ".join(present) if present else "(none)")
     print(summary)
+    # Env var NAME only (never the value), so the owner can see which secret is wired.
+    print("xai key source: " + (xai.key_source() or "(none: add repo secret XAI_API_KEY)"))
     logger.info("[llm] %s", summary)
     rows = probe_results()
     for name, status in rows:

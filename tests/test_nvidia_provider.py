@@ -35,9 +35,9 @@ def _clean_router():
     router.reset_cascade_log()
 
 
-def test_provider_order_free_first_nvidia_last():
+def test_provider_order_xai_first_free_next_nvidia_last():
     names = [name for name, _fn in router._PROVIDERS]
-    assert names == ["gemini", "groq", "cerebras", "openrouter", "github_models",
+    assert names == ["xai", "gemini", "groq", "cerebras", "openrouter",
                      "mistral", "cloudflare", "huggingface", "deepseek", "nvidia"]
 
 
