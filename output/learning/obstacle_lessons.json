@@ -32559,6 +32559,34 @@
       "reason": "15-16 Nov: the repo variable PUBLISHING_ENABLED stayed false (the box token cannot read or set it), so generated pieces were never published on any platform despite the owner wanting daily posting.",
       "stage": "publish",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "GitHub Models was retired on 30 Jul 2026; don't re-add it.",
+      "first_seen": "2026-11-17",
+      "fix": "Removed github_models from the default provider chain, the LinkedIn route and the free-quota table. The module stays only so an old OK placeholder is recognised; it is reachable only by naming it in LLM_PROVIDER_ORDER. Do not wire it back as a fallback.",
+      "gate": "llm_provider",
+      "id": "all|llm_provider|llm_provider|GitHub Models was retired on 30 Jul 2026; don't re-add it",
+      "label": "llm_provider",
+      "last_seen": "2026-11-17",
+      "platform": "all",
+      "reason": "17 Nov: asked to add GitHub Models as a free fallback. docs.github.com says it was fully retired on 30 Jul 2026, and models.github.ai/inference/chat/completions answers HTTP 200 with plaintext OK, which is not a completion.",
+      "stage": "generate",
+      "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "Owner (17 Nov): use the existing xAI Grok API key as the MAIN writer and scorer. xAI is not Groq.",
+      "first_seen": "2026-11-17",
+      "fix": "New provider content_generator/providers/xai.py (https://api.x.ai/v1/chat/completions, models grok-4.7 then grok-4.3, key XAI_API_KEY with GROK_API_KEY alias). xAI leads the default chain and every route (primary_providers keeps it first after a per-minute 429); each call falls through to the free chain on 429/5xx. Copy, rewrites, editorial and viral scorers all go through llm_router, so all use it. Workflows pass both secret names to the generation, probe, retry and recovery steps. Thresholds (8.0 visual, 9.0 viral), claim rules and UTM are unchanged.",
+      "gate": "llm_provider",
+      "id": "all|llm_provider|llm_provider|free LLM quotas exhausted; xAI Grok made the main writer and scorer",
+      "label": "llm_provider",
+      "last_seen": "2026-11-17",
+      "platform": "all",
+      "reason": "16-17 Nov: Cerebras and Hugging Face returned 402, OpenRouter hit its free daily cap, Gemini returned 503s and GitHub Models was retired, so rewrites and scoring fell to slow NVIDIA and nothing reached the 9.0 viral bar.",
+      "stage": "generate",
+      "status": "fixed"
     }
   ],
   "version": 1

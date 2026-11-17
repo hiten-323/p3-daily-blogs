@@ -184,7 +184,12 @@ def order_for(label: str, base_order: list[str]) -> list[str]:
     start = routes.get(platform_for_label(label), routes.get("default", "auto"))
     starts = [start] if isinstance(start, str) else list(start or [])
     starts = [s for s in starts if s != "auto" and s in base_order]
-    healthy = [n for n in base_order if not near_limit(n, cfg)]
+    # Primary providers (paid xAI, owner 17 Nov 2026) keep their place at the
+    # front even after a 429: a paid per-minute limit is not a spent free daily
+    # quota. The router's circuit breaker still skips them for a cooldown after
+    # repeated 429s, and each call falls through to the next provider on 429/5xx.
+    primary = [p for p in (cfg.get("primary_providers") or []) if p in base_order]
+    healthy = [n for n in base_order if n in primary or not near_limit(n, cfg)]
     tired = [n for n in base_order if n not in healthy]
     rest = sorted((n for n in healthy if n not in starts),
                   key=lambda n: (-round(headroom(n, cfg), 2), base_order.index(n)))
