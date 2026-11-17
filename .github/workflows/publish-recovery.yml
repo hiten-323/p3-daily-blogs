@@ -87,6 +87,10 @@ jobs:
         env:
           FORCE_SLOT: generate
           ENABLE_TIMED_SLOTS: "true"
+          # xAI (Grok) is the main writer and scorer (owner, 17 Nov 2026), for any
+          # copy check or rewrite reached from recovery; GROK_API_KEY is an alias.
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
           WEBSITE_URL: https://p3online.in
           INSTAGRAM_ACCOUNT_ID: ${{ steps.meta_preflight.outputs.instagram_account_id || secrets.INSTAGRAM_ACCOUNT_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}

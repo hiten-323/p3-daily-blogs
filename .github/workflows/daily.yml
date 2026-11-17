@@ -128,6 +128,9 @@ jobs:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           NVIDIA_MODEL: ${{ secrets.NVIDIA_MODEL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # xAI (Grok) is the main writer and scorer (owner, 17 Nov 2026); GROK_API_KEY is an accepted alias.
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_TOKEN }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
@@ -216,6 +219,9 @@ jobs:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           NVIDIA_MODEL: ${{ secrets.NVIDIA_MODEL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # xAI (Grok) is the main writer and scorer (owner, 17 Nov 2026); GROK_API_KEY is an accepted alias.
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_TOKEN }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
