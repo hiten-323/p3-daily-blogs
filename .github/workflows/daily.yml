@@ -58,27 +58,6 @@ jobs:
       models: read
       actions: write
     steps:
-      - name: TEMP secret-name presence check (names only, never values)
-        env:
-          C_XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
-          C_GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
-          C_XAI_KEY: ${{ secrets.XAI_KEY }}
-          C_GROK_KEY: ${{ secrets.GROK_KEY }}
-          C_X_AI_API_KEY: ${{ secrets.X_AI_API_KEY }}
-          C_XAI_TOKEN: ${{ secrets.XAI_TOKEN }}
-          C_XAI_API_TOKEN: ${{ secrets.XAI_API_TOKEN }}
-          C_GROK_API_TOKEN: ${{ secrets.GROK_API_TOKEN }}
-          C_GROK_TOKEN: ${{ secrets.GROK_TOKEN }}
-          C_XAI: ${{ secrets.XAI }}
-          C_GROK: ${{ secrets.GROK }}
-          C_XAI_SECRET: ${{ secrets.XAI_SECRET }}
-          C_GROK_SECRET: ${{ secrets.GROK_SECRET }}
-          C_XAI_GROK_API_KEY: ${{ secrets.XAI_GROK_API_KEY }}
-          C_GROK_XAI_API_KEY: ${{ secrets.GROK_XAI_API_KEY }}
-        run: |
-          for v in $(env | cut -d= -f1 | grep '^C_' | sort); do
-            if [ -n "${!v}" ]; then echo "SET   ${v#C_}"; else echo "unset ${v#C_}"; fi
-          done
       - name: Checkout latest main after concurrency queue
         uses: actions/checkout@v6
         with:
