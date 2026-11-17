@@ -35,8 +35,16 @@ TARGETS = {
     "youtube":     ("generate", ("youtube",), ("yt_short",), 6),
     "threads":     ("generate", ("threads",), ("threads_post",), 6),
     "blog":        ("generate", ("blog",), ("blog_post",), 6),
+    "evening_fb":  ("evening", ("facebook",), ("growth_reel_fb", "reel_1"), 21),
+    "evening_youtube": ("evening", ("youtube",), ("evening_yt_short", "yt_short"), 21),
 }
-PIECE_ASSET = {"carousel": "carousel", "reel_1": "reel_1", "growth_reel": "growth_reel"}
+PIECE_ASSET = {
+    "carousel": "carousel",
+    "reel_1": "reel_1",
+    "growth_reel": "growth_reel",
+    "evening_fb": "growth_reel_fb",
+    "evening_youtube": "evening_yt_short",
+}
 LEGACY_BARE_ASSET = frozenset({"reel_1"})
 REEL_TARGETS = ("growth_reel", "reel_1")
 # Reels owned by the evening slot: prewarmed before it, backstopped after midnight.

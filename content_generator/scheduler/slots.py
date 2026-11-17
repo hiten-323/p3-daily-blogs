@@ -466,7 +466,8 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
                          {"instagram": [asset], "facebook": [asset]})
 
     if slot == "evening":
-        # reel_1 only — 21:53 IST. growth_reel posts in the morning; reel_2 is retired.
+        # Evening growth triad (Instagram, Facebook, YouTube Shorts) — 21:53 IST.
+        # reel_1 for Instagram, dedicated growth_reel_fb for Facebook, evening_yt_short for YouTube Shorts.
         from content_generator.core.editorial_engine import approved_assets
         approved = approved_assets(content)
         out = _publish_slot_reel(slot, day, content, approved, slot_date, only_asset)
@@ -474,11 +475,38 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
             return out["contract"]
         chosen, result, fb_result, ig_paused = out["chosen"], out["result"], out["fb_result"], out["ig_paused"]
         _attach_sales_push(result, content, slot, day)
-        if ig_paused:
-            return _contract(slot, day, content, {"facebook": fb_result}, {"facebook": [chosen]})
-        return _contract(slot, day, content,
-                         {"instagram": result, "facebook": fb_result},
-                         {"instagram": [chosen], "facebook": [chosen]})
+
+        # Evening YouTube Shorts growth reel (if YouTube is configured)
+        yt_result = {"success": True, "skipped": True}
+        try:
+            from content_generator.publisher.youtube import is_configured as yt_ready, post_content as yt_post
+            if yt_ready() and (not only_asset or only_asset in ("evening_yt_short", "yt_short")):
+                yt_piece = approved.get("evening_yt_short") or approved.get("yt_short")
+                if yt_piece:
+                    logger.info("[slots] publishing evening YouTube Shorts growth reel")
+                    from content_generator.publisher.publishing_ledger import publish_with_ledger
+                    yt_content = dict(content)
+                    yt_asset_name = "evening_yt_short" if "evening_yt_short" in approved else "yt_short"
+                    yt_content["yt_short"] = yt_piece
+                    yt_result = publish_with_ledger(
+                        "youtube", yt_content, slot, day,
+                        lambda: yt_post(yt_content, day=day),
+                        asset=yt_asset_name,
+                    )
+        except Exception as yt_exc:
+            logger.warning("[slots] evening YouTube Shorts publish skipped or failed: %s", yt_exc)
+            yt_result = {"success": False, "error": str(yt_exc)}
+
+        contract_results = {"facebook": fb_result}
+        expected_assets = {"facebook": ["growth_reel_fb" if "growth_reel_fb" in approved else chosen]}
+        if not ig_paused:
+            contract_results["instagram"] = result
+            expected_assets["instagram"] = [chosen]
+        if yt_result.get("success") and not yt_result.get("skipped"):
+            contract_results["youtube"] = yt_result
+            expected_assets["youtube"] = ["evening_yt_short" if "evening_yt_short" in approved else "yt_short"]
+
+        return _contract(slot, day, content, contract_results, expected_assets)
 
     return {"slot": slot, "success": False, "error": f"unknown_slot_{slot}"}
 
@@ -646,11 +674,23 @@ def _publish_slot_reel(slot: str, day: int, content: dict, approved: dict, slot_
                 mirror_piece=reel, mirror_label=chosen,
             )
     elif mirror_facebook:
-        fb_result = _mirror_to_facebook(
-            content, day, slot, message=caption,
-            mirror_piece=reel, mirror_label=chosen,
-            video_path=video_path if 'video_path' in locals() else None,
-        )
+        fb_growth = approved.get("growth_reel_fb") if isinstance(approved, dict) else None
+        if fb_growth and isinstance(fb_growth, dict):
+            fb_body = str(fb_growth.get("caption") or fb_growth.get("body") or caption).strip()
+            fb_question = str(fb_growth.get("community_question") or "").strip()
+            if fb_question and fb_question not in fb_body:
+                fb_body = f"{fb_body}\n\n{fb_question}"
+            fb_result = _mirror_to_facebook(
+                content, day, slot, message=fb_body,
+                mirror_piece=fb_growth, mirror_label="growth_reel_fb",
+                video_path=video_path if 'video_path' in locals() else None,
+            )
+        else:
+            fb_result = _mirror_to_facebook(
+                content, day, slot, message=caption,
+                mirror_piece=reel, mirror_label=chosen,
+                video_path=video_path if 'video_path' in locals() else None,
+            )
     else:
         fb_result = {"success": True, "skipped": True, "error": ""}
 

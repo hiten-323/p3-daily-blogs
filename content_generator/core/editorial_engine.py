@@ -399,7 +399,35 @@ def get_valid_assets(content: dict) -> list[str]:
                     logger.warning("[editorial] %s REJECTED by brand validation: %s", "yt_short", _brand_errs)
         except Exception as e:
             logger.warning("[editorial] yt_short validation failed: %s", e)
-        
+
+    # 8. Dedicated Evening Platform Growth Reels
+    growth_fb = content.get("growth_reel_fb") or {}
+    if isinstance(growth_fb, dict) and growth_fb and has_copy(growth_fb, "hook", "chosen_hook", "caption", "body"):
+        try:
+            ensure_structural_fields(growth_fb, "growth_reel_fb")
+            is_brand_ok, _brand_errs = validate_asset("growth_reel_fb", growth_fb, _governance)
+            if is_brand_ok:
+                _editorial_ok("growth_reel_fb", growth_fb)
+                valid.append("growth_reel_fb")
+            else:
+                logger.warning("[editorial] growth_reel_fb REJECTED by brand validation: %s", _brand_errs)
+        except Exception as e:
+            logger.warning("[editorial] growth_reel_fb validation failed: %s", e)
+
+    evening_yt = content.get("evening_yt_short") or {}
+    if isinstance(evening_yt, dict) and evening_yt and has_copy(evening_yt, "hook", "chosen_hook", "tagline", "title"):
+        try:
+            ensure_structural_fields(evening_yt, "evening_yt_short")
+            validate_or_fail(YoutubeShortSchema, evening_yt)
+            is_brand_ok, _brand_errs = validate_asset("evening_yt_short", evening_yt, _governance)
+            if is_brand_ok:
+                _editorial_ok("evening_yt_short", evening_yt)
+                valid.append("evening_yt_short")
+            else:
+                logger.warning("[editorial] evening_yt_short REJECTED by brand validation: %s", _brand_errs)
+        except Exception as e:
+            logger.warning("[editorial] evening_yt_short validation failed: %s", e)
+
     return _apply_growth_director_gates(content, valid)
 
 
