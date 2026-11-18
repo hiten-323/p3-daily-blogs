@@ -145,12 +145,15 @@ def test_deletions_and_prune_reach_the_branch(tmp_path, origin, monkeypatch):
     _write(work, "output/creative/old_2026-11-01.jpg", "img")
     _write(work, "output/creative/.jar_provenance.lock", "x")
     assert engine_state.save("s", Path("."))
+    # save() pushes through a detached worktree; refresh this clone's remote-tracking ref before inspecting it.
+    _git(work, "fetch", "-q", "origin", "engine-state")
     files = _git(work, "ls-tree", "-r", "--name-only", "origin/engine-state")
     assert "output/creative/old_2026-11-01.jpg" not in files  # pruned (older than yesterday)
     assert ".jar_provenance.lock" not in files
     engine_state.load(Path("."))
     (work / "output/creative/reel_2026-11-16.jpg").unlink()
     assert engine_state.save("d", Path("."))
+    _git(work, "fetch", "-q", "origin", "engine-state")
     files = _git(work, "ls-tree", "-r", "--name-only", "origin/engine-state")
     assert "output/creative/reel_2026-11-16.jpg" not in files
 
