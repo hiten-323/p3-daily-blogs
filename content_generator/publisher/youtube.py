@@ -322,13 +322,13 @@ def _extract_description(content: dict) -> str:
         scenes = yt.get("scenes") or []
         if isinstance(scenes, list) and scenes:
             spoken_lines = [s.get("spoken") for s in scenes if isinstance(s, dict) and s.get("spoken")]
-            cta = str(yt.get("cta") or "Subscribe for pure coffee truths. Explore pure jars at https://p3online.in")
+            cta = str(yt.get("cta") or "Subscribe for pure coffee truths. Explore pure jars at https://p3online.in?utm_source=youtube&utm_medium=post&utm_campaign=202610")
             parts = [
                 str(yt.get("hook") or ""),
                 "\n".join(spoken_lines),
                 cta,
                 "\nPurity Beans — instant coffee in lead-free glass jars.",
-                "Shop: https://p3online.in",
+                "Shop: https://p3online.in?utm_source=youtube&utm_medium=post&utm_campaign=202610",
             ]
             return "\n".join(p for p in parts if p)[:5000]
 
@@ -341,10 +341,10 @@ def _extract_description(content: dict) -> str:
             str(reel.get("cta") or ""),
             "",
             "Purity Beans — instant coffee in lead-free glass jars.",
-            "Shop: https://p3online.in",
+            "Shop: https://p3online.in?utm_source=youtube&utm_medium=post&utm_campaign=202610",
         ]
         return "\n".join(p for p in parts if p)[:5000]
-    return "Purity Beans — pure instant coffee. Zero chicory. Shop at https://p3online.in"
+    return "Purity Beans — pure instant coffee. Zero chicory. Shop at https://p3online.in?utm_source=youtube&utm_medium=post&utm_campaign=202610"
 
 
 def _build_tags(content: dict) -> list[str]:

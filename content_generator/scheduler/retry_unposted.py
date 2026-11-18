@@ -1,8 +1,14 @@
 """Self-resuming retry. Each reel, the carousel, and the YouTube Short are separate targets.
 
+Two reels a day, spread across the day (owner, 2 Nov 2026; core/reel_schedule):
+growth_reel is a MORNING target (due 10:00-18:00 IST), reel_1 is the EVENING
+target (regenerates from 10:00 IST, publishes once the 21:53 slot has passed),
+and reel_2 is retired, so it is never due, regenerated or published. A run
+never publishes both reels.
+
 A legacy ledger row with no asset still clears single-platform targets and reel_1.
-It does not clear carousel, reel_2, or growth_reel. Reels regenerate from 10:00 IST
-and publish at 22:00. The 8.0 gates stay. Blog stays off unless BLOG_ENABLED.
+It does not clear carousel or growth_reel. The 8.0 gates stay.
+Blog stays off unless BLOG_ENABLED.
 """
 from __future__ import annotations
 
@@ -14,23 +20,28 @@ import re
 log = logging.getLogger(__name__)
 
 # target -> (slot, ledger platforms, labels, earliest IST hour)
-_EVENING_PLATFORMS = ("instagram_reel", "instagram_video", "instagram")
+from content_generator.core.reel_schedule import (  # noqa: E402
+    REEL_PLATFORMS as _REEL_PLATFORMS, REEL_SLOT, reel_window_open,
+)
+_EVENING_PLATFORMS = _REEL_PLATFORMS
 TARGETS = {
     "ig_feed":     ("morning", ("instagram",), ("instagram_post",), 10),
     "carousel":    ("morning", ("instagram",), ("carousel",), 10),
     "ig_story":    ("morning", ("instagram_story",), ("carousel", "instagram_post"), 10),
     "facebook":    ("morning", ("facebook",), ("facebook_post",), 10),
-    "reel_1":      ("evening", _EVENING_PLATFORMS, ("reel_1",), 10),
-    "reel_2":      ("evening", _EVENING_PLATFORMS, ("reel_2",), 10),
-    "growth_reel": ("evening", _EVENING_PLATFORMS, ("growth_reel",), 10),
+    "reel_1":      (REEL_SLOT["reel_1"], _REEL_PLATFORMS, ("reel_1",), 10),
+    "growth_reel": (REEL_SLOT["growth_reel"], _REEL_PLATFORMS, ("growth_reel",), 10),
     "linkedin":    ("generate", ("linkedin",), ("linkedin_post",), 6),
     "youtube":     ("generate", ("youtube",), ("yt_short",), 6),
     "threads":     ("generate", ("threads",), ("threads_post",), 6),
     "blog":        ("generate", ("blog",), ("blog_post",), 6),
 }
-PIECE_ASSET = {"carousel": "carousel", "reel_1": "reel_1", "reel_2": "reel_2", "growth_reel": "growth_reel"}
+PIECE_ASSET = {"carousel": "carousel", "reel_1": "reel_1", "growth_reel": "growth_reel"}
 LEGACY_BARE_ASSET = frozenset({"reel_1"})
-REEL_TARGETS = ("reel_1", "reel_2", "growth_reel")
+REEL_TARGETS = ("growth_reel", "reel_1")
+# Reels owned by the evening slot: prewarmed before it, backstopped after midnight.
+EVENING_REEL_TARGETS = tuple(t for t in REEL_TARGETS if REEL_SLOT.get(t) == "evening")
+INSTAGRAM_TARGETS = frozenset({"ig_feed", "carousel", "ig_story", "reel_1", "growth_reel"})
 MANDATORY_SLOTS = ("morning", "evening")
 MANDATORY_BUDGET_S = int(os.getenv("MANDATORY_REGEN_BUDGET_S", "2400"))
 _RATE = re.compile(r"429|rate.?limit|too many|throttl|quota", re.I)
@@ -46,9 +57,13 @@ def _posted_states():
 def active_targets() -> dict:
     """TARGETS with blog removed when BLOG_ENABLED is off (Blogs bot owns it)."""
     from content_generator.core.blog_flags import blog_enabled
-    if blog_enabled():
-        return dict(TARGETS)
-    return {k: v for k, v in TARGETS.items() if k != "blog"}
+    from content_generator.core.instagram_pause import instagram_paused
+    targets = dict(TARGETS) if blog_enabled() else {k: v for k, v in TARGETS.items() if k != "blog"}
+    if instagram_paused():
+        # Owner kill switch: Instagram pieces are not due, not retried, and do
+        # not keep the self-resume chain alive. Facebook/LinkedIn/YouTube/Threads stay.
+        targets = {k: v for k, v in targets.items() if k not in INSTAGRAM_TARGETS}
+    return targets
 
 
 def records_for_date(date: str) -> list[dict]:
@@ -60,8 +75,60 @@ def records_for_date(date: str) -> list[dict]:
 
 
 def evening_backstop_wait(now_ist: dt.datetime) -> bool:
-    """True before 22:15 IST, while the scheduled evening slot should run."""
+    """True before 22:15 IST, the old window when the cron alone owned every reel.
+
+    Kept so callers can still name that window. publish_plan does not use it:
+    the cron publishes one reel, and deleting reel_1, reel_2, and growth_reel
+    from the retry left them unattempted when that cron did not run.
+    """
     return now_ist.hour == 22 and now_ist.minute < 15
+
+
+def _evening_clock() -> tuple[int, int]:
+    from content_generator.core.slot_registry import SLOTS_BY_ID
+    hour, minute = (int(part) for part in SLOTS_BY_ID["evening"]["ist"].split(":"))
+    return hour, minute
+
+
+def prewarm_targets(missing: list[str], ist_hour: int, ist_minute: int, *,
+                    override: bool = False, only: set | None = None) -> set[str]:
+    """Reels regenerate before the evening slot. They publish once that slot is due."""
+    if override or only is not None:
+        return set()
+    hour, minute = _evening_clock()
+    if (ist_hour, ist_minute) >= (hour, minute):
+        return set()
+    return {t for t in missing if t in EVENING_REEL_TARGETS}
+
+
+def slots_for_targets(todo: list[str], prewarm: set[str], approved: dict) -> set[str]:
+    approved = approved or {}
+    return {
+        TARGETS[t][0] for t in todo
+        if t in TARGETS and t not in prewarm and any(label in approved for label in TARGETS[t][2])
+    }
+
+
+def evening_assets_due(todo: list[str], prewarm: set[str]) -> list[str]:
+    """The evening slot's own reel (reel_1) when due. growth_reel is a morning target."""
+    return [name for name in EVENING_REEL_TARGETS if name in todo and name not in prewarm]
+
+
+def publish_plan(todo: list[str], approved: dict, ist_hour: int, ist_minute: int, *,
+                 override: bool = False, only: set | None = None,
+                 missing: list[str] | None = None) -> dict:
+    """Slots to run, reels to publish one by one, and targets that are regen-only."""
+    prewarm = prewarm_targets(
+        list(missing if missing is not None else todo), ist_hour, ist_minute,
+        override=override, only=only)
+    slots = slots_for_targets(todo, prewarm, approved)
+    reels = evening_assets_due(todo, prewarm)
+    morning_reel = [k for k, v in REEL_SLOT.items() if v == "morning"][0]
+    if "morning" in slots and morning_reel in todo and morning_reel not in prewarm and reels:
+        # Never both reels in one run: the morning reel goes now, the evening
+        # reel waits for the next retry (the slot gap check also holds it).
+        reels = []
+    return {"prewarm": prewarm, "slots": slots, "reels": reels}
 
 
 def _asset_matches(record: dict, target: str) -> bool:
@@ -69,6 +136,9 @@ def _asset_matches(record: dict, target: str) -> bool:
     if target == "ig_feed":
         # A carousel row is not the feed post. A bare legacy row is.
         return recorded in ("", "instagram_post")
+    if recorded in REEL_SLOT or recorded == "reel_2":
+        # A reel row (e.g. growth_reel in the morning slot) only ever covers its own reel.
+        return PIECE_ASSET.get(target) == recorded
     asset = PIECE_ASSET.get(target)
     if not asset:
         return True
@@ -99,6 +169,9 @@ def unposted_targets(records: list[dict], now_hour: int) -> list[str]:
     for name, (slot, platforms, _labels, hour) in active_targets().items():
         if now_hour < hour:
             continue
+        if name in REEL_SLOT and not reel_window_open(name, now_hour):
+            # growth_reel is not chased past its morning window (never next to reel_1).
+            continue
         if not any(_row_covers(r, name, slot, platforms) for r in records):
             out.append(name)
     return out
@@ -108,8 +181,22 @@ NO_PACK = "no_pack"
 CHAIN_FROM_HOUR = 7
 
 
+def threads_only_auth_block(unresolved: list[str], records: list[dict]) -> bool:
+    """True when the only thing still unposted is a Threads credential block.
+
+    Other platforms already had their chance. The block stays in the ledger
+    so the next retry tries Threads again, and this job does not go red.
+    """
+    if list(unresolved) != ["threads"]:
+        return False
+    from content_generator.publisher.publishing_ledger import threads_auth_block
+    rows = _target_rows(records, "threads")
+    return bool(rows) and all(threads_auth_block(row) for row in rows)
+
+
 def target_refuses_retry(records: list[dict], target: str) -> bool:
-    """True when every real attempt for this target is past the ledger retry cap.
+    """True when every real attempt for this target is past the ledger retry cap,
+    or if the target was permanently rejected by a claim, process, or prepublish gate.
 
     Pre-flight misses do not count, so the self-resume chain can drop this target.
     """
@@ -117,6 +204,15 @@ def target_refuses_retry(records: list[dict], target: str) -> bool:
     rows = _target_rows(records, target)
     if not rows:
         return False
+    # If any row was permanently skipped or rejected by a claim/process gate, drop target from retries
+    for r in rows:
+        status = str(r.get("status") or "").upper()
+        err = str(r.get("error") or "").lower()
+        if status in ("SKIPPED", "REJECTED"):
+            if any(p in err for p in ("process_match", "product_truth", "prepublish_gate", "claim_gate", "banned")):
+                return True
+        if any(p in err for p in ("process_match_failed", "product_truth_failed")):
+            return True
     return all(attempt_budget_exhausted(r) for r in rows)
 
 
@@ -249,6 +345,29 @@ def mark_fresh(content: dict, labels) -> list[str]:
     return marked
 
 
+
+
+def recover_blocked_stories(content: dict, todo: list[str]) -> bool:
+    """Replace a claim-blocked Instagram Story so the next publish can succeed.
+
+    Reel targets are not rewritten. The process-match check is unchanged: the
+    replacement has to pass it. A Story that already carries an editorial or
+    viral score is left in place so an unscored line cannot skip the 8.0 bar.
+    """
+    if "ig_story" not in (todo or []) or not isinstance(content, dict):
+        return False
+    from content_generator.publisher.story_copy import recover_claim_blocked_story
+
+    installed = recover_claim_blocked_story(content, int(content.get("day_number") or 0))
+    if not installed:
+        return False
+    log.warning(
+        "[retry] ig_story claim block replaced from %s headline=%r",
+        installed.get("source"), installed.get("headline"),
+    )
+    return True
+
+
 def backoff_ok(records: list[dict], target: str, now: dt.datetime) -> bool:
     """Exponential backoff on rate limits: 30, 60, 120, 240 min (capped)."""
     fails = [r for r in _target_rows(records, target) if r.get("status") == "FAILED"]
@@ -374,7 +493,7 @@ def main() -> int:
         # Evening backstop across midnight: a dropped 21:53 cron (or a crash)
         # must not lose yesterday's mandatory evening reel.
         y = (dt.date.fromisoformat(date) - dt.timedelta(days=1)).isoformat()
-        due = [t for t in REEL_TARGETS if t in unposted_targets(records_for_date(y), 23)]
+        due = [t for t in EVENING_REEL_TARGETS if t in unposted_targets(records_for_date(y), 23)]
         if due:
             log.warning("Evening backstop: %s still missing %s; publishing them now.", y, due)
             date, ist_hour, only = y, 23, set(due)
@@ -384,15 +503,12 @@ def main() -> int:
         return 0
 
     records = records_for_date(date)
-    missing = unposted_targets(records, ist_hour)
+    missing = [t for t in unposted_targets(records, ist_hour) if not target_refuses_retry(records, t)]
     if only is not None:
         missing = [t for t in missing if t in only]
-    if not override and only is None and evening_backstop_wait(now_ist):
-        # The scheduled evening slot owns 21:53-22:15; backstop only after.
-        missing = [t for t in missing if t not in REEL_TARGETS]
-    # Reel targets are due from 10:00 so the chain regenerates them. Publishing
-    # still waits until 22:00.
-    prewarm = {t for t in missing if t in REEL_TARGETS} if (not override and only is None and ist_hour < 22) else set()
+    # Reel targets stay in `missing` after the evening slot time, including
+    # 22:00-22:15. The cron publishes one reel; the others are this retry's.
+    minute = now_ist.minute if ist_hour == now_ist.hour else 0
     # A missing mandatory slot is never parked in backoff.
     todo = prioritise([t for t in missing if is_mandatory(t) or backoff_ok(records, t, now)])
     if not todo:
@@ -426,9 +542,17 @@ def main() -> int:
         save_content(content)
         approved = _approved(content)
 
-    # 2. Publish through the normal paths; the ledger dedupes by date+slot+platform.
+    # A claim-blocked Story otherwise republishes the same story_1 forever.
+    # Save before the slot reloads the pack from disk.
+    if recover_blocked_stories(content, todo):
+        save_content(content)
+
+    # 2. Publish through the normal paths; the ledger dedupes by date+slot+platform+asset.
     failures = []
-    slots = {TARGETS[t][0] for t in todo if any(l in approved for l in TARGETS[t][2]) and t not in prewarm}
+    plan = publish_plan(
+        todo, approved, ist_hour, minute, override=bool(override), only=only, missing=missing)
+    prewarm = plan["prewarm"]
+    slots = plan["slots"]
     if ("ig_feed" in todo or "carousel" in todo) and "morning" in slots:
         ensure_ig_images(content)
     os.environ.setdefault("ENABLE_TIMED_SLOTS", "true")
@@ -437,20 +561,33 @@ def main() -> int:
         from content_generator.publisher.dispatcher import publish_all
         res = publish_all(content, day_number=int(content.get("day_number") or 0))
         log.info("generate-path result: %s", res.get("summary"))
+    from content_generator.scheduler.slots import run_publish_slot
+    on_date = dt.date.fromisoformat(date)
     for slot in ("morning", "evening"):
-        if slot in slots:
-            os.environ["FORCE_SLOT"] = slot
-            from content_generator.scheduler.slots import run_publish_slot
-            res = run_publish_slot(slot, force_retry=True, on_date=dt.date.fromisoformat(date))
-            log.info("%s result: %s", slot, res.get("status"))
+        if slot not in slots:
+            continue
+        os.environ["FORCE_SLOT"] = slot
+        if slot == "evening":
+            for asset in plan["reels"]:
+                res = run_publish_slot(slot, force_retry=True, on_date=on_date, only_asset=asset)
+                log.info("%s %s result: %s", slot, asset, res.get("status"))
+            continue
+        res = run_publish_slot(slot, force_retry=True, on_date=on_date)
+        log.info("%s result: %s", slot, res.get("status"))
     blocked = [t for t in todo if not any(l in approved for l in TARGETS[t][2])]
-    # Prewarming the evening reel before 22:00 is expected; every other target
+    # Prewarming a reel before the evening slot is expected; every other target
     # selected for this run must now be present in the authoritative ledger.
     checked_todo = [t for t in todo if t not in prewarm]
     after_records = records_for_date(date)
     remaining = [t for t in checked_todo if t in unposted_targets(after_records, ist_hour)]
     unresolved = sorted(set(blocked + remaining))
     if unresolved:
+        if threads_only_auth_block(unresolved, after_records):
+            log.warning(
+                "Threads credential block is retryable and does not fail this job: %s",
+                unresolved,
+            )
+            return 0
         refused = [t for t in unresolved if target_refuses_retry(after_records, t)]
         retryable = [t for t in unresolved if t not in refused]
         if refused and not retryable:

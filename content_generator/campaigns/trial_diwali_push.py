@@ -249,8 +249,8 @@ def product_url(slug: str, cfg: dict | None = None) -> str:
     utm = cfg.get("utm") or {}
     query = urlencode([
         ("utm_source", str(utm.get("utm_source") or "instagram")),
-        ("utm_medium", str(utm.get("utm_medium") or "organic")),
-        ("utm_campaign", str(utm.get("utm_campaign") or "trial_diwali_push")),
+        ("utm_medium", str(utm.get("utm_medium") or "post")),
+        ("utm_campaign", str(utm.get("utm_campaign") or "202610")),
     ])
     return f"https://p3online.in/products/{handle}?{query}"
 
@@ -346,7 +346,7 @@ def attach(content: dict, on, cfg: dict | None = None) -> dict:
         return content
     cfg = cfg or load_config()
     base = {
-        "campaign": str(cfg.get("id") or "trial_diwali_push"),
+        "campaign": str(cfg.get("id") or "202610"),
         "ends_on": str(cfg.get("end") or ""),
         "organic_only": True,
     }
@@ -481,6 +481,11 @@ def publish_for_slot(content: dict, slot: str, day: int) -> dict:
     surface = {"morning": "story", "evening": "reel"}.get(slot)
     if not surface:
         return {"skipped": True, "reason": "slot"}
+    if surface == "reel":
+        # Two reels a day, spread across the day (owner, 2 Nov 2026): the
+        # day's reels are growth_reel (morning) and reel_1 (evening). A sales
+        # reel on top would be a third reel, so it is never published.
+        return {"skipped": True, "reason": "two_reels_per_day"}
     piece = block.get(surface) if isinstance(block.get(surface), dict) else {}
     video = str(piece.get("video_path") or "")
     poster = str(piece.get("poster_path") or "")
@@ -504,6 +509,10 @@ def publish_for_slot(content: dict, slot: str, day: int) -> dict:
             logger.debug("[sales-push] lesson not recorded")
         return {"skipped": True, "reason": reason_code(block)}
     platform = "instagram_sales_story" if surface == "story" else "instagram_sales_reel"
+    from content_generator.core.instagram_pause import instagram_paused
+    if instagram_paused():
+        logger.warning("[sales-push] Instagram PAUSED (owner kill switch) — %s not published", platform)
+        return {"skipped": True, "reason": "instagram_paused"}
 
     def _publish() -> dict:
         if surface == "reel":

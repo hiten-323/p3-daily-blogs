@@ -16,7 +16,7 @@ from content_generator.creative.visual_gate import AESTHETIC_PASS, MIN_BG_MOTION
 START = dt.date(2026, 10, 21)
 END = dt.date(2026, 11, 20)
 ALLOWED = {"bold", "purista", "purica", "gourmet_duo_mini"}
-UTM = "utm_source=instagram&utm_medium=organic&utm_campaign=trial_diwali_push"
+UTM = "utm_source=instagram&utm_medium=post&utm_campaign=202610"
 HANDLES = {
     "bold": "purity-beans-bold-instant-coffee",
     "purista": "purity-beans-purista-gourmet-instant-coffee-granules",
@@ -217,10 +217,11 @@ def test_publish_skips_until_gates_and_provenance_pass(prov, monkeypatch):
         "content_generator.publisher.publishing_ledger.publish_with_ledger",
         _ledger,
     )
-    assert push.publish_for_slot(content, "evening", 1)["reason"] == "not_rendered"
+    assert push.publish_for_slot(content, "morning", 1)["reason"] == "not_rendered"
+    assert push.publish_for_slot(content, "evening", 1)["reason"] == "two_reels_per_day"
     assert calls == []
 
-    piece = content["sales_push"]["reel"]
+    piece = content["sales_push"]["story"]
     poster = push.resolve_asset("bold")
     push.register_source(poster)
     prov.record_jar_provenance(poster, jar_asset_id=poster, render_source="cinematic_real_jar")
@@ -234,19 +235,19 @@ def test_publish_skips_until_gates_and_provenance_pass(prov, monkeypatch):
     })
     posted = {}
 
-    def _post(video, caption):
-        posted["video"] = video
-        posted["caption"] = caption
+    def _post(poster_path, video_path):
+        posted["poster"] = poster_path
+        posted["video"] = video_path
         return {"success": True, "media_id": "1"}
 
     monkeypatch.setattr(
-        "content_generator.publisher.instagram._post_reel_direct_binary",
+        "content_generator.publisher.instagram.post_prepared_story",
         _post,
     )
-    result = push.publish_for_slot(content, "evening", 1)
+    result = push.publish_for_slot(content, "morning", 1)
     assert result["success"] is True
-    assert calls == ["instagram_sales_reel"]
-    assert posted["caption"].endswith(push.REEL_CTA)
+    assert calls == ["instagram_sales_story"]
+    assert posted["poster"] == poster
 
 
 def test_limited_stock_phrase_stays_blocked():

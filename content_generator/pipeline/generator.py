@@ -253,7 +253,7 @@ def generate_daily_content(
     # Optimizer-biased selections (falls back to round-robin if no data)
     product = pick(PRODUCTS, day_number)
     arch_1  = _optimized_pick(HOOK_ARCHETYPES, day_number, label="reel_1_hook")
-    arch_2  = _optimized_pick(HOOK_ARCHETYPES, day_number, label="reel_2_hook", offset=5)
+    # reel_2 dropped (two reels a day policy)
     mech    = _optimized_pick(SAVE_MECHANICS,  day_number, label="carousel_mech")
     angle   = _optimized_pick(LINKEDIN_ANGLES, day_number, label="linkedin_angle")
     topic   = get_todays_blog_topic(day_number)
@@ -317,8 +317,8 @@ def generate_daily_content(
         logger.debug("[pipeline] reel style reference unavailable: %s", e)
 
     logger.info(
-        "[pipeline] Day #%d (%s) | product=%s | Reel1=%s | Reel2=%s | Carousel=%s | LinkedIn=%s",
-        day_number, todays_date, product, arch_1[0], arch_2[0], mech[0], angle[0],
+        "[pipeline] Day #%d (%s) | product=%s | Reel1=%s | Carousel=%s | LinkedIn=%s",
+        day_number, todays_date, product, arch_1[0], mech[0], angle[0],
     )
 
     # ── Phase 1: core tasks (always run) ─────────────────────────────────────
@@ -342,8 +342,7 @@ def generate_daily_content(
     if _extended:
         from content_generator.prompts import threads, facebook
         phase1_tasks.update({
-            "reel_2":        (reels.build,    ("reel_2", arch_2, "evening/night (8-10pm)", "reel_night", avoid, day_number), 1800),
-            "stories":       (stories.build,  (day_number,),                                                      1500),
+                "stories":       (stories.build,  (day_number,),                                                      1500),
             "yt_short":      (yt_short.build, (product, day_number),                                              1500),
             "threads_post":  (threads.build,  (th_angle, avoid, day_number),                                      600),
             "facebook_post": (facebook.build, (fb_angle, avoid, day_number),                                     800),
@@ -394,7 +393,7 @@ def generate_daily_content(
         )
 
     # Fill optional keys with empty dicts so downstream code doesn't KeyError
-    for optional in ("reel_2", "blog_post", "stories", "yt_short", "threads_post", "facebook_post"):
+    for optional in ("blog_post", "stories", "yt_short", "threads_post", "facebook_post"):
         phase1_results.setdefault(optional, {})
 
     # Semantic Premise Lock: verify portfolio premise diversity
@@ -409,7 +408,7 @@ def generate_daily_content(
     # ── Phase 2: video prompts (depends on phase 1) ───────────────────────────
     vp_prompt = video_prompts.build(
         phase1_results["reel_1"],
-        phase1_results["reel_2"],
+        {},
         phase1_results["yt_short"],
         product,
     )
@@ -493,7 +492,7 @@ def generate_daily_content(
         "target_kpi_at_creation":   _kpi_at_creation(),
         "policy_version_at_creation": _policy_version_at_creation(),
         "featured_product": product,
-        "reels":          [phase1_results["reel_1"], phase1_results["reel_2"]],
+        "reels":          [phase1_results["reel_1"]],
         "instagram_post": phase1_results["instagram_post"],
         "carousel":       phase1_results["carousel"],
         "linkedin_post":  phase1_results["linkedin_post"],
@@ -555,8 +554,7 @@ def generate_daily_content(
     vp_data   = output.get("video_prompts", {})
     vp_frames = (
         len(vp_data.get("reel_1",    {}).get("frames", []))
-        + len(vp_data.get("reel_2",  {}).get("frames", []))
-        + len(vp_data.get("yt_short",{}).get("scenes", []))
+                + len(vp_data.get("yt_short",{}).get("scenes", []))
     )
     logger.info(
         "[pipeline] Done — 2 reels | 1 insta post | 1 carousel | 1 linkedin | "

@@ -235,7 +235,7 @@ def test_systemic_insights_error_does_not_abandon_the_window(monkeypatch) -> Non
     """A missing insights scope is the account, not this post. Do not burn 24h."""
     post = {
         "media_id": "1789",
-        "published_at": "2026-10-01T00:00:00",
+        "published_at": (insights.datetime.datetime.now() - insights.datetime.timedelta(hours=25)).isoformat(),
         "measurement_snapshots": [],
         "failed_windows": [],
         "fetch_attempts_by_window": {"24h": 4},

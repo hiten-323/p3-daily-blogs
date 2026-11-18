@@ -183,11 +183,12 @@ def _instagram_publish_checks():
         check("repair fills editorial subscores the schema requires",
               score.get("shareability") is not None and score.get("hook_strength") is not None)
     from content_generator.scheduler.slots import _select_evening_reel
-    only_two = {"reel_2": {"hook": "Check the label"}}
-    picked = _select_evening_reel(only_two)
-    check("evening can publish reel_2", picked and picked[0] == "reel_2")
-    both = {"growth_reel": {"hook": "g"}, "reel_1": {"hook": "a"}, "reel_2": {"hook": "b"}}
-    check("evening still prefers growth_reel", _select_evening_reel(both)[0] == "growth_reel")
+    only_one = {"reel_1": {"hook": "Check the label"}}
+    picked = _select_evening_reel(only_one)
+    check("evening publishes reel_1", picked and picked[0] == "reel_1")
+    both = {"growth_reel": {"hook": "g"}, "reel_1": {"hook": "a"}}
+    check("evening selects reel_1 while growth_reel is morning", _select_evening_reel(both)[0] == "reel_1")
+    check("evening rejects retired reel_2", _select_evening_reel({"reel_2": {"hook": "b"}}) is None)
 
     # 3. Hashtag cap and the correct piece
     print("\nCaption uses the carousel and stays inside Instagram limits:")

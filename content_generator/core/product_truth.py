@@ -60,10 +60,18 @@ _BRAND_IS_FREEZE_ARABICA = re.compile(
 )
 _INVENTED = re.compile(
     r"100\s*x\s+purer|lab-tested purity certificate|lab[\s-]?certified|"
-    r"single-origin style|"
+    r"\bsingle[\s-]origin(?:\s+style)?\b|"
+    r"\bsludge\b|"
     r"70\s*[-–]\s*80\s*%\s*chicory|hand-selected chicory|"
     r"\bsmall[\s-]batch(?:es)?\b|"
     r"\borganic\b|india'?s\s+(?:first|only)\b",
+    re.I,
+)
+_RANGE_WIDE_PURE = re.compile(
+    r"\b(?:shop|buy|order|browse|our|all|entire|every)\s+(?:(?:range|collection|lineup)\s+of\s+)?pure\s+instant\s+coffee\b"
+    r"|\bpure\s+instant\s+coffee\s+(?:brand|range|collection|lineup)\b"
+    r"|\b(?:our|all|entire|every)\s+(?:(?:entire|all|our)\s+)?(?:collection|range|lineup|jars?|coffees?|products?)\s+(?:are|is)\s+pure\s+instant\s+coffee\b"
+    r"|\bpurity\s+beans\s+is\s+pure\s+instant\s+coffee\b",
     re.I,
 )
 _PERCENT = re.compile(
@@ -517,6 +525,11 @@ def product_truth_findings(text: str, featured: str | None = None) -> list[dict]
             ))
         if _INVENTED.search(s):
             findings.append(_finding(s, "invented product claim"))
+        if _RANGE_WIDE_PURE.search(s):
+            findings.append(_finding(
+                s,
+                "Ultra Blend contains 30% chicory; never make range-wide 'pure instant coffee' claims",
+            ))
         for clause in _CLAUSE.split(s):
             clause = clause.strip()
             if not clause:

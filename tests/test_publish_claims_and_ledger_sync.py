@@ -142,4 +142,63 @@ def test_asset_scoped_claims_do_not_block_sibling_assets(clone):
     assert not ok_car and why_car == "already_published_remote"
     ok_post, ref_post = publish_claim.acquire("2026-10-24", "morning", "instagram", asset="instagram_post")
     assert ok_post and "instagram_post" in ref_post
+    assert "/instagram/instagram_post" not in ref_post
+    publish_claim.release(ref_post)
+
+
+def test_stale_platform_claim_does_not_block_a_different_piece(clone, monkeypatch):
+    """A dead run's platform ref must not occupy the piece-claim namespace forever.
+
+    The 2026-10-24 carousel claim is refs/.../morning/instagram. A nested
+    instagram/instagram_post ref cannot be created beside it, and the stale
+    check then looks at a ref that does not exist.
+    """
+    monkeypatch.setenv("GITHUB_RUN_ID", "dead-run")
+    ok, legacy = publish_claim.acquire("2026-10-24", "morning", "instagram")
+    assert ok and legacy.endswith("/morning/instagram")
+    monkeypatch.setattr(publish_claim, "_STALE_MIN", -1)
+    monkeypatch.setenv("GITHUB_RUN_ID", "retry-run")
+    ok_post, ref_post = publish_claim.acquire(
+        "2026-10-24", "morning", "instagram", asset="instagram_post")
+    assert ok_post, ref_post
+    assert ref_post.endswith("instagram--instagram_post")
+    assert _git(clone, "ls-remote", "origin", legacy).split()[0]
+    monkeypatch.setattr(publish_claim, "_STALE_MIN", 180)
+    ok_again, why = publish_claim.acquire(
+        "2026-10-24", "morning", "instagram", asset="instagram_post")
+    assert not ok_again and why == "claimed_by_other_run"
+
+
+def test_fresh_platform_claim_blocks_only_a_different_run(clone, monkeypatch):
+    monkeypatch.setenv("GITHUB_RUN_ID", "live-run")
+    assert publish_claim.acquire("2026-10-24", "morning", "instagram")[0]
+    ok_same, ref_same = publish_claim.acquire(
+        "2026-10-24", "morning", "instagram", asset="carousel")
+    assert ok_same and ref_same.endswith("instagram--carousel")
+    publish_claim.release(ref_same)
+    monkeypatch.setenv("GITHUB_RUN_ID", "other-run")
+    ok_other, why = publish_claim.acquire(
+        "2026-10-24", "morning", "instagram", asset="instagram_post")
+    assert not ok_other and why == "claimed_by_other_run"
+    assert _git(clone, "ls-remote", "origin",
+                "refs/publish-claims/2026-10-24/morning/instagram--instagram_post") == ""
+
+
+def test_stale_platform_claim_still_blocks_a_posted_piece(clone, monkeypatch):
+    monkeypatch.setenv("GITHUB_RUN_ID", "dead-run")
+    assert publish_claim.acquire("2026-10-24", "morning", "instagram")[0]
+    led = clone / "output/learning/publishing_ledger.json"
+    led.write_text('{"version":1,"records":{"2026-10-24|morning|instagram|x|carousel":'
+                   '{"content_date":"2026-10-24","slot":"morning","platform":"instagram",'
+                   '"status":"VERIFIED_LIVE","asset":"carousel"}}}')
+    _git(clone, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qam", "carousel live")
+    _git(clone, "push", "-q", "origin", "main")
+    monkeypatch.setattr(publish_claim, "_STALE_MIN", -1)
+    monkeypatch.setenv("GITHUB_RUN_ID", "retry-run")
+    ok_car, why_car = publish_claim.acquire(
+        "2026-10-24", "morning", "instagram", asset="carousel")
+    assert not ok_car and why_car == "already_published_remote"
+    ok_post, ref_post = publish_claim.acquire(
+        "2026-10-24", "morning", "instagram", asset="instagram_post")
+    assert ok_post and ref_post.endswith("instagram--instagram_post")
     publish_claim.release(ref_post)

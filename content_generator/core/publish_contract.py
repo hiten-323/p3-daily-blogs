@@ -65,6 +65,11 @@ LEGIT_HOLDS = (
     "already published",
     "auto_publish_disabled",
     "auto_publish=false",
+    # Two reels a day, spread across the day (owner, 2 Nov 2026). These are
+    # deliberate schedule holds; retry-unposted still owns the slot's reel.
+    "reel_retired",
+    "daily_reel_cap",
+    "reel_gap",
 )
 
 

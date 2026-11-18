@@ -4,7 +4,7 @@ from content_generator.publisher import product_links as pl
 def test_tracked_url_has_product_handle_and_utm():
     url = pl.tracked_url("bold", "facebook")
     assert url.startswith("https://p3online.in/products/purity-beans-bold-instant-coffee?")
-    assert "utm_source=facebook" in url and "utm_medium=social" in url and "utm_campaign=daily" in url
+    assert "utm_source=facebook" in url and "utm_medium=post" in url and "utm_campaign=202610" in url
 
 
 def test_story_utm_content():

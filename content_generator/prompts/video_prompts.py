@@ -16,9 +16,9 @@ def _summarise_reel(r: dict) -> str:
     return "\n".join(lines)
 
 
-def build(reel1: dict, reel2: dict, yt_short: dict, product: str) -> str:
+def build(reel1: dict, reel2: dict | None, yt_short: dict, product: str) -> str:
     r1_summary = _summarise_reel(reel1)
-    r2_summary = _summarise_reel(reel2)
+    r2_summary = _summarise_reel(reel2) if reel2 else ""
     short_summary = "\n".join(
         f"Scene {s.get('scene')} ({s.get('type','').upper()}, {s.get('duration_s',5)}s): "
         f"on_screen='{s.get('on_screen','')}' | spoken='{s.get('spoken','')}'"

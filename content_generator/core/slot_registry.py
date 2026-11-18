@@ -39,13 +39,15 @@ SLOTS: list[dict] = [
         "id":        "morning",
         "ist":       "09:53",
         "expects":   ["instagram", "facebook"],
-        "purpose":   "IG carousel + FB mirror (owner-chosen time).",
+        "purpose":   "IG carousel + feed post + Story + growth_reel (reel 1 of 2) "
+                     "+ FB mirror (owner-chosen time).",
     },
     {
         "id":        "evening",
         "ist":       "21:53",
         "expects":   ["instagram", "facebook"],
-        "purpose":   "IG reel post + FB mirror (owner-chosen time).",
+        "purpose":   "IG reel_1 (reel 2 of 2) + FB mirror (owner-chosen time). "
+                     "reel_2 is retired: two reels a day (owner, 2 Nov 2026).",
     },
 ]
 SLOTS_BY_ID = {s["id"]: s for s in SLOTS}

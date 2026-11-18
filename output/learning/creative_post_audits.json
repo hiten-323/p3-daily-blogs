@@ -54337,5 +54337,473 @@
       "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
     ],
     "asset_count": 36
+  },
+  {
+    "ts": "2026-11-03T08:03:28.277126+00:00",
+    "day_number": 1,
+    "generation_id": "test_gen",
+    "image_assets": [],
+    "video_assets": [],
+    "copy_audit": [
+      {
+        "asset": "yt_short",
+        "hook_length": 26,
+        "recommendations": [
+          "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+          "yt_short: YouTube Short lacks subscribe/channel retention trigger"
+        ]
+      },
+      {
+        "asset": "carousel",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "carousel: carousel lacks an explicit save/share cue for algorithmic distribution"
+        ]
+      },
+      {
+        "asset": "threads_post",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "threads_post: community asset lacks a question/debate trigger",
+          "threads_post: Threads post needs an open-ended question to fuel reply ranking"
+        ]
+      },
+      {
+        "asset": "linkedin_post",
+        "hook_length": 150,
+        "recommendations": [
+          "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+        ]
+      }
+    ],
+    "vision_audit": {
+      "status": "skipped_no_api_key",
+      "model": "",
+      "assets": [],
+      "recommendations": []
+    },
+    "portfolio_diversity": 0.0,
+    "recommendations": [
+      "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+      "yt_short: YouTube Short lacks subscribe/channel retention trigger",
+      "hook is too short to communicate a clear curiosity/problem",
+      "carousel: carousel lacks an explicit save/share cue for algorithmic distribution",
+      "threads_post: community asset lacks a question/debate trigger",
+      "threads_post: Threads post needs an open-ended question to fuel reply ranking",
+      "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+    ],
+    "asset_count": 0
+  },
+  {
+    "ts": "2026-11-18T13:51:27.279993+00:00",
+    "day_number": 1,
+    "generation_id": "test_gen",
+    "image_assets": [],
+    "video_assets": [],
+    "copy_audit": [
+      {
+        "asset": "yt_short",
+        "hook_length": 26,
+        "recommendations": [
+          "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+          "yt_short: YouTube Short lacks subscribe/channel retention trigger"
+        ]
+      },
+      {
+        "asset": "carousel",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "carousel: carousel lacks an explicit save/share cue for algorithmic distribution"
+        ]
+      },
+      {
+        "asset": "threads_post",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "threads_post: community asset lacks a question/debate trigger",
+          "threads_post: Threads post needs an open-ended question to fuel reply ranking"
+        ]
+      },
+      {
+        "asset": "linkedin_post",
+        "hook_length": 150,
+        "recommendations": [
+          "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+        ]
+      }
+    ],
+    "vision_audit": {
+      "status": "skipped_no_api_key",
+      "model": "",
+      "assets": [],
+      "recommendations": []
+    },
+    "portfolio_diversity": 0.0,
+    "recommendations": [
+      "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+      "yt_short: YouTube Short lacks subscribe/channel retention trigger",
+      "hook is too short to communicate a clear curiosity/problem",
+      "carousel: carousel lacks an explicit save/share cue for algorithmic distribution",
+      "threads_post: community asset lacks a question/debate trigger",
+      "threads_post: Threads post needs an open-ended question to fuel reply ranking",
+      "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+    ],
+    "asset_count": 0
+  },
+  {
+    "ts": "2026-11-18T14:26:21.797680+00:00",
+    "day_number": 1,
+    "generation_id": "test_gen",
+    "image_assets": [
+      {
+        "path": "output\\creative\\adaptation_test_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 600,
+          "height": 600,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7798,
+          "contrast": 0.277,
+          "edge_density": 0.0227,
+          "upper_activity": 0.3006,
+          "center_brightness_delta": 0.1488,
+          "lower_center_edge_ratio": 473.858,
+          "lower_center_edge_density": 0.0474,
+          "visual_hash": "a646094d30790b76"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\avatar_day1_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.23,
+          "contrast": 0.1811,
+          "edge_density": 0.0151,
+          "upper_activity": 0.1144,
+          "center_brightness_delta": 0.0971,
+          "lower_center_edge_ratio": 25.656,
+          "lower_center_edge_density": 0.0395,
+          "visual_hash": "a1cf855193c83b31"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\c0_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7778,
+          "contrast": 0.2804,
+          "edge_density": 0.0209,
+          "upper_activity": 0.3092,
+          "center_brightness_delta": 0.1464,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "7e4b36806bbad479"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\c1_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7778,
+          "contrast": 0.2804,
+          "edge_density": 0.0209,
+          "upper_activity": 0.3092,
+          "center_brightness_delta": 0.1464,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "7e4b36806bbad479"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\c2_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7778,
+          "contrast": 0.2804,
+          "edge_density": 0.0209,
+          "upper_activity": 0.3092,
+          "center_brightness_delta": 0.1464,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "7e4b36806bbad479"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\facebook_post_day1_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7775,
+          "contrast": 0.2796,
+          "edge_density": 0.0228,
+          "upper_activity": 0.307,
+          "center_brightness_delta": 0.1461,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "6ad40bb44b43710a"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\instagram_post_day1_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.7752,
+          "contrast": 0.2821,
+          "edge_density": 0.0224,
+          "upper_activity": 0.3136,
+          "center_brightness_delta": 0.1438,
+          "lower_center_edge_ratio": 458.074,
+          "lower_center_edge_density": 0.0458,
+          "visual_hash": "c4a7b5728c6a8269"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\reel_hook_day1_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2276,
+          "contrast": 0.177,
+          "edge_density": 0.0134,
+          "upper_activity": 0.0905,
+          "center_brightness_delta": 0.0988,
+          "lower_center_edge_ratio": 25.656,
+          "lower_center_edge_density": 0.0395,
+          "visual_hash": "6d3a6c87d0deaa18"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\story_day1_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2304,
+          "contrast": 0.1796,
+          "edge_density": 0.0156,
+          "upper_activity": 0.1066,
+          "center_brightness_delta": 0.1009,
+          "lower_center_edge_ratio": 28.085,
+          "lower_center_edge_density": 0.0409,
+          "visual_hash": "c7de63e7a72823ce"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\test_reel_thumb_day1_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.2283,
+          "contrast": 0.1782,
+          "edge_density": 0.0139,
+          "upper_activity": 0.0978,
+          "center_brightness_delta": 0.0985,
+          "lower_center_edge_ratio": 25.656,
+          "lower_center_edge_density": 0.0395,
+          "visual_hash": "5760e831183ece94"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\t_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": 1.0,
+          "brightness": 0.1168,
+          "contrast": 0.1821,
+          "edge_density": 0.0217,
+          "upper_activity": 0.207,
+          "center_brightness_delta": 0.0326,
+          "lower_center_edge_ratio": 18.341,
+          "lower_center_edge_density": 0.0239,
+          "visual_hash": "4e552ce2630bd5d4"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      },
+      {
+        "path": "output\\creative\\ugc_day1_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": 0.562,
+          "brightness": 0.23,
+          "contrast": 0.1811,
+          "edge_density": 0.0151,
+          "upper_activity": 0.1144,
+          "center_brightness_delta": 0.0971,
+          "lower_center_edge_ratio": 25.656,
+          "lower_center_edge_density": 0.0395,
+          "visual_hash": "a1cf855193c83b31"
+        },
+        "recommendations": [
+          "raise exposure/background separation; avoid another near-black frame",
+          "add visible action/texture such as pour, hand, steam, granules, or environment",
+          "lower-center focal composition dominates; vary into a contextual or off-center composition"
+        ]
+      },
+      {
+        "path": "output\\creative\\yt_thumb_day1_2026-11-18.jpg",
+        "platform": "generated_image",
+        "jar_verified": true,
+        "metrics": {
+          "width": 1280,
+          "height": 720,
+          "aspect_ratio": 1.778,
+          "brightness": 0.3256,
+          "contrast": 0.2266,
+          "edge_density": 0.02,
+          "upper_activity": 0.1958,
+          "center_brightness_delta": 0.0522,
+          "lower_center_edge_ratio": 0.864,
+          "lower_center_edge_density": 0.0106,
+          "visual_hash": "fba8b0473a3da983"
+        },
+        "recommendations": [
+          "add visible action/texture such as pour, hand, steam, granules, or environment"
+        ]
+      }
+    ],
+    "video_assets": [],
+    "copy_audit": [
+      {
+        "asset": "yt_short",
+        "hook_length": 26,
+        "recommendations": [
+          "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+          "yt_short: YouTube Short lacks subscribe/channel retention trigger"
+        ]
+      },
+      {
+        "asset": "carousel",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "carousel: carousel lacks an explicit save/share cue for algorithmic distribution"
+        ]
+      },
+      {
+        "asset": "threads_post",
+        "hook_length": 0,
+        "recommendations": [
+          "hook is too short to communicate a clear curiosity/problem",
+          "threads_post: community asset lacks a question/debate trigger",
+          "threads_post: Threads post needs an open-ended question to fuel reply ranking"
+        ]
+      },
+      {
+        "asset": "linkedin_post",
+        "hook_length": 150,
+        "recommendations": [
+          "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+        ]
+      }
+    ],
+    "vision_audit": {
+      "status": "skipped_no_api_key",
+      "model": "",
+      "assets": [],
+      "recommendations": []
+    },
+    "portfolio_diversity": 0.949,
+    "recommendations": [
+      "add visible action/texture such as pour, hand, steam, granules, or environment",
+      "lower-center focal composition dominates; vary into a contextual or off-center composition",
+      "raise exposure/background separation; avoid another near-black frame",
+      "yt_short: discovery video lacks an explicit follow/subscribe conversion cue",
+      "yt_short: YouTube Short lacks subscribe/channel retention trigger",
+      "hook is too short to communicate a clear curiosity/problem",
+      "carousel: carousel lacks an explicit save/share cue for algorithmic distribution",
+      "threads_post: community asset lacks a question/debate trigger",
+      "threads_post: Threads post needs an open-ended question to fuel reply ranking",
+      "linkedin_post: LinkedIn hook exceeds 140 chars before the see-more fold"
+    ],
+    "asset_count": 13
   }
 ]

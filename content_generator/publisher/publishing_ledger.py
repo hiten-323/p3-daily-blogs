@@ -28,14 +28,21 @@ def _iso(value: dt.datetime | None = None) -> str:
 
 
 def _load() -> dict:
-    try:
-        data = json.loads(_PATH.read_text(encoding="utf-8"))
-        return data if isinstance(data, dict) and isinstance(data.get("records"), dict) else {"version": 1, "records": {}}
-    except (OSError, ValueError, TypeError):
+    if not _PATH.exists():
         return {"version": 1, "records": {}}
+    try:
+        raw = _PATH.read_text(encoding="utf-8")
+        data = json.loads(raw)
+    except (OSError, ValueError, TypeError) as exc:
+        raise ValueError(f"Cannot safely read publishing ledger {_PATH}: {exc}") from exc
+    if not isinstance(data, dict) or not isinstance(data.get("records"), dict):
+        raise ValueError(f"Invalid publishing ledger schema in {_PATH}")
+    return data
 
 
 def _save(data: dict) -> None:
+    if not isinstance(data, dict) or not isinstance(data.get("records"), dict):
+        raise ValueError("Cannot persist invalid publishing ledger structure: missing dict records")
     _PATH.parent.mkdir(parents=True, exist_ok=True)
     fd, temp = tempfile.mkstemp(prefix=_PATH.name + ".", suffix=".tmp", dir=str(_PATH.parent))
     try:
@@ -44,6 +51,10 @@ def _save(data: dict) -> None:
             stream.write("\n")
             stream.flush()
             os.fsync(stream.fileno())
+        with open(temp, "r", encoding="utf-8") as check_stream:
+            parsed = json.load(check_stream)
+            if not isinstance(parsed, dict) or not isinstance(parsed.get("records"), dict):
+                raise ValueError("Temporary ledger content validation failed before replace")
         os.replace(temp, _PATH)
     finally:
         try:
