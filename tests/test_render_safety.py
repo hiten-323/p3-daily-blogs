@@ -139,7 +139,17 @@ def main():
         "instagram_post": {"hook": "PURE COFFEE ONLY", "caption": "Real coffee caption\n\np3online.in"},
         "facebook_post": {"hook": "ZERO CHICORY ALWAYS", "body": "Facebook body text"},
     }
-    gen_results = _do_generate_images(sample_content, day_number=1)
+    # This check is provenance of the two stills. The story path renders a
+    # 10s motion video that these assertions never open.
+    previous_story = os.environ.get("ENABLE_STORY_VIDEO")
+    os.environ["ENABLE_STORY_VIDEO"] = "false"
+    try:
+        gen_results = _do_generate_images(sample_content, day_number=1)
+    finally:
+        if previous_story is None:
+            os.environ.pop("ENABLE_STORY_VIDEO", None)
+        else:
+            os.environ["ENABLE_STORY_VIDEO"] = previous_story
     ig_prov = verify_jar_provenance(gen_results.get("instagram_post", ""))
     fb_prov = verify_jar_provenance(gen_results.get("facebook_post", ""))
     check("instagram_post provenance verified", ig_prov.get("verified") is True, str(ig_prov))
