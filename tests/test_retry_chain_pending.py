@@ -34,7 +34,8 @@ def test_nothing_pending_once_each_piece_is_live():
     live = "VERIFIED_LIVE"
     rec = [{"slot": s, "platform": p, "status": live} for s, p in (
         ("morning", "instagram_story"), ("morning", "facebook"),
-        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
+        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"),
+        ("evening", "facebook"), ("evening", "youtube"))]
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "instagram_post"})
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "carousel"})
     for asset in ("reel_1", "growth_reel"):
@@ -65,7 +66,8 @@ def test_approved_evening_reel_waits_until_its_slot():
     live = "VERIFIED_LIVE"
     rec = [{"slot": s, "platform": p, "status": live} for s, p in (
         ("morning", "instagram_story"), ("morning", "facebook"),
-        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
+        ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"),
+        ("evening", "facebook"), ("evening", "youtube"))]
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "instagram_post"})
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "carousel"})
     rec.append({"slot": "morning", "platform": "instagram_video", "status": live, "asset": "growth_reel"})
