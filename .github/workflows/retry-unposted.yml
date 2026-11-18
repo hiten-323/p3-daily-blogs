@@ -211,6 +211,12 @@ jobs:
               dispatch_with_retry gh workflow run daily.yml -R "$GITHUB_REPOSITORY" --ref main -f slot=generate -f force_run=false || { echo "::error::generate dispatch failed"; exit 1; }
             fi
           fi
+          if [ "$PENDING" = "no_pack" ]; then
+            # Daily generation owns the next recovery kickoff once it saves today's pack.
+            # Do not create a four-minute retry-dispatch loop while that job is active.
+            echo "::notice::No pack yet; exiting and leaving generation/recovery to the daily workflow."
+            exit 0
+          fi
           sleep 240
           dispatch_with_retry gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::self-dispatch failed"; exit 1; }
       - name: Alert on recovery failure

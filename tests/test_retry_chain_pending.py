@@ -90,6 +90,8 @@ def test_workflows_chain_on_due_targets_not_ledger_rows():
     # Publishing is on by default; the retry kickoff is not gated by the variable.
     assert "vars.PUBLISHING_ENABLED" not in daily
     assert "vars.PUBLISHING_ENABLED" not in retry
+    # Missing-pack recovery exits; daily owns the next retry kickoff.
+    assert "No pack yet; exiting" in retry
 
 
 def test_instagram_reel_alias_counts_as_posted():
