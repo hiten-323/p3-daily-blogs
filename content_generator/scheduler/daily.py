@@ -1095,8 +1095,8 @@ def _materialize_missing_piece(content: dict, label: str, day_no: int, featured:
 
 def _build_native_with_platform_prompt(label: str, content: dict, day_no: int,
                                        featured: str) -> dict | None:
-    """Same phase-1 builders generator.py uses for facebook, threads, and Shorts."""
-    if label not in ("facebook_post", "threads_post", "yt_short"):
+    """Same phase-1 builders generator.py uses for facebook, threads, Shorts, and evening growth reels."""
+    if label not in ("facebook_post", "threads_post", "yt_short", "growth_reel_fb", "evening_yt_short"):
         return None
     try:
         from content_generator.pipeline.generator import _optimized_pick
@@ -1117,6 +1117,14 @@ def _build_native_with_platform_prompt(label: str, content: dict, day_no: int,
             prompt = threads.build(
                 _optimized_pick(THREADS_ANGLES, day_no, label="threads_angle"), avoid, day_no)
             tokens = 600
+        elif label == "growth_reel_fb":
+            from content_generator.prompts.evening_growth_reels import build_facebook_evening_growth
+            prompt = build_facebook_evening_growth(day_no, product, avoid)
+            tokens = 1500
+        elif label == "evening_yt_short":
+            from content_generator.prompts.evening_growth_reels import build_youtube_evening_growth
+            prompt = build_youtube_evening_growth(day_no, product, avoid)
+            tokens = 1500
         else:
             from content_generator.prompts import yt_short
             prompt = yt_short.build(product, day_no)
@@ -1179,6 +1187,8 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
         # content["stories"]["story_1"] and makes the Story take the same
         # editorial + viral gate as every other asset.
         ("stories",        "stories",        "story_1"),
+        ("growth_reel_fb", "growth_reel_fb", None),
+        ("evening_yt_short", "evening_yt_short", None),
     ]
     # Blog regen only when explicitly enabled; Blogs bot owns Shopify blog.
     if blog_enabled():
