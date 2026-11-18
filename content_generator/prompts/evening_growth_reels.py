@@ -135,7 +135,7 @@ def build_youtube_evening_growth(day: int, product: str = "", avoid: str = "", h
 
     return f"""YOUTUBE SHORTS EVENING GROWTH REEL — SEARCH ALGORITHM & RETENTION LOOP.
 
-Goal: Maximize Average Percentage Viewed (APV > 100%) through rapid cuts, search-driven title, and seamless loop.
+Goal: Maximize replay-driven retention through rapid cuts, a search-driven title, and a seamless loop.
 
 {avoid}
 {benchmark}
