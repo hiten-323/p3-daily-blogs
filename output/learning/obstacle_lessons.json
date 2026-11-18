@@ -32587,6 +32587,20 @@
       "reason": "16-17 Nov: Cerebras and Hugging Face returned 402, OpenRouter hit its free daily cap, Gemini returned 503s and GitHub Models was retired, so rewrites and scoring fell to slow NVIDIA and nothing reached the 9.0 viral bar.",
       "stage": "generate",
       "status": "fixed"
+    },
+    {
+      "count": 1,
+      "feedback": "Owner (17 Nov, 10:16 PM IST): make sure the first generation itself passes the bar, so no retry is needed.",
+      "first_seen": "2026-11-17",
+      "fix": "content_generator/core/first_pass.py: before writing, each piece's prompt gets the scorers' exact rubric (editorial dimensions and rules verbatim, viral dimensions, format rules, pass marks), the top past pieces for that platform that cleared both gates, recent gate feedback and obstacle lessons. With the xAI key present it then drafts, scores with the same copy/claim, editorial and viral gates, and rewrites up to FIRST_PASS_ROUNDS (default 3, max 6) inside generation, keeping the best version. The editorial loop still re-scores, and retry-unposted stays the safety net. Gates unchanged (8.0 editorial floor, 9.0 viral, claim rules).",
+      "gate": "viral_potential",
+      "id": "all|generation|viral_potential|first drafts rarely cleared 9.0 viral, so every piece depended on retries",
+      "label": "first_pass",
+      "last_seen": "2026-11-17",
+      "platform": "all",
+      "reason": "15-17 Nov: first drafts mostly scored 5-8.5 viral; the ladder and dozens of retry-unposted runs held every piece. The writer never saw the judges' rubric or past winners.",
+      "stage": "generate",
+      "status": "fixed"
     }
   ],
   "version": 1

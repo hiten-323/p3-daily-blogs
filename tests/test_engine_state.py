@@ -141,18 +141,23 @@ def test_untouched_files_do_not_overwrite_newer_branch_copies(tmp_path, origin, 
 def test_deletions_and_prune_reach_the_branch(tmp_path, origin, monkeypatch):
     work = _runner(tmp_path, origin, "gen", monkeypatch)
     engine_state.load(Path("."))
-    _write(work, "output/creative/reel_2026-11-16.jpg", "img")
+    # Keep one dated creative newer than the test clock so save() has a real state change.
+    _write(work, "output/creative/reel_2099-11-19.jpg", "img")
     _write(work, "output/creative/old_2026-11-01.jpg", "img")
     _write(work, "output/creative/.jar_provenance.lock", "x")
     assert engine_state.save("s", Path("."))
+    # save() pushes through a detached worktree; refresh this clone's remote-tracking ref before inspecting it.
+    _git(work, "fetch", "-q", "origin", "+refs/heads/engine-state:refs/remotes/origin/engine-state")
     files = _git(work, "ls-tree", "-r", "--name-only", "origin/engine-state")
     assert "output/creative/old_2026-11-01.jpg" not in files  # pruned (older than yesterday)
     assert ".jar_provenance.lock" not in files
+    assert "output/creative/reel_2099-11-19.jpg" in files
     engine_state.load(Path("."))
-    (work / "output/creative/reel_2026-11-16.jpg").unlink()
+    (work / "output/creative/reel_2099-11-19.jpg").unlink()
     assert engine_state.save("d", Path("."))
+    _git(work, "fetch", "-q", "origin", "engine-state")
     files = _git(work, "ls-tree", "-r", "--name-only", "origin/engine-state")
-    assert "output/creative/reel_2026-11-16.jpg" not in files
+    assert "output/creative/reel_2099-11-19.jpg" not in files
 
 
 def test_prune_keeps_today_yesterday_and_undated(tmp_path):

@@ -369,21 +369,34 @@ def generate_daily_content(
     # workers makes it worse, not better. Raise GEN_MAX_WORKERS only when a
     # high-quota provider (valid Gemini key) is carrying the load.
     _workers = max(1, int(os.getenv("GEN_MAX_WORKERS", "2")))
+    # First-pass quality (owner, 17 Nov 2026): the writer gets the gates' exact
+    # rubric, top past pieces and recent feedback, then (with the xAI key) drafts,
+    # self-scores with the same scorers and rewrites up to N times before saving.
+    # The editorial loop below still re-scores everything; no gate is changed.
+    from content_generator.core import first_pass
+    first_pass.start_budget()
+    first_pass_report: dict[str, dict] = {}
+
+    def _first_pass_prompt(label: str, base: str) -> str:
+        extra = first_pass.brief(label)
+        return base + ("\n\n" + extra if extra else "")
+
     with ThreadPoolExecutor(max_workers=_workers) as pool:
         from content_generator.prompts.growth_engine import prompt_block
         futures = {
             pool.submit(
-                llm_call,
-                fn(*args) + "\n\n" + prompt_block(label, str(product), day_number) + ctx,
+                first_pass.generate,
                 label,
+                _first_pass_prompt(label, fn(*args) + "\n\n" + prompt_block(label, str(product), day_number) + ctx),
                 tokens,
+                call=llm_call,
             ): label
             for label, (fn, args, tokens) in phase1_tasks.items()
         }
         for future in as_completed(futures):
             label = futures[future]
             try:
-                phase1_results[label] = future.result()
+                phase1_results[label], first_pass_report[label] = future.result()
             except Exception as e:
                 logger.error("[pipeline] %s failed: %s", label, e)
                 raise
@@ -569,6 +582,8 @@ def generate_daily_content(
             "passes": False,
             "audit_error": str(exc),
         }
+
+    output["first_pass_report"] = first_pass_report
 
     if os.getenv("ENABLE_USAGE_LOG", "false").lower() == "true":
         output["usage"] = get_usage_log()
