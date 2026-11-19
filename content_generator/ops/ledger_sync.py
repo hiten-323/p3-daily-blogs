@@ -15,6 +15,7 @@ never make a live post look unposted (which could trigger a duplicate).
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -30,23 +31,27 @@ _RANK = {"VERIFIED_LIVE": 5, "PUBLISHED_UNVERIFIED": 4, "UNCERTAIN": 3, "PUBLISH
 
 
 def _read(path: Path) -> dict:
+    if not path.exists():
+        return {"version": 1, "records": {}}
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(data, dict) and isinstance(data.get("records"), dict):
             return data
-    except (OSError, ValueError):
-        pass
-    return {"version": 1, "records": {}}
+        raise ValueError(f"Invalid ledger schema in {path}")
+    except (OSError, ValueError) as exc:
+        raise ValueError(f"Corrupt ledger file in {path}: {exc}") from exc
 
 
 def _read_posts(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
-        if isinstance(data, list):
-            return [x for x in data if isinstance(x, dict)]
-    except (OSError, ValueError):
-        pass
-    return []
+        if isinstance(data, list) and all(isinstance(x, dict) for x in data):
+            return data
+        raise ValueError(f"Invalid posts schema in {path}")
+    except (OSError, ValueError) as exc:
+        raise ValueError(f"Corrupt posts file in {path}: {exc}") from exc
 
 
 def _pick(a: dict, b: dict) -> dict:
@@ -125,23 +130,63 @@ def merge_posts(base: list[dict], other: list[dict]) -> list[dict]:
 
 
 def _write(data: dict, path: Path) -> None:
+    if not isinstance(data, dict) or not isinstance(data.get("records"), dict):
+        raise ValueError(f"Cannot save invalid ledger structure to {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    fd, temp = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=str(path.parent))
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            json.dump(data, stream, indent=2, sort_keys=True)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        with open(temp, "r", encoding="utf-8") as check_stream:
+            parsed = json.load(check_stream)
+            if not isinstance(parsed, dict) or not isinstance(parsed.get("records"), dict):
+                raise ValueError("Temporary ledger content validation failed")
+        os.replace(temp, path)
+    finally:
+        try:
+            if os.path.exists(temp):
+                os.unlink(temp)
+        except OSError:
+            pass
 
 
 def _write_posts(data: list[dict], path: Path) -> None:
+    if not isinstance(data, list) or any(not isinstance(x, dict) for x in data):
+        raise ValueError(f"Cannot save invalid posts structure to {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    fd, temp = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=str(path.parent))
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            json.dump(data, stream, indent=2, ensure_ascii=False)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        with open(temp, "r", encoding="utf-8") as check_stream:
+            parsed = json.load(check_stream)
+            if not isinstance(parsed, list):
+                raise ValueError("Temporary posts content validation failed")
+        os.replace(temp, path)
+    finally:
+        try:
+            if os.path.exists(temp):
+                os.unlink(temp)
+        except OSError:
+            pass
 
 
 def _read_lessons(path: Path) -> dict:
+    if not path.exists():
+        return {"version": 1, "lessons": []}
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(data, dict) and isinstance(data.get("lessons"), list):
             return data
-    except (OSError, ValueError):
-        pass
-    return {"version": 1, "lessons": []}
+        raise ValueError(f"Invalid lessons schema in {path}")
+    except (OSError, ValueError) as exc:
+        raise ValueError(f"Corrupt lessons file in {path}: {exc}") from exc
 
 
 def merge_lessons(base: dict, other: dict) -> dict:
