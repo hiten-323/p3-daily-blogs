@@ -6,7 +6,7 @@ requests>=2.31.0
 
 # LLM providers (install at least one)
 google-generativeai>=0.7.0      # Gemini Flash — primary LLM
-groq>=0.9.0                     # Groq Llama — fallback LLM
+groq>=1.7.0                     # Groq Llama — fallback LLM
 openai>=1.30.0                  # OpenRouter (uses OpenAI SDK) — final fallback
 
 # Scheduling
