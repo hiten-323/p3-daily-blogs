@@ -41,7 +41,7 @@ Pillow>=10.3.0                  # Carousel rendering + branded placeholder (alwa
 # Optional: video generation
 moviepy>=2.2.1                  # YouTube Shorts slideshow fallback
 runwayml>=0.1.0                 # Runway Gen-3 video (requires RUNWAY_API_KEY)
-pydantic>=2.0.0                 # Schema validation
+pydantic>=2.14.3                 # Schema validation
 langdetect>=1.0.9               # Language detection
 
 PyYAML>=6.0                     # Founder Policy Engine (founder_policies.yaml)
