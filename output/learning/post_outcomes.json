@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-22T09:16:58+00:00",
+  "generated_at": "2026-11-22T12:48:12+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 46,
+      "posts": 45,
       "measured": 6,
       "ranked": 5,
       "metrics_seen": [
@@ -11,7 +11,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 38,
+        "too_old_for_comparable_window": 37,
         "missing_pages_read_engagement_permission": 2
       },
       "winners": [],
@@ -261,9 +261,9 @@
       ]
     },
     "threads": {
-      "posts": 24,
-      "measured": 24,
-      "ranked": 24,
+      "posts": 23,
+      "measured": 23,
+      "ranked": 23,
       "metrics_seen": [
         "comments",
         "likes",
@@ -275,15 +275,15 @@
         {
           "dimension": "angle",
           "value": "sensory",
-          "ratio": 5.53,
+          "ratio": 4.96,
           "n": 2,
           "provisional": true
         },
         {
           "dimension": "label",
           "value": "threads_post",
-          "ratio": 1.8,
-          "n": 24,
+          "ratio": 1.73,
+          "n": 23,
           "provisional": false
         }
       ],
@@ -294,7 +294,7 @@
           "hook": "Hot take: most people never taste their coffee, they just drink it.",
           "template": "",
           "angle": "sensory",
-          "relative": 10.25,
+          "relative": 9.111,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -324,7 +324,7 @@
           "hook": "Unpopular opinion: bitter instant coffee isn't a bad bean, it's just boiling water poured straight on top.",
           "template": "",
           "angle": "the 100c water mistake",
-          "relative": 3.5,
+          "relative": 3.111,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -356,7 +356,7 @@
           "hook": "Unpopular opinion: water temperature matters less than the brand transparency hiding on the back of your coffee jar.",
           "template": "",
           "angle": "unpopular opinion: water temperature matters less than the b",
-          "relative": 0.25,
+          "relative": 0.222,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -487,6 +487,25 @@
   },
   "posts": [
     {
+      "platform": "instagram",
+      "label": "growth_reel",
+      "day": 295,
+      "media_id": "18181307467431600",
+      "published_at": "2026-10-23T17:12:44+00:00",
+      "hook": "POV: It's 9:40 at your desk and you actually read the label on your coffee jar.",
+      "angle": "clean_label",
+      "template": "",
+      "hook_strategy": "second_person",
+      "attention_mechanism": "pattern_interrupt",
+      "product": "Purica Gourmet Arabica Granules [purica]",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
       "platform": "linkedin",
       "label": "linkedin_post",
       "day": 296,
@@ -546,7 +565,7 @@
       },
       "basis": "reach",
       "value": 6.0,
-      "relative": 1.5
+      "relative": 1.333
     },
     {
       "platform": "youtube",
@@ -703,7 +722,7 @@
       },
       "basis": "reach",
       "value": 3.0,
-      "relative": 0.75
+      "relative": 0.667
     },
     {
       "platform": "instagram",
@@ -825,25 +844,6 @@
       "day": 294,
       "media_id": "494003270464484_122168654036655685",
       "published_at": "2026-10-22T16:56:02+00:00",
-      "hook": "My husband drank black coffee for fifteen years before he finally tasted actual coffee.",
-      "angle": "clean_label",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purista",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 294,
-      "media_id": "494003270464484_122168640326655685",
-      "published_at": "2026-10-22T11:59:44+00:00",
       "hook": "My husband drank black coffee for fifteen years before he finally tasted actual coffee.",
       "angle": "clean_label",
       "template": "",
@@ -1126,7 +1126,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.25
+      "relative": 1.111
     },
     {
       "platform": "instagram",
@@ -1578,7 +1578,7 @@
       },
       "basis": "reach",
       "value": 3.0,
-      "relative": 0.75
+      "relative": 0.667
     },
     {
       "platform": "youtube",
@@ -1678,7 +1678,7 @@
       },
       "basis": "reach",
       "value": 4.0,
-      "relative": 1.0
+      "relative": 0.889
     },
     {
       "platform": "linkedin",
@@ -1878,7 +1878,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.25
+      "relative": 1.111
     },
     {
       "platform": "youtube",
@@ -2306,7 +2306,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.5
+      "relative": 0.444
     },
     {
       "platform": "instagram",
@@ -2677,7 +2677,7 @@
       },
       "basis": "reach",
       "value": 1.0,
-      "relative": 0.25
+      "relative": 0.222
     },
     {
       "platform": "instagram",
@@ -2948,7 +2948,7 @@
       },
       "basis": "reach",
       "value": 7.0,
-      "relative": 1.75
+      "relative": 1.556
     },
     {
       "platform": "instagram",
@@ -3827,7 +3827,7 @@
       },
       "basis": "reach",
       "value": 14.0,
-      "relative": 3.5
+      "relative": 3.111
     },
     {
       "platform": "instagram",
@@ -3987,7 +3987,7 @@
       },
       "basis": "reach",
       "value": 41.0,
-      "relative": 10.25
+      "relative": 9.111
     },
     {
       "platform": "instagram",
