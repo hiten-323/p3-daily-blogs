@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-22T12:48:12+00:00",
+  "generated_at": "2026-11-22T22:02:49+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 45,
+      "posts": 43,
       "measured": 6,
       "ranked": 5,
       "metrics_seen": [
@@ -11,7 +11,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 37,
+        "too_old_for_comparable_window": 35,
         "missing_pages_read_engagement_permission": 2
       },
       "winners": [],
@@ -102,7 +102,7 @@
       "gaps": []
     },
     "instagram": {
-      "posts": 80,
+      "posts": 79,
       "measured": 24,
       "ranked": 24,
       "metrics_seen": [
@@ -110,7 +110,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 56
+        "too_old_for_comparable_window": 55
       },
       "winners": [
         {
@@ -487,6 +487,49 @@
   },
   "posts": [
     {
+      "platform": "threads",
+      "label": "threads_post",
+      "day": 295,
+      "media_id": "17920256169245460",
+      "published_at": "2026-10-23T07:37:05+00:00",
+      "hook": "The alternative to burnt instant coffee is waiting 30 seconds after boiling.",
+      "angle": "teach the physical difference between freeze-dried and insta",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "",
+      "product": "purica",
+      "editorial_score": null,
+      "window": "7d",
+      "metrics": {
+        "views": 5,
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "basis": "reach",
+      "value": 5.0,
+      "relative": 1.0
+    },
+    {
+      "platform": "instagram",
+      "label": "carousel",
+      "day": 295,
+      "media_id": "17917310274263071",
+      "published_at": "2026-10-23T08:57:23+00:00",
+      "hook": "Why your morning milk coffee still tastes thin (even with two spoons).",
+      "angle": "",
+      "template": "",
+      "hook_strategy": "question",
+      "attention_mechanism": "curiosity_gap",
+      "product": "ultra_blend",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
       "platform": "instagram",
       "label": "growth_reel",
       "day": 295,
@@ -812,44 +855,6 @@
       "hook_strategy": "demonstration",
       "attention_mechanism": "curiosity_gap",
       "product": "Bold",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 293,
-      "media_id": "494003270464484_122168649128655685",
-      "published_at": "2026-10-22T15:27:19+00:00",
-      "hook": "Stop pouring boiling water directly onto your instant coffee.",
-      "angle": "brewing technique education focusing on water temperature fo",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 294,
-      "media_id": "494003270464484_122168654036655685",
-      "published_at": "2026-10-22T16:56:02+00:00",
-      "hook": "My husband drank black coffee for fifteen years before he finally tasted actual coffee.",
-      "angle": "clean_label",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purista",
       "editorial_score": null,
       "window": null,
       "metrics": {},
