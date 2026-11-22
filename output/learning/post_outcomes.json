@@ -1,20 +1,18 @@
 {
-  "generated_at": "2026-11-17T13:48:28+00:00",
+  "generated_at": "2026-11-22T09:16:58+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 53,
+      "posts": 46,
       "measured": 6,
-      "ranked": 6,
+      "ranked": 5,
       "metrics_seen": [
         "comments",
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 40,
-        "missing_pages_read_engagement_permission": 5,
-        "api_returned_no_metrics": 1,
-        "pending": 1
+        "too_old_for_comparable_window": 38,
+        "missing_pages_read_engagement_permission": 2
       },
       "winners": [],
       "losers": [],
@@ -66,7 +64,7 @@
           "template": "",
           "angle": "the warm everyday habit that turns a milk coffee from ordina",
           "relative": 1.0,
-          "window": "72h",
+          "window": "7d",
           "editorial_score": null,
           "metrics": {
             "likes": 0,
@@ -79,7 +77,7 @@
           "template": "",
           "angle": "sensory",
           "relative": 1.0,
-          "window": "72h",
+          "window": "7d",
           "editorial_score": null,
           "metrics": {
             "likes": 0,
@@ -88,11 +86,11 @@
         },
         {
           "label": "facebook_post",
-          "hook": "Why does your morning coffee always leave that chalky, powdery residue at the bottom of the mug?",
+          "hook": "Ever poured a cup of homemade milk coffee, only to watch it turn gritty and muddy by the second sip?",
           "template": "",
-          "angle": "the muddy cup frustration",
+          "angle": "accessible_premium",
           "relative": 1.0,
-          "window": "72h",
+          "window": "7d",
           "editorial_score": null,
           "metrics": {
             "likes": 0,
@@ -104,7 +102,7 @@
       "gaps": []
     },
     "instagram": {
-      "posts": 91,
+      "posts": 80,
       "measured": 24,
       "ranked": 24,
       "metrics_seen": [
@@ -112,8 +110,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 63,
-        "awaiting_first_window": 4
+        "too_old_for_comparable_window": 56
       },
       "winners": [
         {
@@ -187,7 +184,7 @@
           "template": "",
           "angle": "revelation",
           "relative": 1.0,
-          "window": "72h",
+          "window": "7d",
           "editorial_score": null,
           "metrics": {
             "likes": 0,
@@ -200,7 +197,7 @@
           "template": "",
           "angle": "follower growth",
           "relative": 1.0,
-          "window": "72h",
+          "window": "7d",
           "editorial_score": null,
           "metrics": {
             "likes": 0,
@@ -213,7 +210,7 @@
           "template": "",
           "angle": "expose slides",
           "relative": 1.0,
-          "window": "72h",
+          "window": "7d",
           "editorial_score": null,
           "metrics": {
             "likes": 0,
@@ -227,12 +224,12 @@
       ]
     },
     "instagram_story": {
-      "posts": 18,
+      "posts": 12,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "story_measurement_window_missed": 18
+        "story_measurement_window_missed": 12
       },
       "winners": [],
       "losers": [],
@@ -245,14 +242,13 @@
       ]
     },
     "linkedin": {
-      "posts": 27,
+      "posts": 22,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 20,
-        "missing_linkedin_token_or_version": 5,
-        "awaiting_first_window": 2
+        "missing_linkedin_token_or_version": 2
       },
       "winners": [],
       "losers": [],
@@ -265,31 +261,29 @@
       ]
     },
     "threads": {
-      "posts": 29,
-      "measured": 25,
-      "ranked": 25,
+      "posts": 24,
+      "measured": 24,
+      "ranked": 24,
       "metrics_seen": [
         "comments",
         "likes",
         "shares",
         "views"
       ],
-      "unmeasured_statuses": {
-        "too_old_for_comparable_window": 4
-      },
+      "unmeasured_statuses": {},
       "winners": [
         {
           "dimension": "angle",
           "value": "sensory",
-          "ratio": 5.5,
+          "ratio": 5.53,
           "n": 2,
           "provisional": true
         },
         {
           "dimension": "label",
           "value": "threads_post",
-          "ratio": 1.72,
-          "n": 25,
+          "ratio": 1.8,
+          "n": 24,
           "provisional": false
         }
       ],
@@ -315,11 +309,11 @@
           "hook": "Hot take: most people never taste their coffee, they just drink the sugar and milk poured on top of it. ",
           "template": "",
           "angle": "myth-busting coffee truths",
-          "relative": 6.75,
-          "window": "72h",
+          "relative": 5.8,
+          "window": "7d",
           "editorial_score": null,
           "metrics": {
-            "views": 27,
+            "views": 29,
             "likes": 0,
             "comments": 0,
             "shares": 0
@@ -377,7 +371,7 @@
           "hook": "Hot take: most people never actually taste their morning coffee, they just drink it out of routine.",
           "template": "",
           "angle": "sensory_contrast_purica",
-          "relative": 0.333,
+          "relative": 0.4,
           "window": "7d",
           "editorial_score": null,
           "metrics": {
@@ -392,22 +386,21 @@
       "gaps": []
     },
     "youtube": {
-      "posts": 27,
+      "posts": 22,
       "measured": 7,
-      "ranked": 7,
+      "ranked": 6,
       "metrics_seen": [
         "views"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 19,
-        "awaiting_first_window": 1
+        "too_old_for_comparable_window": 15
       },
       "winners": [
         {
           "dimension": "label",
           "value": "yt_short",
-          "ratio": 8.55,
-          "n": 7,
+          "ratio": 3.29,
+          "n": 6,
           "provisional": false
         }
       ],
@@ -418,11 +411,11 @@
           "hook": "The coffee mistake almost every Indian kitchen makes",
           "template": "",
           "angle": "engagement growth",
-          "relative": 53.5,
-          "window": "72h",
+          "relative": 14.727,
+          "window": "7d",
           "editorial_score": null,
           "metrics": {
-            "views": 428
+            "views": 405
           }
         },
         {
@@ -453,14 +446,14 @@
       "bottom_posts": [
         {
           "label": "yt_short",
-          "hook": "Your morning coffee smells flat because the crystals inside shattered before they ever touched your mug.",
+          "hook": "What's actually inside this jar? Let's read it.",
           "template": "",
-          "angle": "drive traffic to https://p3online.in",
-          "relative": 0.625,
-          "window": "72h",
+          "angle": "conversions and traffic to https://p3online.in",
+          "relative": 0.291,
+          "window": "7d",
           "editorial_score": null,
           "metrics": {
-            "views": 5
+            "views": 8
           }
         },
         {
@@ -494,55 +487,36 @@
   },
   "posts": [
     {
-      "platform": "instagram",
-      "label": "",
-      "day": 289,
-      "media_id": "18116828654083980",
-      "published_at": "2026-10-17T14:06:02+00:00",
-      "hook": "",
-      "angle": "",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 290,
-      "media_id": "494003270464484_122168412086655685",
-      "published_at": "2026-10-19T09:46:14+00:00",
-      "hook": "",
-      "angle": "drive variety box purchases and increase product discovery",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Variety Box (4 × 50g Jars)",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
       "platform": "linkedin",
       "label": "linkedin_post",
-      "day": 290,
-      "media_id": "urn:li:share:7517481756711784448",
-      "published_at": "2026-10-18T07:08:40+00:00",
-      "hook": "Most people sip their afternoon coffee and taste... nothing distinct. Just warmth and caffeine.",
+      "day": 296,
+      "media_id": "urn:li:share:7519654946821283841",
+      "published_at": "2026-10-24T07:04:10+00:00",
+      "hook": "We almost launched with the wrong label. Here is what changed it.",
       "angle": "",
       "template": "",
       "hook_strategy": "",
       "attention_mechanism": "",
-      "product": "Purista Gourmet Robusta Granules",
+      "product": "Ultra Blend",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "instagram",
+      "label": "carousel",
+      "day": 296,
+      "media_id": "18080181725387761",
+      "published_at": "2026-10-24T10:15:50+00:00",
+      "hook": "Your coffee is not losing aroma because the lid was off. It is losing aroma because the jar was never pure coffee to beg",
+      "angle": "",
+      "template": "",
+      "hook_strategy": "negation",
+      "attention_mechanism": "specificity",
+      "product": "Ultra Blend",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -553,15 +527,134 @@
     {
       "platform": "threads",
       "label": "threads_post",
-      "day": 290,
-      "media_id": "18123244135852190",
-      "published_at": "2026-10-18T07:08:53+00:00",
-      "hook": "You measure 2.5 grams. Water at 93°C. Thirty seconds of bloom.",
-      "angle": "follower growth",
+      "day": 296,
+      "media_id": "18079937897546299",
+      "published_at": "2026-10-24T10:41:25+00:00",
+      "hook": "Hot take: most people never taste their coffee, they just drink it out of pure habit.",
+      "angle": "contrarian take on daily milk coffee routines and ingredient",
       "template": "",
       "hook_strategy": "",
       "attention_mechanism": "",
-      "product": "purista",
+      "product": "Ultra Blend",
+      "editorial_score": null,
+      "window": "72h",
+      "metrics": {
+        "views": 6,
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "basis": "reach",
+      "value": 6.0,
+      "relative": 1.5
+    },
+    {
+      "platform": "youtube",
+      "label": "yt_short",
+      "day": 296,
+      "media_id": "0zyE-tF1rmQ",
+      "published_at": "2026-10-24T11:26:39+00:00",
+      "hook": "The coffee mistake almost every Indian kitchen makes",
+      "angle": "drive product page visits for ultra blend via transparent in",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "",
+      "product": "ultra_blend",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "instagram",
+      "label": "growth_reel",
+      "day": 296,
+      "media_id": "18169243390499652",
+      "published_at": "2026-10-24T16:59:59+00:00",
+      "hook": "That bitter edge in your morning milk coffee is not your fault. It happens in the first three seconds of the pour.",
+      "angle": "myth_busting",
+      "template": "",
+      "hook_strategy": "negation",
+      "attention_mechanism": "curiosity_gap",
+      "product": "ultra_blend",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "instagram",
+      "label": "instagram_post",
+      "day": 296,
+      "media_id": "18111597194333596",
+      "published_at": "2026-10-24T17:05:53+00:00",
+      "hook": "Unpopular opinion: the 4 PM coffee break does more for your workflow than the entire morning.",
+      "angle": "",
+      "template": "",
+      "hook_strategy": "second_person",
+      "attention_mechanism": "curiosity_gap",
+      "product": "Ultra Blend",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "instagram",
+      "label": "reel_1",
+      "day": 296,
+      "media_id": "18034605326853145",
+      "published_at": "2026-10-24T17:17:03+00:00",
+      "hook": "I bought the five top-selling instant coffees. Four list coffee last. One prints '70% Coffee, 30% Chicory' on the front.",
+      "angle": "revelation",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "specificity",
+      "product": "ultra_blend",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "instagram",
+      "label": "reel_1",
+      "day": 296,
+      "media_id": "18107311085627793",
+      "published_at": "2026-10-24T17:29:27+00:00",
+      "hook": "Air steals the 70% coffee from your Ultra Blend jar first — the 30% chicory stays behind.",
+      "angle": "revelation",
+      "template": "",
+      "hook_strategy": "second_person",
+      "attention_mechanism": "recognition",
+      "product": "ultra_blend",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "linkedin",
+      "label": "linkedin_post",
+      "day": 297,
+      "media_id": "urn:li:share:7519991614241415168",
+      "published_at": "2026-10-25T05:21:58+00:00",
+      "hook": "Why your 8 AM coffee is actually making your 2 PM crash worse.",
+      "angle": "caffeine chronobiology",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "",
+      "product": "Bold",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -572,15 +665,77 @@
     {
       "platform": "youtube",
       "label": "yt_short",
-      "day": 290,
-      "media_id": "9bQeO7TEjNA",
-      "published_at": "2026-10-18T07:14:53+00:00",
-      "hook": "Turn the jar around. Most instant coffee hides chicory in the small print.",
+      "day": 297,
+      "media_id": "w5fUvQa0pHw",
+      "published_at": "2026-10-25T05:40:28+00:00",
+      "hook": "Why Your Black Coffee Tastes Bitter",
+      "angle": "drive traffic and direct sales for bold pure coffee.",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "",
+      "product": "Bold",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "threads",
+      "label": "threads_post",
+      "day": 297,
+      "media_id": "17907198891664158",
+      "published_at": "2026-10-25T05:40:28+00:00",
+      "hook": "Hot take: most people never taste their coffee, they just drink it.",
+      "angle": "the process behind your coffee decides the taste — and most ",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "",
+      "product": "Bold",
+      "editorial_score": null,
+      "window": "72h",
+      "metrics": {
+        "views": 3,
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "basis": "reach",
+      "value": 3.0,
+      "relative": 0.75
+    },
+    {
+      "platform": "instagram",
+      "label": "carousel",
+      "day": 297,
+      "media_id": "17978593197131206",
+      "published_at": "2026-10-25T05:41:17+00:00",
+      "hook": "Why a good home cup does not need an expensive machine",
+      "angle": "insider glossary",
+      "template": "",
+      "hook_strategy": "question",
+      "attention_mechanism": "specificity",
+      "product": "Bold",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "instagram",
+      "label": "instagram_post",
+      "day": 297,
+      "media_id": "17994427941049942",
+      "published_at": "2026-10-25T05:41:35+00:00",
+      "hook": "People spend five hundred rupees on a café cup because they think morning coffee is supposed to taste bitter.",
       "angle": "follower growth",
       "template": "",
       "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purista",
+      "attention_mechanism": "specificity",
+      "product": "Bold",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -589,17 +744,17 @@
       "relative": null
     },
     {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 290,
-      "media_id": "494003270464484_122168415140655685",
-      "published_at": "2026-10-19T10:50:19+00:00",
-      "hook": "",
-      "angle": "drive variety box purchases and increase product discovery",
+      "platform": "instagram",
+      "label": "growth_reel",
+      "day": 297,
+      "media_id": "18096775787427601",
+      "published_at": "2026-10-25T16:38:04+00:00",
+      "hook": "I read the label so you don't have to: Purity Beans Purica prints single-origin pure Arabica on the back panel.",
+      "angle": "educate",
       "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Variety Box (4 × 50g Jars)",
+      "hook_strategy": "negation",
+      "attention_mechanism": "useful_discovery",
+      "product": "Bold",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -608,17 +763,17 @@
       "relative": null
     },
     {
-      "platform": "instagram_story",
-      "label": "stories",
-      "day": 290,
-      "media_id": "18165601753488087",
-      "published_at": "2026-10-19T10:52:06+00:00",
-      "hook": "TURN THE JAR The real truth is on the back panel. Check yours tonight.",
-      "angle": "consumer purchase",
+      "platform": "instagram",
+      "label": "reel_1",
+      "day": 297,
+      "media_id": "18098157677653896",
+      "published_at": "2026-10-25T16:46:18+00:00",
+      "hook": "Three lines on the back ingredient panel decide whether your coffee is pure coffee or a chicory blend.",
+      "angle": "educate",
       "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
+      "hook_strategy": "second_person",
+      "attention_mechanism": "useful_discovery",
+      "product": "Bold",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -627,112 +782,17 @@
       "relative": null
     },
     {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 291,
-      "media_id": "494003270464484_122168438570655685",
-      "published_at": "2026-10-19T16:58:15+00:00",
-      "hook": "You are probably burning your instant coffee the second you pour boiling water straight from the kettle.",
-      "angle": "brew precision for instant coffee",
+      "platform": "instagram",
+      "label": "reel_1",
+      "day": 297,
+      "media_id": "18140453791617276",
+      "published_at": "2026-10-25T16:52:09+00:00",
+      "hook": "Close-up: dark granules hit 85°C water — no burnt smell rises. Spray-dried powder would have burned.",
+      "angle": "educate",
       "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purica Gourmet Arabica Granules",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 291,
-      "media_id": "494003270464484_122168399264655685",
-      "published_at": "2026-10-19T04:59:15+00:00",
-      "hook": "You are probably burning your instant coffee the second you pour boiling water straight from the kettle.",
-      "angle": "brew precision for instant coffee",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purica Gourmet Arabica Granules",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram_story",
-      "label": "stories",
-      "day": 291,
-      "media_id": "18081371951347948",
-      "published_at": "2026-10-19T05:09:13+00:00",
-      "hook": "",
-      "angle": "engagement growth",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 292,
-      "media_id": "494003270464484_122168507924655685",
-      "published_at": "2026-10-20T16:49:17+00:00",
-      "hook": "",
-      "angle": "the moment you taste freeze-dried pure arabica and realize i",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 292,
-      "media_id": "494003270464484_122168481542655685",
-      "published_at": "2026-10-20T07:53:25+00:00",
-      "hook": "",
-      "angle": "the moment you taste freeze-dried pure arabica and realize i",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram_story",
-      "label": "stories",
-      "day": 292,
-      "media_id": "17993947845102023",
-      "published_at": "2026-10-20T07:09:49+00:00",
-      "hook": "MILK COFFEE DEBATE How do you take your morning cup?",
-      "angle": "consumer purchase",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
+      "hook_strategy": "demonstration",
+      "attention_mechanism": "curiosity_gap",
+      "product": "Bold",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -752,44 +812,6 @@
       "hook_strategy": "",
       "attention_mechanism": "",
       "product": "purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 293,
-      "media_id": "494003270464484_122168555510655685",
-      "published_at": "2026-10-21T06:11:24+00:00",
-      "hook": "Stop pouring boiling water directly onto your instant coffee.",
-      "angle": "brewing technique education focusing on water temperature fo",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram_story",
-      "label": "stories",
-      "day": 293,
-      "media_id": "18041780162839224",
-      "published_at": "2026-10-21T06:20:23+00:00",
-      "hook": "MORNING HABIT Be honest about your cup.",
-      "angle": "engagement growth",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -828,25 +850,6 @@
       "hook_strategy": "",
       "attention_mechanism": "",
       "product": "Purista",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram_story",
-      "label": "stories",
-      "day": 294,
-      "media_id": "17914267365284074",
-      "published_at": "2026-10-22T07:09:50+00:00",
-      "hook": "MORNING HABIT CHECK How do you start the day?",
-      "angle": "consumer purchase",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -1299,7 +1302,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.333
+      "relative": 0.4
     },
     {
       "platform": "instagram",
@@ -1437,7 +1440,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 0.833
+      "relative": 1.0
     },
     {
       "platform": "instagram",
@@ -1794,7 +1797,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.333
+      "relative": 0.4
     },
     {
       "platform": "facebook",
@@ -2108,7 +2111,7 @@
       },
       "basis": "reach",
       "value": 9.0,
-      "relative": 1.5
+      "relative": 1.8
     },
     {
       "platform": "instagram",
@@ -3085,7 +3088,7 @@
       },
       "basis": "reach",
       "value": 14.0,
-      "relative": 2.333
+      "relative": 2.8
     },
     {
       "platform": "instagram",
@@ -3248,7 +3251,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 0.833
+      "relative": 1.0
     },
     {
       "platform": "youtube",
@@ -3441,7 +3444,7 @@
       },
       "basis": "reach",
       "value": 10.0,
-      "relative": 1.667
+      "relative": 2.0
     },
     {
       "platform": "instagram",
@@ -3634,7 +3637,7 @@
       },
       "basis": "reach",
       "value": 13.0,
-      "relative": 2.167
+      "relative": 2.6
     },
     {
       "platform": "instagram",
@@ -3941,7 +3944,7 @@
       },
       "basis": "engagement",
       "value": 0.0,
-      "relative": 1.0
+      "relative": null
     },
     {
       "platform": "facebook",
@@ -4090,7 +4093,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 0.625
+      "relative": null
     },
     {
       "platform": "instagram",
@@ -4105,7 +4108,7 @@
       "attention_mechanism": "specificity",
       "product": "Purica",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4127,7 +4130,7 @@
       "attention_mechanism": "",
       "product": "Purica",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4187,16 +4190,16 @@
       "attention_mechanism": "",
       "product": "ultra_blend",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
-        "views": 27,
+        "views": 29,
         "likes": 0,
         "comments": 0,
         "shares": 0
       },
       "basis": "reach",
-      "value": 27.0,
-      "relative": 6.75
+      "value": 29.0,
+      "relative": 5.8
     },
     {
       "platform": "youtube",
@@ -4211,13 +4214,13 @@
       "attention_mechanism": "",
       "product": "ultra_blend",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "views": 8
       },
       "basis": "reach",
       "value": 8.0,
-      "relative": 1.0
+      "relative": 0.291
     },
     {
       "platform": "instagram",
@@ -4232,7 +4235,7 @@
       "attention_mechanism": "specificity",
       "product": "Ultra Blend",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4254,7 +4257,7 @@
       "attention_mechanism": "recognition",
       "product": "ultra_blend",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4276,7 +4279,7 @@
       "attention_mechanism": "useful_discovery",
       "product": "Ultra Blend",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4298,7 +4301,7 @@
       "attention_mechanism": "recognition",
       "product": "Ultra Blend",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4320,7 +4323,7 @@
       "attention_mechanism": "",
       "product": "Ultra Blend",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4361,13 +4364,13 @@
       "attention_mechanism": "",
       "product": "Bold",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
-        "views": 428
+        "views": 405
       },
       "basis": "reach",
-      "value": 428.0,
-      "relative": 53.5
+      "value": 405.0,
+      "relative": 14.727
     },
     {
       "platform": "linkedin",
@@ -4401,7 +4404,7 @@
       "attention_mechanism": "useful_discovery",
       "product": "Bold",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4423,7 +4426,7 @@
       "attention_mechanism": "useful_discovery",
       "product": "bold",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4445,7 +4448,7 @@
       "attention_mechanism": "pattern_interrupt",
       "product": "Bold",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
         "likes": 0,
         "comments": 0
@@ -4467,16 +4470,16 @@
       "attention_mechanism": "",
       "product": "bold",
       "editorial_score": null,
-      "window": "72h",
+      "window": "7d",
       "metrics": {
-        "views": 3,
+        "views": 4,
         "likes": 0,
         "comments": 0,
         "shares": 0
       },
       "basis": "reach",
-      "value": 3.0,
-      "relative": 0.75
+      "value": 4.0,
+      "relative": 0.8
     },
     {
       "platform": "facebook",

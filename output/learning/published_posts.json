@@ -8389,7 +8389,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -8705,7 +8706,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -8733,7 +8735,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -9052,7 +9055,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -9080,7 +9084,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -9359,7 +9364,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -9406,7 +9412,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -9457,7 +9464,9 @@
       }
     ],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "7d"
+    ]
   },
   {
     "media_id": "18172735765464272",
@@ -9485,7 +9494,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -9514,7 +9524,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -9543,7 +9554,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -9572,7 +9584,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -9600,7 +9613,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -9633,7 +9647,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -9658,7 +9673,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "api_returned_no_metrics",
     "missed_windows": {}
@@ -9711,7 +9727,9 @@
       }
     ],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "7d"
+    ]
   },
   {
     "media_id": "17956493856082653",
@@ -9747,7 +9765,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "7d"
     ]
   },
   {
@@ -9784,7 +9803,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "7d"
     ]
   },
   {
@@ -9810,7 +9830,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -9847,7 +9868,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "7d"
     ]
   },
   {
@@ -9885,7 +9907,8 @@
       "24h": 1
     },
     "failed_windows": [
-      "24h"
+      "24h",
+      "7d"
     ]
   },
   {
@@ -9906,12 +9929,21 @@
     "format": "evening",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeDaily #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #ArtisanCoffee #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #SwadeshiProducts",
     "published_at": "2026-11-12T16:47:06",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:49",
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -9937,13 +9969,24 @@
     "permalink": "https://www.facebook.com/494003270464484/videos/1955886668921199",
     "ledger_key": "2026-11-12|evening|facebook|pb_8c0203f388",
     "publication_status": "VERIFIED_LIVE",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-16T07:22:03+00:00",
         "actual_age_hours": 86.58,
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        },
+        "source": "facebook_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:53+00:00",
+        "actual_age_hours": 232.5,
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -9979,7 +10022,8 @@
     },
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -10006,7 +10050,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -10027,7 +10072,7 @@
     "format": "discussion",
     "hashtags": "",
     "published_at": "2026-11-13T03:45:04",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "24h",
@@ -10049,6 +10094,19 @@
         "actual_age_hours": 75.62,
         "metrics": {
           "views": 27,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:53+00:00",
+        "actual_age_hours": 221.53,
+        "metrics": {
+          "views": 29,
           "likes": 0,
           "comments": 0,
           "shares": 0
@@ -10077,13 +10135,23 @@
     "format": "yt_short",
     "hashtags": "Ultra Blend Purity Beans Instant Coffee Coffee Math Milk Coffee",
     "published_at": "2026-11-13T03:58:06",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-16T07:22:03+00:00",
         "actual_age_hours": 75.4,
+        "metrics": {
+          "views": 8
+        },
+        "source": "youtube_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:53+00:00",
+        "actual_age_hours": 221.31,
         "metrics": {
           "views": 8
         },
@@ -10115,12 +10183,21 @@
     "format": "morning",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CafeLife #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeFacts #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #StartupIndia",
     "published_at": "2026-11-13T06:28:04",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:49",
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -10150,12 +10227,21 @@
     "format": "morning",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CafeLife #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeFacts #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #StartupIndia",
     "published_at": "2026-11-13T06:28:20",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:49",
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -10185,12 +10271,21 @@
     "format": "morning",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CafeLife #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeFacts #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #StartupIndia",
     "published_at": "2026-11-13T06:53:46",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-16T07:21:58",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:49",
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -10220,12 +10315,21 @@
     "format": "evening",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CafeLife #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeFacts #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #StartupIndia",
     "published_at": "2026-11-13T16:57:38",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-17T00:30:49",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:49",
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -10249,13 +10353,24 @@
     "permalink": "https://www.facebook.com/494003270464484/videos/1662580385414642",
     "ledger_key": "2026-11-13|evening|facebook|pb_075fd8649f",
     "publication_status": "VERIFIED_LIVE",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-17T00:30:53+00:00",
         "actual_age_hours": 79.55,
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        },
+        "source": "facebook_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:53+00:00",
+        "actual_age_hours": 208.32,
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -10286,7 +10401,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "pending",
     "missed_windows": {}
@@ -10309,7 +10425,7 @@
     "format": "yt_short",
     "hashtags": "purity beans premium instant coffee agglomerated coffee coffee without preservatives instant coffee india Purity Beans instant coffee gourmet instant coffee indian coffee brand",
     "published_at": "2026-11-14T06:54:00",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "72h",
@@ -10318,6 +10434,16 @@
         "actual_age_hours": 78.91,
         "metrics": {
           "views": 428
+        },
+        "source": "youtube_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:53+00:00",
+        "actual_age_hours": 194.38,
+        "metrics": {
+          "views": 405
         },
         "source": "youtube_native_api"
       }
@@ -10351,7 +10477,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -10372,7 +10499,7 @@
     "format": "morning",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeBeans #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeTasting #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #CoffeeCultureIndia",
     "published_at": "2026-11-14T07:43:45",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "24h",
@@ -10387,6 +10514,15 @@
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-17T02:43:34",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:49",
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -10414,7 +10550,7 @@
     "format": "morning",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeBeans #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeTasting #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #CoffeeCultureIndia",
     "published_at": "2026-11-14T07:44:03",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "24h",
@@ -10429,6 +10565,15 @@
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-17T02:43:34",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:49",
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -10456,7 +10601,7 @@
     "format": "morning",
     "hashtags": "#Drinks #CoffeeLover #CoffeeAddict #Coffee #CoffeeBeans #IcedCoffee #PremiumCoffee #InstantCoffee #GourmetCoffee #CoffeeTasting #IndianFoodie #CoffeeIndia #IndianBrands #IndianCoffee #CoffeeCultureIndia",
     "published_at": "2026-11-14T08:05:12",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "24h",
@@ -10471,6 +10616,15 @@
         "window": "72h",
         "target_hours": 72,
         "measured_at": "2026-11-17T02:43:34",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:49",
         "metrics": {
           "likes": 0,
           "comments": 0
@@ -10498,7 +10652,7 @@
     "format": "discussion",
     "hashtags": "",
     "published_at": "2026-11-14T08:47:23",
-    "insights_recorded": false,
+    "insights_recorded": true,
     "measurement_snapshots": [
       {
         "window": "24h",
@@ -10525,6 +10679,19 @@
           "shares": 0
         },
         "source": "threads_native_api"
+      },
+      {
+        "window": "7d",
+        "target_hours": 168,
+        "measured_at": "2026-11-22T09:16:53+00:00",
+        "actual_age_hours": 192.49,
+        "metrics": {
+          "views": 4,
+          "likes": 0,
+          "comments": 0,
+          "shares": 0
+        },
+        "source": "threads_native_api"
       }
     ],
     "fetch_attempts_by_window": {},
@@ -10546,7 +10713,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ],
     "measurement_status": "missing_pages_read_engagement_permission",
     "missed_windows": {}
