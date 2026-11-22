@@ -130,8 +130,12 @@ def merge_posts(base: list[dict], other: list[dict]) -> list[dict]:
 
 
 def _write(data: dict, path: Path) -> None:
-    if not isinstance(data, dict) or not isinstance(data.get("records"), dict):
+    if not isinstance(data, dict):
+        raise ValueError(f"Cannot save invalid structure to {path}: expected dict")
+    if "records" in data and not isinstance(data.get("records"), dict):
         raise ValueError(f"Cannot save invalid ledger structure to {path}")
+    if "lessons" in data and not isinstance(data.get("lessons"), list):
+        raise ValueError(f"Cannot save invalid lessons structure to {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temp = tempfile.mkstemp(prefix=path.name + ".", suffix=".tmp", dir=str(path.parent))
     try:
@@ -142,8 +146,12 @@ def _write(data: dict, path: Path) -> None:
             os.fsync(stream.fileno())
         with open(temp, "r", encoding="utf-8") as check_stream:
             parsed = json.load(check_stream)
-            if not isinstance(parsed, dict) or not isinstance(parsed.get("records"), dict):
+            if not isinstance(parsed, dict):
+                raise ValueError("Temporary content validation failed: not a dict")
+            if "records" in data and not isinstance(parsed.get("records"), dict):
                 raise ValueError("Temporary ledger content validation failed")
+            if "lessons" in data and not isinstance(parsed.get("lessons"), list):
+                raise ValueError("Temporary lessons content validation failed")
         os.replace(temp, path)
     finally:
         try:
