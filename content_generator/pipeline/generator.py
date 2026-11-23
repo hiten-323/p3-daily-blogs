@@ -355,11 +355,16 @@ def generate_daily_content(
 
     if _extended:
         from content_generator.prompts import threads, facebook
+        from content_generator.prompts.evening_growth_reels import (
+            build_facebook_evening_growth, build_youtube_evening_growth,
+        )
         phase1_tasks.update({
                 "stories":       (stories.build,  (day_number,),                                                      1500),
             "yt_short":      (yt_short.build, (product, day_number),                                              1500),
             "threads_post":  (threads.build,  (th_angle, avoid, day_number),                                      600),
             "facebook_post": (facebook.build, (fb_angle, avoid, day_number),                                     800),
+            "growth_reel_fb": (build_facebook_evening_growth, (day_number, str(product), avoid),                 1200),
+            "evening_yt_short": (build_youtube_evening_growth, (day_number, str(product), avoid),                1200),
         })
 
     phase1_results: dict[str, dict] = {}
@@ -420,7 +425,7 @@ def generate_daily_content(
         )
 
     # Fill optional keys with empty dicts so downstream code doesn't KeyError
-    for optional in ("blog_post", "stories", "yt_short", "threads_post", "facebook_post"):
+    for optional in ("blog_post", "stories", "yt_short", "threads_post", "facebook_post", "growth_reel_fb", "evening_yt_short"):
         phase1_results.setdefault(optional, {})
 
     # Semantic Premise Lock: verify portfolio premise diversity
@@ -529,6 +534,8 @@ def generate_daily_content(
         "growth_reel":    _stamp_growth_reel(phase1_results.get("growth_reel", {}), day_number),
         "threads_post":   phase1_results.get("threads_post", {}),
         "facebook_post":  phase1_results.get("facebook_post", {}),
+        "growth_reel_fb": phase1_results.get("growth_reel_fb", {}),
+        "evening_yt_short": phase1_results.get("evening_yt_short", {}),
         **vp,
         **_image_prompts(),
         "featured_product": product,

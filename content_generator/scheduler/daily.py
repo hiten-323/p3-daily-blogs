@@ -485,7 +485,8 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
         needs_website = "p3online.in" not in low
         # Rotate the appended brand line so captions aren't a chicory sermon
         # every day (one-note-messaging fix). Deterministic by piece text.
-        line = _brand_tagline(val)
+        feat = str(piece.get("featured_product") or piece.get("product") or "")
+        line = _brand_tagline(val, feat)
         if needs_brand and needs_website:
             piece[field] = val.rstrip() + f" {line} Shop: {site_link(label)}"
         elif needs_brand:
@@ -495,7 +496,8 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
 
     # CTA field is mandatory on brand-track assets — create it if the LLM skipped it
     if label in ("reel_1", "carousel", "instagram_post") and not str(piece.get("cta", "")).strip():
-        piece["cta"] = f"{_brand_tagline(str(piece))} Shop Purity Beans: {site_link(label)}"
+        feat = str(piece.get("featured_product") or piece.get("product") or "")
+        piece["cta"] = f"{_brand_tagline(str(piece), feat)} Shop Purity Beans: {site_link(label)}"
 
     # Carousel: the schema requires the FINAL SLIDE to carry brand + website.
     # Injection previously only touched caption/cta, so any carousel whose last
@@ -625,8 +627,20 @@ _BRAND_TAGLINES = (
     "Purity Beans — read the label: 70% coffee in Ultra Blend.",
 )
 
-def _brand_tagline(seed_text: str) -> str:
-    return _BRAND_TAGLINES[hash(seed_text) % len(_BRAND_TAGLINES)]
+def _brand_tagline(seed_text: str, featured_product: str = "") -> str:
+    feat = (featured_product or "").lower()
+    if "ultra" in feat:
+        ultra_taglines = (
+            "Purity Beans — Ultra Blend is 70% coffee.",
+            "Purity Beans — read the label: 70% coffee in Ultra Blend.",
+        )
+        return ultra_taglines[hash(seed_text) % len(ultra_taglines)]
+    pure_taglines = (
+        "Bold, Purista, Purica, and Prima are pure coffee.",
+        "Purity Beans — pure Arabica in Purica and Prima.",
+        "Purity Beans — Purista is pure Robusta. Bold is pure coffee.",
+    )
+    return pure_taglines[hash(seed_text) % len(pure_taglines)]
 
 
 _UNSUPPORTED_STATS = [
@@ -1130,7 +1144,7 @@ def _materialize_missing_piece(content: dict, label: str, day_no: int, featured:
 def _build_native_with_platform_prompt(label: str, content: dict, day_no: int,
                                        featured: str) -> dict | None:
     """Same phase-1 builders generator.py uses for facebook, threads, and Shorts."""
-    if label not in ("facebook_post", "threads_post", "yt_short"):
+    if label not in ("facebook_post", "threads_post", "yt_short", "growth_reel_fb", "evening_yt_short"):
         return None
     try:
         from content_generator.pipeline.generator import _optimized_pick
@@ -1151,6 +1165,14 @@ def _build_native_with_platform_prompt(label: str, content: dict, day_no: int,
             prompt = threads.build(
                 _optimized_pick(THREADS_ANGLES, day_no, label="threads_angle"), avoid, day_no)
             tokens = 600
+        elif label == "growth_reel_fb":
+            from content_generator.prompts.evening_growth_reels import build_facebook_evening_growth
+            prompt = build_facebook_evening_growth(day_no, product, avoid)
+            tokens = 1500
+        elif label == "evening_yt_short":
+            from content_generator.prompts.evening_growth_reels import build_youtube_evening_growth
+            prompt = build_youtube_evening_growth(day_no, product, avoid)
+            tokens = 1500
         else:
             from content_generator.prompts import yt_short
             prompt = yt_short.build(product, day_no)
@@ -1214,6 +1236,8 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
         # content["stories"]["story_1"] and makes the Story take the same
         # editorial + viral gate as every other asset.
         ("stories",        "stories",        "story_1"),
+        ("growth_reel_fb", "growth_reel_fb", None),
+        ("evening_yt_short", "evening_yt_short", None),
     ]
     # Blog regen only when explicitly enabled; Blogs bot owns Shopify blog.
     if blog_enabled():
