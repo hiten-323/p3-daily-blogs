@@ -357,3 +357,27 @@ def test_credential_blocked_posts_do_not_starve_other_due_platform_posts(tmp_pat
     assert result["blocked"] == 1
     assert result["snapshots"] == 1
     assert next(row for row in persisted if row["media_id"] == "authorized")["measurement_snapshots"]
+
+def test_facebook_skips_invalid_metric_and_preserves_valid_metrics(monkeypatch):
+    monkeypatch.setenv("FACEBOOK_PAGE_ACCESS_TOKEN", "test-token")
+    monkeypatch.setattr(platform_learning, "_meta_get", lambda *args: {
+        "shares": {"count": 5},
+        "likes": {"summary": {"total_count": 50}},
+        "comments": {"summary": {"total_count": 10}},
+    })
+    def mock_request(url, headers=None):
+        if "post_impressions" in url:
+            return {"data": [{"values": [{"value": 150}]}]}
+        if "post_engaged_users" in url:
+            return {"data": [{"values": [{"value": 45}]}]}
+        if "post_video_views" in url:
+            return None
+        return None
+    monkeypatch.setattr(platform_learning, "_request_json", mock_request)
+
+    res = platform_learning._fetch_facebook("page_post_photo_1")
+    assert res == {
+        "shares": 5, "likes": 50, "comments": 10,
+        "impressions": 150, "engagements": 45,
+    }
+
