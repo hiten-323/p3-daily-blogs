@@ -378,6 +378,6 @@ def test_facebook_skips_invalid_metric_and_preserves_valid_metrics(monkeypatch):
     res = platform_learning._fetch_facebook("page_post_photo_1")
     assert res == {
         "shares": 5, "likes": 50, "comments": 10,
-        "impressions": 150, "engagements": 45,
+        "impressions": 150, "engaged_users": 45,
     }
 
