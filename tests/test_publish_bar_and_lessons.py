@@ -228,3 +228,38 @@ def test_secrets_are_scrubbed(tmp_path, monkeypatch):
     assert "EAAFAKE" not in raw
     assert "sk-livekey" not in raw
     assert "supersecret" not in raw
+
+def test_compact_lessons_deduplication():
+    from content_generator.core.obstacle_lessons import compact_lessons
+    data = {
+        "lessons": [
+            {
+                "platform": "facebook",
+                "gate": "llm_viral",
+                "reason": "viral 7.0 late product reveal",
+                "count": 2,
+                "last_seen": "2026-11-20T10:00:00Z"
+            },
+            {
+                "platform": "facebook",
+                "gate": "llm_viral",
+                "reason": "Viral 7.0 late product reveal.",
+                "count": 1,
+                "last_seen": "2026-11-22T10:00:00Z"
+            },
+            {
+                "platform": "threads",
+                "gate": "editorial",
+                "reason": "missing link",
+                "count": 1,
+                "last_seen": "2026-11-21T10:00:00Z"
+            }
+        ]
+    }
+    compacted = compact_lessons(data)
+    assert len(compacted["lessons"]) == 2
+    fb_lesson = next(l for l in compacted["lessons"] if l["platform"] == "facebook")
+    assert fb_lesson["count"] == 3
+    assert fb_lesson["last_seen"] == "2026-11-22T10:00:00Z"
+    assert fb_lesson["gate"] == "llm_viral"
+

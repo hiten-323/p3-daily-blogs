@@ -159,5 +159,11 @@ def test_workflows_pass_the_xai_secret_to_generation_scoring_and_retry_steps():
 
 
 def test_thresholds_unchanged():
-    from content_generator.core import viral_gate
+    from content_generator.core import viral_gate, fallback_ladder
+    from content_generator.creative import visual_gate
+    from content_generator.core import editorial_engine
+
     assert viral_gate.PASS_MARK == 9.0
+    assert fallback_ladder.PASS_FLOOR == 8.0
+    assert visual_gate.AESTHETIC_PASS == 8.0
+    assert editorial_engine.get_current_pass_score() >= 8.0

@@ -61,6 +61,10 @@
     },
     "huggingface": {
       "requests": 300
+    },
+    "xai": {
+      "paid": true,
+      "_doc": "Paid tier, not percent-gated; 429s fall through to free chain"
     }
   },
   "primary_providers": [
