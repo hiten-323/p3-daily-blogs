@@ -200,7 +200,6 @@ _KEY_GETTERS = (
     ("gemini", gemini.get_key),
     ("cerebras", cerebras.get_key),
     ("deepseek", deepseek.get_key),
-    ("github_models", github_models.get_key),
     ("mistral", mistral.get_key),
     ("cloudflare", cloudflare.get_key),
     ("huggingface", huggingface.get_key),
