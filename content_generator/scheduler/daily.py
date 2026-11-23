@@ -55,12 +55,14 @@ def run_full_pipeline(day_number: int = None) -> dict:
     """
     from content_generator.scheduler.run_lock import RunLock
 
-    # ── Run lock — skip if today already ran ──────────────────────────────────
+    # ── Run lock — skip if today already ran (bypassed in dry-run mode) ───────
+    is_dry = bool(os.getenv("DRY_RUN"))
     lock = RunLock()
-    lock.__enter__()
-    if lock.already_ran:
-        logger.info("[scheduler] Today's run already completed — exiting")
-        return {"_skipped": True, "reason": "already_ran_today"}
+    if not is_dry:
+        lock.__enter__()
+        if lock.already_ran:
+            logger.info("[scheduler] Today's run already completed — exiting")
+            return {"_skipped": True, "reason": "already_ran_today"}
 
     # The lock is marked completed only after the work finishes, and released if
     # it raises. This path called __enter__() and never __exit__(), release() or
@@ -72,9 +74,11 @@ def run_full_pipeline(day_number: int = None) -> dict:
     try:
         result = _run_generate_slot(day_number)
     except Exception:
-        lock.release()          # crashed — let the next attempt proceed
+        if not is_dry:
+            lock.release()          # crashed — let the next attempt proceed
         raise
-    lock.mark_completed()
+    if not is_dry:
+        lock.mark_completed()
     return result
 
 
