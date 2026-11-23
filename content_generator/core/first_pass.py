@@ -129,6 +129,9 @@ def rubric_block(label: str) -> str:
         "knocking competitors or chicory, calling Ultra Blend pure (it is 70% coffee / 30% chicory), "
         "freeze-dried for anything but Purica/Purista, agglomerated for anything but Bold/Prima, "
         "or any price that is not the live Shopify price already given to you."
+        + ("\nOn-canvas word cap: keep each frame's on-screen text concise (<= 12 words per frame) to avoid visual clutter." if label == "stories" else "")
+        + ("\nReel 1 brand facts: MUST include at least one verifiable brand fact (e.g. Bold is pure agglomerated coffee, Purista/Purica is pure freeze-dried coffee, Ultra Blend is 70% coffee / 30% chicory) in the caption or cta." if label == "reel_1" else "")
+        + ("\nThreads anti-hedging: Forbid competitor-knocking ('might be', 'other brands cut', 'secretly'). State only Purity Beans' own verifiable processes." if label == "threads_post" else "")
     )
 
 
