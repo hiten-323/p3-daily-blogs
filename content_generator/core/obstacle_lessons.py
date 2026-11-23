@@ -102,7 +102,7 @@ def classify(feedback: str) -> str:
 
 
 def _norm_reason(reason: str) -> str:
-    return re.sub(r"\s+", " ", scrub(reason).lower()).strip()[:180]
+    return re.sub(r"\s+", " ", scrub(reason).lower()).strip().rstrip(".,;:!?")[:180]
 
 
 def _lesson_id(platform: str, label: str, gate: str, reason: str) -> str:
@@ -125,7 +125,8 @@ def _load(path: Path) -> dict:
 
 def _save(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    blob = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    compacted = compact_lessons(data)
+    blob = json.dumps(compacted, indent=2, sort_keys=True) + "\n"
     fd, tmp = tempfile.mkstemp(prefix="lessons-", dir=str(path.parent))
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
@@ -256,3 +257,44 @@ def prompt_block(label: str) -> str:
     if len(text) <= _MAX_PROMPT:
         return text
     return text[:_MAX_PROMPT].rsplit("\n", 1)[0]
+
+
+def compact_lessons(data: dict) -> dict:
+    """Merge rows with the same (platform, gate, normalized_reason) into one row with count and last_seen updated."""
+    lessons = [row for row in data.get("lessons") or [] if isinstance(row, dict)]
+    by_key: dict[str, dict] = {}
+    order: list[str] = []
+
+    for row in lessons:
+        platform = str(row.get("platform") or platform_for(row.get("label", "")))
+        gate = str(row.get("gate") or classify(row.get("reason", "")))
+        norm_reason = _norm_reason(str(row.get("reason") or ""))
+        key = f"{platform}|{gate}|{norm_reason}"
+
+        count = int(row.get("count") or 1)
+        first_seen = str(row.get("first_seen") or "")
+        last_seen = str(row.get("last_seen") or "")
+
+        if key not in by_key:
+            merged = dict(row)
+            merged["id"] = key
+            merged["platform"] = platform
+            merged["gate"] = gate
+            merged["count"] = count
+            merged["first_seen"] = first_seen
+            merged["last_seen"] = last_seen
+            by_key[key] = merged
+            order.append(key)
+        else:
+            cur = by_key[key]
+            cur["count"] = int(cur.get("count") or 1) + count
+            if last_seen and (not cur.get("last_seen") or last_seen > str(cur.get("last_seen"))):
+                cur["last_seen"] = last_seen
+            if first_seen and (not cur.get("first_seen") or first_seen < str(cur.get("first_seen"))):
+                cur["first_seen"] = first_seen
+            if not cur.get("fix") and row.get("fix"):
+                cur["fix"] = row["fix"]
+            if not cur.get("feedback") and row.get("feedback"):
+                cur["feedback"] = row["feedback"]
+
+    return {"version": 1, "lessons": [by_key[k] for k in order]}

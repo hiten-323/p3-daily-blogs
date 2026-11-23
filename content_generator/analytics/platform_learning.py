@@ -341,13 +341,18 @@ def _fetch_facebook(media_id: str) -> dict | None:
     if not data:
         return None
     out: dict[str, Any] = {}
-    query = urllib.parse.urlencode({
-        "metric": "post_impressions,post_engaged_users,post_video_views",
-    })
-    insights = _request_json(
-        f"{_meta_base()}/{urllib.parse.quote(media_id, safe='_')}/insights?{query}",
-        headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
-    )
+    # Query valid post metrics; skip unknown/unsupported metrics (e.g. video_views on photos)
+    # instead of letting one bad metric return OAuthException (#100) and drop all metrics.
+    insights_data = []
+    for m in ("post_impressions", "post_engaged_users", "post_video_views"):
+        query = urllib.parse.urlencode({"metric": m})
+        res = _request_json(
+            f"{_meta_base()}/{urllib.parse.quote(media_id, safe='_')}/insights?{query}",
+            headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+        )
+        if res and "data" in res:
+            insights_data.extend(res["data"])
+    insights = {"data": insights_data}
     if isinstance(data.get("shares"), dict) and "count" in data["shares"]:
         out["shares"] = data["shares"]["count"]
     likes = (data.get("likes") or {}).get("summary") or {}
