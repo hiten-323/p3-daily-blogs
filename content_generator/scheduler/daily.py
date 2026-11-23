@@ -494,7 +494,7 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
             piece[field] = val.rstrip() + f" Shop: {site_link(label)}"
 
     # CTA field is mandatory on brand-track assets — create it if the LLM skipped it
-    if label in ("reel_1", "carousel", "instagram_post", "yt_short") and not str(piece.get("cta", "")).strip():
+    if label in ("reel_1", "carousel", "instagram_post") and not str(piece.get("cta", "")).strip():
         piece["cta"] = f"{_brand_tagline(str(piece))} Shop Purity Beans: {site_link(label)}"
 
     # Carousel: the schema requires the FINAL SLIDE to carry brand + website.
@@ -505,7 +505,11 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
         try:
             from content_generator.core.brand_validator import validate_brand_facts
             if not validate_brand_facts(caption_and_cta):
-                line = _brand_tagline(caption_and_cta)
+                feat = str(piece.get("featured_product") or "").lower()
+                if "ultra" in feat:
+                    line = "Purity Beans — Ultra Blend is 70% coffee."
+                else:
+                    line = "Bold, Purista, Purica, and Prima are pure coffee."
                 if piece.get("caption"):
                     piece["caption"] = piece["caption"].rstrip() + f" {line}"
                 else:
@@ -515,18 +519,20 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
 
     if label == "yt_short":
         scenes = piece.get("scenes")
-        if isinstance(scenes, list) and scenes and isinstance(scenes[-1], dict):
-            last = scenes[-1]
-            spoken = str(last.get("spoken") or "")
-            on_screen = str(last.get("on_screen") or "")
-            full_text = " ".join([str(piece.get(k) or "") for k in ("tagline", "product", "cta", "description")] + [spoken, on_screen]).lower()
-            if "purity beans" not in full_text:
-                if spoken:
-                    last["spoken"] = (spoken.rstrip() + " — Purity Beans.").strip()
-                elif on_screen:
-                    last["on_screen"] = (on_screen.rstrip() + " | Purity Beans").strip()
-                else:
-                    piece["tagline"] = "Purity Beans pure coffee"
+        spoken_all = " ".join([str(s.get("spoken") or "") + " " + str(s.get("on_screen") or "")
+                              for s in (scenes or []) if isinstance(s, dict)])
+        full_text = " ".join([str(piece.get(k) or "") for k in ("tagline", "product", "cta", "description")] + [spoken_all]).lower()
+        if "purity beans" not in full_text:
+            if isinstance(scenes, list) and scenes and isinstance(scenes[-1], dict):
+                last = scenes[-1]
+                if last.get("spoken"):
+                    last["spoken"] = str(last["spoken"]).rstrip() + " — Purity Beans."
+                elif last.get("on_screen"):
+                    last["on_screen"] = str(last["on_screen"]).rstrip() + " | Purity Beans"
+            elif piece.get("tagline"):
+                piece["tagline"] = str(piece["tagline"]).rstrip() + " — Purity Beans"
+            elif piece.get("cta"):
+                piece["cta"] = str(piece["cta"]).rstrip() + " — Purity Beans"
 
     if label == "carousel":
         slides = piece.get("slides")
