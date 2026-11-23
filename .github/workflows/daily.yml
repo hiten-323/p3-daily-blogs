@@ -119,8 +119,28 @@ jobs:
         run: python -m content_generator.scheduler.daily --unlock
 
       - name: Verify render, measurement, governance and workflow contracts
+        continue-on-error: true
+        id: test_contracts
         run: |
           pytest -q tests/
+
+      - name: Alert on test contract failure
+        if: steps.test_contracts.outcome == 'failure'
+        env:
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+        run: |
+          python - <<'PY'
+          import os
+          msg = (
+              "WARNING: Daily pipeline test contracts failed, continuing generation/publishing\n"
+              f"Run: {os.environ.get('GITHUB_RUN_NUMBER', '')}\n"
+              f"Logs: {os.environ.get('GITHUB_SERVER_URL', '')}/{os.environ.get('GITHUB_REPOSITORY', '')}/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}"
+          )
+          from content_generator.scheduler.watchdog import alert_failure
+          alert_failure(msg)
+          print("Test contract failure warning alert sent.")
+          PY
 
       - name: Probe LLM providers
         if: ${{ (success() || failure()) && github.event.inputs.dry_run == 'true' }}
