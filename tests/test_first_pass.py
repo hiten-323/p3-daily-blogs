@@ -196,3 +196,32 @@ def test_generator_uses_first_pass_and_reports_it():
 def test_writer_uses_the_strongest_grok_model_first():
     from content_generator.providers import xai
     assert xai.MODELS[0] == "grok-4.7"
+
+def test_scratch_prompt_includes_first_pass_brief():
+    from content_generator.core.fallback_ladder import scratch_prompt
+    prompt = scratch_prompt("reel_1", {"featured_product": "Bold"}, "critique", 8.0, "BRAND")
+    assert "HOW THIS PIECE WILL BE SCORED" in prompt
+    assert "GATE 1, EDITORIAL" in prompt
+
+
+def test_story_word_cap_and_threads_anti_hedging_rules():
+    from content_generator.prompts import stories, threads
+    st_prompt = stories.build(1)
+    assert "<= 12 words per frame" in st_prompt
+    th_prompt = threads.build(("process", "clarity"), "avoid", 1)
+    assert "FORBID COMPETITOR-KNOCKING" in th_prompt
+    assert "ULTRA BLEND DISCLOSURE" in th_prompt
+
+
+def test_inject_brand_covers_yt_short_and_reel_1_brand_facts():
+    from content_generator.scheduler.daily import _inject_brand_into_piece
+    reel = {"caption": "Just coffee in the jar", "cta": ""}
+    _inject_brand_into_piece("reel_1", reel)
+    assert "p3online.in" in reel["cta"]
+    from content_generator.core.brand_validator import validate_brand_facts
+    assert validate_brand_facts(f"{reel['caption']} {reel['cta']}")
+
+    yt = {"tagline": "Morning brew", "scenes": [{"spoken": "Pouring hot water", "on_screen": "Brewing"}]}
+    _inject_brand_into_piece("yt_short", yt)
+    assert "Purity Beans" in yt["scenes"][-1]["spoken"] or "Purity Beans" in yt.get("tagline", "")
+
