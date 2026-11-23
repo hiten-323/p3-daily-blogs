@@ -1157,6 +1157,7 @@ def _build_native_with_platform_prompt(label: str, content: dict, day_no: int,
 
 
 def _do_editorial(content: dict, only: set | None = None) -> None:
+    import time as _time
     """
     Review each content piece. Regenerates up to QUALITY_MAX_REGEN times.
     Skips LLM review entirely if all providers are exhausted (circuit open).
