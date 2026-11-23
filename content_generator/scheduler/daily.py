@@ -473,7 +473,7 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
         "instagram_post": ["caption", "cta"],
         "linkedin_post":  ["cta"],
         "blog_post":      ["conclusion"],
-        "yt_short":       ["cta", "description"],
+        "yt_short":       ["cta", "description", "tagline"],
     }
     fields = TEXT_FIELDS.get(label, [])
     for field in fields:
@@ -494,12 +494,40 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
             piece[field] = val.rstrip() + f" Shop: {site_link(label)}"
 
     # CTA field is mandatory on brand-track assets — create it if the LLM skipped it
-    if label in ("reel_1", "carousel", "instagram_post") and not str(piece.get("cta", "")).strip():
+    if label in ("reel_1", "carousel", "instagram_post", "yt_short") and not str(piece.get("cta", "")).strip():
         piece["cta"] = f"{_brand_tagline(str(piece))} Shop Purity Beans: {site_link(label)}"
 
     # Carousel: the schema requires the FINAL SLIDE to carry brand + website.
     # Injection previously only touched caption/cta, so any carousel whose last
     # slide omitted the link was rejected outright (a silent daily loss).
+    if label == "reel_1":
+        caption_and_cta = f"{piece.get('caption', '')} {piece.get('cta', '')}"
+        try:
+            from content_generator.core.brand_validator import validate_brand_facts
+            if not validate_brand_facts(caption_and_cta):
+                line = _brand_tagline(caption_and_cta)
+                if piece.get("caption"):
+                    piece["caption"] = piece["caption"].rstrip() + f" {line}"
+                else:
+                    piece["cta"] = (str(piece.get("cta") or "").rstrip() + f" {line}").strip()
+        except Exception:
+            pass
+
+    if label == "yt_short":
+        scenes = piece.get("scenes")
+        if isinstance(scenes, list) and scenes and isinstance(scenes[-1], dict):
+            last = scenes[-1]
+            spoken = str(last.get("spoken") or "")
+            on_screen = str(last.get("on_screen") or "")
+            full_text = " ".join([str(piece.get(k) or "") for k in ("tagline", "product", "cta", "description")] + [spoken, on_screen]).lower()
+            if "purity beans" not in full_text:
+                if spoken:
+                    last["spoken"] = (spoken.rstrip() + " — Purity Beans.").strip()
+                elif on_screen:
+                    last["on_screen"] = (on_screen.rstrip() + " | Purity Beans").strip()
+                else:
+                    piece["tagline"] = "Purity Beans pure coffee"
+
     if label == "carousel":
         slides = piece.get("slides")
         if isinstance(slides, list) and slides and isinstance(slides[-1], dict):
@@ -1237,8 +1265,11 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
             piece["featured_product"] = featured
 
         viral_score_misses = 0
+        _piece_budget = max(45, int(os.getenv("EDITORIAL_PIECE_TIMEOUT_S", "180")))
+        _piece_deadline = _time.monotonic() + _piece_budget
+
         for attempt in range(attempts_allowed):
-            if _editorial_deadline_passed():
+            if _editorial_deadline_passed() or _time.monotonic() >= _piece_deadline:
                 piece.setdefault("editorial_error", "editorial time budget reached before this piece passed")
                 logger.warning("[editorial] time budget reached — %s left unapproved (held for retry)", label)
                 break
@@ -1698,6 +1729,13 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
                 regen_prompt += "\n\n" + extra
         except Exception:
             logger.debug("[lessons] regen prompt suffix skipped for %s", label)
+        try:
+            from content_generator.core.first_pass import brief as _first_pass_brief
+            _fp_extra = _first_pass_brief(label)
+            if _fp_extra:
+                regen_prompt += "\n\n" + _fp_extra
+        except Exception:
+            pass
         if from_scratch:
             from content_generator.core.fallback_ladder import scratch_prompt
             regen_prompt = scratch_prompt(label, piece, feedback, threshold, brand_block())
