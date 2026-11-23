@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-23T02:42:58+00:00",
+  "generated_at": "2026-11-23T15:08:09+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 43,
+      "posts": 42,
       "measured": 6,
       "ranked": 5,
       "metrics_seen": [
@@ -12,7 +12,7 @@
       ],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 35,
-        "missing_pages_read_engagement_permission": 2
+        "missing_pages_read_engagement_permission": 1
       },
       "winners": [],
       "losers": [],
@@ -102,7 +102,7 @@
       "gaps": []
     },
     "instagram": {
-      "posts": 79,
+      "posts": 78,
       "measured": 24,
       "ranked": 24,
       "metrics_seen": [
@@ -110,7 +110,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 55
+        "too_old_for_comparable_window": 54
       },
       "winners": [
         {
@@ -224,12 +224,12 @@
       ]
     },
     "instagram_story": {
-      "posts": 12,
+      "posts": 11,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "story_measurement_window_missed": 12
+        "story_measurement_window_missed": 11
       },
       "winners": [],
       "losers": [],
@@ -242,13 +242,13 @@
       ]
     },
     "linkedin": {
-      "posts": 22,
+      "posts": 21,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 20,
-        "missing_linkedin_token_or_version": 2
+        "missing_linkedin_token_or_version": 1
       },
       "winners": [],
       "losers": [],
@@ -261,9 +261,9 @@
       ]
     },
     "threads": {
-      "posts": 23,
-      "measured": 23,
-      "ranked": 23,
+      "posts": 22,
+      "measured": 22,
+      "ranked": 22,
       "metrics_seen": [
         "comments",
         "likes",
@@ -275,15 +275,15 @@
         {
           "dimension": "angle",
           "value": "sensory",
-          "ratio": 4.96,
+          "ratio": 4.84,
           "n": 2,
           "provisional": true
         },
         {
           "dimension": "label",
           "value": "threads_post",
-          "ratio": 1.73,
-          "n": 23,
+          "ratio": 1.52,
+          "n": 22,
           "provisional": false
         }
       ],
@@ -309,7 +309,7 @@
           "hook": "Hot take: most people never taste their coffee, they just drink the sugar and milk poured on top of it. ",
           "template": "",
           "angle": "myth-busting coffee truths",
-          "relative": 5.8,
+          "relative": 4.143,
           "window": "7d",
           "editorial_score": null,
           "metrics": {
@@ -371,7 +371,7 @@
           "hook": "Hot take: most people never actually taste their morning coffee, they just drink it out of routine.",
           "template": "",
           "angle": "sensory_contrast_purica",
-          "relative": 0.4,
+          "relative": 0.286,
           "window": "7d",
           "editorial_score": null,
           "metrics": {
@@ -486,49 +486,6 @@
     }
   },
   "posts": [
-    {
-      "platform": "threads",
-      "label": "threads_post",
-      "day": 295,
-      "media_id": "17920256169245460",
-      "published_at": "2026-10-23T07:37:05+00:00",
-      "hook": "The alternative to burnt instant coffee is waiting 30 seconds after boiling.",
-      "angle": "teach the physical difference between freeze-dried and insta",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "purica",
-      "editorial_score": null,
-      "window": "7d",
-      "metrics": {
-        "views": 5,
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "basis": "reach",
-      "value": 5.0,
-      "relative": 1.0
-    },
-    {
-      "platform": "instagram",
-      "label": "carousel",
-      "day": 295,
-      "media_id": "17917310274263071",
-      "published_at": "2026-10-23T08:57:23+00:00",
-      "hook": "Why your morning milk coffee still tastes thin (even with two spoons).",
-      "angle": "",
-      "template": "",
-      "hook_strategy": "question",
-      "attention_mechanism": "curiosity_gap",
-      "product": "ultra_blend",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
     {
       "platform": "instagram",
       "label": "growth_reel",
@@ -874,44 +831,6 @@
       "hook_strategy": "",
       "attention_mechanism": "",
       "product": "Purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 295,
-      "media_id": "494003270464484_122168700632655685",
-      "published_at": "2026-10-23T08:57:29+00:00",
-      "hook": "Who else knows that quiet disappointment of opening an instant coffee jar and smelling absolutely nothing?",
-      "angle": "sensory contrast — describing the exact moment the taste tel",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram_story",
-      "label": "stories",
-      "day": 295,
-      "media_id": "18134243140780570",
-      "published_at": "2026-10-23T09:06:47+00:00",
-      "hook": "BREW PURE Join real coffee lovers switching to pure coffee.",
-      "angle": "engagement growth",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -1307,7 +1226,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.4
+      "relative": 0.286
     },
     {
       "platform": "instagram",
@@ -1445,7 +1364,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.0
+      "relative": 0.714
     },
     {
       "platform": "instagram",
@@ -1802,7 +1721,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.4
+      "relative": 0.286
     },
     {
       "platform": "facebook",
@@ -2116,7 +2035,7 @@
       },
       "basis": "reach",
       "value": 9.0,
-      "relative": 1.8
+      "relative": 1.286
     },
     {
       "platform": "instagram",
@@ -3093,7 +3012,7 @@
       },
       "basis": "reach",
       "value": 14.0,
-      "relative": 2.8
+      "relative": 2.0
     },
     {
       "platform": "instagram",
@@ -3256,7 +3175,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.0
+      "relative": 0.714
     },
     {
       "platform": "youtube",
@@ -3449,7 +3368,7 @@
       },
       "basis": "reach",
       "value": 10.0,
-      "relative": 2.0
+      "relative": 1.429
     },
     {
       "platform": "instagram",
@@ -3642,7 +3561,7 @@
       },
       "basis": "reach",
       "value": 13.0,
-      "relative": 2.6
+      "relative": 1.857
     },
     {
       "platform": "instagram",
@@ -4204,7 +4123,7 @@
       },
       "basis": "reach",
       "value": 29.0,
-      "relative": 5.8
+      "relative": 4.143
     },
     {
       "platform": "youtube",
@@ -4484,7 +4403,7 @@
       },
       "basis": "reach",
       "value": 4.0,
-      "relative": 0.8
+      "relative": 0.571
     },
     {
       "platform": "facebook",
