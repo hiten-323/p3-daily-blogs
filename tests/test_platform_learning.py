@@ -367,9 +367,9 @@ def test_facebook_skips_invalid_metric_and_preserves_valid_metrics(monkeypatch):
     })
     def mock_request(url, headers=None):
         if "post_impressions" in url:
-            return {"data": [{"values": [{"value": 150}]}]}
+            return {"data": [{"name": "post_impressions", "values": [{"value": 150}]}]}
         if "post_engaged_users" in url:
-            return {"data": [{"values": [{"value": 45}]}]}
+            return {"data": [{"name": "post_engaged_users", "values": [{"value": 45}]}]}
         if "post_video_views" in url:
             return None
         return None
