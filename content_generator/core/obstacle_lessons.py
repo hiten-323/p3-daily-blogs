@@ -102,7 +102,7 @@ def classify(feedback: str) -> str:
 
 
 def _norm_reason(reason: str) -> str:
-    return re.sub(r"\s+", " ", scrub(reason).lower()).strip()[:180]
+    return re.sub(r"\s+", " ", scrub(reason).lower()).strip().rstrip(".,;:!?")[:180]
 
 
 def _lesson_id(platform: str, label: str, gate: str, reason: str) -> str:
