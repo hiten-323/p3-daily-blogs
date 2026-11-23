@@ -31,6 +31,8 @@ REEL_SLOT: dict[str, str] = {
 PUBLISHED_REELS: tuple[str, ...] = ("growth_reel", "reel_1")
 RETIRED_REELS: frozenset[str] = frozenset({"reel_2"})
 ALL_REEL_LABELS: frozenset[str] = frozenset(PUBLISHED_REELS) | RETIRED_REELS
+# Evening growth triad (dedicated per-platform growth assets for 21:53 IST)
+EVENING_GROWTH_ASSETS: tuple[str, ...] = ("reel_1", "growth_reel_fb", "evening_yt_short")
 MAX_REELS_PER_DAY = 2
 MIN_REEL_GAP_HOURS = 3
 # The morning reel is due from the morning slot until this IST time.
@@ -49,6 +51,11 @@ def reel_for_slot(slot: str) -> str | None:
 
 def slot_for_reel(name: str) -> str | None:
     return REEL_SLOT.get(name)
+
+
+def evening_growth_targets() -> tuple[str, ...]:
+    """The dedicated platform-specific growth assets for the evening slot (21:53 IST)."""
+    return EVENING_GROWTH_ASSETS
 
 
 def reel_window_open(name: str, ist_hour: int, ist_minute: int = 0) -> bool:

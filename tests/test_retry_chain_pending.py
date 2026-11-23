@@ -37,6 +37,8 @@ def test_nothing_pending_once_each_piece_is_live():
         ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "instagram_post"})
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "carousel"})
+    rec.append({"slot": "evening", "platform": "facebook", "status": live, "asset": "growth_reel_fb"})
+    rec.append({"slot": "evening", "platform": "youtube", "status": live, "asset": "evening_yt_short"})
     for asset in ("reel_1", "growth_reel"):
         rec.append({"slot": REEL_SLOT[asset], "platform": "instagram_video", "status": live, "asset": asset})
     assert ru.pending_targets(T(12), records=rec, pack_exists=True) == []
@@ -68,6 +70,10 @@ def test_approved_evening_reel_waits_until_its_slot():
         ("generate", "linkedin"), ("generate", "youtube"), ("generate", "threads"))]
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "instagram_post"})
     rec.append({"slot": "morning", "platform": "instagram", "status": live, "asset": "carousel"})
+    rec.extend([
+        {"slot": "evening", "platform": "facebook", "status": live, "asset": "growth_reel_fb"},
+        {"slot": "evening", "platform": "youtube", "status": live, "asset": "evening_yt_short"},
+    ])
     rec.append({"slot": "morning", "platform": "instagram_video", "status": live, "asset": "growth_reel"})
     assert ru.pending_targets(dt.datetime(2026, 11, 6, 19, 28), records=rec, pack_exists=True) == []
     assert ru.pending_targets(dt.datetime(2026, 11, 6, 21, 52), records=rec, pack_exists=True) == []
