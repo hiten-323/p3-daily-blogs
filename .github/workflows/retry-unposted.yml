@@ -199,19 +199,25 @@ jobs:
           # An explicit empty PENDING: is a valid all-clear; no output is an error.
           [ -z "$PENDING" ] && exit 0
           TODAY_IST=$(TZ=Asia/Kolkata date +%F)
-          # Generate backstop: no pack by 08:00 IST and no active same-day daily run
+                    # Generate backstop: no pack by 08:00 IST and no active same-day daily run
           # (scheduled run was dropped, failed, or completed without saving a pack) -> regenerate.
           if [ "$PENDING" = "no_pack" ] && [ "$HOUR_IST" -ge 8 ]; then
-            # A failed or completed daily run must not block recovery when the content pack is absent.
-            # Only suppress a new generate while a same-day daily run is queued or in progress.
+            DAILY_DISPATCHED=$(gh run list -R "$GITHUB_REPOSITORY" --workflow daily.yml -L 30 --json createdAt,event \
+              --jq "[.[] | select((.createdAt | fromdateiso8601 + 19800 | strftime(\"%Y-%m-%d\")) == \"$TODAY_IST\") | select(.event == \"workflow_dispatch\")] | length" 2>/dev/null || echo "1")
             DAILY_ACTIVE=$(gh run list -R "$GITHUB_REPOSITORY" --workflow daily.yml -L 30 --json createdAt,status \
-              --jq "[.[] | select((.createdAt | fromdateiso8601 + 19800 | strftime(\"%Y-%m-%d\")) == \"$TODAY_IST\") | select(.status == \"queued\" or .status == \"in_progress\")] | length" 2>/dev/null) || { echo "::error::could not inspect same-day daily runs; refusing to assume one is active"; exit 1; }
-            if [ "$DAILY_ACTIVE" = "0" ]; then
-              echo "::warning::No content pack for $TODAY_IST by ${HOUR_IST}h IST and no active daily run; dispatching generate."
-              dispatch_with_retry gh workflow run daily.yml -R "$GITHUB_REPOSITORY" --ref main -f slot=generate -f force_run=false || { echo "::error::generate dispatch failed"; exit 1; }
+              --jq "[.[] | select((.createdAt | fromdateiso8601 + 19800 | strftime(\"%Y-%m-%d\")) == \"$TODAY_IST\") | select(.status == \"queued\" or .status == \"in_progress\")] | length" 2>/dev/null || echo "1")
+            if [ "$DAILY_ACTIVE" = "0" ] && [ "$DAILY_DISPATCHED" = "0" ]; then
+              echo "::warning::No content pack for $TODAY_IST by ${HOUR_IST}h IST and no daily run active or previously dispatched; dispatching generate."
+              dispatch_with_retry gh workflow run daily.yml -R "$GITHUB_REPOSITORY" --ref main -f slot=generate -f force_run=false || { echo "::warning::generate dispatch failed"; }
             fi
           fi
-          sleep 240
+          if [ "$PENDING" = "no_pack" ]; then
+            # Daily generation owns the next recovery kickoff once it saves today's pack.
+            # Do not create a four-minute retry-dispatch loop while that job is active.
+            echo "::notice::No pack yet; exiting and leaving generation/recovery to the daily workflow."
+            exit 0
+          fi
+          sleep 1800
           dispatch_with_retry gh workflow run retry-unposted.yml -R "$GITHUB_REPOSITORY" --ref main || { echo "::error::self-dispatch failed"; exit 1; }
       - name: Alert on recovery failure
         if: failure()
