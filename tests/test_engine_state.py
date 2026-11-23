@@ -155,7 +155,7 @@ def test_deletions_and_prune_reach_the_branch(tmp_path, origin, monkeypatch):
     engine_state.load(Path("."))
     (work / "output/creative/reel_2099-11-19.jpg").unlink()
     assert engine_state.save("d", Path("."))
-    _git(work, "fetch", "-q", "origin", "engine-state")
+    _git(work, "fetch", "-q", "origin", "+refs/heads/engine-state:refs/remotes/origin/engine-state")
     files = _git(work, "ls-tree", "-r", "--name-only", "origin/engine-state")
     assert "output/creative/reel_2099-11-19.jpg" not in files
 
