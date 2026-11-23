@@ -19,6 +19,8 @@ NATIVE THREADS ARCHITECTURE (OPTIMIZED FOR REPLIES, QUOTES & FOLLOWS):
 
 PLATFORM RULES (STRICT):
 - Total length MUST BE UNDER 480 CHARACTERS.
+- FORBID COMPETITOR-KNOCKING: Do not use speculative competitor attacks or hedging phrases ('might be', 'other brands cut', 'most brands secretly'). Speak only about Purity Beans' own processes and verifiable label facts.
+- ULTRA BLEND DISCLOSURE: Ultra Blend is 70% pure coffee and 30% chicory (never pure coffee). Disclose this honestly for traditional South Indian filter-style coffee lovers; never attack chicory or treat it as a filler attack.
 - LAYOUT: the CONVERSATION HOOK alone on the first line, then a blank line, then the insight that ANSWERS it (a concrete fact, check, comparison or action), then the discussion spark. Never one run-on paragraph.
 - NO PROMOTIONAL LINKS (links suppress reach in the Threads algorithm).
 - NO HASHTAG CLUTTER (Threads is conversation-led, not tag-stuffed).

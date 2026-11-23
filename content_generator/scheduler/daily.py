@@ -473,7 +473,7 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
         "instagram_post": ["caption", "cta"],
         "linkedin_post":  ["cta"],
         "blog_post":      ["conclusion"],
-        "yt_short":       ["cta", "description"],
+        "yt_short":       ["cta", "description", "tagline"],
     }
     fields = TEXT_FIELDS.get(label, [])
     for field in fields:
@@ -500,6 +500,40 @@ def _inject_brand_into_piece(label: str, piece: dict) -> dict:
     # Carousel: the schema requires the FINAL SLIDE to carry brand + website.
     # Injection previously only touched caption/cta, so any carousel whose last
     # slide omitted the link was rejected outright (a silent daily loss).
+    if label == "reel_1":
+        caption_and_cta = f"{piece.get('caption', '')} {piece.get('cta', '')}"
+        try:
+            from content_generator.core.brand_validator import validate_brand_facts
+            if not validate_brand_facts(caption_and_cta):
+                feat = str(piece.get("featured_product") or "").lower()
+                if "ultra" in feat:
+                    line = "Purity Beans — Ultra Blend is 70% coffee."
+                else:
+                    line = "Bold, Purista, Purica, and Prima are pure coffee."
+                if piece.get("caption"):
+                    piece["caption"] = piece["caption"].rstrip() + f" {line}"
+                else:
+                    piece["cta"] = (str(piece.get("cta") or "").rstrip() + f" {line}").strip()
+        except Exception:
+            pass
+
+    if label == "yt_short":
+        scenes = piece.get("scenes")
+        spoken_all = " ".join([str(s.get("spoken") or "") + " " + str(s.get("on_screen") or "")
+                              for s in (scenes or []) if isinstance(s, dict)])
+        full_text = " ".join([str(piece.get(k) or "") for k in ("tagline", "product", "cta", "description")] + [spoken_all]).lower()
+        if "purity beans" not in full_text:
+            if isinstance(scenes, list) and scenes and isinstance(scenes[-1], dict):
+                last = scenes[-1]
+                if last.get("spoken"):
+                    last["spoken"] = str(last["spoken"]).rstrip() + " — Purity Beans."
+                elif last.get("on_screen"):
+                    last["on_screen"] = str(last["on_screen"]).rstrip() + " | Purity Beans"
+            elif piece.get("tagline"):
+                piece["tagline"] = str(piece["tagline"]).rstrip() + " — Purity Beans"
+            elif piece.get("cta"):
+                piece["cta"] = str(piece["cta"]).rstrip() + " — Purity Beans"
+
     if label == "carousel":
         slides = piece.get("slides")
         if isinstance(slides, list) and slides and isinstance(slides[-1], dict):
@@ -1129,6 +1163,7 @@ def _build_native_with_platform_prompt(label: str, content: dict, day_no: int,
 
 
 def _do_editorial(content: dict, only: set | None = None) -> None:
+    import time as _time
     """
     Review each content piece. Regenerates up to QUALITY_MAX_REGEN times.
     Skips LLM review entirely if all providers are exhausted (circuit open).
@@ -1237,8 +1272,11 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
             piece["featured_product"] = featured
 
         viral_score_misses = 0
+        _piece_budget = max(45, int(os.getenv("EDITORIAL_PIECE_TIMEOUT_S", "180")))
+        _piece_deadline = _time.monotonic() + _piece_budget
+
         for attempt in range(attempts_allowed):
-            if _editorial_deadline_passed():
+            if _editorial_deadline_passed() or _time.monotonic() >= _piece_deadline:
                 piece.setdefault("editorial_error", "editorial time budget reached before this piece passed")
                 logger.warning("[editorial] time budget reached — %s left unapproved (held for retry)", label)
                 break
@@ -1698,6 +1736,13 @@ def _regenerate_piece(label: str, piece: dict, feedback: str, content: dict,
                 regen_prompt += "\n\n" + extra
         except Exception:
             logger.debug("[lessons] regen prompt suffix skipped for %s", label)
+        try:
+            from content_generator.core.first_pass import brief as _first_pass_brief
+            _fp_extra = _first_pass_brief(label)
+            if _fp_extra:
+                regen_prompt += "\n\n" + _fp_extra
+        except Exception:
+            pass
         if from_scratch:
             from content_generator.core.fallback_ladder import scratch_prompt
             regen_prompt = scratch_prompt(label, piece, feedback, threshold, brand_block())

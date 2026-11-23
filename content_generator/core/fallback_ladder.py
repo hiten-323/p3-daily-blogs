@@ -222,7 +222,7 @@ def scratch_prompt(label: str, piece: dict, feedback: str, threshold: float, bra
             craft = "\n\n" + craft_block(label)
         except Exception:
             craft = ""
-    return (
+    prompt_base = (
         f"{brand}\n\n"
         f"TASK: Write a BRAND-NEW {label} from scratch for {featured}. It must pass schema and an "
         f"editorial score of {threshold}.\n"
@@ -234,3 +234,10 @@ def scratch_prompt(label: str, piece: dict, feedback: str, threshold: float, bra
         f"Keep STOP, CURIOSITY, VALUE, TRUST, FOLLOW, BUY. {closer} Do not include an editorial_score.\n"
         "Return ONLY the JSON object."
     ) + craft + _lesson_suffix(label)
+    first_pass_extra = ""
+    try:
+        from content_generator.core.first_pass import brief as _first_pass_brief
+        first_pass_extra = "\n\n" + _first_pass_brief(label)
+    except Exception:
+        first_pass_extra = ""
+    return prompt_base + first_pass_extra

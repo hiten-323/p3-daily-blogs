@@ -15,6 +15,7 @@ Generate ONE 4-story Instagram Story sequence for Purity Beans. Return a single 
 
 COMPANION CONCEPT (shared with today's YouTube Short — the same vertical video
 is posted to both): {companion}
+ON-CANVAS WORD CAP: Every frame headline, subtext, body or question on-screen must be concise (<= 12 words per frame) to fit vertical mobile screens without clutter.
 IMPORTANT: This concept is deliberately DIFFERENT from today's Instagram Reels.
 Do not reuse the reels' hooks or angles.
 
