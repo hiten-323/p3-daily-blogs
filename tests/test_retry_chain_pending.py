@@ -127,3 +127,18 @@ def test_pending_probe_error_returns_nonzero(monkeypatch, capsys):
     monkeypatch.setattr(sys, "argv", ["retry_unposted.py", "--pending"])
     assert ru._cli() == 1
     assert capsys.readouterr().out.startswith("PENDING_ERROR:RuntimeError")
+
+
+def test_retry_unposted_dispatches_generate_at_most_once_per_day():
+    wf = ROOT / ".github/workflows"
+    retry = (wf / "retry-unposted.yml").read_text(encoding="utf-8")
+    assert "DAILY_DISPATCHED" in retry
+    assert "DAILY_ACTIVE" in retry
+    assert "No pack yet; exiting" in retry
+
+
+def test_daily_autonomous_pipeline_does_not_depend_on_test_step_success():
+    wf = ROOT / ".github/workflows"
+    daily = (wf / "daily.yml").read_text(encoding="utf-8")
+    assert "Verify render, measurement, governance and workflow contracts" in daily
+    assert "continue-on-error: true" in daily
