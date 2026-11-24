@@ -913,10 +913,18 @@
   "yt_short": {
     "featured_product": "Purica",
     "objective": "traffic",
-    "primary_cta": "Shop https://p3online.in/products/purica-100g-at-559?utm_source=youtube&utm_medium=post&utm_campaign=202610",
+    "primary_cta": "Follow @purepantryprovisions",
     "success_metric": "Completion rate > 75% + clicks to product page",
-    "_growth_attempts": 0,
-    "ad_cta_link": "https://p3online.in/products/purica-100g-at-559?utm_source=youtube&utm_medium=post&utm_campaign=202610",
+    "type": "yt_short",
+    "product": "Purica",
+    "tagline": "Read the jar. Purica is pure Arabica freeze-dried coffee.",
+    "title": "The Crema That Refuses to Die. The 30-Second Test.",
+    "description": "Side-by-side at 0:07 — generic spray-dried powder dissolves into flat brown water with zero crema. Purity Beans Purica freeze-dried Arabica crystals bloom into thick amber crema that holds for minutes. Zero chicory. Pure Arabica. Read the jar at https://p3online.in/?utm_source=youtube&utm_medium=post&utm_campaign=202610",
+    "hook": "Your instant coffee crema dies in 8 seconds. Here is the 30-second test.",
+    "hook_text": "Your instant coffee crema dies in 8 seconds. Here is the 30-second test.",
+    "chosen_hook": "Contrarian Statement",
+    "emotion_arc": "Contrarian shock → visual proof → sensory awakening → confident choice",
+    "edit_pacing": "Fast cuts every 2-3 seconds, macro crystal detail pulls, subtle handheld sway, physics-first dissolution",
     "audio": {
       "audio_category": "coffee_aesthetic",
       "mood": "lofi",
@@ -926,142 +934,100 @@
       "audio_name": null,
       "audio_id": null,
       "audio_source": null,
-      "audio_attached": false,
-      "audio_published": false
+      "audio_attached": false
     },
-    "audio_category": "coffee_aesthetic",
-    "audio_direction": "Pure diegetic sound first 4 seconds — kettle whistle, glass jar clink, crystal pour, steam hiss — then subtle lo-fi instrumental bed under voiceover",
-    "audio_note": "Trending Lo-Fi Cafe Beats",
-    "chosen_hook": "Contrarian Statement",
-    "comment_trigger": "Comment CRYSTALS if you've seen the bloom. Comment DUST if it vanishes.",
-    "cta": "Follow @purepantryprovisions for daily coffee truth. Shop Purica 100g ₹559 | 50g ₹329 at https://p3online.in/products/purica-100g-at-559?utm_source=youtube&utm_medium=post&utm_campaign=202610 — Purity Beans",
-    "edit_pacing": "Fast cuts every 2-3 seconds, macro crystal detail pulls, subtle handheld sway, physics-first dissolution",
-    "emotion_arc": "Contrarian shock → visual proof → sensory awakening → confident choice",
-    "funnel_objective": "traffic",
-    "hashtags": "#PurityBeans #Purica #PureCoffee #FreezeDriedCoffee #Arabica #CoffeeLoversIndia #CleanLabel #ReadTheJar #IndianCoffeeRitual",
-    "hook": "Your instant coffee vanishes in seconds. No crema. No body. Just bitter brown water.",
-    "hook_text": "Your instant coffee vanishes in seconds. No crema. No body. Just bitter brown water.",
-    "ladder_exhausted": true,
-    "loop_note": "End on the crema ring hold looping into the crystal pour",
-    "mood": "lofi",
-    "product": "Purica",
-    "publish_blocked": "ladder_exhausted",
-    "reel_inspiration": {
-      "inspiration_id": "purica_granule_test_style",
-      "mode": "style_cues",
-      "source_template_id": "purica_granule_test_reel",
-      "source_filename": "purica_granule_test.mp4",
-      "publish_source_video": false,
-      "copied": {
-        "pixels": false,
-        "audio": false,
-        "sku": false
-      },
-      "featured_product": "Purica",
-      "featured_slug": "purica",
-      "cues": [
-        {
-          "id": "pacing",
-          "cue": "Thirty-five seconds total, with scene shifts every seven seconds."
-        },
-        {
-          "id": "framing",
-          "cue": "Vertical 1080x1920 with the exact Purity Beans Purica jar forward so glass and label stay readable."
-        },
-        {
-          "id": "storytelling\": \"Focus on freeze-dried pure Arabica crystals vs spray-dried powder granule test and 10-second crema hold implying 30-second stability."
-        },
-        {
-          "id": "aesthetic",
-          "cue": "Warm editorial glass-jar photography on dark marble under warm amber light with lived-in kitchen details."
-        }
-      ]
-    },
-    "save_trigger": "Save this before your next grocery run. Tomorrow, test your jar and see the difference.",
+    "audio_direction": "Pure diegetic sound first 4 seconds — kettle whistle, crystal pour, steam hiss — then subtle instrumental bed under voiceover",
+    "audio_note": "ASMR-first: crystal pour at 0:03, crema bloom at 0:11, spoon clink at 0:18",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
-        "duration_s": 5.0,
-        "on_screen": "Steel dabara on kitchen counter — generic instant powder drops in, vanishes in 2 seconds, flat brown surface, no ring",
-        "spoken": "Your instant coffee dies in three seconds. No crema. No aroma. Just brown water.",
-        "visual_direction": "Handheld iPhone 15 vertical, 85mm macro. Dark kitchen counter, warm amber window light from left. Generic instant powder drops into a steel dabara — granules dissolve instantly, surface turns dull matte brown. Steam rises. Zero crema ring. Slight motion blur on pour. Realistic grain, lived-in kitchen details: used spoon, water ring on counter."
+        "duration_s": 3.0,
+        "on_screen": "Generic spray-dried powder hitting hot water — instant flat brown liquid, zero crema, timer overlay: 0:08",
+        "spoken": "Eight seconds. That is how long generic instant crema survives before it collapses into flat water.",
+        "visual_direction": "Macro top-down on white ceramic cup, harsh overhead light, spray-dried powder dissolves into muddy water with zero crema formation. Red timer overlay counts 0:08. Handheld sway."
       },
       {
         "scene": 2,
         "type": "turn",
-        "duration_s": 5.0,
-        "on_screen": "Purica jar (exact label, gold cap) pours crystalline granules — each crystal catches light, porous geometric structure visible",
-        "spoken": "Purity Beans Purica. Freeze-dried pure Arabica crystals. Not burnt powder. Not filler.",
-        "visual_direction": "Locked-off macro on dark marble. Purica jar forward, label and gold cap sharp. Crystals cascade into hot water in a white ceramic cup — porous, angular, catching amber rim light. Immediate crema bloom, golden-amber, alive. Steam swirls naturally. Jar label readable. Shallow depth of field, 85mm portrait lens feel. Fingerprint smudge on glass for realism."
+        "duration_s": 4.0,
+        "on_screen": "Purity Beans Purica jar enters frame — amber crystals pour slow, hit water, bloom into thick crema, timer: 0:00 → 0:45+",
+        "spoken": "Purity Beans Purica. Freeze-dried pure Arabica crystals. Crema holds past forty-five seconds.",
+        "visual_direction": "Warm amber side light on dark marble. Purica glass jar (exact reference) slides in from right. Crystals pour — visible crystalline structure. Hot water hit. Crema blooms thick, golden, persistent. Green timer counts up past 0:45. Shallow depth of field, 85mm equivalent."
       },
       {
         "scene": 3,
-        "type": "payoff",
-        "duration_s": 5.0,
-        "on_screen": "Crema ring holds at 30 seconds — glossy, unbroken, micro-bubbles visible. No timer overlay.",
-        "spoken": "Thirty seconds later the crema ring is still there. That's the freeze-dried difference.",
-        "visual_direction": "Locked-off macro on cup surface. Amber crema ring stays intact, glossy, micro-bubbles visible. Subtle steam drift. Purica jar rests in background, label readable. No cuts. Physics-first. Natural handheld micro-sway only."
+        "type": "proof",
+        "duration_s": 4.0,
+        "on_screen": "Spoon pulls through Purica crema — elastic stretch, no break. Cut to: spray-dried cup — spoon hits flat liquid.",
+        "spoken": "Real crema stretches. Fake crema vanishes. The difference is freeze-drying.",
+        "visual_direction": "Split-screen macro. Left: spoon drags through Purica crema — elastic, glossy, holds shape. Right: spoon hits spray-dried cup — zero resistance, flat brown. Warm amber light on left, cool flat light on right. Subtle handheld micro-movement."
       },
       {
         "scene": 4,
-        "type": "trust",
-        "duration_s": 5.0,
-        "on_screen": "Extreme close-up Purica label — 'Pure Arabica | Freeze-Dried | Zero Chicory' sharp, gold foil catches light. Net weight 100g. Lead-free glass jar.",
-        "spoken": "Read the jar. Pure Arabica. Freeze-dried. Zero chicory. Lead-free glass. Purity Beans.",
-        "visual_direction": "Tilt-shift macro on label. Ingredient panel crisp. Warm amber glow on gold foil. Dark marble. Human thumb enters frame, taps label once — lived-in realism, slight fingerprint on glass, visible skin texture."
+        "type": "value",
+        "duration_s": 4.0,
+        "on_screen": "Purica jar label close-up — 'Pure Arabica', 'Freeze-Dried', 'Zero Chicory' highlighted by light sweep",
+        "spoken": "Pure Arabica. Freeze-dried. Zero chicory. Read the jar at https://p3online.in",
+        "visual_direction": "Extreme close-up on Purica label. Warm light sweeps across 'Pure Arabica', 'Freeze-Dried Granules', '0% Chicory'. Label texture catches light like real printed paper. Fingerprint smudge on glass. Dark marble reflection."
       },
       {
         "scene": 5,
+        "type": "payoff",
+        "duration_s": 3.0,
+        "on_screen": "First sip — steam rises, genuine satisfaction micro-expression. Purica jar rests on dark marble, warm glow.",
+        "spoken": "This is what pure Arabica tastes like. Purity Beans. https://p3online.in",
+        "visual_direction": "Eye-level, 85mm. Person sips — natural micro-blink, chest rise, genuine pause. Steam catches amber backlight. Purica jar in foreground, sharp, glowing. Contact shadow on marble. Subtle lens flare from window."
+      },
+      {
+        "scene": 6,
         "type": "cta",
-        "duration_s": 5.0,
-        "on_screen": "Crema ring hold (end of Scene 3) loops seamlessly into crystal pour (start of Scene 2) — @purepantryprovisions on screen 2s + https://p3online.in/products/purica-100g-at-559?utm_source=youtube&utm_medium=post&utm_campaign=202610 at bottom of screen",
-        "spoken": "Follow @purepantryprovisions for daily coffee truth. Shop Purica 100g ₹559 | 50g ₹329 at https://p3online.in/products/purica-100g-at-559?utm_source=youtube&utm_medium=post&utm_campaign=202610 — Purity Beans",
-        "visual_direction": "Locked-off macro on cup surface. Amber crema ring from Scene 3 holds. Cursor or tap transitions into crystal pour from Scene 2. @purepantryprovisions handle appears bottom-left for 2 seconds. Website URL fades"
+        "duration_s": 3.0,
+        "on_screen": "Purica jar center frame. Text: 'Freeze-dried Arabica. Zero chicory.' → 'Follow @purepantryprovisions' → 'Shop p3online.in'",
+        "spoken": "Follow @purepantryprovisions for daily coffee truth. Shop Purica at p3online.in",
+        "visual_direction": "Locked-off, centered. Purica jar hero. Clean typography fade-in sequence. Warm amber rim light holds. No motion blur. End frame holds 1.5s for loop."
       }
     ],
-    "share_trigger": "Share this with someone who drinks instant coffee daily.",
-    "tagline": "Read the jar. Purica is pure Arabica freeze-dried coffee. Purity Beans — pure Arabica in Purica and Prima. Shop: https://p3online.in/?utm_source=youtube&utm_medium=post&utm_campaign=202610",
+    "comment_trigger": "Comment CREMA if your instant coffee holds crema past 30 seconds. Comment FLAT if it dies in 10.",
+    "cta": "Follow @purepantryprovisions | Shop Purica: https://p3online.in — Purity Beans",
+    "cta_link": "https://p3online.in",
+    "ad_cta_link": "https://p3online.in",
+    "save_trigger": "Save to compare freeze-dried vs spray-dried crema test next time you buy instant coffee.",
+    "share_trigger": "Send this to the friend who thinks all instant coffee tastes the same.",
+    "hashtags": "#PurityBeans #Purica #PureArabica #FreezeD",
     "editorial_score": {
-      "shareability": 7.2,
-      "saveability": 6.8,
-      "emotion_pull": 7.5,
-      "hook_strength": 8.1,
-      "brand_clarity": 9.0,
-      "overall": 7.9,
-      "verdict": "REJECT",
-      "feedback": "The hook lands effectively with a strong contrast between expectation (crema, body) and reality (bitter water). Brand clarity is excellent—Purica is positioned as the solution. Save trigger is practical and tied to action. Minor improvement: ensure the visual direction description in scene 1 fully communicates the 'no crema' reality so viewers immediately grasp the problem without needing to read the spoken line.",
-      "retention_audit": ""
+      "shareability": 8.5,
+      "saveability": 8.5,
+      "emotion_pull": 8.0,
+      "hook_strength": 9.0,
+      "brand_clarity": 9.5,
+      "overall": 8.7,
+      "verdict": "PASS",
+      "feedback": ""
     },
-    "title": "Why Your Coffee Disappears — The Crema Test",
-    "description": "Side-by-side: spray-dried powder dissolves into flat, bitter mud. Purity Beans Purica freeze-dried Arabica crystals bloom with amber crema, locked-in aroma, and natural caramel-chocolate notes. Zero chicory. Read the jar at https://p3online.in/?utm_source=youtube&utm_medium=post&utm_campaign=202610",
     "viral_potential": {
       "scores": {
-        "hook": 6.0,
-        "curiosity_gap": 7.0,
-        "relatability": 8.0,
+        "hook": 8.0,
+        "curiosity_gap": 9.0,
+        "relatability": 6.0,
         "shareability": 7.0,
-        "comment_trigger": 7.0,
+        "comment_trigger": 8.0,
         "format_fit": 8.0,
-        "follow_cta": 6.0
+        "follow_cta": 7.0
       },
       "overall": 7.0,
       "weakest": [
-        "hook",
+        "relatability",
+        "shareability",
         "follow_cta"
       ],
-      "feedback": "Hook is too generic; many coffee drinkers accept 'flat coffee' as normal. Make it personal/relatable. Follow CTA is buried at end and not urgent enough — move it earlier or frame it as a 'daily tip' subscription.",
-      "better_hook": "Stop accepting flat coffee. See the crema difference — and what it says about your jar.",
+      "feedback": "The technical demonstration is strong and the curiosity gap around crema longevity is well-executed. However, the piece feels like a sterile lab test — it lacks the emotional texture of an Indian coffee drinker's morning. Relatability suffers because there's no identifiable human context: no kitchen steam mixing with pressure-cooker whistles, no rushed sip before a Bangalore commute, no filter-coffee mom asking 'what is this?' Shareability drops because 'save to compare crema test' is a niche nerd trigger, not a 'send to friend' moment. The follow CTA ('daily coffee truth') is generic — it doe",
+      "better_hook": "You take a sip, expect crema — get flat brown water. Here is why.",
       "passed": false,
       "honesty": [],
       "pass_mark": 9.0
     },
-    "caption": "Your instant coffee dies in 3 seconds. Purica's freeze-dried Arabica holds crema for 30. The proof is in the pour. ☕\n\nPurity Beans Purica — pure Arabica, freeze-dried, zero chicory.\n\n👉 Follow @purepantryprovisions for daily coffee truth.\n🛒 Shop: https://p3online.in/?utm_source=youtube&utm_medium=post&utm_campaign=202610\n\n#PurityBeans #Purica #PureCoffee #FreezeDriedCoffee #Arabica #CoffeeLoversIndia #CleanLabel #ReadTheJar #IndianCoffeeRitual",
-    "type": "yt_short",
-    "cta_link": "https://p3online.in/?utm_source=youtube&utm_medium=post&utm_campaign=202610",
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The hook lands effectively with a strong contrast between expectation (crema, body) and reality (bitter water). Brand clarity is excellent—Purica is positioned as the solution. Save trigger is practical and tied to action. Minor improvement: ensure the visual direction description in scene 1 fully communicates the 'no crema' reality so viewers immediately grasp the problem without needing to read the spoken line."
+    "editorial_error": "editorial time budget reached before this piece passed"
   },
   "growth_reel": {
     "type": "reel",
@@ -1108,7 +1074,7 @@
     "viral_readiness_score": 90.0
   },
   "threads_post": {
-    "text": "Purica is the only instant coffee that is freeze-dried pure Arabica. The aroma hits you first — natural caramel and chocolate notes.\n\nOnce you taste it, spray-dried coffee tastes flat and muted.\n\nName the jar: Purica Gourmet Arabica Granules 50g (₹329) / 100g (₹559).\n\nFollow for more honest coffee truth.",
+    "text": "You paid cafe prices for freeze-dried Arabica. The ingredient list still said chicory.\n\nPurica by Purity Beans is freeze-dried pure Arabica — zero chicory. ₹559 for 100g.\n\nWhat word on the Purica label proves it's not the same old trick? Reply with that word.",
     "featured_product": "Purica",
     "objective": "Engagement Growth",
     "primary_cta": "Which one would you choose? Comment below",
@@ -1117,22 +1083,7 @@
     "comment_trigger": "Comment the first word you see on the jar label.",
     "save_trigger": "Save this before your next grocery run — real coffee matters.",
     "share_trigger": "Share with someone who starts every morning with coffee.",
-    "editorial_score": {
-      "shareability": 5.2,
-      "saveability": 4.8,
-      "emotion_pull": 6.5,
-      "hook_strength": 4.5,
-      "brand_clarity": 6.0,
-      "overall": 5.5,
-      "verdict": "REJECT",
-      "feedback": "The content feels like a generic coffee fact post rather than a Purity Beans-specific asset. The opening line 'Once you taste it, spray-dried coffee tastes flat and muted' causes an immediate attention drop as it's a generic coffee comparison that applies to any brand. The mandatory product name and price reveal happens too late in the copy. The hook lacks a Purity Beans-specific angle that stops the scroll. The content reads like a blog post rather than a social media format, violating the 'Facebook post that reads like a blog' rule. No visual context is described, making it hard to assess realism or product placement.",
-      "retention_audit": "Line 1-2: Generic coffee aroma/taste description with no brand anchor. Line 3: Mandatory product name/price reveal buried in the middle. Line 4-5: Generic follow line. Overall structure feels like a blog intro rather than scroll-stopping social content."
-    },
-    "ladder_exhausted": true,
-    "publish_blocked": "ladder_exhausted",
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The content feels like a generic coffee fact post rather than a Purity Beans-specific asset. The opening line 'Once you taste it, spray-dried coffee tastes flat and muted' causes an immediate attention drop as it's a generic coffee comparison that applies to any brand. The mandatory product name and price reveal happens too late in the copy. The hook lacks a Purity Beans-specific angle that stops the scroll. The content reads like a blog post rather than a social media"
+    "editorial_error": "editorial time budget reached before this piece passed"
   },
   "facebook_post": {
     "objective": "Engagement Growth",
@@ -1278,71 +1229,56 @@
     "editorial_error": "editorial time budget reached before this piece passed"
   },
   "evening_yt_short": {
-    "id": "evening_yt_short",
-    "track": "growth",
-    "product": "Purica",
-    "tagline": "Pure coffee truths without commercial fluff",
-    "title": "Why Freeze-Dried Coffee Tastes Different #shorts",
-    "hook": "Your spoon hits the jar and a grey dust cloud rises — that is not coffee, that is shattered crystals.",
-    "chosen_hook": "Your spoon hits the jar and a grey dust cloud rises — that is not coffee, that is shattered crystals.",
-    "description": "Freeze-dried coffee crystals hold their structure until hot water hits them. Spray-dried powder fractures into dust the moment you scoop it — and takes your aroma with it. Purica is freeze-dried pure Arabica. No chicory. No fillers. Just intact crystals that bloom in your cup. Subscribe to Purity Beans for daily coffee science.",
-    "cta": "Subscribe to Purity Beans for daily coffee science.",
-    "scenes": [
+    "featured_product": "purica",
+    "audio": "warm_ambient_kitchen, soft_porcelain_clink, gentle_steam_rise",
+    "caption": "Evening coffee ritual? Check the label before the last sip. 👀 Most jars hide what they’re really made of. Purity Beans Purica is freeze-dried pure Arabica — 0% chicory, full aroma. No hidden fillers. Just clean coffee. 🌿✨ Comment PURICA if you read the label first. Shop the jar: https://p3online.in #PurityBeans #PremiumInstantCoffee #CoffeeLabel",
+    "chosen_hook": "clean_label",
+    "comment_trigger": "Comment PURICA if you read the label first.",
+    "cta": "Follow @purepantryprovisions. Shop p3online.in.",
+    "description": "Evening coffee ritual? Check the label before the last sip. 👀 Most jars hide what they're really made of. Purity Beans Purica is freeze-dried pure Arabica — 0% chicory, full aroma. No hidden fillers. Just clean coffee. 🌿✨ Comment PURICA if you read the label first. Shop the jar: https://p3online.in #PurityBeans #PremiumInstantCoffee #CoffeeLabel",
+    "editorial_subscores": {
+      "shareability": 9,
+      "saveability": 9,
+      "emotion_pull": 8,
+      "hook_strength": 8,
+      "brand_clarity": 9
+    },
+    "frames": [
       {
-        "scene": 1,
-        "type": "hook",
-        "duration_s": 1.5,
-        "on_screen": "SPOON HITS JAR → GREY DUST CLOUD",
-        "spoken": "Your spoon hits the jar and a grey dust cloud rises — that is not coffee, that is shattered crystals.",
-        "visual_direction": "Extreme macro close-up, 85mm equivalent, vertical 9:16. A metal spoon breaks the surface of a dark glass instant coffee jar. A visible puff of fine grey-brown powder mushrooms upward in slow motion, catching a single shaft of warm amber light. The dust hangs, weightless. Purity Beans Purica jar sits steady in soft background blur, label facing camera, catching the same light. Shot on iPhone 15 Pro, 24fps, shallow depth of field."
+        "on_screen": "Vertical 9:16 frame. Dim evening light, kitchen counter. Hands holding a generic instant coffee jar, shaking it slightly. Dust particles visible in the ray of light. Purity Beans Purica jar appears in the background, untouched, catching the warm glow.",
+        "spoken": "Evening coffee drinkers — check what's really in your jar before the last sip."
       },
       {
-        "scene": 2,
-        "type": "tension",
-        "duration_s": 3,
-        "on_screen": "SPRAY-DRIED = 200°C TOWER → DUST",
-        "spoken": "Spray-dried coffee is blasted through a 200-degree tower. The heat shatters every crystal into powder. Aroma? Gone.",
-        "visual_direction": "Rapid cut to stylized macro CGI-realism cross-section: tiny coffee droplets hit superheated air, instantly fracturing into chaotic dust particles. Desaturated, industrial cool tones. Text overlay: '200°C = shattered crystals, burned aromatics'. Handheld sway, slight film grain."
+        "on_screen": "Close-up, 85mm lens equivalent. The Purity Beans Purica glass jar label is in sharp focus. The ingredient panel is visible: 'pure Arabica. 0% Chicory.' Warm amber light hits the text. A finger points gently to the label.",
+        "spoken": "Zero chicory. Pure Arabica. Freeze-dried to lock in the aroma."
       },
       {
-        "scene": 3,
-        "type": "turn",
-        "duration_s": 4,
-        "on_screen": "FREEZE-DRIED = -40°C VACUUM → INTACT CRYSTALS",
-        "spoken": "Freeze-dried skips the heat. Minus forty degrees. Vacuum. The ice sublimates — crystals stay whole. Aroma stays locked inside.",
-        "visual_direction": "Slow-motion macro: Purica freeze-dried granules — crystalline, geometric, amber-gold — tumble into 85°C water in a clear glass mug. Each granule blooms instantly, releasing a visible aromatic vapor plume. Warm golden-hour lighting, steam rising naturally. Purity Beans Purica jar in foreground, condensation beading on glass. Real physics, no CGI feel."
+        "on_screen": "Macro shot of coffee granules in a clear glass mug. Hot water is poured in. The granules dissolve slowly. The liquid is clear, rich amber. No foam scum sits on top — just smooth, clean liquid.",
+        "spoken": "See how it dissolves? No oily skin, no bitter residue. That's the freeze-drying difference."
       },
       {
-        "scene": 4,
-        "type": "revelation",
-        "duration_s": 3.5,
-        "on_screen": "YOUR SPOON TEST: NO DUST = FREEZE-DRIED",
-        "spoken": "Next jar you open — scoop it. No dust cloud? That is freeze-dried. Dust cloud? Spray-dried. You just learned to read coffee without a label.",
-        "visual_direction": "Split-screen comparison, fast cut. Left: spoon in generic jar, dust cloud. Right: spoon in Purica jar, clean scoop, zero dust. Granules clink like tiny glass beads. On-screen text: 'No dust = freeze-dried'. Handheld, imperfect framing, finger smudge on jar glass visible."
+        "on_screen": "Side-by-side comparison. On the left: a generic instant coffee jar with a cloudy, dark label. On the right: Purity Beans Purica jar with a clean, minimal label. Light falls across the right jar. A text bubble appears: 'What's in your cup?'",
+        "spoken": "Don't guess. Read the jar."
       },
       {
-        "scene": 5,
-        "type": "payoff_loop",
-        "duration_s": 2.5,
-        "on_screen": "SUBSCRIBE FOR DAILY COFFEE SCIENCE",
-        "spoken": "Your spoon hits the jar and a grey dust cloud rises — that is not coffee, that is shattered crystals.",
-        "visual_direction": "Seamless loop: final frame matches scene 1 opening — spoon breaking surface, dust mushrooming. Camera pulls back slightly to reveal Subscribe button overlay bottom-center, pulsing once. Audio crossfades perfectly into opening hook. 24fps, vertical 9:16."
+        "on_screen": "Vertical 9:16 frame. The Purity Beans Purica jar sits alone on a dark surface. A single coffee bean rests in front of it, in sharp focus. The background is blurred city lights, suggesting the evening. Text overlay fades in: 'Pure. Honest. Indian.'",
+        "spoken": "The last cup of the day. Make it pure."
       }
     ],
-    "loop_mechanic": "The final spoken line is identical to the opening hook (word-for-word). The final visual frame is a 1:1 match to Scene 1's first frame — spoon entering jar, dust cloud rising. This creates a perfect narrative and visual loop: the viewer who replays hears the hook again instantly, with zero dead air or title card interruption. The Subscribe overlay appears only on the loop pass (frame 2+), not on first view.",
-    "featured_product": "Purica",
-    "editorial_error": "editorial time budget reached before this piece passed",
-    "hook_text": "Your spoon hits the jar and a grey dust cloud rises — that is not coffee, that is shattered crystals.",
-    "audio": {
-      "plan": "Voice-forward bed, low music under the spoken line, no lyric clash.",
-      "source": "structural_default"
-    },
-    "loop_note": "Final frame returns to the opening shot so the reel loops without a hard cut.",
-    "caption": "Why Freeze-Dried Coffee Tastes Different #shorts Your spoon hits the jar and a grey dust cloud rises — that is not coffee, that is shattered crystals.",
-    "hashtags": "#PurityBeans #PureCoffee #InstantCoffee #CoffeeLover #IndianCoffee #CoffeeIndia #MadeInIndia #PremiumCoffee #GlassJar #GourmetCoffee #CoffeeCommunity #CoffeeAddict #CoffeeGram #CoffeeCulture #SupportIndianBrands #IndianBrands #PurityBeansCoffee #BrewPure #PureCoffeeExperience #MorningCoffee #CoffeeTime #CoffeeDaily #CoffeeLife #CoffeeLove",
-    "comment_trigger": "Comment the first word you see on the jar label.",
-    "save_trigger": "Save this before your next grocery run — real coffee matters.",
-    "share_trigger": "Share with someone who starts every morning with coffee."
+    "hashtags": "#PurityBeans #PremiumInstantCoffee #CoffeeLabel #PureArabica #0Chicory #CoffeeLoversIndia #ReadTheLabel #IndianCoffee",
+    "hook": "Your evening coffee might not be what you think. Check the label before the last sip.",
+    "hook_text": "Your evening coffee might not be what you think. Check the label before the last sip.",
+    "id": "evening_yt_short_purica_001",
+    "loop_mechanic": "The final frame loops back to the label close-up, creating a replay that signals algorithmic completion.",
+    "loop_note": "End on the label. Begin on the label.",
+    "product": "purica",
+    "save_trigger": "Save this before you buy your next jar.",
+    "share_trigger": "Share with the friend who drinks instant coffee daily and never checks the label.",
+    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
+    "title": "Evening Coffee Label Check — Purica",
+    "track": "growth_reel",
+    "type": "evening_yt_short",
+    "editorial_error": "editorial time budget reached before this piece passed"
   },
   "video_prompts": {
     "reel_1": {
@@ -4102,6 +4038,66 @@
       {
         "status": "exhausted",
         "reason": "The content feels like a generic coffee fact post rather than a Purity Beans-specific asset. The opening line 'Once you taste it, spray-dried coffee tastes flat and muted' causes an immediate attention drop as it's a generic coffee comparison that applies to any brand. The mandatory product name and"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The opening line \"Purica is the only instant coffee that is freeze-dried pure Arabica\" is a bland product claim and does not create a curiosity gap or emotional trigger. Replace it with a betrayal or curiosity hook (e.g., \"You've been drinking flat coffee all your life – here's why\"). Highlight the "
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The hook works well for coffee enthusiasts, but the line \"Most 'Arabica' instant coffee is spray-dried into dust\" risks sounding hyperbolic and could trigger skepticism. Consider softening to \"Most instant coffee is processed to remove delicate flavors\" to maintain realism. The late jar reveal (ment"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The hook 'You've been settling for flat Arabica — and didn't realize it' is generic and lacks a betrayal or curiosity trigger — it could apply to any Arabica brand. No Purity Beans jar is featured visually (required for brand-track posts). The body makes a processing claim ('loses delicate notes') w"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook 'You've been drinking dead Arabica' uses aggressive shaming language that triggers defensiveness, not curiosity — Indian consumers scroll past moralizing. 'Dead Arabica' is vague jargon; nobody knows what it means in 2 seconds. The body copy states process and purity facts but offers zero e"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The hook 'Freeze-dried Arabica keeps the caramel and chocolate that heat kills' is technical and passive — it explains a process instead of triggering a consumer insight. It could apply to any freeze-dried Arabica brand, so hook_strength is ≤5. Line 2 ('Purica is pure Arabica, zero chicory. The note"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The opening line 'You taste the caramel before the bitterness arrives' is sensory but generic — it could be any premium coffee brand, triggering zero brand-specific curiosity. It fails the betrayal/curiosity-gap/identity hooks required to stop the scroll. The second line states a product fact (freez"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook 'You've been paying cafe prices for instant coffee with 30% chicory' is a logic mismatch — cafe coffee isn't instant coffee, and the 30% chicory reference points to Ultra Blend, not the hero product Purica. This creates immediate confusion. Line 2 jumps to Purica's tasting notes without bri"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "Hook fails the 'specificity test' — 'paying cafe prices for freeze-dried Arabica that tastes like instant' is a generic category complaint, not a Purity Beans revelation. It does not name chicory, transparency, or the clean-label promise that differentiates the brand. The body copies a product descr"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The hook 'Freeze-dried Arabica at cafe prices usually means chicory filler' is factually shaky and generic — many premium freeze-dried Arabicas are pure coffee. It sounds like a scare tactic rather than a truth, so the scroll doesn't stop. The second line lists features (zero chicory, flavor notes, "
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "Hook fails the 2-second test — 'You paid cafe prices for freeze-dried Arabica' is a generic category statement, not a betrayal or curiosity gap. It sounds like any premium coffee ad. Line 2 ('The label still said chicory') delivers the punch but arrives too late; the scroll has already happened. Pri"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The hook fails the 'any brand' test — 'You paid cafe prices for freeze-dried Arabica. The ingredient list still said chicory' could be said by any pure-coffee brand. It lacks a Purity Beans–specific betrayal or proof moment. The body line is a flat feature list (process, origin, tasting notes, price"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The hook 'You paid cafe prices for freeze-dried Arabica. The ingredient list still said chicory.' is generic and could apply to any brand — it fails the 2-second scroll-stop test. It accuses the reader of a past mistake without offering immediate curiosity or proof. The transition to Purica is abrup"
       }
     ],
     "growth_reel": [
@@ -4493,6 +4489,26 @@
       {
         "status": "exhausted",
         "reason": "The hook lands effectively with a strong contrast between expectation (crema, body) and reality (bitter water). Brand clarity is excellent—Purica is positioned as the solution. Save trigger is practical and tied to action. Minor improvement: ensure the visual direction description in scene 1 fully c"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook 'Your instant coffee vanishes in seconds' is strong and specific to the freeze-dried vs spray-dried differentiation, scoring well on hook_strength. However, brand_clarity is only 6.5 because the Purity Beans Purica jar never appears in Scene 1 — the problem scene shows only generic powder a"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "The content scores below the 8.0 threshold across all dimensions. Key failures: 1) Brand clarity is only 6.0 — Purica is not explicitly named as the solution until the CTA (final frame). The reel must introduce Purica by name and show the jar by Scene 2-3, not just the end card. 2) Saveability suffe"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "The content scores below the 8.0 threshold across all dimensions. Key issues: 1) Hook is generic — 'Your instant coffee vanishes in seconds' could apply to any brand; it fails the 'identity challenge' or 'betrayal' pattern required for 8+. 2) Brand clarity is low — Purica (freeze-dried Arabica) is o"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "viral: score 7.0 < 9.0 (weakest: relatability, shareability, follow_cta). The technical demonstration is strong and the curiosity gap around crema longevity is well-executed. However, the piece feels like a sterile lab test — it lacks the emotional texture of an Indian coffee drinker's morning. Rela"
       }
     ],
     "stories": [
@@ -4542,6 +4558,53 @@
         "attempt": 1,
         "rung": "feedback",
         "feedback": "This asset is labeled 'growth' track but violates every growth-track rule: it names and shows the product (Purica jar appears in script visual at 8-18s), uses #PurityBeans hashtag, and delivers a product-centric educational pitch. Growth-track content must NEVER show or name the product — brand pres"
+      }
+    ],
+    "evening_yt_short": [
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook and visual concept are strong, but the asset falls just below the 8.0 overall threshold due to a weak emotion_pull (7.0) and shareability (7.5). The 'dust cloud' visual is a great pattern interrupt, but the script lacks a visceral emotional trigger (betrayal, pride, relief) that drives shar"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "REJECTED AS SALES-LED (Track violation: 'growth_reel' must be non-branded (no jar, no product mention, no website, no shop CTA). This asset shows the Purica jar, names it, includes 'Shop p3online.in', and uses a promotional CTA — all banned for growth track. For growth, strip product entirely; make "
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "brand: ['Missing brand mention']"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       }
     ]
   },
@@ -6530,6 +6593,7 @@
     "facebook_post": 12,
     "reel_1": 5,
     "growth_reel": 3,
-    "threads_post": 7
+    "threads_post": 9,
+    "evening_yt_short": 2
   }
 }
