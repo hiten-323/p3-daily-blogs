@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-24T10:14:31+00:00",
+  "generated_at": "2026-11-24T11:09:25+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 41,
+      "posts": 40,
       "measured": 6,
       "ranked": 5,
       "metrics_seen": [
@@ -11,7 +11,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 35
+        "too_old_for_comparable_window": 34
       },
       "winners": [],
       "losers": [],
@@ -101,7 +101,7 @@
       "gaps": []
     },
     "instagram": {
-      "posts": 77,
+      "posts": 76,
       "measured": 24,
       "ranked": 24,
       "metrics_seen": [
@@ -109,7 +109,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 53
+        "too_old_for_comparable_window": 52
       },
       "winners": [
         {
@@ -223,12 +223,12 @@
       ]
     },
     "instagram_story": {
-      "posts": 11,
+      "posts": 10,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "story_measurement_window_missed": 11
+        "story_measurement_window_missed": 10
       },
       "winners": [],
       "losers": [],
@@ -259,9 +259,9 @@
       ]
     },
     "threads": {
-      "posts": 22,
-      "measured": 22,
-      "ranked": 22,
+      "posts": 21,
+      "measured": 21,
+      "ranked": 21,
       "metrics_seen": [
         "comments",
         "likes",
@@ -273,15 +273,15 @@
         {
           "dimension": "angle",
           "value": "sensory",
-          "ratio": 4.84,
+          "ratio": 5.41,
           "n": 2,
           "provisional": true
         },
         {
           "dimension": "label",
           "value": "threads_post",
-          "ratio": 1.52,
-          "n": 22,
+          "ratio": 1.64,
+          "n": 21,
           "provisional": false
         }
       ],
@@ -292,7 +292,7 @@
           "hook": "Hot take: most people never taste their coffee, they just drink it.",
           "template": "",
           "angle": "sensory",
-          "relative": 9.111,
+          "relative": 10.25,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -322,7 +322,7 @@
           "hook": "Unpopular opinion: bitter instant coffee isn't a bad bean, it's just boiling water poured straight on top.",
           "template": "",
           "angle": "the 100c water mistake",
-          "relative": 3.111,
+          "relative": 3.5,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -354,7 +354,7 @@
           "hook": "Unpopular opinion: water temperature matters less than the brand transparency hiding on the back of your coffee jar.",
           "template": "",
           "angle": "unpopular opinion: water temperature matters less than the b",
-          "relative": 0.222,
+          "relative": 0.25,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -484,49 +484,6 @@
     }
   },
   "posts": [
-    {
-      "platform": "instagram",
-      "label": "carousel",
-      "day": 296,
-      "media_id": "18080181725387761",
-      "published_at": "2026-10-24T10:15:50+00:00",
-      "hook": "Your coffee is not losing aroma because the lid was off. It is losing aroma because the jar was never pure coffee to beg",
-      "angle": "",
-      "template": "",
-      "hook_strategy": "negation",
-      "attention_mechanism": "specificity",
-      "product": "Ultra Blend",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "threads",
-      "label": "threads_post",
-      "day": 296,
-      "media_id": "18079937897546299",
-      "published_at": "2026-10-24T10:41:25+00:00",
-      "hook": "Hot take: most people never taste their coffee, they just drink it out of pure habit.",
-      "angle": "contrarian take on daily milk coffee routines and ingredient",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Ultra Blend",
-      "editorial_score": null,
-      "window": "72h",
-      "metrics": {
-        "views": 6,
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "basis": "reach",
-      "value": 6.0,
-      "relative": 1.333
-    },
     {
       "platform": "youtube",
       "label": "yt_short",
@@ -682,7 +639,7 @@
       },
       "basis": "reach",
       "value": 3.0,
-      "relative": 0.667
+      "relative": 0.75
     },
     {
       "platform": "instagram",
@@ -791,44 +748,6 @@
       "hook_strategy": "",
       "attention_mechanism": "",
       "product": "Ultra Blend",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 296,
-      "media_id": "494003270464484_122168773376655685",
-      "published_at": "2026-10-24T10:15:56+00:00",
-      "hook": "I put Purity Beans Ultra Blend on the shelf between the fancy single-origin bags and the instant that hides chicory in the fine print — the 70% coffee, 30% chicory jar was gone in three days.",
-      "angle": "the milk coffee jar that tells the truth upfront — and still",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Ultra Blend",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram_story",
-      "label": "stories",
-      "day": 296,
-      "media_id": "18143743042593679",
-      "published_at": "2026-10-24T10:27:34+00:00",
-      "hook": "THIS OR THAT How do you take your weekday coffee?",
-      "angle": "consumer purchase",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -991,7 +910,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.111
+      "relative": 1.25
     },
     {
       "platform": "instagram",
@@ -1443,7 +1362,7 @@
       },
       "basis": "reach",
       "value": 3.0,
-      "relative": 0.667
+      "relative": 0.75
     },
     {
       "platform": "youtube",
@@ -1543,7 +1462,7 @@
       },
       "basis": "reach",
       "value": 4.0,
-      "relative": 0.889
+      "relative": 1.0
     },
     {
       "platform": "linkedin",
@@ -1743,7 +1662,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.111
+      "relative": 1.25
     },
     {
       "platform": "youtube",
@@ -2171,7 +2090,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.444
+      "relative": 0.5
     },
     {
       "platform": "instagram",
@@ -2542,7 +2461,7 @@
       },
       "basis": "reach",
       "value": 1.0,
-      "relative": 0.222
+      "relative": 0.25
     },
     {
       "platform": "instagram",
@@ -2813,7 +2732,7 @@
       },
       "basis": "reach",
       "value": 7.0,
-      "relative": 1.556
+      "relative": 1.75
     },
     {
       "platform": "instagram",
@@ -3692,7 +3611,7 @@
       },
       "basis": "reach",
       "value": 14.0,
-      "relative": 3.111
+      "relative": 3.5
     },
     {
       "platform": "instagram",
@@ -3852,7 +3771,7 @@
       },
       "basis": "reach",
       "value": 41.0,
-      "relative": 9.111
+      "relative": 10.25
     },
     {
       "platform": "instagram",
