@@ -10480,7 +10480,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ]
   },
   {
@@ -10716,7 +10717,8 @@
     "fetch_attempts_by_window": {},
     "failed_windows": [
       "24h",
-      "72h"
+      "72h",
+      "7d"
     ],
     "measurement_status": "missing_pages_read_engagement_permission",
     "missed_windows": {}

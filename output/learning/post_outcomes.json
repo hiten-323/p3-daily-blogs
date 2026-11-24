@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T06:32:48+00:00",
+  "generated_at": "2026-11-24T08:33:22+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -11,8 +11,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 34,
-        "missing_pages_read_engagement_permission": 1
+        "too_old_for_comparable_window": 35
       },
       "winners": [],
       "losers": [],
@@ -242,13 +241,12 @@
       ]
     },
     "linkedin": {
-      "posts": 21,
+      "posts": 20,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 20,
-        "missing_linkedin_token_or_version": 1
+        "too_old_for_comparable_window": 20
       },
       "winners": [],
       "losers": [],
@@ -486,25 +484,6 @@
     }
   },
   "posts": [
-    {
-      "platform": "linkedin",
-      "label": "linkedin_post",
-      "day": 296,
-      "media_id": "urn:li:share:7519654946821283841",
-      "published_at": "2026-10-24T07:04:10+00:00",
-      "hook": "We almost launched with the wrong label. Here is what changed it.",
-      "angle": "",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Ultra Blend",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
     {
       "platform": "instagram",
       "label": "carousel",
