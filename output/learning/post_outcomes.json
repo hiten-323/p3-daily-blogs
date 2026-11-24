@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T11:09:25+00:00",
+  "generated_at": "2026-11-24T10:38:54+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -259,9 +259,9 @@
       ]
     },
     "threads": {
-      "posts": 21,
-      "measured": 21,
-      "ranked": 21,
+      "posts": 22,
+      "measured": 22,
+      "ranked": 22,
       "metrics_seen": [
         "comments",
         "likes",
@@ -273,15 +273,15 @@
         {
           "dimension": "angle",
           "value": "sensory",
-          "ratio": 5.41,
+          "ratio": 4.84,
           "n": 2,
           "provisional": true
         },
         {
           "dimension": "label",
           "value": "threads_post",
-          "ratio": 1.64,
-          "n": 21,
+          "ratio": 1.52,
+          "n": 22,
           "provisional": false
         }
       ],
@@ -292,7 +292,7 @@
           "hook": "Hot take: most people never taste their coffee, they just drink it.",
           "template": "",
           "angle": "sensory",
-          "relative": 10.25,
+          "relative": 9.111,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -322,7 +322,7 @@
           "hook": "Unpopular opinion: bitter instant coffee isn't a bad bean, it's just boiling water poured straight on top.",
           "template": "",
           "angle": "the 100c water mistake",
-          "relative": 3.5,
+          "relative": 3.111,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -354,7 +354,7 @@
           "hook": "Unpopular opinion: water temperature matters less than the brand transparency hiding on the back of your coffee jar.",
           "template": "",
           "angle": "unpopular opinion: water temperature matters less than the b",
-          "relative": 0.25,
+          "relative": 0.222,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -484,6 +484,30 @@
     }
   },
   "posts": [
+    {
+      "platform": "threads",
+      "label": "threads_post",
+      "day": 296,
+      "media_id": "18079937897546299",
+      "published_at": "2026-10-24T10:41:25+00:00",
+      "hook": "Hot take: most people never taste their coffee, they just drink it out of pure habit.",
+      "angle": "contrarian take on daily milk coffee routines and ingredient",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "",
+      "product": "Ultra Blend",
+      "editorial_score": null,
+      "window": "72h",
+      "metrics": {
+        "views": 6,
+        "likes": 0,
+        "comments": 0,
+        "shares": 0
+      },
+      "basis": "reach",
+      "value": 6.0,
+      "relative": 1.333
+    },
     {
       "platform": "youtube",
       "label": "yt_short",
@@ -639,7 +663,7 @@
       },
       "basis": "reach",
       "value": 3.0,
-      "relative": 0.75
+      "relative": 0.667
     },
     {
       "platform": "instagram",
@@ -910,7 +934,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.25
+      "relative": 1.111
     },
     {
       "platform": "instagram",
@@ -1362,7 +1386,7 @@
       },
       "basis": "reach",
       "value": 3.0,
-      "relative": 0.75
+      "relative": 0.667
     },
     {
       "platform": "youtube",
@@ -1462,7 +1486,7 @@
       },
       "basis": "reach",
       "value": 4.0,
-      "relative": 1.0
+      "relative": 0.889
     },
     {
       "platform": "linkedin",
@@ -1662,7 +1686,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.25
+      "relative": 1.111
     },
     {
       "platform": "youtube",
@@ -2090,7 +2114,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.5
+      "relative": 0.444
     },
     {
       "platform": "instagram",
@@ -2461,7 +2485,7 @@
       },
       "basis": "reach",
       "value": 1.0,
-      "relative": 0.25
+      "relative": 0.222
     },
     {
       "platform": "instagram",
@@ -2732,7 +2756,7 @@
       },
       "basis": "reach",
       "value": 7.0,
-      "relative": 1.75
+      "relative": 1.556
     },
     {
       "platform": "instagram",
@@ -3611,7 +3635,7 @@
       },
       "basis": "reach",
       "value": 14.0,
-      "relative": 3.5
+      "relative": 3.111
     },
     {
       "platform": "instagram",
@@ -3771,7 +3795,7 @@
       },
       "basis": "reach",
       "value": 41.0,
-      "relative": 10.25
+      "relative": 9.111
     },
     {
       "platform": "instagram",
