@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-24T16:18:53+00:00",
+  "generated_at": "2026-11-24T17:05:40+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 40,
+      "posts": 39,
       "measured": 6,
       "ranked": 5,
       "metrics_seen": [
@@ -11,7 +11,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 34
+        "too_old_for_comparable_window": 33
       },
       "winners": [],
       "losers": [],
@@ -101,7 +101,7 @@
       "gaps": []
     },
     "instagram": {
-      "posts": 76,
+      "posts": 75,
       "measured": 24,
       "ranked": 24,
       "metrics_seen": [
@@ -109,7 +109,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 52
+        "too_old_for_comparable_window": 51
       },
       "winners": [
         {
@@ -487,25 +487,6 @@
   "posts": [
     {
       "platform": "instagram",
-      "label": "growth_reel",
-      "day": 296,
-      "media_id": "18169243390499652",
-      "published_at": "2026-10-24T16:59:59+00:00",
-      "hook": "That bitter edge in your morning milk coffee is not your fault. It happens in the first three seconds of the pour.",
-      "angle": "myth_busting",
-      "template": "",
-      "hook_strategy": "negation",
-      "attention_mechanism": "curiosity_gap",
-      "product": "ultra_blend",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram",
       "label": "instagram_post",
       "day": 296,
       "media_id": "18111597194333596",
@@ -711,25 +692,6 @@
       "hook_strategy": "demonstration",
       "attention_mechanism": "curiosity_gap",
       "product": "Bold",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 296,
-      "media_id": "494003270464484_122168791112655685",
-      "published_at": "2026-10-24T16:59:59+00:00",
-      "hook": "I put Purity Beans Ultra Blend on the shelf between the fancy single-origin bags and the instant that hides chicory in the fine print — the 70% coffee, 30% chicory jar was gone in three days.",
-      "angle": "the milk coffee jar that tells the truth upfront — and still",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Ultra Blend",
       "editorial_score": null,
       "window": null,
       "metrics": {},
