@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-24T11:55:05+00:00",
+  "generated_at": "2026-11-24T12:42:17+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -241,12 +241,13 @@
       ]
     },
     "linkedin": {
-      "posts": 20,
+      "posts": 21,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 20
+        "too_old_for_comparable_window": 20,
+        "awaiting_first_window": 1
       },
       "winners": [],
       "losers": [],
@@ -4258,6 +4259,25 @@
       "hook_strategy": "",
       "attention_mechanism": "",
       "product": "Bold",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "linkedin",
+      "label": "linkedin_post",
+      "day": 327,
+      "media_id": "urn:li:share:7530959201209110528",
+      "published_at": "2026-11-24T11:43:17+00:00",
+      "hook": "When a retail buyer flips our coffee jar over, this is the exact detail they look for first.",
+      "angle": "",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "",
+      "product": "purica",
       "editorial_score": null,
       "window": null,
       "metrics": {},
