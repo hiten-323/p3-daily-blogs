@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-23T15:08:09+00:00",
+  "generated_at": "2026-11-24T03:06:52+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 42,
+      "posts": 41,
       "measured": 6,
       "ranked": 5,
       "metrics_seen": [
@@ -11,7 +11,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 35,
+        "too_old_for_comparable_window": 34,
         "missing_pages_read_engagement_permission": 1
       },
       "winners": [],
@@ -102,7 +102,7 @@
       "gaps": []
     },
     "instagram": {
-      "posts": 78,
+      "posts": 77,
       "measured": 24,
       "ranked": 24,
       "metrics_seen": [
@@ -110,7 +110,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 54
+        "too_old_for_comparable_window": 53
       },
       "winners": [
         {
@@ -487,25 +487,6 @@
   },
   "posts": [
     {
-      "platform": "instagram",
-      "label": "growth_reel",
-      "day": 295,
-      "media_id": "18181307467431600",
-      "published_at": "2026-10-23T17:12:44+00:00",
-      "hook": "POV: It's 9:40 at your desk and you actually read the label on your coffee jar.",
-      "angle": "clean_label",
-      "template": "",
-      "hook_strategy": "second_person",
-      "attention_mechanism": "pattern_interrupt",
-      "product": "Purica Gourmet Arabica Granules [purica]",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
       "platform": "linkedin",
       "label": "linkedin_post",
       "day": 296,
@@ -812,25 +793,6 @@
       "hook_strategy": "demonstration",
       "attention_mechanism": "curiosity_gap",
       "product": "Bold",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 295,
-      "media_id": "494003270464484_122168721926655685",
-      "published_at": "2026-10-23T17:12:44+00:00",
-      "hook": "Who else knows that quiet disappointment of opening an instant coffee jar and smelling absolutely nothing?",
-      "angle": "sensory contrast — describing the exact moment the taste tel",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purica",
       "editorial_score": null,
       "window": null,
       "metrics": {},
