@@ -7162,5 +7162,23 @@
     "rate_limit": {},
     "exception_type": "",
     "exception_msg": ""
+  },
+  {
+    "ts": "2026-11-24T17:54:08",
+    "day_number": 327,
+    "platform": "threads",
+    "content_id": "pb_839ec1a67c",
+    "generation_id": "gen_2026-11-24_67617907",
+    "publisher_version": "2.3.0",
+    "status": "failure",
+    "duration_ms": 3645,
+    "http_status": null,
+    "retry_count": 0,
+    "failure_class": "missing_input",
+    "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+    "response": "{\"success\": false, \"attempted\": false, \"skipped\": true, \"post_id\": \"\", \"url\": \"\", \"gate\": {\"allowed\": false, \"asset_key\": \"threads_post\", \"reason\": \"native_asset_missing_passing_editorial_score\", \"checks\": {\"editorial\": false}}, \"ledger_status\": \"FAILED\", \"ledger_attempt_count\": 2}",
+    "rate_limit": {},
+    "exception_type": "",
+    "exception_msg": ""
   }
 ]
