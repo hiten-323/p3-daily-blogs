@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T07:05:34+00:00",
+  "generated_at": "2026-11-26T08:06:38+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -223,12 +223,12 @@
       ]
     },
     "instagram_story": {
-      "posts": 9,
+      "posts": 8,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "story_measurement_window_missed": 9
+        "story_measurement_window_missed": 8
       },
       "winners": [],
       "losers": [],
@@ -247,8 +247,7 @@
       "metrics_seen": [],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 18,
-        "missing_linkedin_token_or_version": 1,
-        "awaiting_first_window": 1
+        "missing_linkedin_token_or_version": 2
       },
       "winners": [],
       "losers": [],
@@ -261,9 +260,9 @@
       ]
     },
     "threads": {
-      "posts": 20,
-      "measured": 20,
-      "ranked": 20,
+      "posts": 19,
+      "measured": 19,
+      "ranked": 19,
       "metrics_seen": [
         "comments",
         "likes",
@@ -275,15 +274,15 @@
         {
           "dimension": "angle",
           "value": "sensory",
-          "ratio": 4.84,
+          "ratio": 5.41,
           "n": 2,
           "provisional": true
         },
         {
           "dimension": "label",
           "value": "threads_post",
-          "ratio": 1.58,
-          "n": 20,
+          "ratio": 1.71,
+          "n": 19,
           "provisional": false
         }
       ],
@@ -294,7 +293,7 @@
           "hook": "Hot take: most people never taste their coffee, they just drink it.",
           "template": "",
           "angle": "sensory",
-          "relative": 9.111,
+          "relative": 10.25,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -324,7 +323,7 @@
           "hook": "Unpopular opinion: bitter instant coffee isn't a bad bean, it's just boiling water poured straight on top.",
           "template": "",
           "angle": "the 100c water mistake",
-          "relative": 3.111,
+          "relative": 3.5,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -356,7 +355,7 @@
           "hook": "Unpopular opinion: water temperature matters less than the brand transparency hiding on the back of your coffee jar.",
           "template": "",
           "angle": "unpopular opinion: water temperature matters less than the b",
-          "relative": 0.222,
+          "relative": 0.25,
           "window": "72h",
           "editorial_score": null,
           "metrics": {
@@ -487,30 +486,6 @@
   },
   "posts": [
     {
-      "platform": "threads",
-      "label": "threads_post",
-      "day": 298,
-      "media_id": "18073493669783986",
-      "published_at": "2026-10-26T07:34:16+00:00",
-      "hook": "Unpopular opinion: Most instant coffee in India tastes like brown water because intense heat destroyed the flavor before it ever hit your mug.",
-      "angle": "the aroma betrayal — explaining why most instant coffee tast",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "purista",
-      "editorial_score": null,
-      "window": "72h",
-      "metrics": {
-        "views": 5,
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "basis": "reach",
-      "value": 5.0,
-      "relative": 1.111
-    },
-    {
       "platform": "instagram",
       "label": "growth_reel",
       "day": 298,
@@ -579,25 +554,6 @@
       "hook_strategy": "",
       "attention_mechanism": "",
       "product": "Purista",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram_story",
-      "label": "stories",
-      "day": 298,
-      "media_id": "18230087053330029",
-      "published_at": "2026-10-26T07:08:50+00:00",
-      "hook": "AROMA CHECK How do you store your instant coffee?",
-      "angle": "consumer purchase",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
       "editorial_score": null,
       "window": null,
       "metrics": {},
@@ -941,7 +897,7 @@
       },
       "basis": "reach",
       "value": 3.0,
-      "relative": 0.667
+      "relative": 0.75
     },
     {
       "platform": "youtube",
@@ -1041,7 +997,7 @@
       },
       "basis": "reach",
       "value": 4.0,
-      "relative": 0.889
+      "relative": 1.0
     },
     {
       "platform": "linkedin",
@@ -1241,7 +1197,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 1.111
+      "relative": 1.25
     },
     {
       "platform": "youtube",
@@ -1669,7 +1625,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.444
+      "relative": 0.5
     },
     {
       "platform": "instagram",
@@ -2040,7 +1996,7 @@
       },
       "basis": "reach",
       "value": 1.0,
-      "relative": 0.222
+      "relative": 0.25
     },
     {
       "platform": "instagram",
@@ -2311,7 +2267,7 @@
       },
       "basis": "reach",
       "value": 7.0,
-      "relative": 1.556
+      "relative": 1.75
     },
     {
       "platform": "instagram",
@@ -3190,7 +3146,7 @@
       },
       "basis": "reach",
       "value": 14.0,
-      "relative": 3.111
+      "relative": 3.5
     },
     {
       "platform": "instagram",
@@ -3350,7 +3306,7 @@
       },
       "basis": "reach",
       "value": 41.0,
-      "relative": 9.111
+      "relative": 10.25
     },
     {
       "platform": "instagram",
