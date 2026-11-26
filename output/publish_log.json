@@ -5698,18 +5698,16 @@
   },
   {
     "date": "2026-11-26",
-    "day_number": 328,
+    "day_number": 329,
     "results": {
       "linkedin": {
-        "success": false,
-        "attempted": false,
-        "skipped": true,
-        "error": "not_attempted",
-        "piece": "linkedin_post",
-        "gate": "rejected",
-        "post_id": "",
-        "video_id": "",
-        "url": ""
+        "success": true,
+        "post_id": "urn:li:share:7531588115870707712",
+        "url": "https://www.linkedin.com/feed/update/urn:li:share:7531588115870707712/",
+        "error": null,
+        "ledger_status": "VERIFIED_LIVE",
+        "ledger_attempt_count": 1,
+        "duration_ms": 4357
       },
       "instagram": {
         "success": false,
@@ -5748,8 +5746,8 @@
           }
         },
         "ledger_status": "FAILED",
-        "ledger_attempt_count": 3,
-        "duration_ms": 3453
+        "ledger_attempt_count": 1,
+        "duration_ms": 2949
       },
       "blog": {
         "success": false,
@@ -5757,9 +5755,11 @@
         "skipped": true,
         "error": "blog_disabled"
       },
-      "summary": "Held for slot: Instagram, Facebook | Skipped: Linkedin, Youtube, Threads, Blog",
-      "published_platforms": [],
-      "timestamp": "2026-11-26T05:01:10"
+      "summary": "Published: Linkedin | Held for slot: Instagram, Facebook | Skipped: Youtube, Threads, Blog",
+      "published_platforms": [
+        "linkedin"
+      ],
+      "timestamp": "2026-11-26T05:22:21"
     }
   }
 ]
