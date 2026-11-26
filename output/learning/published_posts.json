@@ -10744,7 +10744,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "urn:li:share:7531588115870707712",
@@ -10788,7 +10790,17 @@
     "hashtags": "#Drinks #CoffeeTime #CoffeeMug #CoffeeLover #CoffeeVibes #IcedCoffee #PureCoffee #CoffeeScience #PremiumCoffee #NoAddedSugar #IndianFoodie #MadeInIndia #ChaiVsCoffee #CoffeeIndia #ArakuCoffee",
     "published_at": "2026-11-26T08:07:02",
     "insights_recorded": false,
-    "measurement_snapshots": [],
+    "measurement_snapshots": [
+      {
+        "window": "early",
+        "target_hours": 2,
+        "measured_at": "2026-11-26T16:39:18",
+        "metrics": {
+          "likes": 0,
+          "comments": 0
+        }
+      }
+    ],
     "fetch_attempts_by_window": {},
     "failed_windows": []
   }

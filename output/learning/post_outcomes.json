@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T09:02:19+00:00",
+  "generated_at": "2026-11-26T16:39:19+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -102,15 +102,14 @@
     },
     "instagram": {
       "posts": 66,
-      "measured": 24,
+      "measured": 25,
       "ranked": 24,
       "metrics_seen": [
         "comments",
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 41,
-        "awaiting_first_window": 1
+        "too_old_for_comparable_window": 41
       },
       "winners": [
         {
@@ -248,7 +247,8 @@
       "metrics_seen": [],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 18,
-        "missing_linkedin_token_or_version": 2
+        "awaiting_first_window": 1,
+        "missing_linkedin_token_or_version": 1
       },
       "winners": [],
       "losers": [],
@@ -3845,8 +3845,8 @@
       "day": 329,
       "media_id": "urn:li:share:7531588115870707712",
       "published_at": "2026-11-26T05:22:21+00:00",
-      "hook": "I watched our pilot Bold batch die in the cup before the timer hit 12 seconds. That hollow cup forced us to walk away from a signed contract and start over.",
-      "angle": "the first bold batch failed in my kitchen at 6 am. that fail",
+      "hook": "We almost launched with the wrong label. Here is what changed it before a single Purity Beans jar hit a store shelf.",
+      "angle": "follower growth",
       "template": "",
       "hook_strategy": "",
       "attention_mechanism": "",
@@ -3860,21 +3860,24 @@
     },
     {
       "platform": "instagram",
-      "label": "instagram_post",
+      "label": "",
       "day": 329,
       "media_id": "18080675975441645",
       "published_at": "2026-11-26T08:07:02+00:00",
       "hook": "Your strong black coffee tastes burnt at the third sip because industrial spray-drying hits 200°C and vaporizes the oils",
-      "angle": "education_to_follow",
+      "angle": "",
       "template": "",
       "hook_strategy": "second_person",
       "attention_mechanism": "recognition",
-      "product": "Bold",
+      "product": "",
       "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
+      "window": "early",
+      "metrics": {
+        "likes": 0,
+        "comments": 0
+      },
+      "basis": "engagement",
+      "value": 0.0,
       "relative": null
     }
   ]
