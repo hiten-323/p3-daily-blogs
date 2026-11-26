@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T04:14:27+00:00",
+  "generated_at": "2026-11-26T06:00:39+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -241,13 +241,14 @@
       ]
     },
     "linkedin": {
-      "posts": 20,
+      "posts": 21,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 19,
-        "missing_linkedin_token_or_version": 1
+        "missing_linkedin_token_or_version": 1,
+        "awaiting_first_window": 1
       },
       "winners": [],
       "losers": [],
@@ -3969,6 +3970,25 @@
       "hook_strategy": "",
       "attention_mechanism": "",
       "product": "purica",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
+      "relative": null
+    },
+    {
+      "platform": "linkedin",
+      "label": "linkedin_post",
+      "day": 329,
+      "media_id": "urn:li:share:7531588115870707712",
+      "published_at": "2026-11-26T05:22:21+00:00",
+      "hook": "I watched our pilot Bold batch die in the cup before the timer hit 12 seconds. That hollow cup forced us to walk away from a signed contract and start over.",
+      "angle": "the first bold batch failed in my kitchen at 6 am. that fail",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "",
+      "product": "Bold",
       "editorial_score": null,
       "window": null,
       "metrics": {},
