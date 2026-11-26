@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-26T06:00:39+00:00",
+  "generated_at": "2026-11-26T07:05:34+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 37,
+      "posts": 36,
       "measured": 6,
       "ranked": 5,
       "metrics_seen": [
@@ -11,7 +11,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 31
+        "too_old_for_comparable_window": 30
       },
       "winners": [],
       "losers": [],
@@ -101,7 +101,7 @@
       "gaps": []
     },
     "instagram": {
-      "posts": 67,
+      "posts": 65,
       "measured": 24,
       "ranked": 24,
       "metrics_seen": [
@@ -109,7 +109,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 43
+        "too_old_for_comparable_window": 41
       },
       "winners": [
         {
@@ -241,12 +241,12 @@
       ]
     },
     "linkedin": {
-      "posts": 21,
+      "posts": 20,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 19,
+        "too_old_for_comparable_window": 18,
         "missing_linkedin_token_or_version": 1,
         "awaiting_first_window": 1
       },
@@ -386,14 +386,14 @@
       "gaps": []
     },
     "youtube": {
-      "posts": 20,
+      "posts": 19,
       "measured": 7,
       "ranked": 6,
       "metrics_seen": [
         "views"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 13
+        "too_old_for_comparable_window": 12
       },
       "winners": [
         {
@@ -487,82 +487,6 @@
   },
   "posts": [
     {
-      "platform": "linkedin",
-      "label": "linkedin_post",
-      "day": 298,
-      "media_id": "urn:li:share:7520365302560288768",
-      "published_at": "2026-10-26T06:06:53+00:00",
-      "hook": "Why your morning cup leaves your hands shaking",
-      "angle": "clean caffeine vs jitters",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purista",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "youtube",
-      "label": "yt_short",
-      "day": 298,
-      "media_id": "vL1KDAXKjI4",
-      "published_at": "2026-10-26T06:56:45+00:00",
-      "hook": "Freeze-Dried Robusta Survives Ice Water. Spray-Dried Doesn't.",
-      "angle": "brand awareness",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purista",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram",
-      "label": "carousel",
-      "day": 298,
-      "media_id": "18108281594189718",
-      "published_at": "2026-10-26T06:57:32+00:00",
-      "hook": "Stop guessing your coffee spoon. Here’s how to lock the perfect measure in 3 mornings.",
-      "angle": "brand awareness",
-      "template": "",
-      "hook_strategy": "negation",
-      "attention_mechanism": "curiosity_gap",
-      "product": "Purista",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram",
-      "label": "instagram_post",
-      "day": 298,
-      "media_id": "17984083100902122",
-      "published_at": "2026-10-26T06:57:49+00:00",
-      "hook": "Dosing by the eye instead of a level teaspoon is why your third sip always tastes burnt.",
-      "angle": "engagement growth",
-      "template": "",
-      "hook_strategy": "second_person",
-      "attention_mechanism": "recognition",
-      "product": "Purista",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
       "platform": "threads",
       "label": "threads_post",
       "day": 298,
@@ -649,25 +573,6 @@
       "day": 298,
       "media_id": "494003270464484_122168929946655685",
       "published_at": "2026-10-26T16:49:52+00:00",
-      "hook": "My dadi — who has rejected every instant coffee since the 90s — stared at the Purity Beans Purista jar, read 'freeze-dried pure Robusta, zero chicory', and quietly asked for a second cup.",
-      "angle": "the grandmother test",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purista",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 298,
-      "media_id": "494003270464484_122168904860655685",
-      "published_at": "2026-10-26T06:58:00+00:00",
       "hook": "My dadi — who has rejected every instant coffee since the 90s — stared at the Purity Beans Purista jar, read 'freeze-dried pure Robusta, zero chicory', and quietly asked for a second cup.",
       "angle": "the grandmother test",
       "template": "",

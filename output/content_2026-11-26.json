@@ -222,17 +222,17 @@
       },
       "ad_template_id": "pov_ritual",
       "needs_regen": true,
-      "regen_round": 2,
+      "regen_round": 4,
       "editorial_score": {
         "shareability": 7.5,
-        "saveability": 7.5,
+        "saveability": 7.0,
         "emotion_pull": 6.5,
-        "hook_strength": 7.5,
+        "hook_strength": 7.0,
         "brand_clarity": 5.0,
-        "overall": 6.8,
+        "overall": 6.6,
         "verdict": "REJECT",
-        "feedback": "CRITICAL MISMATCH: featured_product is 'Bold' (agglomerated, zero-chicory pure coffee) but every frame, spoken line, and CTA showcases Ultra Blend (70/30 chicory blend). This confuses the buyer and violates the rule that freeze-dried/agglomerated education must match the featured product. REWRITE: either change featured_product to 'Ultra Blend' and keep the script, OR rewrite the entire reel to demonstrate Bold's agglomerated pure-coffee granules dissolving in cold water with a 'zero chicory' label close-up. Also, the hook claims 'five top-selling instant coffees' but only one competitor jar is shown generically — either show five distinct jars or change hook to 'I checked the top-selling instant coffees.' The loop ending cuts to Frame 1 but Frame 1 shows five jars; the final frame shows only Ultra Blend + phone. Make the loop seamless by ending on the same five-jar layout. Add a visible fingerprint or water droplet on the Ultra Blend jar for product realism.",
-        "retention_audit": "Frame 1: Hook strong but 'five jars' visual not delivered — only one competitor type shown. Frame 2: Good ingredient-panel close-up but generic jar lacks realism (no condensation, no label texture). Frame 3: Ultra Blend hero shot works; needs fingerprint/droplet on glass. Frame 4: Dissolve demo clear but 15-second stir claim feels long for Reel pacing — show time-lapse or cut to 'stirred' state. Frame 5: Cold milk/ice sequence good; hot cup steam feels disconnected — either show both prep paths or pick one. Frame 6: Website URL on phone screen is unreadable at Reel resolution — replace with large on-screen text overlay of URL. Loop: Final frame (single jar + phone) does not match Frame 1 (five jars) — breaks seamless loop."
+        "feedback": "Critical brand clarity failure: 'featured_product' is set to 'Bold' (zero-chicory pure coffee) but the entire reel script, visuals, and CTA feature Ultra Blend (70/30 chicory blend). This creates a dangerous mismatch — if the Meta catalog tag or shop link pulls Bold, the customer receives a different product than the reel demonstrates. The hook is strong and the 'label test' concept is shareable, but the reel never explicitly names the four competitor brands or shows their labels clearly enough to prove the 'coffee last' claim, reducing saveability. The line 'One prints 70% Coffee, 30% Chicory on the front' positions transparency as the hero, yet the caption and CTA fail to reinforce the distinction between Ultra Blend (honest blend) and the pure range (zero chicory), missing an education-to-conversion bridge. Fix: change featured_product to 'Ultra Blend', ensure shop link UTMs match Ultra Blend, add a frame or overlay explicitly stating 'Ultra Blend = 70% Coffee / 30% Chicory | Bold, Purista, Purica, Prima = pure Coffee / 0% Chicory' to close the clarity gap and drive informed purchases.",
+        "retention_audit": "Frame 1: Strong visual hook but 'five top-selling' is unverified — add 'in India' or 'on quick-commerce apps' for credibility. Frame 2: Good pattern interrupt, but generic jars lack recognizable branding — viewer cannot verify the claim. Show a blurred but identifiable market-leader jar shape or use 'Brand A, Brand B' overlays. Frame 3: Best frame — product clarity peaks here. Frame 4-5: ASMR execution is solid, but 'no kettle needed' applies to all instant coffee — not a differentiator. Replace with 'dissolves clean in cold milk — no residue, no clumps' which is a specific Ultra Blend agglomerated benefit. Frame 6: CTA frame holds too long (1.5s loop) — cut to 0.8s and add the pure-range disclaimer overlay. Caption: Missing the pure-range distinction. Hashtags: Add #HonestLabel #70PercentCoffee."
       },
       "editorial_error": "editorial time budget reached before this piece passed"
     }
@@ -240,74 +240,70 @@
   "instagram_post": {
     "featured_product": "Bold",
     "objective": "Brand Awareness",
-    "primary_cta": "Comment BLACK, MILK, or STRONG and I will tell you which pure-coffee variant fits your ratio. Follow @purepantryprovisions for daily coffee truth. https://p3online.in/?utm_source=instagram&utm_medium=post&utm_campaign=202610 — Purity Beans",
-    "success_metric": "follows",
-    "_growth_attempts": 1,
-    "brand_clarity": 9,
-    "caption": "The office pantry jar hides a second ingredient. Ours doesn't.\n\nMonday 9:15 AM. You reach for the shared jar. The label reads: Coffee, Chicory. You sip anyway because the meeting starts in five minutes. The kick arrives — but so does the hollow, woody aftertaste that lingers past lunch.\n\nThe second ingredient isn't coffee. It's a filler brands don't advertise.\n\nFlip a Purity Beans Bold jar. The back panel reads: Coffee. That is the entire list. Zero chicory. Agglomerated pure coffee that dissolves clean and hits strong without the filler ghost.\n\nSave this before your next grocery run to compare ingredient panels in three seconds.\nSend this to anyone who's ever wondered why office coffee leaves a woody aftertaste.\nComment BLACK, MILK, or STRONG and I will tell you which pure-coffee variant fits your ratio.\nFollow @purepantryprovisions for daily coffee truth.\nhttps://p3online.in/?utm_source=instagram&utm_medium=post&utm_campaign=202610 — Purity Beans",
-    "chosen_hook": "The office pantry jar hides a second ingredient. Ours doesn't.",
-    "comment_trigger": "Comment BLACK, MILK, or STRONG and I will tell you which pure-coffee variant fits your ratio.",
-    "cta": "Comment BLACK, MILK, or STRONG and I will tell you which pure-coffee variant fits your ratio. Follow @purepantryprovisions for daily coffee truth. https://p3online.in/?utm_source=instagram&utm_medium=post&utm_campaign=202610 — Purity Beans",
-    "emotion_pull": 9,
-    "feedback": "Hook creates curiosity gap by withholding what the second ingredient is until paragraph three. Open loop paid off with 'It's a filler brands don't advertise.' Relatability sharpened via specific Indian office moment (Monday 9:15 AM, meeting in five minutes, woody aftertaste). Comment trigger uses three-option this-or-that (BLACK/MILK/STRONG) for higher engagement. Save trigger is practical grocery-run utility. Share trigger targets universal pain point (woody aftertaste) not behavior. Follow CTA moved to final line with clear reason ('daily coffee truth'). No banned phrases, no fabricated metrics, no health claims. Bold correctly described as agglomerated pure coffee with zero chicory. Website link included.",
-    "funnel_objective": "Follower growth and ingredient-awareness education",
-    "growth_plan": "Post at 7:30 AM IST Monday. Pin comment with BLACK/MILK/STRONG prompt. Reply to every comment within 30 minutes with variant recommendation. Reshare top UGC comments to Stories with ingredient-panel close-up.",
-    "hashtags": "#PurityBeans #PureCoffee #ZeroChicory #BoldCoffee #OfficeCoffee #ReadTheLabel #IndianCoffee #CleanLabel #CoffeeTruth #PurePantryProvisions",
-    "hook": "The office pantry jar hides a second ingredient. Ours doesn't.",
-    "hook_line": "The office pantry jar hides a second ingredient. Ours doesn't.",
-    "hook_strength": 9,
-    "hook_text": "The office pantry jar hides a second ingredient. Ours doesn't.",
-    "image_alt": "Top-down shot of an office pantry shelf at 9:15 AM. A generic shared coffee jar sits center with a worn label clearly showing 'Coffee, Chicory' in small print. Beside it, a Purity Beans Bold glass jar catches a shaft of cool morning window light — its label clean, ingredient line visible: 'Coffee'. A stainless steel teaspoon rests across the Bold jar's lid. Background: blurred steel kettle, stacked ceramic mugs, a half-eaten paratha on a plate. Realistic texture: fingerprints on glass, slight condensation on the kettle, crumbs on the shelf.",
-    "image_prompt": "Vertical 9:16 hyperrealistic photograph, shot on iPhone 15 Pro, 85mm equivalent portrait lens, f/1.8, shallow depth of field. Top-down view of an Indian office pantry shelf at 9:15 AM Monday. Center-left: a generic plastic coffee jar with a faded, slightly peeled label where the ingredient line 'Coffee, Chicory' is legible in small print. Center-right: the exact Purity Beans Bold glass jar from reference — clear glass, black matte cap, authentic label catching a narrow shaft of cool window light (mixed color temp: cool daylight 5600K from window, warm 3000K overhead pantry light). The Bold jar's ingredient panel is sharply readable: 'Coffee' alone. A stainless steel teaspoon lies across the Bold jar's lid. Background details: stainless steel electric kettle with fingerprints and slight limescale, three ceramic mugs stacked with chipped rims, a half-eaten aloo paratha on a steel plate with crumbs scattered, a used tissue crumpled at shelf edge. Visible skin pores on hand reaching for Bold jar (forearm only), natural oil sheen. Contact shadow under both jars. Slight motion blur on the reaching hand. Lived-in clutter, not staged. Dark moody grading with warm amber accent on Bold jar label. No text overlay, no graphics.",
-    "overall": 9,
+    "primary_cta": "Comment 50g or 100g",
+    "success_metric": "Saves > 1,200 | Comments > 300 (segmented 50g/100g) | Shares > 500 | Profile visits > 800 | Follows gained > 200",
+    "caption": "Your office pantry jar lists a second ingredient. It is not coffee.\n\nThat bitter ghost note at the bottom of your steel tumbler — the one that lingers while a colleague's voice note plays at 2x speed over keyboard clatter — is chicory filler doing its job: stretching yield, muting the bean.\n\nFlip the jar. Read the back. If the ingredient list runs longer than one word, you are drinking a blend designed for margin, not for mornings.\n\nPurity Beans Bold is agglomerated pure coffee. One ingredient. Zero chicory. The bitterness you taste is the bean, not the filler.\n\nComment 50g or 100g and I will tell you which Bold size fits your routine. Follow @purepantryprovisions for daily coffee truth. https://p3online.in — Purity Beans",
+    "cta": "Comment 50g or 100g and I will tell you which Bold size fits your routine. Follow @purepantryprovisions for daily coffee truth. https://p3online.in — Purity Beans",
+    "comment_trigger": "Comment 50g or 100g and I will tell you which Bold size fits your routine.",
+    "save_trigger": "Save this to compare labels next grocery run.",
+    "share_trigger": "Tag the teammate who complains about the office coffee every single afternoon.",
+    "hook": "Your office pantry jar lists a second ingredient. It is not coffee.",
+    "hook_line": "Your office pantry jar lists a second ingredient. It is not coffee.",
+    "hook_text": "Your office pantry jar lists a second ingredient. It is not coffee.",
+    "image_prompt": "Vertical 9:16, hyperrealistic photograph, cinematic lighting. An Indian office desk at 4:17 PM: a steel tumbler half-full of dark coffee, condensation beads on the metal, a faint chipped rim from years of use. A generic instant coffee jar sits pushed to the side, a half-peeled price sticker on its lid, ingredient list visible with multiple lines: Coffee, Chicory, Stabilizer, Flavor. The Purity Beans Bold jar stands upright and untouched center-frame, glass catching a warm amber rim light, label crisp and legible: one ingredient — Coffee. A hand rests near the Bold jar, fingers slightly tense, index finger pointing at the generic jar's ingredient panel. Background: blurred office partitions, a colleague's backlit laptop screen showing a spreadsheet, a coiled charging cable, a crumpled yellow corporate sticky note in a specific sans-serif font. Shallow depth of field, 85mm equivalent, shot on iPhone 15 Pro, natural grain, slight motion blur on the background figure typing. Real contact shadow under both jars. Fingerprint smudge on the Bold jar's glass.",
+    "image_alt": "Office desk with steel tumbler showing chipped rim, generic coffee jar with half-peeled price sticker and multi-item ingredient list, and Purity Beans Bold jar with single-ingredient label. Hand pointing at generic jar.",
+    "hashtags": "#PurityBeans #BoldPureCoffee #ReadTheLabel #ZeroChicory #OfficeCoffee #IndianCoffeeCulture #PureIngredients #AgglomeratedCoffee #CoffeeTruth #PurePantryProvisions",
+    "funnel_objective": "Consideration",
     "post_type": "instagram_post",
     "reel_inspiration": [
       {
-        "on_screen": "Monday 9:15 AM text overlay. Hand reaches for generic pantry jar. Label close-up: 'Ingredients: Coffee, Chicory'.",
-        "spoken": "Monday 9:15. The shared jar says Coffee, Chicory. You drink it anyway."
+        "on_screen": "Close-up: steel tumbler on desk, condensation dripping. Chipped rim catches light. WhatsApp voice note waveform animates on phone screen nearby at 2x speed.",
+        "spoken": "That bitter ghost note at the bottom of your steel tumbler..."
       },
       {
-        "on_screen": "Close-up on the word 'Chicory' highlighted in red. Text overlay: 'The second ingredient isn't coffee.'",
-        "spoken": "The second ingredient isn't coffee. It's a filler brands don't advertise."
+        "on_screen": "Hand picks up generic jar, turns it slowly. Half-peeled price sticker on lid. Ingredient list scrolls into focus: Coffee, Chicory, Stabilizer, Flavor.",
+        "spoken": "Flip the jar. Read the back. If the list runs longer than one word..."
       },
-      [
-        "on_screen"
-      ]
+      {
+        "on_screen": "Cut to: Purity Beans Bold jar in same amber light. Label clean. One ingredient: Coffee. Fingerprint smudge on glass catches the light.",
+        "spoken": "Purity Beans Bold is agglomerated pure coffee. One ingredient. Zero chicory."
+      },
+      {
+        "on_screen": "Split screen: generic jar murky pour vs Bold clear amber pour into identical steel tumblers. The chipped-rim tumbler on the right.",
+        "spoken": "The bitterness you taste is the bean, not the filler."
+      },
+      {
+        "on_screen": "Bold jar on desk. Text overlay: Comment 50g or 100g. Follow @purepantryprovisions for daily coffee truth.",
+        "spoken": "Comment 50g or 100g. Follow for daily coffee truth."
+      }
     ],
-    "save_trigger": "Save this before your next grocery run — real coffee matters.",
-    "share_trigger": "Share with someone who starts every morning with coffee.",
+    "emotion_pull": "Betrayal turning into quiet confidence — the relief of knowing exactly what is in your cup.",
+    "brand_clarity": 10,
+    "hook_strength": 9,
+    "viral_potential": 9,
+    "overall": 9,
+    "shareability": 9,
+    "saveability": 9,
+    "relatability": 9,
+    "curiosity_gap": 9,
+    "comment_trigger_score": 9,
+    "format_fit": 9,
+    "follow_cta": 9,
+    "growth_plan": "Seed via Stories poll: 'Does your office jar list one ingredient or five?' Link to post. Boost to metro professionals 25-40 interested in specialty coffee, productivity, health labels. Retarget engagers with Bold 50g product page.",
+    "_growth_attempts": 0,
+    "feedback": "Hook delays 'chicory' until after the steel tumbler and WhatsApp voice note scene — reader feels the problem before naming the filler. Micro-detail: chipped tumbler",
+    "regen_round": 3,
+    "chosen_hook": "Your office pantry jar has a second",
     "editorial_score": {
-      "shareability": 8.5,
-      "saveability": 9.0,
-      "emotion_pull": 8.5,
-      "hook_strength": 9.0,
-      "brand_clarity": 9.0,
-      "overall": 8.8,
-      "verdict": "PASS",
-      "feedback": "Strong Monday 9:15 AM office ritual hook anchors instantly in Tier-1/Tier-2 Indian professional reality. The ingredient-panel reveal in paragraph two creates a clean curiosity gap. Sensory detail — 'hollow, woody aftertaste', 'filler ghost' — triggers disgust/relief contrast without banned language. BLACK vs MILK comment trigger is a clean this-or-that identity prompt. Save trigger ('before your next grocery run') is practical utility. Share trigger targets the 3-cup colleague naturally. Bold correctly described as agglomerated pure coffee with zero chicory. Website link and follow handle present. No fabricated metrics, no health claims, no consumer sample offers.",
-      "retention_audit": "Line 1 (hook): stops scroll — specific, contrast, relatable. Line 2-3 (scene-setting): 'Monday 9:15 AM', 'shared jar', 'meeting in five minutes' — zero fluff, high recognition. Line 4 (pain point): 'hollow, woody aftertaste that lingers past lunch' — visceral, specific. Line 5 (reveal): 'Flip a Purity Beans Bold jar. The back panel reads: Coffee.' — clean authority move. Line 6 (process + benefit): 'Agglomerated pure coffee that dissolves clean and hits strong without the filler ghost.' — correct process, benefit-led, no banned terms. Line 7 (save CTA): practical, timely. Line 8 (share CTA): identity-tagged colleague. Line 9 (comment CTA): binary, low-friction. Line 10-11 (follow + link): complete funnel. No attention drops detected."
-    },
-    "viral_potential": {
-      "scores": {
-        "hook": 9.0,
-        "curiosity_gap": 6.0,
-        "relatability": 9.0,
-        "shareability": 7.0,
-        "comment_trigger": 8.0,
-        "format_fit": 9.0,
-        "follow_cta": 7.0
-      },
-      "overall": 7.86,
-      "weakest": [
-        "curiosity_gap",
-        "shareability",
-        "follow_cta"
-      ],
-      "feedback": "Curiosity gap is the main drag: the hook delivers the answer (one ingredient vs two) in the first line, leaving no open loop to pull the reader deeper. Add a delayed-reveal sentence — e.g. \"The second ingredient isn't coffee. It's something brands don't advertise.\" — then pay it off in paragraph two. Shareability sits at 7 because the share prompt targets a behavior (three cups before lunch) rather than a universal pain point; swap to \"Send this to anyone who's ever wondered why office coffee leaves a woody aftertaste.\" Follow CTA is buried after two other asks; move \"Follow @purepantryprovisi",
-      "better_hook": "The office pantry jar hides a second ingredient. Ours doesn't.",
-      "passed": false,
-      "honesty": [],
-      "pass_mark": 9.0
+      "shareability": 7.5,
+      "saveability": 8.0,
+      "emotion_pull": 7.5,
+      "hook_strength": 8.0,
+      "brand_clarity": 8.5,
+      "overall": 7.9,
+      "verdict": "REJECT",
+      "feedback": "Overall score 7.9 falls below the 8.0 threshold. The opening hook is strong and specific, but the caption loses momentum in the middle paragraphs. The '4:17 PM / WhatsApp 2x speed' detail is vivid but over-descriptive — it delays the pivot to the ingredient reveal. The line 'bitter ghost note... is not the bean. It is roasted root filler' uses 'roasted root filler' which borders on disparaging chicory (prohibited per brand rules: never call chicory muddy, bad, or poison). Replace with neutral 'chicory filler' or 'added filler'. The CTA 'Comment 50g or 100g' is clear but the follow-up promise 'I will tell you which Bold size fits your routine' creates a manual reply burden at scale — consider a self-serve sizing guide link instead. Shorten the middle narrative by 30%, cut the disparaging language, and tighten the transition from problem to product.",
+      "retention_audit": "Line 1 (Hook): Strong — specific, accusatory, stops scroll. Line 2: Overwritten sensory detail (4:17 PM, WhatsApp 2x, keyboard clatter) — attention drifts before the payoff. Line 3: 'roasted root filler' triggers brand-safety flag; replace with 'chicory' or 'added filler'. Line 4: Good pivot to action ('Flip the jar'). Line 5: Product claim clean and compliant. Line 6: CTA functional but manual-reply promise limits scalability. Line 7: Generic follow CTA dilutes primary action."
     },
     "editorial_error": "editorial time budget reached before this piece passed"
   },
@@ -498,18 +494,18 @@
       "published": false
     },
     "needs_regen": true,
-    "regen_round": 2,
+    "regen_round": 4,
     "viral_readiness_score": 82.0,
     "editorial_score": {
       "shareability": 7.0,
       "saveability": 8.5,
-      "emotion_pull": 4.5,
+      "emotion_pull": 4.0,
       "hook_strength": 6.5,
-      "brand_clarity": 8.0,
-      "overall": 6.9,
+      "brand_clarity": 6.5,
+      "overall": 6.5,
       "verdict": "REJECT",
-      "feedback": "The carousel is an excellent *recipe card* (high saveability) but fails as a growth driver because it lacks emotional stakes and a distinct Purity Beans POV. The hook ('Your black coffee has been lying to you about what strong tastes like') promises a revelation about coffee quality/strength but delivers only a generic cold-coffee method that works with any instant powder — creating an attention drop at Slide 3 when the user realizes the 'secret' is just 'whisk with 2 spoons water.' The Purity Beans jar appears only on the final slide as a passive prop, not the enabler of the result. To pass: 1) Rewrite the hook to match the actual payoff (e.g., 'The barista trick for creamy cold coffee without a blender'). 2) Move the product benefit forward: explain *why* Purity Beans (Bold/Purica) creates better foam/flavor in this method (agglomerated structure / freeze-dried solubility). 3) Add a comparative line on Slide 4: 'Cheap chicory powders turn sludgy; pure coffee emulsifies.' This turns a recipe into a product demo.",
-      "retention_audit": "Slide 1-2: Functional, low tension. Slide 3 (2 spoons water): The 'pattern interrupt' moment — user expects a quality reveal, gets a technique. Attention drops here. Slide 4 (Stir hard): Good sensory detail ('pale and thick') but generic — no link to *why this brand works better*. Slide 5: Standard assembly. Slide 6: Product dump — too late. The jar should be the hero of Slide 4 (the emulsification step)."
+      "feedback": "The carousel is a solid sensory recipe guide (high saveability) but fails as growth content because the hook is generic and the brand clarity is diluted. The hook 'Your black coffee has been lying to you about what strong tastes like' promises a revelation about coffee quality but delivers a cold coffee technique — a bait-and-switch that drops attention at slide 1. The product reveal on slide 6 is passive: the jar sits beside the glass with no visual hierarchy, and the copy lists the entire portfolio instead of anchoring to the featured SKU (Bold). The anti-chicory framing in the system prompt is not triggered here, but the 'India's Cleanest Instant Coffee' claim sits next to Ultra Blend's 30% chicory disclosure without separation, creating a clarity conflict. To pass: 1) Rewrite hook to match the actual value prop ('The 60-second cold coffee method cafes don't want you to know'). 2) Make Bold the hero — show the jar mid-whip on slide 4 with granules visible. 3) Move the portfolio disclosure to a footer line; lead with 'Bold is pure agglomerated coffee — zero chicory.' 4) Add a visceral sensory line on slide 5 ('The foam clings to the spoon like melted chocolate').",
+      "retention_audit": "Slide 1: Hook promises taste revelation, delivers vessel — attention drop. Slide 2-4: Functional steps, no sensory language — retention flatlines. Slide 5: 'Pour it in, stir it through, and it is done' is the flattest line in the deck — zero payoff. Slide 6: Brand clarity fractures across 4 SKUs + a blend; no single reason to buy Bold today."
     },
     "editorial_error": "editorial time budget reached before this piece passed"
   },
@@ -1546,37 +1542,115 @@
   },
   "yt_short": {
     "featured_product": "Bold",
-    "objective": "drive_traffic",
-    "primary_cta": "https://p3online.in/products/bold-pure-coffee",
+    "objective": "Brand Awareness",
+    "primary_cta": "Follow @purepantryprovisions",
     "success_metric": "watch_time_40_percent",
-    "_shape": [
-      "ad_cta_link",
-      "audio",
-      "audio_direction",
-      "chosen_hook",
-      "comment_trigger",
-      "cta",
-      "description",
-      "edit_pacing",
-      "emotion_arc",
-      "featured_product",
-      "funnel_objective",
-      "hashtags",
-      "hook",
-      "hook_text",
-      "objective",
-      "primary_cta",
-      "product",
-      "reel_inspiration",
-      "save_trigger",
-      "scenes",
-      "share_trigger",
-      "success_metric",
-      "tagline"
+    "product": "Bold",
+    "tagline": "Read the jar. Bold is pure coffee, agglomerated, zero chicory. Shop Bold at https://p3online.in/products/bold-pure-coffee — Purity Beans",
+    "chosen_hook": "Betrayal Hook",
+    "hook": "That watery cup isn't weak coffee — it's chicory filler dissolving in seconds.",
+    "hook_text": "That watery cup isn't weak coffee — it's chicory filler dissolving in seconds.",
+    "emotion_arc": "Betrayal shock → visual proof → sensory clarity → confident choice",
+    "edit_pacing": "Tight cuts every 2-3 seconds, macro granule detail, subtle handheld sway, physics-first pour",
+    "audio": "Diegetic kitchen ASMR — kettle click, spoon tap, granules hitting water, steam rise — layered under warm acoustic guitar bed",
+    "audio_direction": "Pure diegetic sound first 4 seconds, then subtle instrumental bed under voiceover",
+    "comment_trigger": "Comment BOLD if you want body. Comment SMOOTH if you prefer clean finish.",
+    "share_trigger": "Send this to the friend who complains their instant coffee tastes watery.",
+    "save_trigger": "Save this before your next grocery run — know your granules.",
+    "cta": "Shop Bold at https://p3online.in/products/bold-pure-coffee — Purity Beans",
+    "description": "Generic chicory-laden powder vanishes in two seconds — no body, no crema, no kick. Purity Beans Bold uses agglomerated pure coffee granules that bloom for 45 seconds, hold structure, and deliver a deep, full-bodied cup. Zero chicory. Read the jar at https://p3online.in",
+    "hashtags": "#PurityBeans #BoldCoffee #PureCoffee #AgglomeratedCoffee #ZeroChicory #IndianCoffeeBrand #ReadTheJar #CoffeeLoversIndia",
+    "funnel_objective": "Top of Funnel",
+    "reel_inspiration": {
+      "inspiration_id": "bold_granule_reveal",
+      "mode": "style_cues",
+      "source_template_id": "bold_granule_closeup",
+      "source_filename": "bold_granule_reveal.mp4",
+      "publish_source_video": false,
+      "copied": {
+        "pixels": false,
+        "audio": false,
+        "sku": false
+      },
+      "featured_product": "Bold",
+      "featured_slug": "bold",
+      "cues": [
+        {
+          "id": "pacing",
+          "cue": "Thirty-five seconds total, scene shifts every 2-3 seconds."
+        },
+        {
+          "id": "framing",
+          "cue": "Vertical 1080x1920, exact Purity Beans Bold jar forward so glass and label stay readable from frame one."
+        },
+        {
+          "id": "storytelling",
+          "cue": "Focus on granule structure vs powder dissolution speed — Bold jar visible immediately."
+        },
+        {
+          "id": "aesthetic",
+          "cue": "Warm editorial glass-jar photography on dark marble under warm amber light."
+        }
+      ],
+      "audio_note": "Diegetic ASMR first, then warm acoustic bed"
+    },
+    "scenes": [
+      {
+        "scene": 1,
+        "type": "problem",
+        "duration_s": 3.0,
+        "on_screen": "Purity Beans Bold jar front-and-center on dark marble. Hand spoons generic fine powder into mug — vanishes in 2 seconds, water stays pale. Bold jar label sharp: 'Pure Coffee • Agglomerated • 0% Chicory'",
+        "spoken": "Watch generic chicory powder disappear in two seconds. No body. No weight. Just colored water — because filler dissolves instantly.",
+        "visual_direction": "Macro top-down, 85mm equivalent, dark marble, single warm amber key light, steam rising, shallow depth of field. Bold jar hero position from frame one with contact shadow."
+      },
+      {
+        "scene": 2,
+        "type": "tension",
+        "duration_s": 3.0,
+        "on_screen": "Split frame: left side generic powder dissolving to pale water, right side Bold granules poured — distinct, structured, audible clink against ceramic. Granules catch light, hold shape. Bold jar label facing camera: 'Pure Coffee • Agglomerated • 0% Chicory'",
+        "spoken": "Now watch Bold. Agglomerated granules. You hear them. You see them. They hold structure for 45 seconds, bloom like real coffee.",
+        "visual_direction": "Slow-motion pour on right, time-lapse dissolve on left, granules catching light, label facing camera, fingerprint smudge on glass for realism, warm gold reflection on label."
+      },
+      {
+        "scene": 3,
+        "type": "turn",
+        "duration_s": 4.0,
+        "on_screen": "Granules bloom slowly — amber crema forms, swirls, holds. On-screen timer graphic: '0:00 → 0:45' counting up. Bold jar steady in background, label readable.",
+        "spoken": "Forty-five seconds to full bloom. That structure is why the kick lasts.",
+        "visual_direction": "Time-lapse bloom with visible timer overlay, macro focus on crema formation, warm gold reflection on jar label, subtle handheld sway."
+      },
+      {
+        "scene": 4,
+        "type": "payoff",
+        "duration_s": 4.0,
+        "on_screen": "Sip moment — person nods, sets mug down. Bold jar centered, label sharp: 'Pure Coffee • Agglomerated • 0% Chicory'. Natural grain, contact shadow on marble.",
+        "spoken": "Pure coffee. Agglomerated. Zero chicory. Read the jar.",
+        "visual_direction": "Pull back to wide, handheld sway settles, natural grain, jar hero position, contact shadow on marble, warm amber glow holds."
+      },
+      {
+        "scene": 5,
+        "type": "cta",
+        "duration_s": 3.0,
+        "on_screen": "Shop Bold at p3online.in  •  Purity Beans  •  Follow @purepantryprovisions",
+        "spoken": "Shop Bold at p3online.in. Purity Beans. Follow @purepantryprovisions.",
+        "visual_direction": "Hold on the line already written."
+      }
     ],
-    "needs_regen": true,
-    "held": true,
-    "hold_reason": "purged banned-claim draft: Shopify price truth: price ₹175 is not a live Shopify price; Per-cup price/yield is verified only for Ultra Blend; name Ultra Blend or omit the figure"
+    "ad_cta_link": "https://p3online.in/products/bold-pure-coffee?utm_source=youtube&utm_medium=post&utm_campaign=202610",
+    "editorial_score": {
+      "shareability": 7.2,
+      "saveability": 6.8,
+      "emotion_pull": 7.0,
+      "hook_strength": 6.5,
+      "brand_clarity": 8.0,
+      "overall": 7.1,
+      "verdict": "REJECT",
+      "feedback": "The hook 'Your strong coffee disappears in two seconds' is functional but generic — it could apply to any brand selling 'better' instant coffee. It lacks the specific betrayal trigger (chicory/filler) that defines Purity Beans' positioning. The audio cut at Scene 2 ('Ag') truncates the spoken line, breaking retention. Scene 1 shows generic powder but never names what it *is* (chicory-laden powder), missing the educational 'aha' moment that drives saves. The emotion arc promises 'visual proof' but Scene 2 only shows granules clinking — no side-by-side dissolution comparison to prove body/structure. The CTA repeats the URL three times across fields; consolidate to one clear directive. To pass: rewrite hook to target the chicory/filler betrayal explicitly, complete the Scene 2 spoken line with sensory payoff ('hold structure for 45 seconds, bloom like real coffee'), add a split-frame dissolve comparison in Scene 2, and replace the third CTA instance with a comment trigger that segments audience ('Comment BOLD if you want body. Comment SMOOTH if you prefer clean finish').",
+      "retention_audit": "Scene 1 (0-3s): Hook lands but lacks specificity — 'generic powder' is vague. Name the enemy: 'chicory-heavy powder'.\nScene 2 (3-6s): Spoken line cuts at 'Ag'. Incomplete audio = immediate drop-off. Must complete: 'Now watch Bold. Agglomerated granules hold structure for 45 seconds, bloom like real coffee, deliver the body your mug deserves.'\nScene 2 Visual: Shows granules catching light but no dissolution proof. Add macro side-by-side: generic powder vanishing vs Bold granules blooming.\nScene 3+ (missing): Only 2 scenes for 35s reel. Pacing cue says 'scene shifts every 2-3s' — need 10-12 scenes. Where are the pour, bloom, sip, label close-up, website end-card?\nCTA redundancy: URL appears in tagline, cta, description. Keep only in final end-card + caption.\nComment trigger is strong but isolated — pair with identity hook: 'Real coffee drinkers know body isn't optional.'"
+    },
+    "type": "yt_short",
+    "title": "Why Your Strong Coffee Vanishes in 3 Seconds — The Granule Test",
+    "editorial_error": "editorial time budget reached before this piece passed"
   },
   "growth_reel": {
     "type": "growth_reel",
@@ -1767,7 +1841,7 @@
     "viral_readiness_score": 76.0
   },
   "threads_post": {
-    "text": "Purity Beans Bold is pure coffee — zero chicory, agglomerated for a deep, full-bodied kick.\n\nRead the label. That is the only way to know.\n\nComment PURE if your jar says pure coffee.",
+    "text": "Your instant coffee lists chicory BEFORE coffee. Read that again.\n\nPurity Beans Bold is agglomerated pure coffee — zero chicory. The first sip hits with clean, high-caffeine clarity that never turns inconsistent.\n\nComment COFFEE if your jar puts coffee first. Comment CHICORY if yours leads with filler.",
     "featured_product": "Bold",
     "objective": "Engagement Growth",
     "primary_cta": "Which one would you choose? Comment below",
@@ -1776,27 +1850,37 @@
     "comment_trigger": "Comment the first word you see on the jar label.",
     "save_trigger": "Save this before your next grocery run — real coffee matters.",
     "share_trigger": "Share with someone who starts every morning with coffee.",
-    "editorial_error": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
+    "editorial_score": {
+      "shareability": 7.0,
+      "saveability": 6.5,
+      "emotion_pull": 7.5,
+      "hook_strength": 7.5,
+      "brand_clarity": 8.5,
+      "overall": 7.4,
+      "verdict": "REJECT",
+      "feedback": "Hook is strong and specific to Indian instant coffee reality, but the body loses momentum by sliding into generic product benefit language ('clean, high-caffeine clarity') instead of extending the betrayal narrative. The CTA asks for a binary choice (COFFEE vs CHICORY) which limits comment volume — most users won't check their jar mid-scroll. The comment_trigger ('first word on the jar label') is better but unused in the main CTA. Save/share triggers are generic grocery/run lines that could apply to any brand. To pass: rewrite body to name the specific emotional cost of chicory-first labeling (wasted money, broken trust), replace binary CTA with the label-reading prompt, and make save/share triggers specific to the revelation (e.g., 'Save to check your jar tonight').",
+      "retention_audit": "Line 1 (Hook): Strong — specific, accusatory, instantly verifiable. Holds attention. Line 2 (Body): Drop — shifts from revelation to product pitch. 'Agglomerated pure coffee' is technical; 'clean, high-caffeine clarity' is vague marketing. No emotional payoff for the betrayal set up in line 1. Line 3 (CTA): Weak — binary choice creates friction. Most users don't have jar in hand. Comment_trigger in metadata is stronger but disconnected. Save/Share triggers: Generic — no tie to the hook's insight."
+    },
     "ladder_exhausted": true,
     "publish_blocked": "ladder_exhausted",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: Hook is strong and specific to Indian instant coffee reality, but the body loses momentum by sliding into generic product benefit language ('clean, high-caffeine clarity') instead of extending the betrayal narrative. The CTA asks for a binary choice (COFFEE vs CHICORY) which limits comment volume — most users won't check their jar mid-scroll. The comment_trigger ('first word on the jar label') is better but unused in the main CTA. Save/share triggers are generic grocer"
   },
   "facebook_post": {
-    "featured_product": "Bold",
     "objective": "Engagement Growth",
     "primary_cta": "Which one would you choose? Comment below",
     "success_metric": "comments",
     "angle": "revelation",
-    "hook": "I watched my husband brew the Purity Beans Bold jar for three mornings straight before I realized the label wasn't hiding anything — it actually says one ingredient.",
-    "body": "The Purity Beans Bold jar arrived in its glass bottle and my husband treated it like his new favorite tool — spoon, hot water, done. I kept waiting for the catch: the chicory line in small print, the filler percentage, the roasted root stretch. It never came. The front says pure coffee. The back lists one ingredient: pure coffee. Bold is agglomerated pure coffee, not freeze-dried, and that structure holds the oils so the aroma stays in the kitchen twenty minutes after pouring. At ₹369 for the 100g jar, it replaces a daily cafe habit that quietly drains ₹4,500 a month without the commute or the markup. Most instant coffee hides chicory in the fine print; Purity Beans puts pure coffee on the front and the back so you never have to guess what you are drinking.",
-    "community_question": "What is the one ingredient you refuse to see on your coffee label?",
-    "cta": "Follow @purepantryprovisions for honest label breakdowns most brands skip. Shop Bold at https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610",
-    "hashtags": "#PurityBeans #Bold #PureCoffee #ZeroChicory #ReadTheLabel #IndianCoffee",
-    "comment_trigger": "What is the one ingredient you refuse to see on your coffee label?",
-    "hook_text": "I watched my husband brew the Purity Beans Bold jar for three mornings straight before I realized the label wasn't hiding anything — it actually says one ingredient.",
-    "chosen_hook": "I watched my husband brew the Purity Beans Bold jar for three mornings straight before I realized the label wasn't hiding anything — it actually says one ingredient.",
+    "hook": "I handed my husband the Purity Beans Bold jar and asked him to read the ingredient list out loud — coffee, that is it, the whole list.",
+    "body": "We have kept the 100g glass jar at ₹369 on the counter for months because Bold is agglomerated pure coffee with zero chicory and zero additives, and it dissolves clean whether I brew it black in a French press hack with thirty seconds steep or he takes it with a splash of oat milk. The flavour holds without any muddy aftertaste, naturally high caffeine hits like it should, and the jar sits right next to the kettle so slow mornings stay friction-free. Orders above ₹399 ship free so grabbing two jars lasts us weeks. Purity Beans Bold is the strong honest coffee that actually tastes like coffee.",
+    "community_question": "Black, with milk, or something weird — how do you drink your Bold?",
+    "cta": "Follow @purepantryprovisions for the label-reading habit that catches what brands hide. https://p3online.in/?utm_source=facebook&utm_medium=post&utm_campaign=202610",
+    "hashtags": "#PurityBeans #Bold #PureCoffee #ZeroChicory #IndianCoffeeBrand #MorningRitual",
+    "featured_product": "Bold",
+    "comment_trigger": "Black, with milk, or something weird — how do you drink your Bold?",
+    "hook_text": "I handed my husband the Purity Beans Bold jar and asked him to read the ingredient list out loud — coffee, that is it, the whole list.",
+    "chosen_hook": "I handed my husband the Purity Beans Bold jar and asked him to read the ingredient list out loud — coffee, that is it, the whole list.",
     "save_trigger": "Save this before your next grocery run — real coffee matters.",
     "share_trigger": "Share with someone who starts every morning with coffee.",
     "editorial_error": "editorial time budget reached before this piece passed"
@@ -2587,6 +2671,41 @@
         "attempt": 2,
         "rung": "from_scratch",
         "feedback": "CRITICAL MISMATCH: featured_product is 'Bold' (agglomerated, zero-chicory pure coffee) but every frame, spoken line, and CTA showcases Ultra Blend (70/30 chicory blend). This confuses the buyer and violates the rule that freeze-dried/agglomerated education must match the featured product. REWRITE: e"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook is specific and stops the scroll, but tighten the opening visual by showing the five jars immediately with a quick zoom on the Ultra Blend label to amplify curiosity. Replace the generic “Free shipping on orders above Rs 399” line with a value‑focused note (e.g., “Get café‑style coffee at h"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "CRITICAL FAILURE: Featured product is listed as 'Bold' (agglomerated, zero-chicory pure coffee) but the entire reel script, visuals, and CTA showcase Ultra Blend (70/30 chicory blend). This product mismatch violates mandatory product rules and destroys brand clarity. The hook is strong but generic —"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "CRITICAL MISMATCH: featured_product is 'Bold' (agglomerated, pure coffee, zero chicory) but the entire reel script, frames, and spoken audio feature 'Ultra Blend' (70% coffee, 30% chicory). This violates the mandatory rule: any mention of process or product must match the featured product. Bold is n"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "Critical mismatch: featured_product is 'Bold' (zero-chicory agglomerated) but the entire reel script, frames, and CTA promote Ultra Blend (70/30 chicory blend). This violates Mandatory Product Rules — process/format claims must match the featured product. Brand clarity suffers because the hero produ"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "Critical mismatch: featured_product is 'Bold' (zero-chicory pure coffee) but the entire reel script, hook, and visuals showcase Ultra Blend (70/30 coffee-chicory). This confuses the viewer and dilutes brand clarity. The hook 'Four list coffee last' is a strong betrayal pattern but fails specificity "
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "Critical mismatch: featured_product is 'Bold' (zero-chicory, agglomerated) but the entire reel script, frames, and CTA showcase Ultra Blend (70/30 chicory blend). This violates Mandatory Product Rules — freeze-dried vs agglomerated process claims must match the featured product. Bold is agglomerated"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "Critical brand clarity failure: 'featured_product' is set to 'Bold' (zero-chicory pure coffee) but the entire reel script, visuals, and CTA feature Ultra Blend (70/30 chicory blend). This creates a dangerous mismatch — if the Meta catalog tag or shop link pulls Bold, the customer receives a differen"
       }
     ],
     "carousel": [
@@ -2663,6 +2782,46 @@
         "attempt": 3,
         "rung": "from_scratch",
         "feedback": "The carousel is an excellent *recipe card* (high saveability) but fails as a growth driver because it lacks emotional stakes and a distinct Purity Beans POV. The hook ('Your black coffee has been lying to you about what strong tastes like') promises a revelation about coffee quality/strength but del"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The carousel teaches a solid cold-coffee technique (high saveability) but fails to make Purity Beans the hero. The hook attacks 'black coffee' generically — it could belong to any brand — so hook_strength and brand_clarity stay low. Emotion_pull is near zero because the copy is purely instructional;"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "The carousel teaches a solid cold-coffee technique (high saveability) but fails to make Purity Beans the hero. The hook attacks 'black coffee' generically instead of targeting the chicory/filler problem that differentiates the brand. Slide 6 buries the product disclosure in a dense paragraph; the ja"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "The carousel teaches a solid cold-coffee technique (high saveability) but fails to make Purity Beans the hero. The hook attacks 'black coffee' generically — it could belong to any brand — so hook_strength drops. The featured product is Bold (agglomerated) but the copy never explains why Bold's granu"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "The carousel teaches a solid cold-coffee technique (high saveability) but fails to make Purity Beans the hero. The hook attacks 'black coffee' generically — it doesn't name chicory, fillers, or the specific deception Purity Beans solves — so it could belong to any brand. Slide 6 buries the product d"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "HOOK/PAYOFF MISMATCH (The carousel teaches a solid cold-coffee technique (high saveability) but fails to make Purity Beans the hero. Slide 6 buries the product disclosure in a dense paragraph that mentions Ultra Blend's 70/30 split immediately after the pure-coffee variants, diluting the 'zero chico"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "The hook 'Your black coffee has been lying to you about what strong tastes like' creates a betrayal/curiosity gap that is strong, but the carousel body never delivers on that promise — it pivots immediately to a cold coffee recipe without explaining what 'strong' actually tastes like or how Purity B"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "The hook 'Your black coffee has been lying to you about what strong tastes like' creates a betrayal/curiosity gap but the carousel immediately pivots to a cold coffee recipe with zero follow-through on the 'strong taste' promise. This attention drop kills retention. The recipe is solid (high saveabi"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "The carousel is a solid sensory recipe guide (high saveability) but fails as growth content because the hook is generic and the brand clarity is diluted. The hook 'Your black coffee has been lying to you about what strong tastes like' promises a revelation about coffee quality but delivers a cold co"
       }
     ],
     "instagram_post": [
@@ -2710,6 +2869,41 @@
         "attempt": 3,
         "rung": "feedback",
         "feedback": "viral: score 7.86 < 9.0 (weakest: curiosity_gap, shareability, follow_cta). Curiosity gap is the main drag: the hook delivers the answer (one ingredient vs two) in the first line, leaving no open loop to pull the reader deeper. Add a delayed-reveal sentence — e.g. \"The second ingredient isn't coffee"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 8.0 < 9.0 (weakest: curiosity_gap, shareability, follow_cta). Curiosity gap resolves in paragraph 3; move the reveal one sentence earlier (e.g., 'The second ingredient is chicory — a filler brands don't advertise.') to tighten the open loop. Share trigger is generic ('share with someone"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 8.86 < 9.0 (weakest: curiosity_gap). Curiosity gap is strong but could be sharper. Consider flipping the structure: lead with the hidden truth first, then the brand solution. The current 'two ingredients' line is good but the 'why does this matter' urgency can be heightened. Add a micro"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 7.71 < 9.0 (weakest: shareability, comment_trigger, follow_cta). The piece scores well on hook, curiosity, and format fit. Three dimensions hold it back from a 9: (1) Shareability relies on a generic 'tag a colleague' prompt instead of a concrete, save-worthy utility (e.g., a 3-second i"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "viral: score 8.57 < 9.0 (weakest: curiosity_gap, relatability). The piece is strong across the board. To push curiosity_gap from 8 to 9, delay the word 'chicory' until after the aftertaste description — let the reader feel the problem before naming the filler. For relatability, add one micro-detail "
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The piece is competent but falls short of the 8.0 threshold because the emotional stakes are underplayed and the CTA cluster dilutes focus. The hook is specific to the Indian office ritual (steel tumbler, 2x WhatsApp note) which is strong, but the payoff — 'bitterness you taste is the bean, not the "
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "Overall score falls below the 8.0 threshold. Shareability and saveability are strong but not 'definitely' territory (8+). The caption's middle section loses momentum — the WhatsApp/keyboard detail is vivid but the 'margin not mornings' line feels like a generic marketing truism rather than a specifi"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "Overall score 7.9 falls below the 8.0 threshold. The opening hook is strong and specific, but the caption loses momentum in the middle paragraphs. The '4:17 PM / WhatsApp 2x speed' detail is vivid but over-descriptive — it delays the pivot to the ingredient reveal. The line 'bitter ghost note... is "
       }
     ],
     "linkedin_post": [
@@ -2848,6 +3042,71 @@
         "attempt": 7,
         "rung": "feedback",
         "feedback": "The hook is the strongest element — personal, relatable, and specific to Purity Beans Bold. However, the body loses momentum after the ingredient reveal. The price comparison (₹369 vs ₹4,500) is a strong value anchor but buried mid-paragraph without visual formatting. The 'kitchen still smells like "
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook spends 22 words on a husband narrative before naming the product or the revelation. On Facebook, the first 10–12 words are all that appear before 'See more' — the product and the 'one ingredient' payoff must land inside that window. The body is informative but reads like a product page para"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The hook is functional but not sharp — it frames the problem passively ('why does ours say...') instead of accusing the industry directly ('Your coffee brand hides chicory in small print'). The body spends too many words on price math (cafe ₹4,500/month) that dilutes the purity revelation. The commu"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "Overall score 7.6 is below the 8.0 threshold. The hook is specific and strong but the body reads like a product description, not a Facebook post — it reveals the jar/price too late and lacks scroll-stopping formatting. The community question and comment trigger are identical; deduplicate. The CTA us"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook is passive and personal ('I picked up...') instead of confronting the reader with their own coffee. It lacks betrayal, curiosity gap, or identity challenge — the three patterns that stop Indian coffee drinkers. The body reads like a product description, not a revelation. No visual hook desc"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "Hook is functional but generic — 'ingredient list has one job' could be any brand; it does not create a curiosity gap or identity challenge strong enough to stop a thumb in 2s. Opening paragraph buries the product name (Bold) and price (₹369) after a generic sentence; lead with the specific jar + pr"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The hook 'I turned my coffee jar around and the ingredient list was just one word — coffee' is relatable but lacks a pattern interrupt; it reads like a personal anecdote rather than a revelation that demands a stop. The body reveals the product name (Bold) and price in sentence two, which kills curi"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The hook 'You pick up a coffee jar, spin it around...' is a relatable action but lacks a stakes-driven pattern interrupt — it feels like a calm observation, not a scroll-stop. Shareability is capped at 7 because the body reads like a product spec sheet (process names, SKU weights, price) rather than"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The hook works as a curiosity gap but lacks specificity — 'it said exactly one thing' could be any brand. Add the word 'coffee' to the hook so the promise pays off instantly: '...and the ingredient list said exactly one thing: coffee.' The body front-loads price (₹369) before establishing value; mov"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook 'I turned my coffee jar around this morning...' is a generic personal anecdote that could belong to any brand — it lacks a betrayal, curiosity gap, or identity challenge. The body reads like a product spec sheet (price, weight, shipping threshold) instead of a story that makes the reader fe"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The hook reads like a personal diary entry, not a scroll-stopping revelation. 'My husband grabbed...' centers the narrator's spouse, not the reader's problem. The phrase 'strong coffee' in quotes is vague — is it a label claim or her description? No pattern interrupt. Body drifts into price/logistic"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The hook fails the 'Betrayal/Curiosity' test — 'I picked up our jar' is an internal founder moment, not a viewer-facing revelation. It lacks a scroll-stopping visual or emotional trigger (no betrayal, identity challenge, or surprising fact). The body drifts into a personal anecdote ('my husband reac"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook 'I turned our Bold jar around...' uses first-person brand voice ('our') which signals corporate content, not a real consumer moment — this kills shareability on Facebook where native UGC outperforms brand posts. The body reads like a product spec sheet with pricing, shipping thresholds, and"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "Content is honest and relatable. The hook effectively highlights the clean ingredient label. The body successfully communicates the product's texture and taste benefits. The CTA and links are clear. The overall flow works well for engagement."
       }
     ],
     "threads_post": [
@@ -2938,6 +3197,50 @@
       {
         "status": "exhausted",
         "reason": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The hook 'Purity Beans Bold is pure coffee — zero chicory, agglomerated for a deep, full-bodied kick' is a flat product description, not a scroll-stopper. It lacks betrayal, curiosity, or identity challenge. 'Read the label. That is the only way to know' is passive and gives no reason to act. The co"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "Hook 'You have been paying for chicory, not coffee' is a strong betrayal hook but gets diluted by line 3 jumping straight to product pitch without proving the claim. Line 2 ('Purity Beans Bold is pure coffee...') reads like a spec sheet — no proof, no visual, no 'read the jar' moment with actual lab"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The hook 'Your instant coffee jar hides a 30% secret' is vague and could apply to any brand — it does not name the category villain (chicory) or the specific pain point. Line 2 ('Flip it. Read the ingredient list.') is a generic instruction with no tension. Line 3 ('If chicory is in the top three, y"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "Overall 7.7 is below the 8.0 threshold. The opening hook is strong and specific to chicory-first labeling — good pattern interrupt. However, the middle sentence ('That means you are drinking roasted root filler, not coffee') crosses into disparaging competitor territory, which violates brand rules a"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The hook 'Your instant coffee jar lists chicory before coffee' is passive and informational — it reads like a label-reading tip, not a betrayal trigger. It fails the Subject Test: it does not make the reader feel personally deceived. The body line 'Purity Beans Bold is agglomerated pure coffee — zer"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The hook 'You've been drinking chicory, not coffee' is a strong betrayal pattern but fails specificity — it could be any anti-chicory brand. It does not anchor to Purity Beans until line 2, causing a 1.5s attention drop before brand clarity arrives. The body line 'Purity Beans Bold is agglomerated p"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "The hook 'Your coffee jar lists chicory before coffee' is strong but passive — it describes a label rather than attacking a behavior. The betrayal trigger is diluted because the reader must mentally check their own jar to feel it. Rewrite the opening as a direct accusation: 'Your instant coffee list"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "Hook is strong but the line 'The first sip hits with a clean, high-caffeine clarity that never turns muddy' uses sensory language ('muddy') that risks implying a negative claim about chicory, which violates policy when a chicory blend (Ultra Blend) exists in the portfolio. Replace 'muddy' with neutr"
+      },
+      {
+        "status": "exhausted",
+        "reason": "Hook is strong and specific to Indian instant coffee reality, but the body loses momentum by sliding into generic product benefit language ('clean, high-caffeine clarity') instead of extending the betrayal narrative. The CTA asks for a binary choice (COFFEE vs CHICORY) which limits comment volume — "
       }
     ],
     "growth_reel": [
@@ -3045,12 +3348,37 @@
       {
         "attempt": 3,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       },
       {
         "attempt": 4,
         "rung": "from_scratch",
-        "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "schema: 1 validation error for YoutubeShortSchema   Value error, YouTube Short must contain either (hook, script, cta) or (product, tagline, scenes >= 5) [type=value_error, input_value={'featured_product': 'Bol...ee.', 'product': 'Bold'}, input_type=dict]     For further information visit https://er"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "The hook 'Your strong coffee habit is built on powder that dissolves too fast' is functional but generic — it could apply to any premium instant coffee brand. It lacks the betrayal/curiosity gap that stops an Indian scroll. The 'powder vs granules' education is save-worthy but the emotional arc stay"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The content is technically accurate and product-correct, but fails the scroll-stop test. The hook 'Your strong coffee isn't strong — it's just dark water' is a generic sensory critique that could apply to any premium instant coffee brand — it lacks the specific 'betrayal' punch (chicory/filler decep"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The hook 'Your strong coffee isn't bold — it's bulked with fillers that vanish. Bold is not.' is strong and specific to Purity Beans' agglomerated differentiator, clearing the 2-second scroll-stop bar. However, the reel truncates at Scene 2 mid-sentence ('Now wa'), breaking the narrative arc before "
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The hook 'Your strong coffee disappears in two seconds' is functional but generic — it could apply to any brand selling 'better' instant coffee. It lacks the specific betrayal trigger (chicory/filler) that defines Purity Beans' positioning. The audio cut at Scene 2 ('Ag') truncates the spoken line, "
       }
     ],
     "stories": [
@@ -5041,11 +5369,11 @@
     "asset_count": 33
   },
   "mandatory_regen_rounds": {
-    "instagram_post": 2,
-    "carousel": 2,
-    "facebook_post": 2,
-    "reel_1": 2,
+    "instagram_post": 4,
+    "carousel": 4,
+    "facebook_post": 4,
+    "reel_1": 4,
     "growth_reel": 1,
-    "threads_post": 1
+    "threads_post": 2
   }
 }
