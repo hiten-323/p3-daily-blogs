@@ -1164,32 +1164,36 @@
     }
   },
   "yt_short": {
-    "featured_product": "purista",
-    "objective": "awareness_and_conversion",
-    "primary_cta": "Shop p3online.in",
+    "featured_product": "Purista",
+    "objective": "brand_awareness",
+    "primary_cta": "Follow @purepantryprovisions and shop p3online.in",
     "success_metric": "watch_time_40s_min",
     "format": "yt_short",
     "_distinct_regen": true,
-    "ad_cta_link": "https://p3online.in/?utm_source=youtube&utm_medium=post&utm_campaign=202610",
-    "ad_template_id": "purista_reel_2026_10",
+    "ad_cta_link": "https://p3online.in/products/purista?utm_source=youtube&utm_medium=post&utm_campaign=202610",
+    "ad_template_id": "purista_reveal_2025_qt",
     "audio": {
       "audio_category": "coffee_aesthetic",
-      "audio_direction": "diegetic first, bed under",
-      "audio_note": "Trending Lo-Fi Cafe Beats with kettle and spoon ASMR",
-      "audio_attached": true
+      "audio_attached": true,
+      "mood": "lofi_jazz",
+      "recommendation": "Trending Lo-Fi Cafe Beats (Search: 'Coffee Morning Chill' or 'Warm Lo-Fi Cafe')",
+      "audio_name": "purista_arc_lofi",
+      "audio_id": "p3_purista_arc_01",
+      "audio_source": "internal_library",
+      "audio_direction": "Diegetic kitchen clink first 3s, then warm instrumental bed under voiceover"
     },
-    "audio_category": "coffee_aesthetic",
     "audio_attached": true,
-    "audio_note": "Trending Lo-Fi Cafe Beats with kettle and spoon ASMR",
-    "audio_direction": "diegetic first, bed under",
+    "audio_category": "coffee_aesthetic",
+    "audio_direction": "Diegetic kitchen clink first 3s, then warm instrumental bed over voiceover",
+    "audio_note": "Warm analog crackle under a slow jazz piano loop; subtle spoon-tap synced to the reveal",
     "brand_mention": "Purity Beans",
-    "chosen_hook": "Relatable Moment",
-    "comment_trigger": "Comment AROMA if you notice the difference after the first sip.",
-    "cta": "Shop p3online.in — Purity Beans",
+    "chosen_hook": "Contrarian Statement",
+    "comment_trigger": "Comment PURISTA if you have ever poured a cup that turned bitter in seconds",
+    "cta": "Follow @purepantryprovisions and shop p3online.in for your jar — Purity Beans",
     "cues": [
       {
         "id": "pacing",
-        "cue": "Scene shift every 6 seconds."
+        "cue": "Thirty-five seconds total, with scene shifts every five seconds."
       },
       {
         "id": "framing",
@@ -1204,28 +1208,28 @@
         "cue": "Warm editorial glass-jar photography on dark marble under warm amber light."
       }
     ],
-    "description": "Your instant coffee granules hold their aroma — if you know the difference. Most Robusta powder turns bitter within minutes. Purity Beans Purista keeps the aroma locked in, naturally. Watch. Shop: https://p3online.in/?utm_source=youtube&utm_medium=post&utm_campaign=202610",
-    "edit_pacing": "Cut every 5-7 seconds. Macro granule pull, water pour, first sip. Never static.",
-    "emotion_arc": "Curiosity → sensory test → relaxed confidence → soft CTA",
+    "description": "Your instant coffee turns bitter within minutes — but it is not about the bean. It is about the process. Discover why Purista stands apart. Bold, Purista, Purica, and Prima are pure coffee. Shop: https://p3online.in/products/purista?utm_source=youtube&utm_medium=post&utm_campaign=202610 — Purity Beans",
+    "edit_pacing": "Fast cuts every 2-3 seconds, macro granule detail pulls, subtle handheld sway, physics-first dissolution",
+    "emotion_arc": "Contrarian shock → visual proof → sensory awakening → confident choice",
     "featured_slug": "purista",
-    "funnel_objective": "traffic_and_sales",
-    "growth_plan": "Follow @purepantryprovisions for more coffee truths.",
-    "growth_review": "Hold for watch time. Drop @purepantryprovisions in comments.",
-    "hashtags": "#PurityBeans #Purista #IndianCoffee #FreezeDried #CoffeeLoversIndia #PureCoffee #NoChicory #CoffeeRitual",
-    "hook": "Your instant coffee granules turn bitter within minutes — but not all of them.",
-    "hook_text": "Your instant coffee granules turn bitter within minutes — but not all of them.",
+    "funnel_objective": "traffic",
+    "growth_plan": "growth_reel",
+    "growth_review": "pending",
+    "hashtags": "#PurityBeans #Purista #PureCoffee #InstantCoffee #CoffeeLoversIndia #CoffeeRitual #CoffeeBreak #CoffeeSnob #FilterCoffee #IndianCoffee",
+    "hook": "Your instant coffee turns bitter within minutes — but it is not about the bean. It is about the process.",
+    "hook_text": "Your instant coffee turns bitter within minutes — but it is not about the bean. It is about the process.",
     "ladder_exhausted": true,
-    "loop_note": "End on the jar sitting still. Loop back to the first granule close-up.",
-    "mood": "lofi_calm",
+    "loop_note": "End on the crema blooming in the cup — reverse-play to the granule pour for loopability.",
+    "mood": "awakening",
     "pass_mark": 8.5,
     "passed": true,
     "product": "Purista",
     "publish_blocked": "ladder_exhausted",
     "reel_inspiration": {
-      "inspiration_id": "purista_brew_tip_style",
+      "inspiration_id": "purista_reveal_2025_qt",
       "mode": "style_cues",
       "source_template_id": "purista_brew_reel",
-      "source_filename": "purista_brew.mp4",
+      "source_filename": "purista_arc_qt.mp4",
       "publish_source_video": false,
       "copied": {
         "pixels": false,
@@ -1235,88 +1239,89 @@
       "featured_product": "Purista",
       "featured_slug": "purista"
     },
-    "save_trigger": "Save before your next grocery run — you will want to remember this.",
+    "save_trigger": "Save this before your next grocery run — the water temperature trick that actually works",
     "scenes": [
       {
         "scene": 1,
         "type": "problem",
         "duration_s": 5.0,
-        "on_screen": "GRANULES ON DARK MARBLE",
-        "spoken": "Instant coffee powder sitting in a cup — it turns bitter after just a few minutes.",
-        "visual_direction": "Close-up of coffee powder in a white cup under warm light"
+        "on_screen": "GRANULES MEETING HOT WATER IN A WHITE CERAMIC MUG",
+        "spoken": "You pour hot water over instant coffee granules and they dissolve into a flat, dark liquid.",
+        "visual_direction": "Top-down close-up of dark instant coffee granules meeting hot water in a white ceramic mug"
       },
       {
         "scene": 2,
         "type": "tension",
-        "duration_s": 6.0,
-        "on_screen": "WATER POUR",
-        "spoken": "Most Robusta powder loses its aroma the moment hot water touches it.",
-        "visual_direction": "Hot water being poured over coffee powder"
+        "duration_s": 7.0,
+        "on_screen": "BUBBLES QUICKLY POP ON SURFACE",
+        "spoken": "Within a minute the surface turns bitter — a familiar, disappointing taste that lingers.",
+        "visual_direction": "Side angle of the mug as foam bubbles form and quickly pop on the surface"
       },
       {
         "scene": 3,
         "type": "turn",
-        "duration_s": 5.0,
-        "on_screen": "PURISTA JAR CLOSE-UP",
-        "spoken": "Purity Beans Purista granules keep the aroma locked in naturally.",
-        "visual_direction": "The exact Purity Beans Purista jar in warm amber light"
+        "duration_s": 6.0,
+        "on_screen": "PURISTA JAR REVEAL IN WARM AMBER LIGHT",
+        "spoken": "But not all instant coffee is the same. Purista uses freeze-dried Robusta granules — a process that locks in aroma and crema.",
+        "visual_direction": "The camera pulls back to reveal the Purity Beans Purista glass jar with its clean label, warm amber light catching the label text"
       },
       {
         "scene": 4,
         "type": "payoff",
-        "duration_s": 5.0,
-        "on_screen": "FIRST SIP",
-        "spoken": "Take a sip and notice the smooth, rich flavour that lasts.",
-        "visual_direction": "Hand lifting the cup, first sip captured"
+        "duration_s": 7.0,
+        "on_screen": "CREMA BLOOMING IN A CUP",
+        "spoken": "The crema rises naturally. The aroma is rich, caramelly, and smooth — not bitter, not muddy.",
+        "visual_direction": "Close-up of the coffee surface as fine crema bubbles rise and linger, warm light dancing on the crema texture"
       },
       {
         "scene": 5,
         "type": "cta",
-        "duration_s": 4.0,
-        "on_screen": "SHOP PURISTA",
-        "spoken": "Shop Purity Beans Purista at https://p3online.in/?utm_source=youtube&utm_medium=post&utm_campaign=202610",
-        "visual_direction": "Jar label readable, text overlay: Shop p3online.in"
+        "duration_s": 5.0,
+        "on_screen": "FOLLOW AND SHOP WITH WATER TEMPERATURE CALL-OUT",
+        "spoken": "If you are tired of bitter instant coffee, read the jar. Purista is pure coffee, zero chicory. For the best taste, use water around 85 degrees celsius.",
+        "visual_direction": "Side-by-side: the Purity Beans Purista jar on the counter beside a generic dark jar with water being poured"
       }
     ],
-    "share_trigger": "Share with a friend who always complains about bitter instant coffee.",
-    "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee. Purity Beans — pure Arabica in Purica and Prima. Shop: https://p3online.in/?utm_source=youtube&utm_medium=post&utm_campaign=202610",
-    "title": "The Granule Test: Why Purista Stays Aromatic",
+    "share_trigger": "Share with a coffee friend who deserves better taste",
+    "tagline": "Your instant coffee turns bitter within minutes — but the reason is the drying process, not the bean. Read the jar at https://p3online.in/products/purista?utm_source=youtube&utm_medium=post&utm_campaign=202610 — Purity Beans",
+    "editorial_score": {
+      "shareability": 7.2,
+      "saveability": 6.8,
+      "emotion_pull": 7.5,
+      "hook_strength": 7.8,
+      "brand_clarity": 8.5,
+      "overall": 7.5,
+      "verdict": "REJECT",
+      "feedback": "The content is too generic and reads like a standard coffee blog rather than a Purity Beans asset. It fails the brand-specificity test - the hook 'Your instant coffee turns bitter within minutes' could apply to any instant coffee brand, which triggers the scoring rule that hook_strength drops when the hook is not unique to Purity Beans. The late product reveal (only at the very end) and generic follow line further weaken the asset. The description also contains text that reads like a blog post, which the rules explicitly penalize. The hook needs to be bold and specifically anti-chicory/anti-bitter in a way that only Purity Beans can own.",
+      "retention_audit": "Scene 1: Standard granule visual - no unique Purity Beans hook. The 'flat, dark liquid' description is generic. Scene 2-5: Without seeing these, risk of generic coffee visuals. The water temperature focus is good but not enough to save a generic foundation. Ending on crema blooming is a generic coffee visual, not a Purity Beans differentiator."
+    },
     "viral_potential": {
       "scores": {
-        "hook": 4.0,
+        "hook": 6.0,
         "curiosity_gap": 5.0,
         "relatability": 7.0,
-        "shareability": 6.0,
+        "shareability": 7.0,
         "comment_trigger": 5.0,
         "format_fit": 8.0,
         "follow_cta": 6.0
       },
-      "overall": 5.6,
+      "overall": 6.0,
       "weakest": [
         "hook",
-        "comment_trigger",
-        "shareability"
+        "curiosity_gap",
+        "comment_trigger"
       ],
-      "feedback": "The hook is too wordy and lacks a visual pattern interrupt. The comment trigger is passive; it should demand an immediate binary choice. Shareability is low because the tip feels generic; it needs a specific, actionable insight. The piece tells rather than shows the 'test' — make it a demonstrable visual experiment.",
-      "better_hook": "Your instant coffee turns bitter in 2 minutes flat. Watch the granules.",
+      "feedback": "Hook is too generic ('not what you think'). Curiosity gap isn't specific enough — payoff must be concrete. Comment trigger needs a direct question or choice. Add a 'this-or-that' or a bold claim to invite responses.",
+      "better_hook": "Comment PURISTA if your instant coffee turns bitter within minutes. Most brands aren't what they seem.",
       "passed": false,
       "honesty": [],
       "pass_mark": 9.0
     },
-    "editorial_score": {
-      "shareability": 7.5,
-      "saveability": 7.0,
-      "emotion_pull": 7.5,
-      "hook_strength": 8.0,
-      "brand_clarity": 8.5,
-      "overall": 7.8,
-      "verdict": "REJECT",
-      "feedback": "The content is functionally solid but falls below the pass_mark of 8.5. The hook 'Your instant coffee granules turn bitter within minutes' is a generic claim that could apply to any Robusta brand. It lacks the specific Purity Beans differentiator required for brand clarity. The description text also suffers from generic language ('Most Robusta powder loses its aroma') rather than Purity Beans-specific science. The 'water temperature' cue is good but not leveraged strongly enough to anchor the brand. The save_trigger is weak — it doesn't offer a reason to bookmark the brand specifically. The scene transitions are acceptable but lack the visual precision needed for a 8.5+ score.",
-      "retention_audit": "Scene 1: Standard problem set-up, but 'instant coffee powder' feels generic. Scene 2: Water pour is a strong visual, but the spoken line doesn't connect the pour to the Purista benefit strongly enough. Scene 3: Jar close-up is the brand anchor, but the spoken line 'keep the aroma locked in naturally' is a generic benefit statement. Ending on the jar still is a good loop, but the overall pacing feels slightly static between scenes 2 and 3."
-    },
+    "type": "yt_short",
+    "title": "The instant coffee mistake every Indian kitchen makes",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The content is functionally solid but falls below the pass_mark of 8.5. The hook 'Your instant coffee granules turn bitter within minutes' is a generic claim that could apply to any Robusta brand. It lacks the specific Purity Beans differentiator required for brand clarity. The description text also suffers from generic language ('Most Robusta powder loses its aroma') rather than Purity Beans-specific science. The 'water temperature' cue is good but not leveraged stron"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: The content is too generic and reads like a standard coffee blog rather than a Purity Beans asset. It fails the brand-specificity test - the hook 'Your instant coffee turns bitter within minutes' could apply to any instant coffee brand, which triggers the scoring rule that hook_strength drops when the hook is not unique to Purity Beans. The late product reveal (only at the very end) and generic follow line further weaken the asset. The description also contains text th"
   },
   "growth_reel": {
     "type": "growth_reel",
@@ -1526,7 +1531,8 @@
     "viral_readiness_score": 94.0
   },
   "threads_post": {
-    "text": "What if your Robusta could taste this smooth? Meet Purista — gourmet freeze-dried granules that lock in crema naturally, without the instant aftertaste.\n\nComment YES if you crave a black coffee that actually tastes like coffee.",
+    "text": "Your instant coffee tastes bitter? That is the spray-drying calling. \n\nPurista uses freeze-drying, not spray-drying, for a smooth rich cup with zero chicory. \n\nReply YES if you have switched, or share your spray-dry regret.",
+    "character_count": 192,
     "featured_product": "Purista",
     "objective": "Follower Growth",
     "primary_cta": "Follow @purepantryprovisions for one buying check you can save",
@@ -1536,21 +1542,21 @@
     "save_trigger": "Save this before your next grocery run — real coffee matters.",
     "share_trigger": "Share with someone who starts every morning with coffee.",
     "editorial_score": {
-      "shareability": 6.5,
-      "saveability": 6.0,
-      "emotion_pull": 7.0,
-      "hook_strength": 6.5,
+      "shareability": 7.2,
+      "saveability": 6.8,
+      "emotion_pull": 5.5,
+      "hook_strength": 6.0,
       "brand_clarity": 8.5,
       "overall": 6.9,
       "verdict": "REJECT",
-      "feedback": "The hook ('What if your Robusta could taste this smooth?') is too soft and applies to any quality Robusta, failing the scroll-stop test. For Follower Growth, avoid direct product benefit claims; focus on coffee culture or a strong identity challenge. Rewrite to leverage a 'Curiosity Gap' or 'Identity Challenge' hook related to instant coffee perception, not just taste. The CTA is too promotional for a Growth track; shift to a soft CTA like 'Follow for more coffee culture insights'.",
-      "retention_audit": "The transition from the question to the product introduction ('Meet Purista') is too smooth, lacking a pattern interrupt required for retention."
+      "feedback": "Generic regret framing; feels like standard coffee complaint, not a Purity Beans differentiator. Opening line lacks a stop-scroll hook specific to the brand. The 'spray-dry' mention is technical but not arresting enough to stop the thumb in a scroll. Brand clarity is the strongest element, but the overall execution feels forgettable and not distinct enough for the target audience.",
+      "retention_audit": "Opening line generic coffee complaint. Middle section lists process but does not pivot to a brand-specific benefit. CTA feels passive; 'Follow for a buying check' does not demand immediate action or create urgency. No reverse-qualifier or identity trigger to drive comments or shares."
     },
-    "needs_regen": true,
     "ladder_exhausted": true,
     "publish_blocked": "ladder_exhausted",
+    "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: REJECTED AS SALES-LED (The hook ('What if your Robusta could taste this smooth?') is too soft and applies to any quality Robusta, failing the scroll-stop test. For Follower Growth, avoid direct product benefit claims; focus on coffee culture or a strong identity challenge. Rewrite to leverage a 'Curiosity Gap' or 'Identity Challenge' hook related to instant coffee perception, not just taste. The CTA is too promotional for a Growth track; shift to a soft CTA like 'Follo"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: Generic regret framing; feels like standard coffee complaint, not a Purity Beans differentiator. Opening line lacks a stop-scroll hook specific to the brand. The 'spray-dry' mention is technical but not arresting enough to stop the thumb in a scroll. Brand clarity is the strongest element, but the overall execution feels forgettable and not distinct enough for the target audience."
   },
   "facebook_post": {
     "featured_product": "Purista",
@@ -1587,160 +1593,150 @@
   },
   "growth_reel_fb": {
     "featured_product": "purista",
-    "audio": "soft jazz / ambient cafe sounds that fade into a focused 'pour' sound effect",
-    "caption": "Stop serving instant coffee that tastes like burnt leaves. Meet Purista: India’s gourmet Robusta granules, freeze-dried to lock in aroma — pure coffee, zero chicory. Follow @purepantryprovisions for more. Shop the 50g jar at https://p3online.in/products/purista-gourmet-robusta-granules?utm_source=growth_reel_fb&utm_medium=post&utm_campaign=202610",
+    "audio": "ambient kitchen sounds: gentle clink of a spoon, soft steam hiss. Low-tempo jazz piano fades in. Voiceover: warm, conversational, Indian English accent.",
+    "caption": "Stop scrolling if you love real coffee. Your instant coffee jar has a secret. Discover the Purity Beans difference. Tap follow for honest coffee. https://p3online.in/?utm_source=growth_reel_fb&utm_medium=post&utm_campaign=202610",
     "chosen_hook": "revelation",
-    "comment_trigger": "Comment PURISTA if you always read the back of the jar first.",
-    "community_question": "What’s the one thing you check before buying instant coffee — the front label or the back?",
-    "cta": "Follow @purepantryprovisions and shop the 50g jar at https://p3online.in/products/purista-gourmet-robusta-granules?utm_source=growth_reel_fb&utm_medium=post&utm_campaign=202610",
+    "comment_trigger": "Comment PURISTA if you love bold, smooth coffee.",
+    "community_question": "Black or with milk? Share your go-to instant coffee style.",
+    "cta": "Follow @purepantryprovisions and tap the link in bio to shop Purista today.",
     "frames": [
       {
-        "on_screen": "Extreme close-up of the Purity Beans Purista jar lid. Warm golden light catches the glass texture. Label visible: clean dark background with bold text.",
-        "spoken": "Pick up your jar and turn it around."
+        "on_screen": "Extreme close-up of Purity Beans Purista Gourmet Robusta Granules jar lid. Warm amber light glows on the glass. Dark kitchen backdrop.",
+        "spoken": "Open your kitchen cupboard…"
       },
       {
-        "on_screen": "Rapid zoom-in on the Purista ingredient label. Text appears one word at a time: 'Pure Coffee. Zero Chicory. Freeze-Dried Granules.'",
-        "spoken": "Read the back."
+        "on_screen": "Side view of the jar. Steam rises from a hot cup of coffee being poured. Rich crema forms on top.",
+        "spoken": "You see that familiar instant coffee jar. The one you’ve bought a hundred times."
       },
       {
-        "on_screen": "Split-screen: left side shows a blurry generic instant coffee jar. Right side shows the Purity Beans Purista jar crystal clear with label facing camera.",
-        "spoken": "One has extra. The other doesn't."
+        "on_screen": "Extreme close-up of the ingredient label on the Purity Beans Purista jar. Text is visible: \"Pure Coffee, 0% Chicory\". A finger points to the label.",
+        "spoken": "Turn it over. Look at the label."
       },
       {
-        "on_screen": "Hot water poured into a mug at ~85 degrees Celsius. Purista granules swirl. Dark coffee rises with a thick crema layer on top. Steam rises gently.",
-        "spoken": "Brew the real thing."
+        "on_screen": "Person holding a mug of dark coffee, taking a sip. Satisfied expression. Background is a cozy Indian kitchen.",
+        "spoken": "See? Pure coffee. No hidden fillers. Just smooth, bold Robusta granules that melt instantly."
       },
       {
-        "on_screen": "The Purista jar sits alone on a marble counter. Dark background. Text overlay appears briefly: 'Zero chicory. Pure Robusta. Bold yet smooth.'",
-        "spoken": "Purista. Freeze-dried pure Robusta. Zero chicory."
+        "on_screen": "Purity Beans Purista jar sits alone on a minimalist counter. Text overlay: \"Pure Coffee. Zero Chicory.\". The jar glows gently.",
+        "spoken": "Purity Beans Purista. Because you deserve to know exactly what you’re drinking."
       }
     ],
-    "hashtags": "#puristabeans #purecoffee #freezedried #zerochicory #coffeeloversindia #coffeeeducation #p3onlinein #premiuminstant",
-    "hook": "You’ve been pouring boiling water on Robusta and wondering why it tastes flat.",
-    "hook_text": "You’ve been pouring boiling water on Robusta and wondering why it tastes flat.",
+    "hashtags": "#PurityBeans #InstantCoffee #PureCoffee #Purista #CoffeeLover #India #CoffeeTime #GourmetCoffee #NoChicory #CoffeeRitual",
+    "hook": "Did you know most instant coffee isn’t actually coffee?",
+    "hook_text": "Did you know most instant coffee isn’t actually coffee?",
     "id": "growth_reel_purista_001",
-    "loop_note": "Ends on 'Zero chicory. Pure Robusta.'",
-    "loop_cut": true,
+    "loop_cut": "Ends on the jar lid closing, seamlessly looping back to the first frame.",
+    "loop_note": "The jar lid closing creates a seamless visual loop. Audio ends on the steam hiss, restarting the cycle.",
     "regen_round": 1,
-    "save_trigger": "Save this before your next grocery run. You’ll thank yourself when you actually know what you’re drinking.",
-    "script": "Scene 1: A hand lifts the Purity Beans Purista jar. The label is visible. Clean. Honest.\nScene 2: The ingredient label pops up. 'Pure Coffee. Zero Chicory. Freeze-Dried Granules.'\nScene 3: Side-by-side with a generic jar. The difference is clear.\nScene 4: Hot water is poured at ~85 degrees. Steam. The coffee pours — rich, dark, crema on top.\nScene 5: The jar sits alone. Text: 'Zero chicory. Pure Robusta. Bold yet smooth.'\nVoice over: 'If it doesn’t say zero chicory, it might not be pure coffee. Purista. Freeze-dried pure Robusta. Zero chicory.'",
-    "share_trigger": "Share this with someone who drinks instant coffee daily and deserves to know what’s really in the jar.",
-    "title": "What’s Really in Your Instant Coffee Jar?",
-    "track": "growth_reel",
+    "save_trigger": "Save this before your next grocery run. You’ll want to check the label.",
+    "script": "Voiceover: “You open your cupboard. You grab that jar. But have you ever looked at what’s inside? Most instant coffee is bulked up with fillers you never see. Not Purity Beans. ”\n\nCut to: Close-up of Purista jar label. “Pure Coffee. 0% Chicory.”\n\nCut to: Person pouring hot water. Rich crema rises. “Purista is freeze-dried pure Robusta. Locked-in aroma. Bold yet smooth. The real deal.”\n\nCut to: Cup of coffee being sipped. “Next time you buy instant, read the back. Make it Purity Beans.”",
+    "share_trigger": "Share this with a friend who drinks instant coffee daily. Tell them to check the label.",
     "editorial_score": {
-      "shareability": 4.0,
-      "saveability": 3.5,
-      "emotion_pull": 3.0,
-      "hook_strength": 2.0,
-      "brand_clarity": 5.0,
-      "overall": 3.2,
+      "shareability": 7.5,
+      "saveability": 8.2,
+      "emotion_pull": 7.8,
+      "hook_strength": 6.5,
+      "brand_clarity": 8.0,
+      "overall": 7.6,
       "verdict": "REJECT",
-      "feedback": "The hook is too generic and does not leverage a 'Betrayal' or 'Curiosity Gap' specific to hidden ingredients. Scene 1 is too slow; the jar must be immediately visible or the problem stated in the first 2 seconds. The content needs to immediately challenge a consumer assumption about instant coffee, not just describe brewing.",
-      "retention_audit": "Scene 1 opens too slowly by having a hand lift the jar instead of presenting the conflict/truth immediately. The hook fails to create immediate tension."
+      "feedback": "Generic hook 'Did you know most instant coffee isn’t actually coffee?' applies to any brand - penalizes hook_strength. The Facebook post reads like a blog with a generic follow line, scoring below 8 on brand quality thresholds. The reveal of the jar late in the sequence delays brand association. The caption CTA conflicts with the mandated format requirements.",
+      "retention_audit": "Frame 1-2: Hook lands but feels generic. Frame 3-4: Label close-up and sip are strong brand moments. Frame 5: Overlay text is effective but arrives too late."
     },
-    "rejection_reasons": [
-      "Hook is generic coffee advice — 'pouring boiling water' applies to every instant coffee brand, not just Purity Beans. Hook strength fails because it does not stop the scroll in under 2 seconds. The script opens with a hand lifting the jar late (Scene 1), violating the 'jar late' rule. The split-screen comparison (Scene 3) uses a blurry generic jar, which fails brand visibility requirements. Several frames are staged as generic coffee content with no unique Purity Beans differentiator visible. The 'boiling water' instruction risks scorching premium Robusta granules. Frames 4 and 5 contain no brand identifiers. No retail CTA in script body."
-    ],
     "ladder_exhausted": true,
     "publish_blocked": "ladder_exhausted",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: The hook is too generic and does not leverage a 'Betrayal' or 'Curiosity Gap' specific to hidden ingredients. Scene 1 is too slow; the jar must be immediately visible or the problem stated in the first 2 seconds. The content needs to immediately challenge a consumer assumption about instant coffee, not just describe brewing."
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: Generic hook 'Did you know most instant coffee isn’t actually coffee?' applies to any brand - penalizes hook_strength. The Facebook post reads like a blog with a generic follow line, scoring below 8 on brand quality thresholds. The reveal of the jar late in the sequence delays brand association. The caption CTA conflicts with the mandated format requirements."
   },
   "evening_yt_short": {
     "featured_product": "purista",
-    "audio": "ambient evening room tone, subtle steam hiss under spoken lines",
-    "caption": "Stop overpaying for cafe coffee you can't taste. Purity Beans Purista — smooth aroma, zero chicory. Read the jar. https://p3online.in/?utm_source=evening_yt_short&utm_medium=post&utm_campaign=202610 Follow @purepantryprovisions for honest coffee education. #purista #purecoffee #gourmetgranules #puritybeans #p3onlinein",
+    "audio": "warm intimate voice at a kitchen counter, gentle ambient kitchen sounds: soft kettle hum, distant traffic murmur, ceramic mug placed down. not reading a script.",
+    "better_hook": "Your 4 PM coffee has an oil skin — tap it. If it holds, the oils burned at 200°C.",
+    "caption": "Your 4 PM coffee has an oil skin — tap it. If it holds, the oils burned at 200°C. Save this before your next grocery run. Tap the jar to shop Purity Beans Purista at https://p3online.in/products/purista?utm_source=evening_yt_short&utm_medium=post&utm_campaign=202610 #PurityBeans #InstantCoffee #CoffeeRitual #CoffeeHack #Purista #CoffeeLoversIndia #CoffeeWithoutChicory",
     "chosen_hook": "sensory_contrast",
-    "comment_trigger": "Comment AROMA if you can smell the difference after this test.",
-    "cta": "Follow @purepantryprovisions for honest coffee education. Visit https://p3online.in/?utm_source=evening_yt_short&utm_medium=post&utm_campaign=202610 to shop the gourmet range.",
-    "description": "Your evening coffee break should taste like something, not just caffeine in warm water. Purity Beans Purista Gourmet Robusta granules deliver a bold yet smooth cup with locked-in aroma and natural crema — zero chicory, pure ingredients. It is the upgrade your mug has been waiting for, without the Rs 180 cafe markup.",
+    "comment_trigger": "Comment OIL if you notice the oily film on your coffee, or NO OIL if it's clear.",
+    "cta": "Follow @purepantryprovisions for honest coffee education and shop Purity Beans Purista at https://p3online.in/products/purista?utm_source=evening_yt_short&utm_medium=post&utm_campaign=202610",
     "editorial_subscores": {
       "shareability": 9,
       "saveability": 9,
       "emotion_pull": 8,
       "hook_strength": 9,
-      "brand_clarity": 9
+      "brand_clarity": 8
     },
-    "hashtags": "#purista #purecoffee #gourmetgranules #puritybeans #p3onlinein",
-    "hook": "Tap your mug right now. If a brown film stays stuck to the surface, your coffee burned the oils at 200°C. See the difference.",
-    "hook_text": "Tap your mug right now. If a brown film stays stuck to the surface, your coffee burned the oils at 200°C. See the difference.",
-    "id": "evening_yt_short_202612_004",
-    "loop_mechanic": "The oil skin tap test loops — viewer taps their mug and watches the oil skin behavior again.",
-    "loop_note": "Replay value: the curiosity gap about coffee processing keeps them watching until the payoff.",
+    "hashtags": "#PurityBeans #InstantCoffee #CoffeeRitual #CoffeeHack #Purista #CoffeeLoversIndia #CoffeeWithoutChicory",
+    "hook": "Your 4 PM coffee has an oil skin — the ones without it are spray-dried. Does yours hold? Tap to find out.",
+    "hook_text": "Your 4 PM coffee has an oil skin — the ones without it are spray-dried. Does yours hold? Tap to find out.",
+    "id": "evening_yt_short_purista_003",
+    "loop_mechanic": "oil_skin_reveal",
+    "loop_note": "The visual ends on the oily surface before cutting back to the jar — the thumb naturally loops to replay the oil test.",
+    "pass_mark": true,
+    "passed": true,
     "product": "purista",
-    "regen_round": 1,
-    "save_trigger": "Save this before your next grocery run — you will want to remember the oil skin test.",
+    "save_trigger": "Save this before your next grocery run — you will want to check the oil skin on your coffee tomorrow morning.",
     "scenes": [
       {
-        "on_screen": "Vertical 9:16 frame. Desk POV: hand holding a steaming ceramic mug, coffee surface has a thin oily film. Purity Beans Purista glass jar in soft focus background, label visible.",
-        "spoken": "Tap your mug right now. If a brown film stays stuck to the surface, your coffee burned the oils at 200°C. See the difference."
+        "on_screen": "vertical 9:16. Desk POV: hand holding a ceramic mug of coffee, steam rising. close-up on the coffee surface — a thin, glossy oil skin glistens under warm ambient light. Purity Beans Purista glass jar sits unobtrusively in the soft background blur, label legible, catching the light. Text overlay appears instantly: 'Tap the oil skin. Does it hold?'",
+        "spoken": "Your 4 PM coffee has an oil skin — the ones without it are spray-dried. Does yours hold? Tap to find out."
       },
       {
-        "on_screen": "Extreme macro close-up, 85mm equivalent: fingertip taps the mug rim. Oil skin swirls, stretches, then slowly breaks. Text overlay flashes: 'Spray dried = burned off.'",
-        "spoken": "If it breaks immediately — spray drying burned the oils before they ever reached your cup."
+        "on_screen": "extreme macro close-up, 85mm equivalent: fingertip taps the mug rim. the oil skin ripples, swirls lazily, refuses to break. no snap. no rebound. text overlay appears: 'Oil skin holds = oils burned at 200°C.'",
+        "spoken": "Tap the rim. If the oil skin holds — your coffee was spray-dried at 200 degrees. The volatile oils, the crema, the aroma — burned off in the tower."
       },
       {
-        "on_screen": "Cut to Purity Beans Purista jar pouring freeze-dried granules into a glass mug. Hot water pours in, the granules sink slowly, crema rises to the surface within seconds.",
-        "spoken": "Purista freeze-dried granules keep the aroma locked in. The crema forms naturally, the way real coffee should."
+        "on_screen": "cut to: Purity Beans Purista jar in a dim, cozy kitchen setting. warm amber light washes the glass. the label is visible — pure coffee, zero chicory. text appears: 'Freeze-dried pure Robusta. Zero chicory.'",
+        "spoken": "Purity Beans Purista is freeze-dried pure Robusta. Zero chicory. The freeze-drying process locks the aroma in, not burns it off."
       },
       {
-        "on_screen": "Close-up: hand lifts the mug, steam curls up. The crema sits proud on top. Text overlay: 'Taste the difference tomorrow morning.'",
-        "spoken": "Tomorrow morning, you will taste the difference. Smooth, aromatic, zero chicory."
+        "on_screen": "split screen: left side — a generic instant coffee mug with a thin, quickly-dissipating oil film. right side — Purity Beans Purista mug with a rich, holding oil skin. warm gold light contrasts the two. text overlay: 'Spray-dried vs freeze-dried.'",
+        "spoken": "Most instant coffee is spray-dried at high heat. That burns the aroma. Purity Beans Purista uses freeze-drying — cold, gentle, aroma-preserving."
       },
       {
-        "on_screen": "Vertical frame. Purity Beans Purista jar sits on a dark surface, warm amber light catching the label. Text overlay: 'Read the jar. https://p3online.in/?utm_source=evening_yt_short&utm_medium=post&utm_campaign=202610 to shop the gourmet range.'",
-        "spoken": "Read the jar. Zero chicory. Pure ingredients. https://p3online.in/?utm_source=evening_yt_short&utm_medium=post&utm_campaign=202610 to shop the gourmet range."
+        "on_screen": "close-up: Purity Beans Purista jar being lifted. the glass catches warm light. a hand pours a cup. the coffee has a rich crema, a dark, aromatic surface. text overlay: 'Your ritual, upgraded.'",
+        "spoken": "Your evening ritual deserves coffee that tastes like it was ground moments ago. Purity Beans Purista. Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee."
       }
     ],
-    "share_trigger": "Share with the colleague who always complains their coffee tastes flat.",
+    "scoring_notes": "Hook is a pattern-interrupt (oil skin test) that stops scroll instantly. Curiosity gap implied: 'what does the oil skin mean?' Paid off at Scene 3 with process reveal. Every 2-3 seconds has a visual change (tap -> ripple -> jar -> split screen -> pour). Comment trigger invites engagement. Brand mention and website in caption. No banned claims. Per-cup price omitted (featured jar is Purista, not Ultra Blend).",
+    "share_trigger": "Share this with someone who drinks instant coffee daily and never notices the oil skin. A simple test they can try tomorrow morning.",
     "tagline": "Read the jar. Bold, Purista, Purica, and Prima are pure coffee. Ultra Blend is a smooth 70% coffee, 30% chicory milk coffee.",
-    "title": "Why Your 4 PM Coffee Tastes Flat — The Oil Skin Test #shorts",
-    "track": "brand",
-    "type": "evening_yt_short",
+    "title": "Why Your 4 PM Coffee Has an Oil Skin #shorts",
     "editorial_score": {
       "shareability": 7.5,
-      "saveability": 7.0,
-      "emotion_pull": 8.0,
+      "saveability": 8.2,
+      "emotion_pull": 7.8,
       "hook_strength": 8.5,
       "brand_clarity": 8.0,
-      "overall": 7.8,
-      "verdict": "REJECT",
-      "feedback": "Facebook audience expects native, conversational content. This reads like a blog excerpt posted to a feed. The late jar reveal (Scene 5) breaks native flow. Generic follow line ('Follow for more') underperforms on Meta. Need sharper opener and earlier product placement.",
-      "retention_audit": "Scene 1 hook is strong but buried in description text. Scene 2 oil-skin test is good visual. Scene 3 product pour is the money shot but comes too late. Scene 5 jar reveal kills momentum — product must appear in Scene 1 or 2. Caption link CTA buried at end; move to first comment or first 3 lines."
+      "overall": 8.0,
+      "verdict": "PASS",
+      "feedback": "Strong sensory hook and clear process contrast. The split-screen visual is effective for retention. Ensure the 'spray-dried' claim is factually accurate for the specific competitor being implied, as overgeneralization can feel reductive to educated coffee drinkers. Consider softening to 'Most mass-market instant coffee' if testing shows pushback.",
+      "retention_audit": "scenes 1-2 hold attention well with the tactile oil-skin test. Scene 3 transitions smoothly to product benefits. Scene 4's split-screen may cause a brief moment of visual comparison fatigue; ensure the gold light contrast remains the focal point rather than the generic mug. Scene 5 provides a satisfying payoff and CTA-adjacent closure."
     },
     "viral_potential": {
       "scores": {
-        "hook": 6.0,
-        "curiosity_gap": 4.0,
+        "hook": 8.0,
+        "curiosity_gap": 6.0,
         "relatability": 8.0,
-        "shareability": 7.0,
+        "shareability": 8.0,
         "comment_trigger": 7.0,
-        "format_fit": 6.0,
-        "follow_cta": 8.0
+        "format_fit": 9.0,
+        "follow_cta": 7.0
       },
-      "overall": 6.0,
+      "overall": 7.5,
       "weakest": [
-        "hook",
         "curiosity_gap",
-        "format_fit"
+        "follow_cta"
       ],
-      "feedback": "Fix the opening hook to be more pattern-interrupt and less generic. Strengthen the curiosity gap by implying a secret about processing that is revealed later. Ensure every 2-3 seconds has a visual change to match vertical short-form pacing. The current hook 'Tap your mug' is a known trope; make it sharper and more specific to the Purity Beans advantage.",
-      "better_hook": "Does your instant coffee leave a greasy ring? See why 90% of cafe coffee is actually chicory. The truth is in the jar.",
+      "feedback": "Curiosity gap drops because the hook 'spray-dried at 200°C' is stated early without a question loop. Extend the mystery: hint at the 'why' without answering. Follow CTA is passive; replace 'Follow for honest coffee education' with a viewer-identity challenge that demands a follow to resolve. Add a 'comment-to-unlock' mechanic to boost algorithmic weight. Fix: Hook line should end on a question or tease, not a statement.",
+      "better_hook": "Your 4 PM coffee has an oil skin — the ones without it are spray-dried. Does yours hold? Tap to find out. Follow for the coffee truth.",
       "passed": false,
       "honesty": [],
       "pass_mark": 9.0
     },
-    "better_hook": "Tap your mug right now. If a brown film stays stuck, your coffee burned the oils at 200°C. See the difference.",
-    "passed": true,
-    "pass_mark": 9.0,
-    "scoring_notes": "Hook targets oil skin phenomenon specific to spray-drying. Purista is freeze-dried, so the contrast holds. Brand appears in Scene 1 and Scene 5. Website link in caption first 3 lines and CTA. Per-cup price omitted (only Ultra Blend eligible). No health claims. No competitor bashing.",
-    "editorial_error": "brand: ['Contains prohibited medical or weight loss claims']",
+    "type": "evening_yt_short",
     "ladder_exhausted": true,
     "publish_blocked": "ladder_exhausted",
     "needs_regen": true,
     "held": true,
-    "hold_reason": "FALLBACK LADDER EXHAUSTED: brand: ['Contains prohibited medical or weight loss claims']"
+    "hold_reason": "FALLBACK LADDER EXHAUSTED: viral: score 7.5 < 9.0 (weakest: curiosity_gap, follow_cta). Curiosity gap drops because the hook 'spray-dried at 200°C' is stated early without a question loop. Extend the mystery: hint at the 'why' without answering. Follow CTA is passive; replace 'Follow for honest coffee education' with a viewer-identity challenge that demands a follow to resolve. Add a 'comment-to-unlock' mechanic to boost algorithmic weight. Fix: Hook line should end on a question or tease, not a"
   },
   "video_prompts": {
     "reel_1": {
@@ -4502,6 +4498,50 @@
       {
         "status": "exhausted",
         "reason": "REJECTED AS SALES-LED (The hook ('What if your Robusta could taste this smooth?') is too soft and applies to any quality Robusta, failing the scroll-stop test. For Follower Growth, avoid direct product benefit claims; focus on coffee culture or a strong identity challenge. Rewrite to leverage a 'Cur"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "The copy opens with a solid curiosity question about Robusta smoothness, but 'Meet Purista' slows down the transition into a generic product pitch. To lift the score above 8, make the hook punchier by directly challenging a common perception about harsh Robusta instant coffees, and tie the freeze-dr"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 7.86 < 9.0 (weakest: curiosity_gap, shareability). The opening line effectively targets a pain point for instant coffee drinkers. However, the curiosity gap could be sharper by hinting at what industrial drying actually does to the flavor profile. The shareability relies on a general no"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "Content reads like a generic blog post. The hook \"It's the drying method\" is too technical and slows the scroll. The product mention is buried in the middle rather than front-loaded. The order CTA appears at the very end, violating the platform-native pattern. The follow line is generic and forgetta"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The opening line is a strong scroll-stopper that targets a common pain point (burnt taste). The mid-copy clearly differentiates Purista using freeze-drying. The comment and save triggers are well-placed. Consider tightening the hashtag list to the most high-performing 5-8 tags to avoid dilution. The"
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "The hook 'Stop scrolling if your instant coffee tastes burnt' is generic and could apply to any brand. It lacks a Purity Beans-specific hook. The mention of 'freeze-drying' for Purista is good, but the opening line weakens the stop-the-scroll power. The request to 'Reply YES or share your instant co"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "The opening line \"If your instant coffee leaves you with a burnt aftertaste\" is a generic coffee complaint that applies to any brand. This immediately drops hook_strength to ≤5. The spray-dry vs freeze-dry explanation, while educational, feels like a blog paragraph rather than a scroll-stopping hook"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "Generic complaint opener; 'bitter and burnt' could apply to any brand. Spray-dry mention lacks visual specificity. CTA buried in reply prompt. Feels like a generic coffee page, not Purity Beans authority. No reference jar visibility, no product lifestyle context."
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "Generic complaint opening fails the hook test — 'if your morning coffee tastes bitter' applies to any brand, scores hook_strength ≤ 5. The spray-dry vs freeze-dry comparison lacks specificity; readers scroll past routine taste complaints. The request to reply YES or share regret creates low-effort e"
+      },
+      {
+        "status": "exhausted",
+        "reason": "Generic regret framing; feels like standard coffee complaint, not a Purity Beans differentiator. Opening line lacks a stop-scroll hook specific to the brand. The 'spray-dry' mention is technical but not arresting enough to stop the thumb in a scroll. Brand clarity is the strongest element, but the o"
       }
     ],
     "growth_reel": [
@@ -4941,6 +4981,50 @@
       {
         "status": "exhausted",
         "reason": "The content is functionally solid but falls below the pass_mark of 8.5. The hook 'Your instant coffee granules turn bitter within minutes' is a generic claim that could apply to any Robusta brand. It lacks the specific Purity Beans differentiator required for brand clarity. The description text also"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "Hook is too generic. 'Most coffee powder turns bitter' applies to any brand. It stops the scroll for 1 in 5 viewers only. Rewrite to target Purity Beans loyalists or anti-chicory seekers directly. 'Your instant coffee turns bitter' lacks the specificity that makes Indian consumers pause and identify"
+      },
+      {
+        "attempt": 2,
+        "rung": "feedback",
+        "feedback": "viral: score 6.0 < 9.0 (weakest: hook, curiosity_gap, comment_trigger). Hook is too generic ('not what you think'). Curiosity gap isn't specific enough — payoff must be concrete. Comment trigger needs a direct question or choice. Add a 'this-or-that' or a bold claim to invite responses. Suggested ho"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "The content reveals the jar too late and uses a generic follow line, causing a mid-roll attention drop. The hook 'The coffee mistake almost every Indian kitchen makes' is generic and could apply to any instant coffee brand, which penalizes hook_strength. The description states 'Bold, Purista, Purica"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "The content is generic and safe. The hook 'The coffee mistake almost every Indian kitchen makes' could apply to any coffee brand, so hook_strength is penalized. The emotion_pull is weak — 'Contrarian shock → visual proof → sensory awakening' feels hollow without a concrete conflict. The description "
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "Content is safe but forgettable. The hook 'The instant coffee mistake every Indian kitchen makes' is generic and could apply to any brand, capping hook_strength at 6. The scene descriptions are static — granules settling and a close-up shot — with no visual movement or change, which penalizes saveab"
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "Good retention arc with clear process education. The hook lands well for instant coffee drinkers experiencing bitterness. Consider sharpening the 'water temperature' cue in scene 2 to make the save trigger more specific and actionable. The brand mention is clear without being pushy."
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "Content is strong on brand clarity and emotion. Hook is clear but could be sharper. Slight risk the 'bitter' angle is too generic; lean harder into the process contrast to differentiate from competitors. The save trigger is practical but generic — consider tying it to a specific water temperature tr"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "The content is too generic and reads like a standard blog intro. It fails to leverage the 'Contrarian Statement' hook effectively and the product reveal comes too late. The generic follow line 'Follow @purepantryprovisions and shop p3online.in' does not compel action. The hook 'Your instant coffee t"
+      },
+      {
+        "status": "exhausted",
+        "reason": "The content is too generic and reads like a standard coffee blog rather than a Purity Beans asset. It fails the brand-specificity test - the hook 'Your instant coffee turns bitter within minutes' could apply to any instant coffee brand, which triggers the scoring rule that hook_strength drops when t"
       }
     ],
     "growth_reel_fb": [
@@ -5056,6 +5140,50 @@
       {
         "status": "exhausted",
         "reason": "The hook is too generic and does not leverage a 'Betrayal' or 'Curiosity Gap' specific to hidden ingredients. Scene 1 is too slow; the jar must be immediately visible or the problem stated in the first 2 seconds. The content needs to immediately challenge a consumer assumption about instant coffee, "
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "Hook is generic coffee advice that applies to every instant coffee brand, not just Purity Beans. Hook strength is moderate because the opening line does not stop the scroll in under 2 seconds. Brand clarity is weak — the script opens with a hand lifting the jar late, violating the 'jar late' rule. T"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 3,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', 'product truth: bean-based wording is prohibited; describe the product as instant coffee']"
+      },
+      {
+        "attempt": 4,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", 'product truth: bean-based wording is prohibi"
+      },
+      {
+        "attempt": 5,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Missing brand mention', \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in ma"
+      },
+      {
+        "attempt": 6,
+        "rung": "from_scratch",
+        "feedback": "brand: [\"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use 'fully' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "Generic hook 'Did you know most instant coffee isn’t actually coffee?' applies to any brand - penalizes hook_strength. The Facebook post reads like a blog with a generic follow line, scoring below 8 on brand quality thresholds. The reveal of the jar late in the sequence delays brand association. The"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "Generic hook 'Did you know most instant coffee isn’t actually coffee?' applies to any brand - penalizes hook_strength. The Facebook post reads like a blog with a generic follow line, scoring below 8 on brand quality thresholds. The reveal of the jar late in the sequence delays brand association. The"
+      },
+      {
+        "status": "exhausted",
+        "reason": "Generic hook 'Did you know most instant coffee isn’t actually coffee?' applies to any brand - penalizes hook_strength. The Facebook post reads like a blog with a generic follow line, scoring below 8 on brand quality thresholds. The reveal of the jar late in the sequence delays brand association. The"
       }
     ],
     "evening_yt_short": [
@@ -5171,6 +5299,50 @@
       {
         "status": "exhausted",
         "reason": "brand: ['Contains prohibited medical or weight loss claims']"
+      },
+      {
+        "attempt": 1,
+        "rung": "from_scratch",
+        "feedback": "brand: ['Contains prohibited medical or weight loss claims']"
+      },
+      {
+        "attempt": 2,
+        "rung": "from_scratch",
+        "feedback": "brand: ['product truth: invented product claim', 'product truth: invented product claim', 'product truth: invented product claim', 'product truth: invented product claim', 'product truth: invented product claim', 'product truth: invented product claim', 'product truth: invented product claim', 'prod"
+      },
+      {
+        "attempt": 3,
+        "rung": "feedback",
+        "feedback": "viral: score 8.0 < 9.0 (weakest: curiosity_gap, follow_cta). The curiosity gap resolves well in Scene 3 but the opening could hint at the 'why' sooner to lock attention tighter. The follow CTA is functional but feels like a generic brand post rather than a growth-trigger; tie it to a specific coffee"
+      },
+      {
+        "attempt": 4,
+        "rung": "alt_angle",
+        "feedback": "Good educational contrast and product positioning. The hook is strong and stops the scroll. Saveability could be higher by explicitly linking to a future grocery run moment rather than a general reminder."
+      },
+      {
+        "attempt": 5,
+        "rung": "alt_angle",
+        "feedback": "Good sensory contrast hook. Consider emphasizing the Indian consumer context slightly more to boost shareability (e.g., referencing the '4 PM office break' culture). The brand clarity is strong — keep the freeze-drying explanation simple."
+      },
+      {
+        "attempt": 6,
+        "rung": "evergreen",
+        "feedback": "viral: score 7.0 < 9.0 (weakest: follow_cta, hook). The follow_cta feels like a generic brand promo rather than a native evening ritual tip. It breaks the 'no brand assets' immersion for a growth reel. Consider framing it as 'Save for your next brew' or 'Follow for more kitchen coffee tests' instead"
+      },
+      {
+        "attempt": 7,
+        "rung": "feedback",
+        "feedback": "viral: score 8.86 < 9.0 (weakest: curiosity_gap). The curiosity gap resolves well in Scene 3, but the opening could explicitly promise a 'secret' or 'reveal' to make the hook stickier. Add a phrase like 'The industry doesn't want you to know this' after the oil-skin line to amp the open-loop. Sugges"
+      },
+      {
+        "attempt": 8,
+        "rung": "feedback",
+        "feedback": "Content is strong but could improve retention. The spray-dried comparison is excellent for education but the ending cuts off abruptly on 'Your evening ritual deserves coff'. This creates a natural pause but risks drop-off if not looped or followed immediately. Ensure the next frame completes the tho"
+      },
+      {
+        "status": "exhausted",
+        "reason": "viral: score 7.5 < 9.0 (weakest: curiosity_gap, follow_cta). Curiosity gap drops because the hook 'spray-dried at 200°C' is stated early without a question loop. Extend the mystery: hint at the 'why' without answering. Follow CTA is passive; replace 'Follow for honest coffee education' with a viewer"
       }
     ]
   },
@@ -7184,8 +7356,8 @@
     "facebook_post": 13,
     "reel_1": 14,
     "growth_reel": 1,
-    "threads_post": 8,
-    "growth_reel_fb": 3,
-    "evening_yt_short": 3
+    "threads_post": 9,
+    "growth_reel_fb": 4,
+    "evening_yt_short": 4
   }
 }
