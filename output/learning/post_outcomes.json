@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-27T09:19:58+00:00",
+  "generated_at": "2026-11-27T10:14:24+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -102,15 +102,14 @@
     },
     "instagram": {
       "posts": 62,
-      "measured": 25,
+      "measured": 26,
       "ranked": 24,
       "metrics_seen": [
         "comments",
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 36,
-        "awaiting_first_window": 1
+        "too_old_for_comparable_window": 36
       },
       "winners": [
         {
@@ -242,13 +241,14 @@
       ]
     },
     "linkedin": {
-      "posts": 19,
+      "posts": 20,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 17,
-        "missing_linkedin_token_or_version": 2
+        "missing_linkedin_token_or_version": 2,
+        "awaiting_first_window": 1
       },
       "winners": [],
       "losers": [],
@@ -3678,6 +3678,28 @@
       "hook_strategy": "second_person",
       "attention_mechanism": "specificity",
       "product": "purista",
+      "editorial_score": null,
+      "window": "early",
+      "metrics": {
+        "likes": 0,
+        "comments": 0
+      },
+      "basis": "engagement",
+      "value": 0.0,
+      "relative": null
+    },
+    {
+      "platform": "linkedin",
+      "label": "linkedin_post",
+      "day": 330,
+      "media_id": "urn:li:share:7532023986390618113",
+      "published_at": "2026-11-27T10:14:22+00:00",
+      "hook": "The first jar we sold taught me more than any plan did.",
+      "angle": "brand awareness",
+      "template": "",
+      "hook_strategy": "",
+      "attention_mechanism": "",
+      "product": "Purista",
       "editorial_score": null,
       "window": null,
       "metrics": {},
