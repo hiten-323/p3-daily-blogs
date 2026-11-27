@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-27T07:54:52+00:00",
+  "generated_at": "2026-11-27T09:09:16+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -101,7 +101,7 @@
       "gaps": []
     },
     "instagram": {
-      "posts": 61,
+      "posts": 62,
       "measured": 25,
       "ranked": 24,
       "metrics_seen": [
@@ -109,7 +109,8 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 36
+        "too_old_for_comparable_window": 36,
+        "awaiting_first_window": 1
       },
       "winners": [
         {
@@ -3663,6 +3664,25 @@
       },
       "basis": "engagement",
       "value": 0.0,
+      "relative": null
+    },
+    {
+      "platform": "instagram",
+      "label": "instagram_post",
+      "day": 330,
+      "media_id": "17959099848339948",
+      "published_at": "2026-11-27T07:55:11+00:00",
+      "hook": "Your 4 PM black coffee tastes like charcoal because commodity Robusta was roasted past 220°C to hide defects.",
+      "angle": "",
+      "template": "",
+      "hook_strategy": "second_person",
+      "attention_mechanism": "specificity",
+      "product": "purista",
+      "editorial_score": null,
+      "window": null,
+      "metrics": {},
+      "basis": null,
+      "value": null,
       "relative": null
     }
   ]
