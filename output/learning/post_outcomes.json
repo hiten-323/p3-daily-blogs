@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-26T23:52:19+00:00",
+  "generated_at": "2026-11-27T05:05:55+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -241,12 +241,12 @@
       ]
     },
     "linkedin": {
-      "posts": 20,
+      "posts": 19,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 18,
+        "too_old_for_comparable_window": 17,
         "awaiting_first_window": 1,
         "missing_linkedin_token_or_version": 1
       },
@@ -261,9 +261,9 @@
       ]
     },
     "threads": {
-      "posts": 19,
-      "measured": 19,
-      "ranked": 19,
+      "posts": 18,
+      "measured": 18,
+      "ranked": 18,
       "metrics_seen": [
         "comments",
         "likes",
@@ -275,15 +275,15 @@
         {
           "dimension": "angle",
           "value": "sensory",
-          "ratio": 5.41,
+          "ratio": 5.35,
           "n": 2,
           "provisional": true
         },
         {
           "dimension": "label",
           "value": "threads_post",
-          "ratio": 1.71,
-          "n": 19,
+          "ratio": 1.63,
+          "n": 18,
           "provisional": false
         }
       ],
@@ -306,21 +306,6 @@
         },
         {
           "label": "threads_post",
-          "hook": "Hot take: most people never taste their coffee, they just drink the sugar and milk poured on top of it. ",
-          "template": "",
-          "angle": "myth-busting coffee truths",
-          "relative": 4.143,
-          "window": "7d",
-          "editorial_score": null,
-          "metrics": {
-            "views": 29,
-            "likes": 0,
-            "comments": 0,
-            "shares": 0
-          }
-        },
-        {
-          "label": "threads_post",
           "hook": "Unpopular opinion: bitter instant coffee isn't a bad bean, it's just boiling water poured straight on top.",
           "template": "",
           "angle": "the 100c water mistake",
@@ -329,6 +314,21 @@
           "editorial_score": null,
           "metrics": {
             "views": 14,
+            "likes": 0,
+            "comments": 0,
+            "shares": 0
+          }
+        },
+        {
+          "label": "threads_post",
+          "hook": "Hot take: most people never taste their coffee, they just drink the sugar and milk poured on top of it. ",
+          "template": "",
+          "angle": "myth-busting coffee truths",
+          "relative": 3.222,
+          "window": "7d",
+          "editorial_score": null,
+          "metrics": {
+            "views": 29,
             "likes": 0,
             "comments": 0,
             "shares": 0
@@ -353,6 +353,21 @@
         },
         {
           "label": "threads_post",
+          "hook": "Hot take: most people never actually taste their morning coffee, they just drink it out of routine.",
+          "template": "",
+          "angle": "sensory_contrast_purica",
+          "relative": 0.222,
+          "window": "7d",
+          "editorial_score": null,
+          "metrics": {
+            "views": 2,
+            "likes": 0,
+            "comments": 0,
+            "shares": 0
+          }
+        },
+        {
+          "label": "threads_post",
           "hook": "Unpopular opinion: water temperature matters less than the brand transparency hiding on the back of your coffee jar.",
           "template": "",
           "angle": "unpopular opinion: water temperature matters less than the b",
@@ -365,35 +380,20 @@
             "comments": 0,
             "shares": 0
           }
-        },
-        {
-          "label": "threads_post",
-          "hook": "Hot take: most people never actually taste their morning coffee, they just drink it out of routine.",
-          "template": "",
-          "angle": "sensory_contrast_purica",
-          "relative": 0.286,
-          "window": "7d",
-          "editorial_score": null,
-          "metrics": {
-            "views": 2,
-            "likes": 0,
-            "comments": 0,
-            "shares": 0
-          }
         }
       ],
       "editorial_only": [],
       "gaps": []
     },
     "youtube": {
-      "posts": 19,
+      "posts": 18,
       "measured": 7,
       "ranked": 6,
       "metrics_seen": [
         "views"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 12
+        "too_old_for_comparable_window": 11
       },
       "winners": [
         {
@@ -486,68 +486,6 @@
     }
   },
   "posts": [
-    {
-      "platform": "youtube",
-      "label": "yt_short",
-      "day": 299,
-      "media_id": "A3APmiKCVww",
-      "published_at": "2026-10-27T03:21:49+00:00",
-      "hook": "Why Your Morning Black Coffee Loses Its Aroma in the Mug",
-      "angle": "engagement growth",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "linkedin",
-      "label": "linkedin_post",
-      "day": 299,
-      "media_id": "urn:li:share:7520686090865782785",
-      "published_at": "2026-10-27T03:21:49+00:00",
-      "hook": "Why your afternoon desk coffee is making you sleepier.",
-      "angle": "the desk ritual paradox",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "threads",
-      "label": "threads_post",
-      "day": 299,
-      "media_id": "18576956095077193",
-      "published_at": "2026-10-27T03:21:49+00:00",
-      "hook": "Unpopular opinion: the jar on your kitchen counter has been lying to you about what you are drinking every morning.",
-      "angle": "the ingredient list test",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purica",
-      "editorial_score": null,
-      "window": "7d",
-      "metrics": {
-        "views": 2,
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "basis": "reach",
-      "value": 2.0,
-      "relative": 0.286
-    },
     {
       "platform": "instagram",
       "label": "carousel",
@@ -684,7 +622,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 0.714
+      "relative": 0.556
     },
     {
       "platform": "instagram",
@@ -1041,7 +979,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.286
+      "relative": 0.222
     },
     {
       "platform": "facebook",
@@ -1355,7 +1293,7 @@
       },
       "basis": "reach",
       "value": 9.0,
-      "relative": 1.286
+      "relative": 1.0
     },
     {
       "platform": "instagram",
@@ -2332,7 +2270,7 @@
       },
       "basis": "reach",
       "value": 14.0,
-      "relative": 2.0
+      "relative": 1.556
     },
     {
       "platform": "instagram",
@@ -2495,7 +2433,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 0.714
+      "relative": 0.556
     },
     {
       "platform": "youtube",
@@ -2688,7 +2626,7 @@
       },
       "basis": "reach",
       "value": 10.0,
-      "relative": 1.429
+      "relative": 1.111
     },
     {
       "platform": "instagram",
@@ -2881,7 +2819,7 @@
       },
       "basis": "reach",
       "value": 13.0,
-      "relative": 1.857
+      "relative": 1.444
     },
     {
       "platform": "instagram",
@@ -3443,7 +3381,7 @@
       },
       "basis": "reach",
       "value": 29.0,
-      "relative": 4.143
+      "relative": 3.222
     },
     {
       "platform": "youtube",
@@ -3723,7 +3661,7 @@
       },
       "basis": "reach",
       "value": 4.0,
-      "relative": 0.571
+      "relative": 0.444
     },
     {
       "platform": "facebook",
@@ -3795,7 +3733,7 @@
       "attention_mechanism": "recognition",
       "product": "",
       "editorial_score": null,
-      "window": "early",
+      "window": "24h",
       "metrics": {
         "likes": 0,
         "comments": 0
