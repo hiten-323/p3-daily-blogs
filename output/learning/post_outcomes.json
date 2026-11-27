@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-27T05:05:55+00:00",
+  "generated_at": "2026-11-27T07:54:52+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
-      "posts": 35,
+      "posts": 34,
       "measured": 6,
       "ranked": 5,
       "metrics_seen": [
@@ -11,7 +11,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 29
+        "too_old_for_comparable_window": 28
       },
       "winners": [],
       "losers": [],
@@ -101,7 +101,7 @@
       "gaps": []
     },
     "instagram": {
-      "posts": 63,
+      "posts": 61,
       "measured": 25,
       "ranked": 24,
       "metrics_seen": [
@@ -109,7 +109,7 @@
         "likes"
       ],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 38
+        "too_old_for_comparable_window": 36
       },
       "winners": [
         {
@@ -223,12 +223,12 @@
       ]
     },
     "instagram_story": {
-      "posts": 8,
+      "posts": 7,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "story_measurement_window_missed": 8
+        "story_measurement_window_missed": 7
       },
       "winners": [],
       "losers": [],
@@ -247,8 +247,7 @@
       "metrics_seen": [],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 17,
-        "awaiting_first_window": 1,
-        "missing_linkedin_token_or_version": 1
+        "missing_linkedin_token_or_version": 2
       },
       "winners": [],
       "losers": [],
@@ -486,82 +485,6 @@
     }
   },
   "posts": [
-    {
-      "platform": "instagram",
-      "label": "carousel",
-      "day": 299,
-      "media_id": "18166183414486758",
-      "published_at": "2026-10-27T05:49:18+00:00",
-      "hook": "Why Two Jars Taste Completely Different",
-      "angle": "ritual script",
-      "template": "",
-      "hook_strategy": "question",
-      "attention_mechanism": "curiosity_gap",
-      "product": "Purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram",
-      "label": "instagram_post",
-      "day": 299,
-      "media_id": "17938541073391942",
-      "published_at": "2026-10-27T05:49:34+00:00",
-      "hook": "The bitterness in your black coffee isn't the bean — it's the 200°C spray-dryer that torched it.",
-      "angle": "follower growth",
-      "template": "",
-      "hook_strategy": "negation",
-      "attention_mechanism": "useful_discovery",
-      "product": "Purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "facebook",
-      "label": "facebook_post",
-      "day": 299,
-      "media_id": "494003270464484_122168983442655685",
-      "published_at": "2026-10-27T05:49:43+00:00",
-      "hook": "My dad — who has drank the same instant coffee for 30 years — picked up the Purity Beans Purica jar, read the back panel, and actually put down his newspaper.",
-      "angle": "the label that made my dad put down his newspaper",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Purica",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
-    {
-      "platform": "instagram_story",
-      "label": "stories",
-      "day": 299,
-      "media_id": "18146110345578462",
-      "published_at": "2026-10-27T05:56:52+00:00",
-      "hook": "HOT TAKE Morning routine reality check",
-      "angle": "engagement growth",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
     {
       "platform": "linkedin",
       "label": "linkedin_post",
