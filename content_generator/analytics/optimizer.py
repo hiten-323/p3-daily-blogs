@@ -28,17 +28,34 @@ def get_optimized_pick(bank: list, day: int, label: str = "", offset: int = 0) -
     """
     effective_day = day + offset
 
-    try:
-        from content_generator.analytics.metrics_store import get_hook_performance
-        perf = get_hook_performance(min_samples=_MIN_DATA_SAMPLES)
-    except Exception:
-        perf = []
+    score_map = {}
+    if label == "linkedin_angle":
+        try:
+            from content_generator.analytics.post_outcomes import OUTCOMES_FILE, LEARNING_DIR
+            outcomes_path = Path(LEARNING_DIR) / OUTCOMES_FILE
+            if outcomes_path.exists():
+                outcomes_data = json.loads(outcomes_path.read_text(encoding="utf-8"))
+                li_outcomes = outcomes_data.get("platforms", {}).get("linkedin", {})
+                for w in li_outcomes.get("winners", []):
+                    if w.get("dimension") == "angle":
+                        score_map[w.get("value")] = 50.0 * float(w.get("ratio", 1.25))
+                for l in li_outcomes.get("losers", []):
+                    if l.get("dimension") == "angle":
+                        score_map[l.get("value")] = 50.0 * float(l.get("ratio", 0.7))
+        except Exception as exc:
+            logger.debug("[optimizer] failed reading linkedin angle outcomes: %s", exc)
 
-    if not perf:
+    if not score_map:
+        try:
+            from content_generator.analytics.metrics_store import get_hook_performance
+            perf = get_hook_performance(min_samples=_MIN_DATA_SAMPLES)
+            score_map = {p["archetype"]: p["avg_viral_score"] for p in perf}
+        except Exception:
+            score_map = {}
+
+    if not score_map:
         # No data yet — plain round-robin
         return bank[effective_day % len(bank)]
-
-    score_map = {p["archetype"]: p["avg_viral_score"] for p in perf}
 
     # Score every bank item; default 50 for items with no data yet
     scored = []

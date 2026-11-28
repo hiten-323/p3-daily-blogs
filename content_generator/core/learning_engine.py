@@ -303,10 +303,17 @@ def get_learning_block(max_items: int = 5) -> str:
 
 
 def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
-    """Return measured wins and cautions for one platform after 5 independent posts."""
+    """Return measured wins and cautions for one platform, delegating to daily feedback."""
     target = str(platform or "").strip().lower()
     if not target:
         return ""
+    try:
+        from content_generator.core.daily_feedback import build_feedback_block
+        block = build_feedback_block(target)
+        if block:
+            return block
+    except Exception as exc:
+        logger.debug("[learning-engine] daily feedback delegation failed: %s", exc)
     entries = [
         e for e in _load_log()
         if str(e.get("platform") or "").strip().lower() == target
