@@ -8,7 +8,9 @@ deterministic exploration every 5th day.
 Gracefully falls back to round-robin rotation when performance data
 is insufficient (< MIN_DATA_SAMPLES entries per archetype).
 """
+import json
 import logging
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
