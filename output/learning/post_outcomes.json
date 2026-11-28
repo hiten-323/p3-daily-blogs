@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-28T08:35:12+00:00",
+  "generated_at": "2026-11-28T09:48:15+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -260,9 +260,9 @@
       ]
     },
     "threads": {
-      "posts": 18,
-      "measured": 18,
-      "ranked": 18,
+      "posts": 17,
+      "measured": 17,
+      "ranked": 17,
       "metrics_seen": [
         "comments",
         "likes",
@@ -274,15 +274,15 @@
         {
           "dimension": "angle",
           "value": "sensory",
-          "ratio": 5.35,
+          "ratio": 5.34,
           "n": 2,
           "provisional": true
         },
         {
           "dimension": "label",
           "value": "threads_post",
-          "ratio": 1.63,
-          "n": 18,
+          "ratio": 1.66,
+          "n": 17,
           "provisional": false
         }
       ],
@@ -323,7 +323,7 @@
           "hook": "Hot take: most people never taste their coffee, they just drink the sugar and milk poured on top of it. ",
           "template": "",
           "angle": "myth-busting coffee truths",
-          "relative": 3.222,
+          "relative": 3.053,
           "window": "7d",
           "editorial_score": null,
           "metrics": {
@@ -355,7 +355,7 @@
           "hook": "Hot take: most people never actually taste their morning coffee, they just drink it out of routine.",
           "template": "",
           "angle": "sensory_contrast_purica",
-          "relative": 0.222,
+          "relative": 0.211,
           "window": "7d",
           "editorial_score": null,
           "metrics": {
@@ -485,30 +485,6 @@
     }
   },
   "posts": [
-    {
-      "platform": "threads",
-      "label": "threads_post",
-      "day": 300,
-      "media_id": "18139525735653054",
-      "published_at": "2026-10-28T09:17:40+00:00",
-      "hook": "Unpopular opinion: most bitter instant coffee isn't bad beans — it's boiling water hitting the granules too fast.",
-      "angle": "the truth about instant coffee bitterness",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Ultra Blend",
-      "editorial_score": null,
-      "window": "7d",
-      "metrics": {
-        "views": 5,
-        "likes": 0,
-        "comments": 0,
-        "shares": 0
-      },
-      "basis": "reach",
-      "value": 5.0,
-      "relative": 0.556
-    },
     {
       "platform": "instagram",
       "label": "growth_reel",
@@ -845,7 +821,7 @@
       },
       "basis": "reach",
       "value": 2.0,
-      "relative": 0.222
+      "relative": 0.211
     },
     {
       "platform": "facebook",
@@ -1159,7 +1135,7 @@
       },
       "basis": "reach",
       "value": 9.0,
-      "relative": 1.0
+      "relative": 0.947
     },
     {
       "platform": "instagram",
@@ -2136,7 +2112,7 @@
       },
       "basis": "reach",
       "value": 14.0,
-      "relative": 1.556
+      "relative": 1.474
     },
     {
       "platform": "instagram",
@@ -2299,7 +2275,7 @@
       },
       "basis": "reach",
       "value": 5.0,
-      "relative": 0.556
+      "relative": 0.526
     },
     {
       "platform": "youtube",
@@ -2492,7 +2468,7 @@
       },
       "basis": "reach",
       "value": 10.0,
-      "relative": 1.111
+      "relative": 1.053
     },
     {
       "platform": "instagram",
@@ -2685,7 +2661,7 @@
       },
       "basis": "reach",
       "value": 13.0,
-      "relative": 1.444
+      "relative": 1.368
     },
     {
       "platform": "instagram",
@@ -3247,7 +3223,7 @@
       },
       "basis": "reach",
       "value": 29.0,
-      "relative": 3.222
+      "relative": 3.053
     },
     {
       "platform": "youtube",
@@ -3527,7 +3503,7 @@
       },
       "basis": "reach",
       "value": 4.0,
-      "relative": 0.444
+      "relative": 0.421
     },
     {
       "platform": "facebook",
