@@ -22,7 +22,7 @@ _SCENE_EXAMPLE = {
 
     "type": "problem",
 
-    "duration_s": 5,
+    "duration_s": 2,
 
     "on_screen": "READ THE JAR",
 
@@ -106,15 +106,29 @@ ABSOLUTE RULES:
 
 - NEVER make medical claims
 
-- 'Purity Beans' MUST appear in script and description
+- NEVER invent prices, stock, reviews, urgency, or metrics
 
-- '{WEBSITE_URL}' MUST appear in cta and description
+- NEVER write 100%, fresh, lab tested, single-origin, or any bean/beans wording except the brand name Purity Beans
 
-- scenes.on_screen = text displayed on screen only (max 4 words per scene)
+- Hook must land in the first 1-2 seconds: scene 1 duration_s is 1 or 2; on_screen and spoken both carry the hook. Name a concrete jar, clock time, or label contradiction. Never open with Most people / Did you know / What if I told you / In this video
+
+- 'Purity Beans' MUST appear in spoken script (payoff or CTA scene) AND in the description
+
+- '{WEBSITE_URL}' MUST appear in the description and the cta field. Do not put the URL in spoken lines. Never write Follow @purepantryprovisions or any Instagram handle
+
+- CTA spoken line is a Subscribe cue (Subscribe for the next coffee truth). The shop link lives only in description/cta
+
+- Title: max 60 characters, searchable, include #Shorts. Description: Purity Beans, the shop URL, at most 3 hashtags plus #Shorts / #PurityBeans
+
+- Never paste instruction text, schema labels, or placeholders into hook, title, or description
+
+- scenes.on_screen = text displayed on screen only (max 4 words per scene). Every scene has on_screen text
 
 - scenes.spoken = voiceover only, no production notes
 
-- Bold is agglomerated pure coffee. You must not call Bold freeze-dried. Purica and Purista are freeze-dried. Do not name a process for Ultra Blend. Never write the word fully.
+- visual_direction is cinematic: a real camera move on a real jar, pour, steam, or label in hand — not a typography card, poster, or talking-head stock clip
+
+- Bold is agglomerated pure coffee. You must not call Bold freeze-dried. Purica and Purista are freeze-dried. Prima is agglomerated. Do not name a process for Ultra Blend. Ultra Blend is a 70/30 coffee and chicory milk coffee — never call it pure. Never write the word fully.
 
 
 
@@ -134,7 +148,7 @@ ABSOLUTE RULES:
 
   "scenes": [
 
-    {{"scene": 1, "type": "problem",   "duration_s": 5, "on_screen": "4 WORDS MAX — one specific moment", "spoken": "8-12 words — the problem, with stakes, no product mention", "visual_direction": "Specific shot the viewer recognises"}},
+    {{"scene": 1, "type": "problem",   "duration_s": 2, "on_screen": "4 WORDS MAX — one specific moment", "spoken": "8-12 words — the problem, with stakes, no product mention", "visual_direction": "Specific shot the viewer recognises"}},
 
     {{"scene": 2, "type": "tension",   "duration_s": 5, "on_screen": "4 WORDS MAX — the stakes rise", "spoken": "8-12 words — what goes wrong if they keep doing it", "visual_direction": "The tension, closer, not a product dump"}},
 

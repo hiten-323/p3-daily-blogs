@@ -9,7 +9,7 @@ import json
 from content_generator.core.history_benchmark import build_history_benchmark_prompt
 from content_generator.prompts.brand import brand_block
 from content_generator.prompts.piece_craft import craft_block
-from content_generator.rotation import PRODUCTS, pick
+from content_generator.rotation import PRODUCTS, WEBSITE_URL, pick
 
 # Distinct evening angles tailored for prime time leisure scroll (7:30 PM - 10:30 PM IST)
 EVENING_ANGLES = [
@@ -144,31 +144,34 @@ FEATURED COFFEE PRODUCT: {product}
 FOCUS TOPIC: {angle}
 
 HARD PRODUCTION RULES:
-1. Hook lands in 0-1.5 seconds. Rapid pattern interrupt.
-2. YouTube SEO Title: Under 50 characters, high-intent search keywords (e.g. 'Why Your Coffee Tastes Bitter #shorts').
-3. Scene pacing: every scene must change visual angle every 1.5 to 2.5 seconds.
+1. Hook lands in 0-1.5 seconds — first on_screen text and first spoken line ARE the hook. Name a jar, a clock time, or a label contradiction.
+2. YouTube SEO title: under 60 characters, high-intent search keywords, include #Shorts. Write a real title, never the words "Punchy YouTube SEO Search Title".
+3. Scene pacing: every scene must change visual angle every 1.5 to 2.5 seconds. visual_direction is cinematic (macro jar, pour, steam, label in hand), not a typography card.
 4. Seamless ending: the final spoken line must flow right back into the first word of the hook.
-5. High-retention subscriber CTA: "Subscribe to learn what's really in your food."
+5. Subscriber CTA: "Subscribe for the next coffee truth." Never use an Instagram-handle follow CTA or a food-science CTA. The shop URL belongs in the description only.
+6. Description must include the words Purity Beans and {WEBSITE_URL}, with at most 3 hashtags plus #Shorts / #PurityBeans.
+7. Never invent statistics, prices, stock, reviews, or health claims. Never write 100%, fresh, lab tested, single-origin, or any bean/beans wording except the brand name Purity Beans. Ultra Blend is 70/30 coffee and chicory — never call it pure. Purica/Purista are freeze-dried; Bold/Prima are agglomerated.
+8. NEVER copy instruction text or schema labels into hook, title, tagline, or description. The strings in the schema below are field names and guidance, not copy to return.
 
-Return ONLY a single valid JSON object with these keys:
+Return ONLY a single valid JSON object with these keys (values are guidance, not copy):
 {{
   "id": "evening_yt_short",
   "track": "growth",
   "product": "{product}",
-  "tagline": "Pure coffee truths without commercial fluff",
-  "title": "Punchy YouTube SEO Search Title #shorts",
-  "hook": "High-tension 1.5s opening spoken hook line",
-  "chosen_hook": "Same spoken hook line",
-  "description": "50-100 words including search keywords, coffee facts, and subscribe link.",
-  "cta": "Subscribe to Purity Beans for daily coffee science.",
+  "tagline": "A 6-word tagline you invent, not a schema label",
+  "title": "A real searchable title under 60 characters ending in #Shorts",
+  "hook": "A real 1.5s spoken hook naming a jar or contradiction",
+  "chosen_hook": "The same hook line you actually wrote",
+  "description": "Purity Beans. Two or three sentences of coffee craft, then {WEBSITE_URL} #PurityBeans #Shorts",
+  "cta": "Subscribe for the next coffee truth.",
   "scenes": [
-    {{"scene": 1, "type": "hook", "duration_s": 2, "on_screen": "DON'T DO THIS", "spoken": "The opening hook line", "visual_direction": "Dramatic macro close-up of dark roast coffee"}},
-    {{"scene": 2, "type": "tension", "duration_s": 4, "on_screen": "...", "spoken": "...", "visual_direction": "..."}},
-    {{"scene": 3, "type": "turn", "duration_s": 6, "on_screen": "...", "spoken": "...", "visual_direction": "..."}},
-    {{"scene": 4, "type": "revelation", "duration_s": 6, "on_screen": "...", "spoken": "...", "visual_direction": "..."}},
-    {{"scene": 5, "type": "payoff_loop", "duration_s": 4, "on_screen": "SUBSCRIBE FOR MORE", "spoken": "And that is exactly why...", "visual_direction": "Looping cut leading right back to scene 1"}}
+    {{"scene": 1, "type": "hook", "duration_s": 2, "on_screen": "4 WORDS MAX", "spoken": "Your real hook, not a label", "visual_direction": "Macro jar or pour in motion"}},
+    {{"scene": 2, "type": "tension", "duration_s": 4, "on_screen": "4 WORDS MAX", "spoken": "The stakes in 8-12 words", "visual_direction": "Tighter shot, steam or spoon"}},
+    {{"scene": 3, "type": "turn", "duration_s": 6, "on_screen": "4 WORDS MAX", "spoken": "The unexpected label fact", "visual_direction": "Label in hand, still tense"}},
+    {{"scene": 4, "type": "revelation", "duration_s": 6, "on_screen": "4 WORDS MAX", "spoken": "Pay off the hook; say Purity Beans", "visual_direction": "The jar in warm light after the answer"}},
+    {{"scene": 5, "type": "payoff_loop", "duration_s": 4, "on_screen": "SUBSCRIBE FOR MORE", "spoken": "Subscribe for the next coffee truth.", "visual_direction": "Looping cut leading right back to scene 1"}}
   ],
-  "loop_mechanic": "Explain how the final line and shot seamlessly restart scene 1"
+  "loop_mechanic": "How the final line and shot restart scene 1"
 }}
 
 {craft_block("yt_short")}
