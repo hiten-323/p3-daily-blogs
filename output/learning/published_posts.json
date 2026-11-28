@@ -10745,7 +10745,8 @@
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
     "failed_windows": [
-      "24h"
+      "24h",
+      "72h"
     ]
   },
   {
@@ -10769,7 +10770,9 @@
     "insights_recorded": false,
     "measurement_snapshots": [],
     "fetch_attempts_by_window": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   },
   {
     "media_id": "18080675975441645",
@@ -10880,6 +10883,8 @@
     "ledger_key": "2026-11-27|generate|linkedin|pb_41c1d509af",
     "publication_status": "VERIFIED_LIVE",
     "missed_windows": {},
-    "failed_windows": []
+    "failed_windows": [
+      "24h"
+    ]
   }
 ]

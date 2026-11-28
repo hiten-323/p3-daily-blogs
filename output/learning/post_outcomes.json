@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-28T05:04:19+00:00",
+  "generated_at": "2026-11-28T06:32:41+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -247,7 +247,8 @@
       "metrics_seen": [],
       "unmeasured_statuses": {
         "too_old_for_comparable_window": 17,
-        "missing_linkedin_token_or_version": 3
+        "linkedin_scope_missing_r_member_social_or_r_organization_social": 2,
+        "awaiting_first_window": 1
       },
       "winners": [],
       "losers": [],
