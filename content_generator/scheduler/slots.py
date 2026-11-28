@@ -471,31 +471,14 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
         from content_generator.core.editorial_engine import approved_assets
         approved = approved_assets(content)
         out = _publish_slot_reel(slot, day, content, approved, slot_date, only_asset)
+        # A held evening Reel must not skip a passing YouTube Short. 20-27 Nov
+        # produced zero YouTube ledger rows because this path returned the
+        # reel contract before the Short was attempted.
+        yt_result = _publish_evening_youtube(content, approved, slot, day, only_asset)
         if out.get("contract"):
-            return out["contract"]
+            return _attach_youtube_to_contract(out["contract"], yt_result, approved, slot, day, content)
         chosen, result, fb_result, ig_paused = out["chosen"], out["result"], out["fb_result"], out["ig_paused"]
         _attach_sales_push(result, content, slot, day)
-
-        # Evening YouTube Shorts growth reel (if YouTube is configured)
-        yt_result = {"success": True, "skipped": True}
-        try:
-            from content_generator.publisher.youtube import is_configured as yt_ready, post_content as yt_post
-            if yt_ready() and (not only_asset or only_asset in ("evening_yt_short", "yt_short")):
-                yt_piece = approved.get("evening_yt_short") or approved.get("yt_short")
-                if yt_piece:
-                    logger.info("[slots] publishing evening YouTube Shorts growth reel")
-                    from content_generator.publisher.publishing_ledger import publish_with_ledger
-                    yt_content = dict(content)
-                    yt_asset_name = "evening_yt_short" if "evening_yt_short" in approved else "yt_short"
-                    yt_content["yt_short"] = yt_piece
-                    yt_result = publish_with_ledger(
-                        "youtube", yt_content, slot, day,
-                        lambda: yt_post(yt_content, day=day),
-                        asset=yt_asset_name,
-                    )
-        except Exception as yt_exc:
-            logger.warning("[slots] evening YouTube Shorts publish skipped or failed: %s", yt_exc)
-            yt_result = {"success": False, "error": str(yt_exc)}
 
         contract_results = {"facebook": fb_result}
         expected_assets = {"facebook": ["growth_reel_fb" if "growth_reel_fb" in approved else chosen]}
@@ -503,6 +486,9 @@ def _execute_publish_slot(slot: str, on_date: datetime.date | None = None, only_
             contract_results["instagram"] = result
             expected_assets["instagram"] = [chosen]
         if yt_result.get("success") and not yt_result.get("skipped"):
+            contract_results["youtube"] = yt_result
+            expected_assets["youtube"] = ["evening_yt_short" if "evening_yt_short" in approved else "yt_short"]
+        elif yt_result.get("success") is False and not yt_result.get("skipped"):
             contract_results["youtube"] = yt_result
             expected_assets["youtube"] = ["evening_yt_short" if "evening_yt_short" in approved else "yt_short"]
 
@@ -778,6 +764,66 @@ def _mirror_to_facebook(content: dict, day: int, slot: str,
 
 class _InstagramPaused(Exception):
     """Internal: owner kill switch skips an Instagram step (not an error)."""
+
+
+
+def _publish_evening_youtube(content: dict, approved: dict, slot, day: int,
+                             only_asset: str = "") -> dict:
+    """Upload a passing evening or daytime Short. Independent of the IG reel."""
+    yt_result = {"success": True, "skipped": True}
+    try:
+        from content_generator.publisher.youtube import is_configured as yt_ready, post_content as yt_post
+        if yt_ready() and (not only_asset or only_asset in ("evening_yt_short", "yt_short")):
+            yt_piece = approved.get("evening_yt_short") or approved.get("yt_short")
+            if yt_piece:
+                logger.info("[slots] publishing evening YouTube Shorts growth reel")
+                from content_generator.publisher.publishing_ledger import publish_with_ledger
+                yt_content = dict(content)
+                yt_asset_name = "evening_yt_short" if "evening_yt_short" in approved else "yt_short"
+                yt_content["yt_short"] = yt_piece
+                # Keep the evening key so prepublish can authorize either asset.
+                if yt_asset_name == "evening_yt_short":
+                    yt_content["evening_yt_short"] = yt_piece
+                yt_result = publish_with_ledger(
+                    "youtube", yt_content, slot, day,
+                    lambda: yt_post(yt_content, day=day),
+                    asset=yt_asset_name,
+                )
+    except Exception as yt_exc:
+        logger.warning("[slots] evening YouTube Shorts publish skipped or failed: %s", yt_exc)
+        yt_result = {"success": False, "error": str(yt_exc)}
+    return yt_result
+
+
+def _attach_youtube_to_contract(contract: dict, yt_result: dict, approved: dict,
+                                slot, day: int, content: dict) -> dict:
+    """Fold a YouTube attempt into an already-built evening reel contract."""
+    if not isinstance(contract, dict):
+        return contract
+    if yt_result.get("skipped") and yt_result.get("success"):
+        return contract
+    asset = "evening_yt_short" if "evening_yt_short" in approved else "yt_short"
+    results = {"youtube": yt_result}
+    expected = {"youtube": [asset]}
+    # Rebuild so the contract lists YouTube beside the held/failed reel.
+    existing = {}
+    expected_full = dict(expected)
+    # Prefer original platforms from the contract if present.
+    raw = contract.get("results") or contract.get("platforms") or {}
+    if isinstance(raw, dict):
+        for platform, row in raw.items():
+            if platform == "youtube":
+                continue
+            if isinstance(row, dict):
+                existing[platform] = {
+                    "success": row.get("status") == "published" or row.get("success") is True,
+                    "error": row.get("error") or "",
+                    "media_id": row.get("remote_id") or row.get("media_id") or "",
+                }
+                expected_full[platform] = [row.get("asset_id") or platform]
+    existing.update(results)
+    expected_full.update(expected)
+    return _contract(slot, day, content, existing, expected_full)
 
 
 def _contract(slot: str, day: int, content: dict,

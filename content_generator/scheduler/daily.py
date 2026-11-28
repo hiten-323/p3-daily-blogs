@@ -1234,6 +1234,9 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
         ("threads_post",   "threads_post",   None),
         ("growth_reel",    "growth_reel",    None),
         ("yt_short",       "yt_short",       None),
+        # Score the evening Short before Stories so a passing Short is not
+        # left unscored after the global editorial deadline.
+        ("evening_yt_short", "evening_yt_short", None),
         # The generated Story used to be excluded from this loop, so
         # instagram.post_story published it only when some other path had
         # already stamped a score. A nested string index targets
@@ -1241,7 +1244,6 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
         # editorial + viral gate as every other asset.
         ("stories",        "stories",        "story_1"),
         ("growth_reel_fb", "growth_reel_fb", None),
-        ("evening_yt_short", "evening_yt_short", None),
     ]
     # Blog regen only when explicitly enabled; Blogs bot owns Shopify blog.
     if blog_enabled():
@@ -1305,6 +1307,17 @@ def _do_editorial(content: dict, only: set | None = None) -> None:
 
         for attempt in range(attempts_allowed):
             if _editorial_deadline_passed() or _time.monotonic() >= _piece_deadline:
+                from content_generator.core.publish_bar import clears_quality_bar
+                if clears_quality_bar(piece):
+                    # Already measured at 8.0 editorial and 9.0 viral. Do not
+                    # stamp a time-budget hold that would leave a passing
+                    # Short (or any other piece) unapproved. Gates stay as-is.
+                    piece.pop("editorial_error", None)
+                    logger.info(
+                        "[editorial] time budget reached — %s already clears the 8.0/9.0 bar; keeping it",
+                        label,
+                    )
+                    break
                 piece.setdefault("editorial_error", "editorial time budget reached before this piece passed")
                 logger.warning("[editorial] time budget reached — %s left unapproved (held for retry)", label)
                 break

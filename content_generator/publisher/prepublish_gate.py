@@ -16,7 +16,7 @@ _PLATFORM_KEYS = {
     "facebook": ("facebook_post",),
     "threads": ("threads_post",),
     "linkedin": ("linkedin_post",),
-    "youtube": ("yt_short",),
+    "youtube": ("yt_short", "evening_yt_short"),
     "shopify": ("blog_post",),
 }
 
@@ -75,6 +75,12 @@ def authorize_publish(content: Any, platform: str) -> dict:
                          "youtube": "yt_short", "shopify": "blog_post"}[platform]
         # Instagram can publish the carousel or Instagram post, but reel-only
         # approval does not authorize a carousel image payload.
+        # Evening YouTube Shorts are a first-class approved key; accept either.
+        if platform == "youtube":
+            if "yt_short" in approved:
+                canonical_key = "yt_short"
+            elif "evening_yt_short" in approved:
+                canonical_key = "evening_yt_short"
         if canonical_key not in approved:
             return {"allowed": False, "asset_key": key, "reason": "canonical_editorial_rejection", "checks": {"editorial": False}}
         asset = approved[canonical_key]

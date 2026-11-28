@@ -548,9 +548,15 @@ def ensure_yt_video(content: dict) -> bool:
     from content_generator.publisher.youtube import find_native_short
     if find_native_short(content):
         return True
-    piece = content.get("yt_short") if isinstance(content, dict) else None
+    piece = None
+    if isinstance(content, dict):
+        for key in ("yt_short", "evening_yt_short"):
+            cand = content.get(key)
+            if isinstance(cand, dict) and cand:
+                piece = cand
+                break
     if not isinstance(piece, dict) or not piece:
-        log.warning("[retry] no yt_short piece to render")
+        log.warning("[retry] no yt_short or evening_yt_short piece to render")
         return False
     try:
         from content_generator.core.ist_dates import asset_date
