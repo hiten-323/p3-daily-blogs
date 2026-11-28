@@ -568,6 +568,11 @@ def ensure_yt_video(content: dict) -> bool:
 
 def main() -> int:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+    try:
+        from content_generator.scheduler.daily import _do_fetch_insights
+        _do_fetch_insights()
+    except Exception as exc:
+        logging.getLogger(__name__).warning("retry-unposted pre-flight measurement skipped: %s", exc)
     from content_generator.core.ist_dates import today_ist
     from content_generator.publisher.publishing_ledger import records_for_today
     from content_generator.scheduler.publish_recovery import _load_content
