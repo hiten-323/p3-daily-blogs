@@ -269,7 +269,7 @@ def audience_value(metrics: dict) -> tuple[str, float] | None:
     if reach is not None:
         rate = engagement / max(reach, 1.0)
         return "reach", reach * (1.0 + 10.0 * min(rate, 0.5))
-    if observed:
+    if observed and engagement > 0.0:
         return "engagement", engagement
     return None
 

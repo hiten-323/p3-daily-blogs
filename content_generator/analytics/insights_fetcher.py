@@ -517,16 +517,33 @@ def _fetch_account_insights() -> dict:
     account_id = os.getenv("INSTAGRAM_ACCOUNT_ID")
     if not account_id:
         return {}
-    data = _graph_get(
-        f"{account_id}/insights",
-        {"metric": "profile_views,website_clicks", "period": "day"},
-    )
     out = {}
-    for item in ((data or {}).get("data") or []):
-        values = item.get("values") or [{}]
-        value = values[0].get("value")
-        if value is not None:
-            out[item.get("name", "")] = value
+    candidate_metrics = (
+        "reach", "impressions", "accounts_engaged", "total_interactions",
+        "profile_views", "website_clicks"
+    )
+    for m in candidate_metrics:
+        try:
+            data = _graph_get(
+                f"{account_id}/insights",
+                {"metric": m, "period": "day", "metric_type": "total_value"},
+                bypass_circuit=True,
+            )
+            if not data:
+                data = _graph_get(
+                    f"{account_id}/insights",
+                    {"metric": m, "period": "day"},
+                    bypass_circuit=True,
+                )
+            for item in ((data or {}).get("data") or []):
+                values = item.get("values") or [{}]
+                val = values[0].get("value")
+                if val is None and isinstance(item.get("total_value"), dict):
+                    val = item["total_value"].get("value")
+                if val is not None:
+                    out[item.get("name", m)] = val
+        except Exception as exc:
+            logger.debug("[insights] account metric %s unavailable: %s", m, exc)
     return out
 
 
