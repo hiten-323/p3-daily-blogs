@@ -195421,18 +195421,19 @@
     },
     {
       "code": "banned_claim:fresh",
-      "count": 324,
-      "feedback": "The copy gate rejects those phrases. refresh is not a match.",
+      "count": 325,
+      "feedback": "The hook successfully addresses a common frustration with stale pantry coffee, but it reads slightly too much like an article excerpt rather than a scroll-stopping social media post. To elevate the shareability and emotional pull above the threshold, tighten the pacing in the middle body sentences and amplify the contrast between mystery warehouse storage and fresh kitchen brews. Ensure the commen",
       "first_seen": "2026-10-22",
       "fix": "Never write fresh, freshly, freshness, fresher, freshest, lab tested, or zero acidity. refresh is allowed.",
       "gate": "banned_claim",
       "id": "instagram|banned_claim|banned_claim:fresh",
-      "label": "carousel",
-      "last_seen": "2026-10-22",
+      "label": "instagram_post",
+      "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "Copy used a banned claim: fresh, freshly, freshness, lab tested, or zero acidity.",
+      "reason": "The hook successfully addresses a common frustration with stale pantry coffee, but it reads slightly too much like an article excerpt rather than a scroll-stopping social media post. To elevate the shareability and emotional pull above the threshold, tighten the pacing in the middle body sentences a",
       "recent_samples": [
-        "The copy gate rejects those phrases. refresh is not a match."
+        "The copy gate rejects those phrases. refresh is not a match.",
+        "The hook successfully addresses a common frustration with stale pantry coffee, but it reads slightly too much like an article excerpt rather than a scroll-stopping social media post. To elevate the shareability and emotional pull above the threshold, tighten the pacing in the middle body sentences a"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -195550,7 +195551,7 @@
     {
       "code": "generic_hook",
       "count": 156851,
-      "feedback": "The hook 'Unpopular opinion: your instant coffee tastes burnt before you even add water' is generic and could apply to any premium coffee brand \u2014 it does not uniquely position Purity Beans or Purica. The reveal of 'Purica is freeze-dried pure Arabica' arrives too late (line 3) without visual or sensory proof. The CTA 'Comment COFFEE if you want to try clean freeze-dried coffee' is passive and low-",
+      "feedback": "The hook 'Hot take: most people never taste their coffee, they just drink it' is generic \u2014 it could apply to Starbucks, Nescaf\u00e9, or a local chai stall. It does not name Purity Beans, does not reference the Purica jar, and does not create a curiosity gap specific to this product. The body teaches water temperature (60s off boil) which is valid coffee education, but it is not tied to the unique sell",
       "first_seen": "2026-10-24",
       "fix": "later draft passed the same gates",
       "gate": "generic_hook",
@@ -195558,51 +195559,51 @@
       "label": "threads_post",
       "last_seen": "2026-11-28",
       "platform": "threads",
-      "reason": "The hook 'Unpopular opinion: your instant coffee tastes burnt before you even add water' is generic and could apply to any premium coffee brand \u2014 it does not uniquely position Purity Beans or Purica. The reveal of 'Purica is freeze-dried pure Arabica' arrives too late (line 3) without visual or sens",
+      "reason": "The hook 'Hot take: most people never taste their coffee, they just drink it' is generic \u2014 it could apply to Starbucks, Nescaf\u00e9, or a local chai stall. It does not name Purity Beans, does not reference the Purica jar, and does not create a curiosity gap specific to this product. The body teaches wat",
       "recent_samples": [
         "The hook 'Your instant coffee tastes like caramel for thirty seconds' is generic and lacks a betrayal/curiosity trigger \u2014 it could apply to any brand. The promise 'Minute two still tastes like the first sip' is a weak value prop without proof or contrast. The CTA 'Comment ARABICA if you drink it bla",
         "Hook ('You bought Arabica...') is generic \u2014 it could apply to any Arabica instant coffee brand and lacks a Purity Beans-specific truth bomb. The second paragraph reads like a spec sheet ('Low temperature locks in...') instead of a visceral payoff; no sensory contrast, no 'aha' moment. CTA ('Which on",
-        "The hook 'Unpopular opinion: your instant coffee tastes burnt before you even add water' is generic and could apply to any premium coffee brand \u2014 it does not uniquely position Purity Beans or Purica. The reveal of 'Purica is freeze-dried pure Arabica' arrives too late (line 3) without visual or sens"
+        "The hook 'Hot take: most people never taste their coffee, they just drink it' is generic \u2014 it could apply to Starbucks, Nescaf\u00e9, or a local chai stall. It does not name Purity Beans, does not reference the Purica jar, and does not create a curiosity gap specific to this product. The body teaches wat"
       ],
       "stage": "generation",
       "status": "gate_holding"
     },
     {
       "code": "llm_viral",
-      "count": 147279,
-      "feedback": "viral: score 7.86 < 9.0 (weakest: relatability). The piece has strong technical specificity about freeze-drying versus high-heat spray-drying, and the ingredient transparency callout is solid. To improve relatability, anchor the technical detail directly into the everyday kitchen experience right from the opening sentence rather than starting with process mechanics. Suggested hook: That flat, dull",
+      "count": 147291,
+      "feedback": "viral: score 8.29 < 9.0 (weakest: hook, shareability). The piece hits a strong, relatable pain point with the third-sip bitterness test and uses precise temperature education. To push scores higher, make the opening hook punchier in the very first second to instantly capture attention before the longer technical explanation. Ensure all visual transitions are tight and hit every 1-2 seconds as per",
       "first_seen": "2026-10-23",
       "fix": "later draft passed the same gates",
       "gate": "llm_viral",
       "id": "instagram|llm_viral|llm_viral",
-      "label": "instagram_post",
+      "label": "reel_1",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "viral: score 7.86 < 9.0 (weakest: relatability). The piece has strong technical specificity about freeze-drying versus high-heat spray-drying, and the ingredient transparency callout is solid. To improve relatability, anchor the technical detail directly into the everyday kitchen experience right fr",
+      "reason": "viral: score 8.29 < 9.0 (weakest: hook, shareability). The piece hits a strong, relatable pain point with the third-sip bitterness test and uses precise temperature education. To push scores higher, make the opening hook punchier in the very first second to instantly capture attention before the lon",
       "recent_samples": [
-        "viral: score 8.0 < 9.0 (weakest: hook, follow_cta). The carousel maintains strong educational value and clear formatting across slides with continuous swipe tension. Ensure slide 6 maintains pure educational and brand integrity without sounding overly salesy, keeping price and link clean. The hook i",
-        "viral: score 8.0 < 9.0 (weakest: relatability). The technical explanation about spray-drying and volatile oils is strong and establishes great authority, but it leans slightly academic. Connecting the vanished aroma directly to that disappointing morning cup at home would push relatability higher. O",
-        "viral: score 7.86 < 9.0 (weakest: relatability). The piece has strong technical specificity about freeze-drying versus high-heat spray-drying, and the ingredient transparency callout is solid. To improve relatability, anchor the technical detail directly into the everyday kitchen experience right fr"
+        "viral: score 8.29 < 9.0 (weakest: hook, shareability). The piece is exceptionally strong and strictly adheres to brand guidelines, featuring precise product naming, correct pricing for Purica, and clear temperature science. To push it from good to elite, make the hook punchier by focusing on the imm",
+        "viral: score 7.29 < 9.0 (weakest: hook, format_fit, follow_cta). The piece provides genuinely useful consumer education on reading jar dates, but the opening hook is a bit dry for short-form video and needs a stronger visual or verbal pattern interrupt. The format pacing needs sharper cuts every 1-2",
+        "viral: score 8.29 < 9.0 (weakest: hook, shareability). The piece hits a strong, relatable pain point with the third-sip bitterness test and uses precise temperature education. To push scores higher, make the opening hook punchier in the very first second to instantly capture attention before the lon"
       ],
       "stage": "generation",
       "status": "gate_holding"
     },
     {
       "code": "product_truth",
-      "count": 121631,
-      "feedback": "brand: [\"product truth: Ultra Blend contains 30% chicory; never make range-wide 'pure instant coffee' claims\"]",
+      "count": 121640,
+      "feedback": "brand: ['product truth: Bold is pure coffee; never name a bean variety (Robusta/Arabica) for Bold']",
       "first_seen": "2026-10-14",
       "fix": "Ultra Blend is 70% coffee and 30% chicory. Do not call it pure or attack chicory.",
       "gate": "product_truth",
       "id": "instagram|product_truth|product_truth",
-      "label": "instagram_post",
+      "label": "reel_1",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "brand: [\"product truth: Ultra Blend contains 30% chicory; never make range-wide 'pure instant coffee' claims\"]",
+      "reason": "brand: ['product truth: Bold is pure coffee; never name a bean variety (Robusta/Arabica) for Bold']",
       "recent_samples": [
-        "The asset scores 7.5 overall \u2014 below the 8.0 threshold. The hook is specific and strong (price + product + mechanism), but the emotional pull is muted: it frames the problem as a technical mistake rather than a betrayal or identity moment. The 'Value' beat leans on price-per-cup math, which is funct",
-        "Overall 7.5 remains below the 8.0 threshold. Hook creates visual curiosity but the second sentence ('Chicory root polysaccharides bind milk fat...') is too technical and dry for a scroll-stop \u2014 it reads like a food-science textbook, not a revelation. Move the mug-ring proof earlier: 'Flip the jar. O",
-        "brand: [\"product truth: Ultra Blend contains 30% chicory; never make range-wide 'pure instant coffee' claims\"]"
+        "brand: ['product truth: bean-based wording is prohibited; describe the product as instant coffee']",
+        "brand: ['product truth: invented product claim']",
+        "brand: ['product truth: Bold is pure coffee; never name a bean variety (Robusta/Arabica) for Bold']"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -195670,7 +195671,7 @@
     {
       "code": "generic_hook",
       "count": 70340,
-      "feedback": "The hook 'What we get asked about shelf life' is generic B2B operations talk \u2014 it does not stop a scroll for any coffee drinker or decision-maker. It signals 'logistics update,' not insight. The body stays in supplier mode: stock rotation, dating, pack sizes. Zero consumer-facing value, zero identity trigger, zero pride or betrayal hook. The CTA asks for a DM for a 'distributor pack' but the linke",
+      "feedback": "This reads like a B2B trade note, not a LinkedIn post that builds authority. The hook 'What we get asked about shelf life' is functional but generic \u2014 it could be any FMCG brand. No curiosity gap, no POV, no insight. The body states facts (freeze-dried, glass jars, direct about pack sizes) without a single specific detail that proves expertise (e.g., actual shelf life number, why glass matters for",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "generic_hook",
@@ -195678,19 +195679,19 @@
       "label": "linkedin_post",
       "last_seen": "2026-11-28",
       "platform": "linkedin",
-      "reason": "The hook 'What we get asked about shelf life' is generic B2B operations talk \u2014 it does not stop a scroll for any coffee drinker or decision-maker. It signals 'logistics update,' not insight. The body stays in supplier mode: stock rotation, dating, pack sizes. Zero consumer-facing value, zero identit",
+      "reason": "This reads like a B2B trade note, not a LinkedIn post that builds authority. The hook 'What we get asked about shelf life' is functional but generic \u2014 it could be any FMCG brand. No curiosity gap, no POV, no insight. The body states facts (freeze-dried, glass jars, direct about pack sizes) without a",
       "recent_samples": [
         "The opening hook is generic and doesn\u2019t create an immediate curiosity gap; it could apply to any FMCG brand. Strengthen it with a specific, surprising retailer moment that highlights a unique Purity Beans packaging advantage. Replace the bulk pricing list with a concise, story-driven insight about h",
         "viral: score 6.0 < 9.0 (weakest: curiosity_gap, relatability). Hook is a generic founder trope \u2014 'first sale taught me X' blends into every other LinkedIn founder post. No curiosity gap: the lesson (labels matter) is stated upfront with no open loop. Relatability is low \u2014 packing a box in Bangalore ",
-        "The hook 'What we get asked about shelf life' is generic B2B operations talk \u2014 it does not stop a scroll for any coffee drinker or decision-maker. It signals 'logistics update,' not insight. The body stays in supplier mode: stock rotation, dating, pack sizes. Zero consumer-facing value, zero identit"
+        "This reads like a B2B trade note, not a LinkedIn post that builds authority. The hook 'What we get asked about shelf life' is functional but generic \u2014 it could be any FMCG brand. No curiosity gap, no POV, no insight. The body states facts (freeze-dried, glass jars, direct about pack sizes) without a"
       ],
       "stage": "generation",
       "status": "gate_holding"
     },
     {
       "code": "generic_hook",
-      "count": 65136,
-      "feedback": "Hook is generic and brand-agnostic \u2014 'instant coffee at the store' could be any brand. No pattern interrupt in first 2 seconds. Body front-loads product list (Purica, Purista, Bold, Ultra Blend) before earning trust; reads like a spec sheet. No visceral contrast (chicory filler vs pure coffee) to trigger share-worthy betrayal. CTA asks for a comment but the community question is passive ('first th",
+      "count": 65137,
+      "feedback": "HOOK/PAYOFF MISMATCH (Critical mismatch: featured_product is Purica (freeze-dried Arabica, zero-chicory, premium) but the body sells Ultra Blend (70/30 chicory blend, \u20b9309/100g, value positioning). The hook promises a grocery-bill revelation but the math is for the wrong SKU. This confuses the buyer and dilutes trust. The hook is a generic 'uncle at kitchen island' scene \u2014 could be any coffee bran",
       "first_seen": "2026-10-24",
       "fix": "later draft passed the same gates",
       "gate": "generic_hook",
@@ -195698,31 +195699,31 @@
       "label": "facebook_post",
       "last_seen": "2026-11-28",
       "platform": "facebook",
-      "reason": "Hook is generic and brand-agnostic \u2014 'instant coffee at the store' could be any brand. No pattern interrupt in first 2 seconds. Body front-loads product list (Purica, Purista, Bold, Ultra Blend) before earning trust; reads like a spec sheet. No visceral contrast (chicory filler vs pure coffee) to tr",
+      "reason": "HOOK/PAYOFF MISMATCH (Critical mismatch: featured_product is Purica (freeze-dried Arabica, zero-chicory, premium) but the body sells Ultra Blend (70/30 chicory blend, \u20b9309/100g, value positioning). The hook promises a grocery-bill revelation but the math is for the wrong SKU. This confuses the buyer",
       "recent_samples": [
-        "The hook is the strongest element \u2014 a specific, visual, relatable moment that stops the scroll. However, the body loses momentum after the first sentence. The transition from sensory detail (aroma) to price/specs (\u20b9559, 100g, freeze-dried) feels like a spec sheet dropped into a story. The 'zero deba",
         "The hook creates a strong visual scene but lacks a 'why care' tension \u2014 it's observational, not revelatory. The body reads like a personal journal entry, not a shareable insight. No myth-busting, no surprising fact, no identity challenge. The price mention (\u20b9559) is buried mid-sentence; for saveabil",
-        "Hook is generic and brand-agnostic \u2014 'instant coffee at the store' could be any brand. No pattern interrupt in first 2 seconds. Body front-loads product list (Purica, Purista, Bold, Ultra Blend) before earning trust; reads like a spec sheet. No visceral contrast (chicory filler vs pure coffee) to tr"
+        "Hook is generic and brand-agnostic \u2014 'instant coffee at the store' could be any brand. No pattern interrupt in first 2 seconds. Body front-loads product list (Purica, Purista, Bold, Ultra Blend) before earning trust; reads like a spec sheet. No visceral contrast (chicory filler vs pure coffee) to tr",
+        "HOOK/PAYOFF MISMATCH (Critical mismatch: featured_product is Purica (freeze-dried Arabica, zero-chicory, premium) but the body sells Ultra Blend (70/30 chicory blend, \u20b9309/100g, value positioning). The hook promises a grocery-bill revelation but the math is for the wrong SKU. This confuses the buyer"
       ],
       "stage": "generation",
       "status": "gate_holding"
     },
     {
       "code": "brand",
-      "count": 60855,
-      "feedback": "brand: ['reel overlay/copy too dense']",
+      "count": 60856,
+      "feedback": "Overall 7.1 fails the \u22658 threshold. The hook is specific and stops the scroll (temperature science + Purica = brand-owned). Saveability is strong \u2014 a genuine brewing tip worth keeping. Shareability is held back by low emotion_pull: the copy is instructional, not identity-driven. No pride, betrayal, curiosity-gap, or 'real coffee lover' signal that makes an Indian urban drinker forward to a friend",
       "first_seen": "2026-10-16",
       "fix": "Fix the cited gate before the next draft.",
       "gate": "brand",
       "id": "instagram|brand|brand",
-      "label": "reel_1",
+      "label": "instagram_post",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "brand: ['reel overlay/copy too dense']",
+      "reason": "Overall 7.1 fails the \u22658 threshold. The hook is specific and stops the scroll (temperature science + Purica = brand-owned). Saveability is strong \u2014 a genuine brewing tip worth keeping. Shareability is held back by low emotion_pull: the copy is instructional, not identity-driven. No pride, betrayal,",
       "recent_samples": [
-        "The opening line about ingredient order creates immediate curiosity and trust. The comment trigger is strong and platform-native. Brand mention is crystal clear. Minor improvement: vary the spoken script line 4 to add a sensory detail (e.g., 'the pure aroma fills the air') to deepen emotion pull. Th",
         "brand: ['Missing brand mention']",
-        "brand: ['reel overlay/copy too dense']"
+        "brand: [\"Reel caption error: ['Missing required brand facts']\"]",
+        "Overall 7.1 fails the \u22658 threshold. The hook is specific and stops the scroll (temperature science + Purica = brand-owned). Saveability is strong \u2014 a genuine brewing tip worth keeping. Shareability is held back by low emotion_pull: the copy is instructional, not identity-driven. No pride, betrayal, "
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -195749,20 +195750,21 @@
     },
     {
       "code": "aesthetic",
-      "count": 55080,
-      "feedback": "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+      "count": 55081,
+      "feedback": "Strong hook and brand clarity, but the story fails the 'retention arc' test. The hook (boiling water pour) promises a revelation, yet Frame 3 (thermometer graphic) is a static UI element that breaks the 'authentic iPhone UGC' aesthetic established in Frames 1-2. This visual discontinuity causes a micro-drop in watch time right before the payoff. The poll question is functional but passive \u2014 it ask",
       "first_seen": "2026-11-07",
       "fix": "",
       "gate": "aesthetic",
       "id": "instagram_story|aesthetic|aesthetic",
       "label": "stories",
-      "last_seen": "2026-11-14",
+      "last_seen": "2026-11-28",
       "platform": "instagram_story",
-      "reason": "aesthetic_below_8.0:6.5; Hard horizontal seam behind the jar reads as a flat cut; weak contact shadow makes the product feel floated rather than firmly sitting on a surface.; Headline copy is clunky \u2014 double colons and inconsistent 'Vs' capitalization undercut the premium tone.; Bottom third is dead",
+      "reason": "Strong hook and brand clarity, but the story fails the 'retention arc' test. The hook (boiling water pour) promises a revelation, yet Frame 3 (thermometer graphic) is a static UI element that breaks the 'authentic iPhone UGC' aesthetic established in Frames 1-2. This visual discontinuity causes a mi",
       "recent_samples": [
-        "A story frame that misses the 8.0 visual gate stays held and is not posted."
+        "A story frame that misses the 8.0 visual gate stays held and is not posted.",
+        "Strong hook and brand clarity, but the story fails the 'retention arc' test. The hook (boiling water pour) promises a revelation, yet Frame 3 (thermometer graphic) is a static UI element that breaks the 'authentic iPhone UGC' aesthetic established in Frames 1-2. This visual discontinuity causes a mi"
       ],
-      "stage": "publish",
+      "stage": "generation",
       "status": "gate_holding"
     },
     {
@@ -195867,22 +195869,22 @@
     },
     {
       "code": "aesthetic",
-      "count": 41614,
-      "feedback": "Overall 7.8 is below the 8.0 threshold. The hook is strong and specific, but the carousel truncates at slide 5 (visual cuts mid-sentence) and the caption/CTA blur product focus by name-dropping Purista and Bold in a Purica asset. The 'SCIENCE-BACKED EXPLANATION' save_mechanic is a label, not a tangible deliverable \u2014 slide 6 (the promised aroma test) is missing. To pass: (1) complete all 6\u20138 slides",
+      "count": 41616,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-23",
       "fix": "Real in-situ photo shoot of the Bold 50g and Purica 50g jars together; composited cutouts on rendered backdrops do not clear 8.0",
       "gate": "aesthetic",
       "id": "instagram|aesthetic|aesthetic",
-      "label": "carousel",
+      "label": "reel_1",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "Overall 7.8 is below the 8.0 threshold. The hook is strong and specific, but the carousel truncates at slide 5 (visual cuts mid-sentence) and the caption/CTA blur product focus by name-dropping Purista and Bold in a Purica asset. The 'SCIENCE-BACKED EXPLANATION' save_mechanic is a label, not a tangi",
+      "reason": "pale_background:sat=0.10; weak_hierarchy:60/41; pale_background:sat=0.21",
       "recent_samples": [
-        "The hook is solid but could be more brand\u2011specific to boost scroll\u2011stop power. Mention Purity Beans or the freeze\u2011dried advantage within the first 2 seconds (e.g., \"Purity Beans' freeze\u2011dried coffee keeps the aroma alive, unlike spray\u2011dried instant coffee\"). The caption\u2019s mention of the Variety Box ",
         "The content is technically excellent and highly saveable (specific brew parameters), but fails the emotional threshold. It reads as a pure utility tutorial, not a Purity Beans brand asset. The 'sensory' angle is underserved \u2014 the audio script promises 'caramel, dark chocolate, zero burnt notes' and ",
-        "Overall 7.8 is below the 8.0 threshold. The hook is strong and specific, but the carousel truncates at slide 5 (visual cuts mid-sentence) and the caption/CTA blur product focus by name-dropping Purista and Bold in a Purica asset. The 'SCIENCE-BACKED EXPLANATION' save_mechanic is a label, not a tangi"
+        "The hook is strong and the educational angle is good, but the asset never shows a Purity Beans jar or mentions the brand explicitly, so brand clarity is very low. For a growth reel, the lack of product visual and brand name means viewers won\u2019t associate the insight with Purity Beans. To improve, add",
+        "Use a different layout and the next background provider. Do not repeat a failed plate."
       ],
-      "stage": "generation",
+      "stage": "render",
       "status": "gate_holding"
     },
     {
@@ -195928,19 +195930,19 @@
     {
       "code": "banned_claim:100%",
       "count": 29296,
-      "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
+      "feedback": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "product_truth",
       "id": "instagram|product_truth|banned_claim:100%",
-      "label": "instagram_post",
+      "label": "reel_1",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
+      "reason": "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
       "recent_samples": [
         "brand: ['product truth: bean-based wording is prohibited; describe the product as instant coffee', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
         "brand: ['Contains prohibited medical or weight loss claims', 'Contains banned claim wording: fresh', 'product truth: never describe the instant coffee as fresh/freshly made', \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]",
-        "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
+        "brand: [\"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\", \"product truth: FSSAI: never use '100%' in marketing copy; say 'pure coffee', 'pure Arabica', 'pure Robusta'\"]"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -196028,7 +196030,7 @@
     {
       "code": "llm_viral",
       "count": 23594,
-      "feedback": "viral: score 8.0 < 9.0 (weakest: relatability). The founder story is grounded, transparent, and hits the correct LinkedIn tone without inventing fake metrics or using prohibited anti-chicory phrasing on Ultra Blend. To push this from an 8 to a 9, make the opening line slightly sharper by focusing purely on the consumer's trust angle rather than the operational jar count. Suggested hook: A veteran",
+      "feedback": "viral: score 8.1 < 9.0 (weakest: comment_trigger, follow_cta). Strong founder narrative with clear stakes. Hook is excellent \u2014 specific, personal, and pattern-interrupting. Curiosity gap pays off fully. Relatability lands via the retailer's mother and Indian kitchen detail. Shareability is high for founders and operators. Comment trigger is buried at the end and framed as a binary (FRONT/BACK) tha",
       "first_seen": "2026-10-23",
       "fix": "later draft passed the same gates",
       "gate": "llm_viral",
@@ -196036,11 +196038,11 @@
       "label": "linkedin_post",
       "last_seen": "2026-11-28",
       "platform": "linkedin",
-      "reason": "viral: score 8.0 < 9.0 (weakest: relatability). The founder story is grounded, transparent, and hits the correct LinkedIn tone without inventing fake metrics or using prohibited anti-chicory phrasing on Ultra Blend. To push this from an 8 to a 9, make the opening line slightly sharper by focusing pu",
+      "reason": "viral: score 8.1 < 9.0 (weakest: comment_trigger, follow_cta). Strong founder narrative with clear stakes. Hook is excellent \u2014 specific, personal, and pattern-interrupting. Curiosity gap pays off fully. Relatability lands via the retailer's mother and Indian kitchen detail. Shareability is high for",
       "recent_samples": [
-        "viral: score 8.2 < 9.0 (weakest: relatability). The piece has strong founder narrative tension and clear B2B/B2C honesty, but the middle paragraph dips slightly into corporate standard speak rather than maintaining the raw dialogue style of the opening. To push past 8.5, keep the sensory tension of ",
-        "viral: score 8.71 < 9.0 (weakest: relatability, shareability). The piece hits the founder-story format brilliantly. The distributor dialogue is a stellar pattern interrupt, the distinction between pure coffee lines and Ultra Blend is handled with absolute regulatory and brand honesty, and the closin",
-        "viral: score 8.0 < 9.0 (weakest: relatability). The founder story is grounded, transparent, and hits the correct LinkedIn tone without inventing fake metrics or using prohibited anti-chicory phrasing on Ultra Blend. To push this from an 8 to a 9, make the opening line slightly sharper by focusing pu"
+        "viral: score 8.0 < 9.0 (weakest: relatability). The founder story format is executed well with strong operational specificity and a genuine behind-the-scenes dilemma. To push the score higher, tie the packaging detail slightly closer to the consumer's daily morning routine rather than just the print",
+        "viral: score 8.0 < 9.0 (weakest: relatability). The founder story format is executed well with an authentic operational dilemma, specific product details, and a clear question for the network. To boost relatability, connect the 7-point font frustration slightly closer to the everyday consumer grocer",
+        "viral: score 8.1 < 9.0 (weakest: comment_trigger, follow_cta). Strong founder narrative with clear stakes. Hook is excellent \u2014 specific, personal, and pattern-interrupting. Curiosity gap pays off fully. Relatability lands via the retailer's mother and Indian kitchen detail. Shareability is high for "
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -196067,20 +196069,20 @@
     },
     {
       "code": "generic_hook",
-      "count": 21765,
-      "feedback": "Hook strength and emotion pull need work. The opening line reads like a generic blog intro rather than a scroll-stopping Reel hook. It does not trigger an immediate identity challenge or curiosity gap in under 2 seconds. The emotion pull is diluted by educational body copy that feels like a blog post. The hook could apply to any coffee brand, which penalizes hook_strength. The 'read the label' ins",
+      "count": 21766,
+      "feedback": "The hook blames the consumer ('You've been sipping flat coffee') without a strong betrayal or curiosity trigger \u2014 it feels like a generic brewing tip, not a revelation. Frame 1 reveals the jar immediately with zero tension; growth-track assets must never show the product. The script never creates an open loop or 'aha' moment \u2014 it states the problem and solution linearly. The CTA is a weak generic",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "ladder_exhausted",
       "id": "instagram|ladder_exhausted|generic_hook",
-      "label": "reel_2",
+      "label": "growth_reel",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "Hook strength and emotion pull need work. The opening line reads like a generic blog intro rather than a scroll-stopping Reel hook. It does not trigger an immediate identity challenge or curiosity gap in under 2 seconds. The emotion pull is diluted by educational body copy that feels like a blog pos",
+      "reason": "The hook blames the consumer ('You've been sipping flat coffee') without a strong betrayal or curiosity trigger \u2014 it feels like a generic brewing tip, not a revelation. Frame 1 reveals the jar immediately with zero tension; growth-track assets must never show the product. The script never creates an",
       "recent_samples": [
-        "Hook is too generic and feels like a price-comparison ad rather than a coffee truth. The educational slides are functional but lack urgency or a bold stance. Brand clarity improves only in slide 6 and arrives too late to retain attention. Caption ends with a generic follow line, reducing share inten",
         "viral: score 4.14 < 9.0 (weakest: hook, curiosity_gap, follow_cta, comment_trigger). The hook number on the front is a suggestion, not a rule. This is weak and sounds like generic packaging advice. The piece ends abruptly without a loop or CTA. The follow CTA is just a tagline. The comment trigger i",
-        "Hook strength and emotion pull need work. The opening line reads like a generic blog intro rather than a scroll-stopping Reel hook. It does not trigger an immediate identity challenge or curiosity gap in under 2 seconds. The emotion pull is diluted by educational body copy that feels like a blog pos"
+        "Hook strength and emotion pull need work. The opening line reads like a generic blog intro rather than a scroll-stopping Reel hook. It does not trigger an immediate identity challenge or curiosity gap in under 2 seconds. The emotion pull is diluted by educational body copy that feels like a blog pos",
+        "The hook blames the consumer ('You've been sipping flat coffee') without a strong betrayal or curiosity trigger \u2014 it feels like a generic brewing tip, not a revelation. Frame 1 reveals the jar immediately with zero tension; growth-track assets must never show the product. The script never creates an"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -196127,20 +196129,20 @@
     },
     {
       "code": "llm_viral",
-      "count": 18538,
-      "feedback": "viral: score 8.0 < 9.0 (weakest: curiosity_gap). The opening line is very strong and instantly targets a specific sensory annoyance that coffee drinkers face. To improve the curiosity gap, hint slightly more at the hidden cause before diving straight into the technical explanation of tinplate seals. Ensure the transition from the problem to the glass preservation solution feels even more seamless.",
+      "count": 18540,
+      "feedback": "viral: score 7.4 < 9.0 (weakest: format_fit, hook, comment_trigger). The hook relies on a slightly overused phrasing. The frame count and pacing work, but on-screen text changes need to be punchier every 1-2 seconds to fully satisfy format rules. The comment trigger is a bit standard; frame it as an identity question to drive higher engagement. Suggested hook: Your instant coffee jar is hiding som",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "ladder_exhausted",
       "id": "instagram|ladder_exhausted|llm_viral",
-      "label": "instagram_post",
+      "label": "reel_1",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "viral: score 8.0 < 9.0 (weakest: curiosity_gap). The opening line is very strong and instantly targets a specific sensory annoyance that coffee drinkers face. To improve the curiosity gap, hint slightly more at the hidden cause before diving straight into the technical explanation of tinplate seals.",
+      "reason": "viral: score 7.4 < 9.0 (weakest: format_fit, hook, comment_trigger). The hook relies on a slightly overused phrasing. The frame count and pacing work, but on-screen text changes need to be punchier every 1-2 seconds to fully satisfy format rules. The comment trigger is a bit standard; frame it as an",
       "recent_samples": [
-        "viral: score 6.0 < 9.0 (weakest: curiosity_gap, relatability, hook). Hook is descriptive but not disruptive \u2014 'I read the label so you don't have to' is a service promise, not a pattern interrupt. Open loop opens on frame 1 (what does the label say?) and closes on frame 2 (one ingredient) \u2014 paid off",
-        "viral: score 7.7 < 9.0 (weakest: hook, shareability). HOOK: Your opening line is descriptive but passive. It tells a scene rather than shocking or intriguing. Make it active and accusatory to trigger an instant stop. Shareability: The 'grocery run' tip is good, but add a 'compare your jar now' call-",
-        "viral: score 8.0 < 9.0 (weakest: curiosity_gap). The opening line is very strong and instantly targets a specific sensory annoyance that coffee drinkers face. To improve the curiosity gap, hint slightly more at the hidden cause before diving straight into the technical explanation of tinplate seals."
+        "viral: score 7.0 < 9.0 (weakest: format_fit, hook). The opening line is a bit long and wordy for a fast 9:16 scroll-stopper. Tighten the spoken hook to land under 2 seconds. Ensure the first frame visual hits instantly with a clear contrast between a hidden ingredient label and a transparent one. Su",
+        "viral: score 8.1 < 9.0 (weakest: relatability). The hook is exceptionally strong, specific, and pattern-interrupting. The copy clearly communicates product transparency without violating any brand rules. To improve relatability, lean slightly more into the everyday kitchen or pantry experience rathe",
+        "viral: score 7.4 < 9.0 (weakest: format_fit, hook, comment_trigger). The hook relies on a slightly overused phrasing. The frame count and pacing work, but on-screen text changes need to be punchier every 1-2 seconds to fully satisfy format rules. The comment trigger is a bit standard; frame it as an"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -196167,20 +196169,20 @@
     },
     {
       "code": "llm_viral",
-      "count": 16608,
-      "feedback": "viral: score 5.86 < 9.0 (weakest: hook, curiosity_gap, comment_trigger, follow_cta). The hook 'Pour hot water. Watch the foam disappear instantly. If it vanishes, it is not Purity Beans. Watch the difference.' is too close to an anti-chicory claim and feels instructional rather than curious. The piece tells the viewer what to look for ('if it vanishes'), which kills the open loop. The curiosity ga",
+      "count": 16609,
+      "feedback": "viral: score 7.57 < 9.0 (weakest: relatability, comment_trigger, follow_cta). The piece has strong technical compliance, accurate freeze-drying educational value, and uses the exact Purity Beans Purica jar reference properly. To push the score higher, make the opening hook punchier for YouTube Shorts pacing (under 1.5 seconds) and tie the comment trigger tighter to the exact product name rather th",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "generic_hook",
       "id": "youtube|generic_hook|llm_viral",
       "label": "yt_short",
-      "last_seen": "2026-11-27",
+      "last_seen": "2026-11-28",
       "platform": "youtube",
-      "reason": "viral: score 5.86 < 9.0 (weakest: hook, curiosity_gap, comment_trigger, follow_cta). The hook 'Pour hot water. Watch the foam disappear instantly. If it vanishes, it is not Purity Beans. Watch the difference.' is too close to an anti-chicory claim and feels instructional rather than curious. The pie",
+      "reason": "viral: score 7.57 < 9.0 (weakest: relatability, comment_trigger, follow_cta). The piece has strong technical compliance, accurate freeze-drying educational value, and uses the exact Purity Beans Purica jar reference properly. To push the score higher, make the opening hook punchier for YouTube Short",
       "recent_samples": [
-        "viral: score 8.0 < 9.0 (weakest: follow_cta, comment_trigger). Follow CTA is buried in a generic line that mentions 'one buying check' \u2014 replace with a specific, identity-based reason to follow (e.g., 'Follow for one coffee truth most brands hide'). Comment trigger in the CTA scene asks 'BLACK or MI",
         "viral: score 8.1 < 9.0 (weakest: comment_trigger). The piece hits a very relatable chord with Indian kitchen habits regarding water temperature and immediately delivers value without fake health claims or exaggeration. To push the score higher, make the comment trigger more interactive and direct (e",
-        "viral: score 5.86 < 9.0 (weakest: hook, curiosity_gap, comment_trigger, follow_cta). The hook 'Pour hot water. Watch the foam disappear instantly. If it vanishes, it is not Purity Beans. Watch the difference.' is too close to an anti-chicory claim and feels instructional rather than curious. The pie"
+        "viral: score 5.86 < 9.0 (weakest: hook, curiosity_gap, comment_trigger, follow_cta). The hook 'Pour hot water. Watch the foam disappear instantly. If it vanishes, it is not Purity Beans. Watch the difference.' is too close to an anti-chicory claim and feels instructional rather than curious. The pie",
+        "viral: score 7.57 < 9.0 (weakest: relatability, comment_trigger, follow_cta). The piece has strong technical compliance, accurate freeze-drying educational value, and uses the exact Purity Beans Purica jar reference properly. To push the score higher, make the opening hook punchier for YouTube Short"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -196267,20 +196269,20 @@
     },
     {
       "code": "product_truth",
-      "count": 13336,
-      "feedback": "The hook works \u2014 a retail buyer asking 'Where is the chicory line?' is a strong, specific moment that stops the scroll. But the post collapses after line 2. Lines 3-4 dump the entire SKU roster (Bold, Purista, Purica, Prima, Ultra Blend) in a single block with zero narrative thread. It reads like a spec sheet, not a story. The distributor ask in line 5 arrives with no bridge \u2014 no 'why this matters",
+      "count": 13337,
+      "feedback": "The hook is excellent \u2014 specific, human, high-stakes, and Purity Beans-native. The Mumbai retailer's mother is a perfect anchor. The body loses momentum in the middle: the co-packer walk-away is a strong proof point but sits isolated; connect it to the label redesign decision explicitly. The SKU breakdown at the end reads like a spec sheet \u2014 move the key differentiator (front-panel 0% chicory vs 7",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "generic_hook",
       "id": "linkedin|generic_hook|product_truth",
       "label": "linkedin_post",
-      "last_seen": "2026-11-25",
+      "last_seen": "2026-11-28",
       "platform": "linkedin",
-      "reason": "The hook works \u2014 a retail buyer asking 'Where is the chicory line?' is a strong, specific moment that stops the scroll. But the post collapses after line 2. Lines 3-4 dump the entire SKU roster (Bold, Purista, Purica, Prima, Ultra Blend) in a single block with zero narrative thread. It reads like a",
+      "reason": "The hook is excellent \u2014 specific, human, high-stakes, and Purity Beans-native. The Mumbai retailer's mother is a perfect anchor. The body loses momentum in the middle: the co-packer walk-away is a strong proof point but sits isolated; connect it to the label redesign decision explicitly. The SKU bre",
       "recent_samples": [
-        "The hook is strong and specific to Purity Beans' transparency stance, but the body loses momentum after the second paragraph. The distributor pitch paragraph ('We are growing our distributor network...') creates an attention drop \u2014 it shifts audience from consumers to B2B buyers mid-post, diluting s",
         "Hook is strong and brand-specific, earning the only above-7 score. The per-cup math (\u20b95, 66 cups) is the highest-value line for saves but sits too late \u2014 move it to line 2 or 3. The distributor-network paragraph creates a hard attention drop (consumer \u2192 B2B shift) and must be cut or moved to a separ",
-        "The hook works \u2014 a retail buyer asking 'Where is the chicory line?' is a strong, specific moment that stops the scroll. But the post collapses after line 2. Lines 3-4 dump the entire SKU roster (Bold, Purista, Purica, Prima, Ultra Blend) in a single block with zero narrative thread. It reads like a "
+        "The hook works \u2014 a retail buyer asking 'Where is the chicory line?' is a strong, specific moment that stops the scroll. But the post collapses after line 2. Lines 3-4 dump the entire SKU roster (Bold, Purista, Purica, Prima, Ultra Blend) in a single block with zero narrative thread. It reads like a ",
+        "The hook is excellent \u2014 specific, human, high-stakes, and Purity Beans-native. The Mumbai retailer's mother is a perfect anchor. The body loses momentum in the middle: the co-packer walk-away is a strong proof point but sits isolated; connect it to the label redesign decision explicitly. The SKU bre"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -196348,7 +196350,7 @@
     {
       "code": "llm_viral",
       "count": 11997,
-      "feedback": "viral: score 6.0 < 9.0 (weakest: curiosity_gap, follow_cta, shareability). The opening line is decent but a bit generic for Threads. To drive real engagement, use a sharper contrarian take or a specific contrast about how instant coffee is made versus what people expect. The comment trigger works, but the follow CTA is entirely missing from the text body, which reduces profile visits and follower",
+      "feedback": "viral: score 7.86 < 9.0 (weakest: curiosity_gap, comment_trigger). The contrarian opener ('Unpopular opinion: water temperature matters more than the brand') is strong for Threads and instantly stops the scroll. The mention of Purica and freeze-dried pure Arabica aligns correctly with product rules without making false claims or misrepresenting Ultra Blend. To push the overall score above 8, make",
       "first_seen": "2026-10-24",
       "fix": "later draft passed the same gates",
       "gate": "generic_hook",
@@ -196356,11 +196358,11 @@
       "label": "threads_post",
       "last_seen": "2026-11-28",
       "platform": "threads",
-      "reason": "viral: score 6.0 < 9.0 (weakest: curiosity_gap, follow_cta, shareability). The opening line is decent but a bit generic for Threads. To drive real engagement, use a sharper contrarian take or a specific contrast about how instant coffee is made versus what people expect. The comment trigger works, b",
+      "reason": "viral: score 7.86 < 9.0 (weakest: curiosity_gap, comment_trigger). The contrarian opener ('Unpopular opinion: water temperature matters more than the brand') is strong for Threads and instantly stops the scroll. The mention of Purica and freeze-dried pure Arabica aligns correctly with product rules",
       "recent_samples": [
         "This post is rejected for violating multiple brand rules. Ultra Blend (70/30 blend) cannot be positioned as a clean-pure solution. The opening line \"What if your daily coffee has 30% filler\" triggers anti-chicory attacks, which are prohibited for Ultra Blend. Calling the 30% chicory a \"filler\" viola",
         "viral: score 2.57 < 9.0 (weakest: hook, curiosity_gap, shareability, format_fit, follow_cta). The piece reads like a product blurb, not a Threads post. It fails the Subject Test \u2014 'Here is our blend' is not a topic people are curious about. No betrayal, no revelation, no identity challenge. The hook",
-        "viral: score 6.0 < 9.0 (weakest: curiosity_gap, follow_cta, shareability). The opening line is decent but a bit generic for Threads. To drive real engagement, use a sharper contrarian take or a specific contrast about how instant coffee is made versus what people expect. The comment trigger works, b"
+        "viral: score 7.86 < 9.0 (weakest: curiosity_gap, comment_trigger). The contrarian opener ('Unpopular opinion: water temperature matters more than the brand') is strong for Threads and instantly stops the scroll. The mention of Purica and freeze-dried pure Arabica aligns correctly with product rules "
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -196368,19 +196370,19 @@
     {
       "code": "process_match",
       "count": 11700,
-      "feedback": "This carousel fails the growth-track mandate: it is a product explainer masquerading as education. The hook is process-focused, not human-focused \u2014 'industrial coffee' and 'heat shock' are industry terms, not consumer pain language. No curiosity gap, no identity trigger, no open loop. Slide 1-3 are a linear lecture; attention drops at Slide 2 and never recovers. Slide 6 reveals the jar and URL \u2014 t",
+      "feedback": "Overall 7.9 is below the 8.0 publish threshold. The reveal frame (frame 4) is the primary retention leak: the finger-trace on the ingredient panel is a static, textbook 'product shot' moment that kills the ASMR momentum built in frames 1-3. Replace with a dynamic 'pour-and-swirl' POV where the founder pours 85\u00b0C water directly into the Purica jar lid (used as a micro-cup), swirls, and inhales \u2014 ke",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "process_match",
       "id": "instagram|process_match|process_match",
-      "label": "carousel",
+      "label": "reel_1",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "This carousel fails the growth-track mandate: it is a product explainer masquerading as education. The hook is process-focused, not human-focused \u2014 'industrial coffee' and 'heat shock' are industry terms, not consumer pain language. No curiosity gap, no identity trigger, no open loop. Slide 1-3 are",
+      "reason": "Overall 7.9 is below the 8.0 publish threshold. The reveal frame (frame 4) is the primary retention leak: the finger-trace on the ingredient panel is a static, textbook 'product shot' moment that kills the ASMR momentum built in frames 1-3. Replace with a dynamic 'pour-and-swirl' POV where the found",
       "recent_samples": [
         "CRITICAL PRODUCT MISMATCH: The content features Purica (freeze-dried Arabica) but the featured_product field says Purista (freeze-dried Robusta). This violates Mandatory Product Rules \u2014 process claims must match the featured product. The hook talks about 'delicate Arabica notes' and 'pure Arabica cr",
         "Shareability and overall score fall below the mandatory 8 threshold. The post reveals the process truth (160\u00b0C blast-drying) early, which risks sounding technical or instructional rather than scroll-stopping. The brand mention and CTA appear late in a long body, risking attention drop before the Pur",
-        "This carousel fails the growth-track mandate: it is a product explainer masquerading as education. The hook is process-focused, not human-focused \u2014 'industrial coffee' and 'heat shock' are industry terms, not consumer pain language. No curiosity gap, no identity trigger, no open loop. Slide 1-3 are "
+        "Overall 7.9 is below the 8.0 publish threshold. The reveal frame (frame 4) is the primary retention leak: the finger-trace on the ingredient panel is a static, textbook 'product shot' moment that kills the ASMR momentum built in frames 1-3. Replace with a dynamic 'pour-and-swirl' POV where the found"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -196524,8 +196526,8 @@
     },
     {
       "code": "llm_viral",
-      "count": 10139,
-      "feedback": "viral: score 7.0 < 9.0 (weakest: curiosity_gap, shareability). The opening line draws a strong parallel with milk expiry dates, making it relatable for Indian households, but it lacks a sharp pattern interrupt for Facebook. To lift engagement, tighten the curiosity gap by hinting directly at what hidden ingredients people miss on coffee jars. Ensure the comment trigger feels natural by encouraging",
+      "count": 10141,
+      "feedback": "viral: score 7.0 < 9.0 (weakest: curiosity_gap, shareability). The piece has strong relatable family context and a solid community question, but the opening hook is a bit long and reads like a lecture rather than a scroll-stopping conversation. Tighten the first sentence to immediately contrast everyday kitchen label-checking with the coffee aisle blindness. Ensure the curiosity gap forces the rea",
       "first_seen": "2026-10-23",
       "fix": "later draft passed the same gates",
       "gate": "llm_viral",
@@ -196533,11 +196535,11 @@
       "label": "facebook_post",
       "last_seen": "2026-11-28",
       "platform": "facebook",
-      "reason": "viral: score 7.0 < 9.0 (weakest: curiosity_gap, shareability). The opening line draws a strong parallel with milk expiry dates, making it relatable for Indian households, but it lacks a sharp pattern interrupt for Facebook. To lift engagement, tighten the curiosity gap by hinting directly at what hi",
+      "reason": "viral: score 7.0 < 9.0 (weakest: curiosity_gap, shareability). The piece has strong relatable family context and a solid community question, but the opening hook is a bit long and reads like a lecture rather than a scroll-stopping conversation. Tighten the first sentence to immediately contrast ever",
       "recent_samples": [
-        "viral: score 7.0 < 9.0 (weakest: curiosity_gap, shareability). The opening line is decent and sets a transparent tone, but it reads a bit like a product review rather than a sharp social hook. To increase virality on Facebook, lean harder into the relatable kitchen-table moment of reading confusing ",
-        "viral: score 7.4 < 9.0 (weakest: shareability, curiosity_gap). The piece has a strong, relatable opening question and fits the Facebook household angle well. To push it past an 8, make the curiosity gap sharper by contrasting what is normally hidden on labels versus what Purity Beans shows openly. I",
-        "viral: score 7.0 < 9.0 (weakest: curiosity_gap, shareability). The opening line draws a strong parallel with milk expiry dates, making it relatable for Indian households, but it lacks a sharp pattern interrupt for Facebook. To lift engagement, tighten the curiosity gap by hinting directly at what hi"
+        "viral: score 7.0 < 9.0 (weakest: curiosity_gap, shareability). The piece grounds itself well in a relatable household moment with the mother-in-law, but the hook is slightly standard and doesn't create an immediate urgency to read further. To push past a 7, tighten the opening line to focus sharper ",
+        "viral: score 7.7 < 9.0 (weakest: shareability, curiosity_gap). The piece hits a strong, relatable household note with the mother-in-law kitchen detail and cleanly follows product rules for Purica as freeze-dried pure Arabica without violating anti-chicory or bean-origin constraints. To push past an ",
+        "viral: score 7.0 < 9.0 (weakest: curiosity_gap, shareability). The piece has strong relatable family context and a solid community question, but the opening hook is a bit long and reads like a lecture rather than a scroll-stopping conversation. Tighten the first sentence to immediately contrast ever"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -196602,22 +196604,22 @@
     },
     {
       "code": "other",
-      "count": 9400,
-      "feedback": "The copy is transparent and honest regarding the 70/30 Ultra Blend ratio, but the opening hook lacks a strong psychological pattern interrupt. It reads like a standard product listing rather than a thumb-stopping social post. To improve, lead with a direct comparison between daily cafe spending and home-brewed cost efficiency to instantly trigger reader interest.",
+      "count": 9401,
+      "feedback": "The hook 'Best before is a quality note, not a safety deadline' is interesting and educational, but the overall asset lacks a sharp emotional trigger or strong contrarian pull that compels immediate sharing. The transition into product variants feels a bit abrupt and reads more like an informational label breakdown than high-performing social copy. To push this above an 8, introduce a more provoca",
       "first_seen": "2026-10-12",
       "fix": "External auth, quota, or platform API. Do not treat it as a copy failure.",
       "gate": "other",
       "id": "instagram|other|other",
       "label": "instagram_post",
-      "last_seen": "2026-11-25",
+      "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "The copy is transparent and honest regarding the 70/30 Ultra Blend ratio, but the opening hook lacks a strong psychological pattern interrupt. It reads like a standard product listing rather than a thumb-stopping social post. To improve, lead with a direct comparison between daily cafe spending and",
+      "reason": "The hook 'Best before is a quality note, not a safety deadline' is interesting and educational, but the overall asset lacks a sharp emotional trigger or strong contrarian pull that compels immediate sharing. The transition into product variants feels a bit abrupt and reads more like an informational",
       "recent_samples": [
-        "Good educational content that informs without being pushy. The hook is clear and stops the scroll. The content successfully distinguishes between Arabica/Robusta and the Purity Beans variants without misleading. Consider adding a direct question in the caption to increase comments.",
         "The hook 'lost its soul at 200 degrees Celsius' is poetic but vague \u2014 viewers don't know what 'soul' means in a coffee context until frame 2 explains spray-drying. That 2-second gap loses the scroll. Replace with a betrayal hook: 'Your instant coffee was burned at 200\u00b0C. Here is what the label hides",
-        "The copy is transparent and honest regarding the 70/30 Ultra Blend ratio, but the opening hook lacks a strong psychological pattern interrupt. It reads like a standard product listing rather than a thumb-stopping social post. To improve, lead with a direct comparison between daily cafe spending and "
+        "The copy is transparent and honest regarding the 70/30 Ultra Blend ratio, but the opening hook lacks a strong psychological pattern interrupt. It reads like a standard product listing rather than a thumb-stopping social post. To improve, lead with a direct comparison between daily cafe spending and ",
+        "The hook 'Best before is a quality note, not a safety deadline' is interesting and educational, but the overall asset lacks a sharp emotional trigger or strong contrarian pull that compels immediate sharing. The transition into product variants feels a bit abrupt and reads more like an informational"
       ],
-      "stage": "publish",
+      "stage": "generation",
       "status": "external"
     },
     {
@@ -196700,8 +196702,8 @@
     },
     {
       "code": "aesthetic",
-      "count": 8829,
-      "feedback": "Strong performance. The hook creates instant intrigue. The \u20b9180 cafe price comparison is relatable for Indian audiences. Consider tightening the spoken text in Scene 1 to reduce cognitive load - maybe 'Your \u20b9180 cafe Americano is just hot water and crystals' instead of the full sentence. The side-by-side bloom comparison in Scene 3 is a visual standout that drives shares. Ensure the \u20b9329/50g price",
+      "count": 8831,
+      "feedback": "Use a different layout and the next background provider. Do not repeat a failed plate.",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "aesthetic",
@@ -196709,11 +196711,11 @@
       "label": "yt_short",
       "last_seen": "2026-11-28",
       "platform": "youtube",
-      "reason": "Strong performance. The hook creates instant intrigue. The \u20b9180 cafe price comparison is relatable for Indian audiences. Consider tightening the spoken text in Scene 1 to reduce cognitive load - maybe 'Your \u20b9180 cafe Americano is just hot water and crystals' instead of the full sentence. The side-by",
+      "reason": "aesthetic_below_8.0:3.0; Crude and amateurish product placement: a small jar is awkwardly pasted directly on top of a larger, blurry bottle graphic, violating clean presentation rules.; Cluttered and chaotic composition with competing focal points (multiple text pills, top header tags, large headlin",
       "recent_samples": [
-        "Overall 7.4 falls below the 8.0 threshold. The asset has strong brand clarity and a solid curiosity-gap hook, but the incomplete Scene 3 (cut off at 'Vacuum freezi') means retention cannot be audited past 13s of a 35s Short. Scene 2's 'bitter carbon' language risks sounding like a disparaging compet",
         "Content is strong and meets the minimum threshold. The hook is punchy and relevant for the target audience. The visual descriptions are clear and support the product's selling point. To push the score higher, consider tightening the pacing in the first 5 seconds to ensure the hook lands instantly, a",
-        "Strong performance. The hook creates instant intrigue. The \u20b9180 cafe price comparison is relatable for Indian audiences. Consider tightening the spoken text in Scene 1 to reduce cognitive load - maybe 'Your \u20b9180 cafe Americano is just hot water and crystals' instead of the full sentence. The side-by"
+        "Strong performance. The hook creates instant intrigue. The \u20b9180 cafe price comparison is relatable for Indian audiences. Consider tightening the spoken text in Scene 1 to reduce cognitive load - maybe 'Your \u20b9180 cafe Americano is just hot water and crystals' instead of the full sentence. The side-by",
+        "Use a different layout and the next background provider. Do not repeat a failed plate."
       ],
       "stage": "render",
       "status": "gate_holding"
@@ -196840,10 +196842,10 @@
     },
     {
       "code": "provider:hf_wan",
-      "count": 8056,
+      "count": 8062,
       "feedback": "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback.",
       "first_seen": "2026-11-16",
-      "fix": "Resolve the named auth/quota/timeout condition, then retry once within the bounded provider policy.",
+      "fix": "Check provider availability, quota, credentials and timeout before retrying. Never send a jar image to image-to-video.",
       "gate": "provider",
       "id": "instagram|provider|provider:hf_wan",
       "label": "growth_reel",
@@ -196854,7 +196856,7 @@
         "Use the next provider in the configured fallback ladder; do not invent a jar or package.",
         "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback."
       ],
-      "stage": "video_provider",
+      "stage": "background_provider",
       "status": "gate_holding"
     },
     {
@@ -197039,8 +197041,8 @@
     },
     {
       "code": "aesthetic",
-      "count": 6944,
-      "feedback": "aesthetic_below_8.0:6.0; Flat background gradient lacks the rich depth and texture required for premium positioning.; Body copy has insufficient contrast against the dark background, impairing legibility.; The bottom 'FOLLOW' banner appears as a low-end CTA sticker, diluting brand equity.",
+      "count": 6950,
+      "feedback": "aesthetic_below_8.0:4.0; Orphan text in body copy ('Here is how waiting' breaks awkwardly onto the next line); Product lighting and cutout look somewhat amateurish with artificial floor reflection; Font pairing and background split feel generic rather than bespoke D2C aesthetic",
       "first_seen": "2026-11-16",
       "fix": "",
       "gate": "visual_gate_rejected",
@@ -197048,11 +197050,11 @@
       "label": "ig_story",
       "last_seen": "2026-11-28",
       "platform": "ig_story",
-      "reason": "aesthetic_below_8.0:6.0; Flat background gradient lacks the rich depth and texture required for premium positioning.; Body copy has insufficient contrast against the dark background, impairing legibility.; The bottom 'FOLLOW' banner appears as a low-end CTA sticker, diluting brand equity.",
+      "reason": "aesthetic_below_8.0:4.0; Orphan text in body copy ('Here is how waiting' breaks awkwardly onto the next line); Product lighting and cutout look somewhat amateurish with artificial floor reflection; Font pairing and background split feel generic rather than bespoke D2C aesthetic",
       "recent_samples": [
-        "aesthetic_below_8.0:7.0; Background gradient is subtle but overall tone feels dark and slightly muddy, lacking rich depth or texture to stop the scroll.; Product shot is a standard centered cutout with generic studio lighting; lacks premium texture, dynamic highlights, or environmental context expec",
-        "aesthetic_below_8.0:6.0; Background lacks rich depth and feels like a flat gradient rather than a premium environment; Headline uses negative fear-based messaging which may not suit a premium brand aesthetic; Product lighting is standard e-commerce, lacking editorial polish or dramatic depth",
-        "aesthetic_below_8.0:6.0; Flat background gradient lacks the rich depth and texture required for premium positioning.; Body copy has insufficient contrast against the dark background, impairing legibility.; The bottom 'FOLLOW' banner appears as a low-end CTA sticker, diluting brand equity."
+        "aesthetic_below_8.0:4.0; The green background lacks rich color and depth, appearing flat and digital rather than premium.; Typographic hierarchy is messy: the headline 'THE 45-SECOND BREW SECRET' is huge and awkwardly wrapped, while the subheadline uses an italicized serif that feels unrefined and d",
+        "aesthetic_below_8.0:4.0; Subheadline text cuts off awkwardly ('Here is how waiting'), indicating a copywriting or layout error.; The green background lacks rich photographic texture or depth, looking like a flat digital gradient rather than a premium studio set.; The product shadow beneath the jar i",
+        "aesthetic_below_8.0:4.0; Orphan text in body copy ('Here is how waiting' breaks awkwardly onto the next line); Product lighting and cutout look somewhat amateurish with artificial floor reflection; Font pairing and background split feel generic rather than bespoke D2C aesthetic"
       ],
       "stage": "visual_gate",
       "status": "gate_holding"
@@ -197099,7 +197101,7 @@
     },
     {
       "code": "provider:kaggle_bank",
-      "count": 6620,
+      "count": 6624,
       "feedback": "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback.",
       "first_seen": "2026-11-16",
       "fix": "Check provider availability, quota, credentials and timeout before retrying. Never send a jar image to image-to-video.",
@@ -197178,7 +197180,7 @@
     {
       "code": "llm_viral",
       "count": 5525,
-      "feedback": "viral: score 3.0 < 9.0 (weakest: follow_cta, curiosity_gap, shareability, hook, format_fit). Threads demands a contrarian hot take that fits in one screen. The opener 'water temperature matters more than the brand' is weak \u2014 every specialty coffee account says this; it's not contrarian. The piece pivots immediately to a Purica product pitch, killing the conversation before it starts. No follow CTA",
+      "feedback": "viral: score 8.1 < 9.0 (weakest: hook). The piece has strong, practical value and a native Threads feel, but the opening line can be sharper to immediately arrest the scroll among coffee enthusiasts. Suggested hook: You are probably ruining your morning Purica cup before you even take a sip. Use a DIFFERENT hook and angle from the last draft. Starting point: \"Things nobody tells you about instant",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "ladder_exhausted",
@@ -197186,11 +197188,11 @@
       "label": "threads_post",
       "last_seen": "2026-11-28",
       "platform": "threads",
-      "reason": "viral: score 3.0 < 9.0 (weakest: follow_cta, curiosity_gap, shareability, hook, format_fit). Threads demands a contrarian hot take that fits in one screen. The opener 'water temperature matters more than the brand' is weak \u2014 every specialty coffee account says this; it's not contrarian. The piece pi",
+      "reason": "viral: score 8.1 < 9.0 (weakest: hook). The piece has strong, practical value and a native Threads feel, but the opening line can be sharper to immediately arrest the scroll among coffee enthusiasts. Suggested hook: You are probably ruining your morning Purica cup before you even take a sip. Use a D",
       "recent_samples": [
         "viral: score 4.0 < 9.0 (weakest: hook, follow_cta, format_fit). The opening line is a recycled cliche that scroll-stoppers ignore. The follow CTA is missing entirely - this is a threads_post, so you need a 'Follow for more' or 'Follow for honest coffee truths'. The format feels like a broadcast capt",
         "viral: score 8.0 < 9.0 (weakest: follow_cta). The opening hot take is strong and native to Threads. Mentioning water temperature creates instant curiosity. The comment bait for the temperature trick is effective. To improve, strengthen the follow CTA by explicitly mentioning @purepantryprovisions in",
-        "viral: score 3.0 < 9.0 (weakest: follow_cta, curiosity_gap, shareability, hook, format_fit). Threads demands a contrarian hot take that fits in one screen. The opener 'water temperature matters more than the brand' is weak \u2014 every specialty coffee account says this; it's not contrarian. The piece pi"
+        "viral: score 8.1 < 9.0 (weakest: hook). The piece has strong, practical value and a native Threads feel, but the opening line can be sharper to immediately arrest the scroll among coffee enthusiasts. Suggested hook: You are probably ruining your morning Purica cup before you even take a sip. Use a D"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -197257,16 +197259,16 @@
     },
     {
       "code": "aesthetic",
-      "count": 5228,
+      "count": 5234,
       "feedback": "Every piece needs its own opening, angle and visual; do not repeat a recent hook.",
       "first_seen": "2026-11-16",
       "fix": "Regenerated with a different angle from the unused-angle pool.",
       "gate": "novelty",
       "id": "instagram|novelty|aesthetic",
-      "label": "instagram_post",
+      "label": "reel_1",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "hook 0.58 similar to instagram_post on 2026-11-17",
+      "reason": "same opening words to growth_reel on 2026-11-27",
       "recent_samples": [
         "Every piece needs its own opening, angle and visual; do not repeat a recent hook."
       ],
@@ -197315,8 +197317,8 @@
     },
     {
       "code": "llm_viral",
-      "count": 4931,
-      "feedback": "viral: score 7.0 < 9.0 (weakest: curiosity_gap, follow_cta). The Chennai retailer anecdote is a strong, specific founder-story hook (hook=7) and the format follows the required structure perfectly (format_fit=9). Relatability is high because 'reading tiny back-panel text' is a universal Indian grocery pain point (8). However, the curiosity gap (6) closes too fast \u2014 the label policy is revealed by",
+      "count": 4932,
+      "feedback": "viral: score 8.0 < 9.0 (weakest: follow_cta, comment_trigger). 1) follow_cta: The CTA 'Follow @purepantryprovisions for the label decisions we reject before they hit the shelf' is vague and passive. Make it specific and value-driven \u2014 e.g., 'Follow @purepantryprovisions for weekly packaging decisions we kill before print \u2014 so your labels never mislead a customer in aisle 3.' 2) comment_trigger: 'C",
       "first_seen": "2026-11-12",
       "fix": "",
       "gate": "generic_hook",
@@ -197324,11 +197326,11 @@
       "label": "linkedin_post",
       "last_seen": "2026-11-28",
       "platform": "linkedin",
-      "reason": "viral: score 7.0 < 9.0 (weakest: curiosity_gap, follow_cta). The Chennai retailer anecdote is a strong, specific founder-story hook (hook=7) and the format follows the required structure perfectly (format_fit=9). Relatability is high because 'reading tiny back-panel text' is a universal Indian groce",
+      "reason": "viral: score 8.0 < 9.0 (weakest: follow_cta, comment_trigger). 1) follow_cta: The CTA 'Follow @purepantryprovisions for the label decisions we reject before they hit the shelf' is vague and passive. Make it specific and value-driven \u2014 e.g., 'Follow @purepantryprovisions for weekly packaging decision",
       "recent_samples": [
-        "viral: score 8.0 < 9.0 (weakest: relatability, comment_trigger). Relatability is limited to founder/retailer lens; add one sentence about an everyday Indian coffee moment (mother reading label, office pantry jar) to broaden emotional pull. Comment trigger is generic; replace with a concrete this-or-",
         "viral: score 8.0 < 9.0 (weakest: shareability, follow_cta). Shareability is limited by multiple CTAs competing (comment, follow, shop) and a save/share trigger that feels like homework. Consolidate to one primary ask: comment. The follow CTA is generic ('for the coffee truths brands hide') \u2014 make it",
-        "viral: score 7.0 < 9.0 (weakest: curiosity_gap, follow_cta). The Chennai retailer anecdote is a strong, specific founder-story hook (hook=7) and the format follows the required structure perfectly (format_fit=9). Relatability is high because 'reading tiny back-panel text' is a universal Indian groce"
+        "viral: score 7.0 < 9.0 (weakest: relatability, follow_cta). Relatability is the biggest gap: the post reads like a packaging-design case study, not an Indian coffee ritual. Add one concrete moment \u2014 standing in a supermarket aisle at 7 AM, steam rising from a cutting chai next to you, squinting at t",
+        "viral: score 8.0 < 9.0 (weakest: follow_cta, comment_trigger). 1) follow_cta: The CTA 'Follow @purepantryprovisions for the label decisions we reject before they hit the shelf' is vague and passive. Make it specific and value-driven \u2014 e.g., 'Follow @purepantryprovisions for weekly packaging decision"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -197845,7 +197847,7 @@
     {
       "code": "llm_viral",
       "count": 2955,
-      "feedback": "viral: score 8.29 < 9.0 (weakest: curiosity_gap, shareability). The founder story is strong and grounded in a real manufacturing decision. To elevate it further, tighten the middle section to build more tension around the co-packer ultimatum, and ensure the line break after the hook immediately pulls the reader into the retailer's realization without fluff. Suggested hook: We almost launched our b",
+      "feedback": "viral: score 7.0 < 9.0 (weakest: relatability, shareability, follow_cta). Relatability is the biggest miss \u2014 the story lives entirely in a founder/label-compliance room. Add one line that places the reader in a familiar Indian coffee moment: a mother scanning a jar on a kitchen shelf, an office pantry stare-down, or the filter-coffee vs instant debate at breakfast. Shareability drops because the '",
       "first_seen": "2026-11-04",
       "fix": "",
       "gate": "ladder_exhausted",
@@ -197853,11 +197855,11 @@
       "label": "linkedin_post",
       "last_seen": "2026-11-28",
       "platform": "linkedin",
-      "reason": "viral: score 8.29 < 9.0 (weakest: curiosity_gap, shareability). The founder story is strong and grounded in a real manufacturing decision. To elevate it further, tighten the middle section to build more tension around the co-packer ultimatum, and ensure the line break after the hook immediately pull",
+      "reason": "viral: score 7.0 < 9.0 (weakest: relatability, shareability, follow_cta). Relatability is the biggest miss \u2014 the story lives entirely in a founder/label-compliance room. Add one line that places the reader in a familiar Indian coffee moment: a mother scanning a jar on a kitchen shelf, an office pant",
       "recent_samples": [
         "viral: score 8.29 < 9.0 (weakest: relatability). The opening line is a fantastic pattern interrupt and establishes immediate tension with the manufacturing reality in India. The transparency around Purista, Bold, and Ultra Blend is accurate to brand rules. To maximize relatability on LinkedIn, sligh",
         "viral: score 7.5 < 9.0 (weakest: shareability, comment_trigger). Increase shareability by adding a 'why you need to know' angle (e.g., 'The one label check that saves you Rs 500 monthly'). Strengthen comment_trigger by asking for a 'this-or-that' preference or a specific feeling about hidden ingredi",
-        "viral: score 8.29 < 9.0 (weakest: curiosity_gap, shareability). The founder story is strong and grounded in a real manufacturing decision. To elevate it further, tighten the middle section to build more tension around the co-packer ultimatum, and ensure the line break after the hook immediately pull"
+        "viral: score 7.0 < 9.0 (weakest: relatability, shareability, follow_cta). Relatability is the biggest miss \u2014 the story lives entirely in a founder/label-compliance room. Add one line that places the reader in a familiar Indian coffee moment: a mother scanning a jar on a kitchen shelf, an office pant"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -198018,7 +198020,7 @@
     },
     {
       "code": "provider:hf_ltx",
-      "count": 2812,
+      "count": 2814,
       "feedback": "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback.",
       "first_seen": "2026-11-16",
       "fix": "Check provider availability, quota, credentials and timeout before retrying. Never send a jar image to image-to-video.",
@@ -198027,7 +198029,7 @@
       "label": "growth_reel",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "hf_ltx:empty_result_or_missing_file",
+      "reason": "hf_ltx:rejected_after_visual_gate",
       "recent_samples": [
         "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback.",
         "Use the next provider in the configured fallback ladder; do not invent a jar or package."
@@ -198037,7 +198039,7 @@
     },
     {
       "code": "aesthetic",
-      "count": 2704,
+      "count": 2706,
       "feedback": "Ad-creator render missed; the existing cinematic and real-photo fallbacks still run at the same 8.0 bar.",
       "first_seen": "2026-11-16",
       "fix": "Try a different template/grade; never use an AI jar.",
@@ -198046,7 +198048,7 @@
       "label": "reel_1",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "ad_creator_visual_gate:fast_cut_curiosity: aesthetic_below_8.0:5.0; Confusing brand architecture: Headline reads 'Purity Beans', subhead reads 'Purica', and handle is 'p3online.in'.; Typography is generic; font pairing lacks premium hierarchy and feels like a template.; Background is a clich\u00e9 dark green gradient with stock particle effects, lacking original art direction.",
+      "reason": "ad_creator_visual_gate:fast_cut_curiosity: aesthetic_below_8.0:4.0; Product cutout is poorly executed with rough edges and lacks a realistic shadow or ground interaction, making it float awkwardly.; Background has a muddy, low-res texture with awkward artifacts and floating particles that look unintentional.; Typography lacks refinement; the website pill button looks dated and generic, and spacing/alignment in the header feels cramped.",
       "recent_samples": [
         "Ad-creator render missed; the existing cinematic and real-photo fallbacks still run at the same 8.0 bar."
       ],
@@ -198055,7 +198057,7 @@
     },
     {
       "code": "aesthetic",
-      "count": 2664,
+      "count": 2666,
       "feedback": "Ad-creator render missed; the existing cinematic and real-photo fallbacks still run at the same 8.0 bar.",
       "first_seen": "2026-11-16",
       "fix": "Try a different template/grade; never use an AI jar.",
@@ -198064,7 +198066,7 @@
       "label": "yt_short",
       "last_seen": "2026-11-28",
       "platform": "youtube",
-      "reason": "ad_creator_visual_gate:fast_cut_curiosity: aesthetic_below_8.0:6.0; Background is a generic dark gradient lacking premium depth or environmental context.; Top typography competes with the product and feels disconnected from the jar.; The URL pill shape looks dated and amateurish, reducing premium perception.",
+      "reason": "ad_creator_visual_gate:fast_cut_curiosity: aesthetic_below_8.0:5.0; Major brand inconsistency: Header reads 'Shop Purity Beans' while the jar label prominently displays 'PURISTA', creating confusion about the actual brand name.; Typography lacks premium hierarchy: Header fonts are generic and the label text is too small to be legible at Instagram thumbnail size.; Product label design looks dated: Cluttered layout with clip-art style coffee illustrations undermines premium D2C positioning.",
       "recent_samples": [
         "Ad-creator render missed; the existing cinematic and real-photo fallbacks still run at the same 8.0 bar."
       ],
@@ -198488,7 +198490,7 @@
     },
     {
       "code": "provider:pixazo",
-      "count": 2032,
+      "count": 2034,
       "feedback": "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback.",
       "first_seen": "2026-11-16",
       "fix": "Check provider availability, quota, credentials and timeout before retrying. Never send a jar image to image-to-video.",
@@ -198497,7 +198499,7 @@
       "label": "growth_reel",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "pixazo:missing_credentials_or_config",
+      "reason": "pixazo:empty_result_or_missing_file",
       "recent_samples": [
         "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback."
       ],
@@ -198506,7 +198508,7 @@
     },
     {
       "code": "provider:runway",
-      "count": 2032,
+      "count": 2034,
       "feedback": "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback.",
       "first_seen": "2026-11-16",
       "fix": "Check provider availability, quota, credentials and timeout before retrying. Never send a jar image to image-to-video.",
@@ -198524,20 +198526,20 @@
     },
     {
       "code": "aesthetic",
-      "count": 1968,
-      "feedback": "The hook is excellent \u2014 specific, sensory, and stops the scroll. The value section (wait 60 seconds) is highly saveable. However, brand clarity suffers because the product is named 'Ultra Blend' but the jar is never clearly identified as Purity Beans in the visuals or voiceover until the price mention at 14-22s. On a growth track, the jar must either be absent entirely or, if shown, must be unmist",
+      "count": 1969,
+      "feedback": "The carousel is educational and practical. The date-label explanation is useful for grocery-conscious Indian consumers, and the brand transition at Slide 6 is clean. However, Slide 1 and 2 feel like standard text-on-image cards without a visual hook \u2014 they will likely cause scroll-past. Make the date reveal more cinematic (e.g., close-up of ink on glass, finger tracing the line). The hook \"Two dat",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "generic_hook",
       "id": "instagram|generic_hook|aesthetic",
-      "label": "growth_reel",
+      "label": "carousel",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "The hook is excellent \u2014 specific, sensory, and stops the scroll. The value section (wait 60 seconds) is highly saveable. However, brand clarity suffers because the product is named 'Ultra Blend' but the jar is never clearly identified as Purity Beans in the visuals or voiceover until the price menti",
+      "reason": "The carousel is educational and practical. The date-label explanation is useful for grocery-conscious Indian consumers, and the brand transition at Slide 6 is clean. However, Slide 1 and 2 feel like standard text-on-image cards without a visual hook \u2014 they will likely cause scroll-past. Make the dat",
       "recent_samples": [
-        "The carousel is educational but lacks the visceral punch needed for high shareability. Slide 3's 'CHECK THE FIRST LINE' is the attention drop \u2014 it feels instructional rather than revelatory. The visual descriptions are generic 'studio light' tropes that won't generate the photorealistic, lived-in fr",
         "The carousel teaches a universal math formula instead of teaching the Purity Beans difference. Slide 6 dumps the entire SKU catalog in one paragraph \u2014 no one saves a slide that requires parsing four products and three prices. Hook mentions 'bitter' but the solution is arithmetic, not better coffee, ",
-        "The hook is excellent \u2014 specific, sensory, and stops the scroll. The value section (wait 60 seconds) is highly saveable. However, brand clarity suffers because the product is named 'Ultra Blend' but the jar is never clearly identified as Purity Beans in the visuals or voiceover until the price menti"
+        "The hook is excellent \u2014 specific, sensory, and stops the scroll. The value section (wait 60 seconds) is highly saveable. However, brand clarity suffers because the product is named 'Ultra Blend' but the jar is never clearly identified as Purity Beans in the visuals or voiceover until the price menti",
+        "The carousel is educational and practical. The date-label explanation is useful for grocery-conscious Indian consumers, and the brand transition at Slide 6 is clean. However, Slide 1 and 2 feel like standard text-on-image cards without a visual hook \u2014 they will likely cause scroll-past. Make the dat"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -198760,28 +198762,28 @@
     },
     {
       "code": "process_match",
-      "count": 1636,
-      "feedback": "Critical mismatch: content features 'Purica' in scenes, hooks, and visual direction but input specifies featured_product='Purista'. Purista is Robusta freeze-dried with bold intensity; Purica is Arabica freeze-dried with smooth caramel notes. Script describes 'natural caramel notes' and 'smooth taste' \u2014 these are Purica attributes, not Purista. This misrepresents the product. Hook '40% aroma loss'",
+      "count": 1637,
+      "feedback": "The hook 'Three freeze-dried Purica Arabica crystals sit untouched while boiling water destroys your morning cup' is a visual description, not a scroll-stopping headline. It fails the Subject Test (nobody is curious about crystals sitting still) and the 2-second rule. Scene 1 'BOILING WATER DESTROYS' attacks a universal behavior (using hot water) instead of the competitor's product flaw (spray-dry",
       "first_seen": "2026-11-06",
       "fix": "",
       "gate": "generic_hook",
       "id": "youtube|generic_hook|process_match",
       "label": "yt_short",
-      "last_seen": "2026-11-27",
+      "last_seen": "2026-11-28",
       "platform": "youtube",
-      "reason": "Critical mismatch: content features 'Purica' in scenes, hooks, and visual direction but input specifies featured_product='Purista'. Purista is Robusta freeze-dried with bold intensity; Purica is Arabica freeze-dried with smooth caramel notes. Script describes 'natural caramel notes' and 'smooth tast",
+      "reason": "The hook 'Three freeze-dried Purica Arabica crystals sit untouched while boiling water destroys your morning cup' is a visual description, not a scroll-stopping headline. It fails the Subject Test (nobody is curious about crystals sitting still) and the 2-second rule. Scene 1 'BOILING WATER DESTROYS",
       "recent_samples": [
-        "The hook 'Your strong coffee isn't bold \u2014 it's bulked with fillers that vanish. Bold is not.' is strong and specific to Purity Beans' agglomerated differentiator, clearing the 2-second scroll-stop bar. However, the reel truncates at Scene 2 mid-sentence ('Now wa'), breaking the narrative arc before ",
         "The hook 'You've been ruining your Robusta coffee for 5 seconds' is strong and specific to Purista's freeze-dried nature, but the '5 seconds' claim feels arbitrary and slightly confusing (ruining *for* 5 seconds vs ruining *in* 5 seconds). Scene 2's macro visual direction is excellent for saveabilit",
-        "Critical mismatch: content features 'Purica' in scenes, hooks, and visual direction but input specifies featured_product='Purista'. Purista is Robusta freeze-dried with bold intensity; Purica is Arabica freeze-dried with smooth caramel notes. Script describes 'natural caramel notes' and 'smooth tast"
+        "Critical mismatch: content features 'Purica' in scenes, hooks, and visual direction but input specifies featured_product='Purista'. Purista is Robusta freeze-dried with bold intensity; Purica is Arabica freeze-dried with smooth caramel notes. Script describes 'natural caramel notes' and 'smooth tast",
+        "The hook 'Three freeze-dried Purica Arabica crystals sit untouched while boiling water destroys your morning cup' is a visual description, not a scroll-stopping headline. It fails the Subject Test (nobody is curious about crystals sitting still) and the 2-second rule. Scene 1 'BOILING WATER DESTROYS"
       ],
       "stage": "generation",
       "status": "gate_holding"
     },
     {
       "code": "llm_viral",
-      "count": 1633,
-      "feedback": "Content is well-structured and hits the core audience desire for transparency. The hook successfully targets the 'read the label' curiosity gap. Brand clarity is solid, linking Purica to freeze-dried purity. Consider adding a subtle visual cue in the accompanying image referencing the '70/30 disclosure' for Ultra Blend to reinforce honesty without naming it negatively.",
+      "count": 1634,
+      "feedback": "viral: score 7.86 < 9.0 (weakest: curiosity_gap, shareability). The opening line effectively leverages household habits to question instant coffee transparency. To elevate shareability and curiosity, tighten the transition between the mother-in-law anecdote and the product specifics, and ensure the community question directly prompts quick community replies like naming their current jar brand. Sug",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "ladder_exhausted",
@@ -198789,11 +198791,11 @@
       "label": "facebook_post",
       "last_seen": "2026-11-28",
       "platform": "facebook",
-      "reason": "Content is well-structured and hits the core audience desire for transparency. The hook successfully targets the 'read the label' curiosity gap. Brand clarity is solid, linking Purica to freeze-dried purity. Consider adding a subtle visual cue in the accompanying image referencing the '70/30 disclos",
+      "reason": "viral: score 7.86 < 9.0 (weakest: curiosity_gap, shareability). The opening line effectively leverages household habits to question instant coffee transparency. To elevate shareability and curiosity, tighten the transition between the mother-in-law anecdote and the product specifics, and ensure the",
       "recent_samples": [
-        "viral: score 6.8 < 9.0 (weakest: curiosity_gap, shareability). The hook is direct and actionable, but it relies on a standard 'check the label' trope that veteran scrollers have seen before. To push the score above 8, create a sharper curiosity gap in the first line by highlighting a specific hidden",
         "viral: score 8.0 < 9.0 (weakest: curiosity_gap, shareability). The piece has strong household relatability and clear pricing value (\u20b95 a cup), but the curiosity gap could be sharper by directly contrasting home brewing effort with cafe results right in the second line. Ensure the hook immediately gr",
-        "Content is well-structured and hits the core audience desire for transparency. The hook successfully targets the 'read the label' curiosity gap. Brand clarity is solid, linking Purica to freeze-dried purity. Consider adding a subtle visual cue in the accompanying image referencing the '70/30 disclos"
+        "Content is well-structured and hits the core audience desire for transparency. The hook successfully targets the 'read the label' curiosity gap. Brand clarity is solid, linking Purica to freeze-dried purity. Consider adding a subtle visual cue in the accompanying image referencing the '70/30 disclos",
+        "viral: score 7.86 < 9.0 (weakest: curiosity_gap, shareability). The opening line effectively leverages household habits to question instant coffee transparency. To elevate shareability and curiosity, tighten the transition between the mother-in-law anecdote and the product specifics, and ensure the "
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -198999,20 +199001,20 @@
     },
     {
       "code": "aesthetic",
-      "count": 1620,
-      "feedback": "The hook ('Your instant coffee jar says coffee...') is educational but lacks the visceral betrayal or identity challenge needed for a Reel to stop scroll in <2s. It feels like a LinkedIn carousel opener, not a vertical video hook. Frame 3 ('Mystery Jar Label') is the strongest visual moment but arrives too late \u2014 move the 'Ingredients: Coffee \u2014 Zero Species Name' reveal to Frame 1 or 2 as the visu",
+      "count": 1621,
+      "feedback": "The carousel is educationally sound and the brand transition on Slide 6 is compliant and clear. However, the hook 'Two dates on the pack...' is purely functional and lacks a curiosity gap or emotional trigger \u2014 it reads like a textbook caption, not a scroll-stopper. Slides 1\u20132 are text-on-background static cards with zero visual tension; Indian consumers scroll past these in <1s. Slide 3's 'gap' v",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "ladder_exhausted",
       "id": "instagram|ladder_exhausted|aesthetic",
       "label": "carousel",
-      "last_seen": "2026-11-23",
+      "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "The hook ('Your instant coffee jar says coffee...') is educational but lacks the visceral betrayal or identity challenge needed for a Reel to stop scroll in <2s. It feels like a LinkedIn carousel opener, not a vertical video hook. Frame 3 ('Mystery Jar Label') is the strongest visual moment but arri",
+      "reason": "The carousel is educationally sound and the brand transition on Slide 6 is compliant and clear. However, the hook 'Two dates on the pack...' is purely functional and lacks a curiosity gap or emotional trigger \u2014 it reads like a textbook caption, not a scroll-stopper. Slides 1\u20132 are text-on-background",
       "recent_samples": [
-        "The content is technically accurate but forgettable. It teaches a brewing tip without creating a reason to care beyond utility. The hook is a flat instruction ('Boiling water burns notes') \u2014 it does not accuse, reveal, or challenge identity. No betrayal, curiosity gap, or 'you've been lied to' energ",
         "Hook is a technical fact, not a betrayal or curiosity gap \u2014 it educates but doesn't provoke. The scroll-stop moment is Frame 3 (Bold vs Purica physics) but it arrives too late. Move the product contrast to Frame 2 as a visual split-screen: boiling water poured on Bold (fine) vs Purica (scorched). Fr",
-        "The hook ('Your instant coffee jar says coffee...') is educational but lacks the visceral betrayal or identity challenge needed for a Reel to stop scroll in <2s. It feels like a LinkedIn carousel opener, not a vertical video hook. Frame 3 ('Mystery Jar Label') is the strongest visual moment but arri"
+        "The hook ('Your instant coffee jar says coffee...') is educational but lacks the visceral betrayal or identity challenge needed for a Reel to stop scroll in <2s. It feels like a LinkedIn carousel opener, not a vertical video hook. Frame 3 ('Mystery Jar Label') is the strongest visual moment but arri",
+        "The carousel is educationally sound and the brand transition on Slide 6 is compliant and clear. However, the hook 'Two dates on the pack...' is purely functional and lacks a curiosity gap or emotional trigger \u2014 it reads like a textbook caption, not a scroll-stopper. Slides 1\u20132 are text-on-background"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -199077,8 +199079,8 @@
     },
     {
       "code": "aesthetic",
-      "count": 1324,
-      "feedback": "pale_background:sat=0.13; washed_out_background:luma=197; pale_background:sat=0.15; washed_out_background:luma=187; pale_background:sat=0.15; washed_out_background:luma=184",
+      "count": 1325,
+      "feedback": "aesthetic_below_8.0:3.0; Extremely plain white background lacks any lifestyle context, rich color, or depth suitable for Instagram; Missing all typographic hierarchy, graphic elements, and marketing copy required for an engaging social ad; Product photography is a basic cutout rather than a styled, premium D2C studio shot with proper lighting and shadows",
       "first_seen": "2026-11-16",
       "fix": "",
       "gate": "local_ffmpeg_visual_gate",
@@ -199086,18 +199088,18 @@
       "label": "reel_1_video",
       "last_seen": "2026-11-28",
       "platform": "reel_1_video",
-      "reason": "pale_background:sat=0.13; washed_out_background:luma=197; pale_background:sat=0.15; washed_out_background:luma=187; pale_background:sat=0.15; washed_out_background:luma=184",
+      "reason": "aesthetic_below_8.0:3.0; Extremely plain white background lacks any lifestyle context, rich color, or depth suitable for Instagram; Missing all typographic hierarchy, graphic elements, and marketing copy required for an engaging social ad; Product photography is a basic cutout rather than a styled,",
       "recent_samples": [
-        "aesthetic_below_8.0:5.0; Flat, pale salmon-pink palette lacks richness and depth; reads as mass-market rather than premium; Plain white e-commerce background with flat studio lighting\u2014zero scroll-stopping power for Instagram; Typography is generic and under-hierarchized; not optimized for legibility",
         "aesthetic_below_8.0:3.0; Product photography looks like a basic product cutout on a plain white background rather than an Instagram-ready D2C lifestyle or studio creative.; Completely lacks atmospheric lighting, depth, shadows, or background context which are essential for premium coffee aesthetics.",
-        "pale_background:sat=0.13; washed_out_background:luma=197; pale_background:sat=0.15; washed_out_background:luma=187; pale_background:sat=0.15; washed_out_background:luma=184"
+        "pale_background:sat=0.13; washed_out_background:luma=197; pale_background:sat=0.15; washed_out_background:luma=187; pale_background:sat=0.15; washed_out_background:luma=184",
+        "aesthetic_below_8.0:3.0; Extremely plain white background lacks any lifestyle context, rich color, or depth suitable for Instagram; Missing all typographic hierarchy, graphic elements, and marketing copy required for an engaging social ad; Product photography is a basic cutout rather than a styled, "
       ],
       "stage": "render",
       "status": "gate_holding"
     },
     {
       "code": "provider:kaggle_bank",
-      "count": 1320,
+      "count": 1322,
       "feedback": "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback.",
       "first_seen": "2026-11-16",
       "fix": "Check provider availability, quota, credentials and timeout before retrying. Never send a jar image to image-to-video.",
@@ -199135,20 +199137,20 @@
     },
     {
       "code": "payoff",
-      "count": 1308,
-      "feedback": "The hook 'wet cardboard' triggers disgust but lacks a curiosity gap \u2014 it states the problem without promising a reveal. Saveability is strong due to the ingredient-panel line, but shareability suffers because the caption reads like a product pitch, not a truth bomb worth forwarding. The CTA asks for a comment on 'brewing style' but Purica is instant coffee \u2014 no brewing style exists. This mismatch",
+      "count": 1309,
+      "feedback": "The hook is technically accurate but linguistically dense \u2014 'Eighty-five degree water hits Purica granules and the aroma blooms before the spoon even touches the mug' takes 4.2 seconds to speak. That fails the 2-second scroll-stop rule. The sensory payoff (steam, sip, nod) is strong but arrives too late. Frame 2's 'volatile aromatics survive because the water never scorches them' is the actual ins",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "process_match",
       "id": "instagram|process_match|payoff",
-      "label": "instagram_post",
+      "label": "reel_1",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "The hook 'wet cardboard' triggers disgust but lacks a curiosity gap \u2014 it states the problem without promising a reveal. Saveability is strong due to the ingredient-panel line, but shareability suffers because the caption reads like a product pitch, not a truth bomb worth forwarding. The CTA asks for",
+      "reason": "The hook is technically accurate but linguistically dense \u2014 'Eighty-five degree water hits Purica granules and the aroma blooms before the spoon even touches the mug' takes 4.2 seconds to speak. That fails the 2-second scroll-stop rule. The sensory payoff (steam, sip, nod) is strong but arrives too",
       "recent_samples": [
-        "HOOK/PAYOFF MISMATCH (The carousel teaches a solid cold-coffee technique (high saveability) but fails to convert that utility into Purity Beans revenue. Hook promises a revelation about 'strong' taste but delivers a milk-based cold coffee recipe \u2014 attention drops at slide 3 when the 'strong' promise",
         "HOOK/PAYOFF MISMATCH (The carousel is highly saveable (educational, clear steps, honest disclosure) but falls short on shareability and emotion_pull because it reads like a utility guide rather than a story that triggers identity or outrage. The hook promises a caf\u00e9 cup without markup but never quan",
-        "The hook 'wet cardboard' triggers disgust but lacks a curiosity gap \u2014 it states the problem without promising a reveal. Saveability is strong due to the ingredient-panel line, but shareability suffers because the caption reads like a product pitch, not a truth bomb worth forwarding. The CTA asks for"
+        "The hook 'wet cardboard' triggers disgust but lacks a curiosity gap \u2014 it states the problem without promising a reveal. Saveability is strong due to the ingredient-panel line, but shareability suffers because the caption reads like a product pitch, not a truth bomb worth forwarding. The CTA asks for",
+        "The hook is technically accurate but linguistically dense \u2014 'Eighty-five degree water hits Purica granules and the aroma blooms before the spoon even touches the mug' takes 4.2 seconds to speak. That fails the 2-second scroll-stop rule. The sensory payoff (steam, sip, nod) is strong but arrives too "
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -199175,8 +199177,8 @@
     },
     {
       "code": "process_match",
-      "count": 1305,
-      "feedback": "Brand clarity is the primary failure. The CTA and comment trigger explicitly name Purista and Bold (Robusta/agglomerated variants) while the video features only Purica (freeze-dried Arabica). This creates product confusion and dilutes the 'Pure Arabica' positioning. The hook 'burnt leftovers' is strong contrarian framing but lacks Purity Beans specificity \u2014 it could be any premium brand. The descr",
+      "count": 1306,
+      "feedback": "The hook 'Your morning Robusta tastes harsh because you are dissolving it like a cheap commodity powder' is strong and specific to Purista's freeze-dried advantage, but the tension drop in Scene 2 is significant: the spoken line 'When you check the back panel...' is passive and informational rather than revelatory. It fails to create an open loop. Rewrite Scene 2 spoken to: 'Flip the jar. Zero chi",
       "first_seen": "2026-10-23",
       "fix": "",
       "gate": "product_truth",
@@ -199184,11 +199186,11 @@
       "label": "yt_short",
       "last_seen": "2026-11-28",
       "platform": "youtube",
-      "reason": "Brand clarity is the primary failure. The CTA and comment trigger explicitly name Purista and Bold (Robusta/agglomerated variants) while the video features only Purica (freeze-dried Arabica). This creates product confusion and dilutes the 'Pure Arabica' positioning. The hook 'burnt leftovers' is str",
+      "reason": "The hook 'Your morning Robusta tastes harsh because you are dissolving it like a cheap commodity powder' is strong and specific to Purista's freeze-dried advantage, but the tension drop in Scene 2 is significant: the spoken line 'When you check the back panel...' is passive and informational rather",
       "recent_samples": [
-        "The content scores 7.6 overall \u2014 below the 8.0 pass threshold. The hook (8.0) and saveability (8.0) are strong, but shareability (7.0) and brand clarity (7.5) drag the average down. The Purica/Purista product mismatch is a critical brand clarity error: the featured_product field says Purista (freeze",
         "The hook 'Your spoon hits the jar at 7:12 AM \u2014 no grey cloud rises' is strong and specific, scoring well on hook_strength. However, shareability sits at 7.0 because the 'no grey cloud' insight, while technically accurate for agglomerated coffee, lacks an immediate emotional trigger (anger, pride, be",
-        "Brand clarity is the primary failure. The CTA and comment trigger explicitly name Purista and Bold (Robusta/agglomerated variants) while the video features only Purica (freeze-dried Arabica). This creates product confusion and dilutes the 'Pure Arabica' positioning. The hook 'burnt leftovers' is str"
+        "Brand clarity is the primary failure. The CTA and comment trigger explicitly name Purista and Bold (Robusta/agglomerated variants) while the video features only Purica (freeze-dried Arabica). This creates product confusion and dilutes the 'Pure Arabica' positioning. The hook 'burnt leftovers' is str",
+        "The hook 'Your morning Robusta tastes harsh because you are dissolving it like a cheap commodity powder' is strong and specific to Purista's freeze-dried advantage, but the tension drop in Scene 2 is significant: the spoken line 'When you check the back panel...' is passive and informational rather "
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -199559,7 +199561,7 @@
     },
     {
       "code": "provider:pexels",
-      "count": 1036,
+      "count": 1037,
       "feedback": "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback.",
       "first_seen": "2026-11-16",
       "fix": "Check provider availability, quota, credentials and timeout before retrying. Never send a jar image to image-to-video.",
@@ -199568,7 +199570,7 @@
       "label": "growth_reel",
       "last_seen": "2026-11-28",
       "platform": "instagram",
-      "reason": "pexels:missing_credentials_or_config",
+      "reason": "pexels:rejected_after_visual_gate",
       "recent_samples": [
         "Continue through the configured provider order; if exhausted use a procedural plate, then the gated local FFmpeg real-photo fallback."
       ],
@@ -200906,19 +200908,20 @@
     },
     {
       "code": "payoff",
-      "count": 648,
-      "feedback": "The content scores below the 8.0 threshold primarily due to hook_strength and emotion_pull. The opening line 'One spoon, 85\u00b0C water, wait 30 seconds. Watch.' is instructional rather than disruptive \u2014 it does not create a curiosity gap or betrayal trigger. The spoken line 'Your jar turns to dust. This granule doesn't.' is the actual hook but arrives at scene 1, not frame 1. For YouTube Shorts, the",
+      "count": 649,
+      "feedback": "The hook is technically specific (spray-dried at 200\u00b0C) but lacks visceral immediacy \u2014 'burnt at the third sip' is a delayed payoff, not an instant stop. A real user scrolling Reels sees 'Your strong black coffee tastes...' and keeps scrolling because the pain point isn't sharp enough. Rewrite to lead with the betrayal: 'Your coffee isn't burnt. Your powder is spray-dried at 200\u00b0C.' Scene 2 'Flip",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "generic_hook",
       "id": "youtube|generic_hook|payoff",
       "label": "yt_short",
-      "last_seen": "2026-11-16",
+      "last_seen": "2026-11-28",
       "platform": "youtube",
-      "reason": "The content scores below the 8.0 threshold primarily due to hook_strength and emotion_pull. The opening line 'One spoon, 85\u00b0C water, wait 30 seconds. Watch.' is instructional rather than disruptive \u2014 it does not create a curiosity gap or betrayal trigger. The spoken line 'Your jar turns to dust. Thi",
+      "reason": "The hook is technically specific (spray-dried at 200\u00b0C) but lacks visceral immediacy \u2014 'burnt at the third sip' is a delayed payoff, not an instant stop. A real user scrolling Reels sees 'Your strong black coffee tastes...' and keeps scrolling because the pain point isn't sharp enough. Rewrite to le",
       "recent_samples": [
         "The hook identifies a real pain point (clumping) but lacks the betrayal/curiosity trigger needed for a scroll-stop in a crowded feed \u2014 it feels like a functional demo, not a revelation. The script treats Ultra Blend as the hero without leveraging the 'clean label' transparency angle that drives save",
-        "The content scores below the 8.0 threshold primarily due to hook_strength and emotion_pull. The opening line 'One spoon, 85\u00b0C water, wait 30 seconds. Watch.' is instructional rather than disruptive \u2014 it does not create a curiosity gap or betrayal trigger. The spoken line 'Your jar turns to dust. Thi"
+        "The content scores below the 8.0 threshold primarily due to hook_strength and emotion_pull. The opening line 'One spoon, 85\u00b0C water, wait 30 seconds. Watch.' is instructional rather than disruptive \u2014 it does not create a curiosity gap or betrayal trigger. The spoken line 'Your jar turns to dust. Thi",
+        "The hook is technically specific (spray-dried at 200\u00b0C) but lacks visceral immediacy \u2014 'burnt at the third sip' is a delayed payoff, not an instant stop. A real user scrolling Reels sees 'Your strong black coffee tastes...' and keeps scrolling because the pain point isn't sharp enough. Rewrite to le"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -201152,20 +201155,20 @@
     },
     {
       "code": "llm_viral",
-      "count": 376,
-      "feedback": "viral: score 8.0 < 9.0 (weakest: curiosity_gap). The story sequence flows logically and utilizes native story mechanics well with a clear interactive poll. To elevate the curiosity gap, frame the opening question around what boiling water actually does to the coffee compounds rather than just stating it tastes sharp. Suggested hook: Stop pouring boiling water directly onto your instant coffee. Use",
+      "count": 382,
+      "feedback": "viral: score 8.0 < 9.0 (weakest: hook, shareability). The story sequence uses strong multi-frame Instagram Stories mechanics well with tap-forward tension and an interactive poll. To elevate shareability and hook strength further, frame the opening around a common kitchen mistake rather than a general statement to make users immediately stop tapping. Ensure all formatting strictly adheres to the 5",
       "first_seen": "2026-11-22",
       "fix": "",
       "gate": "llm_viral",
       "id": "instagram_story|llm_viral|llm_viral",
       "label": "stories",
-      "last_seen": "2026-11-27",
+      "last_seen": "2026-11-28",
       "platform": "instagram_story",
-      "reason": "viral: score 8.0 < 9.0 (weakest: curiosity_gap). The story sequence flows logically and utilizes native story mechanics well with a clear interactive poll. To elevate the curiosity gap, frame the opening question around what boiling water actually does to the coffee compounds rather than just statin",
+      "reason": "viral: score 8.0 < 9.0 (weakest: hook, shareability). The story sequence uses strong multi-frame Instagram Stories mechanics well with tap-forward tension and an interactive poll. To elevate shareability and hook strength further, frame the opening around a common kitchen mistake rather than a gener",
       "recent_samples": [
-        "viral: score 8.29 < 9.0 (weakest: hook, shareability). The story sequence uses excellent tap-forward tension and a native interactive poll. Frame 1 hook can be sharper by addressing the exact sensory pain point of a bitter brew immediately. Ensure the website URL link is clearly visible alongside th",
-        "viral: score 8.0 < 9.0 (weakest: shareability, follow_cta). The story flows logically with strong native story mechanics, clear tap-forward tension, and an actionable tip. To push the score higher, make frame 1 even more direct about the mistake people make with water temperature, and sharpen the fo",
-        "viral: score 8.0 < 9.0 (weakest: curiosity_gap). The story sequence flows logically and utilizes native story mechanics well with a clear interactive poll. To elevate the curiosity gap, frame the opening question around what boiling water actually does to the coffee compounds rather than just statin"
+        "viral: score 7.8 < 9.0 (weakest: hook, follow_cta). The story structure has strong platform mechanics with rapid tap-forward tension, but Frame 1's hook could hit harder on the everyday frustration of bitter coffee. Ensure the interactive poll connects directly to the 45-second payoff. Keep the CTA ",
+        "viral: score 8.0 < 9.0 (weakest: hook, comment_trigger). The story sequence uses strong multi-frame tap-forward tension and gives practical, specific value without relying on hype. To elevate the hook further, make the opening text punchier to stop the auto-tap habit immediately. The comment trigger",
+        "viral: score 8.0 < 9.0 (weakest: hook, shareability). The story sequence uses strong multi-frame Instagram Stories mechanics well with tap-forward tension and an interactive poll. To elevate shareability and hook strength further, frame the opening around a common kitchen mistake rather than a gener"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -202384,18 +202387,19 @@
     },
     {
       "code": "banned_claim:fresh",
-      "count": 324,
-      "feedback": "The hook is strong and specific \u2014 front-label honesty as a brew lever is a fresh angle that stops the scroll. However, the content fails the brand clarity test because it never explicitly names the four zero-chicory variants (Bold, Purista, Purica, Prima) as the pure-coffee lineup, leaving the reader with an incomplete product map. The \u20b9309/66-cup value frame is save-worthy but the caption truncat",
+      "count": 325,
+      "feedback": "viral: score 7.7 < 9.0 (weakest: hook, curiosity_gap). The opening line is good, but could be sharper to immediately trigger curiosity. The body effectively explains the water temperature tip without violating brand rules (avoiding forbidden words like bean-based or fresh). Ensure the comment trigger perfectly aligns with the prompt's instructions. Suggested hook: Stop pouring boiling water direct",
       "first_seen": "2026-10-24",
       "fix": "",
       "gate": "llm_viral",
       "id": "threads|llm_viral|banned_claim:fresh",
       "label": "threads_post",
-      "last_seen": "2026-10-24",
+      "last_seen": "2026-11-28",
       "platform": "threads",
-      "reason": "The hook is strong and specific \u2014 front-label honesty as a brew lever is a fresh angle that stops the scroll. However, the content fails the brand clarity test because it never explicitly names the four zero-chicory variants (Bold, Purista, Purica, Prima) as the pure-coffee lineup, leaving the reade",
+      "reason": "viral: score 7.7 < 9.0 (weakest: hook, curiosity_gap). The opening line is good, but could be sharper to immediately trigger curiosity. The body effectively explains the water temperature tip without violating brand rules (avoiding forbidden words like bean-based or fresh). Ensure the comment trigge",
       "recent_samples": [
-        "The hook is strong and specific \u2014 front-label honesty as a brew lever is a fresh angle that stops the scroll. However, the content fails the brand clarity test because it never explicitly names the four zero-chicory variants (Bold, Purista, Purica, Prima) as the pure-coffee lineup, leaving the reade"
+        "The hook is strong and specific \u2014 front-label honesty as a brew lever is a fresh angle that stops the scroll. However, the content fails the brand clarity test because it never explicitly names the four zero-chicory variants (Bold, Purista, Purica, Prima) as the pure-coffee lineup, leaving the reade",
+        "viral: score 7.7 < 9.0 (weakest: hook, curiosity_gap). The opening line is good, but could be sharper to immediately trigger curiosity. The body effectively explains the water temperature tip without violating brand rules (avoiding forbidden words like bean-based or fresh). Ensure the comment trigge"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -202640,40 +202644,40 @@
     },
     {
       "code": "generic_hook",
-      "count": 124,
-      "feedback": "Overall score 7.6 is below the 8.0 threshold. Shareability and saveability are dragged down by a generic caption that reads like a spec sheet instead of a story, a community question that invites one-word answers instead of identity signals, and a save trigger that is cut off mid-sentence. The hook is strong and brand clarity is high, but the asset fails the retention test after frame 3: the macro",
+      "count": 125,
+      "feedback": "viral: score 6.0 < 9.0 (weakest: hook, curiosity_gap, shareability). The hook 'Black, milky or smooth blend? Pick one \u2193' is a bit generic and doesn't immediately create a strong enough pattern interrupt for a growth-track reel. To lift the score, make the opening line address a specific frustration or counter-intuitive coffee truth right in the first second (e.g., calling out why cup number three",
       "first_seen": "2026-11-23",
       "fix": "",
       "gate": "generic_hook",
       "id": "growth_reel_fb|generic_hook|generic_hook",
       "label": "growth_reel_fb",
-      "last_seen": "2026-11-27",
+      "last_seen": "2026-11-28",
       "platform": "growth_reel_fb",
-      "reason": "Overall score 7.6 is below the 8.0 threshold. Shareability and saveability are dragged down by a generic caption that reads like a spec sheet instead of a story, a community question that invites one-word answers instead of identity signals, and a save trigger that is cut off mid-sentence. The hook",
+      "reason": "viral: score 6.0 < 9.0 (weakest: hook, curiosity_gap, shareability). The hook 'Black, milky or smooth blend? Pick one \u2193' is a bit generic and doesn't immediately create a strong enough pattern interrupt for a growth-track reel. To lift the score, make the opening line address a specific frustration",
       "recent_samples": [
-        "Generic hook 'Did you know most instant coffee isn\u2019t actually coffee?' applies to any brand - penalizes hook_strength. The Facebook post reads like a blog with a generic follow line, scoring below 8 on brand quality thresholds. The reveal of the jar late in the sequence delays brand association. The",
         "Critical failure on Hook Strength (4.0) and Emotion Pull (4.5). The hook 'Did you know most instant coffee isn't actually coffee?' is a generic curiosity gap used by every coffee startup \u2014 it fails the 'could apply to any brand' test and will not stop an Indian scroll in 2 seconds. The revelation fr",
-        "Overall score 7.6 is below the 8.0 threshold. Shareability and saveability are dragged down by a generic caption that reads like a spec sheet instead of a story, a community question that invites one-word answers instead of identity signals, and a save trigger that is cut off mid-sentence. The hook "
+        "Overall score 7.6 is below the 8.0 threshold. Shareability and saveability are dragged down by a generic caption that reads like a spec sheet instead of a story, a community question that invites one-word answers instead of identity signals, and a save trigger that is cut off mid-sentence. The hook ",
+        "viral: score 6.0 < 9.0 (weakest: hook, curiosity_gap, shareability). The hook 'Black, milky or smooth blend? Pick one \u2193' is a bit generic and doesn't immediately create a strong enough pattern interrupt for a growth-track reel. To lift the score, make the opening line address a specific frustration "
       ],
       "stage": "generation",
       "status": "gate_holding"
     },
     {
       "code": "llm_viral",
-      "count": 120,
-      "feedback": "viral: score 6.57 < 9.0 (weakest: hook, format_fit, follow_cta). Hook is too long for YouTube Shorts; first 1.5 seconds must be visual + audio punch, not a full sentence. Cut to: 'Your 4 PM coffee has an oil skin. Tap it. If it holds \u2014 the oils burned at 200\u00b0C.' Keep macro tap in frame 1, not scene 2. Format fit suffers from slow pacing: 25s of talk before product reveal. Move Purista jar + freeze",
+      "count": 127,
+      "feedback": "viral: score 8.29 < 9.0 (weakest: hook, follow_cta). The piece hits strong notes on office relativity and the technical contrast between heat-towers and freeze-drying without resorting to banned phrases or false claims. The hook is solid ('unpopular opinion') but could be sharper by focusing directly on the burnt-taste pain point rather than the time of day. The follow CTA is clear, but tying the",
       "first_seen": "2026-11-23",
       "fix": "",
       "gate": "llm_viral",
       "id": "evening_yt_short|llm_viral|llm_viral",
       "label": "evening_yt_short",
-      "last_seen": "2026-11-27",
+      "last_seen": "2026-11-28",
       "platform": "evening_yt_short",
-      "reason": "viral: score 6.57 < 9.0 (weakest: hook, format_fit, follow_cta). Hook is too long for YouTube Shorts; first 1.5 seconds must be visual + audio punch, not a full sentence. Cut to: 'Your 4 PM coffee has an oil skin. Tap it. If it holds \u2014 the oils burned at 200\u00b0C.' Keep macro tap in frame 1, not scene",
+      "reason": "viral: score 8.29 < 9.0 (weakest: hook, follow_cta). The piece hits strong notes on office relativity and the technical contrast between heat-towers and freeze-drying without resorting to banned phrases or false claims. The hook is solid ('unpopular opinion') but could be sharper by focusing directl",
       "recent_samples": [
-        "viral: score 6.0 < 9.0 (weakest: hook, curiosity_gap, comment_trigger). 1. HOOK: 'Your 4 PM coffee has an oil skin' is vague. Rename the phenomenon ('spray dried vs freeze-dried') and make the test immediate and tactile. Viewers need a concrete reason to stop. 2. CURIOUSITY GAP: The payoff ('spray d",
-        "viral: score 8.86 < 9.0 (weakest: curiosity_gap). The curiosity gap resolves well in Scene 3, but the opening could explicitly promise a 'secret' or 'reveal' to make the hook stickier. Add a phrase like 'The industry doesn't want you to know this' after the oil-skin line to amp the open-loop. Sugges",
-        "viral: score 6.57 < 9.0 (weakest: hook, format_fit, follow_cta). Hook is too long for YouTube Shorts; first 1.5 seconds must be visual + audio punch, not a full sentence. Cut to: 'Your 4 PM coffee has an oil skin. Tap it. If it holds \u2014 the oils burned at 200\u00b0C.' Keep macro tap in frame 1, not scene "
+        "viral: score 8.0 < 9.0 (weakest: curiosity_gap). The piece hits strong on office relatability and platform pacing for YouTube Shorts. The opening hook immediately targets the 4 PM slump, which works well. To push the curiosity gap higher, hint at the hidden reason *why* boiling water ruins the cup r",
+        "viral: score 8.4 < 9.0 (weakest: curiosity_gap, shareability). The piece hits a strong, relatable note with office coffee routines andmug residue, maintaining absolute honesty about Purica freeze-dried Arabica and zero chicory. To elevate shareability and curiosity further, slightly sharpen the cont",
+        "viral: score 8.29 < 9.0 (weakest: hook, follow_cta). The piece hits strong notes on office relativity and the technical contrast between heat-towers and freeze-drying without resorting to banned phrases or false claims. The hook is solid ('unpopular opinion') but could be sharper by focusing directl"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -202757,20 +202761,20 @@
     },
     {
       "code": "generic_hook",
-      "count": 88,
-      "feedback": "Overall 7.4 is below the 8.0 threshold. The opening hook lacks a retention device \u2014 no open loop or curiosity gap that forces the viewer to stay past 2s. The 'burnt water' line is relatable but generic; it could apply to any premium coffee brand, so hook_strength caps at 7. Scene 2's macro tap test is the strongest visual beat but arrives late; move the 'flat surface holds = oils burned off' text",
+      "count": 89,
+      "feedback": "viral: score 7.0 < 9.0 (weakest: hook, curiosity_gap). The hook relies on a somewhat generic call-out (\"Send this to the friend...\") rather than stopping the scroll with an immediate, unexpected coffee truth. Strengthen the opening by focusing on why those three cups fail to energize before shifting to the share prompt. Ensure the transition to the product feels earned through the educational tens",
       "first_seen": "2026-11-23",
       "fix": "",
       "gate": "generic_hook",
       "id": "evening_yt_short|generic_hook|generic_hook",
       "label": "evening_yt_short",
-      "last_seen": "2026-11-27",
+      "last_seen": "2026-11-28",
       "platform": "evening_yt_short",
-      "reason": "Overall 7.4 is below the 8.0 threshold. The opening hook lacks a retention device \u2014 no open loop or curiosity gap that forces the viewer to stay past 2s. The 'burnt water' line is relatable but generic; it could apply to any premium coffee brand, so hook_strength caps at 7. Scene 2's macro tap test",
+      "reason": "viral: score 7.0 < 9.0 (weakest: hook, curiosity_gap). The hook relies on a somewhat generic call-out (\"Send this to the friend...\") rather than stopping the scroll with an immediate, unexpected coffee truth. Strengthen the opening by focusing on why those three cups fail to energize before shifting",
       "recent_samples": [
-        "viral: score 7.0 < 9.0 (weakest: follow_cta, hook). The follow_cta feels like a generic brand promo rather than a native evening ritual tip. It breaks the 'no brand assets' immersion for a growth reel. Consider framing it as 'Save for your next brew' or 'Follow for more kitchen coffee tests' instead",
         "viral: score 7.0 < 9.0 (weakest: comment_trigger, follow_cta). Hook is strong and sensory but slightly wordy for YT Shorts first 1s; tighten to 6 words max. Comment trigger 'FLAT or CREMA?' is binary but low-stakes \u2014 replace with identity-based choice that signals taste standard. Follow CTA is gener",
-        "Overall 7.4 is below the 8.0 threshold. The opening hook lacks a retention device \u2014 no open loop or curiosity gap that forces the viewer to stay past 2s. The 'burnt water' line is relatable but generic; it could apply to any premium coffee brand, so hook_strength caps at 7. Scene 2's macro tap test "
+        "Overall 7.4 is below the 8.0 threshold. The opening hook lacks a retention device \u2014 no open loop or curiosity gap that forces the viewer to stay past 2s. The 'burnt water' line is relatable but generic; it could apply to any premium coffee brand, so hook_strength caps at 7. Scene 2's macro tap test ",
+        "viral: score 7.0 < 9.0 (weakest: hook, curiosity_gap). The hook relies on a somewhat generic call-out (\"Send this to the friend...\") rather than stopping the scroll with an immediate, unexpected coffee truth. Strengthen the opening by focusing on why those three cups fail to energize before shifting"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -202797,20 +202801,20 @@
     },
     {
       "code": "llm_viral",
-      "count": 68,
-      "feedback": "viral: score 7.5 < 9.0 (weakest: curiosity_gap, shareability). The hook relies on a mild contrarian opinion which works well for relatability, but it lacks a strong open loop that forces the viewer to watch till the end. To elevate shareability, frame the afternoon slump vs. caffeine reality as a relatable shared experience or a micro-hack rather than just an opinion. Suggested hook: Your morning",
+      "count": 74,
+      "feedback": "viral: score 7.8 < 9.0 (weakest: hook, curiosity_gap). The piece touches on a very relatable Indian office routine (the 4 PM slump), but the hook 'Unpopular opinion: the best cup of the day is the 4 PM one' is a bit clich\u00e9 and doesn't immediately shock or hook the viewer hard enough in the first 2 seconds. Elevate the opening with a sharper pattern interrupt about why routine afternoon coffee usua",
       "first_seen": "2026-11-23",
       "fix": "",
       "gate": "llm_viral",
       "id": "growth_reel_fb|llm_viral|llm_viral",
       "label": "growth_reel_fb",
-      "last_seen": "2026-11-27",
+      "last_seen": "2026-11-28",
       "platform": "growth_reel_fb",
-      "reason": "viral: score 7.5 < 9.0 (weakest: curiosity_gap, shareability). The hook relies on a mild contrarian opinion which works well for relatability, but it lacks a strong open loop that forces the viewer to watch till the end. To elevate shareability, frame the afternoon slump vs. caffeine reality as a re",
+      "reason": "viral: score 7.8 < 9.0 (weakest: hook, curiosity_gap). The piece touches on a very relatable Indian office routine (the 4 PM slump), but the hook 'Unpopular opinion: the best cup of the day is the 4 PM one' is a bit clich\u00e9 and doesn't immediately shock or hook the viewer hard enough in the first 2 s",
       "recent_samples": [
-        "viral: score 6.1 < 9.0 (weakest: hook, shareability). The hook relies on a standard 'Send this to the friend' trope which is heavily overused across social media and fails to stop the scroll immediately. To improve, lead with a direct counter-intuitive fact about water temperature that instantly cha",
-        "viral: score 8.0 < 9.0 (weakest: curiosity_gap). The piece is strong, practical, and respects brand rules (zero chicory for Purista, correct product linkage). To push curiosity higher, the hook can state the negative consequence of boiling water directly instead of just declaring the action. Suggest",
-        "viral: score 7.5 < 9.0 (weakest: curiosity_gap, shareability). The hook relies on a mild contrarian opinion which works well for relatability, but it lacks a strong open loop that forces the viewer to watch till the end. To elevate shareability, frame the afternoon slump vs. caffeine reality as a re"
+        "viral: score 7.8 < 9.0 (weakest: curiosity_gap). The piece has strong native pacing, clear product accuracy (Purica freeze-dried pure Arabica), and excellent visual staging rules. However, the hook relies immediately on sharing rather than establishing an instant curiosity gap or direct friction poi",
+        "viral: score 7.86 < 9.0 (weakest: curiosity_gap). The hook is specific and directly targets an everyday coffee mistake, creating immediate practical utility. The piece maintains strong realism and adheres strictly to brand guidelines, avoiding health claims or false metrics. To push curiosity higher",
+        "viral: score 7.8 < 9.0 (weakest: hook, curiosity_gap). The piece touches on a very relatable Indian office routine (the 4 PM slump), but the hook 'Unpopular opinion: the best cup of the day is the 4 PM one' is a bit clich\u00e9 and doesn't immediately shock or hook the viewer hard enough in the first 2 s"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -202995,20 +202999,20 @@
     },
     {
       "code": "llm_viral",
-      "count": 16,
-      "feedback": "viral: score 7.0 < 9.0 (weakest: curiosity_gap, follow_cta). The hook is specific and visual (3s vs 30s) which is a strong pattern interrupt. The office 4 PM setting and ASMR audio design hit relatability and format_fit well. However, the curiosity gap opens with 'watch the oils bloom' but never visually proves *why* it takes 30s beyond stating 'freeze-drying skips spray stage' \u2014 the payoff is tol",
+      "count": 17,
+      "feedback": "viral: score 7.57 < 9.0 (weakest: curiosity_gap, comment_trigger, follow_cta). The hook is strong and highly relatable for working professionals, but the piece shifts too quickly into a brand/product pitch for a growth track asset. To maximize shares and saves, heighten the curiosity gap around why mainstream instant coffee causes crashes before introducing the solution. Strengthen the comment tri",
       "first_seen": "2026-11-23",
       "fix": "",
       "gate": "ladder_exhausted",
       "id": "growth_reel_fb|ladder_exhausted|llm_viral",
       "label": "growth_reel_fb",
-      "last_seen": "2026-11-27",
+      "last_seen": "2026-11-28",
       "platform": "growth_reel_fb",
-      "reason": "viral: score 7.0 < 9.0 (weakest: curiosity_gap, follow_cta). The hook is specific and visual (3s vs 30s) which is a strong pattern interrupt. The office 4 PM setting and ASMR audio design hit relatability and format_fit well. However, the curiosity gap opens with 'watch the oils bloom' but never vis",
+      "reason": "viral: score 7.57 < 9.0 (weakest: curiosity_gap, comment_trigger, follow_cta). The hook is strong and highly relatable for working professionals, but the piece shifts too quickly into a brand/product pitch for a growth track asset. To maximize shares and saves, heighten the curiosity gap around why",
       "recent_samples": [
-        "viral: score 6.0 < 9.0 (weakest: hook, curiosity_gap, shareability). The piece feels slightly like an ad in the first 2 seconds because it names the brand right away in the hook (\"4 PM cup of Purity Beans\"). Growth-track or engaging brand reels perform better when the hook focuses on a relatable uni",
         "viral: score 7.5 < 9.0 (weakest: hook, curiosity_gap, follow_cta). The hook relies on a common social tag trope rather than an immediate pattern interrupt about coffee quality or energy crashes. To increase viral potential, sharpen the opening statement to directly address the physical feeling of un",
-        "viral: score 7.0 < 9.0 (weakest: curiosity_gap, follow_cta). The hook is specific and visual (3s vs 30s) which is a strong pattern interrupt. The office 4 PM setting and ASMR audio design hit relatability and format_fit well. However, the curiosity gap opens with 'watch the oils bloom' but never vis"
+        "viral: score 7.0 < 9.0 (weakest: curiosity_gap, follow_cta). The hook is specific and visual (3s vs 30s) which is a strong pattern interrupt. The office 4 PM setting and ASMR audio design hit relatability and format_fit well. However, the curiosity gap opens with 'watch the oils bloom' but never vis",
+        "viral: score 7.57 < 9.0 (weakest: curiosity_gap, comment_trigger, follow_cta). The hook is strong and highly relatable for working professionals, but the piece shifts too quickly into a brand/product pitch for a growth track asset. To maximize shares and saves, heighten the curiosity gap around why "
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -203361,19 +203365,20 @@
     },
     {
       "code": "salesy_follow",
-      "count": 8,
-      "feedback": "viral: score 6.5 < 9.0 (weakest: hook, curiosity_gap, shareability). The piece leans too heavily into direct promotional language right from the start for a growth track, mentioning price and product features too early. The hook is clear but lacks a strong pattern interrupt or a sharper emotional friction point regarding the afternoon slump. To boost virality, tighten the narrative arc: make the o",
+      "count": 9,
+      "feedback": "viral: score 7.8 < 9.0 (weakest: curiosity_gap, shareability). The hook touches on a highly relatable sensory annoyance (the bitter ring), but the curiosity gap can be tightened by shifting focus immediately to what industrial processing hides. Ensure the transition from the problem to Purica feels seamless without sounding overly promotional for a growth track piece. Suggested hook: That bitter r",
       "first_seen": "2026-11-24",
       "fix": "",
       "gate": "salesy_follow",
       "id": "growth_reel_fb|salesy_follow|salesy_follow",
       "label": "growth_reel_fb",
-      "last_seen": "2026-11-26",
+      "last_seen": "2026-11-28",
       "platform": "growth_reel_fb",
-      "reason": "viral: score 6.5 < 9.0 (weakest: hook, curiosity_gap, shareability). The piece leans too heavily into direct promotional language right from the start for a growth track, mentioning price and product features too early. The hook is clear but lacks a strong pattern interrupt or a sharper emotional fr",
+      "reason": "viral: score 7.8 < 9.0 (weakest: curiosity_gap, shareability). The hook touches on a highly relatable sensory annoyance (the bitter ring), but the curiosity gap can be tightened by shifting focus immediately to what industrial processing hides. Ensure the transition from the problem to Purica feels",
       "recent_samples": [
         "viral: score 8.1 < 9.0 (weakest: hook, curiosity_gap). The piece hits a very relatable pain point for home brewers and balances education with a clean product bridge. To push the virality score higher, sharpen the hook to challenge a common daily habit directly without sounding promotional. The tran",
-        "viral: score 6.5 < 9.0 (weakest: hook, curiosity_gap, shareability). The piece leans too heavily into direct promotional language right from the start for a growth track, mentioning price and product features too early. The hook is clear but lacks a strong pattern interrupt or a sharper emotional fr"
+        "viral: score 6.5 < 9.0 (weakest: hook, curiosity_gap, shareability). The piece leans too heavily into direct promotional language right from the start for a growth track, mentioning price and product features too early. The hook is clear but lacks a strong pattern interrupt or a sharper emotional fr",
+        "viral: score 7.8 < 9.0 (weakest: curiosity_gap, shareability). The hook touches on a highly relatable sensory annoyance (the bitter ring), but the curiosity gap can be tightened by shifting focus immediately to what industrial processing hides. Ensure the transition from the problem to Purica feels "
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -203779,18 +203784,19 @@
     },
     {
       "code": "llm_viral",
-      "count": 4,
-      "feedback": "viral: score 7.7 < 9.0 (weakest: curiosity_gap, shareability, follow_cta). The story opens with a strong, direct action command that fits the Instagram Stories format well. However, frame 2 gives away the product reveal too early instead of building an open loop. To improve shareability and conversion, make the curiosity gap sharper by withholding why checking the jar matters until frame 3, and re",
+      "count": 5,
+      "feedback": "viral: score 8.0 < 9.0 (weakest: hook, follow_cta). The story flows logically through a 5-frame sequence with strong native interactive mechanics (poll). To push the score higher, make the opening hook even more direct about the sensory loss of burning instant coffee, and ensure the final call-to-action drives immediate tap-through behavior. Suggested hook: You are burning your instant coffee. Sto",
       "first_seen": "2026-11-26",
       "fix": "",
       "gate": "ladder_exhausted",
       "id": "instagram_story|ladder_exhausted|llm_viral",
       "label": "stories",
-      "last_seen": "2026-11-26",
+      "last_seen": "2026-11-28",
       "platform": "instagram_story",
-      "reason": "viral: score 7.7 < 9.0 (weakest: curiosity_gap, shareability, follow_cta). The story opens with a strong, direct action command that fits the Instagram Stories format well. However, frame 2 gives away the product reveal too early instead of building an open loop. To improve shareability and conversi",
+      "reason": "viral: score 8.0 < 9.0 (weakest: hook, follow_cta). The story flows logically through a 5-frame sequence with strong native interactive mechanics (poll). To push the score higher, make the opening hook even more direct about the sensory loss of burning instant coffee, and ensure the final call-to-ac",
       "recent_samples": [
-        "viral: score 7.7 < 9.0 (weakest: curiosity_gap, shareability, follow_cta). The story opens with a strong, direct action command that fits the Instagram Stories format well. However, frame 2 gives away the product reveal too early instead of building an open loop. To improve shareability and conversi"
+        "viral: score 7.7 < 9.0 (weakest: curiosity_gap, shareability, follow_cta). The story opens with a strong, direct action command that fits the Instagram Stories format well. However, frame 2 gives away the product reveal too early instead of building an open loop. To improve shareability and conversi",
+        "viral: score 8.0 < 9.0 (weakest: hook, follow_cta). The story flows logically through a 5-frame sequence with strong native interactive mechanics (poll). To push the score higher, make the opening hook even more direct about the sensory loss of burning instant coffee, and ensure the final call-to-ac"
       ],
       "stage": "generation",
       "status": "gate_holding"
@@ -204133,6 +204139,78 @@
       "reason": "The hook 'Most instant coffee loses its soul in hot spray towers' is technically specific but lacks visceral punch \u2014 it sounds like a process explainer, not a consumer betrayal. Attention will dip at Frame 2 spoken line ('The aroma never leaves') because it makes a sensory claim without visual proof",
       "recent_samples": [
         "The hook 'Most instant coffee loses its soul in hot spray towers' is technically specific but lacks visceral punch \u2014 it sounds like a process explainer, not a consumer betrayal. Attention will dip at Frame 2 spoken line ('The aroma never leaves') because it makes a sensory claim without visual proof"
+      ],
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "code": "schema",
+      "count": 1,
+      "feedback": "Hook options list contains 12 entries \u2014 exceeds the defined schema limit and dilutes testing focus; trim to 10 max. Hook_text 'READ THE BACK PANEL' and hook_spoken 'Turn the jar around' feel disconnected \u2014 align spoken and overlay to one clear instruction (e.g., both 'Turn the jar around. Read the back panel.'). Frame 2 spoken line 'Most instant jars list additives or leave room for ambiguity' is",
+      "first_seen": "2026-11-28",
+      "fix": "",
+      "gate": "generic_hook",
+      "id": "instagram|generic_hook|schema",
+      "label": "reel_1",
+      "last_seen": "2026-11-28",
+      "platform": "instagram",
+      "reason": "Hook options list contains 12 entries \u2014 exceeds the defined schema limit and dilutes testing focus; trim to 10 max. Hook_text 'READ THE BACK PANEL' and hook_spoken 'Turn the jar around' feel disconnected \u2014 align spoken and overlay to one clear instruction (e.g., both 'Turn the jar around. Read the b",
+      "recent_samples": [
+        "Hook options list contains 12 entries \u2014 exceeds the defined schema limit and dilutes testing focus; trim to 10 max. Hook_text 'READ THE BACK PANEL' and hook_spoken 'Turn the jar around' feel disconnected \u2014 align spoken and overlay to one clear instruction (e.g., both 'Turn the jar around. Read the b"
+      ],
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "code": "provider:gemini",
+      "count": 1,
+      "feedback": "viral_scoring_failed: RuntimeError: All LLM providers failed for 'viral_threads_post'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets.",
+      "first_seen": "2026-11-28",
+      "fix": "",
+      "gate": "provider",
+      "id": "threads|provider|provider:gemini",
+      "label": "threads_post",
+      "last_seen": "2026-11-28",
+      "platform": "threads",
+      "reason": "viral_scoring_failed: RuntimeError: All LLM providers failed for 'viral_threads_post'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets.",
+      "recent_samples": [
+        "viral_scoring_failed: RuntimeError: All LLM providers failed for 'viral_threads_post'. Set NVIDIA_API_KEY, GEMINI_API_KEY, or GROQ_API_KEY in GitHub Secrets."
+      ],
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "code": "product_truth",
+      "count": 1,
+      "feedback": "The headline 'THAT BITTER TASTE' is generic \u2014 it could be any coffee brand, any roasted bean, any brew method. It does not signal Purity Beans' specific authority (freeze-dried Arabica, zero chicory). The subtext 'Why your third sip tastes burnt. Purica is pure Arabica.' makes an unsupported causal claim: bitterness at the third sip is attributed to the coffee itself, but the real drivers are over",
+      "first_seen": "2026-11-28",
+      "fix": "",
+      "gate": "generic_hook",
+      "id": "instagram_story|generic_hook|product_truth",
+      "label": "stories",
+      "last_seen": "2026-11-28",
+      "platform": "instagram_story",
+      "reason": "The headline 'THAT BITTER TASTE' is generic \u2014 it could be any coffee brand, any roasted bean, any brew method. It does not signal Purity Beans' specific authority (freeze-dried Arabica, zero chicory). The subtext 'Why your third sip tastes burnt. Purica is pure Arabica.' makes an unsupported causal",
+      "recent_samples": [
+        "The headline 'THAT BITTER TASTE' is generic \u2014 it could be any coffee brand, any roasted bean, any brew method. It does not signal Purity Beans' specific authority (freeze-dried Arabica, zero chicory). The subtext 'Why your third sip tastes burnt. Purica is pure Arabica.' makes an unsupported causal "
+      ],
+      "stage": "generation",
+      "status": "gate_holding"
+    },
+    {
+      "code": "salesy_follow",
+      "count": 1,
+      "feedback": "REJECTED AS SALES-LED (The hook 'Your afternoon coffee tastes bitter because high-heat towers burned off the natural caramel notes' is technically accurate but fails the 'instant stop' test \u2014 it sounds like a science lecture, not a personal attack on the viewer's daily habit. Growth-track UGC requires a visceral betrayal or curiosity gap in the first second. Scene 2's 'hot air towers' visual is ab",
+      "first_seen": "2026-11-28",
+      "fix": "",
+      "gate": "ladder_exhausted",
+      "id": "evening_yt_short|ladder_exhausted|salesy_follow",
+      "label": "evening_yt_short",
+      "last_seen": "2026-11-28",
+      "platform": "evening_yt_short",
+      "reason": "REJECTED AS SALES-LED (The hook 'Your afternoon coffee tastes bitter because high-heat towers burned off the natural caramel notes' is technically accurate but fails the 'instant stop' test \u2014 it sounds like a science lecture, not a personal attack on the viewer's daily habit. Growth-track UGC requir",
+      "recent_samples": [
+        "REJECTED AS SALES-LED (The hook 'Your afternoon coffee tastes bitter because high-heat towers burned off the natural caramel notes' is technically accurate but fails the 'instant stop' test \u2014 it sounds like a science lecture, not a personal attack on the viewer's daily habit. Growth-track UGC requir"
       ],
       "stage": "generation",
       "status": "gate_holding"
