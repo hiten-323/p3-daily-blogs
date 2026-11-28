@@ -302,8 +302,26 @@ def get_learning_block(max_items: int = 5) -> str:
 
 
 
+
+def _with_daily_feedback(target: str, measured: str) -> str:
+    """Append the compact daily feedback block without replacing measured signals."""
+    feedback = ""
+    try:
+        from content_generator.core.daily_feedback import build_feedback_block
+        feedback = build_feedback_block(target) or ""
+    except Exception as exc:
+        logger.debug("[learning-engine] daily feedback unavailable: %s", exc)
+    parts = [p for p in (measured, feedback) if p]
+    return "\n\n".join(parts)
+
+
 def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
-    """Return measured wins and cautions for one platform after 5 independent posts."""
+    """Return measured wins and cautions for one platform after 5 independent posts.
+
+    Daily feedback (gate digest, do-not-repeat, last-7-day top/bottom when
+    there is a real audience signal) is appended and must never replace the
+    provisional/measured block built from the performance log.
+    """
     target = str(platform or "").strip().lower()
     if not target:
         return ""
@@ -319,7 +337,7 @@ def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
         unique[key] = entry
     eligible = list(unique.values())
     if not eligible:
-        return ""
+        return _with_daily_feedback(target, "")
     if len(eligible) < _MIN_LEARNING_SAMPLES:
         # Do not wait a week or five posts before the next generation can react.
         # Surface the actual observations immediately, but label them provisional
@@ -350,7 +368,7 @@ def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
             if description or summary:
                 lines.append("  - " + (description or "Published asset") + (f" — observed: {summary}" if summary else ""))
         lines.append("Change one meaningful creative variable at a time; never infer causation from a single post.")
-        return "\n".join(lines)
+        return _with_daily_feedback(target, "\n".join(lines))
     scored = sorted(((e, _weighted_score(e)) for e in eligible), key=lambda pair: pair[1], reverse=True)
     n = max(1, len(scored) // 5)
     winners = scored[:n]
@@ -372,4 +390,4 @@ def get_platform_learning_block(platform: str, max_items: int = 3) -> str:
         if description:
             lines.append(f"  - {description}")
     lines.append("Use these as directional evidence; preserve brand policy and keep testing alternatives.")
-    return "\n".join(lines)
+    return _with_daily_feedback(target, "\n".join(lines))

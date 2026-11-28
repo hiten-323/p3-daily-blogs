@@ -282,15 +282,21 @@ def generate_daily_content(
         ctx += "\n\n" + verified_learning
 
     # Continuous learning — inject what worked / failed from past posts
+    injected_daily_feedback = {}
     try:
         from content_generator.core.learning_engine import get_learning_block
         from content_generator.analytics.instagram_growth import get_instagram_growth_block
+        from content_generator.core.daily_feedback import build_feedback_block, persist_daily_feedback
         learning = get_learning_block()
         if learning:
             ctx += "\n\n" + learning
         ig_growth = get_instagram_growth_block()
         if ig_growth:
             ctx += "\n\n" + ig_growth
+        # Build platform feedback blocks
+        for pf in ("linkedin", "instagram", "threads", "facebook", "youtube"):
+            injected_daily_feedback[pf] = build_feedback_block(pf, todays_date)
+        persist_daily_feedback(injected_daily_feedback, todays_date)
         # Post-generation visual QA becomes an input to the NEXT generation.
         # This is deliberately separate from measured performance learning:
         # heuristics can constrain bad/repetitive visuals, but never masquerade

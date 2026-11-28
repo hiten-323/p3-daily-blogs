@@ -49,9 +49,28 @@ def get_instagram_growth_block(window=30):
            "Every growth reel: visible change in first second, <=8-word hook, real motion, fast payoff, captions, audio plan, loopable ending, and one follow/save/share CTA only.",
            "Use carousels for saveable education/comparisons; use Stories for retention, replies and trust; use Reels for discovery.",
            "Do not use follower bots, follow/unfollow automation, engagement pods, or mass unsolicited DMs."]
-    if a["best_formats"]:
-        lines.append("Best recent formats: "+", ".join(f"{x['format']} ({x['action_rate']:.2%} action/reach, n={x['samples']})" for x in a["best_formats"]))
-    if a["best_hooks"]:
-        lines.append("Reuse the STRUCTURE, not wording, of these hooks: "+" | ".join(x["hook"][:90] for x in a["best_hooks"][:3]))
+    # Only claim best formats when samples >= 5 and action_rate is non-zero
+    qualifying_formats = [x for x in a.get("best_formats", []) if x.get("samples", 0) >= 5 and x.get("action_rate", 0) > 0]
+    if qualifying_formats:
+        lines.append("Best recent formats: "+", ".join(f"{x['format']} ({x['action_rate']:.2%} action/reach, n={x['samples']})" for x in qualifying_formats))
+        
+    # Exclude hooks in BOTTOM 20% or with 0 action_rate from 'reuse structure'
+    bottom_hooks = set()
+    try:
+        from content_generator.core.learning_engine import _load_log
+        log_entries = _load_log()
+        if len(log_entries) >= 5:
+            sorted_entries = sorted(log_entries, key=lambda e: sum(float(v) for v in (e.get("metrics") or {}).values() if isinstance(v, (int, float))))
+            bottom_n = max(1, len(sorted_entries) // 5)
+            bottom_hooks = {str(e.get("hook") or "") for e in sorted_entries[:bottom_n] if e.get("hook")}
+    except Exception:
+        pass
+
+    qualifying_hooks = [
+        x for x in a.get("best_hooks", [])
+        if x.get("action_rate", 0) > 0 and str(x.get("hook") or "") not in bottom_hooks
+    ]
+    if qualifying_hooks:
+        lines.append("Reuse the STRUCTURE, not wording, of these hooks: "+" | ".join(x["hook"][:90] for x in qualifying_hooks[:3]))
     lines.append(f"Recent follower delta snapshot: {a['follower_delta_recent']:+d}. Treat this as account-level growth, not post-level attribution.")
     return "\n".join(lines)
