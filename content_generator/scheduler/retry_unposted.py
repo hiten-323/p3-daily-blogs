@@ -31,7 +31,7 @@ TARGETS = {
     "facebook":    ("morning", ("facebook",), ("facebook_post",), 10),
     "reel_1":      (REEL_SLOT["reel_1"], _REEL_PLATFORMS, ("reel_1",), 10),
     "growth_reel": (REEL_SLOT["growth_reel"], _REEL_PLATFORMS, ("growth_reel",), 10),
-    "linkedin":    ("generate", ("linkedin",), ("linkedin_post",), 6),
+    "linkedin":    ("generate", ("linkedin",), ("linkedin_post",), 8),
     "youtube":     ("generate", ("youtube",), ("yt_short",), 6),
     "threads":     ("generate", ("threads",), ("threads_post",), 6),
     "blog":        ("generate", ("blog",), ("blog_post",), 6),
@@ -180,6 +180,14 @@ def unposted_targets(records: list[dict], now_hour: int) -> list[str]:
         if name in REEL_SLOT and not reel_window_open(name, now_hour):
             # growth_reel is not chased past its morning window (never next to reel_1).
             continue
+        if name == "linkedin":
+            try:
+                from content_generator.publisher.linkedin_format import posting_window_open
+                if not posting_window_open():
+                    continue
+            except Exception:
+                # If the helper cannot be imported, fall through and let the publisher refuse.
+                pass
         if not any(_row_covers(r, name, slot, platforms) for r in records):
             out.append(name)
     return out

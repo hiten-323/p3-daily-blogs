@@ -128,6 +128,9 @@ def with_product_link(text: str, content: dict | None, platform: str,
     text = str(text or "").rstrip()
     if not text or not _enabled():
         return text
+    if str(platform or "").lower() in {"linkedin", "linkedin_post"}:
+        # LinkedIn puts the UTM link in the first comment, not in the body.
+        return text
     if platform == "instagram":
         if re.search(r"link in bio", text, re.I) and re.search(r"comment\s+(try|link)", text, re.I):
             return text

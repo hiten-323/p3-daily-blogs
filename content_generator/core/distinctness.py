@@ -67,6 +67,24 @@ ANGLE_POOL = (
 # built on the same idea even when the words differ (12 Nov: both Instagram
 # reels were "boiling water poured on coffee"; 14 Nov: post and carousel were
 # both "the lines on your jar label").
+# Recurring LinkedIn founder narratives count as one premise even when wording changes.
+LINKEDIN_PREMISES = {
+    "failed_batch_walkaway": (
+        "walked away", "walk away", "signed contract", "pilot batch", "pilot lot",
+        "pilot run", "hollow cup", "label is the only contract", "the label is the contract",
+        "dumped the batch", "start over", "almost launched with the wrong label",
+    ),
+}
+
+
+def linkedin_premise(text: str) -> str:
+    low = str(text or "").lower()
+    for name, keys in LINKEDIN_PREMISES.items():
+        if any(k in low for k in keys):
+            return name
+    return ""
+
+
 CONCEPTS = {
     "water_temperature": ("boil", "kettle", "degree", "°c", "100c", "94c", "temperature", "scorch", "burnt", "hot water"),
     "label_reading": ("label", "ingredient", "back of", "print", "panel", "lines on", "lines of text", "fine print"),
@@ -98,6 +116,7 @@ def _opener(text: str) -> str:
 
 def fingerprint(label: str, piece: dict) -> dict:
     hook = piece_hook(piece)
+    full = " ".join(str(piece.get(k) or "") for k in ("hook", "body", "cta", "brand_bridge"))
     return {
         "label": label,
         "surface": SURFACE.get(label, label),
@@ -105,6 +124,7 @@ def fingerprint(label: str, piece: dict) -> dict:
         "opener": _opener(hook),
         "angle": piece_angle(piece),
         "concept": concept(hook),
+        "premise": linkedin_premise(full) if label == "linkedin_post" else "",
         "template": piece_template(piece) if label in VIDEO_LABELS else "",
     }
 
@@ -186,6 +206,23 @@ def find_collisions(content: dict, history: list[dict] | None = None) -> list[di
             collisions.append({"label": fp["label"], "kind": "recent_repeat", "with": f"{past['label']}@{past['date']}",
                                "similarity": sim, "reason": f"{why} to {past['label']} on {past['date']}",
                                "colliding_hook": str(past.get("hook", ""))[:160]})
+        elif fp.get("label") == "linkedin_post" and fp.get("premise"):
+            for past in history or []:
+                if past.get("label") != "linkedin_post":
+                    continue
+                if past.get("premise") == fp["premise"]:
+                    flagged.add(fp["label"])
+                    collisions.append({
+                        "label": fp["label"], "kind": "recent_repeat",
+                        "with": f"{past['label']}@{past.get('date')}",
+                        "similarity": 1.0,
+                        "reason": (
+                            f"LinkedIn repeated the '{fp['premise']}' premise "
+                            f"(failed batch / walked away / label-is-the-contract) used on {past.get('date')}"
+                        ),
+                        "colliding_hook": str(past.get("hook", ""))[:160],
+                    })
+                    break
     return collisions
 
 
