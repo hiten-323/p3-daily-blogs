@@ -1,65 +1,53 @@
-"""LinkedIn post prompt — high-authority, educational, brand-aware asset."""
+"""LinkedIn post prompt — B2B, founder voice, short hook before 'see more'."""
 from content_generator.prompts.brand import brand_block
-from content_generator.rotation import WEBSITE_URL, LINKEDIN_SEO_KEYWORDS
+from content_generator.rotation import LINKEDIN_SEO_KEYWORDS
 
-HASHTAG_SET = (
-    "#CoffeeKnowledge #FoodScience #D2CIndia #WorkplaceWellness #PureCoffee "
-    "#CleanLabel #IndianStartups #ExecutiveRoutine #CoffeeCommunity #PurityBeans"
-)
+HASHTAG_SET = "#PurityBeans #FMCGIndia #D2CIndia"
 
 
 def build(angle: tuple, avoid: str, day: int = 0) -> str:
     return f"""{brand_block()}
 
-Generate ONE complete, high-authority, educational LinkedIn post for Purity Beans (Pure Pantry Provisions). Return a single JSON object.
+Generate ONE complete LinkedIn post for Purity Beans (Pure Pantry Provisions). Return a single JSON object.
 
 {avoid}
 
 KNOWLEDGE ANGLE: [{angle[0]}] — {angle[1]}
 
-OBJECTIVE & PERSONA:
-You are writing in the authentic, deeply knowledgeable voice of Hiten Jain, Founder of Pure Pantry Provisions (makers of Purity Beans).
-Your primary mission on LinkedIn is to ELEVATE COFFEE LITERACY and AWARENESS in India. You treat the reader as an intelligent professional, executive, or founder.
-Deliver genuine, memorable education first — insights that professionals save, share with their teams, and discuss in comments.
+VOICE AND AUDIENCE:
+Write in the authentic voice of Hiten Jain, Founder of Pure Pantry Provisions (makers of Purity Beans).
+This is a B2B post. Speak to office pantry buyers, HoReCa / cafe operators, corporate gifting managers, distributors and retail buyers in India. Do not write a consumer 'grocery run' caption.
 
-WEAVE THESE SEARCH KEYWORDS NATURALLY:
+FORMAT (LinkedIn feed):
+- The hook is the first 1-2 lines and MUST fit in 200 characters or fewer so the tension is visible before LinkedIn's '...see more' fold. 20-200 characters. No emojis.
+- Body is 120-200 words. Short paragraphs (1-2 sentences). Mobile-readable.
+- Mention at most one featured SKU in a single short fact line. If Ultra Blend is mentioned, disclose 70% coffee / 30% chicory in the same breath and never call Ultra Blend 'pure'.
+- Freeze-dried applies only to Purica and Purista. Agglomerated applies only to Bold and Prima.
+- Exactly ONE call to action, and it must be B2B: e.g. 'Comment OFFICE / HORECA / GIFTING / DISTRIBUTION and I'll share the trade sheet' or 'DM me DISTRIBUTION'.
+- Do NOT write 'Follow @purepantryprovisions'. That is an Instagram handle and does not belong on LinkedIn.
+- Do NOT write consumer CTAs ('Save this before your next grocery run', 'Shop now').
+- Do NOT put any URL in hook, body, brand_bridge, closing_question, cta, or hashtags. The store link is posted as the first comment by the publisher.
+- At most 3 hashtags. Always include #PurityBeans. Add at most two relevant tags such as #HoReCa #CorporateGifting #FMCGIndia #D2CIndia. No more.
+- 'Purity Beans' must appear in the post.
+
+TRUTH RULES:
+- No health claims, no knocking competitors, no free samples, no fabricated prices, stock, reviews, metrics or urgency.
+- No banned wording: '100%', 'fresh', 'lab tested', 'single-origin', or any 'bean' / 'beans' wording.
+- Do not invent anecdotes, named people, cities, contracts, co-packers, or quotations unless they are supplied as verified founder facts in this prompt. If you need a story, frame an observation ('What we check before a SKU ships…') rather than a dramatised scene.
+- Do not repeat the 'failed pilot batch / walked away from a contract / the label is the only contract' premise. Find a new idea for this angle.
+- Prices and shipping lines only if a live Shopify figure is provided in this prompt; otherwise omit them.
+- No medical claims. No invented revenue or customer counts.
+
+WEAVE THESE SEARCH KEYWORDS NATURALLY (without stuffing, and without putting a URL in the post):
 {LINKEDIN_SEO_KEYWORDS}
-
-KNOWLEDGE & AWARENESS PILLARS TO EMPHASIZE:
-1. Deep Coffee Science & Tech:
-   - Dehydration physics: Freeze-drying (-40°C sublimation preserving volatile aromatics & natural oils) vs high-heat spray-drying (burning beans at 200°C and masking with artificial flavours).
-   - Bean botany: pure Arabica (high altitude, higher lipid content, subtle fruit/caramel notes like Purica) vs pure Robusta (bold body, thick crema, double caffeine like Purista).
-   - Extraction thermodynamics: Why boiling 100°C water scorches tannins, and why 80°C–85°C releases natural sweetness without added sugar.
-2. Clean-Label Transparency:
-   - Label literacy: what bean, process and ratio on a jar tell a buyer, and why Ultra Blend's honest 70/30 milk-coffee blend and the pure jars each have a place.
-   - Reading Indian food labels: bean, process, ratio and net weight in ten seconds.
-3. Executive Chronobiology & Performance:
-   - Adenosine receptor science: Why delaying caffeine 60–90 minutes after waking eliminates the 2 PM crash.
-   - Brewing for focus: water temperature, dose and timing for a consistent desk cup.
-4. Corporate & Workplace Culture:
-   - Elevating office pantry standards from cheap vending syrup to artisan pure coffee; executive gifting with clean glass jars.
-
-CONTENT CONSTRAINTS:
-- No medical claims or cures (say 'coffee is widely studied for alertness and focus', never 'coffee cures/prevents X').
-- No invented revenue, no fake customer counts, no fabricated statistics.
-- No corporate jargon, no cringe humblebrags, no generic fluff.
-- Clean formatting: short, punchy 1-2 sentence paragraphs and clear bullet points for effortless mobile readability.
-
-ABSOLUTE MANDATORY RULES:
-1. 'Purity Beans' MUST appear in the post.
-2. '{WEBSITE_URL}' MUST appear in the cta.
-3. The hook MUST be between 20 and 80 characters (provocative, knowledge-driven, or contrarian).
-4. The body MUST be 300+ words of dense, valuable, pedagogical substance.
-5. Provide a natural brand_bridge, an engaging closing_question, a clear cta, and hashtags.
 
 {{
   "angle": "{angle[0]}",
-  "hook": "Compelling 1-line hook (min 20 chars). No emojis. Challenges mainstream assumptions or highlights a surprising coffee fact.",
-  "body": "300+ words. Pedagogical, insightful, beautifully formatted with clean paragraph breaks and bullet points. Deep dive into the science, economics, or brewing facts. Real, grounded, professional Indian tone.",
-  "brand_bridge": "1-2 sentences seamlessly connecting the science to Purity Beans (Pure Pantry Provisions) — our commitment to honest labels, lead-free glass jars, and uncompromised ingredient integrity.",
-  "closing_question": "A thoughtful, debate-worthy question that invites founders, executives, and professionals to share their own coffee routines or pantry standards.",
-  "cta": "Clear call to action: invite readers to follow Hiten Jain for weekly deep-dives into food science and coffee industry transparency, and explore pure coffee at {WEBSITE_URL}.",
+  "hook": "1-2 line hook, 20-200 characters, tension or insight before '...see more'. No emojis. No URL.",
+  "body": "120-200 words. Short paragraphs. B2B. One featured SKU fact line if needed. No URL.",
+  "brand_bridge": "Optional 1-sentence bridge to Purity Beans. No URL.",
+  "closing_question": "Optional one question for pantry, HoReCa, gifting or distribution buyers. No URL.",
+  "cta": "Exactly one B2B CTA (Comment or DM OFFICE/HORECA/GIFTING/DISTRIBUTION). No handle, no grocery line, no URL.",
   "hashtags": "{HASHTAG_SET}",
-  "image_prompt": "Clean executive desk setup, glass jar of Purity Beans pure coffee, warm natural morning light, ceramic cup, premium minimalist aesthetic, 1200x628."
+  "image_prompt": "Use a real Purity Beans product photograph of the featured jar; do not invent a label."
 }}"""
-

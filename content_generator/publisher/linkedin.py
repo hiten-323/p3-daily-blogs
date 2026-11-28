@@ -127,23 +127,27 @@ def post_content(content: dict, day: int = 0) -> dict:
         return {"success": False, "post_id": "", "url": "", "error": "not_configured"}
 
     from content_generator.core.product_truth import featured_product_name, product_truth_findings, separate_ultra_from_pure
+    from content_generator.publisher.linkedin_format import (
+        build_payload, posting_window_open,
+    )
     piece = content.get("linkedin_post")
     if isinstance(piece, dict):
         for field in ("hook", "body", "brand_bridge", "closing_question", "cta", "comment_trigger", "hashtags"):
             if isinstance(piece.get(field), str):
                 piece[field] = separate_ultra_from_pure(piece[field])
-    post_text = _extract_post_text(content)
-    try:
-        from content_generator.publisher.product_links import with_product_link
-        post_text = with_product_link(post_text, content, "linkedin", day=day, limit=3000)
-    except Exception as e:
-        logger.debug("[linkedin] product link skipped: %s", e)
-    post_text = separate_ultra_from_pure(post_text)
+    if not posting_window_open():
+        logger.info("[linkedin] Outside Mon-Fri 08:00-10:30 IST window — not attempted")
+        return {"success": False, "attempted": False, "skipped": True,
+                "post_id": "", "url": "", "error": "outside_linkedin_posting_window"}
+    payload = build_payload(content, day)
+    post_text = separate_ultra_from_pure(payload.get("commentary") or "")
+    comment_text = payload.get("comment") or ""
     if not post_text:
         logger.warning("[linkedin] No linkedin_post in content — skipping")
         return {"success": False, "post_id": "", "url": "", "error": "no_content"}
 
-    if product_truth_findings(post_text, featured=featured_product_name(content)):
+    truth_text = post_text + ("\n" + comment_text if comment_text else "")
+    if product_truth_findings(truth_text, featured=featured_product_name(content)):
         logger.error("[linkedin] Refusing copy that contradicts the jar")
         return {"success": False, "attempted": False, "skipped": True,
                 "post_id": "", "url": "", "error": "product_truth_failed"}
@@ -155,8 +159,8 @@ def post_content(content: dict, day: int = 0) -> dict:
         return {"success": False, "attempted": False, "skipped": True,
                 "post_id": "", "url": "", "error": "prepublish_gate:" + gate["reason"], "gate": gate}
 
-    # Try to attach an image (carousel cover or first reel thumbnail)
-    image_path = _find_image(content)
+    # Real featured-product photo only — never a random creative *date*.jpg.
+    image_path = payload.get("image_path") or _find_image(content)
     image_urn  = None
     if image_path:
         image_urn = _upload_image(image_path)
@@ -166,6 +170,18 @@ def post_content(content: dict, day: int = 0) -> dict:
     result = _create_post(post_text, image_urn)
 
     if result["success"]:
+        result["image_path"] = image_path or ""
+        result["comment"] = comment_text
+        if comment_text:
+            if _post_first_comment(result.get("post_id") or "", comment_text):
+                result["comment_posted"] = True
+            else:
+                result["comment_posted"] = False
+                if _append_link_to_post(result.get("post_id") or "", post_text, comment_text):
+                    logger.info("[linkedin] Comment failed; appended the UTM link once at the end of the post")
+                    result["link_appended"] = True
+                else:
+                    logger.warning("[linkedin] First comment failed and the post was left without a body link")
         logger.info("[linkedin] Day %d posted | id=%s", day, result["post_id"])
     else:
         logger.error("[linkedin] Day %d post failed: %s", day, result["error"])
@@ -233,7 +249,11 @@ def _extract_post_text(content: dict) -> str:
 
 
 def _find_image(content: dict) -> str | None:
-    """Find a generated image file to attach."""
+    """Find a real product photo, never an arbitrary dated creative render."""
+    from content_generator.publisher.linkedin_format import real_product_photo
+    path = real_product_photo(content)
+    if path:
+        return path
     import os, glob as _glob
 
     creative_dir = os.getenv("CREATIVE_OUTPUT_DIR", os.path.join("output", "creative"))
@@ -388,3 +408,84 @@ def _create_post(text: str, image_urn: str | None) -> dict:
     except Exception as e:
         logger.error("[linkedin] Post exception: %s", e)
         return {"success": False, "post_id": "", "url": "", "error": str(e)}
+
+
+def _post_first_comment(post_id: str, text: str) -> bool:
+    """Attach the UTM link as the first comment. Returns True on success."""
+    post_id = str(post_id or "").strip()
+    text = str(text or "").strip()
+    if not post_id or not text:
+        return False
+    try:
+        import requests
+    except ImportError:
+        return False
+    token = get_access_token()
+    author_urn = os.getenv("LI_AUTHOR_URN", "")
+    if not token or not author_urn:
+        return False
+    encoded = requests.utils.quote(post_id, safe=":")
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "LinkedIn-Version": _API_VERSION,
+        "Content-Type": "application/json",
+        "X-Restli-Protocol-Version": "2.0.0",
+        "Accept": "application/json",
+    }
+    payload = {"actor": author_urn, "object": post_id, "message": {"text": text}}
+    try:
+        resp = requests.post(
+            f"{_API_BASE}/socialActions/{encoded}/comments",
+            headers=headers, json=payload, timeout=20,
+        )
+        if resp.status_code in (200, 201, 204):
+            logger.info("[linkedin] First comment posted")
+            return True
+        logger.warning("[linkedin] First comment failed %s: %s", resp.status_code, resp.text[:200])
+        return False
+    except Exception as exc:
+        logger.warning("[linkedin] First comment error: %s", exc)
+        return False
+
+
+def _append_link_to_post(post_id: str, commentary: str, link: str) -> bool:
+    """If the first comment cannot be written, append the single UTM link to the post."""
+    post_id = str(post_id or "").strip()
+    link = str(link or "").strip()
+    if not post_id or not link:
+        return False
+    text = str(commentary or "").rstrip()
+    if link in text:
+        return True
+    if "http://" in text or "https://" in text:
+        return False
+    updated = f"{text}\n\n{link}"[:3000]
+    try:
+        import requests
+    except ImportError:
+        return False
+    token = get_access_token()
+    if not token:
+        return False
+    encoded = requests.utils.quote(post_id, safe=":")
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "LinkedIn-Version": _API_VERSION,
+        "Content-Type": "application/json",
+        "X-Restli-Protocol-Version": "2.0.0",
+        "X-RestLi-Method": "PARTIAL_UPDATE",
+        "Accept": "application/json",
+    }
+    try:
+        resp = requests.post(
+            f"{_API_BASE}/posts/{encoded}",
+            headers=headers,
+            json={"patch": {"$set": {"commentary": updated}}},
+            timeout=20,
+        )
+        return resp.status_code in (200, 201, 204)
+    except Exception as exc:
+        logger.debug("[linkedin] post update failed: %s", exc)
+        return False
+
+

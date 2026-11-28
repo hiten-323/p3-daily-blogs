@@ -7,6 +7,7 @@ links; these helpers make sure links the pipeline itself adds are tagged.
 from __future__ import annotations
 
 import re
+from datetime import date as _date
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 SITE = "https://p3online.in"
@@ -25,6 +26,35 @@ _SOURCE = {
     "yt_short": "youtube", "youtube": "youtube",
     "blog_post": "blog", "blog": "blog",
 }
+
+
+
+_PLATFORM_PREFIX = {
+    "linkedin": "li", "linkedin_post": "li",
+    "instagram": "ig", "instagram_post": "ig", "carousel": "ig",
+    "facebook": "fb", "facebook_post": "fb",
+    "threads": "th", "threads_post": "th",
+    "youtube": "yt", "yt_short": "yt",
+    "blog": "blog", "blog_post": "blog",
+}
+
+
+def dated_campaign(platform: str, date: str | None = None, angle: str = "",
+                   content_id: str = "") -> str:
+    """Platform + IST date + optional angle slug, e.g. li_20261128_pantry."""
+    raw = str(date or "").strip()
+    if not raw:
+        try:
+            from content_generator.core.ist_dates import today_ist
+            raw = today_ist().isoformat()
+        except Exception:
+            raw = _date.today().isoformat()
+    day = raw.replace("-", "")[:8]
+    prefix = _PLATFORM_PREFIX.get(str(platform or "").strip().lower(), "soc")
+    slug_src = str(angle or content_id or "").lower()
+    slug = re.sub(r"[^a-z0-9]+", "_", slug_src).strip("_")[:32]
+    return f"{prefix}_{day}_{slug}" if slug else f"{prefix}_{day}"
+
 
 STORE_LINK = re.compile(r"https?://(?:www\.)?p3online\.in(?:[/?#][^\s)\]\"'<>]*)?", re.I)
 
