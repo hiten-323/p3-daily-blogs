@@ -318,6 +318,13 @@ def labels_to_regen(todo: list[str], approved: dict | None, records: list[dict] 
         for label in labels:
             if label not in queued and (mandatory or label not in approved):
                 queued.append(label)
+    try:
+        from content_generator.core.live_piece_guard import live_labels
+        # records may belong to today's pack even when `content` is not passed.
+        blocked = live_labels(None, records)
+        queued = [label for label in queued if label not in blocked]
+    except Exception:
+        pass
     return queued
 
 
@@ -390,7 +397,15 @@ def mark_fresh(content: dict, labels) -> list[str]:
     """
     marked = []
     rounds = content.setdefault("mandatory_regen_rounds", {})
+    try:
+        from content_generator.core.live_piece_guard import live_labels
+        blocked = live_labels(content)
+    except Exception:
+        blocked = set()
     for label in labels:
+        if label in blocked:
+            log.info("[retry] skipping regen of already-published %s", label)
+            continue
         key, idx, piece = _piece_slot(content, label)
         rounds[label] = int(rounds.get(label) or 0) + 1
         if not isinstance(piece, dict) or not piece:

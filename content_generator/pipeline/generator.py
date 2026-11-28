@@ -620,6 +620,11 @@ def save_content(content_data: dict, output_dir: str = "output") -> str:
     ensure_native_regen_stubs(content_data)
     # Filename and the date field are the same IST day. Legacy long-form
     # dates already in the dict are normalized so later slots can match them.
+    try:
+        from content_generator.core.live_piece_guard import restore_live_pieces
+        restore_live_pieces(content_data)
+    except Exception as exc:
+        logger.warning("[pipeline] live piece restore skipped: %s", exc)
     date_str = content_date_iso(content_data.get("date")) or today_ist().isoformat()
     content_data["date"] = date_str
     if not str(content_data.get("generation_id") or "").strip():

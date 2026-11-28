@@ -6,6 +6,7 @@ explicitly confirms read-back. Ambiguous timeouts are never blindly retried.
 from __future__ import annotations
 
 import datetime as dt
+import logging
 import json
 import os
 import tempfile
@@ -405,6 +406,9 @@ def finish_attempt(ticket: dict, result: dict) -> dict:
                 record.update({"status": "PUBLISHED_UNVERIFIED", "next_retry_at": None, "error": verification.get("detail", "remote object exists but is not public")})
             else:
                 record.update({"status": "PUBLISHED_UNVERIFIED", "next_retry_at": _iso(_now() + dt.timedelta(hours=1)), "error": verification.get("detail", "read-back verification unavailable")})
+        snap = result.get("posted_snapshot")
+        if isinstance(snap, dict) and snap.get("piece") and record.get("status") in POSTED_STATES:
+            record["posted_snapshot"] = snap
         record["published"] = record.get("status") == "VERIFIED_LIVE"
         history = list(record.get("history") or [])
         history.append({
@@ -468,6 +472,15 @@ def publish_with_ledger(platform: str, content: dict, slot: str, day_number: int
         result = publish() or {"success": False, "error": "publisher_returned_no_result"}
     except Exception as exc:
         result = {"success": False, "error": f"{type(exc).__name__}: {exc}"}
+    if result.get("success") or result.get("uncertain"):
+        try:
+            from content_generator.core.live_piece_guard import capture_posted_snapshot
+            snap = capture_posted_snapshot(content, platform, asset=named, slot=slot)
+            if snap:
+                result = dict(result)
+                result["posted_snapshot"] = snap
+        except Exception as exc:
+            logging.getLogger(__name__).debug("[publish-ledger] posted snapshot skipped: %s", exc)
     if not result.get("success") and not result.get("uncertain"):
         publish_claim.release(claim_ref)
     saved = finish_attempt(ticket, result)
