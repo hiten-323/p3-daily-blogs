@@ -18,13 +18,14 @@ def test_linkedin_prompt_builds_knowledge_structure():
     angle = ("BREWING THERMODYNAMICS", "80C vs 100C water")
     avoid = "AVOID REPETITION"
     prompt = linkedin.build(angle, avoid, day=10)
-    assert "KNOWLEDGE & AWARENESS PILLARS" in prompt
     assert "Hiten Jain, Founder of Pure Pantry Provisions" in prompt
-    assert "Freeze-drying" in prompt
-    assert "Arabica" in prompt
-    assert "Robusta" in prompt
     assert "Purity Beans" in prompt
-    assert WEBSITE_URL in prompt
+    assert "B2B" in prompt
+    assert "see more" in prompt
+    assert "At most 3 hashtags" in prompt
+    assert "@purepantryprovisions" in prompt  # mentioned as something to avoid
+    assert "Do NOT put any URL" in prompt
+    assert "first comment" in prompt
 
 
 def test_extract_post_text_includes_all_structured_elements():
