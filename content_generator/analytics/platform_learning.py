@@ -451,11 +451,65 @@ def _fetch_threads(media_id: str) -> dict | None:
     return out or None
 
 
+def _linkedin_version() -> str:
+    override = os.getenv("LINKEDIN_VERSION") or os.getenv("LI_API_VERSION")
+    if override and override.strip():
+        return override.strip()
+    try:
+        from content_generator.publisher.linkedin import active_api_version
+        return active_api_version()
+    except Exception:
+        return "202406"
+
+
 def _fetch_linkedin(media_id: str) -> dict | None:
     token = os.getenv("LINKEDIN_ACCESS_TOKEN") or os.getenv("LI_API_ACCESS")
-    version = os.getenv("LINKEDIN_VERSION") or os.getenv("LI_API_VERSION") or "202610"
     if not token:
         return None
+    version = _linkedin_version()
+    
+    # If an organization URN is configured, use organizationalEntityShareStatistics
+    org_urn = (
+        os.getenv("LI_AUTHOR_URN")
+        or os.getenv("LINKEDIN_AUTHOR_URN")
+        or os.getenv("LINKEDIN_ORGANIZATION_URN")
+        or ""
+    ).strip()
+    if org_urn.startswith("urn:li:organization:"):
+        encoded_org = urllib.parse.quote(org_urn, safe="")
+        encoded_share = urllib.parse.quote(media_id, safe="")
+        url = (
+            f"https://api.linkedin.com/rest/organizationalEntityShareStatistics"
+            f"?q=organizationalEntity&organizationalEntity={encoded_org}&shares=List({encoded_share})"
+        )
+        data = _request_json(
+            url,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "LinkedIn-Version": version,
+                "X-Restli-Protocol-Version": "2.0.0",
+                "Accept": "application/json",
+            },
+        )
+        if data and isinstance(data.get("elements"), list) and data["elements"]:
+            stats = data["elements"][0].get("totalShareStatistics") or {}
+            out: dict[str, Any] = {}
+            if stats.get("uniqueImpressionsCount") is not None:
+                out["impressions"] = stats["uniqueImpressionsCount"]
+            elif stats.get("impressionCount") is not None:
+                out["impressions"] = stats["impressionCount"]
+            if stats.get("clickCount") is not None:
+                out["clicks"] = stats["clickCount"]
+            if stats.get("likeCount") is not None:
+                out["likes"] = stats["likeCount"]
+            if stats.get("commentCount") is not None:
+                out["comments"] = stats["commentCount"]
+            if stats.get("shareCount") is not None:
+                out["shares"] = stats["shareCount"]
+            if out:
+                return out
+
+    # Fall back to socialActions for member posts or likes/comments
     encoded = urllib.parse.quote(media_id, safe=":")
     data = _request_json(
         f"https://api.linkedin.com/rest/socialActions/{encoded}",
@@ -468,7 +522,7 @@ def _fetch_linkedin(media_id: str) -> dict | None:
     )
     if not data:
         return None
-    out: dict[str, Any] = {}
+    out = {}
     likes = data.get("likesSummary") or {}
     comments = data.get("commentsSummary") or {}
     if likes.get("totalLikes") is not None:
@@ -504,9 +558,17 @@ def _fetch_platform_metrics(post: dict) -> tuple[dict | None, str]:
             return None, "missing_threads_access_token"
         metrics = _fetch_threads(media_id)
     elif platform == "linkedin":
-        if not (os.getenv("LINKEDIN_ACCESS_TOKEN") or os.getenv("LI_API_ACCESS")) or not os.getenv("LINKEDIN_VERSION"):
-            return None, "missing_linkedin_token_or_version"
+        if not (os.getenv("LINKEDIN_ACCESS_TOKEN") or os.getenv("LI_API_ACCESS")):
+            return None, "missing_linkedin_token"
+        _LAST_HTTP_ERROR["code"] = 0
+        _LAST_HTTP_ERROR["detail"] = ""
         metrics = _fetch_linkedin(media_id)
+        if not metrics:
+            code = int(_LAST_HTTP_ERROR.get("code") or 0)
+            if code in (401, 403):
+                return None, "linkedin_scope_missing_r_member_social_or_r_organization_social"
+            return None, "api_returned_no_metrics"
+        return metrics, "measured" 
     elif platform == "instagram_story":
         # A Story is short-lived; use the same native Meta media-insights adapter
         # while it is still available, and never pretend a post-expiry absence is zero.
@@ -590,6 +652,13 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         metrics, status = _fetch_platform_metrics(post)
         post["measurement_status"] = status
         if not metrics:
+            if status == "linkedin_scope_missing_r_member_social_or_r_organization_social":
+                post["measurement_status"] = status
+                post["measurement_terminal"] = True
+                post.setdefault("failed_windows", []).append(window)
+                post["failed_windows"] = sorted(set(post["failed_windows"]))
+                blocked += 1
+                continue
             if status.startswith("missing_"):
                 # No request was made for a missing credential/media ID, so it must
                 # not consume the API budget and starve other platforms' due posts.
@@ -673,4 +742,12 @@ def fetch_pending_platform_metrics(now: dt.datetime | None = None) -> dict[str, 
         "posts": len(posts),
     }
     logger.info("[platform-learning] %s", result)
+    # Per-platform breakdown log
+    platform_counts: dict[str, dict[str, Any]] = {}
+    for p_name in ("linkedin", "facebook", "threads", "youtube", "instagram_story"):
+        p_posts = [p for p in posts if _platform(p.get("platform"), p.get("asset_id")) == p_name]
+        m_count = sum(1 for p in p_posts if any(s.get("source", "").startswith(p_name) for s in p.get("measurement_snapshots", [])))
+        b_count = sum(1 for p in p_posts if p.get("measurement_status", "").startswith("missing_") or "scope_missing" in p.get("measurement_status", ""))
+        last_reason = next((p.get("measurement_status") for p in reversed(p_posts) if p.get("measurement_status")), "none")
+        logger.info("[learning] %s measured=%d blocked=%d reason=%s", p_name, m_count, b_count, last_reason)
     return result

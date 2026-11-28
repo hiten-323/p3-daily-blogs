@@ -92,6 +92,7 @@ def track_published_post(
     payoff_type: str = "",
     decision_version: str = "",
     platform: str = "",
+    extra_fields: dict | None = None,
 ) -> None:
     if not media_id:
         return
@@ -105,7 +106,7 @@ def track_published_post(
     posts = _load_posts()
     if any(p.get("media_id") == media_id for p in posts):
         return
-    posts.append({
+    new_entry = {
         "media_id": media_id,
         "asset_id": asset_id,
         "platform": platform,
@@ -128,7 +129,10 @@ def track_published_post(
         "insights_recorded": False,
         "measurement_snapshots": [],
         "fetch_attempts_by_window": {},
-    })
+    }
+    if isinstance(extra_fields, dict):
+        new_entry.update(extra_fields)
+    posts.append(new_entry)
     _save_posts(posts)
     logger.info("[insights] Tracking published post %s (%s, platform=%s)", media_id, asset_id, platform)
 
@@ -206,13 +210,18 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
     li = result.get("linkedin") or {}
     if li.get("success") and li.get("post_id"):
         li_piece = content.get("linkedin_post") or {}
+        raw_hashtags = li_piece.get("hashtags") or []
+        hashtags_str = " ".join(raw_hashtags) if isinstance(raw_hashtags, list) else str(raw_hashtags)
+        commentary = str(li_piece.get("commentary") or li_piece.get("body") or "")
+        ist_now = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=5, minutes=30)
         track_published_post(
             media_id=li["post_id"],
             asset_id=f"linkedin_day{day_number}",
             track="authority",
-            hook=str(li_piece.get("headline") or "")[:120],
+            hook=str(li_piece.get("hook") or li_piece.get("hook_text") or li_piece.get("headline") or "")[:120],
             topic="linkedin_post",
             format_used="thought_leadership",
+            hashtags=hashtags_str,
             kpi_at_creation=li_piece.get("target_kpi_at_creation", ""),
             policy_version=li_piece.get("policy_version_at_creation", ""),
             attention_mechanism=li_piece.get("attention_mechanism", ""),
@@ -220,6 +229,14 @@ def track_dispatch_results(result: dict, content: dict, day_number: int = 0) -> 
             payoff_type=li_piece.get("payoff_type", ""),
             decision_version=li_piece.get("decision_version", ""),
             platform="linkedin",
+            extra_fields={
+                "angle": str(li_piece.get("angle") or li_piece.get("chosen_angle") or content.get("metadata", {}).get("linkedin_angle") or ""),
+                "featured_product": str(li_piece.get("featured_product") or content.get("metadata", {}).get("featured_product") or ""),
+                "cta_type": str(li_piece.get("cta_type") or ""),
+                "has_image": bool(li.get("image_urn") or li.get("image_path") or li_piece.get("image_path")),
+                "char_count": len(commentary),
+                "posted_at_ist_hour": ist_now.hour,
+            },
         )
 
     # 5. Threads
