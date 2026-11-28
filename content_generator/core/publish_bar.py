@@ -106,3 +106,11 @@ def clear_ladder_hold(piece: dict) -> None:
     if str(piece.get("hold_reason") or "").startswith("FALLBACK LADDER"):
         piece.pop("held", None)
         piece.pop("hold_reason", None)
+
+
+def clears_quality_bar(piece: dict | None) -> bool:
+    """True only when the piece already has a measured 8.0 editorial and 9.0 viral pass.
+
+    Missing or unmeasured scores do not clear. This helper never lowers either gate.
+    """
+    return not bool(quality_block(piece))

@@ -55,6 +55,27 @@ def is_configured() -> bool:
     )
 
 
+
+def resolve_approved_short(content: dict) -> tuple[dict, str]:
+    """Accept either yt_short or evening_yt_short when the canonical gate passed.
+
+    Evening slots approve evening_yt_short. The uploader historically looked
+    only at yt_short, so a passing evening Short was skipped at prepublish.
+    """
+    from content_generator.publisher.dispatcher import editorial_disposition
+    if not isinstance(content, dict):
+        return content, ""
+    for key in ("yt_short", "evening_yt_short"):
+        if editorial_disposition(content, key) != "approved":
+            continue
+        if key == "yt_short":
+            return content, key
+        out = dict(content)
+        out["yt_short"] = content[key]
+        return out, key
+    return content, ""
+
+
 def post_content(content: dict, day: int = 0) -> dict:
     """
     Upload today's YouTube Short.
@@ -66,8 +87,9 @@ def post_content(content: dict, day: int = 0) -> dict:
         {"success": bool, "video_id": str, "url": str, "error": str|None}
     """
     from content_generator.publisher.dispatcher import editorial_disposition, not_attempted_result
-    state = editorial_disposition(content, "yt_short")
-    if state != "approved":
+    content, yt_key = resolve_approved_short(content)
+    if not yt_key:
+        state = editorial_disposition(content, "yt_short")
         logger.info("[youtube] Skipping yt_short — %s; not attempted", state)
         return not_attempted_result("yt_short", state)
 
@@ -92,8 +114,15 @@ def post_content(content: dict, day: int = 0) -> dict:
         return {"success": False, "video_id": "", "url": "", "error": "no_video"}
 
     # Build metadata
-    title       = _extract_title(content)
-    description = _extract_description(content)
+    from content_generator.publisher.youtube_format import sanitize_cta, sanitize_description, sanitize_title
+    short = content.get("yt_short") if isinstance(content.get("yt_short"), dict) else {}
+    title       = sanitize_title(_extract_title(content), hook=str(short.get("hook") or ""))
+    description = sanitize_description(
+        _extract_description(content),
+        hook=str(short.get("hook") or ""),
+        cta=sanitize_cta(str(short.get("cta") or "")),
+        date=str(content.get("date") or "") or None,
+    )
     try:
         from content_generator.publisher.product_links import with_product_link
         description = with_product_link(description, content, "youtube", day=day, limit=5000)
@@ -433,7 +462,13 @@ def _extract_title(content: dict) -> str:
     return "Purity Beans — Pure Instant Coffee | No Chicory #Shorts"
 
 
+def _shop_line() -> str:
+    from content_generator.publisher.youtube_format import shop_url
+    return "Shop: " + shop_url()
+
+
 def _extract_description(content: dict) -> str:
+    from content_generator.publisher.youtube_format import sanitize_cta
     yt = content.get("yt_short")
     if isinstance(yt, dict):
         desc = str(yt.get("description") or "").strip()
@@ -443,13 +478,13 @@ def _extract_description(content: dict) -> str:
         scenes = yt.get("scenes") or []
         if isinstance(scenes, list) and scenes:
             spoken_lines = [s.get("spoken") for s in scenes if isinstance(s, dict) and s.get("spoken")]
-            cta = str(yt.get("cta") or "Subscribe for pure coffee truths. Explore pure jars at https://p3online.in?utm_source=youtube&utm_medium=post&utm_campaign=202610")
+            cta = sanitize_cta(str(yt.get("cta") or ""))
             parts = [
                 str(yt.get("hook") or ""),
                 "\n".join(spoken_lines),
                 cta,
                 "\nPurity Beans — instant coffee in lead-free glass jars.",
-                "Shop: https://p3online.in?utm_source=youtube&utm_medium=post&utm_campaign=202610",
+                _shop_line(),
             ]
             return "\n".join(p for p in parts if p)[:5000]
 
@@ -459,19 +494,19 @@ def _extract_description(content: dict) -> str:
         parts = [
             str(reel.get("hook") or reel.get("hook_text") or ""),
             str(reel.get("script") or reel.get("body") or reel.get("caption") or ""),
-            str(reel.get("cta") or ""),
+            sanitize_cta(str(reel.get("cta") or "")),
             "",
             "Purity Beans — instant coffee in lead-free glass jars.",
-            "Shop: https://p3online.in?utm_source=youtube&utm_medium=post&utm_campaign=202610",
+            _shop_line(),
         ]
         return "\n".join(p for p in parts if p)[:5000]
-    return "Purity Beans — pure instant coffee. Zero chicory. Shop at https://p3online.in?utm_source=youtube&utm_medium=post&utm_campaign=202610"
+    return "Purity Beans — instant coffee in lead-free glass jars. " + _shop_line()
 
 
 def _build_tags(content: dict) -> list[str]:
     yt = content.get("yt_short")
     if isinstance(yt, dict) and isinstance(yt.get("tags"), list) and yt.get("tags"):
-        return [str(t).lower()[:30] for t in yt["tags"]][:500]
+        return [str(t).lower()[:30] for t in yt["tags"]][:15]
 
     base = [
         "purity beans", "pure coffee", "instant coffee", "no chicory",
