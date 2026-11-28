@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-28T06:32:41+00:00",
+  "generated_at": "2026-11-28T07:14:37+00:00",
   "lookback_days": 30,
   "platforms": {
     "facebook": {
@@ -241,14 +241,13 @@
       ]
     },
     "linkedin": {
-      "posts": 20,
+      "posts": 19,
       "measured": 0,
       "ranked": 0,
       "metrics_seen": [],
       "unmeasured_statuses": {
-        "too_old_for_comparable_window": 17,
-        "linkedin_scope_missing_r_member_social_or_r_organization_social": 2,
-        "awaiting_first_window": 1
+        "too_old_for_comparable_window": 16,
+        "awaiting_first_window": 3
       },
       "winners": [],
       "losers": [],
@@ -486,25 +485,6 @@
     }
   },
   "posts": [
-    {
-      "platform": "linkedin",
-      "label": "linkedin_post",
-      "day": 300,
-      "media_id": "urn:li:share:7521106156157730816",
-      "published_at": "2026-10-28T07:10:47+00:00",
-      "hook": "Most coffee brands hide their true ingredient ratios. We put them right on the front of the jar.",
-      "angle": "operational transparency and the reality of milk coffee form",
-      "template": "",
-      "hook_strategy": "",
-      "attention_mechanism": "",
-      "product": "Ultra Blend",
-      "editorial_score": null,
-      "window": null,
-      "metrics": {},
-      "basis": null,
-      "value": null,
-      "relative": null
-    },
     {
       "platform": "youtube",
       "label": "yt_short",
