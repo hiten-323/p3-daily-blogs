@@ -22014,7 +22014,7 @@
     },
     "2026-11-28|morning|facebook|pb_5958f62a5a": {
       "asset": "",
-      "attempt_count": 3,
+      "attempt_count": 4,
       "content_date": "2026-11-28",
       "content_id": "pb_5958f62a5a",
       "day_number": 331,
@@ -22064,27 +22064,42 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-28T14:53:29+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-28T14:53:32+00:00",
+          "attempt": 4,
+          "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-28T12:57:01+00:00",
+      "last_attempt_at": "2026-11-28T14:53:29+00:00",
       "last_result": {
         "error": "prepublish_gate:native_asset_missing_passing_editorial_score",
         "success": false
       },
-      "next_retry_at": "2026-11-28T12:57:04+00:00",
+      "next_retry_at": "2026-11-28T14:53:32+00:00",
       "platform": "facebook",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-28T12:57:04+00:00",
+      "updated_at": "2026-11-28T14:53:32+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
     },
     "2026-11-28|morning|instagram_story|pb_5958f62a5a": {
       "asset": "",
-      "attempt_count": 3,
+      "attempt_count": 4,
       "content_date": "2026-11-28",
       "content_id": "pb_5958f62a5a",
       "day_number": 331,
@@ -22134,27 +22149,42 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-28T14:53:32+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-28T14:53:35+00:00",
+          "attempt": 4,
+          "error": "prepublish_gate:editorial_below_8",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-28T12:57:04+00:00",
+      "last_attempt_at": "2026-11-28T14:53:32+00:00",
       "last_result": {
         "error": "prepublish_gate:editorial_below_8",
         "success": false
       },
-      "next_retry_at": "2026-11-28T12:57:08+00:00",
+      "next_retry_at": "2026-11-28T14:53:35+00:00",
       "platform": "instagram_story",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-28T12:57:08+00:00",
+      "updated_at": "2026-11-28T14:53:35+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
     },
     "2026-11-28|morning|instagram|pb_5958f62a5a|carousel": {
       "asset": "carousel",
-      "attempt_count": 3,
+      "attempt_count": 4,
       "content_date": "2026-11-28",
       "content_id": "pb_5958f62a5a",
       "day_number": 331,
@@ -22204,20 +22234,75 @@
           "status": "FAILED",
           "url": "",
           "verification_method": ""
+        },
+        {
+          "at": "2026-11-28T14:53:21+00:00",
+          "attempt": 4,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-28T14:53:25+00:00",
+          "attempt": 4,
+          "error": "prepublish_gate:editorial_below_8",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
         }
       ],
-      "last_attempt_at": "2026-11-28T12:56:57+00:00",
+      "last_attempt_at": "2026-11-28T14:53:21+00:00",
       "last_result": {
         "error": "prepublish_gate:editorial_below_8",
         "success": false
       },
-      "next_retry_at": "2026-11-28T12:57:01+00:00",
+      "next_retry_at": "2026-11-28T14:53:25+00:00",
       "platform": "instagram",
       "published": false,
       "remote_id": "",
       "slot": "morning",
       "status": "FAILED",
-      "updated_at": "2026-11-28T12:57:01+00:00",
+      "updated_at": "2026-11-28T14:53:25+00:00",
+      "url": "",
+      "verification_method": "",
+      "verified_at": null
+    },
+    "2026-11-28|morning|instagram|pb_5958f62a5a|instagram_post": {
+      "asset": "instagram_post",
+      "attempt_count": 1,
+      "content_date": "2026-11-28",
+      "content_id": "pb_5958f62a5a",
+      "day_number": 331,
+      "error": "prepublish_gate:editorial_below_8",
+      "history": [
+        {
+          "at": "2026-11-28T14:53:25+00:00",
+          "attempt": 1,
+          "event": "attempt_started"
+        },
+        {
+          "at": "2026-11-28T14:53:29+00:00",
+          "attempt": 1,
+          "error": "prepublish_gate:editorial_below_8",
+          "event": "attempt_finished",
+          "remote_id": "",
+          "status": "FAILED",
+          "url": "",
+          "verification_method": ""
+        }
+      ],
+      "last_attempt_at": "2026-11-28T14:53:25+00:00",
+      "last_result": {
+        "error": "prepublish_gate:editorial_below_8",
+        "success": false
+      },
+      "next_retry_at": "2026-11-28T14:53:29+00:00",
+      "platform": "instagram",
+      "published": false,
+      "remote_id": "",
+      "slot": "morning",
+      "status": "FAILED",
+      "updated_at": "2026-11-28T14:53:29+00:00",
       "url": "",
       "verification_method": "",
       "verified_at": null
